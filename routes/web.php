@@ -47,6 +47,9 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login');
 })->name('dashboard');
 
+Route::get('/application-form', function () {
+    return Inertia::render('application_form/page');
+})->name('dashboard');
 
 Route::prefix('administrator')->group(function () {
     Route::get('/dashboard', function () {
