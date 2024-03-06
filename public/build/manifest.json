@@ -1,0 +1,178 @@
+{
+  "_administrator-layout-CnDVbYHJ.js": {
+    "file": "assets/administrator-layout-CnDVbYHJ.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-c-edvm9X.js",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/app/pages/ascs/page.jsx",
+      "resources/js/app/pages/brands/page.jsx",
+      "resources/js/app/pages/bup/page.jsx",
+      "resources/js/app/pages/common_issues/page.jsx",
+      "resources/js/app/pages/dashboard/page.jsx",
+      "resources/js/app/pages/email_template/page.jsx",
+      "resources/js/app/pages/htt/page.jsx",
+      "resources/js/app/pages/item_types/page.jsx",
+      "resources/js/app/pages/permissions/page.jsx",
+      "resources/js/app/pages/permissions/sections/permission-table-section.jsx",
+      "resources/js/app/pages/products/page.jsx",
+      "resources/js/app/pages/roles/page.jsx",
+      "resources/js/app/pages/roles/sections/roles-table-section.jsx",
+      "resources/js/app/pages/tickets/page.jsx",
+      "resources/js/app/pages/users/page.jsx",
+      "resources/js/app/pages/users/sections/users-table-section.jsx"
+    ],
+    "css": [
+      "assets/app-DTmHPz-x.css"
+    ]
+  },
+  "resources/js/app/pages/ascs/page.jsx": {
+    "file": "assets/page-C_Ek9Y06.js",
+    "src": "resources/js/app/pages/ascs/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/brands/page.jsx": {
+    "file": "assets/page-DXPgVGiv.js",
+    "src": "resources/js/app/pages/brands/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/bup/page.jsx": {
+    "file": "assets/page-DzuEfNgK.js",
+    "src": "resources/js/app/pages/bup/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/common_issues/page.jsx": {
+    "file": "assets/page-DUr0uj-8.js",
+    "src": "resources/js/app/pages/common_issues/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/dashboard/page.jsx": {
+    "file": "assets/page-BapGqkY6.js",
+    "src": "resources/js/app/pages/dashboard/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/email_template/page.jsx": {
+    "file": "assets/page-CmMGGdUD.js",
+    "src": "resources/js/app/pages/email_template/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/htt/page.jsx": {
+    "file": "assets/page-CDgmGNYq.js",
+    "src": "resources/js/app/pages/htt/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/item_types/page.jsx": {
+    "file": "assets/page-B0dV7dZL.js",
+    "src": "resources/js/app/pages/item_types/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/permissions/page.jsx": {
+    "file": "assets/page-uFb201yh.js",
+    "src": "resources/js/app/pages/permissions/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js",
+      "resources/js/app/pages/permissions/sections/permission-table-section.jsx"
+    ]
+  },
+  "resources/js/app/pages/permissions/sections/permission-table-section.jsx": {
+    "file": "assets/permission-table-section-BuKdSd0O.js",
+    "src": "resources/js/app/pages/permissions/sections/permission-table-section.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app/pages/products/page.jsx": {
+    "file": "assets/page-BOT4OWz-.js",
+    "src": "resources/js/app/pages/products/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/roles/page.jsx": {
+    "file": "assets/page-VJ0vd-J4.js",
+    "src": "resources/js/app/pages/roles/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js",
+      "resources/js/app/pages/roles/sections/roles-table-section.jsx"
+    ]
+  },
+  "resources/js/app/pages/roles/sections/roles-table-section.jsx": {
+    "file": "assets/roles-table-section-DOxDIu3T.js",
+    "src": "resources/js/app/pages/roles/sections/roles-table-section.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app/pages/tickets/page.jsx": {
+    "file": "assets/page-BccO4g1h.js",
+    "src": "resources/js/app/pages/tickets/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js"
+    ]
+  },
+  "resources/js/app/pages/users/page.jsx": {
+    "file": "assets/page-Blgs_1C_.js",
+    "src": "resources/js/app/pages/users/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_administrator-layout-CnDVbYHJ.js",
+      "resources/js/app/pages/users/sections/users-table-section.jsx"
+    ]
+  },
+  "resources/js/app/pages/users/sections/users-table-section.jsx": {
+    "file": "assets/users-table-section-C72UjkTu.js",
+    "src": "resources/js/app/pages/users/sections/users-table-section.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  }
+}
