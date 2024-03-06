@@ -60,6 +60,10 @@ Route::prefix('administrator')->group(function () {
     Route::get('/users', function () {
         return Inertia::render('users/page');
     })->name('users');
+    
+    Route::get('/brands', function () {
+        return Inertia::render('brands/page');
+    })->name('brands');
 
     Route::get('/email_template', function () {
         return Inertia::render('email_template/page');
