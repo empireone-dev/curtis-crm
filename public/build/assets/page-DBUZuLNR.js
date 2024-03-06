@@ -1,1 +1,0 @@
-import{j as o}from"./app-Di4kYGvQ.js";import{A as r}from"./administrator-layout-lkR9Qu4O.js";import t from"./roles-table-section-BdtcOu9c.js";function a(){return o.jsx(r,{children:o.jsx(t,{})})}export{a as default};
