@@ -1,8 +1,10 @@
-import userSlice from './user-slice';
+import { get_users_service } from '@/app/services/user-service';
+import { usersSlice } from './users-slice';
 
-export function addCartProducts(product_id) {
+export function get_users_thunk() {
   return async function (dispatch, getState) {
-    dispatch(userSlice.actions.incrementByAmount(10));
-  
+    const result = (await get_users_service()).data
+    dispatch(usersSlice.actions.setUsers(result));
   };
 }
+

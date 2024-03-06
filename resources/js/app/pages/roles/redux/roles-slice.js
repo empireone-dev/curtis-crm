@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const rolesSlice = createSlice({
   name: 'roles',
   initialState: {
-    isModalOpen: false
+    roles: []
   },
   reducers: {
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setRoles: (state, action) => {
+      state.roles = action.payload
     },
   },
 })
-export const { setIsModalOpen } = rolesSlice.actions
+export const { setRoles } = rolesSlice.actions
 
 export default rolesSlice.reducer

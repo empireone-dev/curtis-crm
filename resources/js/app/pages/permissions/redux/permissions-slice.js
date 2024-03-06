@@ -3,14 +3,16 @@ import { createSlice } from '@reduxjs/toolkit'
 export const permissionsSlice = createSlice({
   name: 'permissions',
   initialState: {
-    isModalOpen: false
+    permissions: []
   },
   reducers: {
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setPermissions: (state, action) => {
+      state.permissions = action.payload
     },
   },
 })
-export const { setIsModalOpen } = permissionsSlice.actions
+export const { 
+  setPermissions
+ } = permissionsSlice.actions
 
 export default permissionsSlice.reducer

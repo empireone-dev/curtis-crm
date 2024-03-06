@@ -1,8 +1,10 @@
-import permissionsSlice from './permissions-slice';
+import { get_permission_service } from '@/app/services/permission-service';
+import {permissionsSlice} from './permissions-slice';
 
-export function addCartProducts(product_id) {
+export function get_permission_thunk() {
   return async function (dispatch, getState) {
-    dispatch(permissionsSlice.actions.incrementByAmount(10));
+    const result = (await get_permission_service()).data
+     dispatch(permissionsSlice.actions.setPermissions(result));
   
   };
 }
