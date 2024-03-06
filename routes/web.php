@@ -92,6 +92,9 @@ Route::prefix('administrator')->group(function () {
     Route::get('/htt', function () {
         return Inertia::render('htt/page');
     })->name('htt');
+    Route::get('/em', function () {
+        return Inertia::render('em/page');
+    })->name('em');
 
 });
 
