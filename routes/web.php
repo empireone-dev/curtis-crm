@@ -89,9 +89,9 @@ Route::prefix('administrator')->group(function () {
         return Inertia::render('tickets/page');
     })->name('tickets');
 
-    Route::get('/ascs', function () {
+    Route::get('/asc', function () {
         return Inertia::render('ascs/page');
-    })->name('ascs');
+    })->name('asc');
 
     Route::get('/bup', function () {
         return Inertia::render('bup/page');

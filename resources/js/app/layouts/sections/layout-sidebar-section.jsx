@@ -71,9 +71,9 @@ export default function LayoutSidebarSection() {
                 href={'tickets'}
               />
               <LayoutSidebarListComponent
-                name="ASCS"
+                name="ASC"
                 icon={<UserCircleIcon className='h-6'/>}   
-                href={'ascs'}
+                href={'asc'}
               />
                <LayoutSidebarListComponent
                 name="Bulk Upload Products"
