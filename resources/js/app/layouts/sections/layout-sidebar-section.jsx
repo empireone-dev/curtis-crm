@@ -8,7 +8,7 @@ export default function LayoutSidebarSection() {
 
   return (
     <>
-      <div className="h-screen sticky top-0 flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
+      <div className="h-screen flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
         <div className="flex flex-col left-0 w-64 bg-white h-screen border-r">
           <div className="flex items-center justify-center h-14 border-b">
             <div>Curtis CRM</div>

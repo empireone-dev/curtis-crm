@@ -1,1 +1,0 @@
-import{j as r}from"./app-c-edvm9X.js";import{A as o}from"./administrator-layout-CnDVbYHJ.js";import i from"./permission-table-section-BuKdSd0O.js";function m(){return r.jsx(o,{children:r.jsx(i,{})})}export{m as default};
