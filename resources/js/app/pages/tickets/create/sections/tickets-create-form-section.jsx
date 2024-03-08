@@ -1,14 +1,14 @@
 import Input from '@/app/layouts/components/input'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setForm } from '../redux/ticket-form-slice'
 import Select from '@/app/layouts/components/select'
-import TicketFormSearchProductSection from './ticket-form-search-product-section'
+import TicketCreateSearchProductSection from './tickets-create-search-product-section'
 import store from '@/app/store/store'
-import { get_products_thunk } from '../redux/ticket-form-thunk'
 import Textarea from '@/app/layouts/components/textarea'
+import { get_products_thunk } from '@/app/pages/ticket_form/redux/ticket-form-thunk'
+import { setForm } from '@/app/pages/ticket_form/redux/ticket-form-slice'
 
-export default function TicketFormSection() {
+export default function TicketCreateFormSection() {
     const dispatch = useDispatch()
     const { form } = useSelector((state) => state.ticket_form)
     function formHandler(value, name) {
@@ -27,7 +27,7 @@ export default function TicketFormSection() {
     }
     
     return (
-        <form onSubmit={submitFormTicket} className="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
+        <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
             <div className='flex items-center justify-center font-black text-3xl'>
                 Ticket Form
             </div>
@@ -126,7 +126,7 @@ export default function TicketFormSection() {
             </div>
             <div className=" md:flex mb-3">
                 <div className="md:w-full px-3 mb-3 md:mb-0">
-                    <TicketFormSearchProductSection />
+                    <TicketCreateSearchProductSection />
                 </div>
             </div>
             <div className=" md:flex mb-3">
@@ -217,10 +217,10 @@ export default function TicketFormSection() {
                 <div className="md:w-1/4 px-3">
                     <Select
                         onChange={formHandler}
-                        name='country'
-                        value={form.country}
-                        label='Country'
-                        errorMessage='Country is required'
+                        name='state'
+                        value={form.state}
+                        label='State'
+                        errorMessage='State is required'
                         data={[
                             {
                                 value: 'Canada',

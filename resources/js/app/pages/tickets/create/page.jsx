@@ -1,13 +1,13 @@
 import AdministratorLayout from '@/app/layouts/administrator-layout'
 import React from 'react'
-import TicketFormSection from '../../ticket_form/sections/ticket-form-section'
+import TicketCreateFormSection from './sections/tickets-create-form-section'
 
 export default function TicketCreatePage() {
-  return (
-    <AdministratorLayout>
-    <div className='my-3'>
-    <TicketFormSection />
-    </div>
-  </AdministratorLayout>
-  )
+    return (
+        <AdministratorLayout>
+            <div className='my-3'>
+                <TicketCreateFormSection />
+            </div>
+        </AdministratorLayout>
+    )
 }
