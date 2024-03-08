@@ -7,7 +7,7 @@ import store from '@/app/store/store'
 import Textarea from '@/app/layouts/components/textarea'
 import { get_products_thunk } from '@/app/pages/ticket_form/redux/ticket-form-thunk'
 import { setForm } from '@/app/pages/ticket_form/redux/ticket-form-slice'
-
+import { countries } from './../../../../json/country';
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch()
     const { form } = useSelector((state) => state.ticket_form)
@@ -25,7 +25,16 @@ export default function TicketCreateFormSection() {
     function submitFormTicket(e) {
         e.preventDefault()
     }
-    
+
+
+    const findCountry = (countryName) => {
+        return countries.find(country => country.name === countryName) || null;
+    };
+
+
+    const { regions } = findCountry(form.country ?? 'Canada');
+
+
     return (
         <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
             <div className='flex items-center justify-center font-black text-3xl'>
@@ -195,6 +204,7 @@ export default function TicketCreateFormSection() {
                         errorMessage='Zip Code is required'
                     />
                 </div>
+
                 <div className="md:w-1/4 px-3">
                     <Select
                         onChange={formHandler}
@@ -202,16 +212,7 @@ export default function TicketCreateFormSection() {
                         value={form.country}
                         label='Country'
                         errorMessage='Country is required'
-                        data={[
-                            {
-                                value: 'Canada',
-                                name: 'Canada'
-                            },
-                            {
-                                value: 'United States',
-                                name: 'United States'
-                            }
-                        ]}
+                        data={countries.map(res => ({ name: res.name, value: res.value }))}
                     />
                 </div>
                 <div className="md:w-1/4 px-3">
@@ -221,16 +222,7 @@ export default function TicketCreateFormSection() {
                         value={form.state}
                         label='State'
                         errorMessage='State is required'
-                        data={[
-                            {
-                                value: 'Canada',
-                                name: 'Canada'
-                            },
-                            {
-                                value: 'United States',
-                                name: 'United States'
-                            }
-                        ]}
+                        data={regions}
                     />
                 </div>
                 <div className="md:w-1/4 px-3">
@@ -287,18 +279,18 @@ export default function TicketCreateFormSection() {
                     </div>
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div className="flex items-center justify-center">
-                            <input  id="checked-checkbox" type="checkbox" value="" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
+                            <input id="checked-checkbox" type="checkbox" value="" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
                             <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
                         </div>
                     </div>
                 </div>
                 <div className='flex gap-4 items-center justify-center'>
-                        <button className='p-3 w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600'>
-                            Open
-                        </button>
-                        <button className='p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600'>
-                            Closed
-                        </button>
+                    <button className='p-3 w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600'>
+                        Open
+                    </button>
+                    <button className='p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600'>
+                        Closed
+                    </button>
                 </div>
             </div>
         </form>
