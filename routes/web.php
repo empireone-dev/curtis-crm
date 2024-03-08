@@ -67,7 +67,7 @@ Route::prefix('administrator')->group(function () {
     Route::get('/users', function () {
         return Inertia::render('users/page');
     })->name('users');
-    
+
     Route::get('/brands', function () {
         return Inertia::render('brands/page');
     })->name('brands');
@@ -88,9 +88,15 @@ Route::prefix('administrator')->group(function () {
         return Inertia::render('products/page');
     })->name('products');
 
-    Route::get('/tickets', function () {
-        return Inertia::render('tickets/page');
-    })->name('tickets');
+    Route::prefix('tickets')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('tickets/page');
+        })->name('tickets');
+        Route::get('/create', function () {
+            return Inertia::render('tickets/create/page');
+        })->name('tickets.create');
+    });
+
 
     Route::get('/asc', function () {
         return Inertia::render('ascs/page');
@@ -106,7 +112,6 @@ Route::prefix('administrator')->group(function () {
     Route::get('/em', function () {
         return Inertia::render('em/page');
     })->name('em');
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -115,4 +120,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

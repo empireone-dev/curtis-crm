@@ -21,9 +21,16 @@ export default function TicketFormSection() {
     useEffect(() => {
         store.dispatch(get_products_thunk())
     }, []);
-    console.log('form', form)
+
+    function submitFormTicket(e) {
+        e.preventDefault()
+    }
+    
     return (
-        <form className="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
+        <form onSubmit={submitFormTicket} className="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
+            <div className='flex items-center justify-center font-black text-3xl'>
+                Ticket Form
+            </div>
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
@@ -280,8 +287,8 @@ export default function TicketFormSection() {
                     </div>
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div class="flex items-center justify-center">
-                            <input checked id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
-                            <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Checked state</label>
+                            <input  id="checked-checkbox" type="checkbox" value="" class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
+                            <label for="checked-checkbox" class="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
                         </div>
                     </div>
                 </div>

@@ -60,11 +60,11 @@ export default function LayoutSidebarSection() {
                 icon={<ClipboardDocumentIcon className='h-6'/>}   
                 href={'common_issues'}
               />
-              <LayoutSidebarListComponent
+              {/* <LayoutSidebarListComponent
                 name="Products"
                 icon={<ShoppingCartIcon className='h-6'/>}   
                 href={'products'}
-              />
+              /> */}
               <LayoutSidebarListComponent
                 name="Tickets"
                 icon={<TicketIcon className='h-6'/>}   

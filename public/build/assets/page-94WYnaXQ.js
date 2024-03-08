@@ -1,0 +1,1 @@
+import{r as t,j as s,b as e}from"./app-D1lS7RiQ.js";import{A as a}from"./administrator-layout-DO1jsBZ3.js";function p(){return t.useEffect(()=>{async function r(c){try{const o=await e.get("/api/google-sheets/11tds5mFC_AFWpSjVso01SWCLQ99gbCS0shJP6jr7Hb0/10");console.log(o.data)}catch(o){console.error("Error exporting to Excel",o)}}r()},[]),s.jsx(a,{})}export{p as default};

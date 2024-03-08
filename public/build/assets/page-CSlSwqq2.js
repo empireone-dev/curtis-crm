@@ -1,0 +1,1 @@
+import{j as t}from"./app-D1lS7RiQ.js";import{A as r}from"./administrator-layout-DO1jsBZ3.js";import o from"./tickets-table-section-D3mmm_5_.js";function a(){return t.jsx(r,{children:t.jsx(o,{})})}export{a as default};
