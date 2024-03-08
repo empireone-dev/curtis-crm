@@ -1,1 +1,0 @@
-import{j as t}from"./app-4wza13sO.js";import r from"./ticket-form-section-DvHy3bU3.js";import"./modal-DysXRHoL.js";import"./textarea-hg6kI6jS.js";import"./ticket-form-search-product-section-CuGFeXjS.js";function c(){return t.jsx("div",{className:"flex items-center justify-center m-auto max-w-5xl h-full my-12",children:t.jsx(r,{})})}export{c as default};
