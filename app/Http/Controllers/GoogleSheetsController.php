@@ -9,16 +9,12 @@ use GuzzleHttp\Client;
 class GoogleSheetsController extends Controller
 {
     protected $googleSheetsService;
-    // protected $client;
 
-    public function __construct(GoogleSheetsService $googleSheetsService)
-    {
-    }
 
-    public function getSheetData($spreadsheetId, $range)
+    public function getSheetData($gid)
     {
         // Use the Google Sheets service to fetch data
-        $spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/11tds5mFC_AFWpSjVso01SWCLQ99gbCS0shJP6jr7Hb0/edit#gid=1115432122';
+        $spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/11tds5mFC_AFWpSjVso01SWCLQ99gbCS0shJP6jr7Hb0/edit#gid='.$gid;
 
         // Extract spreadsheet ID and sheet name from the URL
         preg_match('/\/d\/([^\/]+)/', $spreadsheetUrl, $matches);

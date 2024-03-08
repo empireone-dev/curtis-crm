@@ -14,6 +14,7 @@ import productsSlice from '../pages/products/redux/products-slice';
 import rolesSlice from '../pages/roles/redux/roles-slice';
 import ticketsSlice from '../pages/tickets/redux/tickets-slice';
 import usersSlice from '../pages/users/redux/users-slice';
+import ticketFormSlice from '../pages/ticket_form/redux/ticket-form-slice';
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -29,7 +30,8 @@ const store = configureStore({
         products: productsSlice,
         roles: rolesSlice,
         tickets: ticketsSlice,
-        users: usersSlice
+        users: usersSlice,
+        ticket_form:ticketFormSlice
     },
 });
 

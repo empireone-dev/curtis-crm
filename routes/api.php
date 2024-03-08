@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/google-sheets/{spreadsheetId}/{range}', [GoogleSheetsController::class, 'getSheetData']);
+Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
