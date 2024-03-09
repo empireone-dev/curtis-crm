@@ -45,7 +45,8 @@ use Inertia\Inertia;
 //handle tickets Tracker
 Route::get('/', function () {
     return Inertia::render('login/page');
-})->name('dashboard');
+})->name('home.login');
+
 
 Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
