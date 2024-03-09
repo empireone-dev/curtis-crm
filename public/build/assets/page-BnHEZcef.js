@@ -1,1 +1,0 @@
-import{j as t}from"./app-BeiXDmCO.js";import e from"./content-notes-comment-section-BA8zK_i3.js";import o from"./content-notes-textarea-section-BvPSnQJX.js";function i(){return t.jsxs("div",{children:[t.jsx(o,{}),t.jsx(e,{})]})}export{i as default};

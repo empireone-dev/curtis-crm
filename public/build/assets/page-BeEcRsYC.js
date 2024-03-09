@@ -1,0 +1,1 @@
+import{j as o}from"./app-Rwnom-qL.js";import{A as s}from"./administrator-layout-BSbl0W3O.js";import"./UserGroupIcon-DLEBJ5HR.js";function e(){return o.jsx(s,{children:"CommonIssuesPage"})}export{e as default};
