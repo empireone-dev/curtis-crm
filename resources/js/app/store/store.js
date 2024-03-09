@@ -12,9 +12,10 @@ import item_typesSlice from '../pages/item_types/redux/item_types-slice';
 import permissionsSlice from '../pages/permissions/redux/permissions-slice';
 import productsSlice from '../pages/products/redux/products-slice';
 import rolesSlice from '../pages/roles/redux/roles-slice';
-import ticketsSlice from '../pages/tickets/redux/tickets-slice';
+import ticketsSlice from '../pages/tickets/_redux/tickets-slice';
 import usersSlice from '../pages/users/redux/users-slice';
 import ticketFormSlice from '../pages/ticket_form/redux/ticket-form-slice';
+import ticketsCreateSlice from '../pages/tickets/create/redux/tickets-create-slice';
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -31,7 +32,8 @@ const store = configureStore({
         roles: rolesSlice,
         tickets: ticketsSlice,
         users: usersSlice,
-        ticket_form:ticketFormSlice
+        ticket_form:ticketFormSlice,
+        tickets_create:ticketsCreateSlice
     },
 });
 

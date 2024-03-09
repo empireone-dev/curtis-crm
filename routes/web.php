@@ -44,14 +44,14 @@ use Inertia\Inertia;
 //export Management
 //handle tickets Tracker
 Route::get('/', function () {
-    return Inertia::render('Auth/Login');
+    return Inertia::render('login/page');
 })->name('dashboard');
 
 Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
 })->name('dashboard');
 
-Route::prefix('administrator')->group(function () {
+Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('dashboard/page');
     })->name('dashboard');
@@ -92,6 +92,11 @@ Route::prefix('administrator')->group(function () {
         Route::get('/', function () {
             return Inertia::render('tickets/page');
         })->name('tickets');
+        
+        Route::get('/{details}', function () {
+            return Inertia::render('tickets/details/page');
+        })->name('tickets.details');
+
         Route::get('/create', function () {
             return Inertia::render('tickets/create/page');
         })->name('tickets.create');

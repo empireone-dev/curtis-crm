@@ -1,14 +1,15 @@
 import Input from "@/app/layouts/components/input";
 import Modal from "@/app/layouts/components/modal";
-import { setForm } from "@/app/pages/ticket_form/redux/ticket-form-slice";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setForm } from "../redux/tickets-create-slice";
 
 
 export default function TicketCreateSearchProductSection() {
 
-  const { products, form } = useSelector((state) => state.ticket_form)
+  const { products } = useSelector((state) => state.ticket_form)
+  const { ticket_form } = useSelector((state) => state.tickets_create)
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -49,14 +50,20 @@ export default function TicketCreateSearchProductSection() {
   }))
   function selectedProduct(data) {
     dispatch(setForm({
-      ...form,
+      ...ticket_form,
       ...data
     }))
     setOpen(false)
   }
+
+  function isOpenModal(params) {
+    setOpen(true)
+  }
   return (
     <div>
-      <button onClick={() => setOpen(true)} className="p-3 rounded-sm bg-blue-500 text-white hover:bg-blue-600">
+      <button
+      type="button"
+      onClick={() => isOpenModal()} className="p-3 rounded-sm bg-blue-500 text-white hover:bg-blue-600">
         Select Product
       </button>
       <Modal

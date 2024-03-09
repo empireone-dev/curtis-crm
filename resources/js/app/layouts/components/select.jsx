@@ -1,14 +1,16 @@
 import React from 'react'
 
-export default function Select({ name, value, label, errorMessage, onChange, data }) {
+export default function Select({ name, value, label, errorMessage, onChange, data,required }) {
     return (
         <div>
             <div className='relative' >
                 <select
+                required={required}
                     onChange={(e) => onChange(e.target.value, e.target.name)}
                     id={name}
                     name={name}
                     className='peer text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500' placeholder="" >
+                   <option value=""></option>
                     {
                         data.map((res, i) => {
                             return <option key={i} value={res.value}>{res.name}</option>

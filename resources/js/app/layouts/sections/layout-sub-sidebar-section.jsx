@@ -1,3 +1,5 @@
+import { PowerIcon } from '@heroicons/react/24/outline'
+import { Link } from '@inertiajs/react'
 import React from 'react'
 
 export default function LayoutSubSidebarSection() {
@@ -89,17 +91,19 @@ export default function LayoutSubSidebarSection() {
                 <div className="relative flex items-center justify-center flex-shrink-0">
 
                     <div className="" x-data="{ open: false }">
-                        <button
-
-                            className="block transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100"
+                        <Link
+                            method="post"
+                            href={route('logout')}
+                            className="block transition-opacity duration-200 rounded-full text-blue-500 hover:text-blue-600"
                         >
                             <span className="sr-only">User menu</span>
-                            <img
+                            {/* <img
                                 className="w-10 h-10 rounded-full"
                                 src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"
                                 alt="Ahmed Kamel"
-                            />
-                        </button>
+                            /> */}
+                            <PowerIcon className='h-6' />
+                        </Link>
 
                     </div>
                 </div>

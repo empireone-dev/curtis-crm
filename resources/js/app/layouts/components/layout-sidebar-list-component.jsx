@@ -3,7 +3,8 @@ import React from 'react'
 
 export default function LayoutSidebarListComponent({ name, icon, href }) {
   const {url} = usePage()
-  const path = url.split('/')[2]
+  const path = url.split('/')[2].split('?')[0]
+  
   return (
     <Link href={route(href)}>
       <li className={`focus:outline-none  text-gray-600 ${path == href?'border-blue-500 bg-blue-200':'hover:border-blue-500 hover:text-gray-800 hover:bg-gray-50  border-transparent'}  border-l-4  pr-6`}>

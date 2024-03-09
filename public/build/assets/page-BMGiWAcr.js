@@ -1,1 +1,0 @@
-import{j as r}from"./app-BYt4LErr.js";import{A as t}from"./administrator-layout-40q7vwdX.js";import i from"./tickets-create-form-section-BQd90IpN.js";import"./modal-C2U719CA.js";import"./country-BJ8uGI0d.js";import"./tickets-create-search-product-section-BH4G9pDc.js";function p(){return r.jsx(t,{children:r.jsx("div",{className:"my-3",children:r.jsx(i,{})})})}export{p as default};

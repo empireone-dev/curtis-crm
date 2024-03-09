@@ -1,0 +1,1 @@
+import{j as t}from"./app-A9bNcwVm.js";import{A as i}from"./administrator-layout-B1ggrEb2.js";import r from"./tickets-details-tab-section-BddkRNYy.js";import"./use-is-mounted-CdoK7_XG.js";function m(){return t.jsx(i,{children:t.jsx("div",{className:"mr-3",children:t.jsx(r,{})})})}export{m as default};
