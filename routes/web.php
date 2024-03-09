@@ -94,7 +94,7 @@ Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
             return Inertia::render('tickets/page');
         })->name('tickets');
         
-        Route::get('/{details}', function () {
+        Route::get('/details/{ticket_id}', function () {
             return Inertia::render('tickets/details/page');
         })->name('tickets.details');
 

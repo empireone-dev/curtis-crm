@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LayoutSidebarListComponent from '../components/layout-sidebar-list-component';
-import { BriefcaseIcon, ClipboardDocumentIcon, CloudArrowDownIcon, CloudArrowUpIcon, HomeIcon, InboxArrowDownIcon, KeyIcon, PuzzlePieceIcon, ReceiptPercentIcon, ShoppingCartIcon, TicketIcon, UserCircleIcon, UserGroupIcon, UserIcon } from '@heroicons/react/24/outline'
+import { BriefcaseIcon, ClipboardDocumentIcon, CloudArrowDownIcon, CloudArrowUpIcon, ExclamationTriangleIcon, HomeIcon, InboxArrowDownIcon, KeyIcon, PuzzlePieceIcon, ReceiptPercentIcon, ShoppingCartIcon, TicketIcon, UserCircleIcon, UserGroupIcon, UserIcon } from '@heroicons/react/24/outline'
 
 
 export default function LayoutSidebarSection() {
@@ -57,7 +57,7 @@ export default function LayoutSidebarSection() {
               />
               <LayoutSidebarListComponent
                 name="Common-Issues"
-                icon={<ClipboardDocumentIcon className='h-6'/>}   
+                icon={<ExclamationTriangleIcon className='h-6'/>}   
                 href={'common_issues'}
               />
               {/* <LayoutSidebarListComponent
@@ -70,7 +70,7 @@ export default function LayoutSidebarSection() {
                 icon={<TicketIcon className='h-6'/>}   
                 href={'tickets'}
               />
-              <LayoutSidebarListComponent
+              {/* <LayoutSidebarListComponent
                 name="ASC"
                 icon={<UserCircleIcon className='h-6'/>}   
                 href={'asc'}
@@ -89,7 +89,7 @@ export default function LayoutSidebarSection() {
                 name="Handled Tickets Tracker"
                 icon={<PuzzlePieceIcon className='h-6'/>}   
                 href={'htt'}
-              />
+              /> */}
               {/* <li className="px-5">
                 <div className="flex flex-row items-center h-8">
                   <div className="text-sm font-light tracking-wide text-gray-500">Tasks</div>

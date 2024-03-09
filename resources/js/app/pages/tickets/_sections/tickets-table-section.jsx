@@ -12,7 +12,7 @@ export default function TicketTableSection() {
 
 
     function moveToDetails(id) {
-        router.visit('/administrator/tickets/'+id)
+        router.visit('/administrator/tickets/details/'+id)
     }
     return (
         <>

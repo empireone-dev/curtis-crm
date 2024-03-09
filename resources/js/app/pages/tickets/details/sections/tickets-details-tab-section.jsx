@@ -1,5 +1,11 @@
 import { useState } from 'react'
 import { Tab } from '@headlessui/react'
+import TicketsDetailsContentFiles from '../contents/files/page'
+import TicketsDetailsContentActivities from '../contents/activities/page'
+import TicketsDetailsContentStatus from '../contents/status/page'
+import TicketsDetailsContentDetails from '../contents/details/page'
+import TicketsDetailsContentNotes from '../contents/notes/page'
+import TicketsDetailsContentHistory from '../contents/history/page'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -60,27 +66,27 @@ export default function TicketsDetailsTabSection() {
     const tabs = [
         {
             title: 'Files',
-            components: <>sss</>
+            components: <TicketsDetailsContentFiles />
         },
         {
             title: 'Activities',
-            components: <>sss</>
+            components: <TicketsDetailsContentActivities />
         },
         {
             title: 'Update Status',
-            components: <>sss</>
+            components:<TicketsDetailsContentStatus />
         },
         {
             title: 'Details',
-            components: <>sss</>
+            components:<TicketsDetailsContentDetails />
         },
         {
             title: 'Agent Notes',
-            components: <>sss</>
+            components: <TicketsDetailsContentNotes />
         },
         {
             title: 'History Logs',
-            components: <>sss</>
+            components: <TicketsDetailsContentHistory />
         }
     ]
     return (
@@ -114,7 +120,7 @@ export default function TicketsDetailsTabSection() {
                                     ''
                                 )}
                             >
-                                {res.title}
+                                {res.components}
                             </Tab.Panel>
                         )
                     })}
