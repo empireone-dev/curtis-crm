@@ -1,1 +1,0 @@
-import{j as r}from"./app-Rwnom-qL.js";import{A as t}from"./administrator-layout-BSbl0W3O.js";import"./UserGroupIcon-DLEBJ5HR.js";function e(){return r.jsx(t,{children:"ASCSPage"})}export{e as default};

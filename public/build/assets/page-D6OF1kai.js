@@ -1,1 +1,0 @@
-import{j as r}from"./app-Rwnom-qL.js";import{A as t}from"./administrator-layout-BSbl0W3O.js";import"./UserGroupIcon-DLEBJ5HR.js";function i(){return r.jsx(t,{children:"BrandsPage"})}export{i as default};

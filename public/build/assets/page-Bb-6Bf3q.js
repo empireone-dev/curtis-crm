@@ -1,0 +1,1 @@
+import{j as t}from"./app-DalwlZq2.js";import{A as r}from"./administrator-layout-CThHM3jE.js";import"./UserGroupIcon-DJKoS4EK.js";function s(){return t.jsx(r,{children:"ItemTypesPage"})}export{s as default};

@@ -1,0 +1,1 @@
+import{j as o}from"./app-DalwlZq2.js";import{A as s}from"./administrator-layout-CThHM3jE.js";import"./UserGroupIcon-DJKoS4EK.js";function e(){return o.jsx(s,{children:"CommonIssuesPage"})}export{e as default};
