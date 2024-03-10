@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const ascsSlice = createSlice({
   name: 'ascs',
   initialState: {
-    isModalOpen: false
+    asc: []
   },
   reducers: {
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setAsc: (state, action) => {
+      state.asc = action.payload
     },
   },
 })
-export const { setIsModalOpen } = ascsSlice.actions
+export const { setAsc } = ascsSlice.actions
 
 export default ascsSlice.reducer

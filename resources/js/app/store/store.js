@@ -19,7 +19,7 @@ import ticketsCreateSlice from '../pages/tickets/create/redux/tickets-create-sli
 const store = configureStore({
     reducer: {
         app: appSlice,
-        ascs: ascsSlice,
+        asc: ascsSlice,
         brands: brandsSlice,
         bup: bupSlice,
         common_issues: common_issuesSlice,

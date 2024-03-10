@@ -1,0 +1,1 @@
+import{j as r}from"./app-ByDNA9gT.js";import{A as t}from"./administrator-layout-CKBc7gJ3.js";import"./UserGroupIcon-BCNU-cIP.js";function i(){return r.jsx(t,{children:"BrandsPage"})}export{i as default};

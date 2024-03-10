@@ -1,1 +1,0 @@
-import{j as t}from"./app-DalwlZq2.js";import{A as a}from"./administrator-layout-CThHM3jE.js";import"./UserGroupIcon-DJKoS4EK.js";function i(){return t.jsx(a,{children:"EmailTemplatePage"})}export{i as default};

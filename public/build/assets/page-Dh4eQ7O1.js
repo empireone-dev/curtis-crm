@@ -1,0 +1,1 @@
+import{j as t}from"./app-ByDNA9gT.js";import{A as a}from"./administrator-layout-CKBc7gJ3.js";import"./UserGroupIcon-BCNU-cIP.js";function i(){return t.jsx(a,{children:"EmailTemplatePage"})}export{i as default};

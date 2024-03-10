@@ -1,1 +1,0 @@
-import{j as r}from"./app-DalwlZq2.js";import{A as t}from"./administrator-layout-CThHM3jE.js";import"./UserGroupIcon-DJKoS4EK.js";function i(){return r.jsx(t,{children:"BrandsPage"})}export{i as default};

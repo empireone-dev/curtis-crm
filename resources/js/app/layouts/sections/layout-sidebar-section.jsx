@@ -70,12 +70,12 @@ export default function LayoutSidebarSection() {
                 icon={<TicketIcon className='h-6'/>}   
                 href={'tickets'}
               />
-              {/* <LayoutSidebarListComponent
+             <LayoutSidebarListComponent
                 name="ASC"
                 icon={<UserCircleIcon className='h-6'/>}   
                 href={'asc'}
               />
-               <LayoutSidebarListComponent
+              {/*   <LayoutSidebarListComponent
                 name="Bulk Upload Products"
                 icon={<CloudArrowDownIcon className='h-6'/>}   
                 href={'bup'}
