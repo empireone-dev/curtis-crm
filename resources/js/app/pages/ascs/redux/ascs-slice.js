@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const ascsSlice = createSlice({
-  name: 'ascs',
+  name: 'asc',
   initialState: {
-    asc: []
+    asc: [],
   },
   reducers: {
     setAsc: (state, action) => {

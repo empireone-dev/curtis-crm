@@ -93,6 +93,7 @@ export default function LayoutSubSidebarSection() {
                     <div className="" x-data="{ open: false }">
                         <Link
                             method="post"
+                            as="button"
                             href={route('logout')}
                             className="block transition-opacity duration-200 rounded-full text-blue-500 hover:text-blue-600"
                         >

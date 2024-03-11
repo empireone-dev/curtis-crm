@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AscTableHeaderSection from './asc-table-header-section'
 import { useSelector } from 'react-redux'
 
 export default function ASCTableSection() {
-    const { asc } = useSelector((state) => state.asc)
-    console.log('asc', asc)
+    const { asc } = useSelector((state) => state.asc??[])
+   const [newAsc,setNewAsc] = useState(asc)
+  
     return (
         <>
             <section className="container px-4 my-6 mx-auto">
-                <AscTableHeaderSection />
-
+                <AscTableHeaderSection 
+                setNewAsc={setNewAsc}
+                />
                 <div className="flex flex-col mt-6">
                     {/* <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
                     <div>
@@ -52,7 +54,7 @@ export default function ASCTableSection() {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                         {
-                                            asc.map((res, i) => {
+                                            newAsc.map((res, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
