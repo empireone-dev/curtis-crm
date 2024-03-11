@@ -2,8 +2,8 @@ import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
 
 export default function LayoutSidebarListComponent({ name, icon, href }) {
-  const {url} = usePage()
-  const path = url.split('/')[2].split('?')[0]
+  const {component  } = usePage()
+  const path =component.split('/')[0]
   
   return (
     <Link href={route(href)}>

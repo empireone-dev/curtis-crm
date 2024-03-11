@@ -1,7 +1,10 @@
 import React from 'react'
+import FilesUploadSection from './sections/files-upload-section'
 
 export default function TicketsDetailsContentFiles() {
   return (
-    <div>TicketsDetailsContentFiles</div>
+    <div>
+      <FilesUploadSection />
+    </div>
   )
 }
