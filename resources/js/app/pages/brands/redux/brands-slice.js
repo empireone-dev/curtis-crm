@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const brandsSlice = createSlice({
   name: 'brands',
   initialState: {
-    isModalOpen: false
+    brands: []
   },
   reducers: {
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setbrands: (state, action) => {
+      state.brands = action.payload
     },
   },
 })
-export const { setIsModalOpen } = brandsSlice.actions
+export const { setbrands } = brandsSlice.actions
 
 export default brandsSlice.reducer

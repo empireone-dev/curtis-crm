@@ -1,18 +1,16 @@
 import React from 'react'
-import BrandTableComponent from '../components/brand-table-component'
+import EmailtemplateTableComponent from '../components/emailtemplate-table-component'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { useSelector } from 'react-redux'
 
-export default function BrandTableSection() {
-    const { brands } = useSelector((state) => state.brands)
-    console.log('brands', brands)
-    return (
-        <>
-            <section className="container px-4 my-12 mx-auto">
+export default function EmailtemplateTableSection
+() {
+  return (
+    <>
+       <section className="container px-4 my-12 mx-auto">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
-                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">Brands Table</h2>
+                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">Email Templates Table</h2>
                         </div>
                     </div>
 
@@ -22,7 +20,7 @@ export default function BrandTableSection() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
 
-                            <span>Create Brand</span>
+                            <span>Create Email Template</span>
                         </button>
                     </div>
                 </div>
@@ -60,26 +58,32 @@ export default function BrandTableSection() {
                                                 </button>
                                             </th>
 
-                                            <BrandTableComponent
+                                            <EmailtemplateTableComponent
                                                 name="Name"
                                             />
-                                            <BrandTableComponent
+                                            <EmailtemplateTableComponent
+                                                name="Template"
+                                            />
+                                            <EmailtemplateTableComponent
                                                 name="Action"
                                             />
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {
-                                        brands.map((res, i) => {
-                                            return <tr key={i}>
+                                        <tr>
                                             <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
+                                                    <h2 className="font-medium text-gray-800 dark:text-white ">1</h2>
                                                 </div>
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.brand_name}</h2>
+                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Name</h2>
+                                                </div>
+                                            </td>
+                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                <div>
+                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Template</h2>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -87,11 +91,6 @@ export default function BrandTableSection() {
                                                 <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><TrashIcon className='h-4 text-white' /></button>
                                             </td>
                                         </tr>
-
-                                    })
-                                    }
-
-                                        
 
                                     </tbody>
                                 </table>
@@ -128,6 +127,6 @@ export default function BrandTableSection() {
                     </div>
                 </div>
             </section>
-        </>
-    )
+    </>
+  )
 }

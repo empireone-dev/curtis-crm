@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\PermissionController;
@@ -32,3 +33,4 @@ Route::resource('permissions',PermissionController::class);
 Route::resource('email_template',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
 Route::resource('tickets',TicketController::class);
+Route::resource('brands',BrandController::class);

@@ -1,8 +1,10 @@
-import brandsSlice from './brands-slice';
+import { get_brands_service } from '@/app/services/brand-service';
+import { brandsSlice } from './brands-slice';
 
-export function addCartProducts(product_id) {
+export function get_brands_thunk() {
   return async function (dispatch, getState) {
-    dispatch(brandsSlice.actions.incrementByAmount(10));
-  
+    const result = (await get_brands_service()).data
+    dispatch(brandsSlice.actions.setbrands(result));
   };
 }
+
