@@ -1,10 +1,11 @@
+import { EyeDropperIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
 export default function UsersTableSection() {
 
     const { users } = useSelector((state) => state.users)
-  console.log('users',users)
+    console.log('users', users)
     return (
         <section className="container px-4 my-12 mx-auto">
             <div className="sm:flex sm:items-center sm:justify-between">
@@ -98,13 +99,12 @@ export default function UsersTableSection() {
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div>
-                                                        <h4 className="text-gray-700 dark:text-gray-200">{res.role.name??''}</h4>
+                                                        <h4 className="text-gray-700 dark:text-gray-200">{res.role.name ?? ''}</h4>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center">
-                                                  EDIT | DELETE
-                                                  </div>
+                                                <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><EyeDropperIcon className='h-4 text-white'/></button>
+                                                    <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><TrashIcon  className='h-4 text-white'/></button>
                                                 </td>
 
 
