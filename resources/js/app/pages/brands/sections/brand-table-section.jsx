@@ -62,7 +62,7 @@ export default function BrandTableSection() {
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Title
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-end rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-16 py-3.5 text-sm font-normal text-end rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Action
                                             </th>
                                         </tr>

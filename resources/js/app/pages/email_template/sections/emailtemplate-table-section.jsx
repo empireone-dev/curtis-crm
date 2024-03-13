@@ -63,7 +63,7 @@ export default function EmailtemplateTableSection
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
                                             Template
                                             </th>
-                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-right rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
+                                            <th scope="col" className="px-16 py-3.5 text-sm font-normal text-right rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
                                                 Action
                                             </th>
 
