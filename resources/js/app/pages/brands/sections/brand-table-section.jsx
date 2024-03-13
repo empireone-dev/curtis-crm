@@ -1,11 +1,10 @@
 import React from 'react'
-import BrandTableComponent from '../components/brand-table-component'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 
 export default function BrandTableSection() {
     const { brands } = useSelector((state) => state.brands)
-    console.log('brands', brands)
+
     return (
         <>
             <section className="container px-4 my-12 mx-auto">
@@ -60,38 +59,36 @@ export default function BrandTableSection() {
                                                 </button>
                                             </th>
 
-                                            <BrandTableComponent
-                                                name="Name"
-                                            />
-                                            <BrandTableComponent
-                                                name="Action"
-                                            />
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Title
+                                            </th>
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-end rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Action
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {
-                                        brands.map((res, i) => {
-                                            return <tr key={i}>
-                                            <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.brand_name}</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><PencilSquareIcon className='h-4 text-white' /></button>
-                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><TrashIcon className='h-4 text-white' /></button>
-                                            </td>
-                                        </tr>
+                                        {
+                                            brands.map((res, i) => {
+                                                return <tr key={i}>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.brand_name}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
+                                                        <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
+                                                        <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
+                                                    </td>
+                                                </tr>
 
-                                    })
-                                    }
-
-                                        
+                                            })
+                                        }
 
                                     </tbody>
                                 </table>
