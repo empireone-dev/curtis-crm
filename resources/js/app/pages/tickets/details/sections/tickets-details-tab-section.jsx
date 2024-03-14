@@ -7,6 +7,8 @@ import TicketsDetailsContentDetails from '../contents/details/page';
 import TicketsDetailsContentNotes from '../contents/notes/page';
 import TicketsDetailsContentHistory from '../contents/history/page';
 import { router, usePage } from '@inertiajs/react';
+import TicketsDecisionMakingPage from '../contents/decision_making/page';
+import TicketsDecisionMakingContent from '../contents/decision_making/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -27,6 +29,12 @@ export default function TicketsDetailsTabSection() {
       components: <TicketsDetailsContentActivities />,
       hash: '#activities',
     },
+    {
+      title: 'Decision Making',
+      components: <TicketsDecisionMakingContent />,
+      hash: '#decision',
+    },
+    
     {
       title: 'Update Status',
       components: <TicketsDetailsContentStatus />,
