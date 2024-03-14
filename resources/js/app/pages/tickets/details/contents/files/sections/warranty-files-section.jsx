@@ -1,42 +1,49 @@
+import { TrashIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import EmailtemplateTableComponent from '../components/emailtemplate-table-component'
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 
-export default function EmailtemplateTableSection() {
-  return (
-    <>
-       <section className="container px-4 my-12 mx-auto">
+export default function WarrantyFilesSection() {
+    return (
+        <>
+            <section className="container px-4 my-12 mx-auto border-t-2 border-b-2 border-slate-400">
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-x-3">
-                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">Email Templates Table</h2>
+                    <div className="w-full flex justify-center">
+                        <div className="flex items-center gap-x-3 mt-4">
+                        <h1 class="mb-4 text-lg font-extrabold text-gray-900 dark:text-white md:text-3xl lg:text-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Warranty Files</span></h1>
                         </div>
                     </div>
-
-                    <div className="flex items-center mt-4 gap-x-3">
-                        <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-
-                            <span>Create Email Template</span>
-                        </button>
+                </div>
+                <div className="sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <div className="flex items-center gap-x-3 mt-4">
+                            <h2 className="text-xl font-medium text-gray-800 dark:text-white">A clear and readable picture of the bill of sale</h2>
+                        </div>
+                        <div className="flex items-center gap-x-3 mb-3">
+                            <p className="font-medium text-gray-400 dark:text-white">Please note the bill of sale must show the following:</p>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                            <p className="font-medium text-gray-400 dark:text-white">• Store Name and Address *except if purchased online</p>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                            <p className="font-medium text-gray-400 dark:text-white">• Date of purchase</p>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                            <p className="font-medium text-gray-400 dark:text-white">• Item description</p>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                            <p className="font-medium text-gray-400 dark:text-white">• Unit Price</p>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                            <p className="font-medium text-gray-400 dark:text-white">• Total amount paid</p>
+                        </div>
+                        <div className="flex items-center gap-x-3 mt-5">
+                            <p className="font-medium text-gray-400 dark:text-white">If you do not have the bill of sale, you may try contacting the dealer’s customer care department for added support.</p>
+                        </div>
+                        
                     </div>
                 </div>
+                
 
-                <div className="mt-6 md:flex md:items-center md:justify-between">
-                    <div className="relative flex items-center mt-4 md:mt-0">
-                        <span className="absolute">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
-                        </span>
-
-                        <input type="text" placeholder="Search" className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
-                    </div>
-                </div>
-
-                <div className="flex flex-col mt-6">
+                <div className="flex flex-col">
                     {/* <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
                     <div>
                         {/* <div className="inline-block w-full py-2 align-middle md:px-6 lg:px-8"> */}
@@ -57,15 +64,15 @@ export default function EmailtemplateTableSection() {
                                                 </button>
                                             </th>
 
-                                            <EmailtemplateTableComponent
-                                                name="Name"
-                                            />
-                                            <EmailtemplateTableComponent
-                                                name="Template"
-                                            />
-                                            <EmailtemplateTableComponent
-                                                name="Action"
-                                            />
+                                            <th scope="col" className="px-12 py-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Date
+                                            </th>
+                                            <th scope="col" className="px-12 py-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                File
+                                            </th>
+                                            <th scope="col" className="px-12 py-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Action
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -77,17 +84,14 @@ export default function EmailtemplateTableSection() {
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Name</h2>
+                                                    <h2 className="font-medium text-gray-800 dark:text-white ">01/01/2024</h2>
                                                 </div>
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Template</h2>
-                                                </div>
+                                            <button type="button" className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">DOWNLOAD/VIEW</button>
                                             </td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><PencilSquareIcon className='h-4 text-white' title="Edit" /></button>
-                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><TrashIcon className='h-4 text-white' /></button>
+                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 item-center"><TrashIcon className='h-4 text-white' /></button>
                                             </td>
                                         </tr>
 
@@ -103,7 +107,7 @@ export default function EmailtemplateTableSection() {
                         Page <span className="font-medium text-gray-700 dark:text-gray-100">1 of 10</span>
                     </div>
 
-                    <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
+                    <div className="flex items-center mt-4 mb-4 gap-x-4 sm:mt-0">
                         <a href="#" className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
@@ -126,6 +130,6 @@ export default function EmailtemplateTableSection() {
                     </div>
                 </div>
             </section>
-    </>
-  )
+        </>
+    )
 }
