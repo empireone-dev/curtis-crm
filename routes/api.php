@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 
+Route::get('/send_email', [EmailTemplateController::class, 'sendNotification']);
+
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
 Route::resource('email_template',EmailTemplateController::class);

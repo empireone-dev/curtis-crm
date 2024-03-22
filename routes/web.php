@@ -44,9 +44,8 @@ use Inertia\Inertia;
 //export Management
 //handle tickets Tracker
 Route::get('/', function () {
-    return Inertia::render('login/page');
+    return Inertia::render('admin/login/page');
 })->name('home.login');
-
 
 Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
@@ -54,70 +53,80 @@ Route::get('/ticket-form', function () {
 
 Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('dashboard/page');
+        return Inertia::render('admin/dashboard/page');
     })->name('dashboard');
 
     Route::get('/permissions', function () {
-        return Inertia::render('permissions/page');
+        return Inertia::render('admin/permissions/page');
     })->name('permissions');
 
     Route::get('/roles', function () {
-        return Inertia::render('roles/page');
+        return Inertia::render('admin/roles/page');
     })->name('roles');
 
     Route::get('/users', function () {
-        return Inertia::render('users/page');
+        return Inertia::render('admin/users/page');
     })->name('users');
 
     Route::get('/brands', function () {
-        return Inertia::render('brands/page');
+        return Inertia::render('admin/brands/page');
     })->name('brands');
 
     Route::get('/email_template', function () {
-        return Inertia::render('email_template/page');
+        return Inertia::render('admin/email_template/page');
     })->name('email_template');
 
     Route::get('/item_types', function () {
-        return Inertia::render('item_types/page');
+        return Inertia::render('admin/item_types/page');
     })->name('item_types');
 
     Route::get('/common_issues', function () {
-        return Inertia::render('common_issues/page');
+        return Inertia::render('admin/common_issues/page');
     })->name('common_issues');
 
     Route::get('/products', function () {
-        return Inertia::render('products/page');
+        return Inertia::render('admin/products/page');
     })->name('products');
 
     Route::prefix('tickets')->group(function () {
         Route::get('/', function () {
-            return Inertia::render('tickets/page');
+            return Inertia::render('admin/tickets/page');
         })->name('tickets');
         
         Route::get('/details/{ticket_id}', function () {
-            return Inertia::render('tickets/details/page');
+            return Inertia::render('admin/tickets/details/page');
         })->name('tickets.details');
 
         Route::get('/create', function () {
-            return Inertia::render('tickets/create/page');
+            return Inertia::render('admin/tickets/create/page');
         })->name('tickets.create');
     });
 
 
     Route::get('/asc', function () {
-        return Inertia::render('ascs/page');
+        return Inertia::render('admin/ascs/page');
     })->name('asc');
 
     Route::get('/bup', function () {
-        return Inertia::render('bup/page');
+        return Inertia::render('admin/bup/page');
     })->name('bup');
 
     Route::get('/htt', function () {
-        return Inertia::render('htt/page');
+        return Inertia::render('admin/htt/page');
     })->name('htt');
     Route::get('/em', function () {
-        return Inertia::render('em/page');
+        return Inertia::render('admin/em/page');
     })->name('em');
+});
+
+Route::middleware('auth:sanctum')->prefix('client')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('client/dashboard/page');
+    })->name('client.dashboard');
+
+    Route::get('/tickets', function () {
+        return Inertia::render('client/tickets/page');
+    })->name('client.tickets');
 });
 
 Route::middleware('auth')->group(function () {

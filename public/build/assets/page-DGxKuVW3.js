@@ -1,0 +1,1 @@
+import{j as t}from"./app-BSt9bVZG.js";import{A as r}from"./administrator-layout-B10THd2C.js";import o from"./itemtypes-table-section-LxWu_CkL.js";import"./UserGroupIcon-Brm7yFbG.js";import"./PencilSquareIcon-Ce_8T3t6.js";import"./TrashIcon-BDM8L_4M.js";function n(){return t.jsx(r,{children:t.jsx(o,{})})}export{n as default};

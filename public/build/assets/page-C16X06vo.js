@@ -1,1 +1,0 @@
-import{j as r}from"./app-ByDNA9gT.js";import{A as o}from"./administrator-layout-CKBc7gJ3.js";import t from"./dashboard-cards-section-Df-i1dJY.js";import"./UserGroupIcon-BCNU-cIP.js";import"./dashboard-cards-component-DTHavw0m.js";function n(){return r.jsx(o,{children:r.jsx(t,{})})}export{n as default};
