@@ -7,7 +7,7 @@ import TicketFormSearchProductSection from './ticket-form-search-product-section
 import store from '@/app/store/store'
 import { get_products_thunk } from '../redux/ticket-form-thunk'
 import Textarea from '@/app/layouts/components/textarea'
-import { countries } from './../../../json/country';
+import { countries } from './../../../../json/country.json';
 export default function TicketFormSection() {
     const dispatch = useDispatch()
     const { form } = useSelector((state) => state.ticket_form)

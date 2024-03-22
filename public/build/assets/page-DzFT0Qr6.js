@@ -1,1 +1,0 @@
-import{j as o}from"./app-BSt9bVZG.js";import{A as r}from"./administrator-layout-B10THd2C.js";import t from"./commonissues-table-section-BZ72RYe2.js";import"./UserGroupIcon-Brm7yFbG.js";import"./PencilSquareIcon-Ce_8T3t6.js";import"./TrashIcon-BDM8L_4M.js";function p(){return o.jsx(r,{children:o.jsx(t,{})})}export{p as default};

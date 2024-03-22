@@ -1,1 +1,0 @@
-import{j as t}from"./app-BSt9bVZG.js";import{A as r}from"./administrator-layout-B10THd2C.js";import"./UserGroupIcon-Brm7yFbG.js";function e(){return t.jsx(r,{children:"HttPage"})}export{e as default};

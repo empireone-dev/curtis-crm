@@ -5,9 +5,9 @@ import Select from '@/app/layouts/components/select'
 import TicketCreateSearchProductSection from './tickets-create-search-product-section'
 import store from '@/app/store/store'
 import Textarea from '@/app/layouts/components/textarea'
-import { get_products_thunk } from '@/app/pages/ticket_form/redux/ticket-form-thunk'
-import { countries } from './../../../../json/country';
-import { call_type } from './../../../../json/call_type';
+import { get_products_thunk } from '@/app/pages/admin/ticket_form/redux/ticket-form-thunk'
+import { countries } from './../../../../../json/country.json';
+import { call_type } from './../../../../../json/call_type.json';
 import { setForm } from '../redux/tickets-create-slice'
 import { tickets_create_thunk } from '../redux/tickets-create-thunk'
 import { router } from '@inertiajs/react'
