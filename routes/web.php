@@ -43,7 +43,7 @@ use Inertia\Inertia;
 //Bulk Upload Products
 //export Management
 //handle tickets Tracker
-Route::get('/', function () {
+Route::middleware('redirectBasedOnRole')->get('/', function () {
     return Inertia::render('login/page');
 })->name('home.login');
 
@@ -51,7 +51,8 @@ Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
 })->name('dashboard');
 
-Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
+
+Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');
     })->name('dashboard');
@@ -119,7 +120,7 @@ Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
     })->name('em');
 });
 
-Route::middleware('auth:sanctum')->prefix('client')->group(function () {
+Route::middleware('auth:sanctum', 'role:2')->prefix('client')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('client/dashboard/page');
     })->name('client.dashboard');
@@ -136,3 +137,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('/{any}', function () {
+    return Inertia::render('error404');
+})->where('any', '.*')->name('error404');
