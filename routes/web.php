@@ -44,7 +44,7 @@ use Inertia\Inertia;
 //export Management
 //handle tickets Tracker
 Route::get('/', function () {
-    return Inertia::render('admin/login/page');
+    return Inertia::render('login/page');
 })->name('home.login');
 
 Route::get('/ticket-form', function () {
