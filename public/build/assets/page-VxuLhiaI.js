@@ -1,0 +1,1 @@
+import{j as i}from"./app-CHjNGaN3.js";import{C as o}from"./client-layout-Bo-Jn_dZ.js";import"./PowerIcon-SY7IM-6V.js";import"./TicketIcon-CqlX3M3u.js";function c({auth:t}){const e=t.user;return i.jsx(o,{account:e,children:"ClientTicketsPage"})}export{c as default};
