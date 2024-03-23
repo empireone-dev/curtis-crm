@@ -21,7 +21,14 @@ class GoogleSignInController extends Controller
         $googleUser = Socialite::driver('google')->user();
         $user = User::where('email', $googleUser->email)->first();
         if (!$user) {
-            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => Hash::make(rand(100000, 999999))]);
+            $user = User::create([
+                'name' => $googleUser->name,
+                'role_id'=>2,
+                'email' => $googleUser->email,
+                'password' => Hash::make(
+                    rand(100000, 999999),
+                )
+            ]);
         }
 
         Auth::login($user);
