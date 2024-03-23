@@ -32,7 +32,11 @@ class GoogleSignInController extends Controller
         }
 
         Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        if ($user->role_id == 1) {
+            return redirect(RouteServiceProvider::HOME);
+        }else if($user->role_id == 2){
+            return redirect(RouteServiceProvider::CLIENT);
+        }
+       
     }
 }
