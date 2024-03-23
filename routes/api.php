@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
+use App\Http\Controllers\GoogleSignInController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -25,6 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// START GOOGLE LOGIN
+Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleSignInController::class, 'handleGoogleCallback']);
+//END GOOGLE LOGIN
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 

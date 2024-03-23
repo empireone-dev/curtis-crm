@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,24 +24,8 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
-//dashboard
-//permissions
-//roles
-//users
-//brands
-//email template
-//item types
-//common issues
-//products
-//tickets
-//ASCS
-//Bulk Upload Products
-//export Management
-//handle tickets Tracker
+
 Route::middleware('redirectBasedOnRole')->get('/', function () {
     return Inertia::render('login/page');
 })->name('home.login');
