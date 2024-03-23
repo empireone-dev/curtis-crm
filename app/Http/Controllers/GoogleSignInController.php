@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class GoogleSignInController extends Controller
@@ -13,27 +15,17 @@ class GoogleSignInController extends Controller
     {
         return Socialite::driver('google')->redirect();
     }
-    
+
     public function handleGoogleCallback()
     {
-        $googleUser = Socialite::driver('google')->user();
-        
-        // Check if the user already exists in your database
-        $user = User::where('email', $googleUser->getEmail())->first();
-        
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        $user = User::where('email', $googleUser->email)->first();
         if (!$user) {
-            // If the user does not exist, create a new user
-            $user = new User();
-            $user->name = $googleUser->getName();
-            $user->email = $googleUser->getEmail();
-            // Add any other user details you want to save
-            $user->save();
+            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => Hash::make(rand(100000, 999999))]);
         }
-        
-        // Log the user in
+
         Auth::login($user);
-        
-        // Redirect the user after login
-        return redirect('/administrator/dashboard');
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }
