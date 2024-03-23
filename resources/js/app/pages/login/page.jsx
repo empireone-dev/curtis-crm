@@ -85,13 +85,20 @@ export default function LoginPage({ status, canResetPassword }) {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='flex gap-3 flex-col'>
                         <button
                             type="submit"
                             className="flex w-full justify-center rounded-sm bg-indigo-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Sign in
                         </button>
+                        <Link
+                        href='/api/auth/google'
+                            type="submit"
+                            className="flex w-full justify-center rounded-sm bg-indigo-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Sign in with Google
+                        </Link>
                     </div>
                 </div>
 

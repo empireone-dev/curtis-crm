@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\GoogleSignInController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +26,10 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-
+// START GOOGLE LOGIN
+Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleSignInController::class, 'handleGoogleCallback']);
+//END GOOGLE LOGIN
 
 Route::middleware('redirectBasedOnRole')->get('/', function () {
     return Inertia::render('login/page');

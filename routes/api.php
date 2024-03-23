@@ -27,10 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// START GOOGLE LOGIN
-Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback', [GoogleSignInController::class, 'handleGoogleCallback']);
-//END GOOGLE LOGIN
+
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 
