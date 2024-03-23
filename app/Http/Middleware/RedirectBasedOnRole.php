@@ -15,7 +15,7 @@ class RedirectBasedOnRole
             if ($account->role_id == 1) {
                 return redirect('/administrator/dashboard');
             } else if ($account->role_id == 2) {
-                return redirect('/client/dashboard');
+                return redirect('/customer/dashboard');
             } else if ($account->role_id == 3) {
                 return redirect('/agent/dashboard');
             }

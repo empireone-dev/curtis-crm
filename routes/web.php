@@ -108,14 +108,14 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     })->name('em');
 });
 
-Route::middleware('auth:sanctum', 'role:2')->prefix('client')->group(function () {
+Route::middleware('auth:sanctum', 'role:2')->prefix('customer')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('client/dashboard/page');
-    })->name('client.dashboard');
+        return Inertia::render('customer/dashboard/page');
+    })->name('customer.dashboard');
 
     Route::get('/tickets', function () {
-        return Inertia::render('client/tickets/page');
-    })->name('client.tickets');
+        return Inertia::render('customer/tickets/page');
+    })->name('customer.tickets');
 });
 
 Route::middleware('auth')->group(function () {

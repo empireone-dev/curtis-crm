@@ -9,7 +9,7 @@ function loginAccount() {
   if (account?.role_id == 1) {
     return ''
   }else if (account?.role_id == 2) {
-    return 'client.'
+    return 'customer.'
   }else{
     return ''
   }
