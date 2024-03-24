@@ -3,11 +3,8 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
-<<<<<<< HEAD
-use App\Http\Controllers\ItemTypeController;
-=======
 use App\Http\Controllers\GoogleSignInController;
->>>>>>> 050c5c960e243d87846fa2841e734548c15c60a2
+use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;

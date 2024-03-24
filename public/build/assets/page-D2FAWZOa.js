@@ -1,1 +1,0 @@
-import{j as r}from"./app-Bt8nCvTN.js";import{A as t}from"./administrator-layout-ZyvdXXB7.js";import"./PowerIcon-_gM_XzEk.js";import"./TicketIcon-DzRCYUn6.js";import"./UserGroupIcon-CMbjZRtr.js";function e(){return r.jsx(t,{children:"BupPage"})}export{e as default};

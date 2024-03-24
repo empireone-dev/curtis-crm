@@ -1,0 +1,1 @@
+import{j as t}from"./app-CbB6s8BJ.js";import{A as e}from"./administrator-layout-8vJpmLN1.js";import"./PowerIcon-D_Y3qigF.js";import"./TicketIcon-CMgkzhuQ.js";import"./UserGroupIcon-D1NfZR5N.js";function p(){return useEffect(()=>{store.dispatch(get_item_types_thunk())},[]),t.jsx(e,{children:t.jsx(ItemTypesTableSection,{})})}export{p as default};

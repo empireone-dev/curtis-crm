@@ -1,0 +1,1 @@
+import{j as t}from"./app-CbB6s8BJ.js";import i from"./files-upload-section-Du2-eUpw.js";import o from"./warranty-files-section-DktrXeQZ.js";import"./TrashIcon-F0h1DtJ5.js";function m(){return t.jsxs("div",{children:[t.jsx(i,{}),t.jsx(o,{})]})}export{m as default};
