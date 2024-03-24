@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const item_typesSlice = createSlice({
+export const itemTypesSlice = createSlice({
   name: 'item_types',
   initialState: {
-    isModalOpen: false
+    item_types: [] 
   },
   reducers: {
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setItemTypes: (state, action) => {
+      state.item_types = action.payload 
     },
   },
 })
-export const { setIsModalOpen } = item_typesSlice.actions
 
-export default item_typesSlice.reducer
+export const { setItemTypes } = itemTypesSlice.actions 
+
+export default itemTypesSlice.reducer 

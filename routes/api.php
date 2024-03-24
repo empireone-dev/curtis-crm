@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
+use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -34,3 +35,4 @@ Route::resource('email_template',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
 Route::resource('tickets',TicketController::class);
 Route::resource('brands',BrandController::class);
+Route::resource('item_types',ItemTypeController::class);

@@ -1,8 +1,10 @@
-import item_typesSlice from './item_types-slice';
 
-export function addCartProducts(product_id) {
+import { get_item_types_service } from '@/app/services/item-type-service';
+import { setItemTypes } from './item_types-slice'; 
+
+export function get_item_types_thunk() {
   return async function (dispatch, getState) {
-    dispatch(item_typesSlice.actions.incrementByAmount(10));
-  
+    const result = (await get_item_types_service()).data
+    dispatch(setItemTypes(result)); 
   };
 }
