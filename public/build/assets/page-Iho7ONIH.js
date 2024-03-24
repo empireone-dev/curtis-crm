@@ -1,1 +1,0 @@
-import{j as o}from"./app-ByDNA9gT.js";import{A as s}from"./administrator-layout-CKBc7gJ3.js";import"./UserGroupIcon-BCNU-cIP.js";function e(){return o.jsx(s,{children:"CommonIssuesPage"})}export{e as default};

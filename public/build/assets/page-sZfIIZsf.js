@@ -1,1 +1,0 @@
-import{j as t}from"./app-ByDNA9gT.js";import{A as r}from"./administrator-layout-CKBc7gJ3.js";import"./UserGroupIcon-BCNU-cIP.js";function s(){return t.jsx(r,{children:"ItemTypesPage"})}export{s as default};

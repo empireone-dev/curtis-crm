@@ -3,7 +3,11 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
+<<<<<<< HEAD
 use App\Http\Controllers\ItemTypeController;
+=======
+use App\Http\Controllers\GoogleSignInController;
+>>>>>>> 050c5c960e243d87846fa2841e734548c15c60a2
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -27,7 +31,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
+
+Route::get('/send_email', [EmailTemplateController::class, 'sendNotification']);
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
