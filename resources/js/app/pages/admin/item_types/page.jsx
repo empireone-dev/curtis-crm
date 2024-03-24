@@ -1,6 +1,8 @@
 import AdministratorLayout from '@/app/layouts/admin/administrator-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ItemtypeTableSection from './sections/itemtypes-table-section'
+import store from '@/app/store/store';
+import { get_item_types_thunk } from './redux/item_types-thunk';
 
 export default function ItemTypesPage() {
   useEffect(() => {
@@ -8,7 +10,7 @@ export default function ItemTypesPage() {
   }, []);
   return (
     <AdministratorLayout>
-      <ItemTypesTableSection/>
+      <ItemtypeTableSection />
     </AdministratorLayout>
   )
 }
