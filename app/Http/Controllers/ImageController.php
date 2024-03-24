@@ -9,7 +9,7 @@ class ImageController extends Controller
 {
     public function store(Request $request)
     {
-        $file = $request->file('file')->store('images','public');
+        $file = $request->file('file')->store('images');
         $url = Storage::disk('s3')->url($file); 
         return response()->json([
             'url' => $url
