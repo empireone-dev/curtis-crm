@@ -10,7 +10,7 @@ class ImageController extends Controller
 {
     public function store(Request $request)
     {
-        $file = $request->file('file')->store('images','s3');
+        $file = $request->file('file')->store('images');
         $url = Storage::disk('s3')->url($file); 
 
         Image::create([
