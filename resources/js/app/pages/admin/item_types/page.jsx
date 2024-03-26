@@ -10,7 +10,7 @@ export default function ItemTypesPage() {
   }, []);
   return (
     <AdministratorLayout>
-      <ItemTypesTableSection/>
+      <ItemTypesTableSection />
     </AdministratorLayout>
   )
 }

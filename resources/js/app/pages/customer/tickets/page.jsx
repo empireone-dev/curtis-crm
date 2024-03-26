@@ -6,8 +6,8 @@ export default function CustomerTicketsPage({auth}) {
     return (
         <CustomerLayout
         account={account}
-        >
-            ClientTicketsPage
+        >ss
+            <img src="https://curtis-crm.s3.amazonaws.com/images/Hk6jbCU58aOSdGkaMX1x65tuoGnA8AIugwoOHrJV.png" />
         </CustomerLayout>
     )
 }
