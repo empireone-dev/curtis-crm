@@ -1,15 +1,11 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSheetsController;
-<<<<<<< HEAD
 use App\Http\Controllers\ItemTypeController;
-=======
-use App\Http\Controllers\GoogleSignInController;
->>>>>>> 050c5c960e243d87846fa2841e734548c15c60a2
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -31,11 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
-
-Route::get('/send_email', [EmailTemplateController::class, 'sendNotification']);
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
@@ -44,3 +36,4 @@ Route::resource('role',RoleController::class);
 Route::resource('tickets',TicketController::class);
 Route::resource('brands',BrandController::class);
 Route::resource('item_types',ItemTypeController::class);
+Route::resource('common_issues',CommonIssueController::class);

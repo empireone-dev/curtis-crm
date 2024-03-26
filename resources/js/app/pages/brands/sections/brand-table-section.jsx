@@ -1,15 +1,17 @@
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import CommonissueTableComponent from '../components/commonissues-table-component'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
 
-export default function CommonissueTableSection() {
+export default function BrandTableSection() {
+    const { brands } = useSelector((state) => state.brands)
+
     return (
         <>
             <section className="container px-4 my-12 mx-auto">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
-                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">Common Issues Table</h2>
+                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">Brands Table</h2>
                         </div>
                     </div>
 
@@ -19,7 +21,7 @@ export default function CommonissueTableSection() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
 
-                            <span>Create Common Issue</span>
+                            <span>Create Brand</span>
                         </button>
                     </div>
                 </div>
@@ -56,40 +58,37 @@ export default function CommonissueTableSection() {
                                                     </svg>
                                                 </button>
                                             </th>
-                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
-                                                Name
+
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Title
                                             </th>
-                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
-                                                Parent Issue
-                                            </th>
-                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-right rtl:text-right text-gray-500 dark:text-gray-400 justify-center items-center">
+                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-end rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Action
                                             </th>
-
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">1</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Issue</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Parent Issue</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
-                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
-                                            </td>
-                                        </tr>
+                                        {
+                                            brands.map((res, i) => {
+                                                return <tr key={i}>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.brand_name}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
+                                                        <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
+                                                        <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
+                                                    </td>
+                                                </tr>
+
+                                            })
+                                        }
 
                                     </tbody>
                                 </table>

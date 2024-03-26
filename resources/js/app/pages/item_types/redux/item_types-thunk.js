@@ -1,5 +1,6 @@
-import { setItemTypes } from '@/app/pages/item_types/redux/item_types-slice';
-import { get_item_types_service } from '@/app/services/item-type-services';
+
+import { get_item_types_service } from '@/app/services/item-type-service';
+import { setItemTypes } from './item_types-slice'; 
 
 export function get_item_types_thunk() {
   return async function (dispatch, getState) {

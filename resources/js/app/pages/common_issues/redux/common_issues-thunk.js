@@ -1,6 +1,7 @@
-import { setCommonIssues } from '@/app/pages/common_issues/redux/common_issues-slice';
-import { get_common_issues_service } from '@/app/services/common-issue-services';
 
+
+import { get_common_issues_service } from '@/app/services/common-issue-services';
+import { setCommonIssues } from './common_issues-slice';
 
 export function get_common_issues_thunk() {
   return async function (dispatch, getState) {
