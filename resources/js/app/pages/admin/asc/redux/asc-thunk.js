@@ -1,4 +1,4 @@
-import {ascsSlice} from './ascs-slice';
+import {ascsSlice} from './asc-slice';
 import { get_asc_service } from '@/app/services/product-search';
 
 export function get_asc_thunk() {

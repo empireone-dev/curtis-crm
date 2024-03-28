@@ -1,14 +1,14 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import appSlice from '../redux/app-slice';
-import ascsSlice from '../pages/admin/ascs/redux/ascs-slice';
+import ascsSlice from '../pages/admin/asc/redux/asc-slice';
 import brandsSlice from '../pages/admin/brands/redux/brands-slice';
 import bupSlice from '../pages/admin/bup/redux/bup-slice';
-import common_issuesSlice from '../pages/admin/common_issues/redux/common_issues-slice';
+import common_issuesSlice from '../pages/admin/common_issues/redux/common-issues-slice';
 import dashboardSlice from '../pages/admin/dashboard/redux/dashboard-slice';
 import email_templateSlice from '../pages/admin/email_template/redux/email_template-slice';
 import httSlice from '../pages/admin/htt/redux/htt-slice';
-import item_typesSlice from '../pages/admin/item_types/redux/item_types-slice';
+import item_typesSlice from '../pages/admin/item_types/redux/item-types-slice';
 import permissionsSlice from '../pages/admin/permissions/redux/permissions-slice';
 import productsSlice from '../pages/admin/products/redux/products-slice';
 import rolesSlice from '../pages/admin/roles/redux/roles-slice';

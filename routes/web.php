@@ -93,7 +93,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
 
 
     Route::get('/asc', function () {
-        return Inertia::render('admin/ascs/page');
+        return Inertia::render('admin/asc/page');
     })->name('asc');
 
     Route::get('/bup', function () {

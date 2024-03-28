@@ -2,7 +2,7 @@ import AdministratorLayout from '@/app/layouts/admin/administrator-layout'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import store from '@/app/store/store';
-import { get_asc_thunk } from './redux/ascs-thunk';
+import { get_asc_thunk } from './redux/asc-thunk';
 import ASCTableSection from './sections/asc-table-section';
 
 export default function ASCSPage() {

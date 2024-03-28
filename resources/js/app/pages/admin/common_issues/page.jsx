@@ -1,7 +1,7 @@
 import AdministratorLayout from '@/app/layouts/admin/administrator-layout'
 import React, { useEffect } from 'react'
 import store from '@/app/store/store';
-import { get_common_issues_thunk } from './redux/common_issues-thunk';
+import { get_common_issues_thunk } from './redux/common-issues-thunk';
 import CommonIssueTableSection from './sections/common-issues-table-section';
 
 export default function CommonIssuesPage() {
