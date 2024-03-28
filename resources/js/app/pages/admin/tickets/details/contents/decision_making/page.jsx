@@ -6,12 +6,12 @@ import RepairSection from './sections/repair-section'
 export default function TicketsDecisionMakingContent() {
   return (
     <div>
-      <ReplacementSection/>
+      <RepairSection/>
       <div className='mt-7'>
       <RefundSection/>
       </div>
       <div className='mt-7'>
-      <RepairSection/>
+      <ReplacementSection/>
       </div>
     </div>
   )
