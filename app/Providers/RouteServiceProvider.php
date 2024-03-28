@@ -17,6 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
+    public const LOGININVALID = '/?status=invalid';
     public const ADMIN = '/administrator/dashboard';
     public const CUSTOMER = '/customer/dashboard';
     public const AGENT = '/agent/dashboard';

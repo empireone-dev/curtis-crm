@@ -8,6 +8,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class GoogleSignInController extends Controller
 {
@@ -20,23 +21,15 @@ class GoogleSignInController extends Controller
     {
         $googleUser = Socialite::driver('google')->user();
         $user = User::where('email', $googleUser->email)->first();
-        if (!$user) {
-            $user = User::create([
-                'name' => $googleUser->name,
-                'role_id'=>2,
-                'email' => $googleUser->email,
-                'password' => Hash::make(
-                    rand(100000, 999999),
-                )
-            ]);
+        if ($user) {
+            Auth::login($user);
+            if ($user->role_id == 1) {
+                return redirect(RouteServiceProvider::ADMIN);
+            } else if ($user->role_id == 2) {
+                return redirect(RouteServiceProvider::CUSTOMER);
+            }
+        } else {
+            return redirect(RouteServiceProvider::LOGININVALID);
         }
-
-        Auth::login($user);
-        if ($user->role_id == 1) {
-            return redirect(RouteServiceProvider::ADMIN);
-        }else if($user->role_id == 2){
-            return redirect(RouteServiceProvider::CUSTOMER);
-        }
-       
     }
 }

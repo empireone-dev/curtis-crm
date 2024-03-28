@@ -5,10 +5,12 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Input from '@/app/layouts/components/input';
 
 export default function LoginPage({ status, canResetPassword }) {
+    const { url } = usePage()
+    const searchStatus = url.split('=')[1]
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -20,7 +22,6 @@ export default function LoginPage({ status, canResetPassword }) {
             reset('password');
         };
     }, []);
-
     const submit = (e) => {
         e.preventDefault();
         post(route('login'));
@@ -45,6 +46,12 @@ export default function LoginPage({ status, canResetPassword }) {
             </div>
 
             <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+                {
+                    searchStatus == 'invalid' && <div className='text-center text-red-500 text-bold'>
+                        You haven't ticket transaction yet. <a href='#'><u>Click Here</u></a>
+                    </div>
+                }
+
                 <div className="space-y-4" action="#" method="POST">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
