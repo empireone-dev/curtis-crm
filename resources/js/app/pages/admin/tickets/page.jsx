@@ -9,11 +9,11 @@ import { setPage } from './_redux/tickets-slice';
 
 export default function TicketsPage() {
   
-
   const { search } = useSelector((state) => state.tickets)
   useEffect(() => {
     store.dispatch(get_tickets_thunk())
   }, [search.page??'']);
+  
   return (
     <AdministratorLayout>
       <TicketTableSection />

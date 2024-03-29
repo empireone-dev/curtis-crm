@@ -18,6 +18,7 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
+        
         dispatch(setForm({
             ...form,
             [name]: value
@@ -77,7 +78,7 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <div className='flex gap-4'>
-                        <div className='basis-1/3'>
+                        {/* <div className='basis-1/3'>
                             <Select
                                 onChange={formHandler}
                                 name='isHasEmail'
@@ -96,10 +97,10 @@ export default function TicketCreateFormSection() {
                                     }
                                 ]}
                             />
-                        </div>
+                        </div> */}
 
-                        <div className='basis-2/3'>
-                            {
+                        <div className='basis-full'>
+                            {/* {
                                 (form.isHasEmail ?? 'true') == 'true' ? <Input
                                     required={true}
                                     onChange={formHandler}
@@ -109,7 +110,16 @@ export default function TicketCreateFormSection() {
                                     type='email'
                                     errorMessage='Email is required'
                                 /> : <></>
-                            }
+                            } */}
+                             <Input
+                                    required={true}
+                                    onChange={formHandler}
+                                    name='email'
+                                    value={form.email}
+                                    label='Email'
+                                    type='email'
+                                    errorMessage='Email is required'
+                                />
                         </div>
                     </div>
 
@@ -311,7 +321,10 @@ export default function TicketCreateFormSection() {
                     </div>
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div className="flex items-center justify-center">
-                            <input id="checked-checkbox" type="checkbox" value="" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
+                            <input id="checked-checkbox" 
+                            checked
+                            onChange={(e)=>formHandler(e.target.checked,'isSendEmail')}
+                            type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
                             <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
                         </div>
                     </div>

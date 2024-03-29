@@ -44,12 +44,16 @@ class TicketController extends Controller
             ]);
             $newData = array_merge($account->toArray(), [
                 'id' => $data->id,
-                'call_type' => $request->call_type
+                'call_type' => $request->call_type,
+                'isSendEmail' => $request->isSendEmail,
+                'isHasEmail' => $request->isHasEmail,
             ]);
         } else {
             $newData = array_merge($user->toArray(), [
                 'id' => $data->id,
-                'call_type' => $request->call_type
+                'call_type' => $request->call_type,
+                'isSendEmail' => $request->isSendEmail,
+                'isHasEmail' => $request->isHasEmail,
             ]);
         }
 
