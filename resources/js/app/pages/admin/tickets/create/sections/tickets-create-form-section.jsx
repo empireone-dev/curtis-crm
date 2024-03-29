@@ -1,5 +1,5 @@
 import Input from '@/app/layouts/components/input'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from '@/app/layouts/components/select'
 import TicketCreateSearchProductSection from './tickets-create-search-product-section'
@@ -11,10 +11,11 @@ import { call_type } from './../../../../../json/call_type.json';
 import { setForm } from '../redux/tickets-create-slice'
 import { tickets_create_thunk } from '../redux/tickets-create-thunk'
 import { router } from '@inertiajs/react'
+import Loading from '@/app/layouts/components/loading'
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch()
     const { form } = useSelector((state) => state.tickets_create)
-  
+    const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
         dispatch(setForm({
@@ -27,10 +28,12 @@ export default function TicketCreateFormSection() {
         store.dispatch(get_products_thunk())
     }, []);
 
-   async function submitFormTicket(e) {
+    async function submitFormTicket(e) {
         e.preventDefault()
+        setLoading(true)
         const response = await store.dispatch(tickets_create_thunk())
-        router.visit('/administrator/tickets?ticket_id='+response.id)
+        setLoading(false)
+        router.visit('/administrator/tickets?ticket_id=' + response.id)
     }
 
 
@@ -152,7 +155,7 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
             </div>
-           
+
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
@@ -314,8 +317,12 @@ export default function TicketCreateFormSection() {
                     </div>
                 </div>
                 <div className='flex gap-4 items-center justify-center'>
-                    <button className='p-3 w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600'>
-                        Open
+                    <button className='p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600'>
+
+                        {loading ? <div className='py-1.5'>
+                            <Loading />
+                        </div> : 'Open'}
+
                     </button>
                     <button className='p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600'>
                         Closed

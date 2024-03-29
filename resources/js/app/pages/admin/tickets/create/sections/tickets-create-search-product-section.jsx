@@ -9,7 +9,7 @@ import { setForm } from "../redux/tickets-create-slice";
 export default function TicketCreateSearchProductSection() {
 
   const { products } = useSelector((state) => state.ticket_form)
-  const { ticket_form } = useSelector((state) => state.tickets_create)
+  const { form } = useSelector((state) => state.tickets_create)
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -50,7 +50,7 @@ export default function TicketCreateSearchProductSection() {
   }))
   function selectedProduct(data) {
     dispatch(setForm({
-      ...ticket_form,
+      ...form,
       ...data
     }))
     setOpen(false)

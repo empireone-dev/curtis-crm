@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\GoogleSignInController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -25,6 +26,13 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
+
+
+
+// Start Send Email
+
+Route::get('send_mail_create_ticket_form', [EmailTemplateController::class, 'send_mail_create_ticket_form']);
+//End Send EMail
 
 // START GOOGLE LOGIN
 Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);

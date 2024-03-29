@@ -14,8 +14,6 @@ function loginAccount() {
     return ''
   }
 }
-console.log('a',path)
-console.log('b',href)
   return (
     <Link href={route(loginAccount()+href)}>
       <li className={`focus:outline-none  text-gray-600 ${path == href?'border-blue-500 bg-blue-200':'hover:border-blue-300 hover:text-gray-800 hover:bg-gray-200  border-transparent'}  border-l-4  pr-6`}>

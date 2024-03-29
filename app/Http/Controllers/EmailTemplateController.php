@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EmailTemplate;
+use App\Mail\MailCreateTicketForm;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class EmailTemplateController extends Controller
 {
+    public function send_mail_create_ticket_form($data)
+    {
     
+        Mail::to('recipient@example.com')->send(new MailCreateTicketForm($data));
+        // return view('mail.mail-create-ticket-form',$data);
+        return response()->json([
+            'status' => 'success'
+        ], 200);
+    }
     public function sendNotification()
     {
         $details = [
