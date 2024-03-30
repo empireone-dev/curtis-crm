@@ -23,7 +23,7 @@ class FlightController extends Controller
     }
     public function show($id)
     {
-        // Flight::where('id',$id)->delete();
+         Flight::where('id',$id)->delete();
         return 'success';
     }
 }

@@ -4,7 +4,7 @@ import LayoutSubSidebarSection from './sections/layout-sub-sidebar-section'
 import axios from 'axios';
 
 export default function AdministratorLayout({ children }) {
-
+ 
   return (
     <div className='flex gap-3'>
       <div className='flex-none'>
