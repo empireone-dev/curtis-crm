@@ -1,0 +1,1 @@
+async function i(t){const a="ticket_id="+(t.id==""?"null":t.id)+"&page="+t.page,s=await axios.get("/api/tickets?"+a);return console.log("resss",s.data),s.data}async function c(t){return(await axios.post("/api/tickets",t)).data.result}export{i as g,c as s};

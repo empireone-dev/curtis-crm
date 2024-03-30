@@ -1,0 +1,1 @@
+import{j as s}from"./app-C6Py26G-.js";import{C as r}from"./customer-layout-CVaVsPfM.js";import"./PowerIcon-DQQYPj6Q.js";import"./TicketIcon-N3L1dhIR.js";function i({auth:t}){const o=t.user;return s.jsxs(r,{account:o,children:["ss",s.jsx("img",{src:"https://curtis-crm.s3.amazonaws.com/images/Hk6jbCU58aOSdGkaMX1x65tuoGnA8AIugwoOHrJV.png"})]})}export{i as default};

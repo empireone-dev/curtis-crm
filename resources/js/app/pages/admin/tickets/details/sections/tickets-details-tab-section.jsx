@@ -66,7 +66,7 @@ export default function TicketsDetailsTabSection() {
  const hash = '#'+page.url.split('#')[1]
 
   return (
-    <div className="w-full  px-2 py-6 sm:px-0">
+    <div className="w-full  px-2  sm:px-0">
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-md bg-blue-500 p-1">
           {tabs.map((res, i) => (

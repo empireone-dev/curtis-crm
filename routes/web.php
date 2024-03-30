@@ -69,6 +69,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/brands/page');
     })->name('brands');
 
+    Route::get('/settings', function () {
+        return Inertia::render('admin/settings/page');
+    })->name('settings');
+
     Route::get('/email_template', function () {
         return Inertia::render('admin/email_template/page');
     })->name('email_template');

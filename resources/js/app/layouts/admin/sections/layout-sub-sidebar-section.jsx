@@ -1,8 +1,10 @@
-import { PowerIcon } from '@heroicons/react/24/outline'
-import { Link } from '@inertiajs/react'
+import { Cog8ToothIcon, PowerIcon } from '@heroicons/react/24/outline'
+import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
 
 export default function LayoutSubSidebarSection() {
+    const { component } = usePage()
+    const path = component.split('/')[1]
     return (
         <div>
             <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-800">
@@ -18,7 +20,7 @@ export default function LayoutSubSidebarSection() {
                 <div className="flex flex-col items-center justify-center flex-1 space-y-4">
 
                     <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-10 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
                     >
                         <span className="sr-only">Open Notification panel</span>
                         <svg
@@ -40,7 +42,7 @@ export default function LayoutSubSidebarSection() {
 
                     <button
 
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-10 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
                     >
                         <span className="sr-only">Open search panel</span>
                         <svg
@@ -60,32 +62,10 @@ export default function LayoutSubSidebarSection() {
                         </svg>
                     </button>
 
-                    <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
-                    >
-                        <span className="sr-only">Open settings panel</span>
-                        <svg
-                            className="w-7 h-7"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                            />
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                        </svg>
-                    </button>
+                    <Link href='/administrator/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-200 text-blue-600' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
+                        <Cog8ToothIcon className=' h-8 ' />
+                    </Link>
+
                 </div>
 
                 <div className="relative flex items-center justify-center flex-shrink-0">
