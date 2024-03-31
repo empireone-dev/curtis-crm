@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Mail\EmailTemplate;
 use App\Mail\MailCreateTicketForm;
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\EmailTemplate as ModelsEmailTemplate;
 use Illuminate\Support\Facades\Mail;
 
 class EmailTemplateController extends Controller
 {
+    public function index(){
+        $email_template = ModelsEmailTemplate::get();
+        return response()->json([
+            'data' => $email_template
+        ], 200);
+    }
     public function send_mail_create_ticket_form($data)
     {
         if ($data['email'] && $data['isSendEmail']) {
@@ -31,4 +36,5 @@ class EmailTemplateController extends Controller
 
         return 'Email sent successfully!';
     }
+    
 }

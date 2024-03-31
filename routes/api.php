@@ -32,7 +32,7 @@ Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
-Route::resource('email_template',EmailTemplateController::class);
+Route::resource('email_templates',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
 Route::resource('tickets',TicketController::class);
 Route::resource('brands',BrandController::class);

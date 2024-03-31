@@ -1,7 +1,14 @@
 import React from 'react'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
 
 export default function EmailtemplateTableSection() {
+    const { email_templates } = useSelector((state) => state.email_templates);
+    console.log('email_templates', email_templates);
+
+    if (!email_templates) {
+        return <div>Loading...</div>;
+    }
     return (
         <>
             <section className="container px-4 my-12 mx-auto">
@@ -69,28 +76,31 @@ export default function EmailtemplateTableSection() {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">1</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Name</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">Sample Template</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
-                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
-                                            </td>
-                                        </tr>
-
+                                        {
+                                            email_templates.map((res, i) => {
+                                                return <tr key={i}>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.template_name}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white "></h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
+                                                        <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
+                                                        <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
+                                                    </td>
+                                                </tr>
+                                            })
+                                        }
                                     </tbody>
                                 </table>
                             </div>

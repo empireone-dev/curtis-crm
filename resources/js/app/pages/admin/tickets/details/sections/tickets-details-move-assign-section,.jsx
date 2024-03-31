@@ -4,7 +4,7 @@ import { ArrowsRightLeftIcon, BanknotesIcon, CheckBadgeIcon, InboxStackIcon, Wre
 
 export default function TicketsDetailsMoveAssignSection() {
   return (
-    <div className='flex gap-3'>
+    <div className='flex gap-3 mb-4'>
         <TicketsDetailsMoveAssignComponents 
         name="MOVE TO RESOURCE"
         icon={<InboxStackIcon className='h-6'/>}
