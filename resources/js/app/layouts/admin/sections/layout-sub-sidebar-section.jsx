@@ -7,12 +7,12 @@ export default function LayoutSubSidebarSection() {
     const path = component.split('/')[1]
     return (
         <div>
-            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-800">
+            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-600 bg-slate-200">
 
                 <div className="flex-shrink-0">
                     <a
                         href="#"
-                        className="inline-block text-xl font-bold tracking-wider text-blue-700 uppercase dark:text-light"
+                        className="inline-block text-xl font-bold tracking-wider text-blue-900 uppercase dark:text-light"
                     >
                         CRM
                     </a>
@@ -75,7 +75,7 @@ export default function LayoutSubSidebarSection() {
                             method="post"
                             as="button"
                             href={route('logout')}
-                            className="block transition-opacity duration-200 rounded-full text-blue-500 hover:text-blue-600"
+                            className="block transition-opacity duration-200 rounded-full text-blue-800 hover:text-white"
                         >
                             <span className="sr-only">User menu</span>
                             {/* <img
