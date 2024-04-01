@@ -97,7 +97,7 @@ export default function PermissionTableSection() {
                                                             <h4 className="text-gray-700 dark:text-gray-200">{res.title}</h4>
                                                         </div>
                                                     </td>
-                                                    <td className="px-4 text-sm whitespace-nowrap gap-4 flex items-center justify-end py-2">
+                                                    <td className="px-4 text-sm whitespace-nowrap gap-2 flex items-center justify-end py-2">
                                                          <PermissionEditSection />
                                                          <PermissionDeleteSection />
                                                     </td>
