@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class TicketController extends Controller
 {
+    
 
     public function index(Request $request)
     {
@@ -24,43 +25,76 @@ class TicketController extends Controller
             ], 200);
         }
     }
+    public function show($id){
 
+        $data = Ticket::where('user_id', $id)->get();
+        return response()->json([
+            'result' => $data
+        ], 200);
+        
+    }
+    
 
     public function store(Request $request)
     {
-        $data = Ticket::create($request->all());
         $user = User::where('email', $request->email)->first();
         $account = [];
         $newData = [];
-        if (!$user) {
+
+        if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
+           
             $account = User::create([
-                'name' => $data->fname . ' ' . $data->lname,
-                'email' => $data->email,
+                'name' => $request->fname . ' ' . $request->lname,
+                'email' => $request->email,
                 'password' => Hash::make('12345678'),
                 'role_id' => '2',
-                'address' => $data->address,
-                'city' => $data->city,
-                'zip_code' => $data->zip_code,
+                'address' => $request->address,
+                'city' => $request->city,
+                'zip_code' => $request->zip_code,
             ]);
-            $newData = array_merge($account->toArray(), [
-                'id' => $data->id,
-                'call_type' => $request->call_type,
-                'isSendEmail' => $request->isSendEmail,
-                'isHasEmail' => $request->isHasEmail,
-            ]);
-        } else {
-            $newData = array_merge($user->toArray(), [
-                'id' => $data->id,
-                'call_type' => $request->call_type,
-                'isSendEmail' => $request->isSendEmail,
-                'isHasEmail' => $request->isHasEmail,
-            ]);
-        }
 
-        $emailController = App::make(EmailTemplateController::class);
-        $emailController->send_mail_create_ticket_form($newData);
-        return response()->json([
-            'result' =>  $newData,
-        ], 200);
+            $data = Ticket::create(array_merge($request->all(), [
+                'user_id' => $account->id,
+            ]));
+
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
+                $newData = array_merge($account->toArray(), [
+                    'id' => $data->id,
+                    'call_type' => $request->call_type,
+                    'isSendEmail' => $request->isSendEmail,
+                    'isHasEmail' => $request->isHasEmail,
+                ]);
+
+                $emailController = App::make(EmailTemplateController::class);
+                $emailController->send_mail_create_ticket_form($newData);
+            }
+
+            return response()->json([
+                'result' => $data,
+                array_merge($request->all(), [
+                    'user_id' => $account->id,
+                ])
+            ], 200);
+        } else {
+            $data = Ticket::create(array_merge($request->all(), [
+                'user_id' => $user->id,
+            ]));
+
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
+                $newData = array_merge($user->toArray(), [
+                    'id' => $data->id,
+                    'call_type' => $request->call_type,
+                    'isSendEmail' => $request->isSendEmail,
+                    'isHasEmail' => $request->isHasEmail,
+                ]);
+
+                $emailController = App::make(EmailTemplateController::class);
+                $emailController->send_mail_create_ticket_form($newData);
+            }
+
+            return response()->json([
+                'result' => $data,
+            ], 200);
+        }
     }
 }

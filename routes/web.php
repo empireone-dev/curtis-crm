@@ -128,6 +128,11 @@ Route::middleware('auth:sanctum', 'role:2')->prefix('customer')->group(function 
     Route::get('/tickets', function () {
         return Inertia::render('customer/tickets/page');
     })->name('customer.tickets');
+    
+    
+    Route::get('/tickets/{id}', function () {
+        return Inertia::render('customer/tickets/details/page');
+    })->name('customer.tickets.details');
 });
 
 Route::middleware('auth')->group(function () {

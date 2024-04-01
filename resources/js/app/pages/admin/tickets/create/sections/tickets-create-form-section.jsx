@@ -18,7 +18,7 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
-        
+
         dispatch(setForm({
             ...form,
             [name]: value
@@ -32,6 +32,10 @@ export default function TicketCreateFormSection() {
     async function submitFormTicket(e) {
         e.preventDefault()
         setLoading(true)
+        dispatch(setForm({
+            ...form,
+            email: form.isHasEmail == 'true' || form.isHasEmail == true ? form.email : null
+        }))
         const response = await store.dispatch(tickets_create_thunk())
         setLoading(false)
         router.visit('/administrator/tickets?ticket_id=' + response.id)
@@ -39,7 +43,7 @@ export default function TicketCreateFormSection() {
 
 
     const findCountry = (countryName) => {
-        return countries.find(country => country.name === countryName) || null;
+        return countries.find(country => country.name === countryName);
     };
 
 
@@ -78,7 +82,7 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <div className='flex gap-4'>
-                        {/* <div className='basis-1/3'>
+                        <div className='basis-1/3'>
                             <Select
                                 onChange={formHandler}
                                 name='isHasEmail'
@@ -97,11 +101,11 @@ export default function TicketCreateFormSection() {
                                     }
                                 ]}
                             />
-                        </div> */}
+                        </div>
 
                         <div className='basis-full'>
-                            {/* {
-                                (form.isHasEmail ?? 'true') == 'true' ? <Input
+                            {
+                                form.isHasEmail == 'true' ? <Input
                                     required={true}
                                     onChange={formHandler}
                                     name='email'
@@ -110,16 +114,8 @@ export default function TicketCreateFormSection() {
                                     type='email'
                                     errorMessage='Email is required'
                                 /> : <></>
-                            } */}
-                             <Input
-                                    required={true}
-                                    onChange={formHandler}
-                                    name='email'
-                                    value={form.email}
-                                    label='Email'
-                                    type='email'
-                                    errorMessage='Email is required'
-                                />
+                            }
+
                         </div>
                     </div>
 
@@ -209,7 +205,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='call_type'
                         required={true}
-                        value={form.call_type ?? call_type[0].value}
+                        value={form.call_type}
                         label='Call Type'
                         errorMessage='Call Type is required'
                         data={call_type}
@@ -321,11 +317,16 @@ export default function TicketCreateFormSection() {
                     </div>
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div className="flex items-center justify-center">
-                            <input id="checked-checkbox" 
-                            checked
-                            onChange={(e)=>formHandler(e.target.checked,'isSendEmail')}
-                            type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
-                            <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
+                            {
+                                form.isHasEmail == 'true' && <>
+                                    <input id="checked-checkbox"
+                                        checked={form.isSendEmail}
+                                        onChange={(e) => formHandler(e.target.checked, 'isSendEmail')}
+                                        type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
+                                    <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
+                                </>
+                            }
+
                         </div>
                     </div>
                 </div>

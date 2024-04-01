@@ -3,8 +3,8 @@ export default function Textarea({ name, value, label, type, errorMessage, onCha
 
 
     return (
-        <div>
-            <div className='relative' >
+        <>
+            <div className='relative w-full' >
                 <textarea
                     onChange={(e) => onChange(e.target.value, e.target.name)}
                     type={type}
@@ -22,6 +22,6 @@ export default function Textarea({ name, value, label, type, errorMessage, onCha
             {errorMessage && value == '' && (
                 <p className='text-red-500 text-sm mt-1.5 font-light'>{errorMessage}</p>
             )}
-        </div>
+        </>
     )
 }

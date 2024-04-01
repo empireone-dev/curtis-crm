@@ -68,7 +68,7 @@ export default function TicketsDetailsTabSection() {
   return (
     <div className="w-full  px-2  sm:px-0">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-md bg-blue-500 p-1">
+        <Tab.List className="flex space-x-1 rounded-md bg-blue-600 p-1">
           {tabs.map((res, i) => (
             <Tab
               onClick={() => handleTabClick(i)}

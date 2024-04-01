@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 export const ticketsCreateSlice = createSlice({
   name: 'tickets_create',
   initialState: {
-    form: {}
+    form: {
+      isHasEmail:'true',
+      country:'Canada',
+      state:'Alberta'
+    }
   },
   reducers: {
     setForm: (state, action) => {
