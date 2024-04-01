@@ -8,7 +8,7 @@ export default function PermissionEditSection() {
         <div>
             <button
                 onClick={() => setOpen(true)}
-                type="button" class=" text-blue-500 font-medium rounded-lg text-sm py-2 text-center">
+                type="button" className=" text-blue-500 font-medium rounded-lg text-sm py-2 text-center">
                 <PencilSquareIcon className='h-6 ' />
             </button>
             <Drawer

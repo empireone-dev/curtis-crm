@@ -8,7 +8,7 @@ export default function PermissionDeleteSection() {
         <div>
             <button 
             onClick={()=>setOpen(true)}
-            type="button" class=" text-red-500 font-medium rounded-lg text-sm py-2 text-center">
+            type="button" className=" text-red-500 font-medium rounded-lg text-sm py-2 text-center">
                 <TrashIcon className='h-6' />
             </button>
             <Modal
