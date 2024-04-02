@@ -1,6 +1,8 @@
 import React from 'react'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
+import BrandEditSection from './brand-edit-section'
+import BrandDeleteSection from './brand-delete-section'
 
 export default function BrandTableSection() {
     const { brands } = useSelector((state) => state.brands)
@@ -82,9 +84,9 @@ export default function BrandTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <button type="button" className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
-                                                        <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
-                                                    </td>
+                                                        <BrandEditSection/>
+                                                        <BrandDeleteSection/>
+                                                        </td>
                                                 </tr>
 
                                             })

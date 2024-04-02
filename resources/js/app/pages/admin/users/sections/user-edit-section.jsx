@@ -2,12 +2,11 @@ import Drawer from '@/app/layouts/components/drawer'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import React, { useState } from 'react'
 
-export default function PermissionEditSection() {
+export default function UserEditSection() {
     const [open, setOpen] = useState(false)
-    return (
-        <div>
-            
-            <button
+  return (
+    <div>
+        <button
                 onClick={() => setOpen(true)}
                 type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center">
                 <PencilSquareIcon className='h-6 text-white' />
@@ -15,10 +14,11 @@ export default function PermissionEditSection() {
             <Drawer
                 open={open}
                 setOpen={setOpen}
-                title="Edit Permission"
+                title="Edit Users"
             >
-                Edit Permission
+                Hello Users
             </Drawer>
-        </div>
-    )
+    </div>
+
+  )
 }

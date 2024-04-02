@@ -1,13 +1,15 @@
 import React from 'react'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
+import ItemTypeEditSection from './item-type-edit-section'
+import ItemTypeDeleteSection from './item-type-delete-section'
 
 export default function ItemTypesTableSection() {
     const { item_types } = useSelector((state) => state.item_types)
-    console.log('item_types',item_types)
-  return (
-    <>
-                    <section className="container px-4 my-12 mx-auto">
+    console.log('item_types', item_types)
+    return (
+        <>
+            <section className="container px-4 my-12 mx-auto">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
@@ -68,26 +70,26 @@ export default function ItemTypesTableSection() {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {
+                                        {
                                             item_types.map((res, i) => {
                                                 return <tr key={i}>
-                                            <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800 dark:text-white ">{res.name}</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                            <button type="button" className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><PencilSquareIcon className='h-6 text-white' /></button>
-                                                <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center"><TrashIcon className='h-6 text-white' /></button>
-                                            </td>
-                                        </tr>
-                                             })
-                                            }
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.name}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
+                                                        <ItemTypeEditSection />
+                                                        <ItemTypeDeleteSection />
+                                                    </td>
+                                                </tr>
+                                            })
+                                        }
 
                                     </tbody>
                                 </table>
@@ -124,6 +126,6 @@ export default function ItemTypesTableSection() {
                     </div>
                 </div>
             </section>
-    </>
-  )
+        </>
+    )
 }
