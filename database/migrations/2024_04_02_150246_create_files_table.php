@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('ticket_id')->nullable();
+            $table->string('url');
+            $table->string('type');
             $table->timestamps();
         });
     }
