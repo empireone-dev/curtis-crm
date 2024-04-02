@@ -1,0 +1,1 @@
+import{j as t}from"./app-Cmn4k4Ck.js";import{A as r}from"./administrator-layout-BYNITjRE.js";import"./PowerIcon-4GjZKh7I.js";import"./TicketIcon-D-J11IFp.js";import"./UserGroupIcon-BwH35HQf.js";function p(){return t.jsx(r,{children:"HttPage"})}export{p as default};

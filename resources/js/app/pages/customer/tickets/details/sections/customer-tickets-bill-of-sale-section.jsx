@@ -55,7 +55,6 @@ const CustomerTicketsBillOfSaleSection = () => {
     };
 
     const handleSubmit = () => {
-        alert(`Submitted Files:\n${JSON.stringify(files)}`);
         console.log(files);
     };
 

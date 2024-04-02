@@ -118,8 +118,17 @@ export default function CustomerTicketsTableSection() {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 className="text-gray-700 dark:text-gray-200">{res.issue}</h4>
+                                                    <div >
+                                                        {JSON.parse(res.issue).map((item, j) => {
+                                                            return (
+                                                                <div key={j} className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-blue-100 bg-blue-700 border border-blue-700">
+                                                                    <div className="text-xs font-normal leading-none max-w-full flex-initial">
+                                                                        {item}
+                                                                    </div>
+
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
                                                 </td>
 

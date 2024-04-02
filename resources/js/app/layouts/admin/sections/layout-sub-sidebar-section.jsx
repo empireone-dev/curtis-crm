@@ -62,7 +62,7 @@ export default function LayoutSubSidebarSection() {
                         </svg>
                     </button>
 
-                    <Link href='/administrator/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-200 text-blue-600' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
+                    <Link href='/administrator/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-500 text-white' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
                         <Cog8ToothIcon className=' h-8 ' />
                     </Link>
 
