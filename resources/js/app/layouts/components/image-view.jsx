@@ -1,6 +1,6 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { ExclamationTriangleIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 export default function ImageView({ files }) {
     const [open, setOpen] = useState(false)
@@ -9,11 +9,11 @@ export default function ImageView({ files }) {
 
     function clickHandler(value, res) {
         setOpen(value)
-        if (value) {
-            setData(res)
-        } else {
-            setData({})
-        }
+            if (value) {
+                setData(res)
+            } else {
+                setData({})
+            }
     }
     return (
         <>
@@ -31,25 +31,15 @@ export default function ImageView({ files }) {
                                 alt="upload preview"
                                 src={res?.url}
                             />
-                            <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                            <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full  absolute top-0 py-2 px-3">
 
                                 <div className="flex">
                                     <button
-                                        className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                    // onClick={() => handleDelete(res)}
+                                        className="delete  ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+                                 onClick={() =>alert()}
                                     >
-                                        <svg
-                                            className="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                className="pointer-events-none"
-                                                d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
-                                            ></path>
-                                        </svg>
+                                        <TrashIcon className='h-6 text-red-500 relative'/>
+                                   
                                     </button>
                                 </div>
                             </section>
