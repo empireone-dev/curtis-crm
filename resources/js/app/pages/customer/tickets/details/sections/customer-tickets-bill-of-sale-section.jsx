@@ -1,7 +1,7 @@
 import { upload_picture_videos } from '@/app/services/files-service';
 import store from '@/app/store/store';
 import React, { useState, useRef, useEffect } from 'react';
-import { get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
 import { usePage } from '@inertiajs/react';
 import Loading from '@/app/layouts/components/loading';
 import ImageView from '@/app/layouts/components/image-view';
@@ -92,6 +92,12 @@ const CustomerTicketsBillOfSaleSection = () => {
         setFiles([]);
     };
 
+
+    function deleteFileImage(id,ticket_id) {
+       
+    store.dispatch(delete_upload_ticket_files_thunk(id,ticket_id))
+    }
+
     return (
         <article
             aria-label="File Upload Modal"
@@ -122,7 +128,9 @@ const CustomerTicketsBillOfSaleSection = () => {
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
-                    <ImageView files={filesData}/>
+                    <ImageView 
+                    deleteFileImage={(id,ticket_id)=>deleteFileImage(id,ticket_id)}
+                    files={filesData}/>
                     {files.map(({ objectURL, file }) => (
 
                         <li

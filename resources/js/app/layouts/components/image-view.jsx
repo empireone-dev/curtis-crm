@@ -2,47 +2,51 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, TrashIcon } from '@heroicons/react/24/outline'
 
-export default function ImageView({ files }) {
+export default function ImageView({ files, deleteFileImage }) {
     const [open, setOpen] = useState(false)
     const [data, setData] = useState({})
     const cancelButtonRef = useRef(null)
 
     function clickHandler(value, res) {
         setOpen(value)
-            if (value) {
-                setData(res)
-            } else {
-                setData({})
-            }
+        if (value) {
+            setData(res)
+        } else {
+            setData({})
+        }
     }
+
+
     return (
         <>
             {files.map((res, i) => {
                 return (
                     <li
-                        onClick={() => clickHandler(true, res)}
                         key={i}
                         className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
                         id={res}
                     >
                         <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                            <section className="flex flex-col rounded-md text-xs w-full h-full  absolute top-0 py-2 px-3">
+
+                                <div className="flex">
+                                    <button
+                                        className="delete  ml-auto focus:outline-none p-1 rounded-md z-10 text-red-500"
+                                        onClick={() => deleteFileImage(res.id,res.ticket_id)}
+                                    >
+                                        <TrashIcon className='h-6 text-red-500 relative' />
+
+                                    </button>
+                                </div>
+                            </section>
+
                             <img
+                                onClick={() => clickHandler(true, res)}
                                 className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
                                 alt="upload preview"
                                 src={res?.url}
                             />
-                            <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full  absolute top-0 py-2 px-3">
 
-                                <div className="flex">
-                                    <button
-                                        className="delete  ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                 onClick={() =>alert()}
-                                    >
-                                        <TrashIcon className='h-6 text-red-500 relative'/>
-                                   
-                                    </button>
-                                </div>
-                            </section>
                         </article>
 
                     </li>

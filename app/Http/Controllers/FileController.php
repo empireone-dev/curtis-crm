@@ -35,4 +35,13 @@ class FileController extends Controller
             'data' => $files,
         ], 200);
     }
+
+    public function destroy(Request $request,$id)
+    {
+        // $files  = File::where('id', $id)->delete();
+        $files  = File::where('ticket_id', $request->ticket_id)->get();
+        return response()->json([
+            'data' => $files,
+        ], 200);
+    }
 }
