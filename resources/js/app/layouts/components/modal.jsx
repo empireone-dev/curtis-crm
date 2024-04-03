@@ -1,11 +1,15 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { Link } from '@inertiajs/react'
 
 export default function Modal({children,open,setOpen,title,width,position}) {
 
 
   const cancelButtonRef = useRef(null)
+
+  const closeModal = () => {
+    setOpen(false);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -39,6 +43,11 @@ export default function Modal({children,open,setOpen,title,width,position}) {
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                         {title}
+                                <button className='float-right' onClick={closeModal}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 ">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                       </Dialog.Title>
                       <div className="my-6">
                         {children}

@@ -20,7 +20,7 @@ export default function LayoutSubSidebarSection() {
                 <div className="flex flex-col items-center justify-center flex-1 space-y-4">
 
                     <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-10 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
                     >
                         <span className="sr-only">Open Notification panel</span>
                         <svg
@@ -42,7 +42,7 @@ export default function LayoutSubSidebarSection() {
 
                     <button
 
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-10 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
                     >
                         <span className="sr-only">Open search panel</span>
                         <svg

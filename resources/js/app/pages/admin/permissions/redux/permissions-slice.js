@@ -11,8 +11,8 @@ export const permissionsSlice = createSlice({
     },
   },
 })
-export const { 
+export const {
   setPermissions
- } = permissionsSlice.actions
+} = permissionsSlice.actions
 
 export default permissionsSlice.reducer

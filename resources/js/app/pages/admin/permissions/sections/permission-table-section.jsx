@@ -98,8 +98,8 @@ export default function PermissionTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap gap-2 flex items-center justify-end py-2">
-                                                         <PermissionEditSection />
-                                                         <PermissionDeleteSection />
+                                                         <PermissionEditSection  data={res}/>
+                                                         <PermissionDeleteSection data={res}/>
                                                     </td>
 
                                                 </tr>

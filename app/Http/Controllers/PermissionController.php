@@ -15,16 +15,36 @@ class PermissionController extends Controller
     }
     public function store(Request $request)
     {
-        // Permission::create($request->validate([
-        //     'name' => 'required|unique:permission',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        Permission::create($request->validate([
+            'name' => 'required|unique:permission',
+            'details' => 'required',
+            'start' => 'required',
+            'due' => 'required',
+            'status' => 'required'
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
     }
+
+    public function destroy($id)
+    {
+        $permission = Permission::find($id);
+        if (!$permission) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Permission not found'
+            ], 404);
+        }
+    
+        $permission->delete();
+    
+        $permissions = Permission::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $permissions
+        ], 200);
+    }
+    
 }

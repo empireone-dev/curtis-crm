@@ -5,7 +5,7 @@ import React from 'react'
 export default function CustomerLayoutSubSidebarSection() {
     return (
         <div>
-            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-800">
+            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-800 bg-slate-200">
 
                 <div className="flex-shrink-0">
                     <a
@@ -95,7 +95,7 @@ export default function CustomerLayoutSubSidebarSection() {
                             method="post"
                             as="button"
                             href={route('logout')}
-                            className="block transition-opacity duration-200 rounded-full text-blue-500 hover:text-blue-600"
+                            className="block transition-opacity duration-200 rounded-full text-blue-500 hover:text-white"
                         >
                             <span className="sr-only">User menu</span>
                             {/* <img
