@@ -1,9 +1,15 @@
+import Loading from '@/app/layouts/components/loading';
+import store from '@/app/store/store';
+import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
+import { upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
 
 const CustomerTicketsReadableSerialSection = () => {
     const [files, setFiles] = useState([])
     const overlay = document.getElementById('overlay');
     const galleryRef4 = useRef(null);
+    const {url} = usePage()
+    const [loading,setLoading] = useState(false)
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -53,11 +59,18 @@ const CustomerTicketsReadableSerialSection = () => {
             addFile(file);
         }
     };
-
-    const handleSubmit = () => {
-        alert(`Submitted Files:\n${JSON.stringify(files)}`);
-        console.log(files);
-    };
+    async function handleSubmit() {
+        setLoading(true)
+        const fd = new FormData()
+        
+        fd.append('ticket_id', url.split('/')[3])
+        fd.append('type', 'readable_serial_section')
+        files.forEach(value => {
+            fd.append('files[]', value.file)
+        });
+        await store.dispatch(upload_ticket_files_thunk(fd))
+        setLoading(false)
+    }
 
     const handleCancel = () => {
         setFiles([]);
@@ -186,11 +199,12 @@ const CustomerTicketsReadableSerialSection = () => {
 
             <footer className="flex justify-end px-8 pt-12">
                 <button
+                    disabled={loading}
                     id="submit"
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                    Upload now
+                {loading?<Loading />:' Upload now'}
                 </button>
                 <button
                     id="cancel"

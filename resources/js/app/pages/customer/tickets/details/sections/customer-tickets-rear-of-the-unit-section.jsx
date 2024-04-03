@@ -1,9 +1,15 @@
+import Loading from '@/app/layouts/components/loading';
+import store from '@/app/store/store';
+import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
+import { upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
 
 const CustomerTicketsRearOfTheUnitSection = () => {
     const [files, setFiles] = useState([])
     const overlay = document.getElementById('overlay');
     const galleryRef3 = useRef(null);
+    const { url } = usePage()
+    const [loading,setLoading] = useState(false)
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -54,10 +60,17 @@ const CustomerTicketsRearOfTheUnitSection = () => {
         }
     };
 
-    const handleSubmit = () => {
-        alert(`Submitted Files:\n${JSON.stringify(files)}`);
-        console.log(files);
-    };
+    async function handleSubmit() {
+        setLoading(true)
+        const fd = new FormData()
+        fd.append('ticket_id', url.split('/')[3])
+        fd.append('type', 'rear_of_the_unit')
+        files.forEach(value => {
+            fd.append('files[]', value.file)
+        });
+        await  store.dispatch(upload_ticket_files_thunk(fd))
+        setLoading(false)
+    }
 
     const handleCancel = () => {
         setFiles([]);
@@ -74,65 +87,65 @@ const CustomerTicketsRearOfTheUnitSection = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                A clear picture of the rear of the unit
+                    A clear picture of the rear of the unit
                 </div>
                 <div className='text-gray-400'>
-                All edges must be visible.
+                    All edges must be visible.
 
                 </div>
-                
+
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef3}>
 
                     {files.map(({ objectURL, file }) => (
-                 
-                            <li
-                                key={objectURL}
-                                className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
-                                id={objectURL}
-                            >
-                                <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-                                    <img
-                                        className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-                                        alt="upload preview"
-                                        src={objectURL}
-                                    />
-                                    <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                                        <h1 className="flex-1 ">{file.name}</h1>
-                                        <div className="flex">
-                                            <span className="p-1">
-                                                <i></i>
-                                            </span>
-                                            <p className="p-1 size text-xs">
-                                                {file.size > 1024
-                                                    ? file.size > 1048576
-                                                        ? Math.round(file.size / 1048576) + 'mb'
-                                                        : Math.round(file.size / 1024) + 'kb'
-                                                    : file.size + 'b'}
-                                            </p>
-                                            <button
-                                                className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                                onClick={() => handleDelete(objectURL)}
-                                            >
-                                                <svg
-                                                    className="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        className="pointer-events-none"
-                                                        d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </section>
-                                </article>
 
-                            </li>
+                        <li
+                            key={objectURL}
+                            className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
+                            id={objectURL}
+                        >
+                            <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                                <img
+                                    className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+                                    alt="upload preview"
+                                    src={objectURL}
+                                />
+                                <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                    <h1 className="flex-1 ">{file.name}</h1>
+                                    <div className="flex">
+                                        <span className="p-1">
+                                            <i></i>
+                                        </span>
+                                        <p className="p-1 size text-xs">
+                                            {file.size > 1024
+                                                ? file.size > 1048576
+                                                    ? Math.round(file.size / 1048576) + 'mb'
+                                                    : Math.round(file.size / 1024) + 'kb'
+                                                : file.size + 'b'}
+                                        </p>
+                                        <button
+                                            className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+                                            onClick={() => handleDelete(objectURL)}
+                                        >
+                                            <svg
+                                                className="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    className="pointer-events-none"
+                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </section>
+                            </article>
+
+                        </li>
 
 
                     ))}
@@ -186,11 +199,12 @@ const CustomerTicketsRearOfTheUnitSection = () => {
 
             <footer className="flex justify-end px-8 pt-12">
                 <button
+                    disabled={loading}
                     id="submit"
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                    Upload now
+                {loading?<Loading />:' Upload now'}
                 </button>
                 <button
                     id="cancel"

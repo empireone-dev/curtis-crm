@@ -12,9 +12,11 @@ import { setForm } from '../redux/tickets-create-slice'
 import { tickets_create_thunk } from '../redux/tickets-create-thunk'
 import { router } from '@inertiajs/react'
 import Loading from '@/app/layouts/components/loading'
+import Autocomplete from '@/app/layouts/components/autocomplete'
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch()
     const { form } = useSelector((state) => state.tickets_create)
+    const { common_issues } = useSelector((state) => state.common_issues)
     const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
@@ -48,7 +50,6 @@ export default function TicketCreateFormSection() {
 
 
     const { regions } = findCountry(form.country ?? 'Canada');
-
 
     return (
         <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
@@ -284,23 +285,24 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
-                    <Select
+                    {/* <Select
                         onChange={formHandler}
                         name='issue'
                         required={true}
                         value={form.issue}
                         label='Issue'
                         errorMessage='Issue is required'
-                        data={[
-                            {
-                                value: 'Canada',
-                                name: 'Canada'
-                            },
-                            {
-                                value: 'United States',
-                                name: 'United States'
-                            }
-                        ]}
+                        data={common_issues.map(res=>({
+                            name:res.name,
+                            value:res.name
+                        }))}
+                    /> */}
+                    <Autocomplete 
+                    onChange={formHandler}
+                    value={common_issues.map(res=>({
+                        id:res.id,
+                        name:res.name
+                    }))}
                     />
                 </div>
                 <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">

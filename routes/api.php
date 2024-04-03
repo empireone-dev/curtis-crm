@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\EmailTemplateController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\ItemTypeController;
@@ -38,6 +39,7 @@ Route::resource('tickets',TicketController::class);
 Route::resource('brands',BrandController::class);
 Route::resource('item_types',ItemTypeController::class);
 Route::resource('common_issues',CommonIssueController::class);
+Route::resource('files',FileController::class);
 
 
 

@@ -4,7 +4,7 @@ import TicketsTableHeaderSection from './tickets-table-header-section'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import TicketsSearchSection from './tickets-search-section'
-import { EyeIcon } from '@heroicons/react/24/outline'
+import { EyeIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import TicketsPaginateSection from './tickets-paginate-section'
 
 export default function TicketTableSection() {
@@ -13,7 +13,7 @@ export default function TicketTableSection() {
 
 
     function moveToDetails(id) {
-        router.visit('/administrator/tickets/details/'+id+'#files')
+        router.visit('/administrator/tickets/details/' + id + '#files')
     }
     return (
         <>
@@ -22,7 +22,7 @@ export default function TicketTableSection() {
                     <TicketsTableHeaderSection />
                 </div>
 
-               <TicketsSearchSection />
+                <TicketsSearchSection />
 
                 <div className="flex flex-col mt-6">
                     {/* <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
@@ -78,9 +78,7 @@ export default function TicketTableSection() {
                                                 return (
                                                     <tr key={i}>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-
-                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{res.id}</h2>
-
+                                                            <h2 className="font-medium text-gray-800 dark:text-white">{res.id}</h2>
                                                         </td>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                             {res.fname}  {res.lname}
@@ -91,16 +89,26 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {res.call_type}
                                                         </td>
-
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            {res.issue}
+                                                            <div >
+                                                                {JSON.parse(res.issue).map((item, j) => {
+                                                                    return (
+                                                                        <div key={j} className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-blue-100 bg-blue-700 border border-blue-700">
+                                                                            <div className="text-xs font-normal leading-none max-w-full flex-initial">
+                                                                                {item}
+                                                                            </div>
+                                                                          
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            {
-                                                                res.status == null && <div className="inline px-3 py-1 text-sm font-normal rounded-full text-orange-500 gap-x-2 bg-orange-100/60 dark:bg-gray-800">
+                                                            {res.status == null && (
+                                                                <div className="inline px-3 py-1 text-sm font-normal rounded-full text-orange-500 gap-x-2 bg-orange-100/60 dark:bg-gray-800">
                                                                     Waiting
                                                                 </div>
-                                                            }
+                                                            )}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.created_at).format('LLL')}
@@ -109,14 +117,15 @@ export default function TicketTableSection() {
                                                             {moment(res.updated_at).format('LLL')}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                        <button onClick={()=>moveToDetails(res.id)}>
-                                                        <EyeIcon className='h-6 text-blue-500'/>
-                                                        </button>
+                                                            <button onClick={() => moveToDetails(res.id)}>
+                                                                <EyeIcon className='h-6 text-blue-500' />
+                                                            </button>
                                                         </td>
                                                     </tr>
-                                                )
+                                                );
                                             })
                                         }
+
                                     </tbody>
                                 </table>
                             </div>
