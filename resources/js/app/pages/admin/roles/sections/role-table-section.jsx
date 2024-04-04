@@ -98,8 +98,8 @@ export default function RolesTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <RoleEditSection />
-                                                        <RoleDeleteSection />
+                                                        <RoleEditSection data={res} />
+                                                        <RoleDeleteSection data={res}/>
                                                     </td>
 
 

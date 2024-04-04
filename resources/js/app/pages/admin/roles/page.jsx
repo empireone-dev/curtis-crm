@@ -1,8 +1,8 @@
 import AdministratorLayout from '@/app/layouts/admin/administrator-layout'
 import React, { useEffect } from 'react'
-import RolesTableSection from './sections/roles-table-section'
 import store from '@/app/store/store';
 import { get_roles_thunk } from './redux/roles-thunk';
+import RolesTableSection from './sections/role-table-section';
 
 export default function RolesPage() {
 

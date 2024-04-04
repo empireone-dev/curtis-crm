@@ -7,5 +7,10 @@ export async function get_role_service(){
 
 export async function store_role_service(data){
     const res = await axios.post('/api/role',data)
-    return res.data.data
+    return res.data
+}
+
+export async function delete_role_service(id){
+    const res = await axios.delete('/api/role/'+id)
+    return res.data
 }

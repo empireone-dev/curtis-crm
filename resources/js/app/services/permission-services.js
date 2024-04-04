@@ -15,3 +15,9 @@ export async function delete_permission_service(id){
     return res.data
 }
 
+export async function update_permission_service(id, updatedData){
+    const res = await axios.put(`/api/permissions/${id}`, updatedData);
+    return res.data;
+}
+
+

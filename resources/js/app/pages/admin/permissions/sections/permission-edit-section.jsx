@@ -1,18 +1,45 @@
 import Drawer from '@/app/layouts/components/drawer'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
-export default function PermissionEditSection({data}) {
-    const [open, setOpen] = useState(false)
+export default function PermissionEditSection({ data }) {
+    const [id, setId] = useState('');
+    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        setName(data.name);
+        setTitle(data.title);
+        setId(data.id);
+    }, [data]);
+
+    async function editPermission() {
+        try {
+            const updatedPermission = { id, name, title };
+            const res = await axios.get(`http://127.0.0.1:8000/administrator/permissions/${id}`, updatedPermission);
+            console.log('Permission updated:', res.data);
+            closeModal();
+        } catch (error) {
+            console.error('Error updating permission:', error);
+        }
+    }
+
     const closeModal = () => {
         setOpen(false);
-      };
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        editPermission();
+    };
+
     return (
         <div>
-
             <button
                 onClick={() => setOpen(true)}
-                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center">
+                type="button" className="text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center">
                 <PencilSquareIcon className='h-6 text-white' />
             </button>
             <Drawer
@@ -20,19 +47,26 @@ export default function PermissionEditSection({data}) {
                 setOpen={setOpen}
                 title="Edit Permission"
             >
-                <div className='mt-4'>
-                    <label for="first_name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                    <input type="text" defaultValue={data.name} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                </div>
-                <div className='mt-4'>
-                    <label for="first_name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                    <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                </div>
-                <div className="mb-2 mt-5 flex items-center justify-end gap-x-6">
-                    <button type="button" className="text-sm font-semibold leading-6 text-gray-900 hover:text-slate-400" onClick={closeModal}>Cancel</button>
-                    <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className='mt-4'>
+                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={name} onChange={(event) => setName(event.target.value)} />
+                    </div>
+                    <div className='mt-4'>
+                        <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={title} onChange={(event) => setTitle(event.target.value)} />
+                    </div>
+                    <div className="mb-2 mt-5 flex items-center justify-end gap-x-6">
+                        <button type="button" className="text-sm font-semibold leading-6 text-gray-900 hover:text-slate-400" onClick={closeModal}>Cancel</button>
+                        <button
+                            type="submit"
+                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </form>
             </Drawer>
         </div>
-    )
+    );
 }

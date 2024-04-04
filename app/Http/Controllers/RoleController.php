@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     public function index(){
-        $permission = Role::get();
+        $role = Role::get();
         return response()->json([
-            'data' => $permission
+            'data' => $role
         ], 200);
     }
     public function store(Request $request)
@@ -26,5 +26,24 @@ class RoleController extends Controller
         //     'status' => 'success',
         //    'data'=>$this->index()->original['data']
         // ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $role = Role::find($id);
+        if (!$role) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Permission not found'
+            ], 404);
+        }
+    
+        $role->delete();
+    
+        $role = Role::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $role
+        ], 200);
     }
 }

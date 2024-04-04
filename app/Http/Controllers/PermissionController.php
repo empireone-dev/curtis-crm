@@ -47,4 +47,13 @@ class PermissionController extends Controller
         ], 200);
     }
     
+    public function update(Request $request, $id){
+        $permission = Permission::find($id);
+        $permission->update($request->all());
+        return response()->json([
+            'data' => $permission
+        ], 200);
+    }
+    
+    
 }
