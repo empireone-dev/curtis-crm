@@ -27,6 +27,7 @@ class Ticket extends Model
         'city',
         'address',
         'issue',
+        'explanation',
         'remarks',
         'status',
     ];

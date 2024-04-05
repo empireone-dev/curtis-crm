@@ -2,14 +2,18 @@ import Loading from '@/app/layouts/components/loading';
 import store from '@/app/store/store';
 import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
-import { upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { useSelector } from 'react-redux';
+import ImageView from '@/app/layouts/components/image-view';
 
 const CustomerTicketsRearOfTheUnitSection = () => {
     const [files, setFiles] = useState([])
+    const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
     const galleryRef3 = useRef(null);
     const { url } = usePage()
-    const [loading,setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -68,13 +72,23 @@ const CustomerTicketsRearOfTheUnitSection = () => {
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await  store.dispatch(upload_ticket_files_thunk(fd))
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
         setLoading(false)
+        setFiles([]);
     }
 
-    const handleCancel = () => {
+    function handleCancel() {
         setFiles([]);
-    };
+    }
+    
+
+
+    async function deleteFileImage(id, ticket_id) {
+        setIsLoading(true)
+        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
+        setIsLoading(false)
+        handleCancel()
+    }
 
     return (
         <article
@@ -97,6 +111,10 @@ const CustomerTicketsRearOfTheUnitSection = () => {
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef3}>
+                    <ImageView
+                        isLoading={isLoading}
+                        deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
+                        files={filesData?.rear_of_the_unit??[]} />
 
                     {files.map(({ objectURL, file }) => (
 
@@ -204,7 +222,7 @@ const CustomerTicketsRearOfTheUnitSection = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                {loading?<Loading />:' Upload now'}
+                    {loading ? <Loading /> : ' Upload now'}
                 </button>
                 <button
                     id="cancel"

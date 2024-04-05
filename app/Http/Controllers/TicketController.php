@@ -10,8 +10,18 @@ use Illuminate\Support\Facades\Hash;
 
 class TicketController extends Controller
 {
-    
 
+
+    public function update_explanation(Request $request, $id)
+    {
+        $ticket = Ticket::where('id', $id)->first();
+        $ticket->update([
+            'explanation' => $request->explanation
+        ]);
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
     public function index(Request $request)
     {
         $tickets = Ticket::query();
@@ -25,15 +35,15 @@ class TicketController extends Controller
             ], 200);
         }
     }
-    public function show($id){
+    public function show($id)
+    {
 
         $data = Ticket::where('user_id', $id)->get();
         return response()->json([
             'result' => $data
         ], 200);
-        
     }
-    
+
 
     public function store(Request $request)
     {
@@ -42,7 +52,7 @@ class TicketController extends Controller
         $newData = [];
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
-           
+
             $account = User::create([
                 'name' => $request->fname . ' ' . $request->lname,
                 'email' => $request->email,

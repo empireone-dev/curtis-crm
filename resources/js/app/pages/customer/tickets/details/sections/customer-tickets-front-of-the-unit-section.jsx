@@ -2,13 +2,17 @@ import Loading from '@/app/layouts/components/loading';
 import store from '@/app/store/store';
 import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
-import { upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { useSelector } from 'react-redux';
+import ImageView from '@/app/layouts/components/image-view';
 
 const CustomerTicketsFrontOfTheUnitSection = () => {
     const [files, setFiles] = useState([])
+    const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
     const galleryRef2 = useRef(null);
     const [loading,setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const {url} = usePage()
 
     const addFile = (file) => {
@@ -60,6 +64,9 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
         }
     };
 
+    function handleCancel() {
+        setFiles([]);
+    }
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
@@ -68,13 +75,21 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await  store.dispatch(upload_ticket_files_thunk(fd))
+        await  store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
         setLoading(false)
+        setFiles([]);
     }
 
-    const handleCancel = () => {
-        setFiles([]);
-    };
+ 
+    
+    
+    async function deleteFileImage(id, ticket_id) {
+        setIsLoading(true)
+        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
+        setIsLoading(false)
+        handleCancel()
+    }
+
 
     return (
         <article
@@ -98,7 +113,11 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef2}>
-
+                <ImageView
+                        isLoading={isLoading}
+                        deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
+                        files={filesData?.front_of_the_unit??[]} />
+                 
                     {files.map(({ objectURL, file }) => (
                 
                             <li

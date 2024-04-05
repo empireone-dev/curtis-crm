@@ -1,26 +1,19 @@
-import { upload_picture_videos } from '@/app/services/files-service';
-import store from '@/app/store/store';
-import React, { useState, useRef, useEffect } from 'react';
-import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import { usePage } from '@inertiajs/react';
 import Loading from '@/app/layouts/components/loading';
+import store from '@/app/store/store';
+import { usePage } from '@inertiajs/react';
+import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import ImageView from '@/app/layouts/components/image-view';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilesData } from '../../redux/customer-tickets-slice';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 
-const CustomerTicketsBillOfSaleSection = () => {
+const CustomerTicketsRearOfTheUnitSection = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
-    const galleryRef1 = useRef(null);
-    const dispatch = useDispatch()
+    const galleryRef3 = useRef(null);
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-
-
-
-
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -62,7 +55,7 @@ const CustomerTicketsBillOfSaleSection = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input1').click();
+        document.getElementById('hidden-input3').click();
     };
 
     const handleFileChange = (e) => {
@@ -70,27 +63,25 @@ const CustomerTicketsBillOfSaleSection = () => {
             addFile(file);
         }
     };
-    function handleCancel() {
-        setFiles([]);
-    }
+
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
         fd.append('ticket_id', url.split('/')[3])
-        fd.append('type', 'bill_of_sale')
+        fd.append('type', 'rear_of_the_unit')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[3]))
-
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
         setLoading(false)
         setFiles([]);
     }
 
-
     function handleCancel() {
         setFiles([]);
     }
+    
+
 
     async function deleteFileImage(id, ticket_id) {
         setIsLoading(true)
@@ -110,29 +101,21 @@ const CustomerTicketsBillOfSaleSection = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                    A clear and readable picture of the bill of sale
+                    A clear picture of the rear of the unit
                 </div>
                 <div className='text-gray-400'>
-                    Please note the bill of sale must show the following:
-                    <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
-                        <li>Store Name and Address *except if purchased online</li>
-                        <li>Date of purchase</li>
-                        <li>Item description</li>
-                        <li>Unit Price</li>
-                        <li>Total amount paid</li>
-                    </ul>
+                    All edges must be visible.
 
                 </div>
-                <div className='text-md font-gray-500'>
-                    If you do not have the bill of sale, you may try contacting the dealer’s customer care department for added support.
-                </div>
+
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
-                <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
+                <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef3}>
                     <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.bill_of_sale ?? []} />
+                        files={filesData?.rear_of_the_unit??[]} />
+
                     {files.map(({ objectURL, file }) => (
 
                         <li
@@ -182,6 +165,7 @@ const CustomerTicketsBillOfSaleSection = () => {
 
                         </li>
 
+
                     ))}
                     <li
                         className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
@@ -194,7 +178,7 @@ const CustomerTicketsBillOfSaleSection = () => {
                                 className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
 
                                 <input
-                                    id="hidden-input1"
+                                    id="hidden-input3"
                                     type="file"
                                     multiple
                                     className="hidden"
@@ -252,4 +236,4 @@ const CustomerTicketsBillOfSaleSection = () => {
     );
 };
 
-export default CustomerTicketsBillOfSaleSection;
+export default CustomerTicketsRearOfTheUnitSection;

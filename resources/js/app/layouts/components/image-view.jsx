@@ -1,8 +1,9 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, TrashIcon } from '@heroicons/react/24/outline'
+import Loading from './loading'
 
-export default function ImageView({ files, deleteFileImage }) {
+export default function ImageView({ files, deleteFileImage, isLoading }) {
     const [open, setOpen] = useState(false)
     const [data, setData] = useState({})
     const cancelButtonRef = useRef(null)
@@ -30,11 +31,12 @@ export default function ImageView({ files, deleteFileImage }) {
                             <section className="flex flex-col rounded-md text-xs w-full h-full  absolute top-0 py-2 px-3">
 
                                 <div className="flex">
+
                                     <button
-                                        className="delete  ml-auto focus:outline-none p-1 rounded-md z-10 text-red-500"
-                                        onClick={() => deleteFileImage(res.id,res.ticket_id)}
+                                        className="delete  ml-auto focus:outline-none p-1 rounded-md z-10 text-red-500 hover:bg-gray-500"
+                                        onClick={() => deleteFileImage(res.id, res.ticket_id)}
                                     >
-                                        <TrashIcon className='h-6 text-red-500 relative' />
+                                        {isLoading ? <Loading /> : <TrashIcon className='h-6 text-red-500 relative' />}
 
                                     </button>
                                 </div>

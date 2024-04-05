@@ -1,12 +1,11 @@
 import { upload_picture_videos } from '@/app/services/files-service';
 import store from '@/app/store/store';
 import React, { useState, useRef, useEffect } from 'react';
-import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 import { usePage } from '@inertiajs/react';
 import Loading from '@/app/layouts/components/loading';
 import ImageView from '@/app/layouts/components/image-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilesData } from '../../redux/customer-tickets-slice';
 
 const CustomerTicketsBillOfSaleSection = () => {
     const [files, setFiles] = useState([])

@@ -35,7 +35,10 @@ Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
 Route::resource('email_templates',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
+
 Route::resource('tickets',TicketController::class);
+Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
+
 Route::resource('brands',BrandController::class);
 Route::resource('item_types',ItemTypeController::class);
 Route::resource('common_issues',CommonIssueController::class);

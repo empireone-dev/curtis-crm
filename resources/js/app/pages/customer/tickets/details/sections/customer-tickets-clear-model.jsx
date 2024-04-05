@@ -8,7 +8,7 @@ import ImageView from '@/app/layouts/components/image-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilesData } from '../../redux/customer-tickets-slice';
 
-const CustomerTicketsBillOfSaleSection = () => {
+const CustomerTicketsClearModel = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
@@ -77,7 +77,7 @@ const CustomerTicketsBillOfSaleSection = () => {
         setLoading(true)
         const fd = new FormData()
         fd.append('ticket_id', url.split('/')[3])
-        fd.append('type', 'bill_of_sale')
+        fd.append('type', 'clear_model')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
@@ -110,29 +110,16 @@ const CustomerTicketsBillOfSaleSection = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                    A clear and readable picture of the bill of sale
+                Clear Picture of the Model#
                 </div>
-                <div className='text-gray-400'>
-                    Please note the bill of sale must show the following:
-                    <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
-                        <li>Store Name and Address *except if purchased online</li>
-                        <li>Date of purchase</li>
-                        <li>Item description</li>
-                        <li>Unit Price</li>
-                        <li>Total amount paid</li>
-                    </ul>
-
-                </div>
-                <div className='text-md font-gray-500'>
-                    If you do not have the bill of sale, you may try contacting the dealer’s customer care department for added support.
-                </div>
-                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
+              
+                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
                     <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.bill_of_sale ?? []} />
+                        files={filesData?.clear_model ?? []} />
                     {files.map(({ objectURL, file }) => (
 
                         <li
@@ -252,4 +239,4 @@ const CustomerTicketsBillOfSaleSection = () => {
     );
 };
 
-export default CustomerTicketsBillOfSaleSection;
+export default CustomerTicketsClearModel;

@@ -1,26 +1,19 @@
-import { upload_picture_videos } from '@/app/services/files-service';
-import store from '@/app/store/store';
-import React, { useState, useRef, useEffect } from 'react';
-import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import { usePage } from '@inertiajs/react';
 import Loading from '@/app/layouts/components/loading';
+import store from '@/app/store/store';
+import { usePage } from '@inertiajs/react';
+import React, { useState, useRef } from 'react';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
 import ImageView from '@/app/layouts/components/image-view';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilesData } from '../../redux/customer-tickets-slice';
+import { useSelector } from 'react-redux';
 
-const CustomerTicketsBillOfSaleSection = () => {
+const CustomerTicketsPartsModel = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
-    const galleryRef1 = useRef(null);
-    const dispatch = useDispatch()
+    const galleryRef5 = useRef(null);
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-
-
-
-
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -62,7 +55,7 @@ const CustomerTicketsBillOfSaleSection = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input1').click();
+        document.getElementById('hidden-input5').click();
     };
 
     const handleFileChange = (e) => {
@@ -73,24 +66,22 @@ const CustomerTicketsBillOfSaleSection = () => {
     function handleCancel() {
         setFiles([]);
     }
+    
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
+
         fd.append('ticket_id', url.split('/')[3])
-        fd.append('type', 'bill_of_sale')
+        fd.append('type', 'parts_model')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[3]))
-
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
         setLoading(false)
         setFiles([]);
     }
 
-
-    function handleCancel() {
-        setFiles([]);
-    }
+   
 
     async function deleteFileImage(id, ticket_id) {
         setIsLoading(true)
@@ -98,6 +89,7 @@ const CustomerTicketsBillOfSaleSection = () => {
         setIsLoading(false)
         handleCancel()
     }
+
 
     return (
         <article
@@ -110,29 +102,18 @@ const CustomerTicketsBillOfSaleSection = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                    A clear and readable picture of the bill of sale
+                Clear picture of the part/s you need.
                 </div>
-                <div className='text-gray-400'>
-                    Please note the bill of sale must show the following:
-                    <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
-                        <li>Store Name and Address *except if purchased online</li>
-                        <li>Date of purchase</li>
-                        <li>Item description</li>
-                        <li>Unit Price</li>
-                        <li>Total amount paid</li>
-                    </ul>
 
-                </div>
-                <div className='text-md font-gray-500'>
-                    If you do not have the bill of sale, you may try contacting the dealer’s customer care department for added support.
-                </div>
-                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
-                <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
+                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
+
+                <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef5}>
                     <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.bill_of_sale ?? []} />
+                        files={filesData?.parts_model??[]} />
+                 
                     {files.map(({ objectURL, file }) => (
 
                         <li
@@ -194,7 +175,7 @@ const CustomerTicketsBillOfSaleSection = () => {
                                 className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
 
                                 <input
-                                    id="hidden-input1"
+                                    id="hidden-input5"
                                     type="file"
                                     multiple
                                     className="hidden"
@@ -238,6 +219,7 @@ const CustomerTicketsBillOfSaleSection = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
+
                     {loading ? <Loading /> : ' Upload now'}
                 </button>
                 <button
@@ -252,4 +234,4 @@ const CustomerTicketsBillOfSaleSection = () => {
     );
 };
 
-export default CustomerTicketsBillOfSaleSection;
+export default CustomerTicketsPartsModel;

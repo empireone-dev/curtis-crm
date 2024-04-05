@@ -5,15 +5,15 @@ import TicketsDetailsContentActivities from '../contents/activities/page';
 import TicketsDetailsContentStatus from '../contents/status/page';
 import TicketsDetailsContentDetails from '../contents/details/page';
 import TicketsDetailsContentNotes from '../contents/notes/page';
-import TicketsDetailsContentHistory from '../contents/history/page';
 import { router, usePage } from '@inertiajs/react';
-import TicketsDecisionMakingPage from '../contents/decision_making/page';
 import TicketsDecisionMakingContent from '../contents/decision_making/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-
+// tech support = files,activities,details,agent 
+//parts = files,activities details agent
+//waranty = files,activities details and agent notes
 export default function TicketsDetailsTabSection() {
   const page = usePage();
   const [firstHash, setFirstHash] = useState('#files'); // Set the default first hash
@@ -49,11 +49,6 @@ export default function TicketsDetailsTabSection() {
       title: 'Agent Notes',
       components: <TicketsDetailsContentNotes />,
       hash: '#notes',
-    },
-    {
-      title: 'History Logs',
-      components: <TicketsDetailsContentHistory />,
-      hash: '#logs',
     },
   ];
 
