@@ -28,6 +28,7 @@ class Ticket extends Model
         'address',
         'issue',
         'explanation',
+        'isUploading',
         'remarks',
         'status',
     ];

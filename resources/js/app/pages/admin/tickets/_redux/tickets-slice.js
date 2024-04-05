@@ -4,6 +4,7 @@ export const ticketsSlice = createSlice({
   name: 'tickets',
   initialState: {
     tickets: [],
+    ticket:{},
     page:1,
     search:{
       id:null,
@@ -20,8 +21,11 @@ export const ticketsSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload
     },
+    setTicket: (state, action) => {
+      state.ticket = action.payload
+    },
   },
 })
-export const { setTickets,setPage,setSearch } = ticketsSlice.actions
+export const { setTickets,setPage,setSearch,setTicket } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

@@ -16,21 +16,8 @@ import { get_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redu
 import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-tickets-slice'
 
 export default function WarrantyFilesSection() {
-    const { url } = usePage()
-    const dispatch = useDispatch()
-
     const { ticket } = useSelector((state) => state.customer_tickets)
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
-                dispatch(setFilesData(res))
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    }, [url]);
+    
     return (
         <>
            {

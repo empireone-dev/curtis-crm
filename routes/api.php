@@ -38,6 +38,7 @@ Route::resource('role',RoleController::class);
 
 Route::resource('tickets',TicketController::class);
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
+Route::get('/get_tickets_by_ticket_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_id']);
 
 Route::resource('brands',BrandController::class);
 Route::resource('item_types',ItemTypeController::class);

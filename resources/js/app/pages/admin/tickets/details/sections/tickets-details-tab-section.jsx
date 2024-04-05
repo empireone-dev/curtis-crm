@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import TicketsDetailsContentFiles from '../contents/files/page';
 import TicketsDetailsContentActivities from '../contents/activities/page';
@@ -7,6 +7,13 @@ import TicketsDetailsContentDetails from '../contents/details/page';
 import TicketsDetailsContentNotes from '../contents/notes/page';
 import { router, usePage } from '@inertiajs/react';
 import TicketsDecisionMakingContent from '../contents/decision_making/page';
+import TicketsValidationContent from '../contents/validation/page';
+import store from '@/app/store/store'
+import { get_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk'
+import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-tickets-slice'
+import { useDispatch, useSelector } from 'react-redux';
+import { get_tickets_by_ticket_id } from '@/app/services/tickets-service';
+import { setTicket } from '../../_redux/tickets-slice';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -15,15 +22,41 @@ function classNames(...classes) {
 //parts = files,activities details agent
 //waranty = files,activities details and agent notes
 export default function TicketsDetailsTabSection() {
-  const page = usePage();
-  const [firstHash, setFirstHash] = useState('#files'); // Set the default first hash
 
+  const { ticket } = useSelector((state) => state.tickets)
+  const { url } = usePage()
+  const page = usePage();
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
+        const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
+        dispatch(setTicket(ress))
+        dispatch(setFilesData(res))
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [url]);
+
+  
   const tabs = [
     {
       title: 'Files',
       components: <TicketsDetailsContentFiles />,
       hash: '#files', // Update only the first hash dynamically
     },
+    ...(ticket.isUploading === 'true'
+      ? [
+        {
+          title: 'Validation',
+          components: <TicketsValidationContent />,
+          hash: '#validation',
+        }
+      ]
+      : []),
     {
       title: 'Activities',
       components: <TicketsDetailsContentActivities />,
@@ -34,7 +67,7 @@ export default function TicketsDetailsTabSection() {
       components: <TicketsDecisionMakingContent />,
       hash: '#decision',
     },
-    
+
     {
       title: 'Update Status',
       components: <TicketsDetailsContentStatus />,
@@ -54,11 +87,11 @@ export default function TicketsDetailsTabSection() {
 
   const handleTabClick = (index) => {
     // Update only the first hash dynamically based on the selected tab
-    setFirstHash(tabs[index].hash.split('#')[0]);
+    // setFirstHash(tabs[index].hash.split('#')[0]);
     // Visit the URL with the updated hash
     router.visit(tabs[index].hash);
   };
- const hash = '#'+page.url.split('#')[1]
+  const hash = '#' + page.url.split('#')[1]
 
   return (
     <div className="w-full  px-2  sm:px-0">
@@ -83,15 +116,15 @@ export default function TicketsDetailsTabSection() {
           ))}
         </Tab.List>
         {tabs.map((res, i) => {
-            return (
-              <div
-                key={i}
-                className={classNames('rounded-xl bg-white p-3', '')}
-              >
-                {hash == res.hash && page.url.split('#')[1] && res.components}
-              </div>
-            );
-          })}
+          return (
+            <div
+              key={i}
+              className={classNames('rounded-xl bg-white p-3', '')}
+            >
+              {hash == res.hash && page.url.split('#')[1] && res.components}
+            </div>
+          );
+        })}
       </Tab.Group>
     </div>
   );

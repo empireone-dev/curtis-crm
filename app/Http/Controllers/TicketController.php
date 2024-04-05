@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Hash;
 class TicketController extends Controller
 {
 
+    public function get_tickets_by_ticket_id($ticket_id)
+    {
+        $ticket = Ticket::where('id', $ticket_id)->first();
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
 
     public function update_explanation(Request $request, $id)
     {

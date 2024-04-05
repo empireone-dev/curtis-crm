@@ -23,7 +23,9 @@ class FileController extends Controller
                 ]);
             }
         }
-
+        Ticket::where('id', $request->ticket_id)->update([
+            'isUploading'=>'true'
+        ]);
         return response()->json([
             'url' => 'success',
         ], 200);
