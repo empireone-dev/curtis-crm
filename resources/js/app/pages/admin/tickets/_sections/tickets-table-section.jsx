@@ -31,7 +31,7 @@ export default function TicketTableSection() {
                         <div className='w-full py-2 '>
                             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead className="bg-gray-50 dark:bg-gray-800">
+                                    <thead className="bg-gray-50">
                                         <tr>
                                             <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <button className="flex items-center gap-x-3 focus:outline-none">
@@ -60,6 +60,9 @@ export default function TicketTableSection() {
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Status
+                                            </th>
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Is Uploaded
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Created At
@@ -97,18 +100,33 @@ export default function TicketTableSection() {
                                                                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
                                                                                 {item}
                                                                             </div>
-                                                                          
+
                                                                         </div>
                                                                     );
                                                                 })}
                                                             </div>
                                                         </td>
-                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            {res.status == null && (
-                                                                <div className="inline px-3 py-1 text-sm font-normal rounded-full text-orange-500 gap-x-2 bg-orange-100/60 dark:bg-gray-800">
+                                                        <td className="px-4 py-4 text-sm whitespace-nowrap ">
+                                                            {res.status == null ? (
+                                                                <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
                                                                     Waiting
                                                                 </div>
+                                                            ): (
+                                                                <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">
+                                                                    {res.status}
+                                                                </div>
                                                             )}
+                                                        </td>
+                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                            {res.isUploading == 'true' ?
+                                                                <div className="inline px-3 py-1 text-sm font-black rounded-full text-green-500 gap-x-2 bg-green-100/60">
+                                                                    Uploaded
+                                                                </div>
+                                                                :
+
+                                                                <div className="inline px-3 py-1 text-sm font-black rounded-full text-red-500 gap-x-2 bg-red-100/60">
+                                                                    Pending
+                                                                </div>}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.created_at).format('LLL')}

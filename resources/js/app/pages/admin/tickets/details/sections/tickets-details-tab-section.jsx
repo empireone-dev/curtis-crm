@@ -41,14 +41,14 @@ export default function TicketsDetailsTabSection() {
     fetchData();
   }, [url]);
 
-  
+
   const tabs = [
     {
       title: 'Files',
       components: <TicketsDetailsContentFiles />,
       hash: '#files', // Update only the first hash dynamically
     },
-    ...(ticket.isUploading === 'true'
+    ...(ticket.isUploading === 'true' && ticket.status === null
       ? [
         {
           title: 'Validation',
@@ -115,16 +115,18 @@ export default function TicketsDetailsTabSection() {
             </Tab>
           ))}
         </Tab.List>
-        {tabs.map((res, i) => {
-          return (
-            <div
-              key={i}
-              className={classNames('rounded-xl bg-white p-3', '')}
-            >
-              {hash == res.hash && page.url.split('#')[1] && res.components}
-            </div>
-          );
-        })}
+        <div className='py-5'>
+          {tabs.map((res, i) => {
+            return (
+              <div
+                key={i}
+                className={classNames('rounded-xl bg-white ', '')}
+              >
+                {hash == res.hash && page.url.split('#')[1] && res.components}
+              </div>
+            );
+          })}
+        </div>
       </Tab.Group>
     </div>
   );

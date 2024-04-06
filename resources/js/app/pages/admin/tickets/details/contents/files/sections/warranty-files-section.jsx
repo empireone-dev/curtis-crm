@@ -11,9 +11,6 @@ import CustomerTicketsReceiptModel from './customer-tickets-receipt-model'
 import CustomerTicketsSerialModel from './customer-tickets-serial-model'
 import { usePage } from '@inertiajs/react'
 import { useDispatch, useSelector } from 'react-redux'
-import store from '@/app/store/store'
-import { get_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk'
-import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-tickets-slice'
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.customer_tickets)
