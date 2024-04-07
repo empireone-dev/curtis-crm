@@ -19,6 +19,25 @@ class TicketController extends Controller
         ], 200);
     }
 
+    public function update_tickets_status(Request $request, $id)
+    {
+        $ticket = Ticket::where('id', $id)->first();
+        $ticket->update([
+            'status' => $request->status
+        ]);
+        $user = User::find($request->user_id);
+        // $user_id,$ticket_id,$message,$type
+        ActivityController::create_activity(
+            $request->user_id,
+            $id,
+            strtoupper($user->name) . ' MOVE TO ' . $request->status,
+            $request->status
+        );
+
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
     public function update_explanation(Request $request, $id)
     {
         $ticket = Ticket::where('id', $id)->first();

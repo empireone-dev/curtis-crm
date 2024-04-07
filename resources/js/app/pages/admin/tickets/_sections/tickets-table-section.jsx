@@ -109,7 +109,7 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap ">
                                                             {res.status == null ? (
                                                                 <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
-                                                                    Waiting
+                                                                    WAITING
                                                                 </div>
                                                             ): (
                                                                 <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">
@@ -120,17 +120,18 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {res.isUploading == 'true' ?
                                                                 <div className="inline px-3 py-1 text-sm font-black rounded-full text-green-500 gap-x-2 bg-green-100/60">
-                                                                    Uploaded
+                                                                    UPLOADED
                                                                 </div>
                                                                 :
 
                                                                 <div className="inline px-3 py-1 text-sm font-black rounded-full text-red-500 gap-x-2 bg-red-100/60">
-                                                                    Pending
+                                                                    PENDING
                                                                 </div>}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.created_at).format('LLL')}
                                                         </td>
+                                                        
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.updated_at).format('LLL')}
                                                         </td>

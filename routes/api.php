@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\EmailTemplateController;
@@ -35,9 +36,11 @@ Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
 Route::resource('email_templates',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
+Route::resource('activities',ActivityController::class);
 
 Route::resource('tickets',TicketController::class);
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
+Route::put('/update_tickets_status/{gid}', [TicketController::class, 'update_tickets_status']);
 Route::get('/get_tickets_by_ticket_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_id']);
 
 Route::resource('brands',BrandController::class);

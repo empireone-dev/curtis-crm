@@ -80,6 +80,9 @@ export default function CustomerTicketsTableSection() {
                                             Issue
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Is Uploaded
+                                        </th>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Status
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -132,10 +135,29 @@ export default function CustomerTicketsTableSection() {
                                                     </div>
                                                 </td>
 
+                                         
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 className="text-gray-700 dark:text-gray-200">{res.status}</h4>
-                                                    </div>
+                                                    {res.isUploading == 'true' ?
+                                                        <div className="inline px-3 py-1 text-sm font-black rounded-full text-green-500 gap-x-2 bg-green-100/60">
+                                                            UPLOADED
+                                                        </div>
+                                                        :
+
+                                                        <div className="inline px-3 py-1 text-sm font-black rounded-full text-red-500 gap-x-2 bg-red-100/60">
+                                                            PENDING
+                                                        </div>}
+                                                </td>
+
+                                                <td className="px-4 py-4 text-sm whitespace-nowrap ">
+                                                    {res.status == null ? (
+                                                        <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
+                                                            WAITING
+                                                        </div>
+                                                    ) : (
+                                                        <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">
+                                                            {res.status}
+                                                        </div>
+                                                    )}
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">

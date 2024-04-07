@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 export default function ContentDetailsSection() {
   const { ticket } = useSelector((state) => state.customer_tickets)
-  console.log('ticket', ticket)
+
   return (
     <div>
       <div className="px-4 sm:px-0">

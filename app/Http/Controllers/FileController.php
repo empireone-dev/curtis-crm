@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\File;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -23,9 +24,18 @@ class FileController extends Controller
                 ]);
             }
         }
-        Ticket::where('id', $request->ticket_id)->update([
-            'isUploading'=>'true'
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
+        $ticket->update([
+            'isUploading' => 'true'
         ]);
+        // $user_id,$ticket_id,$message,$type
+        ActivityController::create_activity(
+            $ticket->user_id,
+            $request->ticket_id,
+            'Upload Complete by Customer',
+            'upload'
+        );
+        
         return response()->json([
             'url' => 'success',
         ], 200);
