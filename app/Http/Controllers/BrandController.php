@@ -16,7 +16,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         // Role::create($request->validate([
-        //     'name' => 'required|unique:permission',
+        //     'name' => 'required|unique:brand',
         //     'details' => 'required',
         //     'start' => 'required',
         //     'due' => 'required',
@@ -26,5 +26,24 @@ class BrandController extends Controller
         //     'status' => 'success',
         //    'data'=>$this->index()->original['data']
         // ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'brand not found'
+            ], 404);
+        }
+    
+        $brand->delete();
+    
+        $brands = brand::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $brands
+        ], 200);
     }
 }

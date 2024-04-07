@@ -13,6 +13,7 @@ class PermissionController extends Controller
             'data' => $permission
         ], 200);
     }
+    
     public function store(Request $request)
     {
         Permission::create($request->validate([
@@ -50,8 +51,9 @@ class PermissionController extends Controller
     public function update(Request $request, $id){
         $permission = Permission::find($id);
         $permission->update($request->all());
+
         return response()->json([
-            'data' => $permission
+            'data' => $this->index()->original['data']
         ], 200);
     }
     

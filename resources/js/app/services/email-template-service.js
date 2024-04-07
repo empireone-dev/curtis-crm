@@ -9,3 +9,8 @@ export async function store_email_template_service(data){
     const res = await axios.post('/api/email_templates',data)
     return res.data
 }
+
+export async function delete_email_template_service(id){
+    const res = await axios.delete('/api/email_templates/'+id)
+    return res.data
+}

@@ -105,8 +105,8 @@ export default function UsersTableSection() {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                    <UserEditSection/>
-                                                    <UserDeleteSection/>
+                                                    <UserEditSection data = {res}/>
+                                                    <UserDeleteSection data = {res}/>
                                             </td>
 
                                             </tr>

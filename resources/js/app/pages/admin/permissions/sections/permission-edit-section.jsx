@@ -1,30 +1,17 @@
 import Drawer from '@/app/layouts/components/drawer'
+import store from '@/app/store/store';
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { update_permission_thunk } from '../redux/permissions-thunk';
 
 export default function PermissionEditSection({ data }) {
     const [id, setId] = useState('');
-    const [name, setName] = useState('');
-    const [title, setTitle] = useState('');
-    const [open, setOpen] = useState(false);
-
+    const [newData,setNewData]=useState({})
+    const [open,setOpen]=useState(false)
     useEffect(() => {
-        setName(data.name);
-        setTitle(data.title);
-        setId(data.id);
+        setNewData(data)
     }, [data]);
-
-    async function editPermission() {
-        try {
-            const updatedPermission = { id, name, title };
-            const res = await axios.get(`http://127.0.0.1:8000/administrator/permissions/${id}`, updatedPermission);
-            console.log('Permission updated:', res.data);
-            closeModal();
-        } catch (error) {
-            console.error('Error updating permission:', error);
-        }
-    }
 
     const closeModal = () => {
         setOpen(false);
@@ -32,9 +19,8 @@ export default function PermissionEditSection({ data }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        editPermission();
+       store.dispatch(update_permission_thunk(newData))
     };
-
     return (
         <div>
             <button
@@ -50,11 +36,21 @@ export default function PermissionEditSection({ data }) {
                 <form onSubmit={handleSubmit}>
                     <div className='mt-4'>
                         <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={name} onChange={(event) => setName(event.target.value)} />
+                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                        value={newData.name??''} 
+                        onChange={(event) => setNewData({
+                            ...newData,
+                            name:event.target.value
+                        })} />
                     </div>
                     <div className='mt-4'>
                         <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input type="text" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={title} onChange={(event) => setTitle(event.target.value)} />
+                        <input type="text" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           value={newData.title??''} 
+                           onChange={(event) => setNewData({
+                               ...newData,
+                               title:event.target.value
+                           })}/>
                     </div>
                     <div className="mb-2 mt-5 flex items-center justify-end gap-x-6">
                         <button type="button" className="text-sm font-semibold leading-6 text-gray-900 hover:text-slate-400" onClick={closeModal}>Cancel</button>

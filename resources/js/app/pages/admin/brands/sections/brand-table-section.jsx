@@ -84,8 +84,8 @@ export default function BrandTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <BrandEditSection/>
-                                                        <BrandDeleteSection/>
+                                                        <BrandEditSection data ={res}/>
+                                                        <BrandDeleteSection data ={res}/>
                                                         </td>
                                                 </tr>
 

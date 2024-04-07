@@ -16,10 +16,11 @@ export function delete_permission_thunk(id) {
   };
 }
 
-export function update_permission_thunk(id) {
+export function update_permission_thunk(data) {
   return async function (dispatch, getState) {
-    const result = await update_permission_service(id)
-    dispatch(permissionsSlice.actions.setPermissions(result.data));
+
+   const result = await update_permission_service(data)
+   dispatch(permissionsSlice.actions.setPermissions(result.data));
   };
 }
 

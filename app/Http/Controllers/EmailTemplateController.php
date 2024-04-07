@@ -15,6 +15,26 @@ class EmailTemplateController extends Controller
             'data' => $email_template
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        $email_template = ModelsEmailTemplate::find($id);
+        if (!$email_template) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'email_template not found'
+            ], 404);
+        }
+    
+        $email_template->delete();
+    
+        $email_templates = ModelsEmailTemplate::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $email_templates
+        ], 200);
+    }
+
     public function send_mail_create_ticket_form($data)
     {
         if ($data['email'] && $data['isSendEmail']) {

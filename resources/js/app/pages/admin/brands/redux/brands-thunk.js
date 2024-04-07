@@ -1,4 +1,4 @@
-import { get_brands_service } from '@/app/services/brand-service';
+import { delete_brand_service, get_brands_service } from '@/app/services/brand-service';
 import { brandsSlice } from './brands-slice';
 
 export function get_brands_thunk() {
@@ -8,3 +8,9 @@ export function get_brands_thunk() {
   };
 }
 
+export function delete_brands_thunk(id) {
+  return async function (dispatch, getState) {
+    const result = await delete_brand_service(id)
+    dispatch(brandsSlice.actions.setbrands(result.data));
+  };
+}
