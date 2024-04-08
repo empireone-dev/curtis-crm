@@ -1,0 +1,1 @@
+import{r as o,s as r,j as t}from"./app-CZS1mVd2.js";import i from"./validation-form-section-BJCIy-Ax.js";import{g as e}from"./email-template-thunk-Dq0jeU4i.js";import"./select-CDFHfLWi.js";import"./input-CIv9NGNY.js";function c(){return o.useEffect(()=>{r.dispatch(e())},[]),t.jsx("div",{children:t.jsx(i,{})})}export{c as default};

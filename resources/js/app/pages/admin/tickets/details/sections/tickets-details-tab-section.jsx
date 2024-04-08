@@ -106,7 +106,7 @@ export default function TicketsDetailsTabSection() {
       <div className="px-8">
         <div className="w-full ">
           <div className='py-3 text-3xl font-black flex gap-3 text-blue-600'>
-            <TicketIcon className='h-9'/> {ticket.status??'Open Ticket'}
+            <TicketIcon className='h-9'/> {ticket.status??'Open Ticket'} ({ticket.call_type})
           </div>
           <div className="mb-4 flex space-x-4 p-2 bg-white rounded-lg border-blue-500 border-2 ">
             {tabs.map((res, i) => (
