@@ -24,14 +24,14 @@ export default function ReplacementSection() {
                     </div>
                     <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
                         <div className='w-full'>
-                            <label for="username" className="block text-sm font-medium leading-6 text-gray-900">Cost of Unit</label>
+                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Cost of Unit</label>
                             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
                                 <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$</span>
-                                <input type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                             </div>
-                            <label for="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Cube Weight</label>
+                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Cube Weight</label>
                             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                <input type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                             </div>
                         </div>
                     </div>
@@ -41,28 +41,28 @@ export default function ReplacementSection() {
                         <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-2">
 
-                                <label for="first-name" className="block text-sm font-medium leading-6 text-gray-900">Length</label>
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">Length</label>
                                 <div>
                                     <input type="text" name="length" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
 
                             <div className="sm:col-span-2">
-                                <label for="last-name" className="block text-sm font-medium leading-6 text-gray-900">Width</label>
+                                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Width</label>
                                 <div>
                                     <input type="text" name="width" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
 
                             <div className="sm:col-span-2">
-                                <label for="email" className="block text-sm font-medium leading-6 text-gray-900">Height</label>
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Height</label>
                                 <div>
                                     <input name="height" type="text" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
 
                             <div className="sm:col-span-2">
-                                <label for="first-name" className="block text-sm font-medium leading-6 text-gray-900">Canada to Canada</label>
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">Canada to Canada</label>
                                 <div>
                                     <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
                                         GET FEDEX RATES
@@ -72,7 +72,7 @@ export default function ReplacementSection() {
                             </div>
 
                             <div className="sm:col-span-2">
-                                <label for="last-name" className="block text-sm font-medium leading-6 text-gray-900">Shipping Cost</label>
+                                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Shipping Cost</label>
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
                                     <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$</span>
                                     <input type="text" name="" className="block w-full border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
@@ -80,7 +80,7 @@ export default function ReplacementSection() {
                             </div>
 
                             <div className="sm:col-span-2">
-                                <label for="email" className="block text-sm font-medium leading-6 text-gray-900">Total Estimated Cost</label>
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Total Estimated Cost</label>
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
                                     <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$</span>
                                     <input type="text" name="" className="block w-full border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
@@ -88,16 +88,16 @@ export default function ReplacementSection() {
                             </div>
 
                             <div className="col-span-full">
-                                <label for="street-address" className="block text-sm font-medium leading-6 text-gray-900">Warranty Intruction</label>
+                                <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">Warranty Intruction</label>
                                 <div className="mt-2">
-                                    <input type="text" name="street-address" autocomplete="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                    <input type="text" name="street-address" autoComplete="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
 
                             <div className="col-span-full">
-                                <label for="street-address" className="block text-sm font-medium leading-6 text-gray-900">Notes</label>
+                                <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">Notes</label>
                                 <div className="mt-2">
-                                    <textarea type="text" name="street-address" autocomplete="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                    <textarea type="text" name="street-address" autoComplete="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                         </div>

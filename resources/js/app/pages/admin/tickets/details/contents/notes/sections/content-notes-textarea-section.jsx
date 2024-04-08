@@ -5,8 +5,8 @@ export default function ContentNotesTextareaSection() {
         <div className='my-3'>
 
             <form>
-                <label for="chat" className="sr-only">Your message</label>
-                <div className="flex flex-col items-end p-3 rounded-lg  py-6 ">
+                <label htmlFor="chat" className="sr-only">Your message</label>
+                <div className="flex flex-col items-end p-3 rounded-lg ">
 
                     <textarea id="chat" rows="3" className="block mx-4 p-3  w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Your message..."></textarea>
                     <div className="flex items-center justify-between px-3 py-2 ">

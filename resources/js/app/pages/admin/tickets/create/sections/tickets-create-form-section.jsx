@@ -285,25 +285,32 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
-                    {/* <Select
-                        onChange={formHandler}
-                        name='issue'
-                        required={true}
-                        value={form.issue}
-                        label='Issue'
-                        errorMessage='Issue is required'
-                        data={common_issues.map(res=>({
-                            name:res.name,
-                            value:res.name
-                        }))}
-                    /> */}
-                    <Autocomplete 
-                    onChange={formHandler}
-                    value={common_issues.map(res=>({
-                        id:res.id,
-                        name:res.name
-                    }))}
-                    />
+                    {
+                        form.call_type == 'Parts' ?
+                            <Autocomplete
+                                onChange={formHandler}
+                                value={[
+                                    {
+                                        id: 'Missing Parts',
+                                        name: 'Missing Parts'
+                                    }, {
+                                        id: 'Damage Parts',
+                                        name: 'Damage Parts'
+                                    }, {
+                                        id: 'Want to buy Parts',
+                                        name: 'Want to buy Parts'
+                                    }
+                                ]}
+                            />
+                            : <Autocomplete
+                                onChange={formHandler}
+                                value={common_issues.map(res => ({
+                                    id: res.id,
+                                    name: res.name
+                                }))}
+                            />
+                    }
+
                 </div>
                 <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
                     <div className='basis-3/4'>
@@ -311,7 +318,7 @@ export default function TicketCreateFormSection() {
                             required={true}
                             onChange={formHandler}
                             name='remarks'
-                            value={form.remarks}
+                            value={form.remarks ?? ' '}
                             label='Remarks'
                             type='text'
                             errorMessage='Remarks is required'

@@ -18,7 +18,7 @@ export function upload_ticket_files_thunk(data,ticket_id) {
         await upload_picture_videos(data);
         const result = await get_upload_picture_videos(ticket_id);
         dispatch(setFilesData(result.data));
-         dispatch(customerTicketsSlice.actions.setTickets(result));
+        //  dispatch(customerTicketsSlice.actions.setTickets(result));
     };
 }
 

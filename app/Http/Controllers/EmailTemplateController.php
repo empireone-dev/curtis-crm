@@ -38,7 +38,7 @@ class EmailTemplateController extends Controller
     public function send_mail_create_ticket_form($data)
     {
         if ($data['email'] && $data['isSendEmail']) {
-            Mail::to('recipient@example.com')->send(new MailCreateTicketForm($data));
+            Mail::to($data['email'])->send(new MailCreateTicketForm($data));
         }
         return response()->json([
             'status' => 'success',

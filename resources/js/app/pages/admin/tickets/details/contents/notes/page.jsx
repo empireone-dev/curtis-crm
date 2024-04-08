@@ -4,7 +4,7 @@ import ContentNotesTextareaSection from './sections/content-notes-textarea-secti
 
 export default function TicketsDetailsContentNotes() {
   return (
-    <div>
+    <div className='mx-3'>
       <ContentNotesTextareaSection />
       <ContentNotesCommentSection />
     </div>

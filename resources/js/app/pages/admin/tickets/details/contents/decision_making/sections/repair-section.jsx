@@ -16,28 +16,28 @@ export default function RepairSection() {
                 <form className="container px-4 mx-auto">
                     <div className="mt-4 mb-3 grid grid-cols-1 gap-x-6 gap-y-8">
                         <div>
-                            <label for="username" className="block text-sm font-medium leading-6 text-gray-900">ASC's</label>
+                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">ASC's</label>
                             <div className="col-span-full">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
-                            <label for="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Repair Cost</label>
+                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Repair Cost</label>
                             <div className="col-span-full">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
-                            <label for="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Warranty Instruction</label>
+                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Warranty Instruction</label>
                             <div className="col-span-full">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
-                            <label for="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Notes</label>
+                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Notes</label>
                             <div className="col-span-full">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <textarea type="text" name="username" autocomplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    <textarea type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                         </div>
