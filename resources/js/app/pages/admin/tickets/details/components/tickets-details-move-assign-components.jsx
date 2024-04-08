@@ -2,15 +2,17 @@ import store from '@/app/store/store'
 import React, { useState } from 'react'
 import { update_tickets_status_thunk } from '../../_redux/tickets-thunk'
 import Loading from '@/app/layouts/components/loading'
-import { useSelector } from 'react-redux'
+import { router, usePage } from '@inertiajs/react'
 
-export default function TicketsDetailsMoveAssignComponents({ name, icon, value, ticket }) {
+export default function TicketsDetailsMoveAssignComponents({ name, icon, value, ticket,link }) {
   const [isLoading, setIsLoading] = useState(false)
-  
+  const page = usePage();
+
   async function update_status() {
     setIsLoading(true)
     await store.dispatch(update_tickets_status_thunk(ticket.id, value))
     setIsLoading(false)
+    router.visit('#'+link);
   }
   return (
     <div className='my-3 mx-1'>

@@ -29,7 +29,7 @@ export default function ContentDetailsSection() {
             <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">Item Type : {ticket.class}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900 flex">Issue :  {JSON.parse(ticket.issue).map((item, j) => {
+            <dt className="text-sm font-medium leading-6 text-gray-900 flex">Issue :  { ticket.issue && JSON.parse(ticket.issue).map((item, j) => {
               return (
                 <div key={j} className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-blue-100 bg-blue-700 border border-blue-700">
                   <div className="text-xs font-normal leading-none max-w-full flex-initial">

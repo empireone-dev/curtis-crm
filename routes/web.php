@@ -47,6 +47,10 @@ Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
 })->name('dashboard');
 
+// Route::get('/show_ticket_email', function () {
+//     return view('mail.mail-create-ticket-form');
+// });
+
 
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
     Route::get('/dashboard', function () {

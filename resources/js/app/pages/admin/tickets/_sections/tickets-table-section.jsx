@@ -109,7 +109,7 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap ">
                                                             {res.status == null ? (
                                                                 <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
-                                                                    WAITING
+                                                                    OPEN
                                                                 </div>
                                                             ): (
                                                                 <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">

@@ -9,9 +9,9 @@ export default function LayoutSidebarSection() {
   return (
     <>
       <div className="h-screen flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
-        <div className="flex flex-col left-0 w-64 bg-white h-screen border-r">
+        <div className="flex flex-col left-0 w-52 bg-white h-screen border-r">
           <div className="flex items-center justify-center h-14 border-b">
-            <img src="/images/logo.png" className='w-full h-12 px-16 py-2'/>
+            <img src="/images/logo.png" className='w-full h-12 px-4 py-2'/>
           </div>
           <div className="overflow-y-auto overflow-x-hidden flex-grow">
             <ul className="flex flex-col py-4 space-y-1">
