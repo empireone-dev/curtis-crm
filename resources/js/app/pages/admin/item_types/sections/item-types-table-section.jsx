@@ -84,8 +84,8 @@ export default function ItemTypesTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <ItemTypeEditSection />
-                                                        <ItemTypeDeleteSection />
+                                                        <ItemTypeEditSection data = {res} />
+                                                        <ItemTypeDeleteSection data = {res}/>
                                                     </td>
                                                 </tr>
                                             })

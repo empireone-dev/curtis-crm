@@ -7,6 +7,7 @@ import RoleDeleteSection from './role-delete-section'
 export default function RolesTableSection() {
 
     const { roles } = useSelector((state) => state.roles)
+    console.log('roles',roles)
     return (
         <>
             <section className="container px-4 my-12 mx-auto">

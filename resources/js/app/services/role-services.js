@@ -14,3 +14,8 @@ export async function delete_role_service(id){
     const res = await axios.delete('/api/role/'+id)
     return res.data
 }
+
+export async function update_role_service(data){
+    const res = await axios.put(`/api/role/${data.id}`, data);
+    return res.data;
+}

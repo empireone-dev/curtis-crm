@@ -93,8 +93,8 @@ export default function CommonIssueTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <CommonIssueEditSection/>
-                                                        <CommonIssueDeleteSection/>
+                                                        <CommonIssueEditSection data={res}/>
+                                                        <CommonIssueDeleteSection data={res}/>
                                                     </td>
                                                 </tr>
                                             })

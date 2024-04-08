@@ -1,7 +1,6 @@
 import Drawer from '@/app/layouts/components/drawer'
 import store from '@/app/store/store';
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { update_permission_thunk } from '../redux/permissions-thunk';
 
@@ -20,6 +19,7 @@ export default function PermissionEditSection({ data }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
        store.dispatch(update_permission_thunk(newData))
+       closeModal();
     };
     return (
         <div>

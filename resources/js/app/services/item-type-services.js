@@ -9,3 +9,8 @@ export async function store_item_types_service(data){
     const res = await axios.post('/api/item_types',data)
     return res.data
 }
+
+export async function delete_item_types_service(id){
+    const res = await axios.delete('/api/item_types/'+id)
+    return res.data
+}

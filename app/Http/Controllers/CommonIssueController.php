@@ -27,4 +27,24 @@ class CommonIssueController extends Controller
         //    'data'=>$this->index()->original['data']
         // ], 200);
     }
+
+    public function destroy($id)
+    {
+        $common_issue = CommonIssue::find($id);
+        if (!$common_issue) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'common_issue not found'
+            ], 404);
+        }
+    
+        $common_issue->delete();
+    
+        $common_issues = CommonIssue::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $common_issues
+        ], 200);
+    }
+
 }

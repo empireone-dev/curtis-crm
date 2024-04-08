@@ -27,4 +27,23 @@ class ItemTypeController extends Controller
         //    'data'=>$this->index()->original['data']
         // ], 200);
     }
+
+    public function destroy($id)
+    {
+        $item_type = ItemType::find($id);
+        if (!$item_type) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'item_type not found'
+            ], 404);
+        }
+    
+        $item_type->delete();
+    
+        $item_types = ItemType::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $item_types
+        ], 200);
+    }
 }

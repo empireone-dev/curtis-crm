@@ -19,7 +19,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // User::create($request->validate([
-        //     'name' => 'required|unique:permission',
+        //     'name' => 'required|unique:user',
         //     'details' => 'required',
         //     'start' => 'required',
         //     'due' => 'required',
@@ -47,6 +47,15 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $users
+        ], 200);
+    }
+
+    public function update(Request $request, $id){
+        $user = User::find($id);
+        $user->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
         ], 200);
     }
 }

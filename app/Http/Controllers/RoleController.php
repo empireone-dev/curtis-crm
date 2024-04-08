@@ -46,4 +46,13 @@ class RoleController extends Controller
             'data' => $role
         ], 200);
     }
+
+    public function update(Request $request, $id){
+        $role = Role::find($id);
+        $role->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
 }

@@ -1,4 +1,4 @@
-import { delete_users_service, get_users_service } from '@/app/services/user-service';
+import { delete_users_service, get_users_service, update_users_service } from '@/app/services/user-service';
 import { usersSlice } from './users-slice';
 
 export function get_users_thunk() {
@@ -15,4 +15,10 @@ export function delete_users_thunk(id) {
   };
 }
 
+export function update_users_thunk(data) {
+  return async function (dispatch, getState) {
 
+   const result = await update_users_service(data)
+   dispatch(usersSlice.actions.setUsers(result.data));
+  };
+}
