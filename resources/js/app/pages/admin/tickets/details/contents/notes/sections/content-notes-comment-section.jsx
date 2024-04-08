@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 export default function ContentNotesCommentSection() {
 
     const { notes } = useSelector((state) => state.tickets);
-    console.log('notes', notes)
+   
     return (
         <div>
             <ol className="relative ">
@@ -21,11 +21,9 @@ export default function ContentNotesCommentSection() {
                                             className="mr-2 w-6 h-6 rounded-full"
                                             src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                                             alt="Michael Gough" />{res.user.name}</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400"><time pubdate
-                                            dateTime="2022-02-08"
-                                            title="February 8th, 2022">{moment(res.created_at).format('LLL')}
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">{moment(res.created_at).format('LLL')}
 
-                                        </time></p>
+                                      </p>
                                        </div>
                                         <div className='text-gray-400'>{formattedTimestamp}</div>
                                     </div>
