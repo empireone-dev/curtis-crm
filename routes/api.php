@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\EmailTemplateController;
@@ -37,6 +38,7 @@ Route::resource('permissions',PermissionController::class);
 Route::resource('email_templates',EmailTemplateController::class);
 Route::resource('role',RoleController::class);
 Route::resource('activities',ActivityController::class);
+Route::resource('notes',AgentNoteController::class);
 
 Route::resource('tickets',TicketController::class);
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

@@ -1,43 +1,72 @@
-import React from 'react'
+import moment from 'moment';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function ContentNotesCommentSection() {
-  return (
-    <div>
-        
-<ol className="relative border-s border-gray-200">                  
-    <li className="mb-10 ms-6">            
-        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white">
-            <img className="rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/>
-        </span>
-        <div className="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex">
-            <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">just now</time>
-            <div className="text-sm font-normal text-gray-500 ">Bonnie moved <a href="#" className="font-semibold text-blue-600 hover:underline">Jese Leos</a> to <span className="bg-gray-100 text-gray-800 text-xs font-normal me-2 px-2.5 py-0.5 rounded">Funny Group</span></div>
-        </div>
-    </li>
-    <li className="mb-10 ms-6">
-        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white">
-            <img className="rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Thomas Lean image"/>
-        </span>
-        <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-            <div className="items-center justify-between mb-3 sm:flex">
-                <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">2 hours ago</time>
-                <div className="text-sm font-normal text-gray-500 flex">Thomas Lean commented on  <a href="#" className="font-semibold text-gray-900hover:underline">Flowbite Pro</a></div>
-            </div>
-            <div className="p-3 text-xs italic font-normal text-gray-500 border border-gray-200 rounded-lg bg-gray-50 ">Hi ya'll! I wanted to share a webinar zeroheight is having regarding how to best measure your design system! This is the second session of our new webinar series on #DesignSystems discussions where we'll be speaking about Measurement.</div>
-        </div>
-    </li>
-    <li className="ms-6">
-        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white">
-            <img className="rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="Jese Leos image"/>
-        </span>
-        <div className="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex">
-            <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">1 day ago</time>
-            <div className="text-sm font-normal text-gray-500 flex">Jese Leos has changed <a href="#" className="font-semibold text-blue-600 hover:underline">Pricing page</a> task status to  <span className="font-semibold text-gray-900 ">Finished</span></div>
-        </div>
-    </li>
-</ol>
 
+    const { notes } = useSelector((state) => state.tickets);
+    console.log('notes', notes)
+    return (
+        <div>
+            <ol className="relative ">
+                {
+                    notes.map((res, i) => {
+                        const formattedTimestamp = moment(res.created_at).fromNow();
+                        return (
+                            <article key={i} className="p-6 text-base bg-white rounded-lg border-s border-l-2 border-blue-500 my-3">
+                                <footer className="flex justify-between items-center mb-2">
+                                    <div className="flex flex-col">
+                                       <div className='flex'>
+                                       <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
+                                            className="mr-2 w-6 h-6 rounded-full"
+                                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                                            alt="Michael Gough" />{res.user.name}</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400"><time pubdate
+                                            dateTime="2022-02-08"
+                                            title="February 8th, 2022">{moment(res.created_at).format('LLL')}
 
-    </div>
-  )
+                                        </time></p>
+                                       </div>
+                                        <div className='text-gray-400'>{formattedTimestamp}</div>
+                                    </div>
+
+                                    <button id={`dropdownComment${i}Button`} data-dropdown-toggle={`dropdownComment${i}`}
+                                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                        type="button">
+                                        <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                        </svg>
+                                        <span className="sr-only">Comment settings</span>
+                                    </button>
+
+                                    <div id={`dropdownComment${i}`}
+                                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                            aria-labelledby={`dropdownMenuIconHorizontalButton${i}`}>
+                                            <li>
+                                                <a href="#"
+                                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </footer>
+                                <p className="text-gray-500 dark:text-gray-400">
+                                    {res.message}
+                                </p>
+
+                            </article>
+                        )
+                    })
+                }
+            </ol>
+        </div>
+    )
 }

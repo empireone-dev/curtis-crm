@@ -10,7 +10,8 @@ export const ticketsSlice = createSlice({
       id:null,
       page:1
     },
-    activities:[]
+    activities:[],
+    notes:[]
   },
   reducers: {
     setTickets: (state, action) => {
@@ -28,6 +29,9 @@ export const ticketsSlice = createSlice({
     setActivities: (state, action) => {
       state.activities = action.payload
     },
+    setNotes: (state, action) => {
+      state.notes = action.payload
+    },
   },
 })
 export const { setTickets,
@@ -35,6 +39,7 @@ export const { setTickets,
   setSearch,
   setTicket,
   setActivities,
+  setNotes
  } = ticketsSlice.actions
 
 export default ticketsSlice.reducer
