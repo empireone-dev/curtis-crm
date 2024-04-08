@@ -29,13 +29,15 @@ class FileController extends Controller
             'isUploading' => 'true'
         ]);
         // $user_id,$ticket_id,$message,$type
-        ActivityController::create_activity(
-            $ticket->user_id,
-            $request->ticket_id,
-            'Upload Complete by Customer',
-            'upload'
-        );
-        
+        if ($ticket->type !== 'upload') {
+            ActivityController::create_activity(
+                $ticket->user_id,
+                $request->ticket_id,
+                'Upload Complete by Customer',
+                'upload'
+            );
+        }
+
         return response()->json([
             'url' => 'success',
         ], 200);
