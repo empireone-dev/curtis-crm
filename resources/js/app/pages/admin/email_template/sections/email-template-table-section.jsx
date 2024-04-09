@@ -1,5 +1,5 @@
 import React from 'react'
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { DocumentTextIcon} from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 import EmailTemplateEditSection from './email-template-edit-section';
 import EmailTemplateDeleteSection from './email-template-delete-section';
@@ -93,12 +93,17 @@ export default function EmailtemplateTableSection() {
                                                     </td>
                                                     <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                                         <div>
-                                                            <h2 className="font-medium text-gray-800 dark:text-white "></h2>
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">
+                                                                <button className="flex bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
+                                                                    <DocumentTextIcon className='h-5'/>
+                                                                    <span>VIEW TEMPLATE</span>
+                                                                </button>
+                                                            </h2>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <EmailTemplateEditSection data={res}/>
-                                                        <EmailTemplateDeleteSection data={res}/>
+                                                        <EmailTemplateEditSection data={res} />
+                                                        <EmailTemplateDeleteSection data={res} />
                                                     </td>
                                                 </tr>
                                             })

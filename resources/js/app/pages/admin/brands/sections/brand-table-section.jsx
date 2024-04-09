@@ -7,6 +7,8 @@ import BrandDeleteSection from './brand-delete-section'
 export default function BrandTableSection() {
     const { brands } = useSelector((state) => state.brands)
 
+    console.log('brand', brands)
+
     return (
         <>
             <section className="container px-4 my-12 mx-auto">

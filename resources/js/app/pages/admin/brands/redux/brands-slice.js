@@ -6,11 +6,11 @@ export const brandsSlice = createSlice({
     brands: []
   },
   reducers: {
-    setbrands: (state, action) => {
+    setBrands: (state, action) => {
       state.brands = action.payload
     },
   },
 })
-export const { setbrands } = brandsSlice.actions
+export const { setBrands } = brandsSlice.actions
 
 export default brandsSlice.reducer

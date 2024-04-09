@@ -14,3 +14,8 @@ export async function delete_common_issues_service(id){
     const res = await axios.delete('/api/common_issues/'+id)
     return res.data
 }
+
+export async function update_common_issues_service(data){
+    const res = await axios.put(`/api/common_issues/${data.id}`, data);
+    return res.data;
+}

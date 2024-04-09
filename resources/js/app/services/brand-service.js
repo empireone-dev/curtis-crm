@@ -14,3 +14,8 @@ export async function delete_brand_service(id){
     const res = await axios.delete('/api/brands/'+id)
     return res.data
 }
+
+export async function update_brand_service(data){
+    const res = await axios.put(`/api/brands/${data.id}`, data);
+    return res.data;
+}

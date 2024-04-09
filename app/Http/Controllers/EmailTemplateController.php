@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Mail\EmailTemplate;
 use App\Mail\MailCreateTicketForm;
 use App\Models\EmailTemplate as ModelsEmailTemplate;
@@ -32,6 +32,15 @@ class EmailTemplateController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $email_templates
+        ], 200);
+    }
+
+    public function update(Request $request, $id){
+        $email_template = ModelsEmailTemplate::find($id);
+        $email_template->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
         ], 200);
     }
 

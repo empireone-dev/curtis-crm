@@ -47,4 +47,13 @@ class CommonIssueController extends Controller
         ], 200);
     }
 
+    public function update(Request $request, $id){
+        $common_issue = CommonIssue::find($id);
+        $common_issue->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
+
 }

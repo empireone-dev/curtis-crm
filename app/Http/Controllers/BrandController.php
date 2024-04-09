@@ -46,4 +46,13 @@ class BrandController extends Controller
             'data' => $brands
         ], 200);
     }
+
+    public function update(Request $request, $id){
+        $brand = Brand::find($id);
+        $brand->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
 }

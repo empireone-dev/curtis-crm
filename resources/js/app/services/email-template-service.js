@@ -14,3 +14,8 @@ export async function delete_email_template_service(id){
     const res = await axios.delete('/api/email_templates/'+id)
     return res.data
 }
+
+export async function update_email_template_service(data){
+    const res = await axios.put(`/api/email_templates/${data.id}`, data);
+    return res.data;
+}

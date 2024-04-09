@@ -46,4 +46,13 @@ class ItemTypeController extends Controller
             'data' => $item_types
         ], 200);
     }
+
+    public function update(Request $request, $id){
+        $item_type = ItemType::find($id);
+        $item_type->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
 }

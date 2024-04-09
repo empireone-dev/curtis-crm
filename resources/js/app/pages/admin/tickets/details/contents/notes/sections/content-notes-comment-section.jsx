@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 export default function ContentNotesCommentSection() {
 
     const { notes } = useSelector((state) => state.tickets);
-   
+    
     return (
         <div>
             <ol className="relative ">
