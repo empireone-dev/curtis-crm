@@ -318,7 +318,7 @@ export default function TicketCreateFormSection() {
                             required={true}
                             onChange={formHandler}
                             name='remarks'
-                            value={form.remarks ?? ' '}
+                            value={form.remark??' '}
                             label='Remarks'
                             type='text'
                             errorMessage='Remarks is required'

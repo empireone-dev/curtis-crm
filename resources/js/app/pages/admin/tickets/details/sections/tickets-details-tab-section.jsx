@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_tickets_by_ticket_id } from '@/app/services/tickets-service';
 import { setTicket } from '../../_redux/tickets-slice';
 import { TicketIcon } from '@heroicons/react/24/outline';
+import ContentsRepairPage from '../contents/repair/page';
+import ContentsRefundPage from '../contents/refund/page';
+import ContentsReplacementPage from '../contents/replacement/page';
+import ContentsWarrantyValidationPage from '../contents/warranty_validation/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -75,6 +79,42 @@ export default function TicketsDetailsTabSection() {
       ]
       : []),
 
+      ...(ticket.isUploading === 'true' && ticket.status === 'REPAIR'
+      ? [
+        {
+          title: 'Repair',
+          components: <ContentsRepairPage />,
+          hash: '#repair',
+        },
+      ]
+      : []),
+      ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
+      ? [
+        {
+          title: 'Refund',
+          components: <ContentsRefundPage />,
+          hash: '#refund',
+        },
+      ]
+      : []),
+      ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+      ? [
+        {
+          title: 'Replacement',
+          components: <ContentsReplacementPage />,
+          hash: '#replacement',
+        },
+      ]
+      : []),
+      ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
+      ? [
+        {
+          title: 'Validation',
+          components: <ContentsWarrantyValidationPage />,
+          hash: '#validation',
+        },
+      ]
+      : []),
     {
       title: 'Update Status',
       components: <TicketsDetailsContentStatus />,
@@ -108,9 +148,9 @@ export default function TicketsDetailsTabSection() {
           <div className='py-3 text-3xl font-black flex gap-3 text-blue-600'>
             <TicketIcon className='h-9'/> {ticket.status??'Open Ticket'} ({ticket.call_type})
           </div>
-          <div className="mb-4 flex space-x-4 p-2 bg-white rounded-lg border-blue-500 border-2 ">
+          <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
             {tabs.map((res, i) => (
-              <button key={i} onClick={() => handleTabClick(i)} className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash == res.hash ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'}`}>
+              <button key={i} onClick={() => handleTabClick(i)} className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash == res.hash ? 'bg-blue-600 text-white' : 'bg-gray-300 hover:bg-blue-200'}`}>
                 {res.title}
               </button>
 

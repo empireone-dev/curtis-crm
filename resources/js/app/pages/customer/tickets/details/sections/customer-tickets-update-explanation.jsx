@@ -28,14 +28,15 @@ export default function CustomerTicketsUpdateExplanation() {
        await store.dispatch(update_explanation_thunk(ticket_id, ticket?.explanation ?? ''))
          setIsLoading(false)
     }
-
+console.log('ticket',ticket.explanation)
     return (
         <form
             onSubmit={submitExplanation}
             className='px-5 w-full'>
+
             <Textarea
                 name="explanation"
-                value={ticket.explanation ?? ' '}
+                value={ticket.explanation??' '}
                 label="Write a detailed explanation of the defect/issue."
                 type=""
                 errorMessage="Please write an explanation "
