@@ -2,51 +2,62 @@ import React, { useEffect, useState } from 'react'
 import Select from '@/app/layouts/components/select'
 import Input from '@/app/layouts/components/input'
 import Wysiwyg from '@/app/layouts/components/wysiwyg'
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import ValidationButtonSection from './validation-button-section'
+import { setSelectedTemplate } from '../../../../_redux/tickets-slice'
 export default function ValidationFormSection() {
-    const [data, setData] = useState()
+    const [notes, setNotes] = useState('')
     const { email_templates } = useSelector((state) => state.email_templates);
+    const { selectedTemplate } = useSelector((state) => state.tickets);
+    const { ticket } = useSelector((state) => state.tickets)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        setData({
-            ...data,
-            email_template: {
-                id: 1,
-                template_name: "Blank Template",
-                template_text: ' '
-            }
-        })
-    }, []);
+        dispatch(setSelectedTemplate({
+            id: 1,
+            notes: notes,
+            ticket: ticket,
+            template_name: "Blank Template",
+            template_text: selectedTemplate.template_text??' '
+        }))
+    }, [notes]);
 
     function formHandler(value, name) {
         const findTemplates = email_templates.find(res => res.id == value)
-        setData({
-            ...data,
-            [name]: findTemplates
-        })
+        dispatch(setSelectedTemplate({
+            ...findTemplates,
+            notes: notes,
+            ticket:ticket
+        }))
     }
 
+    function formHandlerWysiwyg(value) {
+        dispatch(setSelectedTemplate({
+            ...selectedTemplate,
+            template_text: value,
+        }))
+    }
+    console.log('selectedTemplate',selectedTemplate)
     return (
         <div className='flex w-full items-center justify-center'>
 
             <div className='max-w-7xl w-full flex flex-col gap-5'>
                 <div>
-                Mark this Ticket Valid / In Valid (Close)
+                    Mark this Ticket Valid / In Valid (Close)
                 </div>
-                <Input
-                    onChange={formHandler}
+                {/* <Input
+                    onChange={setNotes}
                     name='notes'
                     required={true}
-                    value={data?.notes}
+                    value={notes}
                     label='Item notes'
                     type='text'
                     errorMessage='Item notes is required'
-                />
+                /> */}
                 <Select
                     onChange={formHandler}
                     name='email_template'
-                    value='waa'
+                    value=''
                     label='Email Templates'
                     errorMessage=''
                     data={email_templates.map(res => ({
@@ -56,24 +67,14 @@ export default function ValidationFormSection() {
                 />
                 <Wysiwyg
                     label=""
-                    value={data?.email_template?.template_text ?? ' '}
-                    onChange=""
+                    name="wysiwyg"
+                    value={selectedTemplate?.template_text ?? ' '}
+                    onChange={formHandlerWysiwyg}
 
                 />
 
                 <div className='flex gap-4 mt-12'>
-                    <button className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>
-                        MARK VALID - IW
-                    </button>
-                    <button className='p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>
-                        MARK VALID - OOW
-                    </button>
-                    <button className='p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600'>
-                        MARK INVALID 
-                    </button>
-                    <button className='p-2 bg-red-500 text-white rounded-md hover:bg-red-600'>
-                        MARK INCOMPLETE 
-                    </button>
+                    <ValidationButtonSection />
                 </div>
             </div>
         </div>

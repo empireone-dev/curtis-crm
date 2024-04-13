@@ -23,7 +23,7 @@ class ActivityController extends Controller
 
     public function show($ticket_id)
     {
-        $activities = Activity::where('ticket_id', $ticket_id)->with('user')->orderBy('id','asc')->get();
+        $activities = Activity::where('ticket_id', $ticket_id)->with('user')->orderBy('id','desc')->get();
         return response()->json([
             'data' => $activities
         ], 200);

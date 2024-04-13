@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Mail\EmailTemplate;
 use App\Mail\MailCreateTicketForm;
+use App\Mail\Validation;
 use App\Models\EmailTemplate as ModelsEmailTemplate;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Mail;
 
 class EmailTemplateController extends Controller
 {
-    public function index(){
+
+    public function index()
+    {
         $email_template = ModelsEmailTemplate::get();
         return response()->json([
             'data' => $email_template
@@ -25,9 +30,9 @@ class EmailTemplateController extends Controller
                 'message' => 'email_template not found'
             ], 404);
         }
-    
+
         $email_template->delete();
-    
+
         $email_templates = ModelsEmailTemplate::get();
         return response()->json([
             'status' => 'success',
@@ -35,7 +40,8 @@ class EmailTemplateController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $email_template = ModelsEmailTemplate::find($id);
         $email_template->update($request->all());
 
@@ -65,5 +71,21 @@ class EmailTemplateController extends Controller
 
         return 'Email sent successfully!';
     }
-    
+
+    public function validation(Request $request)
+    {
+
+        $status = $request->mark == 'IW' || $request->mark == 'OOW' ? 'RESOURCE' : $request->mark;
+        ActivityController::create_activity(
+            $request->user['id'],
+            $request->ticket['id'],
+            strtoupper($request->user['name']) . ' MOVE TO ' .  $status,
+            'VALIDATION'
+        );
+        Ticket::where('id', $request->ticket['id'])->update([
+            'status' => $status
+        ]);
+        Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        return 'Email sent successfully!';
+    }
 }

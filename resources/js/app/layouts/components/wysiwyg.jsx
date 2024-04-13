@@ -25,11 +25,13 @@ const formats = [
     'link', 'image', 'video'
 ];
 
-export default function Wysiwyg({ label, value, onChange }) {
+export default function Wysiwyg({ label, value, onChange,name }) {
 
     return (
         <div>
             <ReactQuill
+            
+                onChange={(e)=>onChange(e)}
                 className='h-[500px]'
                 modules={modules}
                 formats={formats}

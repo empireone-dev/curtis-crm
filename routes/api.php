@@ -35,7 +35,10 @@ Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
+
 Route::resource('email_templates',EmailTemplateController::class);
+Route::post('validation', [EmailTemplateController::class, 'validation']);
+
 Route::resource('role',RoleController::class);
 Route::resource('activities',ActivityController::class);
 Route::resource('notes',AgentNoteController::class);

@@ -19,3 +19,8 @@ export async function update_email_template_service(data){
     const res = await axios.put(`/api/email_templates/${data.id}`, data);
     return res.data;
 }
+
+export async function validation_service(data){
+    const res = await axios.post(`/api/validation`,data);
+    return res.data;
+}

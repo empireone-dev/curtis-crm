@@ -32,7 +32,10 @@ use Inertia\Inertia;
 // Start Send Email
 
 Route::get('send_mail_create_ticket_form', [EmailTemplateController::class, 'send_mail_create_ticket_form']);
+// Route::get('validation', [EmailTemplateController::class, 'validation']);
 //End Send EMail
+
+
 
 // START GOOGLE LOGIN
 Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);

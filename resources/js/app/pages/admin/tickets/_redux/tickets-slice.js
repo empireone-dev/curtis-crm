@@ -11,7 +11,8 @@ export const ticketsSlice = createSlice({
       page:1
     },
     activities:[],
-    notes:[]
+    notes:[],
+    selectedTemplate:{}
   },
   reducers: {
     setTickets: (state, action) => {
@@ -32,6 +33,9 @@ export const ticketsSlice = createSlice({
     setNotes: (state, action) => {
       state.notes = action.payload
     },
+    setSelectedTemplate: (state, action) => {
+      state.selectedTemplate = action.payload
+    },
   },
 })
 export const { setTickets,
@@ -39,7 +43,8 @@ export const { setTickets,
   setSearch,
   setTicket,
   setActivities,
-  setNotes
+  setNotes,
+  setSelectedTemplate
  } = ticketsSlice.actions
 
 export default ticketsSlice.reducer
