@@ -1,10 +1,21 @@
+import Input from "@/app/layouts/components/input";
+import Select from "@/app/layouts/components/select";
+import Textarea from "@/app/layouts/components/textarea";
 import { GlobeAmericasIcon, Squares2X2Icon } from "@heroicons/react/20/solid";
-import React from "react";
+import React, { useState } from "react";
 
 export default function ReplacementSection() {
+    const [form, setForm] = useState({});
+
+    function formHandler(value, name) {
+        setForm({
+            ...form,
+            [name]: value,
+        });
+    }
     return (
         <>
-            <section className="container border-2 border-slate-400">
+            <section className="container border-2 border-slate-400  p-4">
                 <div className="sm:flex sm:items-center sm:justify-between border-b border-gray-900/10">
                     <div className="w-full flex justify-center">
                         <div className="flex items-center gap-x-3 mt-4 my-4">
@@ -14,151 +25,120 @@ export default function ReplacementSection() {
                         </div>
                     </div>
                 </div>
-                <form className="container px-4 mx-auto">
-                    <div className="flex gap-x-3">
+                <div className="flex flex-col gap-6">
+                    <Input
+                        onChange={formHandler}
+                        name="unit_cost"
+                        required={true}
+                        value={form.unit_cost}
+                        label="Cost of Unit"
+                        type="text"
+                        errorMessage="Cost of Unit is required"
+                    />
+                    <Input
+                        onChange={formHandler}
+                        name="cube_weight"
+                        required={true}
+                        value={form.cube_weight}
+                        label="Cube Weight"
+                        type="text"
+                        errorMessage="Cube Weight is required"
+                    />
+                    <h2 className="text-base font-semibold leading-7 text-gray-900">
+                        Dimension
+                    </h2>
+                    <div className="flex gap-3">
+                        <Input
+                            onChange={formHandler}
+                            name="length"
+                            required={true}
+                            value={form.length}
+                            label="Length"
+                            type="text"
+                            errorMessage="Length is required"
+                        />
+                        <Input
+                            onChange={formHandler}
+                            name="width"
+                            required={true}
+                            value={form.width}
+                            label="Width"
+                            type="text"
+                            errorMessage="Width is required"
+                        />
+                        <Input
+                            onChange={formHandler}
+                            name="height"
+                            required={true}
+                            value={form.height}
+                            label="Height"
+                            type="text"
+                            errorMessage="Height is required"
+                        />
+                    </div>
+
+                    <div className="flex gap-3">
                         <button
                             type="button"
-                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-green-500 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-green-500 hover:text-gray-500"
+                            className="w-96 bg-transparent py-2 hover:bg-blue-50 text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black"
                         >
-                            <GlobeAmericasIcon className="h-5" />
-                            <span>CA</span>
+                            GET FEDEX RATES
                         </button>
-                        <button
-                            type="button"
-                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-yellow-500 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-yellow-500 hover:bg-yellow-300 hover:text-gray-500"
-                        >
-                            <Squares2X2Icon className="h-5" />
-                            <span>VSE3B9</span>
-                        </button>
+                        <Input
+                            onChange={formHandler}
+                            name="shipping_cost"
+                            required={true}
+                            value={form.shipping_cost}
+                            label="Shipping Cost"
+                            type="text"
+                            errorMessage="Shipping Cost is required"
+                        />
+                        <Input
+                            onChange={formHandler}
+                            name="estimate_cost"
+                            required={true}
+                            value={form.estimate_cost}
+                            label="Estimated Cost"
+                            type="text"
+                            errorMessage="Estimated Cost is required"
+                        />
                     </div>
-                    <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
-                        <div className="w-full">
-                            <div class="relative w-full min-w-[200px] h-10 md:flex mb-7">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-500 sm:text-lg">
-                                    $
-                                </span>
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Cost of Unit
-                                </label>
-                            </div>
-
-                            <div class="relative w-full min-w-[200px] h-10">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Cube Weight
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="pb-7 mt-7">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">
-                            Dimension
-                        </h2>
-                        <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="sm:col-span-2 relative w-full min-w-[200px] h-10 md:flex mt-2">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Length
-                                </label>
-                            </div>
-
-                            <div className="sm:col-span-2 relative w-full min-w-[200px] h-10 md:flex mt-2">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Width
-                                </label>
-                            </div>
-
-                            <div className="sm:col-span-2 relative w-full min-w-[200px] h-10 md:flex mt-2">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Height
-                                </label>
-                            </div>
-
-                            <div className="sm:col-span-2 ">
-                                <label
-                                    htmlFor="first-name"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                    Canada to Canada
-                                </label>
-                                <div>
-                                    <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
-                                        GET FEDEX RATES
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="sm:col-span-2 relative w-full min-w-[200px] h-10 md:flex mb-3">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-500 sm:text-lg">
-                                    $
-                                </span>
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Shipping Cost
-                                </label>
-                            </div>
-
-                            <div className="sm:col-span-2 relative w-full min-w-[200px] h-10 md:flex mb-3">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-500 sm:text-lg">
-                                    $
-                                </span>
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Total Estimated Cost
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
-                        <div className="w-full">
-                            <div class="relative w-full min-w-[200px] h-10 mb-8">
-                                <input
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Warranty Instruction
-                                </label>
-                            </div>
-                            <div class="relative w-full min-w-[200px] h-10 mb-8">
-                                <textarea
-                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
-                                    placeholder=""
-                                />
-                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
-                                    Notes
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mb-2 mt-6 flex items-center justify-end gap-x-6">
+                    <Select
+                        onChange={formHandler}
+                        name="instruction"
+                        required={false}
+                        value={form.instruction ?? ""}
+                        label="Warranty Instruction"
+                        errorMessage=""
+                        data={[
+                            {
+                                value: "",
+                                name: "",
+                            },
+                            {
+                                value: "warehouse",
+                                name: "Return to warehouse(the US or CANADA)",
+                            },
+                            {
+                                value: "home",
+                                name: "Destroy in Home",
+                            },
+                            {
+                                value: "asc",
+                                name: "Refer to ASC",
+                            },
+                        ]}
+                    />
+                    <Textarea
+                        required={true}
+                        onChange={formHandler}
+                        name="notes"
+                        value={form.notes ?? " "}
+                        label="Notes"
+                        type="text"
+                        errorMessage="Notes is required"
+                    />
+                    <div className="mb-2 flex items-center justify-end gap-x-6">
                         <button
                             type="button"
                             className="text-sm font-semibold leading-6 text-gray-900"
@@ -167,12 +147,12 @@ export default function ReplacementSection() {
                         </button>
                         <button
                             type="submit"
-                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Submit
                         </button>
                     </div>
-                </form>
+                </div>
             </section>
         </>
     );
