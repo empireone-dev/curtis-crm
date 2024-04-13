@@ -14,36 +14,50 @@ export default function RepairSection() {
                     </div>
                 </div>
                 <form className="container px-4 mx-auto">
-                    <div className="mt-4 mb-3 grid grid-cols-1 gap-x-6 gap-y-8">
-                        <div>
-                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">ASC's</label>
-                            <div className="col-span-full">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                                </div>
+                    <div className="mt-4 mb-4 grid grid-cols-1 gap-x-6 gap-y-8">
+                        <div className="grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
+                        <div className="w-full">
+                        <div class="relative w-full min-w-[200px] h-10 mb-8">
+                                <input
+                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
+                                    placeholder=""
+                                />
+                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
+                                    ASC's
+                                </label>
                             </div>
-                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Repair Cost</label>
-                            <div className="col-span-full">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                                </div>
+                            <div class="relative w-full min-w-[200px] h-10 mb-8">
+                                <input
+                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
+                                    placeholder=""
+                                />
+                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
+                                    Repair Cost
+                                </label>
                             </div>
-                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Warranty Instruction</label>
-                            <div className="col-span-full">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <input type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                                </div>
+                            <div class="relative w-full min-w-[200px] h-10 mb-8">
+                                <input
+                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
+                                    placeholder=""
+                                />
+                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
+                                    Warranty Instruction
+                                </label>
                             </div>
-                            <label htmlFor="username" className="block text-sm mt-4 font-medium leading-6 text-gray-900">Notes</label>
-                            <div className="col-span-full">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-full">
-                                    <textarea type="text" name="username" autoComplete="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                                </div>
+                            <div class="relative w-full min-w-[200px] h-10 mb-8">
+                                <textarea
+                                    className="peer text-black placeholder-transparent w-full py-2.5 px-5 pl-8 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
+                                    placeholder=""
+                                />
+                                <label className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white">
+                                    Notes
+                                </label>
                             </div>
                         </div>
                     </div>
+                    </div>
 
-                    <div className="mb-2 flex items-center justify-end gap-x-6">
+                    <div className="mb-2 mt-4 flex items-center justify-end gap-x-6">
                         <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
                         <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
                     </div>
