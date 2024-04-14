@@ -2,15 +2,18 @@ import Input from "@/app/layouts/components/input";
 import Select from "@/app/layouts/components/select";
 import Textarea from "@/app/layouts/components/textarea";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setRepair } from "../../../../_redux/tickets-slice";
 
 export default function RepairSection() {
-    const [form, setForm] = useState({});
+    const { repair } = useSelector((state) => state.tickets);
+    const dispatch = useDispatch()
 
     function formHandler(value, name) {
-        setForm({
-            ...form,
+        dispatch(setRepair({
+            ...repair,
             [name]: value,
-        });
+        }))
     }
 
     return (
@@ -32,7 +35,7 @@ export default function RepairSection() {
                                 onChange={formHandler}
                                 name="asc"
                                 required={true}
-                                value={form.asc}
+                                value={repair.asc}
                                 label="ASC"
                                 type="text"
                                 errorMessage="ASC is required"
@@ -41,7 +44,7 @@ export default function RepairSection() {
                                 onChange={formHandler}
                                 name="repair_cost"
                                 required={true}
-                                value={form.repair_cost}
+                                value={repair.repair_cost}
                                 label="Repair Cost"
                                 type="text"
                                 errorMessage="Repair Cost is required"
@@ -50,7 +53,7 @@ export default function RepairSection() {
                                 onChange={formHandler}
                                 name="instruction"
                                 required={false}
-                                value={form.instruction ?? ""}
+                                value={repair.instruction ?? ""}
                                 label="Warranty Instruction"
                                 errorMessage=""
                                 data={[
@@ -76,7 +79,7 @@ export default function RepairSection() {
                                 required={true}
                                 onChange={formHandler}
                                 name="notes"
-                                value={form.notes ?? " "}
+                                value={repair.notes ?? " "}
                                 label="Notes"
                                 type="text"
                                 errorMessage="Notes is required"

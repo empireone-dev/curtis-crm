@@ -1,30 +1,20 @@
 import Input from "@/app/layouts/components/input";
 import { get_fedex_rate_service } from "@/app/services/fedex-rate-service";
-import { get_specific_item_service } from "@/app/services/product-search";
 import { GlobeAmericasIcon, Squares2X2Icon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTicket } from "../../../../_redux/tickets-slice";
+import { setRefund, setTicket } from "../../../../_redux/tickets-slice";
 import Loading from "@/app/layouts/components/loading";
 
 export default function RefundSection() {
-    const [form, setForm] = useState({});
-    const { ticket } = useSelector((state) => state.tickets);
+    const { refund } = useSelector((state) => state.tickets);
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        setForm(ticket)
-        
-    }, [ticket]);
 
     function formHandler(value, name) {
-        // setForm({
-        //     ...form,
-        //     [name]: value,
-        // });
-        dispatch(setTicket({
-            ...ticket,
+        dispatch(setRefund({
+            ...refund,
             [name]: value,
         }))
     }
@@ -33,11 +23,11 @@ export default function RefundSection() {
     async function get_fedex_rate() {
         setIsLoading(true)
         try {
-            const result = await get_fedex_rate_service(ticket)
-            dispatch(setTicket({
-                ...ticket,
-                shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
-                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.cost)).toFixed(2)
+            const result = await get_fedex_rate_service(refund)
+            dispatch(setRefund({
+                ...refund,
+                shipping_cost: `${parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2)}`,
+                estimated_cost: `${(parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(refund.cost)).toFixed(2)}`
             }))
         } catch (error) {
             alert('No rates Found!')
@@ -78,11 +68,11 @@ export default function RefundSection() {
                         <Input
                             onChange={formHandler}
                             span="$"
-                            name="retailer"
+                            name="retailers_price"
                             required={true}
-                            value={form.retailer}
+                            value={refund?.retailers_price ?? ' '}
                             label="Retailer's Price"
-                            type="text"
+                            type="number"
                             errorMessage="Retailer's Price is required"
                         />
                         <Input
@@ -90,9 +80,9 @@ export default function RefundSection() {
                             name="discount"
                             span="$"
                             required={true}
-                            value={form.discount}
+                            value={refund?.discount ?? ' '}
                             label="Discount"
-                            type="text"
+                            type="number"
                             errorMessage="Discount is required"
                         />
                         <Input
@@ -100,19 +90,19 @@ export default function RefundSection() {
                             span="$"
                             name="after_discount"
                             required={true}
-                            value={form.after_discount}
+                            value={refund?.after_discount ?? ' '}
                             label="Price After Discount"
-                            type="text"
+                            type="number"
                             errorMessage="Price After Discount is required"
                         />
                         <Input
                             onChange={formHandler}
-                            name="estimated"
+                            name="estimated_fund"
                             span="$"
                             required={true}
-                            value={form.estimated}
+                            value={refund?.estimated ?? ' '}
                             label="Estimated Cost of Refund"
-                            type="text"
+                            type="number"
                             errorMessage="Estimated Cost of Refund is required"
                         />
                     </div>
@@ -121,7 +111,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="cheque_no"
                             required={true}
-                            value={form.cheque_no}
+                            value={refund?.cheque_no ?? ' '}
                             label="Cheque No."
                             type="text"
                             errorMessage="Cheque No. is required"
@@ -130,27 +120,28 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="cheque_amount"
                             required={true}
-                            value={form.cheque_amount}
+                            value={refund?.cheque_amount ?? ' '}
                             label="Cheque Amount"
-                            type="text"
+                            type="number"
                             errorMessage="Cheque Amount is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="mail_date"
                             required={true}
-                            value={form.mail_date}
+                            value={refund?.mail_date ?? ' '}
                             label="Mail Date"
                             type="date"
                             errorMessage="Mail Date is required"
                         />
                     </div>
+
                     <div className="flex gap-3 ">
                         <Input
                             onChange={formHandler}
                             name="unit_cost"
                             required={true}
-                            value={form?.cost ?? '0'}
+                            value={refund?.cost ?? '0'}
                             label="Cost of Unit"
                             type="text"
                             errorMessage="Cost of Unit is required"
@@ -159,7 +150,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="cube_weight"
                             required={true}
-                            value={form?.cubed_weight ?? '0'}
+                            value={refund?.cubed_weight ?? '0'}
                             label="Cube Weight"
                             type="number"
                             errorMessage="Cube Weight is required"
@@ -175,7 +166,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="length"
                             required={true}
-                            value={form?.length ?? '0'}
+                            value={refund?.length ?? '0'}
                             label="Length"
                             type="number"
                             errorMessage="Length is required"
@@ -184,7 +175,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="width"
                             required={true}
-                            value={form?.width ?? '0'}
+                            value={refund?.width ?? '0'}
                             label="Width"
                             type="number"
                             errorMessage="Width is required"
@@ -193,7 +184,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="height"
                             required={true}
-                            value={form?.height ?? '0'}
+                            value={refund?.height ?? '0'}
                             label="Height"
                             type="number"
                             errorMessage="Height is required"
@@ -216,17 +207,17 @@ export default function RefundSection() {
                             name="shipping_cost"
                             span="$"
                             required={true}
-                            value={form?.shipping_cost ?? '0'}
+                            value={refund?.shipping_cost ?? '0'}
                             label="Shipping Cost"
                             type="number"
                             errorMessage="Shipping Cost is required"
                         />
                         <Input
                             onChange={formHandler}
-                            name="estimate_cost"
+                            name="estimated_cost"
                             span="$"
                             required={true}
-                            value={form?.estimate_cost ?? '0'}
+                            value={refund?.estimated_cost ?? '0'}
                             label="Estimated Cost"
                             type="number"
                             errorMessage="Estimated Cost is required"

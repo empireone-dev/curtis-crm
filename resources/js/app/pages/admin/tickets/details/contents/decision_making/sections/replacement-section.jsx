@@ -3,28 +3,19 @@ import Loading from "@/app/layouts/components/loading";
 import Select from "@/app/layouts/components/select";
 import Textarea from "@/app/layouts/components/textarea";
 import { get_fedex_rate_service } from "@/app/services/fedex-rate-service";
-import { GlobeAmericasIcon, Squares2X2Icon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTicket } from "../../../../_redux/tickets-slice";
+import { setReplacement, setTicket } from "../../../../_redux/tickets-slice";
 
 export default function ReplacementSection() {
-    const [form, setForm] = useState({});
-    const { ticket } = useSelector((state) => state.tickets);
+    const { replacement } = useSelector((state) => state.tickets);
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        setForm(ticket)
-    }, [ticket]);
 
     function formHandler(value, name) {
-        // setForm({
-        //     ...form,
-        //     [name]: value,
-        // });
-        dispatch(setTicket({
-            ...ticket,
+        dispatch(setReplacement({
+            ...replacement,
             [name]: value,
         }))
     }
@@ -33,11 +24,11 @@ export default function ReplacementSection() {
     async function get_fedex_rate() {
         setIsLoading(true)
         try {
-            const result = await get_fedex_rate_service(ticket)
-            dispatch(setTicket({
-                ...ticket,
-                shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
-                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.cost)).toFixed(2)
+            const result = await get_fedex_rate_service(replacement)
+            dispatch(setReplacement({
+                ...replacement,
+                shipping_cost: `${parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2)}`,
+                estimated_cost: `${(parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(replacement.cost)).toFixed(2)}`
             }))
         } catch (error) {
             alert('No rates Found!')
@@ -61,7 +52,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="unit_cost"
                         required={true}
-                        value={form?.cost ?? '0'}
+                        value={replacement?.cost ?? '0'}
                         label="Cost of Unit"
                         type="text"
                         errorMessage="Cost of Unit is required"
@@ -70,7 +61,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="cube_weight"
                         required={true}
-                        value={form?.cubed_weight ?? '0'}
+                        value={replacement?.cubed_weight ?? '0'}
                         label="Cube Weight"
                         type="number"
                         errorMessage="Cube Weight is required"
@@ -83,7 +74,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="length"
                             required={true}
-                            value={form?.length ?? '0'}
+                            value={replacement?.length ?? '0'}
                             label="Length"
                             type="number"
                             errorMessage="Length is required"
@@ -92,7 +83,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="width"
                             required={true}
-                            value={form?.width ?? '0'}
+                            value={replacement?.width ?? '0'}
                             label="Width"
                             type="number"
                             errorMessage="Width is required"
@@ -101,7 +92,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="height"
                             required={true}
-                            value={form?.height ?? '0'}
+                            value={replacement?.height ?? '0'}
                             label="Height"
                             type="number"
                             errorMessage="Height is required"
@@ -122,16 +113,16 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="shipping_cost"
                             required={true}
-                            value={form?.shipping_cost ?? '0'}
+                            value={replacement?.shipping_cost ?? '0'}
                             label="Shipping Cost"
                             type="number"
                             errorMessage="Shipping Cost is required"
                         />
                         <Input
                             onChange={formHandler}
-                            name="estimate_cost"
+                            name="estimated_cost"
                             required={true}
-                            value={form?.estimate_cost ?? '0'}
+                            value={replacement?.estimated_cost ?? '0'}
                             label="Estimated Cost"
                             type="number"
                             errorMessage="Estimated Cost is required"
@@ -141,7 +132,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="instruction"
                         required={false}
-                        value={form.instruction ?? ""}
+                        value={replacement.instruction ?? ""}
                         label="Warranty Instruction"
                         errorMessage=""
                         data={[
@@ -167,7 +158,7 @@ export default function ReplacementSection() {
                         required={true}
                         onChange={formHandler}
                         name="notes"
-                        value={form.notes ?? " "}
+                        value={replacement.notes ?? ""}
                         label="Notes"
                         type="text"
                         errorMessage="Notes is required"

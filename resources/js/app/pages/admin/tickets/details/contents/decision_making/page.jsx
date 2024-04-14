@@ -5,31 +5,44 @@ import RepairSection from './sections/repair-section'
 import { get_specific_item_service } from '@/app/services/product-search';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTicket } from '../../../_redux/tickets-slice';
+import store from '@/app/store/store';
+import { get_making_decision_thunk } from '../../../_redux/tickets-thunk';
 
 export default function TicketsDecisionMakingContent() {
 
   const { ticket } = useSelector((state) => state.tickets);
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
+
+
   async function get_specific_item() {
     const result = await get_specific_item_service(ticket)
-    await dispatch(setTicket({
+    store.dispatch(get_making_decision_thunk({
       ...ticket,
       ...result
     }))
+    setIsLoading(false)
   }
 
   useEffect(() => {
     get_specific_item()
   }, []);
+
+  
   return (
     <div>
-      <RepairSection />
-      <div className='mt-7'>
-        <RefundSection />
-      </div>
-      <div className='mt-7'>
-        <ReplacementSection />
-      </div>
+      {
+        !isLoading && <>
+          <RepairSection />
+          <div className='mt-7'>
+            <RefundSection />
+          </div>
+          <div className='mt-7'>
+            <ReplacementSection />
+          </div>
+        </>
+      }
+
     </div>
   )
 }

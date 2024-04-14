@@ -9,8 +9,6 @@ export async function get_specific_item_service(ticket) {
     const res = await axios.post("/api/get_specific_item/" + gid, {
         item_number: ticket.item_number,
     });
-    console.log('res',res.data)
-    console.log('ticket.country',ticket.country)
     return {
         brand: res.data[0],
         item_number: res.data[1],

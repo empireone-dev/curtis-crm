@@ -4,6 +4,16 @@ import { customerTicketsSlice } from '@/app/pages/customer/tickets/redux/custome
 import { get_activities_by_id_service } from '@/app/services/activities-service';
 import { add_notes_on_tickets_service, get_notes_by_id_service } from '@/app/services/add-notes-service';
 
+
+export function get_making_decision_thunk(data) {
+  return async function (dispatch, getState) {
+     dispatch(ticketsSlice.actions.setRefund(data));
+     dispatch(ticketsSlice.actions.setReplacement(data));
+     dispatch(ticketsSlice.actions.setRepair(data));
+  };
+}
+
+
 export function get_tickets_thunk() {
   return async function (dispatch, getState) {
     const { search } = getState().tickets

@@ -28,7 +28,7 @@ export default function Input({
             return value;
         }
     }
-    const id= name+Math.random()
+    const id = name + Math.random()
     return (
         <div className="w-full">
             <div className="relative">
@@ -36,7 +36,7 @@ export default function Input({
                     required={required}
                     value={formType() ?? ""}
                     onChange={(e) => onChange(e.target.value, e.target.name)}
-                    type={'text'}
+                    type={type == 'date' || type == 'password'? type : 'text'}
                     id={id}
                     name={name}
                     className="peer pl-8 text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
@@ -45,7 +45,7 @@ export default function Input({
                 <div className="">
                     {span && (
                         <span className="absolute inset-y-0 left-3 flex items-center text-gray-500 sm:text-lg pr-2">
-                           {span}
+                            {span}
                         </span>
                     )}
                 </div>
