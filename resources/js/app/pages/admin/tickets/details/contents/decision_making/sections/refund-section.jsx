@@ -166,13 +166,14 @@ export default function RefundSection() {
                     <div className="flex gap-3">
                         <button
                             type="button"
-                            className="w-96 bg-transparent py-2 hover:bg-blue-50 text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black"
+                            className="w-96 bg-transparent mr-12 py-2 hover:bg-blue-50 text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black"
                         >
                             GET FEDEX RATES
                         </button>
                         <Input
                             onChange={formHandler}
                             name="shipping_cost"
+                            span="$"
                             required={true}
                             value={form.shipping_cost}
                             label="Shipping Cost"
@@ -182,6 +183,7 @@ export default function RefundSection() {
                         <Input
                             onChange={formHandler}
                             name="estimate_cost"
+                            span="$"
                             required={true}
                             value={form.estimate_cost}
                             label="Estimated Cost"
