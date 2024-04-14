@@ -1,17 +1,44 @@
 import Input from "@/app/layouts/components/input";
+import Loading from "@/app/layouts/components/loading";
 import Select from "@/app/layouts/components/select";
 import Textarea from "@/app/layouts/components/textarea";
+import { get_fedex_rate_service } from "@/app/services/fedex-rate-service";
 import { GlobeAmericasIcon, Squares2X2Icon } from "@heroicons/react/20/solid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setTicket } from "../../../../_redux/tickets-slice";
 
 export default function ReplacementSection() {
     const [form, setForm] = useState({});
+    const { ticket } = useSelector((state) => state.tickets);
+    const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setForm(ticket)
+    }, [ticket?.product]);
 
     function formHandler(value, name) {
         setForm({
             ...form,
             [name]: value,
         });
+    }
+
+    
+    async function get_fedex_rate() {
+        setIsLoading(true)
+        const result = await get_fedex_rate_service(ticket)
+
+        dispatch(setTicket({
+            ...ticket,
+            product: {
+                ...ticket.product,
+                shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
+                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.product.cost)).toFixed(2)
+            }
+        }))
+        setIsLoading(false)
     }
     return (
         <>
@@ -30,7 +57,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="unit_cost"
                         required={true}
-                        value={form.unit_cost}
+                        value={form?.product?.cost ?? '0'}
                         label="Cost of Unit"
                         type="text"
                         errorMessage="Cost of Unit is required"
@@ -39,7 +66,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="cube_weight"
                         required={true}
-                        value={form.cube_weight}
+                        value={form?.product?.cubed_weight ?? '0'}
                         label="Cube Weight"
                         type="text"
                         errorMessage="Cube Weight is required"
@@ -52,7 +79,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="length"
                             required={true}
-                            value={form.length}
+                            value={form?.product?.length ?? '0'}
                             label="Length"
                             type="text"
                             errorMessage="Length is required"
@@ -61,7 +88,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="width"
                             required={true}
-                            value={form.width}
+                            value={form?.product?.width ?? '0'}
                             label="Width"
                             type="text"
                             errorMessage="Width is required"
@@ -70,7 +97,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="height"
                             required={true}
-                            value={form.height}
+                            value={form?.product?.height ?? '0'}
                             label="Height"
                             type="text"
                             errorMessage="Height is required"
@@ -78,17 +105,20 @@ export default function ReplacementSection() {
                     </div>
 
                     <div className="flex gap-3">
-                        <button
+                    <button
+                            onClick={get_fedex_rate}
                             type="button"
-                            className="w-96 bg-transparent py-2 hover:bg-blue-50 text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black"
+                            className={`w-96 flex items-center justify-center mr-12 py-2 ${isLoading ? 'bg-blue-500' : ' bg-transparent  hover:bg-blue-50'}  text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black`}
                         >
-                            GET FEDEX RATES
+                            {
+                                isLoading ? <Loading /> : 'GET FEDEX RATES'
+                            }
                         </button>
                         <Input
                             onChange={formHandler}
                             name="shipping_cost"
                             required={true}
-                            value={form.shipping_cost}
+                            value={form?.product?.shipping_cost ?? '0'}
                             label="Shipping Cost"
                             type="text"
                             errorMessage="Shipping Cost is required"
@@ -97,7 +127,7 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="estimate_cost"
                             required={true}
-                            value={form.estimate_cost}
+                            value={form?.product?.estimate_cost ?? '0'}
                             label="Estimated Cost"
                             type="text"
                             errorMessage="Estimated Cost is required"

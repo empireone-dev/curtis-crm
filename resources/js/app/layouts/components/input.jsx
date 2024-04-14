@@ -36,7 +36,7 @@ export default function Input({
                     required={required}
                     value={formType() ?? ""}
                     onChange={(e) => onChange(e.target.value, e.target.name)}
-                    type={type}
+                    type={'text'}
                     id={id}
                     name={name}
                     className="peer pl-8 text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"

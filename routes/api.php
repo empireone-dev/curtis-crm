@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
+Route::post('/get_specific_item/{gid}', [GoogleSheetsController::class, 'get_specific_item']);
+
 Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_rate']);
 
 Route::resource('users',UserController::class);
