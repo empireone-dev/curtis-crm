@@ -27,11 +27,11 @@ export default function TicketFormSection() {
     }
 
     const findCountry = (countryName) => {
-        return countries.find(country => country.name === countryName) || null;
+        return countries.find(country => country.value === countryName) || null;
     };
 
 
-    const { regions } = findCountry(form.country ?? 'Canada');
+    const { regions } = findCountry(form.country ?? 'CA');
 
     return (
         <form onSubmit={submitFormTicket} className="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
@@ -253,11 +253,11 @@ export default function TicketFormSection() {
                         errorMessage='Issue is required'
                         data={[
                             {
-                                value: 'Canada',
+                                value: 'CA',
                                 name: 'Canada'
                             },
                             {
-                                value: 'United States',
+                                value: 'US',
                                 name: 'United States'
                             }
                         ]}

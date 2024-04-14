@@ -5,8 +5,8 @@ export const ticketsCreateSlice = createSlice({
   initialState: {
     form: {
       isHasEmail:'true',
-      country:'Canada',
-      state:'Alberta',
+      country:'CA',
+      state:'AB',
       call_type:'CF-Warranty Claim'
     }
   },

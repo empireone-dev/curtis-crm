@@ -5,6 +5,7 @@ use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\EmailTemplateController;
+use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GoogleSheetsController;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
+Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_rate']);
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);

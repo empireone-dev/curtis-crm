@@ -20,13 +20,13 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
-
+        
         dispatch(setForm({
             ...form,
             [name]: value
         }))
     }
-
+console.log('form',form)
     useEffect(() => {
         store.dispatch(get_products_thunk())
     }, []);
@@ -45,11 +45,10 @@ export default function TicketCreateFormSection() {
 
 
     const findCountry = (countryName) => {
-        return countries.find(country => country.name === countryName);
+        return countries.find(country => country.value === countryName);
     };
 
-
-    const { regions } = findCountry(form.country ?? 'Canada');
+    const { regions } = findCountry(form.country??'CA');
 
     return (
         <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
@@ -313,12 +312,13 @@ export default function TicketCreateFormSection() {
 
                 </div>
                 <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
+                  
                     <div className='basis-3/4'>
                         <Textarea
                             required={true}
                             onChange={formHandler}
                             name='remarks'
-                            value={form.remark??' '}
+                            value={form.remarks}
                             label='Remarks'
                             type='text'
                             errorMessage='Remarks is required'
