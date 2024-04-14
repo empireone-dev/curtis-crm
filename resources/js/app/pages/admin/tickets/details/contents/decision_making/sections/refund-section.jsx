@@ -15,28 +15,33 @@ export default function RefundSection() {
 
     useEffect(() => {
         setForm(ticket)
-    }, [ticket?.product]);
+        
+    }, [ticket]);
 
     function formHandler(value, name) {
-        setForm({
-            ...form,
+        // setForm({
+        //     ...form,
+        //     [name]: value,
+        // });
+        dispatch(setTicket({
+            ...ticket,
             [name]: value,
-        });
+        }))
     }
 
 
     async function get_fedex_rate() {
         setIsLoading(true)
-        const result = await get_fedex_rate_service(ticket)
-
-        dispatch(setTicket({
-            ...ticket,
-            product: {
-                ...ticket.product,
+        try {
+            const result = await get_fedex_rate_service(ticket)
+            dispatch(setTicket({
+                ...ticket,
                 shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
-                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.product.cost)).toFixed(2)
-            }
-        }))
+                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.cost)).toFixed(2)
+            }))
+        } catch (error) {
+            alert('No rates Found!')
+        }
         setIsLoading(false)
     }
 
@@ -145,7 +150,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="unit_cost"
                             required={true}
-                            value={form?.product?.cost ?? '0'}
+                            value={form?.cost ?? '0'}
                             label="Cost of Unit"
                             type="text"
                             errorMessage="Cost of Unit is required"
@@ -154,9 +159,9 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="cube_weight"
                             required={true}
-                            value={form?.product?.cubed_weight ?? '0'}
+                            value={form?.cubed_weight ?? '0'}
                             label="Cube Weight"
-                            type="text"
+                            type="number"
                             errorMessage="Cube Weight is required"
                         />
                     </div>
@@ -170,27 +175,27 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="length"
                             required={true}
-                            value={form?.product?.length ?? '0'}
+                            value={form?.length ?? '0'}
                             label="Length"
-                            type="text"
+                            type="number"
                             errorMessage="Length is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="width"
                             required={true}
-                            value={form?.product?.width ?? '0'}
+                            value={form?.width ?? '0'}
                             label="Width"
-                            type="text"
+                            type="number"
                             errorMessage="Width is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="height"
                             required={true}
-                            value={form?.product?.height ?? '0'}
+                            value={form?.height ?? '0'}
                             label="Height"
-                            type="text"
+                            type="number"
                             errorMessage="Height is required"
                         />
                     </div>
@@ -204,29 +209,29 @@ export default function RefundSection() {
                                 isLoading ? <Loading /> : 'GET FEDEX RATES'
                             }
                         </button>
-                       
-                  
-                                <Input
-                                    onChange={formHandler}
-                                    name="shipping_cost"
-                                    span="$"
-                                    required={true}
-                                    value={form?.product?.shipping_cost ?? '0'}
-                                    label="Shipping Cost"
-                                    type="number"
-                                    errorMessage="Shipping Cost is required"
-                                />
-                                <Input
-                                    onChange={formHandler}
-                                    name="estimate_cost"
-                                    span="$"
-                                    required={true}
-                                    value={form?.product?.estimate_cost ?? '0'}
-                                    label="Estimated Cost"
-                                    type="number"
-                                    errorMessage="Estimated Cost is required"
-                                />
-                    
+
+
+                        <Input
+                            onChange={formHandler}
+                            name="shipping_cost"
+                            span="$"
+                            required={true}
+                            value={form?.shipping_cost ?? '0'}
+                            label="Shipping Cost"
+                            type="number"
+                            errorMessage="Shipping Cost is required"
+                        />
+                        <Input
+                            onChange={formHandler}
+                            name="estimate_cost"
+                            span="$"
+                            required={true}
+                            value={form?.estimate_cost ?? '0'}
+                            label="Estimated Cost"
+                            type="number"
+                            errorMessage="Estimated Cost is required"
+                        />
+
                     </div>
                     <div className="mb-2 flex items-center justify-end gap-x-6">
                         <button

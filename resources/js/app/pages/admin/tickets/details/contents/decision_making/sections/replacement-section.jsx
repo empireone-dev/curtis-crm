@@ -16,28 +16,32 @@ export default function ReplacementSection() {
 
     useEffect(() => {
         setForm(ticket)
-    }, [ticket?.product]);
+    }, [ticket]);
 
     function formHandler(value, name) {
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    }
-
-    
-    async function get_fedex_rate() {
-        setIsLoading(true)
-        const result = await get_fedex_rate_service(ticket)
-
+        // setForm({
+        //     ...form,
+        //     [name]: value,
+        // });
         dispatch(setTicket({
             ...ticket,
-            product: {
-                ...ticket.product,
-                shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
-                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.product.cost)).toFixed(2)
-            }
+            [name]: value,
         }))
+    }
+
+
+    async function get_fedex_rate() {
+        setIsLoading(true)
+        try {
+            const result = await get_fedex_rate_service(ticket)
+            dispatch(setTicket({
+                ...ticket,
+                shipping_cost: parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2),
+                estimate_cost: (parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(ticket.cost)).toFixed(2)
+            }))
+        } catch (error) {
+            alert('No rates Found!')
+        }
         setIsLoading(false)
     }
     return (
@@ -57,7 +61,7 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="unit_cost"
                         required={true}
-                        value={form?.product?.cost ?? '0'}
+                        value={form?.cost ?? '0'}
                         label="Cost of Unit"
                         type="text"
                         errorMessage="Cost of Unit is required"
@@ -66,9 +70,9 @@ export default function ReplacementSection() {
                         onChange={formHandler}
                         name="cube_weight"
                         required={true}
-                        value={form?.product?.cubed_weight ?? '0'}
+                        value={form?.cubed_weight ?? '0'}
                         label="Cube Weight"
-                        type="text"
+                        type="number"
                         errorMessage="Cube Weight is required"
                     />
                     <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -79,33 +83,33 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="length"
                             required={true}
-                            value={form?.product?.length ?? '0'}
+                            value={form?.length ?? '0'}
                             label="Length"
-                            type="text"
+                            type="number"
                             errorMessage="Length is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="width"
                             required={true}
-                            value={form?.product?.width ?? '0'}
+                            value={form?.width ?? '0'}
                             label="Width"
-                            type="text"
+                            type="number"
                             errorMessage="Width is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="height"
                             required={true}
-                            value={form?.product?.height ?? '0'}
+                            value={form?.height ?? '0'}
                             label="Height"
-                            type="text"
+                            type="number"
                             errorMessage="Height is required"
                         />
                     </div>
 
                     <div className="flex gap-3">
-                    <button
+                        <button
                             onClick={get_fedex_rate}
                             type="button"
                             className={`w-96 flex items-center justify-center mr-12 py-2 ${isLoading ? 'bg-blue-500' : ' bg-transparent  hover:bg-blue-50'}  text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black`}
@@ -118,18 +122,18 @@ export default function ReplacementSection() {
                             onChange={formHandler}
                             name="shipping_cost"
                             required={true}
-                            value={form?.product?.shipping_cost ?? '0'}
+                            value={form?.shipping_cost ?? '0'}
                             label="Shipping Cost"
-                            type="text"
+                            type="number"
                             errorMessage="Shipping Cost is required"
                         />
                         <Input
                             onChange={formHandler}
                             name="estimate_cost"
                             required={true}
-                            value={form?.product?.estimate_cost ?? '0'}
+                            value={form?.estimate_cost ?? '0'}
                             label="Estimated Cost"
-                            type="text"
+                            type="number"
                             errorMessage="Estimated Cost is required"
                         />
                     </div>

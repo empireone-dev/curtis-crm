@@ -14,7 +14,7 @@ export default function TicketsDecisionMakingContent() {
     const result = await get_specific_item_service(ticket)
     await dispatch(setTicket({
       ...ticket,
-      product: result
+      ...result
     }))
   }
 
