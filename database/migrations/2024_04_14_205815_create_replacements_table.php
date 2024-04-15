@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('ticket_id')->nullable();
             $table->string('unit_cost')->nullable();
-            $table->string('cube_weight')->nullable();
+            $table->string('cubed_weight')->nullable();
             $table->string('length')->nullable();
             $table->string('width')->nullable();
             $table->string('height')->nullable();

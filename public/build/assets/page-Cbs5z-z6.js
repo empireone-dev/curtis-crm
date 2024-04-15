@@ -1,1 +1,0 @@
-import{j as t}from"./app-8RkmuAZh.js";import e from"./content-replacement-form-BbyWFQ4I.js";import"./textarea-B5My9jIO.js";function m(){return t.jsx("div",{children:t.jsx(e,{})})}export{m as default};

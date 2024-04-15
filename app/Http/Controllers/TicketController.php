@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Hash;
 class TicketController extends Controller
 {
 
+    
+    public function get_tickets_by_warehouse($country){
+        // $ticket = Ticket::where([
+        //     ['country','=',$country],
+        //     ['status','=','WAREHOUSE']
+        // ])->get();
+        $ticket = Ticket::where('country','=',$country)->get();
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
     public function get_tickets_by_ticket_id($ticket_id)
     {
         $ticket = Ticket::where('id', $ticket_id)->first();

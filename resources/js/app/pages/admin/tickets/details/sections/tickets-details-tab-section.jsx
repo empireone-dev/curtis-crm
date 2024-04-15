@@ -14,11 +14,13 @@ import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-ticket
 import { useDispatch, useSelector } from 'react-redux';
 import { get_tickets_by_ticket_id } from '@/app/services/tickets-service';
 import { setTicket } from '../../_redux/tickets-slice';
-import { TicketIcon } from '@heroicons/react/24/outline';
+import { InboxStackIcon, TicketIcon } from '@heroicons/react/24/outline';
 import ContentsRepairPage from '../contents/repair/page';
 import ContentsRefundPage from '../contents/refund/page';
 import ContentsReplacementPage from '../contents/replacement/page';
 import ContentsWarrantyValidationPage from '../contents/warranty_validation/page';
+import WarehousePage from '../contents/warehouse/page';
+import TicketsDetailsMoveAssignComponents from '../components/tickets-details-move-assign-components';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -26,14 +28,13 @@ function classNames(...classes) {
 // tech support = files,activities,details,agent 
 //parts = files,activities details agent
 //waranty = files,activities details and agent notes
-export default function TicketsDetailsTabSection() {
+export default function TicketsDetailsTabSection({ account }) {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { url } = usePage()
   const page = usePage();
   const dispatch = useDispatch()
   const [openTab, setOpenTab] = useState(1);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,8 +48,6 @@ export default function TicketsDetailsTabSection() {
     };
     fetchData();
   }, [url]);
-
-
   const tabs = [
     {
       title: 'Files',
@@ -69,7 +68,7 @@ export default function TicketsDetailsTabSection() {
       components: <TicketsDetailsContentActivities />,
       hash: '#activities',
     },
-    ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE'
+    ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE' && account?.role_id != 3
       ? [
         {
           title: 'Decision Making',
@@ -78,8 +77,16 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-
-      ...(ticket.isUploading === 'true' && ticket.status === 'REPAIR'
+    ...(ticket.isUploading === 'true' && (ticket.status === 'WAREHOUSE' || ticket.status === 'CLOSED') && account?.role_id == 3
+      ? [
+        {
+          title: 'Warehouse',
+          components: <WarehousePage />,
+          hash: '#warehouse',
+        },
+      ]
+      : []),
+    ...(ticket.isUploading === 'true' && ticket.status === 'REPAIR'
       ? [
         {
           title: 'Repair',
@@ -88,7 +95,7 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-      ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
+    ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
       ? [
         {
           title: 'Refund',
@@ -97,7 +104,7 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-      ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
       ? [
         {
           title: 'Replacement',
@@ -106,7 +113,7 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-      ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
+    ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
       ? [
         {
           title: 'Validation',
@@ -144,9 +151,21 @@ export default function TicketsDetailsTabSection() {
   return (
     <div className=" font-sans h-full">
       <div className="px-8">
+
         <div className="w-full ">
-          <div className='py-3 text-3xl font-black flex gap-3 text-blue-600'>
-            <TicketIcon className='h-9'/> {ticket.status??'Open Ticket'} ({ticket.call_type})
+
+          {
+            ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
+              ticket={ticket}
+              name="MOVE TO RESOURCE"
+              value="RESOURCE"
+              icon={<InboxStackIcon className='h-6' />}
+              link="decision"
+            />
+            </div>
+          }
+          <div className={`py-3 text-3xl font-black flex gap-3 ${ticket.status == 'CLOSED' ? ' text-red-600' : ' text-blue-600'}`}>
+            <TicketIcon className='h-9' /> {ticket.status ?? 'Open Ticket'} ({ticket.call_type})
           </div>
           <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
             {tabs.map((res, i) => (

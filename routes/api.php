@@ -11,6 +11,9 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RefundController;
+use App\Http\Controllers\RepairController;
+use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -37,6 +40,11 @@ Route::post('/get_specific_item/{gid}', [GoogleSheetsController::class, 'get_spe
 
 Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_rate']);
 
+
+Route::resource('replacement',ReplacementController::class);
+Route::resource('refund',RefundController::class);
+Route::resource('repair',RepairController::class);
+
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
 
@@ -48,6 +56,8 @@ Route::resource('activities',ActivityController::class);
 Route::resource('notes',AgentNoteController::class);
 
 Route::resource('tickets',TicketController::class);
+Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
+
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
 Route::put('/update_tickets_status/{gid}', [TicketController::class, 'update_tickets_status']);
 Route::get('/get_tickets_by_ticket_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_id']);

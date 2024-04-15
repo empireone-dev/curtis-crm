@@ -3,7 +3,7 @@ import LayoutSidebarListComponent from '../../components/layout-sidebar-list-com
 import { BriefcaseIcon, ClipboardDocumentIcon, CloudArrowDownIcon, CloudArrowUpIcon, ExclamationTriangleIcon, HomeIcon, InboxArrowDownIcon, KeyIcon, PuzzlePieceIcon, ReceiptPercentIcon, ShoppingCartIcon, TicketIcon, UserCircleIcon, UserGroupIcon, UserIcon } from '@heroicons/react/24/outline'
 
 
-export default function LayoutSidebarSection() {
+export default function LayoutSidebarSection({account}) {
   // State to track whether the sidebar is open or closed
 
   return (
@@ -21,71 +21,85 @@ export default function LayoutSidebarSection() {
                 </div>
               </li> */}
               <LayoutSidebarListComponent
+              account={account}
                 name="Dashboard"
                 icon={<HomeIcon className='h-6'/>}
                 href={'dashboard'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Permissions"
                 icon={<KeyIcon className='h-6'/>}   
                 href={'permissions'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Roles"
                 icon={<UserIcon className='h-6'/>}   
                 href={'roles'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Users"
                 icon={<UserGroupIcon className='h-6'/>}   
                 href={'users'}
               />
                <LayoutSidebarListComponent
+               account={account}
                 name="Brands"
                 icon={<ReceiptPercentIcon className='h-6'/>}   
                 href={'brands'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Email Template"
                 icon={<InboxArrowDownIcon className='h-6'/>}   
                 href={'email_template'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Item Types"
                 icon={<BriefcaseIcon className='h-6'/>}   
                 href={'item_types'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Common-Issues"
                 icon={<ExclamationTriangleIcon className='h-6'/>}   
                 href={'common_issues'}
               />
               {/* <LayoutSidebarListComponent
+              account={account}
                 name="Products"
                 icon={<ShoppingCartIcon className='h-6'/>}   
                 href={'products'}
               /> */}
               <LayoutSidebarListComponent
+              account={account}
                 name="Tickets"
                 icon={<TicketIcon className='h-6'/>}   
                 href={'tickets'}
               />
              <LayoutSidebarListComponent
+             account={account}
                 name="ASC"
                 icon={<UserCircleIcon className='h-6'/>}   
                 href={'asc'}
               />
               {/*   <LayoutSidebarListComponent
+              account={account}
                 name="Bulk Upload Products"
                 icon={<CloudArrowDownIcon className='h-6'/>}   
                 href={'bup'}
               />
               <LayoutSidebarListComponent
+              account={account}
                 name="Exports Management"
                 icon={<CloudArrowUpIcon className='h-6'/>}   
                 href={'em'}
               />
                <LayoutSidebarListComponent
+               account={account}
                 name="Handled Tickets Tracker"
                 icon={<PuzzlePieceIcon className='h-6'/>}   
                 href={'htt'}

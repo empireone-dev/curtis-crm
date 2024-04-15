@@ -25,7 +25,7 @@ export default function AdministratorLayout({ children }) {
       <div className='flex-none'>
         <div className='flex sticky top-0 '>
           <LayoutSubSidebarSection />
-          <LayoutSidebarSection />
+          <LayoutSidebarSection account={user}/>
         </div>
 
       </div>

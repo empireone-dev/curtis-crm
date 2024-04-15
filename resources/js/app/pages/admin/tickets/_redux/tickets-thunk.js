@@ -28,6 +28,7 @@ export function update_tickets_status_thunk(id, status) {
     const { user } = getState().app
     const result = await update_tickets_status_service(id, status, user.id)
     dispatch(customerTicketsSlice.actions.setTicket(result));
+    dispatch(ticketsSlice.actions.setTicket(result));
   };
 }
 

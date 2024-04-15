@@ -17,7 +17,7 @@ class Refund extends Model
         'cheque_amount',
         'mail_date',
         'unit_cost',
-        'cube_weight',
+        'cubed_weight',
         'length',
         'width',
         'height',

@@ -14,7 +14,7 @@ export async function get_specific_item_service(ticket) {
         item_number: res.data[1],
         unit: res.data[2],
         class: res.data[3],
-        cost:ticket.country == 'CA'?res.data[4]:res.data[5],
+        unit_cost:ticket.country == 'CA'?res.data[4]:res.data[5],
         length:res.data[6],
         width:res.data[7],
         height:res.data[8],

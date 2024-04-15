@@ -142,6 +142,23 @@ Route::middleware('auth:sanctum', 'role:2')->prefix('customer')->group(function 
     })->name('customer.tickets.details');
 });
 
+
+Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return Inertia::render('warehouse/dashboard/page');
+    })->name('warehouse.dashboard');
+
+    Route::get('/tickets', function () {
+        return Inertia::render('warehouse/tickets/page');
+    })->name('warehouse.tickets');
+    
+    Route::get('/tickets/{id}', function () {
+        return Inertia::render('warehouse/tickets/details/page');
+    })->name('warehouse.tickets.details');
+});
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

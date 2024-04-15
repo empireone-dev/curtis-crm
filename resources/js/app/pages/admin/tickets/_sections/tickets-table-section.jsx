@@ -109,13 +109,17 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap ">
                                                             {res.status == null ? (
                                                                 <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
-                                                                    OPEN
+                                                                    WAITING
                                                                 </div>
-                                                            ): (
-                                                                <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">
+                                                            ) : res.status == 'CLOSED' ?
+                                                                <div className="inline py-1 font-black text-sm rounded-full text-red-500 gap-x-2 bg-red-100/60">
                                                                     {res.status}
                                                                 </div>
-                                                            )}
+                                                                : (
+                                                                    <div className="inline py-1 font-black text-sm rounded-full text-blue-500 gap-x-2 bg-blue-100/60">
+                                                                        {res.status}
+                                                                    </div>
+                                                                )}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {res.isUploading == 'true' ?
@@ -131,7 +135,7 @@ export default function TicketTableSection() {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.created_at).format('LLL')}
                                                         </td>
-                                                        
+
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             {moment(res.updated_at).format('LLL')}
                                                         </td>

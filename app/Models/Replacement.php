@@ -11,7 +11,7 @@ class Replacement extends Model
     protected $fillable = [
         'ticket_id',
         'unit_cost',
-        'cube_weight',
+        'cubed_weight',
         'length',
         'width',
         'height',

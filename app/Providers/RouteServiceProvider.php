@@ -20,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
     public const LOGININVALID = '/?status=invalid';
     public const ADMIN = '/administrator/dashboard';
     public const CUSTOMER = '/customer/dashboard';
+    public const WAREHOUSE = '/warehouse/dashboard';
     public const AGENT = '/agent/dashboard';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

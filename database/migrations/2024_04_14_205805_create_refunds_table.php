@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('cheque_amount',8, 2)->nullable();
             $table->string('mail_date')->nullable();
             $table->string('unit_cost')->nullable();
-            $table->string('cube_weight')->nullable();
+            $table->string('cubed_weight')->nullable();
             $table->string('length')->nullable();
             $table->string('width')->nullable();
             $table->string('height')->nullable();

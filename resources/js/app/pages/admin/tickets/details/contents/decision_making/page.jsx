@@ -8,6 +8,7 @@ import { setTicket } from "../../../_redux/tickets-slice";
 import store from "@/app/store/store";
 import { get_making_decision_thunk } from "../../../_redux/tickets-thunk";
 import Skeleton from "@/app/layouts/components/skeleton";
+import { get_email_templates_thunk } from "@/app/pages/admin/email_template/redux/email-template-thunk";
 
 export default function TicketsDecisionMakingContent() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -26,6 +27,7 @@ export default function TicketsDecisionMakingContent() {
     }
 
     useEffect(() => {
+        store.dispatch(get_email_templates_thunk())
         get_specific_item();
     }, []);
 

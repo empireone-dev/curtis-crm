@@ -37,7 +37,6 @@ export default function ValidationFormSection() {
             template_text: value,
         }))
     }
-    console.log('selectedTemplate',selectedTemplate)
     return (
         <div className='flex w-full items-center justify-center'>
 

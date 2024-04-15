@@ -26,7 +26,7 @@ export default function TicketCreateFormSection() {
             [name]: value
         }))
     }
-console.log('form',form)
+    
     useEffect(() => {
         store.dispatch(get_products_thunk())
     }, []);

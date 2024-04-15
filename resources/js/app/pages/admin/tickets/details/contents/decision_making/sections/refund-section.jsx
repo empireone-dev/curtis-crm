@@ -27,7 +27,7 @@ export default function RefundSection() {
             dispatch(setRefund({
                 ...refund,
                 shipping_cost: `${parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE).toFixed(2)}`,
-                estimated_cost: `${(parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(refund.cost)).toFixed(2)}`
+                estimated_cost: `${(parseFloat(result.rates.FEDEX_GROUND.PAYOR_ACCOUNT_PACKAGE) + parseFloat(refund.unit_cost)).toFixed(2)}`
             }))
         } catch (error) {
             alert('No rates Found!')
@@ -141,7 +141,7 @@ export default function RefundSection() {
                             onChange={formHandler}
                             name="unit_cost"
                             required={true}
-                            value={refund?.cost ?? '0'}
+                            value={refund?.unit_cost ?? '0'}
                             label="Cost of Unit"
                             type="text"
                             errorMessage="Cost of Unit is required"
