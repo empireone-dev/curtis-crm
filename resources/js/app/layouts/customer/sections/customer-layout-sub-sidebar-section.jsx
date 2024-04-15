@@ -5,12 +5,12 @@ import React from 'react'
 export default function CustomerLayoutSubSidebarSection() {
     return (
         <div>
-            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r dark:border-blue-800 bg-slate-200">
+            <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r  bg-slate-200">
 
                 <div className="flex-shrink-0">
                     <a
                         href="#"
-                        className="inline-block text-xl font-bold tracking-wider text-blue-700 uppercase dark:text-light"
+                        className="inline-block text-xl font-bold tracking-wider text-blue-700 uppercase "
                     >
                         CRM
                     </a>
@@ -18,7 +18,7 @@ export default function CustomerLayoutSubSidebarSection() {
                 <div className="flex flex-col items-center justify-center flex-1 space-y-4">
 
                     <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100  focus:outline-none focus:bg-blue-100  focus:ring-blue-800"
                     >
                         <span className="sr-only">Open Notification panel</span>
                         <svg
@@ -40,7 +40,7 @@ export default function CustomerLayoutSubSidebarSection() {
 
                     <button
 
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100  focus:outline-none focus:bg-blue-100  focus:ring-blue-800"
                     >
                         <span className="sr-only">Open search panel</span>
                         <svg
@@ -61,7 +61,7 @@ export default function CustomerLayoutSubSidebarSection() {
                     </button>
 
                     <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:hover:text-light dark:hover:bg-blue-700 dark:bg-dark focus:outline-none focus:bg-blue-100 dark:focus:bg-blue-700 focus:ring-blue-800"
+                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100  focus:outline-none focus:bg-blue-100  focus:ring-blue-800"
                     >
                         <span className="sr-only">Open settings panel</span>
                         <svg

@@ -171,7 +171,7 @@ const CustomerTicketsRearOfTheUnitSection = () => {
                         className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
 
                     >
-                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative  cursor-pointer text-transparent hover:text-white shadow-sm">
 
 
                             <header

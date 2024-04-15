@@ -29,11 +29,11 @@ export default function TicketTableSection() {
                     <div>
                         {/* <div className="inline-block w-full py-2 align-middle md:px-6 lg:px-8"> */}
                         <div className='w-full py-2 '>
-                            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <div className="overflow-hidden border border-gray-200  md:rounded-lg">
+                                <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 <button className="flex items-center gap-x-3 focus:outline-none">
                                                     <span>ID</span>
 
@@ -45,43 +45,43 @@ export default function TicketTableSection() {
                                                 </button>
                                             </th>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Fullname
                                             </th>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Email
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Resolution
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Issue
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Status
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Is Uploaded
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Created At
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Last Updated At
                                             </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                                 Action
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                    <tbody className="bg-white divide-y divide-gray-200 ">
                                         {
                                             tickets.map((res, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                            <h2 className="font-medium text-gray-800 dark:text-white">{res.id}</h2>
+                                                            <h2 className="font-medium text-gray-800">{res.id}</h2>
                                                         </td>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                             {res.fname}  {res.lname}

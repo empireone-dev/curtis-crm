@@ -29,7 +29,7 @@ export default function AdministratorLayout({ children }) {
         </div>
 
       </div>
-      <div className="flex-1">
+      <div className="flex-1 bg-gray-100">
         {children}
       </div>
     </div>

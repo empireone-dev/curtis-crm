@@ -26,7 +26,7 @@ export default function EmailTemplateEditSection({ data }) {
         <div>
             <button
                 onClick={() => setOpen(true)}
-                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-3 py-2 text-center">
+                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center">
                 <OutlinePencilSquareIcon className='h-6 text-white' />
             </button>
             <Drawer
@@ -36,8 +36,8 @@ export default function EmailTemplateEditSection({ data }) {
             >
                 <form onSubmit={handleSubmit}>
                     <div className='mt-4'>
-                        <label htmlFor="first_name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <label htmlFor="first_name" class="block mb-1 text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             value={newData.template_name ?? ''}
                             onChange={(event) => setNewData({
                                 ...newData,
@@ -45,7 +45,7 @@ export default function EmailTemplateEditSection({ data }) {
                             })} />
                     </div>
                     <div className='mt-4'>
-                        <label htmlFor="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Template</label>
+                        <label htmlFor="first_name" class="block mb-2 text-sm font-medium text-gray-900">Template</label>
                         <button className="flex bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
                             <SolidPencilSquareIcon className='h-5' />
                             <span>EDIT TEMPLATE</span>

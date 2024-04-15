@@ -5,7 +5,7 @@ export default function ContentDetailsSection() {
   const { ticket } = useSelector((state) => state.customer_tickets)
 
   return (
-    <div>
+    <div className='m-5 py-5'>
       <div className="px-4 sm:px-0">
         <h3 className="text-base font-semibold leading-7 text-gray-900">Ticket Details</h3>
         <p className="mt-1 max-w-2xl text-sm leading-6  font-medium text-gray-500">Personal details and ticket.</p>

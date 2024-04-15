@@ -115,7 +115,7 @@ const FilesUploadSection = () => {
                         {files.length === 0 && (
                             <li
                                 id="empty"
-                                className="h-full w-full text-center flex flex-col items-center justify-center items-center"
+                                className="h-full w-full text-center flex flex-col justify-center items-center"
                             >
                                 <img
                                     className="mx-auto w-32"
@@ -131,7 +131,7 @@ const FilesUploadSection = () => {
                                 className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
                                 id={objectURL}
                             >
-                                <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                                <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative cursor-pointer text-transparent hover:text-white shadow-sm">
                                     <img
                                         className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
                                         alt="upload preview"

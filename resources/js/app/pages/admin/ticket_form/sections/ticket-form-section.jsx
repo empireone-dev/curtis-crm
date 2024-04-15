@@ -277,7 +277,7 @@ export default function TicketFormSection() {
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div className="flex items-center justify-center">
                             <input id="checked-checkbox" type="checkbox" value="" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
-                            <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
+                            <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 ">Send Initial Email</label>
                         </div>
                     </div>
                 </div>

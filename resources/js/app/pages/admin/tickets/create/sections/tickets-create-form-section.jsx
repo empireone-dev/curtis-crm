@@ -332,7 +332,7 @@ console.log('form',form)
                                         checked={form.isSendEmail}
                                         onChange={(e) => formHandler(e.target.checked, 'isSendEmail')}
                                         type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
-                                    <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 dark:text-gray-300">Send Initial Email</label>
+                                    <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 ">Send Initial Email</label>
                                 </>
                             }
 

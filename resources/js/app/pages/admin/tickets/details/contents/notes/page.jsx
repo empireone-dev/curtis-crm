@@ -10,7 +10,7 @@ export default function TicketsDetailsContentNotes() {
     store.dispatch(get_notes_by_id_thunk())
   }, [ticket.id]);
   return (
-    <div className='mx-3'>
+    <div className='mx-3 py-1'>
       <ContentNotesTextareaSection />
       <ContentNotesCommentSection />
     </div>

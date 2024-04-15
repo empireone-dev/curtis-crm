@@ -142,7 +142,7 @@ export default function TicketsDetailsTabSection() {
   const hash = '#' + page.url.split('#')[1]
 
   return (
-    <div className="bg-gray-100 font-sans ">
+    <div className=" font-sans h-full">
       <div className="px-8">
         <div className="w-full ">
           <div className='py-3 text-3xl font-black flex gap-3 text-blue-600'>
@@ -160,7 +160,7 @@ export default function TicketsDetailsTabSection() {
             return (
               <div
                 key={i}
-                className={classNames('rounded-xl bg-white ', '')}
+                className={classNames('rounded-xl ', '')}
               >
                 {hash == res.hash && page.url.split('#')[1] && res.components}
               </div>
