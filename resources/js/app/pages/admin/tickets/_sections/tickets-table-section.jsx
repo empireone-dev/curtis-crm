@@ -17,7 +17,7 @@ export default function TicketTableSection() {
     }
     return (
         <>
-            <section className=" pr-3 my-12 mx-auto">
+            <section className=" pr-3 py-5 bg-white min-h-screen px-5">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <TicketsTableHeaderSection />
                 </div>

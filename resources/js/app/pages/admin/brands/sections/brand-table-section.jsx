@@ -11,7 +11,7 @@ export default function BrandTableSection() {
 
     return (
         <>
-            <section className="container px-4 my-12 mx-auto">
+            <section className="px-4 py-12 mx-auto bg-white">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">

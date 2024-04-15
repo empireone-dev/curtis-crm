@@ -8,7 +8,7 @@ export default function ASCTableSection() {
   
     return (
         <>
-            <section className="container px-4 my-6 mx-auto">
+            <section className="px-4 py-12 mx-auto bg-white">
                 <AscTableHeaderSection 
                 setNewAsc={setNewAsc}
                 />

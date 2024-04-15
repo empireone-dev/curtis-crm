@@ -21,7 +21,7 @@ export default function AdministratorLayout({ children }) {
   }, [user]);
 
   return (
-    <div className='flex gap-3'>
+    <div className='flex'>
       <div className='flex-none'>
         <div className='flex sticky top-0 '>
           <LayoutSubSidebarSection />
