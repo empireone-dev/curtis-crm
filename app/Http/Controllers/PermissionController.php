@@ -17,11 +17,8 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         Permission::create($request->validate([
-            'name' => 'required|unique:permission',
-            'details' => 'required',
-            'start' => 'required',
-            'due' => 'required',
-            'status' => 'required'
+            'name' => 'required|unique:permissions',
+            'title' => 'required',
         ]));
         return response()->json([
             'status' => 'success',

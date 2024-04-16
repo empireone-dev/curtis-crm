@@ -1,11 +1,14 @@
-import { EyeDropperIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PermissionEditSection from './permission-edit-section'
 import PermissionDeleteSection from './permission-delete-section'
+import PermissionAddSection from './permission-add-section'
 
 export default function PermissionTableSection() {
-    const { permissions } = useSelector((state) => state.permissions)
+    const { permissions,permissionsForm } = useSelector((state) => state.permissions)
+ console.log(permissions)
+  
     return (
         <>
             <section className="px-4 py-12 mx-auto bg-white">
@@ -18,14 +21,7 @@ export default function PermissionTableSection() {
 
                     <div className="flex items-center mt-4 gap-x-3">
 
-
-                        <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-
-                            <span>Create Permission</span>
-                        </button>
+<PermissionAddSection />
                     </div>
                 </div>
 
@@ -96,8 +92,8 @@ export default function PermissionTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap gap-2 flex items-center justify-end py-2">
-                                                         <PermissionEditSection  data={res}/>
-                                                         <PermissionDeleteSection data={res}/>
+                                                        <PermissionEditSection data={res} />
+                                                        <PermissionDeleteSection data={res} />
                                                     </td>
 
                                                 </tr>

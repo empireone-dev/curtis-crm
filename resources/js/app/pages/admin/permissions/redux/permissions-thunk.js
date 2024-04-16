@@ -1,11 +1,18 @@
-import { delete_permission_service, get_permission_service, update_permission_service } from '@/app/services/permission-services';
+import { delete_permission_service, get_permission_service, store_permission_service, update_permission_service } from '@/app/services/permission-services';
 import { permissionsSlice } from './permissions-slice';
+
+export function store_permission_thunk(data) {
+  return async function (dispatch, getState) {
+    const result = await store_permission_service(data)
+    dispatch(permissionsSlice.actions.setPermissions(result.data));
+    dispatch(permissionsSlice.actions.setPermissionsForm({}));
+  };
+}
 
 export function get_permission_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_permission_service()).data
     dispatch(permissionsSlice.actions.setPermissions(result));
-
   };
 }
 
@@ -18,9 +25,8 @@ export function delete_permission_thunk(id) {
 
 export function update_permission_thunk(data) {
   return async function (dispatch, getState) {
-
-   const result = await update_permission_service(data)
-   dispatch(permissionsSlice.actions.setPermissions(result.data));
+    const result = await update_permission_service(data)
+    dispatch(permissionsSlice.actions.setPermissions(result.data));
   };
 }
 
