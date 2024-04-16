@@ -1,1 +1,0 @@
-import{e as s}from"./app-cd3sQyoO.js";async function t(){return(await s.get("/api/user")).data}async function n(){return(await s.get("/api/users")).data}async function i(e){return(await s.delete("/api/users/"+e)).data}async function u(e){return(await s.put(`/api/users/${e.id}`,e)).data}export{n as a,i as d,t as g,u};

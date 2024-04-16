@@ -20,13 +20,13 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false)
 
     function formHandler(value, name) {
-        
+
         dispatch(setForm({
             ...form,
             [name]: value
         }))
     }
-    
+
     useEffect(() => {
         store.dispatch(get_products_thunk())
     }, []);
@@ -36,6 +36,7 @@ export default function TicketCreateFormSection() {
         setLoading(true)
         dispatch(setForm({
             ...form,
+            status: form.call_type == 'Parts' ? 'PARTS VALIDATION' : null,
             email: form.isHasEmail == 'true' || form.isHasEmail == true ? form.email : null
         }))
         const response = await store.dispatch(tickets_create_thunk())
@@ -48,7 +49,7 @@ export default function TicketCreateFormSection() {
         return countries.find(country => country.value === countryName);
     };
 
-    const { regions } = findCountry(form.country??'CA');
+    const { regions } = findCountry(form.country ?? 'CA');
 
     return (
         <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
@@ -312,7 +313,7 @@ export default function TicketCreateFormSection() {
 
                 </div>
                 <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
-                  
+
                     <div className='basis-3/4'>
                         <Textarea
                             required={true}

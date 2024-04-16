@@ -6,8 +6,8 @@ import store from '@/app/store/store'
 import { get_tickets_thunk } from '../_redux/tickets-thunk'
 
 export default function TicketsSearchSection() {
-    const { url } = usePage()
-    const ticket_id = url.split('?')[1]
+    // const { url } = usePage()
+    // const ticket_id = url.split('?')[1]
     const dispatch = useDispatch()
     const { search } = useSelector((state) => state.tickets)
 

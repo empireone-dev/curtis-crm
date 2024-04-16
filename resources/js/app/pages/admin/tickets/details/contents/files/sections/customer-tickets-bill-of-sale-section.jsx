@@ -11,13 +11,10 @@ const CustomerTicketsBillOfSaleSection = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
-    const galleryRef1 = useRef(null);
-    const dispatch = useDispatch()
+
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-
-
 
 
 
@@ -75,12 +72,12 @@ const CustomerTicketsBillOfSaleSection = () => {
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
-        fd.append('ticket_id', url.split('/')[3])
+        fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'bill_of_sale')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[url.split('/').length - 1].split('#')[0]))
 
         setLoading(false)
         setFiles([]);

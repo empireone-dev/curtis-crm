@@ -1,1 +1,0 @@
-import{j as t}from"./app-cd3sQyoO.js";import r from"./content-repair-form-section-BZ5QWDNa.js";import"./input-y6d0YPIw.js";import"./textarea-8_3zqP-d.js";function m(){return t.jsx("div",{children:t.jsx(r,{})})}export{m as default};

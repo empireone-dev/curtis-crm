@@ -113,15 +113,15 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
-      ? [
-        {
-          title: 'Validation',
-          components: <ContentsWarrantyValidationPage />,
-          hash: '#validation',
-        },
-      ]
-      : []),
+    // ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
+    //   ? [
+    //     {
+    //       title: 'Validation',
+    //       components: <ContentsWarrantyValidationPage />,
+    //       hash: '#validation',
+    //     },
+    //   ]
+    //   : []),
     {
       title: 'Update Status',
       components: <TicketsDetailsContentStatus />,

@@ -67,12 +67,12 @@ const CustomerTicketsRearOfTheUnitSection = () => {
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
-        fd.append('ticket_id', url.split('/')[3])
+        fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'rear_of_the_unit')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[url.split('/').length - 1].split('#')[0]))
         setLoading(false)
         setFiles([]);
     }
