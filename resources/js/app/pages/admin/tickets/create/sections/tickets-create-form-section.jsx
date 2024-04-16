@@ -36,7 +36,8 @@ export default function TicketCreateFormSection() {
         setLoading(true)
         dispatch(setForm({
             ...form,
-            status: form.call_type == 'Parts' ? 'PARTS VALIDATION' : null,
+            // status: form.call_type == 'Parts' ? 'PARTS VALIDATION' : null,
+            status: null,
             email: form.isHasEmail == 'true' || form.isHasEmail == true ? form.email : null
         }))
         const response = await store.dispatch(tickets_create_thunk())

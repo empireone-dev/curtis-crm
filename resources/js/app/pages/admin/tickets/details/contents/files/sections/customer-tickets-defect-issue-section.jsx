@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 const CustomerTicketsDefectIssueSection = () => {
     const [files, setFiles] = useState([])
+    const { user } = useSelector((state) => state.app)
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
     const galleryRef5 = useRef(null);
@@ -73,6 +74,7 @@ const CustomerTicketsDefectIssueSection = () => {
 
         fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'defect_issue')
+        fd.append('user_id', user.id)
         files.forEach(value => {
             fd.append('files[]', value.file)
         });

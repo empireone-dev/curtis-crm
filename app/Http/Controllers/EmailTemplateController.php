@@ -75,7 +75,14 @@ class EmailTemplateController extends Controller
     public function validation(Request $request)
     {
 
-        $status = $request->mark == 'IW' || $request->mark == 'OOW' ? 'RESOURCE' : $request->mark;
+        $status = '';
+        if ($request->mark == 'IW') {
+            $status = 'INTERNALS';
+        } else if ($request->mark == 'OOW') {
+            $status = '';
+        } else {
+            $status = 'CLOSED';
+        }
         ActivityController::create_activity(
             $request->user['id'],
             $request->ticket['id'],
@@ -83,7 +90,8 @@ class EmailTemplateController extends Controller
             'VALIDATION'
         );
         Ticket::where('id', $request->ticket['id'])->update([
-            'status' => $status
+            'status' => $status,
+            'validation_notes' => $request->validation_notes
         ]);
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
         return 'Email sent successfully!';

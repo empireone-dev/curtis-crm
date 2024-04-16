@@ -7,6 +7,7 @@ export default function Input({
     onChange,
     required,
     span,
+    ids
 }) {
     function formType() {
         if (type == "text") {
@@ -35,7 +36,7 @@ export default function Input({
                 <input
                     required={required}
                     value={formType() ?? ""}
-                    onChange={(e) => onChange(e.target.value, e.target.name)}
+                    onChange={(e) => onChange(e.target.value, e.target.name,ids)}
                     type={type == 'date' || type == 'password'? type : 'text'}
                     id={id}
                     name={name}

@@ -15,7 +15,7 @@ export default function ValidationFormSection() {
     useEffect(() => {
         dispatch(setSelectedTemplate({
             id: 1,
-            notes: notes,
+            validation_notes: notes,
             ticket: ticket,
             template_name: "Blank Template",
             template_text: selectedTemplate.template_text??' '
@@ -26,7 +26,7 @@ export default function ValidationFormSection() {
         const findTemplates = email_templates.find(res => res.id == value)
         dispatch(setSelectedTemplate({
             ...findTemplates,
-            notes: notes,
+            validation_notes: notes,
             ticket:ticket
         }))
     }
@@ -44,15 +44,15 @@ export default function ValidationFormSection() {
                 <div>
                     Mark this Ticket Valid / In Valid (Close)
                 </div>
-                {/* <Input
+                <Input
                     onChange={setNotes}
-                    name='notes'
+                    name='validation_notes'
                     required={true}
                     value={notes}
                     label='Item notes'
                     type='text'
                     errorMessage='Item notes is required'
-                /> */}
+                />
                 <Select
                     onChange={formHandler}
                     name='email_template'

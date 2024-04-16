@@ -9,6 +9,7 @@ use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GoogleSheetsController;
+use App\Http\Controllers\InternalController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RefundController;
@@ -47,6 +48,7 @@ Route::resource('repair',RepairController::class);
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);
+Route::resource('internals',InternalController::class);
 
 Route::resource('email_templates',EmailTemplateController::class);
 Route::post('validation', [EmailTemplateController::class, 'validation']);

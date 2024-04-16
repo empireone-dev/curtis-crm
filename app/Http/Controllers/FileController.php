@@ -31,7 +31,7 @@ class FileController extends Controller
         // $user_id,$ticket_id,$message,$type
         if ($ticket->type !== 'upload') {
             ActivityController::create_activity(
-                $ticket->user_id,
+                $request->user_id,
                 $request->ticket_id,
                 'Upload Complete by Customer',
                 'upload'

@@ -13,6 +13,7 @@ const CustomerTicketsPartsModel = () => {
     const galleryRef5 = useRef(null);
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
+    const { user } = useSelector((state) => state.app)
     const [loading, setLoading] = useState(false)
 
     const addFile = (file) => {
@@ -73,6 +74,7 @@ const CustomerTicketsPartsModel = () => {
 
         fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'parts_model')
+        fd.append('user_id', user.id)
         files.forEach(value => {
             fd.append('files[]', value.file)
         });

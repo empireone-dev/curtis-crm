@@ -13,6 +13,7 @@ const CustomerTicketsReceiptModel = () => {
     const galleryRef2 = useRef(null);
     const [loading,setLoading] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const { user } = useSelector((state) => state.app)
     const {url} = usePage()
 
     const addFile = (file) => {
@@ -72,6 +73,7 @@ const CustomerTicketsReceiptModel = () => {
         const fd = new FormData()
         fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'receipt_model')
+        fd.append('user_id', user.id)
         files.forEach(value => {
             fd.append('files[]', value.file)
         });

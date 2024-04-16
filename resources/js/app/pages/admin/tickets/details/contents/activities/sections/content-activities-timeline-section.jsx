@@ -15,7 +15,7 @@ export default function ContentActivitiesTimelineSection() {
                 return (
                     <li key={i} className="mb-10 ms-6">
                         <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
-                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">{res.user.name}
+                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">{res?.user?.name}
                             <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
                                 {formattedTimestamp}
                             </span>

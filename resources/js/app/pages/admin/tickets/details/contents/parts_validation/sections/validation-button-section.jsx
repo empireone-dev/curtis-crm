@@ -8,25 +8,45 @@ import { router } from "@inertiajs/react";
 
 export default function ValidationButtonSection() {
     const { selectedTemplate } = useSelector((state) => state.tickets);
+    const { ticket } = useSelector((state) => state.tickets);
     const { user } = useSelector((state) => state.app);
     const [loading, setLoading] = useState('')
     const dispatch = useDispatch()
 
+    
     async function submitValidation(value) {
         setLoading(value)
         await validation_service({
             ...selectedTemplate,
-            user:user,
+            user: user,
             mark: value
         })
         dispatch(setSelectedTemplate({}))
         setLoading('')
-        if (value == 'IW' || value == 'OOW') {
-            router.visit('#decision');
+        if (ticket.call_type == 'CF-Warranty Claim') {
+            if (value == 'IW' || value == 'OOW') {
+                router.visit('#decision');
+            } else {
+                router.visit('#files');
+            }
+        } else if (ticket.call_type == 'Parts') {
+            if (value == 'IW') {
+                router.visit('#internals');
+            } else if (value == 'OOW') {
+                router.visit('#decision');
+            } else {
+                router.visit('#files');
+            }
         } else {
+            // if (value == 'IW' || value == 'OOW') {
+            //     router.visit('#decision');
+            // } else {
+            //     router.visit('#files');
+            // }
             router.visit('#files');
         }
-       
+
+
     }
 
     return (

@@ -10,15 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const CustomerTicketsClearModel = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
+    const { user } = useSelector((state) => state.app)
     const overlay = document.getElementById('overlay');
     const galleryRef1 = useRef(null);
     const dispatch = useDispatch()
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-
-
-
 
 
     const addFile = (file) => {
@@ -76,6 +74,7 @@ const CustomerTicketsClearModel = () => {
         setLoading(true)
         const fd = new FormData()
         fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
+        fd.append('user_id', user.id)
         fd.append('type', 'clear_model')
         files.forEach(value => {
             fd.append('files[]', value.file)

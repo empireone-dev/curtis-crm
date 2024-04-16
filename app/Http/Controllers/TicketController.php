@@ -87,9 +87,19 @@ class TicketController extends Controller
         $user = User::where('email', $request->email)->first();
         $account = [];
         $newData = [];
+        
+        $ticket_id = '';
+        if($request->call_type == 'Parts'){
+            $ticket_id = '#PS'.date("dmy").'0';
+        }else if($request->call_type == 'CF-Warranty Claim'){
+            $ticket_id = '#CF'.date("dmy").'0';
+        }else if($request->call_type == 'TS-Tech Support'){
+            $ticket_id = '#TS'.date("dmy").'0';
+        }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
 
+          
             $account = User::create([
                 'name' => $request->fname . ' ' . $request->lname,
                 'email' => $request->email,
@@ -104,9 +114,16 @@ class TicketController extends Controller
                 'user_id' => $account->id,
             ]));
 
+            $t = Ticket::where('id',$data->id)->first();
+            $tt = Ticket::where('id',$data->id)->first();
+            $t->update([
+                'ticket_id' => $ticket_id.$t->id
+            ]);
+
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
                 $newData = array_merge($account->toArray(), [
                     'id' => $data->id,
+                    'ticket_id'=>$tt->ticket_id,
                     'call_type' => $request->call_type,
                     'isSendEmail' => $request->isSendEmail,
                     'isHasEmail' => $request->isHasEmail,
@@ -127,9 +144,15 @@ class TicketController extends Controller
                 'user_id' => $user->id,
             ]));
 
+            $t = Ticket::where('id',$data->id)->first();
+            $t->update([
+                'ticket_id' => $ticket_id.$t->id
+            ]);
+            $tt = Ticket::where('id',$data->id)->first();
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
                 $newData = array_merge($user->toArray(), [
                     'id' => $data->id,
+                    'ticket_id'=>$tt->ticket_id,
                     'call_type' => $request->call_type,
                     'isSendEmail' => $request->isSendEmail,
                     'isHasEmail' => $request->isHasEmail,

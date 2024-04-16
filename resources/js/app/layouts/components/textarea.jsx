@@ -1,5 +1,5 @@
 
-export default function Textarea({ name, value, label, type, errorMessage, onChange }) {
+export default function Textarea({ name, value, label, type, errorMessage, onChange, disabled }) {
 
 
     return (
@@ -8,6 +8,7 @@ export default function Textarea({ name, value, label, type, errorMessage, onCha
                 <>
                     <div className='relative w-full' >
                         <textarea
+                            disabled={disabled}
                             onChange={(e) => onChange(e.target.value, e.target.name)}
                             type={type}
                             id={name}

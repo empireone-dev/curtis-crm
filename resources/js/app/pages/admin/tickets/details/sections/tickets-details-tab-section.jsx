@@ -7,7 +7,7 @@ import TicketsDetailsContentDetails from '../contents/details/page';
 import TicketsDetailsContentNotes from '../contents/notes/page';
 import { router, usePage } from '@inertiajs/react';
 import TicketsDecisionMakingContent from '../contents/decision_making/page';
-import TicketsValidationContent from '../contents/validation/page';
+import TicketsPartsValidationContent from '../contents/parts_validation/page';
 import store from '@/app/store/store'
 import { get_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk'
 import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-tickets-slice'
@@ -21,6 +21,8 @@ import ContentsReplacementPage from '../contents/replacement/page';
 import ContentsWarrantyValidationPage from '../contents/warranty_validation/page';
 import WarehousePage from '../contents/warehouse/page';
 import TicketsDetailsMoveAssignComponents from '../components/tickets-details-move-assign-components';
+import TicketsPartsInternalsContent from '../contents/internals/page';
+import TicketsAvailabilityContent from '../contents/availability/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -52,15 +54,24 @@ export default function TicketsDetailsTabSection({ account }) {
     {
       title: 'Files',
       components: <TicketsDetailsContentFiles />,
-      hash: '#files', // Update only the first hash dynamically
+      hash: '#files',
     },
-    ...(ticket.isUploading === 'true' && ticket.status === null
+    ...(ticket.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim'
       ? [
         {
-          title: 'Validation',
-          components: <TicketsValidationContent />,
-          hash: '#validation',
+          title: 'Warranty Validation',
+          components: <ContentsWarrantyValidationPage />,
+          hash: '#warranty_validation',
         }
+      ]
+      : []),
+    ...(ticket.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.validation_notes === null || ticket.status === 'PARTS VALIDATION')
+      ? [
+        {
+          title: 'Parts Validation',
+          components: <TicketsPartsValidationContent />,
+          hash: '#parts_validation',
+        },
       ]
       : []),
     {
@@ -95,6 +106,25 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
+    ...(ticket.isUploading === 'true' && ticket.status === 'AVAILABILITY'
+      ? [
+        {
+          title: 'Availability',
+          components: <TicketsAvailabilityContent />,
+          hash: '#availability',
+        },
+      ]
+      : []),
+    ...(ticket.isUploading === 'true' && ticket.status === 'INTERNALS'
+      ? [
+        {
+          title: 'Internals',
+          components: <TicketsPartsInternalsContent />,
+          hash: '#internals',
+        },
+      ]
+      : []),
+
     ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
       ? [
         {
@@ -104,7 +134,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+    ...(ticket.isUploading === 'true' && (ticket.status === 'REPLACEMENT' || ticket.status === 'REPLACE PARTS')
       ? [
         {
           title: 'Replacement',
@@ -113,15 +143,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    // ...(ticket.isUploading === 'true' && ticket.status === 'VALIDATION'
-    //   ? [
-    //     {
-    //       title: 'Validation',
-    //       components: <ContentsWarrantyValidationPage />,
-    //       hash: '#validation',
-    //     },
-    //   ]
-    //   : []),
+
     {
       title: 'Update Status',
       components: <TicketsDetailsContentStatus />,

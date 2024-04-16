@@ -14,6 +14,7 @@ const CustomerTicketsRearOfTheUnitSection = () => {
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
+    const { user } = useSelector((state) => state.app)
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -68,6 +69,7 @@ const CustomerTicketsRearOfTheUnitSection = () => {
         setLoading(true)
         const fd = new FormData()
         fd.append('ticket_id', url.split('/')[3])
+        fd.append('user_id', user.id)
         fd.append('type', 'rear_of_the_unit')
         files.forEach(value => {
             fd.append('files[]', value.file)

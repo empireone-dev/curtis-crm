@@ -15,6 +15,7 @@ export function get_tickets_by_user_id_thunk(id) {
 
 export function upload_ticket_files_thunk(data,ticket_id) {
     return async function (dispatch, getState) {
+        const { user } = getState().app
         await upload_picture_videos(data);
         const result = await get_upload_picture_videos(ticket_id);
         dispatch(setFilesData(result.data));

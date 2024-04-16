@@ -17,8 +17,8 @@
             <div class=" w-full flex items-center justify-center py-12">
                 <div class=" max-w-5xl w-full">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-base font-semibold leading-7 text-gray-900">WARRANTY CLAIM </h3>
-                        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">#{{$data['call_type']}} - {{ $data['id']}}</p>
+                        <!-- <h3 class="text-base font-semibold leading-7 text-gray-900">WARRANTY CLAIM </h3> -->
+                        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">#{{$data['call_type']}} - {{ $data['ticket_id']}}</p>
                     </div>
                     <div class="px-4 py-6  sm:gap-4 sm:px-0">
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">

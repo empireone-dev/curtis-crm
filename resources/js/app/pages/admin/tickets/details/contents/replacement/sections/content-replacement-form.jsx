@@ -1,7 +1,9 @@
 import Textarea from '@/app/layouts/components/textarea'
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export default function ContentReplacementForm() {
+    const { ticket } = useSelector((state) => state.tickets);
     return (
         <div className='bg-white h-full px-3'>
             <div className="flex flex-col mt-6 ">
@@ -70,7 +72,10 @@ export default function ContentReplacementForm() {
             </div>
             <div className='mt-3 w-full'>
                 <h1 className='mt-2'>Parts Internal Remarks/Notes:</h1>
-                <Textarea type="text" className='w-full' />
+                <Textarea 
+                disabled={true}
+                value={ticket.validation_notes}
+                type="text" className='w-full' />
             </div>
             <div className='mt-3 w-full'>
                 <h1>Updates from Curtis Notes:</h1>

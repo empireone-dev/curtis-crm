@@ -52,7 +52,14 @@ class MailCreateTicketForm extends Mailable
     // }
     public function build()
     {
-        return $this->from('scitdept@empireonegroup.com')
-        ->markdown('mail.mail-create-ticket-form')->with($this->data);
+        if ($this->data['call_type'] == 'CF-Warranty Claim') {
+            return $this->from('scitdept@empireonegroup.com')
+                ->subject($this->data['ticket_id'])
+                ->markdown('mail.mail-create-ticket-form')->with($this->data);
+        } else if ($this->data['call_type'] == 'Parts') {
+            return $this->from('scitdept@empireonegroup.com')
+                ->subject($this->data['ticket_id'])
+                ->markdown('mail.parts-initial-email')->with($this->data);
+        }
     }
 }
