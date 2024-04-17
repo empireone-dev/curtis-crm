@@ -1,13 +1,13 @@
-import Drawer from '@/app/layouts/components/drawer'
 import React, { useState } from 'react'
-import { store_permission_thunk } from '../redux/permissions-thunk';
-import store from '@/app/store/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { setRolesForm } from '../redux/roles-slice';
+import { store_roles_thunk } from '../redux/roles-thunk';
+import Drawer from '@/app/layouts/components/drawer';
 import InputComponents from '@/app/layouts/components/input-components';
-import { setPermissions, setPermissionsForm } from '../redux/permissions-slice';
+import store from '@/app/store/store';
 
-export default function PermissionAddSection() {
-    const { permissionsForm } = useSelector((state) => state.permissions)
+export default function RoleAddSection() {
+    const { rolesForm } = useSelector((state) => state.roles)
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const closeModal = () => {
@@ -17,49 +17,49 @@ export default function PermissionAddSection() {
     function changeHandler(e) {
         const data = e.target.name
         if (data == 'image') {
-            dispatch(setPermissionsForm({
-                ...permissionsForm,
+            dispatch(setRolesForm({
+                ...rolesForm,
                 [data]: e.target.files
             }))
         } else {
-            dispatch(setPermissionsForm({
-                ...permissionsForm,
+            dispatch(setRolesForm({
+                ...rolesForm,
                 [data]: e.target.value
             }))
         }
 
     }
 
-    function submitPermission(e) {
+    function submitRoles(e) {
         e.preventDefault()
-        store.dispatch(store_permission_thunk(permissionsForm))
+        store.dispatch(store_roles_thunk(rolesForm))
         closeModal();
     }
 
     return (
         <div>
             <button onClick={() => setOpen(true)}
-                type="button"
-                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 ">
+                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600  ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Create Permission</span>
+
+                <span>Create Roles</span>
             </button>
 
             <Drawer
                 open={open}
                 setOpen={setOpen}
-                title="Create New Permission"
+                title="Create New Role"
             >
-                <form onSubmit={submitPermission}>
+                <form onSubmit={submitRoles}>
                     <div className='mt-4'>
                         <InputComponents
                             name="name"
                             required={true}
                             label="Name"
                             placeholder="Name"
-                            value={permissionsForm.name ?? ''}
+                            value={rolesForm.name ?? ''}
                             type="text"
                             onChange={changeHandler}
                         />
@@ -70,7 +70,7 @@ export default function PermissionAddSection() {
                             required={true}
                             label="Title"
                             placeholder="Title"
-                            value={permissionsForm.title ?? ''}
+                            value={rolesForm.title ?? ''}
                             type="text"
                             onChange={changeHandler}
                         />

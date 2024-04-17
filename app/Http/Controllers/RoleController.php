@@ -15,17 +15,14 @@ class RoleController extends Controller
     }
     public function store(Request $request)
     {
-        // Role::create($request->validate([
-        //     'name' => 'required|unique:permission',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        Role::create($request->validate([
+            'name' => 'required|unique:roles',
+            'title' => 'required',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
     }
 
     public function destroy($id)
@@ -34,7 +31,7 @@ class RoleController extends Controller
         if (!$role) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Permission not found'
+                'message' => 'Role not found'
             ], 404);
         }
     

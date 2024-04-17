@@ -6,9 +6,9 @@ import PermissionDeleteSection from './permission-delete-section'
 import PermissionAddSection from './permission-add-section'
 
 export default function PermissionTableSection() {
-    const { permissions,permissionsForm } = useSelector((state) => state.permissions)
- console.log(permissions)
-  
+    const { permissions, permissionsForm } = useSelector((state) => state.permissions)
+    console.log(permissions)
+
     return (
         <>
             <section className="px-4 py-12 mx-auto bg-white">
@@ -21,7 +21,7 @@ export default function PermissionTableSection() {
 
                     <div className="flex items-center mt-4 gap-x-3">
 
-<PermissionAddSection />
+                        <PermissionAddSection />
                     </div>
                 </div>
 

@@ -3,14 +3,15 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import RoleEditSection from './role-edit-section'
 import RoleDeleteSection from './role-delete-section'
+import RoleAddSection from './role-add-section'
 
 export default function RolesTableSection() {
 
     const { roles } = useSelector((state) => state.roles)
-    console.log('roles',roles)
+    console.log('roles', roles)
     return (
         <>
-           <section className="px-4 py-12 mx-auto bg-white">
+            <section className="px-4 py-12 mx-auto bg-white">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
@@ -19,15 +20,7 @@ export default function RolesTableSection() {
                     </div>
 
                     <div className="flex items-center mt-4 gap-x-3">
-
-
-                        <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-
-                            <span>Create Roles</span>
-                        </button>
+                        <RoleAddSection />
                     </div>
                 </div>
 
@@ -100,7 +93,7 @@ export default function RolesTableSection() {
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
                                                         <RoleEditSection data={res} />
-                                                        <RoleDeleteSection data={res}/>
+                                                        <RoleDeleteSection data={res} />
                                                     </td>
 
 
