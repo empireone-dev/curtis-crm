@@ -15,17 +15,14 @@ class CommonIssueController extends Controller
     }
     public function store(Request $request)
     {
-        // Role::create($request->validate([
-        //     'name' => 'required|unique:permission',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        CommonIssue::create($request->validate([
+            'name' => 'required|unique:common_issues',
+            'parent_id' => 'required',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
     }
 
     public function destroy($id)

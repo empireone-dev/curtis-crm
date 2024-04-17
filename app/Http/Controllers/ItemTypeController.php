@@ -15,17 +15,13 @@ class ItemTypeController extends Controller
     }
     public function store(Request $request)
     {
-        // Role::create($request->validate([
-        //     'name' => 'required|unique:permission',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        ItemType::create($request->validate([
+            'name' => 'required|unique:item_types',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
     }
 
     public function destroy($id)

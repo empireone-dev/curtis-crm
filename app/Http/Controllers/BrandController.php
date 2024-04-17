@@ -15,17 +15,13 @@ class BrandController extends Controller
     }
     public function store(Request $request)
     {
-        // Role::create($request->validate([
-        //     'name' => 'required|unique:brand',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        Brand::create($request->validate([
+            'brand_name' => 'required|unique:brands',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
     }
 
     public function destroy($id)

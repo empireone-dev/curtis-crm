@@ -83,35 +83,40 @@ export default function UsersTableSection() {
                                 <tbody className="bg-white divide-y divide-gray-200 ">
                                     {
                                         users.map((res, i) => {
-                                            return <tr key={i}>
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div>
-                                                        <h2 className="font-medium text-gray-800">{res.id}</h2>
-                                                    </div>
-                                                </td>
-                                                <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div className="inline py-1 text-sm font-normal rounded-full ">
-                                                        {res.name}
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 className="text-gray-700 ">{res.email}</h4>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 className="text-gray-700 ">{res.role.name ?? ''}</h4>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                    <UserEditSection data = {res}/>
-                                                    <UserDeleteSection data = {res}/>
-                                            </td>
-
-                                            </tr>
+                                            if (!res) {
+                                                return null;
+                                            }
+                                            return (
+                                                <tr key={i}>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800">{res.id}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div className="inline py-1 text-sm font-normal rounded-full ">
+                                                            {res.name}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div>
+                                                            <h4 className="text-gray-700 ">{res.email}</h4>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div>
+                                                            <h4 className="text-gray-700 ">{res.role?.name ?? ''}</h4>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
+                                                        <UserEditSection data={res} />
+                                                        <UserDeleteSection data={res} />
+                                                    </td>
+                                                </tr>
+                                            );
                                         })
                                     }
+
 
 
                                 </tbody>

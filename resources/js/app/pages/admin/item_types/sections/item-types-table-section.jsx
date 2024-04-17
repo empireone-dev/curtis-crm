@@ -3,13 +3,14 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 import ItemTypeEditSection from './item-type-edit-section'
 import ItemTypeDeleteSection from './item-type-delete-section'
+import ItemTypeAddSection from './item-type-add-section'
 
 export default function ItemTypesTableSection() {
     const { item_types } = useSelector((state) => state.item_types)
     console.log('item_types', item_types)
     return (
         <>
-           <section className="px-4 py-12 mx-auto bg-white">
+            <section className="px-4 py-12 mx-auto bg-white">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
@@ -18,13 +19,7 @@ export default function ItemTypesTableSection() {
                     </div>
 
                     <div className="flex items-center mt-4 gap-x-3">
-                        <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600  ">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-
-                            <span>Create Item Type</span>
-                        </button>
+                        <ItemTypeAddSection />
                     </div>
                 </div>
 
@@ -84,8 +79,8 @@ export default function ItemTypesTableSection() {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
-                                                        <ItemTypeEditSection data = {res} />
-                                                        <ItemTypeDeleteSection data = {res}/>
+                                                        <ItemTypeEditSection data={res} />
+                                                        <ItemTypeDeleteSection data={res} />
                                                     </td>
                                                 </tr>
                                             })

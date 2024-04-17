@@ -1,5 +1,13 @@
 import { itemTypesSlice,  setItemTypes } from "./item-types-slice";
-import { delete_item_types_service, get_item_types_service, update_item_types_service } from '@/app/services/item-type-services';
+import { delete_item_types_service, get_item_types_service, store_item_types_service, update_item_types_service } from '@/app/services/item-type-services';
+
+export function store_item_types_thunk(data) {
+  return async function (dispatch, getState) {
+    const result = await store_item_types_service(data)
+    dispatch(itemTypesSlice.actions.setItemTypes(result.data));
+    dispatch(itemTypesSlice.actions.setItemTypesForm({}));
+  };
+}
 
 export function get_item_types_thunk() {
   return async function (dispatch, getState) {

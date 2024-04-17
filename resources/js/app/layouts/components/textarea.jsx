@@ -1,5 +1,5 @@
 
-export default function Textarea({ name, value, label, type, errorMessage, onChange, disabled }) {
+export default function Textarea({ name, value, label, type, errorMessage, onChange, disabled, placeholder }) {
 
 
     return (
@@ -14,7 +14,8 @@ export default function Textarea({ name, value, label, type, errorMessage, onCha
                             id={name}
                             name={name}
                             value={value}
-                            className='peer text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500' placeholder="" />
+                            className='peer text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500' 
+                            placeholder={placeholder} />
 
                         <label
                             htmlFor={name}
