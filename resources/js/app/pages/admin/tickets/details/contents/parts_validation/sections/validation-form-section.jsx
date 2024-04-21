@@ -72,6 +72,7 @@ export default function ValidationFormSection() {
 
                 />
 
+
                 <div className='flex gap-4 mt-12'>
                     <ValidationButtonSection />
                 </div>

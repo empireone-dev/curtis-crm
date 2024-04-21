@@ -5,6 +5,7 @@ import {
     get_upload_picture_videos,
     upload_picture_videos,
 } from "@/app/services/files-service";
+import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 
 export function get_tickets_by_user_id_thunk(id) {
     return async function (dispatch, getState) {
@@ -16,8 +17,9 @@ export function get_tickets_by_user_id_thunk(id) {
 export function upload_ticket_files_thunk(data,ticket_id) {
     return async function (dispatch, getState) {
         const { user } = getState().app
-        await upload_picture_videos(data);
+        const ticket = await upload_picture_videos(data);
         const result = await get_upload_picture_videos(ticket_id);
+        dispatch(setTicket(ticket.status))
         dispatch(setFilesData(result.data));
         //  dispatch(customerTicketsSlice.actions.setTickets(result));
     };

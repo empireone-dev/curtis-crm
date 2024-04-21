@@ -91,9 +91,55 @@ class EmailTemplateController extends Controller
         );
         Ticket::where('id', $request->ticket['id'])->update([
             'status' => $status,
+            'warranty_status' => $request->mark,
             'validation_notes' => $request->validation_notes
         ]);
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
         return 'Email sent successfully!';
+    }
+
+
+    public function availability(Request $request)
+    {
+
+        $status = $request->status;
+        $ticket = Ticket::where('id', $request->ticket['id'])->first();
+        $ticket->update([
+            'status' =>  $status,
+            'availability_notes' => $request->availability_notes
+        ]);
+
+        ActivityController::create_activity(
+            $request->user['id'],
+            $request->ticket['id'],
+            strtoupper($request->user['name']) . ' MOVE TO ' .  $status,
+            'AVAILABILITY'
+        );
+        Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        return response()->json([
+            'status' => $ticket,
+        ], 200);
+    }
+
+    public function callback(Request $request)
+    {
+
+        $status = $request->status;
+        $ticket = Ticket::where('id', $request->ticket['id'])->first();
+        $ticket->update([
+            'status' =>  $status,
+            'callback_notes' => $request->callback_notes
+        ]);
+
+        ActivityController::create_activity(
+            $request->user['id'],
+            $request->ticket['id'],
+            strtoupper($request->user['name']) . ' MOVE TO ' .  $status,
+            'CALLBACK'
+        );
+        // Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        return response()->json([
+            'status' => $ticket,
+        ], 200);
     }
 }

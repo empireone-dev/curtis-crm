@@ -70,7 +70,7 @@ export default function CommonIssueAddSection() {
                             label="Parent Issue/ID"
                             placeholder="Parent Issue/ID"
                             value={common_issuesForm.parent_id ?? ''}
-                            type="text"
+                            type="number"
                             onChange={changeHandler}
                         />
                     </div>

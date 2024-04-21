@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Input from '@/app/layouts/components/input';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { QueueListIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Select from '@/app/layouts/components/select';
 import { useDispatch, useSelector } from 'react-redux';
-import { store_internals_service } from '@/app/services/google-service';
 import { setTicket } from '../../../../_redux/tickets-slice';
 import { router } from '@inertiajs/react';
+import { store_internals_service } from '../../../../../../../services/internals-service';
 
 export default function InternalsAvailabilitySection() {
 
@@ -85,6 +85,30 @@ export default function InternalsAvailabilitySection() {
     return (
         <form onSubmit={submitInternals}>
             <div className='flex flex-col gap-4'>
+                {
+                    ticket.warranty_status == 'IW' ?
+                        <div className="flex gap-3">
+                            <button
+                                type="button"
+                                className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-green-500 font-semibold shadow-sm ring-1 ring-inset ring-green-500"
+                            >
+                                <QueueListIcon className="h-5" />
+                                <span>IN WARRANTY</span>
+                            </button>
+                            <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                        </div> :
+                        <div className="flex gap-3">
+                            <button
+                                type="button"
+                                className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-blue-500 font-semibold shadow-sm ring-1 ring-inset ring-blue-500"
+                            >
+                                <QueueListIcon className="h-5" />
+                                <span>OUT OF WARRANTY</span>
+                            </button>
+                            <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                        </div>
+                }
+
                 <div className='flex justify-between'>
                     <div className='text-2xl'>
                         Availability

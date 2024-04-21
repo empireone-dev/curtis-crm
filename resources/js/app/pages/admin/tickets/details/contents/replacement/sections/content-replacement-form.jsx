@@ -3,7 +3,8 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 export default function ContentReplacementForm() {
-    const { ticket } = useSelector((state) => state.tickets);
+    const { internals, ticket } = useSelector((state) => state.tickets);
+
     return (
         <div className='bg-white h-full px-3'>
             <div className="flex flex-col mt-6 ">
@@ -15,55 +16,64 @@ export default function ContentReplacementForm() {
                             <table className="min-w-full divide-y divide-gray-200 ">
                                 <thead className="">
                                     <tr>
-                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right">
+                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left ">
                                             <button className="flex items-center gap-x-3 focus:outline-none">
                                                 <span>Name</span>
                                             </button>
                                         </th>
 
-                                        <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left ">
                                             Part Number
                                         </th>
 
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left ">
                                             Location
                                         </th>
-                                        <th scope="col" className="px-12 py-3.5 text-sm font-normal text-right rtl:text-right">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left ">
                                             Cost
                                         </th>
-                                        <th scope="col" className="px-12 py-3.5 text-sm font-normal text-right rtl:text-right">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left ">
                                             Status
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 ">
-                                    <tr >
-                                        <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                            <div>
-                                                <h2 className="font-medium text-gray-800"></h2>
-                                            </div>
-                                        </td>
-                                        <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                            <div className="inline  py-1 text-sm font-normal rounded-full">
+                                    {
+                                        internals.map((res, i) => {
+                                            return (
+                                                <tr key={i}>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800">{res.name}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <div className="inline  py-1 text-sm font-normal rounded-full">
+                                                            {res.part_number}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div>
+                                                            <h4 className="text-gray-700 ">{res.location}</h4>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div>
+                                                            <h4 className="text-gray-700 ">{res.cost}</h4>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div>
+                                                            <h4 className="text-gray-700 ">
+                                                                {res.status}
+                                                            </h4>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
 
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div>
-                                                <h4 className="text-gray-700 "></h4>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div>
-                                                <h4 className="text-gray-700 "></h4>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div>
-                                                <h4 className="text-gray-700 "></h4>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -72,14 +82,18 @@ export default function ContentReplacementForm() {
             </div>
             <div className='mt-3 w-full'>
                 <h1 className='mt-2'>Parts Internal Remarks/Notes:</h1>
-                <Textarea 
-                disabled={true}
-                value={ticket.validation_notes}
-                type="text" className='w-full' />
+                <Textarea
+                    disabled={true}
+                    value={ticket.validation_notes}
+                    type="text" className='w-full' />
             </div>
             <div className='mt-3 w-full'>
                 <h1>Updates from Curtis Notes:</h1>
-                <Textarea type="text" className='w-full' />
+                <Textarea
+                    type="text"
+                    disabled={true}
+                    value={ticket.internal_notes}
+                    className='w-full' />
             </div>
             <div className='mt-5 my-4 w-full'>
                 <h1 className='mt-2'>Resource Notes:</h1>
@@ -98,14 +112,11 @@ export default function ContentReplacementForm() {
                     <dt className="text-sm font-medium leading-6 text-gray-900"><b>Tracking # :</b></dt>
                 </div>
                 <div className='flex gap-2'>
-                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 ">
                         REPLACEMENT SHIPPED
                     </button>
-                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 ">
                         REPLACEMENT NOT SHIPPED
-                    </button>
-                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                        NO UNIT AVAILABLE
                     </button>
                 </div>
             </div>

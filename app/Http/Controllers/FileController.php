@@ -40,6 +40,7 @@ class FileController extends Controller
 
         return response()->json([
             'url' => 'success',
+            'status'=>$ticket
         ], 200);
     }
 

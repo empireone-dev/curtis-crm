@@ -68,11 +68,11 @@ export default function TicketsDetailsMoveAssignSection() {
           : <div className='flex gap-3 mb-4'>
 
             {
-              ticket?.status !== "REPLACE PARTS" &&
+              ticket?.status !== "REPLACEMENT PARTS" &&
               <TicketsDetailsMoveAssignComponents
                 ticket={ticket}
-                name="MOVE TO REPLACE PARTS"
-                value="REPLACE PARTS"
+                name="MOVE TO REPLACEMENT PARTS"
+                value="REPLACEMENT PARTS"
                 icon={<InboxStackIcon className='h-6' />}
                 link="replace_parts"
               />

@@ -23,6 +23,7 @@ import WarehousePage from '../contents/warehouse/page';
 import TicketsDetailsMoveAssignComponents from '../components/tickets-details-move-assign-components';
 import TicketsPartsInternalsContent from '../contents/internals/page';
 import TicketsAvailabilityContent from '../contents/availability/page';
+import ContentsCallBackPage from '../contents/call_back/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -124,6 +125,16 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
+    ...(ticket.isUploading === 'true' && ticket.status === 'CALLBACK'
+      ? [
+        {
+          title: 'Callback',
+          components: <ContentsCallBackPage />,
+          hash: '#callback',
+        },
+      ]
+      : []),
+
 
     ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
       ? [
@@ -134,12 +145,22 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && (ticket.status === 'REPLACEMENT' || ticket.status === 'REPLACE PARTS')
+    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
       ? [
         {
           title: 'Replacement',
           components: <ContentsReplacementPage />,
           hash: '#replacement',
+        },
+      ]
+      : []),
+
+    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
+      ? [
+        {
+          title: 'Replacement Parts',
+          components: <ContentsReplacementPage />,
+          hash: '#replacement_parts',
         },
       ]
       : []),

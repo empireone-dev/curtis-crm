@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
@@ -52,6 +53,8 @@ Route::resource('internals',InternalController::class);
 
 Route::resource('email_templates',EmailTemplateController::class);
 Route::post('validation', [EmailTemplateController::class, 'validation']);
+Route::post('availability', [EmailTemplateController::class, 'availability']);
+Route::post('callback', [EmailTemplateController::class, 'callback']);
 
 Route::resource('role',RoleController::class);
 Route::resource('activities',ActivityController::class);
@@ -69,6 +72,8 @@ Route::resource('item_types',ItemTypeController::class);
 Route::resource('common_issues',CommonIssueController::class);
 Route::resource('files',FileController::class);
 
+
+Route::get('/administrator_dashboard', [DashboardController::class, 'administrator_dashboard']);
 
 
 Route::middleware('auth:sanctum')->resource('flights', FlightController::class);

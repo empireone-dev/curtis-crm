@@ -8,9 +8,41 @@ export default function UserEditSection({data}) {
     const [id, setId] = useState('');
     const [newData, setNewData] = useState({})
     const [open, setOpen] = useState(false)
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
     useEffect(() => {
         setNewData(data)
     }, [data]);
+
+    useEffect(() => {
+        if (tooltipVisible) {
+            const handleScroll = () => {
+                setTooltipVisible(false);
+            };
+            window.addEventListener('scroll', handleScroll);
+
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, [tooltipVisible]);
+
+    const handleMouseEnter = (e) => {
+        const rect = e.target.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const tooltipWidth = 80;
+        const tooltipHeight = 20;
+        const tooltipX = rect.left + window.pageXOffset + rect.width + tooltipWidth < window.innerWidth
+            ? rect.right + window.pageXOffset
+            : rect.left + window.pageXOffset - tooltipWidth;
+        const tooltipY = rect.top + scrollTop - tooltipHeight;
+        setTooltipPosition({ x: tooltipX, y: tooltipY });
+        setTooltipVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setTooltipVisible(false);
+    };
 
     const closeModal = () => {
         setOpen(false);
@@ -25,8 +57,13 @@ export default function UserEditSection({data}) {
         <div>
             <button
                 onClick={() => setOpen(true)}
-                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center">
+                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center"
+                onMouseEnter={(e) => handleMouseEnter(e)}
+                onMouseLeave={() => handleMouseLeave()}>
                 <PencilSquareIcon className='h-6 text-white' />
+                {tooltipVisible && (
+                <span className="tooltip bg-black text-white text-md rounded-xl p-3 absolute z-50" style={{ top: tooltipPosition.y + window.pageYOffset, left: tooltipPosition.x }}>Edit User</span>
+            )}
             </button>
             <Drawer
                 open={open}

@@ -44,12 +44,12 @@ export default function LayoutSidebarSection({account}) {
                 icon={<UserGroupIcon className='h-6'/>}   
                 href={'users'}
               />
-               <LayoutSidebarListComponent
+               {/* <LayoutSidebarListComponent
                account={account}
                 name="Brands"
                 icon={<ReceiptPercentIcon className='h-6'/>}   
                 href={'brands'}
-              />
+              /> */}
               <LayoutSidebarListComponent
               account={account}
                 name="Email Template"

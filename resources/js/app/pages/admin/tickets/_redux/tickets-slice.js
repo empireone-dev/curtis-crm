@@ -15,7 +15,8 @@ export const ticketsSlice = createSlice({
     selectedTemplate:{},
     refund:{},
     replacement:{},
-    repair:{}
+    repair:{},
+    internals:[]
   },
   reducers: {
     setTickets: (state, action) => {
@@ -48,6 +49,9 @@ export const ticketsSlice = createSlice({
     setReplacement: (state, action) => {
       state.replacement = action.payload
     },
+    setInternals: (state, action) => {
+      state.internals = action.payload
+    },
   },
 })
 export const { setTickets,
@@ -59,7 +63,8 @@ export const { setTickets,
   setSelectedTemplate,
   setRefund,
   setRepair,
-  setReplacement
+  setReplacement,
+  setInternals
  } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

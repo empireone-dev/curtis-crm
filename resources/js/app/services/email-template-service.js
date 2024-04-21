@@ -24,3 +24,13 @@ export async function validation_service(data){
     const res = await axios.post(`/api/validation`,data);
     return res.data;
 }
+
+export async function availability_service(data){
+    const res = await axios.post(`/api/availability`,data);
+    return res.data;
+}
+
+export async function callback_service(data){
+    const res = await axios.post(`/api/callback`,data);
+    return res.data;
+}

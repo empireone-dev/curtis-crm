@@ -217,7 +217,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name='purchase_date'
-                        required={true}
+                        // required={true}
                         value={form.purchase_date}
                         label='Purchase Date'
                         type='date'

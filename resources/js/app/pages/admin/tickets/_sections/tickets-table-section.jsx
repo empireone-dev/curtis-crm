@@ -1,5 +1,5 @@
 import { Link, router } from '@inertiajs/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TicketsTableHeaderSection from './tickets-table-header-section'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
@@ -10,6 +10,40 @@ import TicketsPaginateSection from './tickets-paginate-section'
 export default function TicketTableSection() {
 
     const { tickets } = useSelector((state) => state.tickets)
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        if (tooltipVisible) {
+            const handleScroll = () => {
+                setTooltipVisible(false);
+            };
+            window.addEventListener('scroll', handleScroll);
+
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, [tooltipVisible]);
+
+    const handleMouseEnter = (e) => {
+        const rect = e.target.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const tooltipWidth = 110;
+        const tooltipHeight = 45;
+        const tooltipX = rect.left + window.pageXOffset + rect.width + tooltipWidth < window.innerWidth
+            ? rect.right + window.pageXOffset
+            : rect.left + window.pageXOffset - tooltipWidth;
+        const tooltipY = rect.top + scrollTop - tooltipHeight;
+        setTooltipPosition({ x: tooltipX, y: tooltipY });
+        setTooltipVisible(true);
+    };
+    
+    
+
+    const handleMouseLeave = () => {
+        setTooltipVisible(false);
+    };
 
 
     function moveToDetails(id) {
@@ -140,8 +174,13 @@ export default function TicketTableSection() {
                                                             {moment(res.updated_at).format('LLL')}
                                                         </td>
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            <button onClick={() => moveToDetails(res.id)}>
+                                                            <button onClick={() => moveToDetails(res.id)}
+                                                                onMouseEnter={(e) => handleMouseEnter(e)}
+                                                                onMouseLeave={() => handleMouseLeave()}>
                                                                 <EyeIcon className='h-6 text-blue-500' />
+                                                                {tooltipVisible && (
+                                                                    <span className="tooltip bg-black text-white text-md rounded-xl p-3 absolute z-50" style={{ top: tooltipPosition.y + window.pageYOffset, left: tooltipPosition.x }}>View Ticket Details</span>
+                                                                )}
                                                             </button>
                                                         </td>
                                                     </tr>

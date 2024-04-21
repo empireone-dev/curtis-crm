@@ -3,6 +3,7 @@ import { ticketsSlice } from './tickets-slice';
 import { customerTicketsSlice } from '@/app/pages/customer/tickets/redux/customer-tickets-slice';
 import { get_activities_by_id_service } from '@/app/services/activities-service';
 import { add_notes_on_tickets_service, get_notes_by_id_service } from '@/app/services/add-notes-service';
+import { get_internals_by_ticket_id_service } from '@/app/services/internals-service';
 
 
 export function get_making_decision_thunk(data) {
@@ -10,6 +11,16 @@ export function get_making_decision_thunk(data) {
      dispatch(ticketsSlice.actions.setRefund(data));
      dispatch(ticketsSlice.actions.setReplacement(data));
      dispatch(ticketsSlice.actions.setRepair(data));
+  };
+}
+
+
+
+export function get_internals_by_ticket_id_thunk() {
+  return async function (dispatch, getState) {
+    const { ticket } = getState().tickets
+    const result = await get_internals_by_ticket_id_service(ticket.id)
+    dispatch(ticketsSlice.actions.setInternals(result.status));
   };
 }
 
