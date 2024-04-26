@@ -13,6 +13,7 @@ use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\InternalController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RepairController;
 use App\Http\Controllers\ReplacementController;
@@ -44,8 +45,13 @@ Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_ra
 
 
 Route::resource('replacement',ReplacementController::class);
+
 Route::resource('refund',RefundController::class);
+Route::post('/warranty_checkque_shipped', [RefundController::class, 'warranty_checkque_shipped']);
+
 Route::resource('repair',RepairController::class);
+Route::resource('receipt',ReceiptController::class);
+
 
 Route::resource('users',UserController::class);
 Route::resource('permissions',PermissionController::class);

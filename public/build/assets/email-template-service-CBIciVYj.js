@@ -1,1 +1,0 @@
-import{e as a}from"./app-h5Q7DzWa.js";async function i(){return(await a.get("/api/email_templates")).data}async function r(e){return(await a.delete("/api/email_templates/"+e)).data}async function n(e){return(await a.put(`/api/email_templates/${e.id}`,e)).data}async function c(e){return(await a.post("/api/validation",e)).data}export{r as d,i as g,n as u,c as v};

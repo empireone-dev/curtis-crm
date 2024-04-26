@@ -5,18 +5,60 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRefund, setTicket } from "../../../../_redux/tickets-slice";
 import Loading from "@/app/layouts/components/loading";
+import { get_receipt_by_ticket_id_service } from "@/app/services/receipt-service";
+import { get_decision_making_refund_by_id_service, store_decision_making_refund_service } from "@/app/services/refund-service";
+import Select from "@/app/layouts/components/select";
+import Wysiwyg from "@/app/layouts/components/wysiwyg";
+import { router } from "@inertiajs/react";
 
 export default function RefundSection() {
-    const { refund } = useSelector((state) => state.tickets);
+    const { refund, ticket } = useSelector((state) => state.tickets);
+    const { user } = useSelector((state) => state.app);
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoading1, setIsLoading1] = useState(false)
     const dispatch = useDispatch()
 
+    const { email_templates } = useSelector((state) => state.email_templates);
+
+
+
+    useEffect(() => {
+        async function get_receipt() {
+            const response = await get_receipt_by_ticket_id_service(ticket.id)
+            const data = response.status
+            const refundExist = await get_decision_making_refund_by_id_service(ticket.id)
+            dispatch(setRefund({
+                ...refund,
+                instruction: refundExist?.instruction ?? ' ',
+                shipping_cost: String(refundExist?.shipping_cost ?? 0),
+                estimated_cost: String(refundExist?.estimated_cost ?? 0),
+                cheque_no: String(ticket?.refund?.cheque_no ?? 0),
+                cheque_amount: String(ticket?.refund?.cheque_amount ?? 0),
+                mail_date: String(ticket?.refund?.mail_date ?? ''),
+                ...data,
+                id: ticket.id,
+                template_text: null,
+                notes: ticket?.refund?.notes ?? ' ',
+            }))
+        }
+        get_receipt()
+    }, [ticket.id]);
 
     function formHandler(value, name) {
-        dispatch(setRefund({
-            ...refund,
-            [name]: value,
-        }))
+        if (name == 'wysiwyg') {
+            dispatch(setRefund({
+                ...refund,
+                template_text: value,
+            }))
+        } else {
+            if ((value || value == '') && name) {
+                dispatch(setRefund({
+                    ...refund,
+                    [name]: value,
+                }))
+            }
+        }
+
     }
 
 
@@ -35,6 +77,33 @@ export default function RefundSection() {
         setIsLoading(false)
     }
 
+    function formHandlerTemplates(value) {
+        const findTemplates = email_templates.find(res => res.id == value)
+        dispatch(setRefund({
+            ...refund,
+            template_text: findTemplates.template_text
+        }))
+    }
+
+    async function refundSubmit(e) {
+        e.preventDefault()
+        setIsLoading1(true)
+        try {
+            const result = await store_decision_making_refund_service({
+                ...refund,
+                account: user,
+            })
+            dispatch(setTicket(result.status))
+            if (refund.instruction == 'US Warehouse' || refund.instruction == 'CA Warehouse') {
+                router.visit('#files')
+            } else {
+                router.visit('#refund')
+            }
+            setIsLoading1(false)
+        } catch (error) {
+            setIsLoading1(false)
+        }
+    }
     return (
         <>
             <section className="container border-2 border-slate-400 py-3 bg-white">
@@ -47,23 +116,26 @@ export default function RefundSection() {
                         </div>
                     </div>
                 </div>
-                <form className="flex flex-col gap-6 px-4 ">
+                <form
+                    onSubmit={refundSubmit}
+                    className="flex flex-col gap-6 px-4 ">
                     <div className="flex gap-3 mt-2">
                         <button
                             type="button"
-                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-green-500 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-green-500 hover:text-gray-500"
+                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-green-500 font-semibold shadow-sm ring-1 ring-inset ring-green-500 hover:bg-green-500 hover:text-gray-500"
                         >
                             <GlobeAmericasIcon className="h-5" />
-                            <span>CA</span>
+                            <span>{ticket.country}</span>
                         </button>
                         <button
                             type="button"
-                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-yellow-500 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-yellow-500 hover:bg-yellow-300 hover:text-gray-500"
+                            className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-yellow-500 font-semibold shadow-sm ring-1 ring-inset ring-yellow-500 hover:bg-yellow-300 hover:text-gray-500"
                         >
                             <Squares2X2Icon className="h-5" />
-                            <span>VSE3B9</span>
+                            <span>{ticket.item_number}</span>
                         </button>
                     </div>
+
                     <div className="flex gap-3 w-full">
                         <Input
                             onChange={formHandler}
@@ -90,12 +162,13 @@ export default function RefundSection() {
                             span="$"
                             name="after_discount"
                             required={true}
-                            value={refund?.after_discount ?? ' '}
+                            value={String(parseFloat(refund?.retailers_price) - parseFloat(refund?.discount ?? '0'))}
                             label="Price After Discount"
                             type="number"
                             errorMessage="Price After Discount is required"
+                            readOnly
                         />
-                        <Input
+                        {/* <Input
                             onChange={formHandler}
                             name="estimated_fund"
                             span="$"
@@ -104,7 +177,7 @@ export default function RefundSection() {
                             label="Estimated Cost of Refund"
                             type="number"
                             errorMessage="Estimated Cost of Refund is required"
-                        />
+                        /> */}
                     </div>
                     <div className="flex gap-3 w-full">
                         <Input
@@ -119,6 +192,7 @@ export default function RefundSection() {
                         <Input
                             onChange={formHandler}
                             name="cheque_amount"
+                            span="$"
                             required={true}
                             value={refund?.cheque_amount ?? ' '}
                             label="Cheque Amount"
@@ -140,6 +214,7 @@ export default function RefundSection() {
                         <Input
                             onChange={formHandler}
                             name="unit_cost"
+                            span="$"
                             required={true}
                             value={refund?.unit_cost ?? '0'}
                             label="Cost of Unit"
@@ -224,6 +299,75 @@ export default function RefundSection() {
                         />
 
                     </div>
+                    <Select
+                        onChange={formHandler}
+                        name="instruction"
+                        required={false}
+                        value={refund.instruction ?? ""}
+                        label="Warranty Instruction"
+                        errorMessage=""
+                        data={[
+                            {
+                                value: "",
+                                name: "",
+                            },
+                            ...(refund.country === 'CA' ? [
+                                {
+                                    value: "CA Warehouse",
+                                    name: "Return to (CA Warehouse)",
+                                }
+                            ] : []),
+                            ...(refund.country === 'US' ? [
+                                {
+                                    value: "US Warehouse",
+                                    name: "Return to (US Warehouse)",
+                                }
+                            ] : []),
+                            {
+                                value: "home",
+                                name: "Destroy in Home",
+                            },
+                            {
+                                value: "asc",
+                                name: "Refer to ASC",
+                            }
+                        ]
+                        }
+                    />
+
+                    <Select
+                        onChange={formHandlerTemplates}
+                        name='email_template'
+                        value=''
+                        label='Email Templates'
+                        errorMessage=''
+                        data={email_templates.map(res => ({
+                            name: res.template_name,
+                            value: res.id
+                        }))}
+                    />
+                    <div className="my-12">
+                        <Wysiwyg
+                            label=""
+                            name="wysiwyg"
+                            value={refund?.template_text ?? null}
+                            onChange={formHandler}
+
+                        />
+                    </div>
+                    <div className="my-6">
+                        <Input
+                            onChange={formHandler}
+                            name="notes"
+                            span=""
+                            required={true}
+                            value={refund?.notes ?? ''}
+                            label="Notes"
+                            type="text"
+                            errorMessage="Notes is required"
+                        />
+                    </div>
+
                     <div className="mb-2 flex items-center justify-end gap-x-6">
                         <button
                             type="button"
@@ -232,10 +376,15 @@ export default function RefundSection() {
                             Cancel
                         </button>
                         <button
+                            onClick={refundSubmit}
                             type="submit"
                             className="rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Submit
+                            {
+                                isLoading1 ? <div className="py-1">
+                                    <Loading />
+                                </div> : 'Submit'
+                            }
                         </button>
                     </div>
 

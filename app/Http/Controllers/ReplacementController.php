@@ -52,7 +52,7 @@ class ReplacementController extends Controller
                 'notes' => $request->notes,
             ]);
             return response()->json([
-                'status' => 'succcess'
+                'status' => $ticket
             ], 200);
         }
     }

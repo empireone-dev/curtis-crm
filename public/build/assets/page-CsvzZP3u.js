@@ -1,0 +1,1 @@
+import{r as e,s as r,j as t}from"./app-BZ1ke76q.js";import o from"./content-replacement-form-DJbisPCs.js";import{b as s}from"./tickets-thunk-CK-cI970.js";import"./textarea-BlYISZcJ.js";import"./tickets-service-BHWw0A67.js";import"./internals-service-B9kSbxh_.js";function f(){return e.useEffect(()=>{r.dispatch(s())},[]),t.jsx("div",{children:t.jsx(o,{})})}export{f as default};

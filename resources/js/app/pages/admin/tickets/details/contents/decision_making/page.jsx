@@ -23,6 +23,7 @@ export default function TicketsDecisionMakingContent() {
                 ...result,
             })
         );
+        console.log('resultresult',result)
         setIsLoading(false);
     }
 

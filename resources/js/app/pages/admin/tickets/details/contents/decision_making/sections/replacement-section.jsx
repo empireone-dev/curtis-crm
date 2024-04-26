@@ -8,10 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setReplacement, setSelectedTemplate, setTicket } from "../../../../_redux/tickets-slice";
 import Wysiwyg from "@/app/layouts/components/wysiwyg";
 import { get_decision_making_replacement_by_id_service, store_decision_making_replacement_service } from "@/app/services/replacement-service";
+import { router } from "@inertiajs/react";
 
 export default function ReplacementSection() {
     const { replacement } = useSelector((state) => state.tickets);
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoading2, setIsLoading2] = useState(false)
     const dispatch = useDispatch()
     const { email_templates } = useSelector((state) => state.email_templates);
 
@@ -33,16 +35,23 @@ export default function ReplacementSection() {
         fetData()
     }, []);
 
+
     function formHandler(value, name) {
-        if (value && name) {
+        if (name == 'wysiwyg') {
             dispatch(setReplacement({
                 ...replacement,
-                [name]: value,
+                template_text: value,
             }))
+        } else {
+            if ((value || value == '') && name) {
+                dispatch(setReplacement({
+                    ...replacement,
+                    [name]: value,
+                }))
+            }
         }
 
     }
-
     function formHandlerTemplates(value) {
         const findTemplates = email_templates.find(res => res.id == value)
         dispatch(setReplacement({
@@ -66,9 +75,21 @@ export default function ReplacementSection() {
         setIsLoading(false)
     }
 
-    function submitFormhandler(e) {
+    async function submitFormhandler(e) {
         e.preventDefault()
-        store_decision_making_replacement_service(replacement)
+        setIsLoading2(true)
+        try {
+            const result = await store_decision_making_replacement_service(replacement)
+            dispatch(setTicket(result.status))
+            setIsLoading2(false)
+            if (replacement.instruction == 'US Warehouse' || replacement.instruction == 'CA Warehouse') {
+                router.visit('#files')
+            } else {
+                router.visit('#refund')
+            }
+        } catch (error) {
+            setIsLoading2(false)
+        }
 
     }
     return (
@@ -89,6 +110,7 @@ export default function ReplacementSection() {
                     <Input
                         onChange={formHandler}
                         name="unit_cost"
+                        span="$"
                         required={true}
                         value={replacement?.unit_cost ?? '0'}
                         label="Cost of Unit"
@@ -150,8 +172,9 @@ export default function ReplacementSection() {
                         <Input
                             onChange={formHandler}
                             name="shipping_cost"
+                            span="$"
                             required={true}
-                            value={replacement?.shipping_cost ?? '0'}
+                            value={String(replacement?.shipping_cost) ?? '0'}
                             label="Shipping Cost"
                             type="number"
                             errorMessage="Shipping Cost is required"
@@ -159,8 +182,9 @@ export default function ReplacementSection() {
                         <Input
                             onChange={formHandler}
                             name="estimated_cost"
+                            span="$"
                             required={true}
-                            value={replacement?.estimated_cost ?? '0'}
+                            value={String(replacement?.estimated_cost) ?? '0'}
                             label="Estimated Cost"
                             type="number"
                             errorMessage="Estimated Cost is required"
@@ -244,7 +268,9 @@ export default function ReplacementSection() {
                             type="submit"
                             className="rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Submit
+                            {
+                                isLoading2 ? <Loading /> : 'Submit'
+                            }
                         </button>
                     </div>
                 </div>

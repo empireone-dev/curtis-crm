@@ -30,8 +30,7 @@ export default function Wysiwyg({ label, value, onChange,name }) {
     return (
         <div>
             <ReactQuill
-            
-                onChange={(e)=>onChange(e)}
+                onChange={(e)=>onChange(e,name)}
                 className='h-[500px]'
                 modules={modules}
                 formats={formats}

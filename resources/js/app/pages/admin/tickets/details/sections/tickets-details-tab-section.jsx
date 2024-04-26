@@ -24,6 +24,8 @@ import TicketsDetailsMoveAssignComponents from '../components/tickets-details-mo
 import TicketsPartsInternalsContent from '../contents/internals/page';
 import TicketsAvailabilityContent from '../contents/availability/page';
 import ContentsCallBackPage from '../contents/call_back/page';
+import ReplacementWarranty from '../contents/replacement_warranty/page';
+import ReplacementWarrantyPage from '../contents/replacement_warranty/page';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -34,6 +36,7 @@ function classNames(...classes) {
 export default function TicketsDetailsTabSection({ account }) {
 
   const { ticket } = useSelector((state) => state.tickets)
+  const { user } = useSelector((state) => state.app)
   const { url } = usePage()
   const page = usePage();
   const dispatch = useDispatch()
@@ -57,7 +60,7 @@ export default function TicketsDetailsTabSection({ account }) {
       components: <TicketsDetailsContentFiles />,
       hash: '#files',
     },
-    ...(ticket.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim'
+    ...(ticket.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == null
       ? [
         {
           title: 'Warranty Validation',
@@ -75,11 +78,6 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    {
-      title: 'Activities',
-      components: <TicketsDetailsContentActivities />,
-      hash: '#activities',
-    },
     ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE' && account?.role_id != 3
       ? [
         {
@@ -149,7 +147,7 @@ export default function TicketsDetailsTabSection({ account }) {
       ? [
         {
           title: 'Replacement',
-          components: <ContentsReplacementPage />,
+          components: <ReplacementWarrantyPage />,
           hash: '#replacement',
         },
       ]
@@ -165,10 +163,16 @@ export default function TicketsDetailsTabSection({ account }) {
       ]
       : []),
 
+    // {
+    //   title: 'Update Status',
+    //   components: <TicketsDetailsContentStatus />,
+    //   hash: '#status',
+    // },
+
     {
-      title: 'Update Status',
-      components: <TicketsDetailsContentStatus />,
-      hash: '#status',
+      title: 'Activities',
+      components: <TicketsDetailsContentActivities />,
+      hash: '#activities',
     },
     {
       title: 'Details',
@@ -190,7 +194,6 @@ export default function TicketsDetailsTabSection({ account }) {
     router.visit(tabs[index].hash);
   };
   const hash = '#' + page.url.split('#')[1]
-
   return (
     <div className=" font-sans h-full">
       <div className="px-8">
@@ -198,7 +201,7 @@ export default function TicketsDetailsTabSection({ account }) {
         <div className="w-full ">
 
           {
-            ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
+           user.role_id == 3 && ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
               ticket={ticket}
               name="MOVE TO RESOURCE"
               value="RESOURCE"
@@ -228,6 +231,7 @@ export default function TicketsDetailsTabSection({ account }) {
               </div>
             );
           })}
+          
         </div>
       </div>
     </div>

@@ -40,8 +40,24 @@ class Ticket extends Model
         'status',
     ];
 
+    
     public function user(): HasOne
     {
         return $this->hasOne(User::class,'user_id');
+    }
+
+    public function refund(): HasOne
+    {
+        return $this->hasOne(Refund::class,'ticket_id','id');
+    }
+
+    public function receipt(): HasOne
+    {
+        return $this->hasOne(Receipt::class,'ticket_id','id');
+    }
+
+    public function replacement(): HasOne
+    {
+        return $this->hasOne(Replacement::class,'ticket_id','id');
     }
 }

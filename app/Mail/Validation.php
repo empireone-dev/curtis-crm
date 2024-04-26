@@ -53,7 +53,7 @@ class Validation extends Mailable
     // }
     public function build()
     {
-        return $this->from('scitdept@empireonegroup.com')
+        return $this->from('support2@curtiscs.com')
         ->view('mail.validation') // Assuming 'mail.validation' is your HTML email template
         ->with(['htmlContent' => $this->data]);
     }

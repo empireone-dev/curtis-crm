@@ -43,6 +43,7 @@ export default function RepairSection() {
                             <Input
                                 onChange={formHandler}
                                 name="repair_cost"
+                                span="$"
                                 required={true}
                                 value={repair.repair_cost}
                                 label="Repair Cost"

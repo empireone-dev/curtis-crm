@@ -53,11 +53,11 @@ class MailCreateTicketForm extends Mailable
     public function build()
     {
         if ($this->data['call_type'] == 'CF-Warranty Claim') {
-            return $this->from('scitdept@empireonegroup.com')
+            return $this->from('support2@curtiscs.com')
                 ->subject($this->data['ticket_id'])
                 ->markdown('mail.mail-create-ticket-form')->with($this->data);
         } else if ($this->data['call_type'] == 'Parts') {
-            return $this->from('scitdept@empireonegroup.com')
+            return $this->from('support2@curtiscs.com')
                 ->subject($this->data['ticket_id'])
                 ->markdown('mail.parts-initial-email')->with($this->data);
         }

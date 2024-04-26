@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Receipt extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'ticket_id',
+        'store',
+        'retailers_price',
+        'discount',
+        'total_price',
+        'refurbished',
+        'notes',
+    ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,13 +19,14 @@ class TicketController extends Controller
         //     ['status','=','WAREHOUSE']
         // ])->get();
         $ticket = Ticket::where('country','=',$country)->get();
+     
         return response()->json([
             'result' => $ticket
         ], 200);
     }
     public function get_tickets_by_ticket_id($ticket_id)
     {
-        $ticket = Ticket::where('id', $ticket_id)->first();
+        $ticket = Ticket::where('id', $ticket_id)->with(['refund','receipt','replacement'])->first();
         return response()->json([
             'result' => $ticket
         ], 200);
