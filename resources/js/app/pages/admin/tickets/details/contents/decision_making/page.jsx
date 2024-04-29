@@ -23,7 +23,7 @@ export default function TicketsDecisionMakingContent() {
                 ...result,
             })
         );
-        console.log('resultresult',result)
+        console.log('resultresult', result)
         setIsLoading(false);
     }
 
@@ -43,7 +43,9 @@ export default function TicketsDecisionMakingContent() {
             ) : (
                 !isLoading && (
                     <>
-                        <RepairSection />
+                        {
+                            ticket.country == 'CA' && <RepairSection />
+                        }
                         <div className="mt-7">
                             <RefundSection />
                         </div>

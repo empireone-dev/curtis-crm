@@ -8,17 +8,25 @@ export default function ContentRepairFormection() {
     function formHandler(value, name) {
 
         if (name === 'cost') {
-            dispatch(setForm({
+            setForm({
                 ...form,
                 cost: value.replace(/[^0-9.]/g, '')
-            }))
+            })
         } else {
-            dispatch(setForm({
+            setForm({
                 ...form,
                 [name]: value
-            }))
+            })
         }
 
+    }
+
+    function submit_repaired_asc(params) {
+        
+    }
+
+    function submit_not_repaired_asc(params) {
+        
     }
     return (
         <div className='flex flex-col gap-6'>
@@ -41,10 +49,15 @@ export default function ContentRepairFormection() {
                 errorMessage='notes is required'
             />
             <div className='flex gap-4'>
-                <button className='p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md'>
+                <button 
+                onClick={submit_repaired_asc}
+                className='p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md'>
                     REPAIRED
                 </button>
-                <button className='p-2 bg-red-500 hover:bg-red-600 text-white rounded-md'>
+                
+                <button
+                onClick={submit_not_repaired_asc}
+                className='p-2 bg-red-500 hover:bg-red-600 text-white rounded-md'>
                     NOT REPAIRED
                 </button>
             </div>

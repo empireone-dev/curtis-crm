@@ -7,8 +7,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function get_user_by_role($role_id){
+        $user = User::where('role_id','=',$role_id)->get();
+        return response()->json([
+            'data' => $user
+        ], 200);
+    }
+    
 
+    public function index(){
         $user = User::with('role')->limit(10)->get();
         return response()->json([
             'data' => $user

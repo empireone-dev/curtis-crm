@@ -1,13 +1,15 @@
 import Input from "@/app/layouts/components/input";
 import Select from "@/app/layouts/components/select";
 import Textarea from "@/app/layouts/components/textarea";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRepair } from "../../../../_redux/tickets-slice";
+import { get_user_by_role_service } from "@/app/services/user-service";
 
 export default function RepairSection() {
     const { repair } = useSelector((state) => state.tickets);
     const dispatch = useDispatch()
+    const [asc, setAsc] = useState([])
 
     function formHandler(value, name) {
         dispatch(setRepair({
@@ -16,6 +18,18 @@ export default function RepairSection() {
         }))
     }
 
+    useEffect(() => {
+        async function get_user_role() {
+            const res = await get_user_by_role_service(4)
+            setAsc(res.data)
+        }
+        get_user_role()
+    }, []);
+    //     openGoogleMaps() {
+    //         const customer_address = ${this.ticket.address}, ${this.ticket.city}, ${this.ticket.state} ${this.ticket.zip_code}, ${this.ticket.country}
+    //         const asc_address = ${this.address}, ${this.city}, ${this.province} ${this.zipcode}, CA
+    //         window.open(https://www.google.com/maps/dir/${asc_address}/${customer_address})
+    //         },
     return (
         <>
             <section className="container border-2 border-slate-400 bg-white">
@@ -31,15 +45,24 @@ export default function RepairSection() {
                 <form className="container px-4 mx-auto">
                     <div className="mt-4 mb-4 grid grid-cols-1 gap-x-6 gap-y-8">
                         <div className="grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
-                            <Input
-                                onChange={formHandler}
-                                name="asc"
-                                required={true}
-                                value={repair.asc}
-                                label="ASC"
-                                type="text"
-                                errorMessage="ASC is required"
-                            />
+                         <Select
+                                    onChange={formHandler}
+                                    name="asc"
+                                    required={false}
+                                    value={repair.asc ?? ""}
+                                    label="Select ASC"
+                                    errorMessage=""
+                                    data={[
+                                        {
+                                            value: '',
+                                            name: ''
+                                        },
+                                        ...asc?.map(res => ({
+                                            value: res.id,
+                                            name: res.name
+                                        }))
+                                    ]}
+                                />
                             <Input
                                 onChange={formHandler}
                                 name="repair_cost"
@@ -64,7 +87,7 @@ export default function RepairSection() {
                                     },
                                     {
                                         value: "warehouse",
-                                        name: "Return to warehouse(the US or CANADA)",
+                                        name: "Return to warehouse Canada",
                                     },
                                     {
                                         value: "home",
@@ -76,6 +99,7 @@ export default function RepairSection() {
                                     },
                                 ]}
                             />
+                        
                             <Textarea
                                 required={true}
                                 onChange={formHandler}
