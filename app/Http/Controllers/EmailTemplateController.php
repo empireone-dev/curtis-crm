@@ -80,7 +80,9 @@ class EmailTemplateController extends Controller
             $status = 'INTERNALS';
         } else if ($request->mark == 'OOW') {
             $status = '';
-        } else {
+        }else if ($request->mark == 'INCOMPLETE') {
+            $status = null;
+        }  else {
             $status = 'CLOSED';
         }
         ActivityController::create_activity(

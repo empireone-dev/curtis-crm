@@ -17,7 +17,7 @@ import { setTicket } from '../../_redux/tickets-slice';
 import { InboxStackIcon, TicketIcon } from '@heroicons/react/24/outline';
 import ContentsRepairPage from '../contents/repair/page';
 import ContentsRefundPage from '../contents/refund/page';
-import ContentsReplacementPage from '../contents/replacement/page';
+import ContentsReplacementPartsPage from '../contents/replacement_parts/page';
 import ContentsWarrantyValidationPage from '../contents/warranty_validation/page';
 import WarehousePage from '../contents/warehouse/page';
 import TicketsDetailsMoveAssignComponents from '../components/tickets-details-move-assign-components';
@@ -157,17 +157,21 @@ export default function TicketsDetailsTabSection({ account }) {
       ? [
         {
           title: 'Replacement Parts',
-          components: <ContentsReplacementPage />,
+          components: <ContentsReplacementPartsPage />,
           hash: '#replacement_parts',
         },
       ]
       : []),
 
-    // {
-    //   title: 'Update Status',
-    //   components: <TicketsDetailsContentStatus />,
-    //   hash: '#status',
-    // },
+      ...(ticket.call_type == 'TS-Tech Support' && ticket.status ===null
+      ? [
+        {
+          title: 'Update Status',
+          components:  <TicketsDetailsContentStatus />,
+          hash: '#status',
+        },
+      ]
+      : []),
 
     {
       title: 'Activities',

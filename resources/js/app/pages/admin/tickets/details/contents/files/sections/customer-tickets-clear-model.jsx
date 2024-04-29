@@ -117,7 +117,8 @@ const CustomerTicketsClearModel = () => {
                     <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.clear_model ?? []} />
+                        files={filesData?.clear_model ?? []} 
+                        />
                     {files.map(({ objectURL, file }) => (
 
                         <li

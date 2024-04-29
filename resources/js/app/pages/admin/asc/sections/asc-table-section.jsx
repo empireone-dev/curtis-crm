@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux'
 
 export default function ASCTableSection() {
     const { asc } = useSelector((state) => state.asc??[])
-   const [newAsc,setNewAsc] = useState(asc)
+
   
     return (
         <>
             <section className="px-4 py-12 mx-auto bg-white">
                 <AscTableHeaderSection 
-                setNewAsc={setNewAsc}
+                setNewAsc={asc}
                 />
                 <div className="flex flex-col mt-6">
                     {/* <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
@@ -54,7 +54,7 @@ export default function ASCTableSection() {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 ">
                                         {
-                                            newAsc.map((res, i) => {
+                                            asc.map((res, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">

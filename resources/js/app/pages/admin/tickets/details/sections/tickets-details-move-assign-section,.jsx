@@ -74,7 +74,7 @@ export default function TicketsDetailsMoveAssignSection() {
                 name="MOVE TO REPLACEMENT PARTS"
                 value="REPLACEMENT PARTS"
                 icon={<InboxStackIcon className='h-6' />}
-                link="replace_parts"
+                link="replacement_parts"
               />
             }
             {

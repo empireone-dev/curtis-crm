@@ -46,14 +46,29 @@ class RefundController extends Controller
                 'notes' => $request->notes,
             ]);
         }
-        Replacement::where('ticket_id', $request->ticket_id)->update([
-            'unit' => $request->unit,
-            'brand' => $request->brand,
-            'item_number' => $request->item_number,
-            'serial_number' => $request->serial_number,
-            'tracking' => $request->tracking,
-            'notes' => $request->notes,
-        ]);
+        $replacement = Replacement::where('ticket_id', $request->ticket_id)->first();
+        if ($replacement) {
+            $replacement->update([
+                'unit' => $request->unit,
+                'brand' => $request->brand,
+                'item_number' => $request->item_number,
+                'serial_number' => $request->serial_number,
+                'tracking' => $request->tracking,
+                'notes' => $request->notes,
+            ]);
+        }else{
+            Replacement::create([
+                'ticket_id'=> $request->ticket_id,
+                'unit' => $request->unit,
+                'brand' => $request->brand,
+                'item_number' => $request->item_number,
+                'serial_number' => $request->serial_number,
+                'tracking' => $request->tracking,
+                'notes' => $request->notes,
+            ]);
+        }
+     
+
         $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
             'status' => $request->status
