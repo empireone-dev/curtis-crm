@@ -95,7 +95,7 @@ export default function CustomerTicketsTableSection() {
                                         tickets.map((res, i) => {
                                             return <tr key={i}>
                                                 <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <h2 className="font-medium text-gray-800">{res.id}</h2>
+                                                    <h2 className="font-medium text-gray-800">{res.ticket_id}</h2>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div>

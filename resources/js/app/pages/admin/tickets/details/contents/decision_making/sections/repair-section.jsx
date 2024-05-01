@@ -3,13 +3,13 @@ import Select from "@/app/layouts/components/select";
 import Textarea from "@/app/layouts/components/textarea";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRepair } from "../../../../_redux/tickets-slice";
+import { setAsc, setRepair } from "../../../../_redux/tickets-slice";
 import { get_user_by_role_service } from "@/app/services/user-service";
+import GoogleMapComponent from "@/app/layouts/components/google-map";
 
 export default function RepairSection() {
-    const { repair } = useSelector((state) => state.tickets);
+    const { repair,asc } = useSelector((state) => state.tickets);
     const dispatch = useDispatch()
-    const [asc, setAsc] = useState([])
 
     function formHandler(value, name) {
         dispatch(setRepair({
@@ -21,7 +21,7 @@ export default function RepairSection() {
     useEffect(() => {
         async function get_user_role() {
             const res = await get_user_by_role_service(4)
-            setAsc(res.data)
+            dispatch(setAsc(res.data))
         }
         get_user_role()
     }, []);
@@ -32,6 +32,9 @@ export default function RepairSection() {
     //         },
     return (
         <>
+        {
+            asc.length !== 0 && <GoogleMapComponent ascs={asc}/>
+        }
             <section className="container border-2 border-slate-400 bg-white">
                 <div className="sm:flex sm:items-center sm:justify-between border-b border-gray-900/10">
                     <div className="w-full flex justify-center">
