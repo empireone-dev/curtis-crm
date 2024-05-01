@@ -186,12 +186,14 @@ export default function AvailabilitySection() {
                                     </button>
                                 </>
                             }
+                            {
+                                ticket.warranty_status == 'IW' && <button
+                                    onClick={() => submitButton('CLOSE')}
+                                    type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    CLOSE
+                                </button>
+                            }
 
-                            <button
-                                onClick={() => submitButton('CLOSE')}
-                                type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                                CLOSE
-                            </button>
                             <button
                                 onClick={() => submitButton('PENDING')}
                                 type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
