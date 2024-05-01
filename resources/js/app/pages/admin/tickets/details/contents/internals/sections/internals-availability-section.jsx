@@ -38,12 +38,21 @@ export default function InternalsAvailabilitySection() {
             dispatch(setTicket(result.status))
             router.visit('#availability');
         } else {
-            const result = await store_internals_service({
-                ...data,
-                status: 'REPLACEMENT'
-            })
-            dispatch(setTicket(result.status))
-            router.visit('#replacement');
+            if (ticket.warranty_status == 'OOW') {
+                const result = await store_internals_service({
+                    ...data,
+                    status: 'AVAILABILITY'
+                })
+                dispatch(setTicket(result.status))
+                router.visit('#availability');
+            } else {
+                const result = await store_internals_service({
+                    ...data,
+                    status: 'REPLACEMENT'
+                })
+                dispatch(setTicket(result.status))
+                router.visit('#replacement');
+            }
         }
     }
     function formHandler(value, fieldName, index) {
