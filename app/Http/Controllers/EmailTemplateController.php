@@ -79,7 +79,7 @@ class EmailTemplateController extends Controller
         if ($request->mark == 'IW') {
             $status = 'INTERNALS';
         } else if ($request->mark == 'OOW') {
-            $status = '';
+            $status = 'INTERNALS';
         }else if ($request->mark == 'INCOMPLETE') {
             $status = null;
         }  else {
