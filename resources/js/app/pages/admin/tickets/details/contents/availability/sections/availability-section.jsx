@@ -36,7 +36,7 @@ export default function AvailabilitySection() {
         setIsLoading(true)
         const status = value == 'WILLING TO BUY' ? 'CALLBACK' :
             value == 'NOT WILLING TO BUY' || value == 'CLOSE' ? 'CLOSED' :
-                value == 'PENDING' ? 'INTERNALS' :
+                value == 'PENDING' ? 'AVAILABILITY' :
                     value == 'FOR REPLACEMENT' ? 'REPLACEMENT PARTS' :
                         'CLOSED';
 
@@ -54,7 +54,7 @@ export default function AvailabilitySection() {
         } else if (value === 'NOT WILLING TO BUY' || value === 'CLOSE') {
             router.visit('#files');
         } else if (value === 'PENDING') {
-            router.visit('#internals');
+            router.visit('#availability');
         } else if (value === 'FOR REPLACEMENT') {
             router.visit('#replacement_parts');
         } else {
@@ -172,16 +172,21 @@ export default function AvailabilitySection() {
 
                         />
                         <div className='flex gap-2 mt-10'>
-                            <button
-                                onClick={() => submitButton('WILLING TO BUY')}
-                                type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
-                                OOW &gt; WILLING TO BUY
-                            </button>
-                            <button
-                                onClick={() => submitButton('NOT WILLING TO BUY')}
-                                type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
-                                OOW &gt; NOT WILLING TO BUY
-                            </button>
+                            {
+                                ticket.warranty_status == 'OOW' && <>
+                                    <button
+                                        onClick={() => submitButton('WILLING TO BUY')}
+                                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
+                                        OOW &gt; WILLING TO BUY
+                                    </button>
+                                    <button
+                                        onClick={() => submitButton('NOT WILLING TO BUY')}
+                                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                                        OOW &gt; NOT WILLING TO BUY
+                                    </button>
+                                </>
+                            }
+
                             <button
                                 onClick={() => submitButton('CLOSE')}
                                 type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
@@ -190,13 +195,16 @@ export default function AvailabilitySection() {
                             <button
                                 onClick={() => submitButton('PENDING')}
                                 type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                                PENDING
+                                Not Available - On Order
                             </button>
-                            <button
-                                onClick={() => submitButton('FOR REPLACEMENT')}
-                                type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                                FOR REPLACEMENT
-                            </button>
+                            {
+                                ticket.warranty_status == 'IW' && <button
+                                    onClick={() => submitButton('FOR REPLACEMENT')}
+                                    type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    FOR REPLACEMENT
+                                </button>
+                            }
+
                             {
                                 isLoading && <div className='bg-orange-500 p-2 rounded-md text-white font-black flex gap-3 items-center justify-center'>
                                     LOADING<Loading />
