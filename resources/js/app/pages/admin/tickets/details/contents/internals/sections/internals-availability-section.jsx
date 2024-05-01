@@ -216,11 +216,14 @@ export default function InternalsAvailabilitySection() {
                 </div>
 
                 {
-                    isNotAvailable ? <button className='p-3 rounded-md bg-green-500 hover:bg-green-600 text-white w-96'>
+                    ticket.warranty_status == 'OOW' ? <button className='p-3 rounded-md bg-green-500 hover:bg-green-600 text-white w-96'>
                         PROCEED
-                    </button> : <button className='p-3 rounded-md bg-green-500 hover:bg-green-600 text-white w-96'>
-                        MOVE TO REPLACEMENT
-                    </button>
+                    </button> :
+                        isNotAvailable ? <button className='p-3 rounded-md bg-green-500 hover:bg-green-600 text-white w-96'>
+                            PROCEED
+                        </button> : <button className='p-3 rounded-md bg-green-500 hover:bg-green-600 text-white w-96'>
+                            MOVE TO REPLACEMENT
+                        </button>
                 }
 
             </div>

@@ -1,1 +1,0 @@
-import{j as t}from"./app-BvHbonui.js";import r from"./internals-availability-section-BUWqfjBF.js";import"./input-C8UI6xif.js";import"./select-0S5UoQ6X.js";import"./internals-service-B9kSbxh_.js";import"./QueueListIcon-BZAFMqS5.js";import"./TrashIcon-BecL2kEU.js";function a(){return t.jsx("div",{children:t.jsx(r,{})})}export{a as default};
