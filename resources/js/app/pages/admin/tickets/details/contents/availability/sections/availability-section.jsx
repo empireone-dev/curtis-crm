@@ -74,7 +74,7 @@ export default function AvailabilitySection() {
                             className="flex items-center rounded-md mt-3 bg-white px-2.5 py-1.5 text-sm text-blue-500 font-semibold shadow-sm ring-1 ring-inset ring-blue-500"
                         >
                             <QueueListIcon className="h-5" />
-                            <span>Valid OOW</span>
+                            <span>Valid {ticket.warranty_status}</span>
                         </button>
                         <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                     </div>
