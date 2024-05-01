@@ -33,7 +33,7 @@ export default function ValidationButtonSection() {
             if (value == 'IW') {
                 router.visit('#internals');
             } else if (value == 'OOW') {
-                router.visit('#decision');
+                router.visit('#internals');
             } else {
                 router.visit('#files');
             }

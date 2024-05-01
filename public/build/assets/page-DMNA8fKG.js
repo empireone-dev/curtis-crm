@@ -1,0 +1,1 @@
+import{j as t}from"./app-BvHbonui.js";import{A as r}from"./administrator-layout-BVLbhUW5.js";import"./PowerIcon-coGS9wM6.js";import"./HomeIcon-DFiaY4CB.js";import"./UserGroupIcon-BrftUjFl.js";import"./TicketIcon-DlMZNJbs.js";import"./UserCircleIcon-B3gOOpaW.js";import"./user-service-Dm8AH_Oi.js";function u(){return t.jsx(r,{children:"HttPage"})}export{u as default};

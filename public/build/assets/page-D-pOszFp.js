@@ -1,0 +1,1 @@
+import{j as t}from"./app-BvHbonui.js";import r from"./content-repair-form-section-wouT_G8-.js";import"./input-C8UI6xif.js";import"./textarea-XCfMiQON.js";function m(){return t.jsx("div",{children:t.jsx(r,{})})}export{m as default};
