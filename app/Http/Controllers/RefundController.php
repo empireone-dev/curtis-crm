@@ -15,7 +15,7 @@ class RefundController extends Controller
 {
     public function warranty_checkque_shipped(Request $request)
     {
-        $refund = Refund::where('ticket_id', $request->ticket_id)->first();
+        $refund = Refund::where('ticket_id', $request->id)->first();
         if ($refund) {
             $refund->update([
                 'cheque_no' => $request->cheque_no,
@@ -32,7 +32,7 @@ class RefundController extends Controller
             ]);
         } else {
             Refund::create([
-                'ticket_id' => $request->ticket_id,
+                'ticket_id' => $request->id,
                 'cheque_no' => $request->cheque_no,
                 'cheque_amount' => $request->cheque_amount,
                 'mail_date' => $request->mail_date,
@@ -46,7 +46,7 @@ class RefundController extends Controller
                 'notes' => $request->notes,
             ]);
         }
-        $replacement = Replacement::where('ticket_id', $request->ticket_id)->first();
+        $replacement = Replacement::where('ticket_id', $request->id)->first();
         if ($replacement) {
             $replacement->update([
                 'unit' => $request->unit,
@@ -58,7 +58,7 @@ class RefundController extends Controller
             ]);
         }else{
             Replacement::create([
-                'ticket_id'=> $request->ticket_id,
+                'ticket_id'=> $request->id,
                 'unit' => $request->unit,
                 'brand' => $request->brand,
                 'item_number' => $request->item_number,
@@ -69,11 +69,11 @@ class RefundController extends Controller
         }
      
 
-        $ticket = Ticket::where('id', $request->ticket_id)->first();
+        $ticket = Ticket::where('id', $request->id)->first();
         $ticket->update([
             'status' => $request->status
         ]);
-        Receipt::where('ticket_id', $request->ticket_id)
+        Receipt::where('ticket_id', $request->id)
             ->update([
                 'retailers_price' => $request->retailers_price,
                 'discount' => $request->discount,
