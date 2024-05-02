@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const API_KEY = "AIzaSyAo0qHVT3W_WQuYrjl6kFFn1KbxcBBwrm4";
+const API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 
 function GoogleMapComponent({ ascs, ticket }) {
     const [marker, setMarker] = useState({
@@ -109,10 +109,10 @@ function GoogleMapComponent({ ascs, ticket }) {
             zoom={10}
         >
 
-            <InfoWindow 
-            position={{ lat: marker.latitude, lng: marker.longitude }}>
+            <InfoWindow
+                position={{ lat: marker.latitude, lng: marker.longitude }}>
                 <div className='flex flex-col'>
-                    Customer: {ticket.fname} {ticket.lname} 
+                    Customer: {ticket.fname} {ticket.lname}
                 </div>
             </InfoWindow>
             {ascs.map(res => (
