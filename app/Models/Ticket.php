@@ -26,6 +26,7 @@ class Ticket extends Model
         'zip_code',
         'country',
         'state',
+        'decision_status',
         'city',
         'address',
         'issue',

@@ -4,6 +4,7 @@ import store from '@/app/store/store'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk'
+import { router } from '@inertiajs/react'
 
 export default function WarehouseReceivedButton() {
     const { ticket } = useSelector((state) => state.tickets)
@@ -11,8 +12,9 @@ export default function WarehouseReceivedButton() {
     async function received_item() {
         if (confirm('Are you sure you want to receive the item?')) {
             setIsLoading(true)
-            await store.dispatch(update_tickets_status_thunk(ticket.id, 'CLOSED'))
+            await store.dispatch(update_tickets_status_thunk(ticket.id, ticket.decision_status))
             setIsLoading(false)
+            router.visit('#' + ticket.decision_status.toLowerCase());
         }
 
     }

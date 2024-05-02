@@ -87,7 +87,8 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && (ticket.status === 'WAREHOUSE' || ticket.status === 'CLOSED') && account?.role_id == 3
+    ...(ticket.isUploading === 'true' && (ticket.status === 'WAREHOUSE' || ticket.status === 'CLOSED') 
+    // && account?.role_id == 3
       ? [
         {
           title: 'Warehouse',

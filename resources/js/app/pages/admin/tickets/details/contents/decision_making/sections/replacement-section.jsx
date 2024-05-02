@@ -79,11 +79,14 @@ export default function ReplacementSection() {
         e.preventDefault()
         setIsLoading2(true)
         try {
-            const result = await store_decision_making_replacement_service(replacement)
+            const result = await store_decision_making_replacement_service({
+                ...replacement,
+                decision_status: 'REPLACEMENT'
+            })
             dispatch(setTicket(result.status))
             setIsLoading2(false)
             if (replacement.instruction == 'US Warehouse' || replacement.instruction == 'CA Warehouse') {
-                router.visit('#files')
+                router.visit('#warehouse')
             } else {
                 router.visit('#refund')
             }

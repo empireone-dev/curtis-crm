@@ -15,7 +15,7 @@ class RefundController extends Controller
 {
     public function warranty_checkque_shipped(Request $request)
     {
-        $refund = Refund::where('ticket_id', $request->id)->first();
+        $refund = Refund::where('ticket_id', $request->ticket_id)->first();
         if ($refund) {
             $refund->update([
                 'cheque_no' => $request->cheque_no,
@@ -32,7 +32,7 @@ class RefundController extends Controller
             ]);
         } else {
             Refund::create([
-                'ticket_id' => $request->id,
+                'ticket_id' => $request->ticket_id,
                 'cheque_no' => $request->cheque_no,
                 'cheque_amount' => $request->cheque_amount,
                 'mail_date' => $request->mail_date,
@@ -46,7 +46,7 @@ class RefundController extends Controller
                 'notes' => $request->notes,
             ]);
         }
-        $replacement = Replacement::where('ticket_id', $request->id)->first();
+        $replacement = Replacement::where('ticket_id', $request->ticket_id)->first();
         if ($replacement) {
             $replacement->update([
                 'unit' => $request->unit,
@@ -56,9 +56,9 @@ class RefundController extends Controller
                 'tracking' => $request->tracking,
                 'notes' => $request->notes,
             ]);
-        }else{
+        } else {
             Replacement::create([
-                'ticket_id'=> $request->id,
+                'ticket_id' => $request->ticket_id,
                 'unit' => $request->unit,
                 'brand' => $request->brand,
                 'item_number' => $request->item_number,
@@ -67,13 +67,13 @@ class RefundController extends Controller
                 'notes' => $request->notes,
             ]);
         }
-     
 
-        $ticket = Ticket::where('id', $request->id)->first();
+
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
             'status' => $request->status
         ]);
-        Receipt::where('ticket_id', $request->id)
+        Receipt::where('ticket_id', $request->ticket_id)
             ->update([
                 'retailers_price' => $request->retailers_price,
                 'discount' => $request->discount,
@@ -96,6 +96,36 @@ class RefundController extends Controller
     {
 
         $refund = Refund::where('ticket_id', $request->ticket_id)->first();
+        $isReplacementExist = Replacement::where('ticket_id', $request->ticket_id)->first();
+
+        if ($isReplacementExist) {
+            $isReplacementExist->update([
+                'ticket_id' => $request->ticket_id,
+                'unit_cost' => $request->unit_cost,
+                'cubed_weight' => $request->cubed_weight,
+                'length' => $request->length,
+                'width' => $request->width,
+                'height' => $request->height,
+                'shipping_cost' => $request->shipping_cost,
+                'estimated_cost' => $request->estimated_cost,
+                'instruction' => $request->instruction,
+                'notes' => $request->notes,
+            ]);
+        } else {
+            Replacement::create([
+                'ticket_id' => $request->ticket_id,
+                'unit_cost' => $request->unit_cost,
+                'cubed_weight' => $request->cubed_weight,
+                'length' => $request->length,
+                'width' => $request->width,
+                'height' => $request->height,
+                'shipping_cost' => $request->shipping_cost,
+                'estimated_cost' => $request->estimated_cost,
+                'instruction' => $request->instruction,
+                'notes' => $request->notes,
+            ]);
+        }
+
         if ($refund) {
             $refund->update([
                 'cheque_no' => $request->cheque_no,
@@ -130,7 +160,8 @@ class RefundController extends Controller
         $ticket = Ticket::where('id', $request->id)->with(['refund', 'receipt'])->first();
         $status = $request->instruction == 'US Warehouse' || $request->instruction == 'CA Warehouse' ? 'WAREHOUSE' : 'REFUND';
         $ticket->update([
-            'status' => $status
+            'status' => $status,
+            'decision_status' => $request->decision_status
         ]);
         ActivityController::create_activity(
             $request->account['id'],

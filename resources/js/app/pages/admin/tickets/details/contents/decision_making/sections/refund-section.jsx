@@ -92,10 +92,11 @@ export default function RefundSection() {
             const result = await store_decision_making_refund_service({
                 ...refund,
                 account: user,
+                decision_status:'REFUND'
             })
             dispatch(setTicket(result.status))
             if (refund.instruction == 'US Warehouse' || refund.instruction == 'CA Warehouse') {
-                router.visit('#files')
+                router.visit('#warehouse')
             } else {
                 router.visit('#refund')
             }
@@ -202,11 +203,10 @@ export default function RefundSection() {
                         <Input
                             onChange={formHandler}
                             name="mail_date"
-                            required={true}
                             value={refund?.mail_date ?? ' '}
                             label="Mail Date"
                             type="date"
-                            errorMessage="Mail Date is required"
+                            // errorMessage="Mail Date is required"
                         />
                     </div>
 
