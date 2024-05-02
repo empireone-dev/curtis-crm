@@ -17,9 +17,14 @@ class RedirectBasedOnRole
             } else if ($account->role_id == 2) {
                 return redirect('/customer/dashboard');
             } else if ($account->role_id == 3) {
+                return redirect('/warehouse/dashboard');
+            } else if ($account->role_id == 4) {
+                return redirect('/asc/dashboard');
+            } else if ($account->role_id == 5) {
                 return redirect('/agent/dashboard');
             }
         }
+
 
         return $next($request);
     }
