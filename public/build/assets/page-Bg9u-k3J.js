@@ -1,1 +1,0 @@
-import{j as t}from"./app-EaZTyv4P.js";import i from"./content-details-section-M-voxasa.js";import"./loading-BRI8SRbw.js";import"./tickets-thunk-BX94sYh9.js";import"./tickets-service-BHWw0A67.js";import"./internals-service-B9kSbxh_.js";function p(){return t.jsx("div",{children:t.jsx(i,{})})}export{p as default};

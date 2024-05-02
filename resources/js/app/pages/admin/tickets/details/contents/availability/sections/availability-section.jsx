@@ -76,7 +76,7 @@ export default function AvailabilitySection() {
                             <QueueListIcon className="h-5" />
                             <span>Valid {ticket.warranty_status}</span>
                         </button>
-                        <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                        <i aria-hidden="true" className="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                     </div>
                     <p>Parts Validation Notes:<Notes:div className='text-red-500'> {ticket.availability_notes}</Notes:div></p>
                     <p>Internal Notes:<Notes:div className='text-red-500'> {ticket.internal_notes}</Notes:div></p>
@@ -176,12 +176,12 @@ export default function AvailabilitySection() {
                                 ticket.warranty_status == 'OOW' && <>
                                     <button
                                         onClick={() => submitButton('WILLING TO BUY')}
-                                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
+                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
                                         OOW &gt; WILLING TO BUY
                                     </button>
                                     <button
                                         onClick={() => submitButton('NOT WILLING TO BUY')}
-                                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
                                         OOW &gt; NOT WILLING TO BUY
                                     </button>
                                 </>
@@ -189,20 +189,20 @@ export default function AvailabilitySection() {
                             {
                                 ticket.warranty_status == 'IW' && <button
                                     onClick={() => submitButton('CLOSE')}
-                                    type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                     CLOSE
                                 </button>
                             }
 
                             <button
                                 onClick={() => submitButton('PENDING')}
-                                type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                 Not Available - On Order
                             </button>
                             {
                                 ticket.warranty_status == 'IW' && <button
                                     onClick={() => submitButton('FOR REPLACEMENT')}
-                                    type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                     FOR REPLACEMENT
                                 </button>
                             }

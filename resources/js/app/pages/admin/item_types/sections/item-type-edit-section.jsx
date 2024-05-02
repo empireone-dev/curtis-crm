@@ -72,8 +72,8 @@ export default function ItemTypeEditSection({ data }) {
             >
                 <form onSubmit={handleSubmit}>
                     <div className='mt-4'>
-                        <label htmlFor="first_name" class="block mb-1 text-sm font-medium text-gray-900">Name</label>
-                        <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        <label htmlFor="first_name" className="block mb-1 text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             value={newData.name ?? ''}
                             onChange={(event) => setNewData({
                                 ...newData,

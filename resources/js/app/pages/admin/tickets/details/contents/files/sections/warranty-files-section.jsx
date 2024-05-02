@@ -20,21 +20,21 @@ export default function WarrantyFilesSection() {
            {
                 ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? <>
                     <CustomerTicketsBillOfSaleSection />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsFrontOfTheUnitSection />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsRearOfTheUnitSection />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReadableSerialSection />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsDefectIssueSection />
                 </> : <>
                     <CustomerTicketsClearModel />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsPartsModel />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReceiptModel />
-                    <div class="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsSerialModel />
                 </>
             }

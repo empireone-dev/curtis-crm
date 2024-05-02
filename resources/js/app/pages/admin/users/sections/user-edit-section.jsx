@@ -72,8 +72,8 @@ export default function UserEditSection({data}) {
             >
                 <form onSubmit={handleSubmit}>
                     <div className='mt-4'>
-                        <label htmlFor="name" class="block mb-1 text-sm font-medium text-gray-900">Name</label>
-                        <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             value={newData.name ?? ''}
                             onChange={(event) => setNewData({
                                 ...newData,
@@ -81,8 +81,8 @@ export default function UserEditSection({data}) {
                             })} />
                     </div>
                     <div className='mt-4'>
-                        <label htmlFor="email" class="block mb-1 text-sm font-medium text-gray-900">Email</label>
-                        <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                        <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-900">Email</label>
+                        <input type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
                         value={newData.email ?? ''}
                         onChange={(event) => setNewData({
                             ...newData,

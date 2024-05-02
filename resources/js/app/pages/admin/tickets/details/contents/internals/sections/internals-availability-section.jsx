@@ -104,7 +104,7 @@ export default function InternalsAvailabilitySection() {
                                 <QueueListIcon className="h-5" />
                                 <span>IN WARRANTY</span>
                             </button>
-                            <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                            <i aria-hidden="true" className="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                         </div> :
                         <div className="flex gap-3">
                             <button
@@ -114,7 +114,7 @@ export default function InternalsAvailabilitySection() {
                                 <QueueListIcon className="h-5" />
                                 <span>OUT OF WARRANTY</span>
                             </button>
-                            <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                            <i aria-hidden="true" className="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                         </div>
                 }
 

@@ -57,7 +57,7 @@ export default function ContentRefundFormSection() {
     }
     return (
         <div className='flex flex-col gap-8 my-12'>
-            <div class="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-4">
                 <Input
                     onChange={formHandler}
                     name='retailers_price'
@@ -99,7 +99,7 @@ export default function ContentRefundFormSection() {
                     errorMessage='Estimated Cost of Refund is required'
                 />
             </div>
-            <div class="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
                 <Input
                     onChange={formHandler}
                     name='cheque_no'

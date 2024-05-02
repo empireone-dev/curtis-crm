@@ -57,7 +57,7 @@ export default function CallBackFormSection() {
                             <QueueListIcon className="h-5" />
                             <span>Valid OOW</span>
                         </button>
-                        <i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
+                        <i aria-hidden="true" className="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                     </div>
                     <p>Parts Validation Notes:<Notes:div className='text-red-500'> {ticket.validation_notes}</Notes:div></p>
                     <p>Internal Notes:<Notes:div className='text-red-500'> {ticket.internal_notes}</Notes:div></p>
@@ -137,7 +137,7 @@ export default function CallBackFormSection() {
                     <div className='flex gap-2'>
                         <button
                             onClick={() => buttonHandler('ORDER PLACED')}
-                            type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
+                            type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
 
                             {
                                 isLoading1 ? <Loading /> : 'ORDER PLACED'
@@ -145,7 +145,7 @@ export default function CallBackFormSection() {
                         </button>
                         <button
                             onClick={() => buttonHandler('CANCEL ORDER')}
-                            type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                            type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
 
                             {
                                 isLoading2 ? <Loading /> : 'CANCEL ORDER'
@@ -153,7 +153,7 @@ export default function CallBackFormSection() {
                         </button>
                         <button
                             onClick={() => buttonHandler('NO ANSWER')}
-                            type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-orange-500 rounded-lg hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                            type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-orange-500 rounded-lg hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                             CALLBACK - NO ANSWER
                         </button>
                     </div>

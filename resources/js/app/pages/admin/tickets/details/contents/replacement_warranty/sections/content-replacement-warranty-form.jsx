@@ -146,7 +146,7 @@ export default function ContentReplacementWarrantyForm() {
                     <button
                         disabled={isLoading1}
                         onClick={process_ticket_handler}
-                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 ">
+                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 ">
 
                         {
                             isLoading1 ? <Loading /> : 'REPLACEMENT SHIPPED'
@@ -155,7 +155,7 @@ export default function ContentReplacementWarrantyForm() {
                     </button>
                     <button
                         onClick={not_shipped_handler}
-                        type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 ">
                         {
                             isLoading2 ? <Loading /> : 'REPLACEMENT NOT SHIPPED'
                         }

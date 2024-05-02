@@ -74,8 +74,8 @@ export default function EmailTemplateEditSection({ data }) {
             >
                 <form onSubmit={handleSubmit}>
                     <div className='mt-4'>
-                        <label htmlFor="first_name" class="block mb-1 text-sm font-medium text-gray-900">Name</label>
-                        <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        <label htmlFor="first_name" className="block mb-1 text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             value={newData.template_name ?? ''}
                             onChange={(event) => setNewData({
                                 ...newData,
@@ -83,7 +83,7 @@ export default function EmailTemplateEditSection({ data }) {
                             })} />
                     </div>
                     <div className='mt-4'>
-                        <label htmlFor="first_name" class="block mb-2 text-sm font-medium text-gray-900">Template</label>
+                        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900">Template</label>
                         <button className="flex bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
                             <SolidPencilSquareIcon className='h-5' />
                             <span>EDIT TEMPLATE</span>

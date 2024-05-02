@@ -5,10 +5,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAsc, setRepair } from "../../../../_redux/tickets-slice";
 import { get_user_by_role_service } from "@/app/services/user-service";
-import GoogleMapComponent from "@/app/layouts/components/google-map";
 
 export default function RepairSection() {
-    const { repair,asc } = useSelector((state) => state.tickets);
+    const { repair, asc,ticket } = useSelector((state) => state.tickets);
     const dispatch = useDispatch()
 
     function formHandler(value, name) {
@@ -25,17 +24,18 @@ export default function RepairSection() {
         }
         get_user_role()
     }, []);
-    //     openGoogleMaps() {
-    //         const customer_address = ${this.ticket.address}, ${this.ticket.city}, ${this.ticket.state} ${this.ticket.zip_code}, ${this.ticket.country}
-    //         const asc_address = ${this.address}, ${this.city}, ${this.province} ${this.zipcode}, CA
-    //         window.open(https://www.google.com/maps/dir/${asc_address}/${customer_address})
-    //         },
+
     return (
         <>
-        {
-            asc.length !== 0 && <GoogleMapComponent ascs={asc}/>
-        }
-            <section className="container border-2 border-slate-400 bg-white">
+            <div className=" my-3">
+                <a
+                    href={`/administrator/google_map/`+ticket.id}
+                    target="_blank"
+                    className="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+                    OPEN ASC
+                </a>
+            </div>
+            <section className="container border-2 Fborder-slate-400 bg-white">
                 <div className="sm:flex sm:items-center sm:justify-between border-b border-gray-900/10">
                     <div className="w-full flex justify-center">
                         <div className="flex items-center gap-x-3 mt-4 my-4 ">
@@ -48,24 +48,24 @@ export default function RepairSection() {
                 <form className="container px-4 mx-auto">
                     <div className="mt-4 mb-4 grid grid-cols-1 gap-x-6 gap-y-8">
                         <div className="grid grid-cols-1 gap-x-6 gap-y-8 flex-1">
-                         <Select
-                                    onChange={formHandler}
-                                    name="asc"
-                                    required={false}
-                                    value={repair.asc ?? ""}
-                                    label="Select ASC"
-                                    errorMessage=""
-                                    data={[
-                                        {
-                                            value: '',
-                                            name: ''
-                                        },
-                                        ...asc?.map(res => ({
-                                            value: res.id,
-                                            name: res.name
-                                        }))
-                                    ]}
-                                />
+                            <Select
+                                onChange={formHandler}
+                                name="asc"
+                                required={false}
+                                value={repair.asc ?? ""}
+                                label="Select ASC"
+                                errorMessage=""
+                                data={[
+                                    {
+                                        value: '',
+                                        name: ''
+                                    },
+                                    ...asc?.map(res => ({
+                                        value: res.id,
+                                        name: res.name
+                                    }))
+                                ]}
+                            />
                             <Input
                                 onChange={formHandler}
                                 name="repair_cost"
@@ -102,7 +102,7 @@ export default function RepairSection() {
                                     },
                                 ]}
                             />
-                        
+
                             <Textarea
                                 required={true}
                                 onChange={formHandler}

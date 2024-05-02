@@ -55,10 +55,17 @@ Route::get('/ticket-form', function () {
 // });
 
 
+
+
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
+
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');
     })->name('dashboard');
+
+    Route::get('google_map/{id}', function () {
+        return Inertia::render('admin/maps/page');
+    })->name('google_map');
 
     Route::get('/permissions', function () {
         return Inertia::render('admin/permissions/page');

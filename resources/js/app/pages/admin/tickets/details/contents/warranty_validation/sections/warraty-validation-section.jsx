@@ -2,14 +2,16 @@ import Input from '@/app/layouts/components/input'
 import Select from '@/app/layouts/components/select'
 import { store_receipt_service } from '@/app/services/receipt-service'
 import { router } from '@inertiajs/react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTicket } from '../../../../_redux/tickets-slice'
+import { get_retailers } from '@/app/services/product-search'
 
 export default function WarratyValidationSection() {
 
     const { ticket } = useSelector((state) => state.tickets)
     const dispatch = useDispatch()
+    const [retailers, setRetailers] = useState([])
     const [form, setForm] = useState({
         store: '',
         retailers_price: '0',
@@ -19,6 +21,16 @@ export default function WarratyValidationSection() {
         notes: null
     })
 
+    useEffect(() => {
+        async function retailers(params) {
+            const res = await get_retailers()
+            setRetailers(res.map(res => ({
+                name: res,
+                value: res
+            })))
+        }
+        retailers()
+    }, [])
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -38,7 +50,6 @@ export default function WarratyValidationSection() {
     function markInValidHandler() {
 
     }
-
     return (
         <>
             <div className='flex flex-col gap-4'>
@@ -51,16 +62,7 @@ export default function WarratyValidationSection() {
                     value={form.store}
                     label='Store Name'
                     errorMessage='Store Name is required'
-                    data={[
-                        {
-                            value: 'CA',
-                            name: 'Canada'
-                        },
-                        {
-                            value: 'US',
-                            name: 'United States'
-                        }
-                    ]}
+                    data={retailers}
                 />
                 <Input
                     span={'$'}
