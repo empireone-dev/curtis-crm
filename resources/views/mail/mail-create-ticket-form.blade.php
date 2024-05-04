@@ -38,16 +38,16 @@
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Postal Link</dt>
+                                    <dt class="text-sm font-medium leading-6 text-blue-600">Postal Link</dt>
                                     <a target="_blank" href="https://curtis-staging.cloud/" class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">https://curtis-staging.cloud</a>
                                 </div>
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">ID: </dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$data['email']}}</dd>
+                                    <dt class="text-sm font-medium leading-6 text-red-500">ID: </dt>
+                                    <dd class="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0"> {{$data['email']}}</dd>
                                 </div>
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Password</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> 12345678</dd>
+                                    <dt class="text-sm font-medium leading-6 text-red-500">Password</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0"> 12345678</dd>
                                 </div>
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Track Activity</dt>

@@ -2,9 +2,9 @@ import Loading from '@/app/layouts/components/loading';
 import store from '@/app/store/store';
 import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
-import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
 import ImageView from '@/app/layouts/components/image-view';
 import { useSelector } from 'react-redux';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 
 const CustomerTicketsPartsModel = () => {
     const [files, setFiles] = useState([])
@@ -13,8 +13,8 @@ const CustomerTicketsPartsModel = () => {
     const galleryRef5 = useRef(null);
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
-    const [loading, setLoading] = useState(false)
     const { user } = useSelector((state) => state.app)
+    const [loading, setLoading] = useState(false)
 
     const addFile = (file) => {
         const isImage = file.type.match('image.*');
@@ -72,13 +72,13 @@ const CustomerTicketsPartsModel = () => {
         setLoading(true)
         const fd = new FormData()
 
-        fd.append('ticket_id', url.split('/')[3])
-        fd.append('user_id', user.id)
+        fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
         fd.append('type', 'parts_model')
+        fd.append('user_id', user.id)
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[url.split('/').length - 1].split('#')[0]))
         setLoading(false)
         setFiles([]);
     }
@@ -104,11 +104,12 @@ const CustomerTicketsPartsModel = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                Clear picture of the part/s you need.
+                Clear picture of the part/s you need. 
                 </div>
                 <div className='text-xl font-black'>
                 Clear photo of the unit in which the missing/damaged part is located.
                 </div>
+             
 
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
 
@@ -172,7 +173,7 @@ const CustomerTicketsPartsModel = () => {
                         className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
 
                     >
-                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative cursor-pointer text-transparent hover:text-white shadow-sm">
 
 
                             <header

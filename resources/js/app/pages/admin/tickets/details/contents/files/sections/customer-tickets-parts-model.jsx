@@ -106,7 +106,9 @@ const CustomerTicketsPartsModel = () => {
                 <div className='text-xl font-black'>
                 Clear picture of the part/s you need.
                 </div>
-
+                <div className='text-xl font-black'>
+                Clear photo of the unit in which the missing/damaged part is located.
+                </div>
 
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
 

@@ -3,20 +3,29 @@ import React, { useEffect } from 'react'
 import TicketTableSection from './_sections/tickets-table-section'
 import store from '@/app/store/store';
 import { get_tickets_thunk } from './_redux/tickets-thunk';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from './_redux/tickets-slice';
 
 export default function TicketsPage() {
-  
+
   const { search } = useSelector((state) => state.tickets)
   useEffect(() => {
     store.dispatch(get_tickets_thunk())
-  }, [search.page??'']);
-  
+  }, [search.page ?? '']);
+
   return (
     <AdministratorLayout>
-      <TicketTableSection />
+      <div className='py-12'>
+        <div className='px-5 flex items-end justify-end'>
+          <button 
+          onClick={()=>router.visit('/administrator/tickets/create')}
+          className='p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md'>
+            CREATE TICKET
+          </button>
+        </div>
+        <TicketTableSection />
+      </div>
     </AdministratorLayout>
   )
 }

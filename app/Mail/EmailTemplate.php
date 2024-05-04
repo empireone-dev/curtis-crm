@@ -58,17 +58,27 @@ class EmailTemplate extends Mailable
         // return $this->from('scitdept@empireonegroup.com')
         // ->markdown('emails.tickets')->with($this->data);
         $subject = '';
+        $data = $this->ticket['id'];
+        $length = strlen($data);
+        $id = '';
+        if ($length == 1) {
+            $id = date("dmy") . '00000' . $data;
+        } else if ($length == 2) {
+            $id = date("dmy") . '0000' . $data;
+        } else if ($length == 3) {
+            $id = date("dmy") . '000' . $data;
+        }
+
         if ($this->ticket['call_type'] == 'Parts') {
-            $subject = '#PS' . date("dmy").'0'. $this->ticket['id'];
+            $subject = '#PS' . $id;
         } else if ($this->ticket['call_type'] == 'CF-Warranty Claim') {
-            $subject = '#CF' . date("dmy").'0'. $this->ticket['id'];
+            $subject = '#CF' . $id;
         } else if ($this->ticket['call_type'] == 'TS-Tech Support') {
-            $subject = '#TS' . date("dmy").'0'. $this->ticket['id'];
+            $subject = '#TS' . $id;
         }
         return $this->from('support2@curtiscs.com')
             ->subject($subject)
             ->view('mail.validation') // Assuming 'mail.validation' is your HTML email template
             ->with(['htmlContent' => $this->data]);
-
     }
 }

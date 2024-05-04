@@ -2,18 +2,18 @@ import Loading from '@/app/layouts/components/loading';
 import store from '@/app/store/store';
 import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
-import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import ImageView from '@/app/layouts/components/image-view';
 import { useSelector } from 'react-redux';
+import ImageView from '@/app/layouts/components/image-view';
+import { delete_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 
-const CustomerTicketsPartsModel = () => {
+const CustomerTicketsSerialModel = () => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
-    const galleryRef5 = useRef(null);
-    const { url } = usePage()
+    const galleryRef4 = useRef(null);
+    const {url} = usePage()
     const [isLoading, setIsLoading] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading,setLoading] = useState(false)
     const { user } = useSelector((state) => state.app)
 
     const addFile = (file) => {
@@ -56,7 +56,7 @@ const CustomerTicketsPartsModel = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input5').click();
+        document.getElementById('hidden-input4').click();
     };
 
     const handleFileChange = (e) => {
@@ -64,27 +64,27 @@ const CustomerTicketsPartsModel = () => {
             addFile(file);
         }
     };
-    function handleCancel() {
-        setFiles([]);
-    }
-    
     async function handleSubmit() {
         setLoading(true)
         const fd = new FormData()
-
-        fd.append('ticket_id', url.split('/')[3])
+        
+        fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
+        fd.append('type', 'serial_model')
         fd.append('user_id', user.id)
-        fd.append('type', 'parts_model')
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[url.split('/').length - 1].split('#')[0]))
         setLoading(false)
         setFiles([]);
     }
 
-   
+    function handleCancel() {
+        setFiles([]);
+    }
+    
 
+    
     async function deleteFileImage(id, ticket_id) {
         setIsLoading(true)
         await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
@@ -104,82 +104,81 @@ const CustomerTicketsPartsModel = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                Clear picture of the part/s you need.
+                Clear Picture of the Serial#
                 </div>
-                <div className='text-xl font-black'>
-                Clear photo of the unit in which the missing/damaged part is located.
-                </div>
-
+               
+                
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
 
-                <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef5}>
-                    <ImageView
+                <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef4}>
+                <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.parts_model??[]} />
+                        files={filesData?.serial_model??[]} />
                  
                     {files.map(({ objectURL, file }) => (
-
-                        <li
-                            key={objectURL}
-                            className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
-                            id={objectURL}
-                        >
-                            <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-                                <img
-                                    className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-                                    alt="upload preview"
-                                    src={objectURL}
-                                />
-                                <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                                    <h1 className="flex-1 ">{file.name}</h1>
-                                    <div className="flex">
-                                        <span className="p-1">
-                                            <i></i>
-                                        </span>
-                                        <p className="p-1 size text-xs">
-                                            {file.size > 1024
-                                                ? file.size > 1048576
-                                                    ? Math.round(file.size / 1048576) + 'mb'
-                                                    : Math.round(file.size / 1024) + 'kb'
-                                                : file.size + 'b'}
-                                        </p>
-                                        <button
-                                            className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                            onClick={() => handleDelete(objectURL)}
-                                        >
-                                            <svg
-                                                className="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
+                   
+                            <li
+                                key={objectURL}
+                                className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
+                                id={objectURL}
+                            >
+                                <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                                    <img
+                                        className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+                                        alt="upload preview"
+                                        src={objectURL}
+                                    />
+                                    <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                        <h1 className="flex-1 ">{file.name}</h1>
+                                        <div className="flex">
+                                            <span className="p-1">
+                                                <i></i>
+                                            </span>
+                                            <p className="p-1 size text-xs">
+                                                {file.size > 1024
+                                                    ? file.size > 1048576
+                                                        ? Math.round(file.size / 1048576) + 'mb'
+                                                        : Math.round(file.size / 1024) + 'kb'
+                                                    : file.size + 'b'}
+                                            </p>
+                                            <button
+                                                className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+                                                onClick={() => handleDelete(objectURL)}
                                             >
-                                                <path
-                                                    className="pointer-events-none"
-                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
-                                                ></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </section>
-                            </article>
+                                                <svg
+                                                    className="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        className="pointer-events-none"
+                                                        d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </section>
+                                </article>
 
-                        </li>
+                            </li>
+
 
                     ))}
                     <li
                         className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
 
                     >
-                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                        <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative cursor-pointer text-transparent hover:text-white shadow-sm">
 
 
                             <header
                                 className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
 
                                 <input
-                                    id="hidden-input5"
+                                    id="hidden-input4"
                                     type="file"
                                     multiple
                                     className="hidden"
@@ -223,8 +222,7 @@ const CustomerTicketsPartsModel = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-
-                    {loading ? <Loading /> : ' Upload now'}
+                {loading?<Loading />:' Upload now'}
                 </button>
                 <button
                     id="cancel"
@@ -238,4 +236,4 @@ const CustomerTicketsPartsModel = () => {
     );
 };
 
-export default CustomerTicketsPartsModel;
+export default CustomerTicketsSerialModel;

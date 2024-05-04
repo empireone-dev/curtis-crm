@@ -12,9 +12,9 @@ export default function DashboardCardsComponent({title,count,icon}) {
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{count}</h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
-                <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                <button className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
                     Click to visit
-                </p>
+                </button>
             </div>
         </div>
     )

@@ -78,7 +78,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE' && account?.role_id != 3
+    ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE'
       ? [
         {
           title: 'Decision Making',

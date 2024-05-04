@@ -282,7 +282,7 @@ export default function TicketCreateFormSection() {
                         value={form.address}
                         label='Address'
                         type='text'
-                        errorMessage='Address is required'
+                        // errorMessage='Address is required'
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">

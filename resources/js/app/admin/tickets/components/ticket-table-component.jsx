@@ -120,8 +120,8 @@ export default function TicketTableComponent() {
         ...tickets,
         ...tickets.map(res => res.id),
     }
-    console.log('datas',datas)
-    const data =tickets
+    console.log('datas', datas)
+    const data = tickets
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
     const columns = [
         {
@@ -216,7 +216,7 @@ export default function TicketTableComponent() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <Link href={'/admin/recruitment/applicants/failed/' + record.key}>
+                    <Link href={'/administrator/tickets/details/' + record.id + '#0'}>
                         <EyeOutlined className='text-lg text-blue-500' />
                     </Link>
                 )

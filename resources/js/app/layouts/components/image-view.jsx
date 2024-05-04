@@ -2,10 +2,12 @@ import { Fragment, useRef, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Loading from './loading'
+import { useSelector } from 'react-redux';
 
 export default function ImageView({ files, deleteFileImage, isLoading }) {
     const [open, setOpen] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0); 
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const { user } = useSelector((state) => state.app)
     const cancelButtonRef = useRef(null);
 
     function clickHandler(value, res) {
@@ -18,20 +20,20 @@ export default function ImageView({ files, deleteFileImage, isLoading }) {
     const handleNextImage = () => {
         setCurrentImageIndex(prevIndex => {
             if (prevIndex === files.length - 1) {
-                return 0; 
+                return 0;
             } else {
-                return prevIndex + 1; 
+                return prevIndex + 1;
             }
         });
     };
 
- 
+
     const handlePreviousImage = () => {
         setCurrentImageIndex(prevIndex => {
             if (prevIndex === 0) {
-                return files.length - 1; 
+                return files.length - 1;
             } else {
-                return prevIndex - 1; 
+                return prevIndex - 1;
             }
         });
     };
@@ -50,22 +52,26 @@ export default function ImageView({ files, deleteFileImage, isLoading }) {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [currentImageIndex]); 
+    }, [currentImageIndex]);
 
+    
     return (
         <>
             {files.map((res, i) => (
                 <li key={i} className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36" id={res}>
                     <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
                         <section className="flex flex-col rounded-md text-xs w-full h-full  absolute top-0 py-2 px-3">
-                            <div className="flex">
-                                <button
-                                    className="delete ml-auto focus:outline-none p-1 rounded-md z-10 text-red-500 hover:bg-gray-500"
-                                    onClick={() => deleteFileImage(res.id, res.ticket_id)}
-                                >
-                                    {isLoading ? <Loading /> : <TrashIcon className='h-6 text-red-500 relative' />}
-                                </button>
-                            </div>
+                            {
+                                user.role_id !== 2 && <div className="flex">
+                                    <button
+                                        className="delete ml-auto focus:outline-none p-1 rounded-md z-10 text-red-500 hover:bg-gray-500"
+                                        onClick={() => deleteFileImage(res.id, res.ticket_id)}
+                                    >
+                                        {isLoading ? <Loading /> : <TrashIcon className='h-6 text-red-500 relative' />}
+                                    </button>
+                                </div>
+                            }
+
                         </section>
                         <img
                             onClick={() => clickHandler(true, res)}
@@ -113,7 +119,7 @@ export default function ImageView({ files, deleteFileImage, isLoading }) {
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path d="M15.17 18.36l-6-6 6-6 1.41 1.29-7.7 7.71 7.7 7.64z"/>
+                                                <path d="M15.17 18.36l-6-6 6-6 1.41 1.29-7.7 7.71 7.7 7.64z" />
                                             </svg>
                                         </button>
                                     )}
@@ -127,7 +133,7 @@ export default function ImageView({ files, deleteFileImage, isLoading }) {
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path d="M8.83 18.36l6-6-6-6.35 1.41-1.29 7.7 7.64-7.7 7.71z"/>
+                                                <path d="M8.83 18.36l6-6-6-6.35 1.41-1.29 7.7 7.64-7.7 7.71z" />
                                             </svg>
                                         </button>
                                     )}

@@ -8,17 +8,65 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
   public function administrator_dashboard(){
+
     $parts_validation = Ticket::where('status','=','PARTS VALIDATION')->count();
+
+    $validation = Ticket::where([
+        ['call_type','=','CF-Warranty Claim'],
+        ['status','=',null]
+    ])->count();
+
     $parts = Ticket::where([
         ['call_type','=','Parts'],
         ['status','=',null]
     ])->count();
+
+    $resource = Ticket::where([
+        ['call_type','=','Resource'],
+        ['isUploading','=','true'],
+    ])->count();
+
+    $refund = Ticket::where([
+        ['call_type','=','Refund'],
+        ['isUploading','=','true'],
+    ])->count();
+
+    $replacement_parts = Ticket::where([
+        ['call_type','=','REPLACEMENT PARTS'],
+        ['isUploading','=','true'],
+    ])->count();
+
+
+    $replacement = Ticket::where([
+        ['call_type','=','REPLACEMENT'],
+        ['isUploading','=','true'],
+    ])->count();
+    
+
+    $internals = Ticket::where([
+        ['call_type','=','INTERNALS'],
+        ['isUploading','=','true'],
+    ])->count();
+
+    $repair = Ticket::where([
+        ['call_type','=','REPAIR'],
+        ['isUploading','=','true'],
+    ])->count();
+
+    $callback = Ticket::where([
+        ['call_type','=','CALLBACK'],
+        ['isUploading','=','true'],
+    ])->count();
+
+    
     $technical = Ticket::where([
         ['call_type','=','TS-Tech Support'],
         ['status','=',null],
         ['isUploading','=','false'],
     ])->count();
+
     $waiting_photos = Ticket::where('isUploading','=',null)->count();
+
     $warehouse_us = Ticket::where([
         ['country','=','US'],
         ['status','=','WAREHOUSE']
@@ -32,8 +80,16 @@ class DashboardController extends Controller
     $updates_curtis = Ticket::where('status','=','AVAILABILITY')->count();
 
     return response()->json([
+        'validation'=>$validation,
         'parts_validation' => $parts_validation,
+        'resource'=>$resource,
         'parts' => $parts,
+        'replacement_parts' => $replacement_parts,
+        'replacement'=>$replacement,
+        'internals'=>$internals,
+        'repair'=>$repair,
+        'refund'=>$refund,
+        'callback'=> $callback,
         'technical' => $technical,
         'waiting_photos'=>$waiting_photos,
         'warehouse_us'=>$warehouse_us,
@@ -41,6 +97,6 @@ class DashboardController extends Controller
         'closed'=>$closed,
         'check_availability'=>$check_availability,
         'updates_curtis'=>$updates_curtis
-    ], 404);
+    ], 200);
   }
 }

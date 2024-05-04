@@ -69,11 +69,12 @@ const AdminLayout = ({ children }) => {
             key: 'common_issues',
             icon: <ExclamationTriangleIcon className='h-6' />,
             onClick: () => router.visit('/administrator/common_issues')
-        }, {
+        },
+        {
             label: 'Tickets',
             key: 'tickets',
             icon: <TicketIcon className='h-6' />,
-            onClick: () => router.visit('/administrator/tickets')
+            onClick: () => router.visit('/administrator/tickets'),
         },
         {
             label: 'ASC',
@@ -81,29 +82,28 @@ const AdminLayout = ({ children }) => {
             icon: <UserCircleIcon className='h-6' />,
             onClick: () => router.visit('/administrator/asc')
         },
-      
+
     ]
     const path = url.split('/').slice(1, -1)
-    const active = url.split('/')[5] ? url.split('/')[url.split('/').length - 2] : url.split('/')[url.split('/').length - 1]
-
+    const active = window.location.pathname.split('/')[2]
 
     return (
         <Layout
             className='h-screen'
         >
             <Sider
-                width={250}
+                width={300}
                 theme="light"
                 className='shadow-lg'
                 trigger={null} collapsible collapsed={collapsed}>
                 <div className='flex items-center justify-center py-3'>
-                    <img src='/images/logo.png' width={collapsed ? 50 : 200} />
+                    <img src='/images/logo.png' width={collapsed ? 50 : 250} />
                 </div>
-                <div className="flex items-center justify-center">
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center py-3">
+                    <div className="flex items-center gap-3 ">
                         <div className="">
                             <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
-                                <img className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/avatars/avatar1.jpg" alt="avatar image" />
+                                <img className="w-[50px] h-[50px] shrink-0 inline-block rounded-[.95rem]" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/avatars/avatar1.jpg" alt="avatar image" />
                             </div>
                         </div>
                         <div className={`${collapsed ? 'hidden' : ''} mr-2`}>
@@ -113,7 +113,7 @@ const AdminLayout = ({ children }) => {
                     </div>
                 </div>
 
-                <Menu className={`text-lg ${collapsed ? 'my-12' : 'my-10 '}`}
+                <Menu className={`text-lg ${collapsed ? 'my-5' : 'my-5 '}`}
                     mode="inline"
                     defaultSelectedKeys={active}
                     defaultOpenKeys={path.slice(1 - path.length)}
