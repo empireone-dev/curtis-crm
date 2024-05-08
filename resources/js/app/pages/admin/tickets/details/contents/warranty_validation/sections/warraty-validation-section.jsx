@@ -11,6 +11,7 @@ import Loading from '@/app/layouts/components/loading'
 export default function WarratyValidationSection() {
 
     const { ticket } = useSelector((state) => state.tickets)
+    const { user } = useSelector((state) => state.app)
     const dispatch = useDispatch()
     const [retailers, setRetailers] = useState([])
     const [isLoading1, setIsLoading1] = useState(false)
@@ -48,13 +49,13 @@ export default function WarratyValidationSection() {
             [name]: value
         })
     }
-
     async function markValidHandler() {
         setIsLoading1(true)
         try {
             const result = await store_receipt_service({
                 ...ticket,
-                ...form
+                ...form,
+                emp_id:user.emp_id
             })
             dispatch(setTicket(result.status))
             setIsLoading1(false)
@@ -65,7 +66,7 @@ export default function WarratyValidationSection() {
     }
 
     function markInValidHandler() {
-        
+
     }
 
     const reasons = [
@@ -79,6 +80,7 @@ export default function WarratyValidationSection() {
         'SHIPPING DAMAGE',
         'THIRD PARTY SELLER',
     ]
+    
     return (
         <>
             <div className='flex flex-col gap-4'>

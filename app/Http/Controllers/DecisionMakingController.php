@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EmailTemplate;
+use App\Models\Activity;
 use App\Models\DecisionMaking;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -21,9 +22,22 @@ class DecisionMakingController extends Controller
             );
         }
 
+        Activity::create([
+            'user_id' => $request->user_id,
+            'ticket_id' => $request->id,
+            'type' => 'DECISION MAKING',
+            'message' => json_encode(array_merge(
+                $request->all(),
+                [
+                    'ticket_id' => $request->id,
+                    'emp_id' => $request->emp_id,
+                ]
+            ))
+        ]);
+
         $ticket = Ticket::where('id', $request->id)->first();
         $ticket->update([
-            'status' => $ticket->country.' WAREHOUSE',
+            'status' => $ticket->country . ' WAREHOUSE',
             'decision_status' => $request->ticket_type
         ]);
 

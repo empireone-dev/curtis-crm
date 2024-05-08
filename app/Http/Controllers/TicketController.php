@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Schema;
 class TicketController extends Controller
 {
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
 
-        $ticket= Ticket::where('id',$id)->first();
+        $ticket = Ticket::where('id', $id)->first();
         if ($ticket) {
             $ticket->update($request->all());
         }
@@ -37,7 +39,7 @@ class TicketController extends Controller
     }
     public function get_tickets_by_ticket_id($ticket_id)
     {
-        $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement','receipt','refund','repair'])->first();
+        $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
         $asc = User::where('id', $ticket->decision_making['id'])->first();
         return response()->json([
             'result' => array_merge($ticket->toArray(), ['asc' => $asc->toArray()]),
@@ -51,13 +53,16 @@ class TicketController extends Controller
             'status' => $request->status
         ]);
         $user = User::find($request->user_id);
-        // $user_id,$ticket_id,$message,$type
-        ActivityController::create_activity(
-            $request->user_id,
-            $id,
-            strtoupper($user->name) . ' MOVE TO ' . $request->status,
-            $request->status
-        );
+
+        Activity::create([
+            'user_id' => $request->user_id,
+            'ticket_id' => $id,
+            'type' => 'MOVE',
+            'message' => json_encode([
+                'emp_id' => $user->emp_id,
+                'move' => $user->role_id == 3 ? $ticket->country . ' Warehouse' : $user->name . ' move to ' . strtolower($request->status),
+            ])
+        ]);
 
         return response()->json([
             'result' => $ticket

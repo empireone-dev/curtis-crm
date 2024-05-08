@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Refund;
 use App\Models\Replacement;
 use App\Models\Ticket;
@@ -24,6 +25,13 @@ class ReplacementController extends Controller
 
         $ticket->update([
             'status' => $request->status,
+        ]);
+
+        Activity::create([
+            'user_id'=>$request->user_id,
+            'ticket_id'=>$request->ticket_id,
+            'type'=>'REPLACEMENT',
+            'message'=>json_encode($request->all())
         ]);
         if ($replacement) {
             $replacement->update($request->all());

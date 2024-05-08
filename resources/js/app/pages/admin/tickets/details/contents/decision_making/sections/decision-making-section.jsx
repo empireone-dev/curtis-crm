@@ -14,6 +14,7 @@ import { router } from '@inertiajs/react';
 
 export default function DecisionMakingSection() {
 
+    const { user } = useSelector((state) => state.app);
     const { asc, ticket } = useSelector((state) => state.tickets);
     const [data, setData] = useState({})
     const dispatch = useDispatch()
@@ -25,12 +26,13 @@ export default function DecisionMakingSection() {
     useEffect(() => {
         async function get_decision_making(params) {
             const response = await get_decision_making_by_ticket_id(ticket.id)
-
             if (response.status) {
                 setData({
                     ...ticket,
                     ...response.status,
-                    id: ticket.id
+                    id: ticket.id,
+                    user_id:user.id,
+                    emp_id:user.emp_id,
                 })
             } else {
                 setData({
@@ -38,12 +40,15 @@ export default function DecisionMakingSection() {
                     ticket_type: 'REPLACEMENT',
                     retailers_price: ticket.receipt?.retailers_price ?? '0',
                     discount: ticket.receipt?.discount ?? '0',
+                    id: ticket.id,
+                    user_id:user.id,
+                    emp_id:user.emp_id,
                 })
             }
         }
         get_decision_making()
-
     }, []);
+
 
     function formHandler(value, name) {
         if (name == 'wysiwyg') {
@@ -93,7 +98,7 @@ export default function DecisionMakingSection() {
             template_text: findTemplates.template_text
         })
     }
-
+    
     async function submit_form(e) {
         e.preventDefault()
         setIsLoading1(true)
