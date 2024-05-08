@@ -17,9 +17,8 @@ export default function ContentRefundFormSection() {
 
     useEffect(() => {
         setForm({
-            ...ticket.receipt ?? {},
+            ...ticket.decision_making ?? {},
             ...ticket.refund ?? {},
-            ...ticket.replacement ?? {},
         })
     }, [ticket]);
 
@@ -45,7 +44,7 @@ export default function ContentRefundFormSection() {
                 const result = await patch_warranty_checkque_shipped_service({
                     ...form,
                     account: user,
-                    status:'PROCESSED TICKET'
+                    status: 'PROCESSED TICKET'
                 })
                 dispatch(setTicket(result.status))
                 setIsLoading(false)
@@ -80,20 +79,20 @@ export default function ContentRefundFormSection() {
                 />
                 <Input
                     onChange={formHandler}
-                    name='total_price'
+                    name='after_discount'
                     span="$"
                     required={true}
-                    value={String(form.total_price) ?? ' '}
+                    value={String(parseFloat(form?.retailers_price) - parseFloat(form?.discount ?? '0'))}
                     label='Price After Discount'
                     type='text'
                     errorMessage='Price After Discount is required'
                 />
                 <Input
                     onChange={formHandler}
-                    name='estimated_cost'
+                    name='cost_refund'
                     span="$"
                     required={true}
-                    value={String(form.estimated_cost ?? '0')}
+                    value={String(form.cost_refund ?? '0')}
                     label='Estimated Cost of Refund'
                     type='text'
                     errorMessage='Estimated Cost of Refund is required'
@@ -123,6 +122,7 @@ export default function ContentRefundFormSection() {
                     Resource Notes: Refund is cheaper than replacement.
                 </div>
             </div>
+            
             <Textarea
                 required={true}
                 onChange={formHandler}

@@ -6,12 +6,16 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTicket } from '../../../../_redux/tickets-slice'
 import { get_retailers } from '@/app/services/product-search'
+import Loading from '@/app/layouts/components/loading'
 
 export default function WarratyValidationSection() {
 
     const { ticket } = useSelector((state) => state.tickets)
     const dispatch = useDispatch()
     const [retailers, setRetailers] = useState([])
+    const [isLoading1, setIsLoading1] = useState(false)
+    const [isLoading2, setIsLoading2] = useState(false)
+
     const [form, setForm] = useState({
         store: '',
         retailers_price: '0',
@@ -28,9 +32,16 @@ export default function WarratyValidationSection() {
                 name: res,
                 value: res
             })))
+            if (ticket?.receipt) {
+                setForm({
+                    ...ticket.receipt,
+                    id: ticket.id
+                })
+            }
         }
         retailers()
     }, [])
+
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -39,17 +50,35 @@ export default function WarratyValidationSection() {
     }
 
     async function markValidHandler() {
-        const result = await store_receipt_service({
-            ...ticket,
-            ...form
-        })
-        dispatch(setTicket(result.status))
-        router.visit('#decision')
+        setIsLoading1(true)
+        try {
+            const result = await store_receipt_service({
+                ...ticket,
+                ...form
+            })
+            dispatch(setTicket(result.status))
+            setIsLoading1(false)
+            router.visit('#decision')
+        } catch (error) {
+            setIsLoading1(false)
+        }
     }
 
     function markInValidHandler() {
-
+        
     }
+
+    const reasons = [
+        'OOW',
+        'HAS PHYSICAL DAMAGE',
+        'REFURBISHED',
+        'UNAUTHORIZED RETAILER',
+        'NON-CURTIS PRODUCT (MODEL, SERIAL)',
+        'PHYSICAL DAMAGE - FRONT',
+        'PHYSICAL DAMAGE - BACK',
+        'SHIPPING DAMAGE',
+        'THIRD PARTY SELLER',
+    ]
     return (
         <>
             <div className='flex flex-col gap-4'>
@@ -125,8 +154,13 @@ export default function WarratyValidationSection() {
                     <div>
                         <button
                             onClick={markValidHandler}
-                            className='bg-white hover:bg-gray-300 text-blue-700 p-3 rounded-md font-black'>
-                            MARK VALID
+                            className='bg-gray-400 hover:bg-gray-300 text-blue-700 p-3 rounded-md font-black'>
+                            {/* MARK VALID */}
+                            {
+                                isLoading1 ? <div className='p-2'>
+                                    <Loading />
+                                </div> : 'MARK VALID'
+                            }
                         </button>
                     </div>
                 </div>
@@ -136,23 +170,27 @@ export default function WarratyValidationSection() {
                         Mark this Ticket In-Valid
                     </div>
                     <div className='bg-white p-5 rounded-md text-black'>
-                        REASON:
-                        <Select
-                            onChange={formHandler}
-                            name='reason'
-                            value={form.reason}
-                            errorMessage='Reason is required'
-                            data={[
-                                {
-                                    value: 'CA',
-                                    name: 'Canada'
-                                },
-                                {
-                                    value: 'US',
-                                    name: 'United States'
-                                }
-                            ]}
-                        />
+                        <div>
+                            <div className='relative' >
+                                <select
+                                    required={false}
+                                    onChange={(e) => formHandler(e.target.value, e.target.name)}
+                                    id={'reason'}
+                                    name={'reason'}
+                                    className='peer text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500' placeholder="" >
+                                    <option selected disabled></option>
+                                    {
+                                        reasons.map((res, i) => {
+                                            return <option selected={`${form.reason}` == `${res}`} key={i} value={res}>{res}</option>
+                                        })
+                                    }
+                                </select>
+                                <label
+                                    htmlFor={'reason'}
+                                    className='absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white'>Select Reason</label>
+                            </div >
+
+                        </div>
                     </div>
                     <div>
                         <button

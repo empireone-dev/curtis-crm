@@ -148,7 +148,7 @@ export default function WarehouseTicketsTableSection() {
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap ">
-                                                    {res.status == null ? (
+                                                    {(res.status == 'PARTS VALIDATION' || res.status == 'WARRANTY VALIDATION' || res.status == 'TECH VALIDATION') ? (
                                                         <div className="inline py-1 font-black text-sm rounded-full text-orange-500 gap-x-2 bg-orange-100/60">
                                                             OPEN
                                                         </div>

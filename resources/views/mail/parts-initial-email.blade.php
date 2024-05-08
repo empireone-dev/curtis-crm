@@ -14,9 +14,10 @@
 
     <p>Click the link and use the credentials below;</p>
     <ul>
-        <li><strong>Portal Link:</strong></li>
-        <li><strong>ID:</strong></li>
-        <li><strong>Password:</strong></li>
+        <li><strong>Portal Link:</strong> <a target="_blank" href="https://curtis-staging.cloud/" class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">https://curtis-staging.cloud</a>
+        </li>
+        <li><strong>ID:</strong>{{$data['email']}}</li>
+        <li><strong>Password:</strong>12345678</li>
     </ul>
 
     <p>Also, kindly reply to this email with the updated information of the following:</p>

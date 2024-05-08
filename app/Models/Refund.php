@@ -10,17 +10,12 @@ class Refund extends Model
     use HasFactory;
     protected $fillable = [
         'ticket_id',
+        'retailers_price',
+        'discount',
+        'after_discount',
         'cheque_no',
         'cheque_amount',
-        'mail_date',
-        'unit_cost',
-        'cubed_weight',
-        'length',
-        'width',
-        'height',
-        'shipping_cost',
-        'estimated_cost',
+        'cost_refund',
         'notes',
     ];
-
 }

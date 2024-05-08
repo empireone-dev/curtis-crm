@@ -13,55 +13,61 @@ class DashboardController extends Controller
 
     $validation = Ticket::where([
         ['call_type','=','CF-Warranty Claim'],
-        ['status','=',null]
+        ['status','=','WARRANTY VALIDATION']
     ])->count();
 
     $parts = Ticket::where([
         ['call_type','=','Parts'],
-        ['status','=',null]
+        ['isUploading','=','true'],
+        ['status','=','PARTS VALIDATION']
     ])->count();
 
     $resource = Ticket::where([
-        ['call_type','=','Resource'],
+        ['call_type','=','CF-Warranty Claim'],
         ['isUploading','=','true'],
+        ['status','=','RESOURCE'],
     ])->count();
 
     $refund = Ticket::where([
-        ['call_type','=','Refund'],
+        ['call_type','=','CF-Warranty Claim'],
+        ['status','=','REFUND'],
         ['isUploading','=','true'],
     ])->count();
 
     $replacement_parts = Ticket::where([
-        ['call_type','=','REPLACEMENT PARTS'],
+        ['call_type','=','Parts'],
+        ['status','=','REPLACEMENT PARTS'],
         ['isUploading','=','true'],
     ])->count();
 
 
     $replacement = Ticket::where([
-        ['call_type','=','REPLACEMENT'],
+        ['call_type','=','CF-Warranty Claim'],
+        ['status','=','REPLACEMENT'],
         ['isUploading','=','true'],
     ])->count();
     
 
     $internals = Ticket::where([
-        ['call_type','=','INTERNALS'],
+        ['status','=','INTERNALS'],
         ['isUploading','=','true'],
     ])->count();
 
     $repair = Ticket::where([
-        ['call_type','=','REPAIR'],
+        ['call_type','=','CF-Warranty Claim'],
+        ['status','=','REPAIR'],
         ['isUploading','=','true'],
     ])->count();
 
     $callback = Ticket::where([
-        ['call_type','=','CALLBACK'],
+        ['status','=','CALLBACK'],
         ['isUploading','=','true'],
     ])->count();
 
     
     $technical = Ticket::where([
         ['call_type','=','TS-Tech Support'],
-        ['status','=',null],
+        ['status','=','TECH VALIDATION'],
         ['isUploading','=','false'],
     ])->count();
 
@@ -69,12 +75,13 @@ class DashboardController extends Controller
 
     $warehouse_us = Ticket::where([
         ['country','=','US'],
-        ['status','=','WAREHOUSE']
+        ['status','=','US WAREHOUSE']
     ])->count();
     $warehouse_ca = Ticket::where([
         ['country','=','CA'],
-        ['status','=','WAREHOUSE']
+        ['status','=','CA WAREHOUSE']
     ])->count();
+
     $closed = Ticket::where('status','=','CLOSED')->count();
     $check_availability = Ticket::where('status','=','INTERNALS')->count();
     $updates_curtis = Ticket::where('status','=','AVAILABILITY')->count();

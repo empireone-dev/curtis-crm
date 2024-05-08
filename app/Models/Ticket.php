@@ -52,6 +52,12 @@ class Ticket extends Model
         return $this->hasOne(Refund::class,'ticket_id','id');
     }
 
+    public function repair(): HasOne
+    {
+        return $this->hasOne(Repair::class,'ticket_id','id');
+    }
+
+
     public function receipt(): HasOne
     {
         return $this->hasOne(Receipt::class,'ticket_id','id');
@@ -60,5 +66,10 @@ class Ticket extends Model
     public function replacement(): HasOne
     {
         return $this->hasOne(Replacement::class,'ticket_id','id');
+    }
+
+    public function decision_making(): HasOne
+    {
+        return $this->hasOne(DecisionMaking::class,'ticket_id','id');
     }
 }

@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('replacements', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ticket_id')->nullable();
-            $table->string('unit_cost')->nullable();
-            $table->string('cubed_weight')->nullable();
-            $table->string('length')->nullable();
-            $table->string('width')->nullable();
-            $table->string('height')->nullable();
-            $table->string('shipping_cost')->nullable();
-            $table->string('estimated_cost')->nullable();
-            $table->string('instruction')->nullable();
+            $table->string('ship_date')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('tracking')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

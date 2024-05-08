@@ -17,21 +17,25 @@ export default function DashboardCardsSection() {
             <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <DashboardCardsComponent
                     title="Validation"
+                    link='WARRANTY VALIDATION'
                     count={data.validation ?? 0}
                     icon={<ListBulletIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Parts Validation"
+                    link='PARTS VALIDATION'
                     count={data.parts_validation ?? 0}
                     icon={<AdjustmentsHorizontalIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Resouce Team"
                     count={data.resource ?? 0}
+                    link='RESOURCE'
                     icon={<ArchiveBoxArrowDownIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Technical"
+                    link='TECHNICAL'
                     count={data.technical ?? 0}
                     icon={<WrenchScrewdriverIcon className='h-10 text-white' />}
                 />
@@ -57,36 +61,43 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Waiting For The Photos"
+                    link='false'
                     count={data.waiting_photos ?? 0}
                     icon={<PhotoIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Refund Tickets"
+                    link='REFUND'
                     count={data.refund ?? 0}
                     icon={<BanknotesIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="ASC Tickets"
+                    link='REPAIR'
                     count={data.repair ?? 0}
                     icon={<TicketIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Replacement For Warranty"
+                    link='REPLACEMENT'
                     count={data.replacement ?? 0}
                     icon={<TagIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Replacement For Parts"
+                    link="REPLACEMENT PARTS"
                     count={data.replacement_parts ?? 0}
                     icon={<Cog6ToothIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="CA Warehouse"
+                    link="CA WAREHOUSE"
                     count={data.warehouse_ca ?? 0}
                     icon={<HomeIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="US Warehouse"
+                    link="US WAREHOUSE"
                     count={data.warehouse_us ?? 0}
                     icon={<HomeModernIcon className='h-10 text-white' />}
                 />
@@ -107,23 +118,27 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Close Tickets"
+                    link="CLOSED"
                     count={data.close ?? 0}
                     icon={<XMarkIcon className='h-10 text-white' />}
                 />
 
                 <DashboardCardsComponent
                     title="Willing To Buy"
+                    link="CALLBACK"
                     count={data.callback ?? 0}
                     icon={<ShoppingCartIcon className='h-10 text-white' />}
                 />
 
                 <DashboardCardsComponent
                     title="Check Availability"
+                    link="INTERNALS"
                     count={data.internals ?? 0}
                     icon={<CheckCircleIcon className='h-10 text-white' />}
                 />
                 <DashboardCardsComponent
                     title="Updates From Curtis"
+                    link="AVAILABILITY"
                     count={data.updates_curtis ?? 0}
                     icon={<ComputerDesktopIcon className='h-10 text-white' />}
                 />

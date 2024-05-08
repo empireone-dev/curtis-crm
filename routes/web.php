@@ -112,6 +112,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/details/page');
         })->name('tickets.details');
 
+        Route::get('/details/{ticket_id}/edit', function () {
+            return Inertia::render('admin/tickets/details/contents/details/id/page');
+        })->name('tickets.details.edit');
+
         // Route::get('/details/{ticket_id}', function () {
         //     return Inertia::render('admin/tickets/details/id/page');
         // })->name('tickets.details');

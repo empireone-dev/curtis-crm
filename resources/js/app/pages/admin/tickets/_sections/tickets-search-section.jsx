@@ -13,25 +13,12 @@ export default function TicketsSearchSection() {
 
     function searchSubmit(e) {
         e.preventDefault()
-        store.dispatch(get_tickets_thunk())
+        store.dispatch(get_tickets_thunk(`?search=${search.id}`))
         
     }
     return (
         <div className="mt-6 md:flex md:items-center md:justify-between">
-            <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg  rtl:flex-row-reverse ">
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm ">
-                    View all
-                </button>
-
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm   hover:bg-gray-100">
-                    Monitored
-                </button>
-
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm   hover:bg-gray-100">
-                    Unmonitored
-                </button>
-            </div>
-
+        
             <form
                 onSubmit={searchSubmit}
                 className="relative flex items-center mt-4 md:mt-0">

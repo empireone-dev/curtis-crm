@@ -16,79 +16,22 @@ class ReplacementController extends Controller
             'status' =>  $replacement
         ], 200);
     }
+
     public function store(Request $request)
     {
-        $isExist = Replacement::where('ticket_id', $request->id)->first();
-        $ticket = Ticket::where('id', $request->id)->first();
-        $isRefundExist = Refund::where('ticket_id', $request->id)->first();
+        $replacement = Replacement::where('ticket_id', $request->ticket_id)->first();
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
 
         $ticket->update([
-            'status' => 'WAREHOUSE',
-            'decision_status' => $request->decision_status
+            'status' => $request->status,
         ]);
-        
-        if ($isRefundExist) {
-            $isRefundExist->update([
-                'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
-                'mail_date' => $request->mail_date,
-                'unit_cost' => $request->unit_cost,
-                'cubed_weight' => $request->cubed_weight,
-                'length' => $request->length,
-                'width' => $request->width,
-                'height' => $request->height,
-                'shipping_cost' => $request->shipping_cost,
-                'estimated_cost' => $request->estimated_cost,
-                'notes' => $request->notes,
-            ]);
+        if ($replacement) {
+            $replacement->update($request->all());
         } else {
-            Refund::create([
-                'ticket_id' => $request->id,
-                'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
-                'mail_date' => $request->mail_date,
-                'unit_cost' => $request->unit_cost,
-                'cubed_weight' => $request->cubed_weight,
-                'length' => $request->length,
-                'width' => $request->width,
-                'height' => $request->height,
-                'shipping_cost' => $request->shipping_cost,
-                'estimated_cost' => $request->estimated_cost,
-                'notes' => $request->notes,
-            ]);
+            Replacement::create($request->all());
         }
-        if (!$isExist) {
-            Replacement::create([
-                'ticket_id' => $request->id,
-                'unit_cost' => $request->unit_cost,
-                'cubed_weight' => $request->cubed_weight,
-                'length' => $request->length,
-                'width' => $request->width,
-                'height' => $request->height,
-                'shipping_cost' => $request->shipping_cost,
-                'estimated_cost' => $request->estimated_cost,
-                'instruction' => $request->instruction,
-                'notes' => $request->notes,
-            ]);
-            return response()->json([
-                'status' => 'succcess'
-            ], 200);
-        } else {
-            $isExist->update([
-                'ticket_id' => $request->id,
-                'unit_cost' => $request->unit_cost,
-                'cubed_weight' => $request->cubed_weight,
-                'length' => $request->length,
-                'width' => $request->width,
-                'height' => $request->height,
-                'shipping_cost' => $request->shipping_cost,
-                'estimated_cost' => $request->estimated_cost,
-                'instruction' => $request->instruction,
-                'notes' => $request->notes,
-            ]);
-            return response()->json([
-                'status' => $ticket
-            ], 200);
-        }
+        return response()->json([
+            'status' => $ticket
+        ], 200);
     }
 }

@@ -1,9 +1,9 @@
 export async function get_tickets_service(search) {
-    const id = search.id == ''?'null':search.id
-    const searchValue = "ticket_id=" + id + "&page=" + search.page;
-    const res = await axios.get("/api/tickets?" + searchValue);
+    // const id = search.id == ''?'null':search.id
+    // const searchValue = "ticket_id=" + id + "&page=" + search.page+'&tile='+search_tile;
+    const res = await axios.get("/api/tickets" + search);
     console.log('resss',res.data)
-    return res.data;
+    return res.data.data;
 }
 
 
@@ -24,6 +24,12 @@ export async function get_tickets_by_user_id(id) {
     const res = await axios.get("/api/tickets/"+ id);
     return res.data.result;
 }
+
+export async function update_tickets_by_user_id(data) {
+    const res = await axios.put("/api/tickets/"+ data.id,data);
+    return res.data.result;
+}
+
 
 export async function get_tickets_by_ticket_id(id) {
     const res = await axios.get("/api/get_tickets_by_ticket_id/"+ id);

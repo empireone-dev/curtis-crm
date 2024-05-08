@@ -6,12 +6,13 @@ import { get_tickets_thunk } from './_redux/tickets-thunk';
 import { router, usePage } from '@inertiajs/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from './_redux/tickets-slice';
+import TicketsSearchSection from './_sections/tickets-search-section';
 
 export default function TicketsPage() {
 
   const { search } = useSelector((state) => state.tickets)
   useEffect(() => {
-    store.dispatch(get_tickets_thunk())
+    store.dispatch(get_tickets_thunk(window.location.search))
   }, [search.page ?? '']);
 
   return (
@@ -23,6 +24,9 @@ export default function TicketsPage() {
           className='p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md'>
             CREATE TICKET
           </button>
+        </div>
+        <div className='m-3'>
+        <TicketsSearchSection />
         </div>
         <TicketTableSection />
       </div>

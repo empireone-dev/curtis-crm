@@ -9,6 +9,7 @@ import store from "@/app/store/store";
 import { get_making_decision_thunk } from "../../../_redux/tickets-thunk";
 import Skeleton from "@/app/layouts/components/skeleton";
 import { get_email_templates_thunk } from "@/app/pages/admin/email_template/redux/email-template-thunk";
+import DecisionMakingSection from "./sections/decision-making-section";
 
 export default function TicketsDecisionMakingContent() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -42,15 +43,17 @@ export default function TicketsDecisionMakingContent() {
             ) : (
                 !isLoading && (
                     <>
-                        {
+                        {/* {
                             ticket.country == 'CA' && <RepairSection />
                         }
+                        <RepairSection />
                         <div className="mt-7">
                             <RefundSection />
                         </div>
                         <div className="mt-7">
                             <ReplacementSection />
-                        </div>
+                        </div> */}
+                        <DecisionMakingSection />
                     </>
                 )
             )}

@@ -26,6 +26,7 @@ import TicketsAvailabilityContent from '../contents/availability/page';
 import ContentsCallBackPage from '../contents/call_back/page';
 import ReplacementWarranty from '../contents/replacement_warranty/page';
 import ReplacementWarrantyPage from '../contents/replacement_warranty/page';
+import Skeleton from '@/app/layouts/components/skeleton';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -40,7 +41,8 @@ export default function TicketsDetailsTabSection({ account }) {
   const { url } = usePage()
   const page = usePage();
   const dispatch = useDispatch()
-  const [openTab, setOpenTab] = useState(1);
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,7 +50,9 @@ export default function TicketsDetailsTabSection({ account }) {
         const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
         dispatch(setTicket(ress))
         dispatch(setFilesData(res))
+        setLoading(false)
       } catch (error) {
+        setLoading(false)
         console.error('Error fetching data:', error);
       }
     };
@@ -60,7 +64,7 @@ export default function TicketsDetailsTabSection({ account }) {
       components: <TicketsDetailsContentFiles />,
       hash: '#files',
     },
-    ...(ticket.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == null
+    ...(ticket?.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == 'WARRANTY VALIDATION'
       ? [
         {
           title: 'Warranty Validation',
@@ -69,7 +73,7 @@ export default function TicketsDetailsTabSection({ account }) {
         }
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.validation_notes === null || ticket.status === 'PARTS VALIDATION')
+    ...(ticket?.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.status === 'PARTS VALIDATION')
       ? [
         {
           title: 'Parts Validation',
@@ -78,7 +82,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'RESOURCE'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'RESOURCE'
       ? [
         {
           title: 'Decision Making',
@@ -87,17 +91,17 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && (ticket.status === 'WAREHOUSE' || ticket.status === 'CLOSED') 
-    // && account?.role_id == 3
+    ...(ticket?.isUploading === 'true' && (ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
+      // && account?.role_id == 3
       ? [
         {
-          title: 'Warehouse',
+          title: ticket.country + ' Warehouse',
           components: <WarehousePage />,
           hash: '#warehouse',
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'REPAIR'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPAIR'
       ? [
         {
           title: 'Repair',
@@ -106,7 +110,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'AVAILABILITY'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'AVAILABILITY'
       ? [
         {
           title: 'Availability',
@@ -115,7 +119,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'INTERNALS'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'INTERNALS'
       ? [
         {
           title: 'Internals',
@@ -124,7 +128,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'CALLBACK'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'CALLBACK'
       ? [
         {
           title: 'Callback',
@@ -135,7 +139,7 @@ export default function TicketsDetailsTabSection({ account }) {
       : []),
 
 
-    ...(ticket.isUploading === 'true' && ticket.status === 'REFUND'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REFUND'
       ? [
         {
           title: 'Refund',
@@ -144,7 +148,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT'
       ? [
         {
           title: 'Replacement',
@@ -154,7 +158,7 @@ export default function TicketsDetailsTabSection({ account }) {
       ]
       : []),
 
-    ...(ticket.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
       ? [
         {
           title: 'Replacement Parts',
@@ -164,11 +168,11 @@ export default function TicketsDetailsTabSection({ account }) {
       ]
       : []),
 
-      ...(ticket.call_type == 'TS-Tech Support' && ticket.status ===null
+    ...(ticket.call_type == 'TS-Tech Support' && ticket.status === 'TECH VALIDATION'
       ? [
         {
           title: 'Update Status',
-          components:  <TicketsDetailsContentStatus />,
+          components: <TicketsDetailsContentStatus />,
           hash: '#status',
         },
       ]
@@ -195,7 +199,6 @@ export default function TicketsDetailsTabSection({ account }) {
     // Update only the first hash dynamically based on the selected tab
     // setFirstHash(tabs[index].hash.split('#')[0]);
     // Visit the URL with the updated hash
-    setOpenTab(index)
     router.visit(tabs[index].hash);
   };
   const hash = '#' + page.url.split('#')[1]
@@ -206,7 +209,7 @@ export default function TicketsDetailsTabSection({ account }) {
         <div className="w-full ">
 
           {
-           user.role_id == 3 && ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
+            user.role_id == 3 && ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
               ticket={ticket}
               name="MOVE TO RESOURCE"
               value="RESOURCE"
@@ -226,17 +229,20 @@ export default function TicketsDetailsTabSection({ account }) {
 
             ))}
           </div>
-          {tabs.map((res, i) => {
-            return (
-              <div
-                key={i}
-                className={classNames('rounded-xl ', '')}
-              >
-                {hash == res.hash && page.url.split('#')[1] && res.components}
-              </div>
-            );
-          })}
-          
+          {
+            loading ? <Skeleton /> : tabs.map((res, i) => {
+              return (
+                <div
+                  key={i}
+                  className={classNames('rounded-xl ', '')}
+                >
+                  {hash == res.hash && page.url.split('#')[1] && res.components}
+                </div>
+              );
+            })
+          }
+
+
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DecisionMakingController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
@@ -45,6 +46,7 @@ Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_ra
 
 
 Route::resource('replacement',ReplacementController::class);
+Route::resource('decision_making',DecisionMakingController::class);
 
 Route::resource('refund',RefundController::class);
 Route::post('/warranty_checkque_shipped', [RefundController::class, 'warranty_checkque_shipped']);

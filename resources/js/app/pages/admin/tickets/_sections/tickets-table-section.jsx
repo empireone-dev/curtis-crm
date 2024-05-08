@@ -116,11 +116,11 @@ export default function TicketTableSection() {
             ),
     });
 
-    const datas = {
-        ...tickets,
-        ...tickets.map(res => res.id),
-    }
-    console.log('datas', datas)
+    // const datas = {
+    //     ...tickets,
+    //     ...tickets.map(res => res.id),
+    // }
+    // console.log('datas', datas)
     const data = tickets
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
     const columns = [
@@ -175,7 +175,7 @@ export default function TicketTableSection() {
             key: 'status',
             ...getColumnSearchProps('status'),
             render: (_, record, i) => {
-                const color = record.status == 'CLOSED' ? 'red' : record.status == null ? 'orange' : 'green'
+                const color = record.status == 'CLOSED' ? 'red' : (record.status == 'PARTS VALIDATION' || record.status == 'WARRANTY VALIDATION' || record.status == 'TECH VALIDATION') ? 'orange' : 'green'
                 return <>
                     <Tag color={color} key={i}>
                         {record.status ?? 'OPEN'}
@@ -216,7 +216,7 @@ export default function TicketTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <Tooltip placement="topLeft"  title="View Ticket Details">
+                    <Tooltip placement="topLeft" title="View Ticket Details">
                         <Link href={'/administrator/tickets/details/' + record.id + '#files'}>
                             <EyeOutlined className='text-lg text-blue-500' />
                         </Link>

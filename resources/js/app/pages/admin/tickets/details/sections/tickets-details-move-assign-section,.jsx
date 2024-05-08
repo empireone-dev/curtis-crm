@@ -54,13 +54,13 @@ export default function TicketsDetailsMoveAssignSection() {
             }
 
             {
-              ticket?.status !== "VALIDATION" &&
+              ticket?.status !== null &&
               <TicketsDetailsMoveAssignComponents
                 ticket={ticket}
                 name="MOVE TO VALIDATION"
-                value="VALIDATION"
+                value={ticket.call_type == 'CF-Warranty Claim'?'WARRANTY VALIDATION':ticket.call_type == 'Parts'?'PARTS VALIDATION':'TECH VALIDATION'}
                 icon={<CheckBadgeIcon className='h-6' />}
-                link="validation"
+                link="warranty_validation"
               />
             }
 

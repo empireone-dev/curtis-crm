@@ -8,6 +8,8 @@ import Loading from '@/app/layouts/components/loading';
 import Input from '@/app/layouts/components/input';
 import store from '@/app/store/store';
 import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk';
+import moment from 'moment';
+import { store_decision_making_replacement_service } from '@/app/services/replacement-service';
 
 export default function ContentReplacementWarrantyForm() {
     const { internals, ticket } = useSelector((state) => state.tickets);
@@ -20,13 +22,14 @@ export default function ContentReplacementWarrantyForm() {
     useEffect(() => {
         setForm({
             ...ticket,
-            ...ticket.receipt ?? {},
-            ...ticket.refund ?? {},
-            notes: ticket?.replacement?.notes ?? '',
-            tracking: ticket?.replacement?.tracking ?? '',
+            ...ticket?.replacement,
+            ship_date:moment().format('L')
+            // ...ticket.receipt ?? {},
+            // ...ticket.refund ?? {},
+            // notes: ticket?.replacement?.notes ?? '',
+            // tracking: ticket?.replacement?.tracking ?? '',
         })
     }, [ticket]);
-
 
     function formHandler(value, name) {
         setForm({
@@ -39,8 +42,9 @@ export default function ContentReplacementWarrantyForm() {
         if (confirm('Are you sure you want to shipped the ticket?')) {
             setIsLoading1(true)
             try {
-                const result = await patch_warranty_checkque_shipped_service({
+                const result = await store_decision_making_replacement_service({
                     ...form,
+                    ticket_id:ticket.id,
                     account: user,
                     status: 'PROCESSED TICKET'
                 })
@@ -72,7 +76,17 @@ export default function ContentReplacementWarrantyForm() {
             </div>
 
             <div className='mt-5 my-4 w-full'>
-
+                <div className='my-3 flex flex-col'>
+                    Date: {form.ship_date??''}
+                    <input type='date' 
+                    className='w-52'
+                        name='ship_date' 
+                        pattern='\d{1,2}/\d{1,2}/\d{4}'
+                        onChange={(e) => setForm({
+                        ...form,
+                        ship_date: moment(e.target.value).format('L')
+                    })} />
+                </div>
                 <div className="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                     <Input
                         onChange={formHandler}
@@ -98,10 +112,10 @@ export default function ContentReplacementWarrantyForm() {
                 <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <Input
                         onChange={formHandler}
-                        name='item_number'
+                        name='model'
                         span=""
                         required={true}
-                        value={String(form.item_number ?? ' ')}
+                        value={String(form.model ?? ' ')}
                         label="model"
                         type='text'
                         errorMessage='model is required'

@@ -14,19 +14,12 @@ return new class extends Migration
         Schema::create('refunds', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ticket_id')->nullable();
-            $table->double('retail_price',8, 2)->nullable();
+            $table->double('retailers_price',8, 2)->nullable();
             $table->double('discount',8, 2)->nullable();
             $table->double('after_discount',8, 2)->nullable();
             $table->string('cheque_no')->nullable();
             $table->double('cheque_amount',8, 2)->nullable();
-            $table->string('mail_date')->nullable();
-            $table->string('unit_cost')->nullable();
-            $table->string('cubed_weight')->nullable();
-            $table->string('length')->nullable();
-            $table->string('width')->nullable();
-            $table->string('height')->nullable();
-            $table->string('shipping_cost')->nullable();
-            $table->string('estimated_cost')->nullable();
+            $table->double('cost_refund',8, 2)->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

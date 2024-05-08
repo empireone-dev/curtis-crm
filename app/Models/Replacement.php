@@ -9,20 +9,13 @@ class Replacement extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'ticket_id',
+        'ship_date',
         'unit',
-        'brand' ,
-        'item_number',
+        'brand',
+        'model',
         'serial_number',
         'tracking',
-        'ticket_id',
-        'unit_cost',
-        'cubed_weight',
-        'length',
-        'width',
-        'height',
-        'shipping_cost',
-        'estimated_cost',
-        'instruction',
         'notes',
     ];
 }

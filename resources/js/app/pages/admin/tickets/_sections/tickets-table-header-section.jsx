@@ -11,7 +11,6 @@ export default function TicketsTableHeaderSection() {
             </div>
 
             <div className="flex items-center mt-4 gap-x-3">
-             
                 <Link
                     href={route('tickets.create')}
                     className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-white bg-blue-600 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-700  ">

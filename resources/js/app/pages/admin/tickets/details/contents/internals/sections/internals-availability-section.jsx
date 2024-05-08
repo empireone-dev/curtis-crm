@@ -217,7 +217,7 @@ export default function InternalsAvailabilitySection() {
                         onChange={(value) => setData({ ...data, internal_notes: value })}
                         name="internal_notes"
                         span=""
-                        required={true}
+                        required={false}
                         value={data?.internal_notes ?? ''}
                         label="Internal Notes"
                         type="text"

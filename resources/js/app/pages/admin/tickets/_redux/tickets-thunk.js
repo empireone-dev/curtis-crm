@@ -25,9 +25,9 @@ export function get_internals_by_ticket_id_thunk() {
 }
 
 
-export function get_tickets_thunk() {
+export function get_tickets_thunk(search) {
   return async function (dispatch, getState) {
-    const { search } = getState().tickets
+    // const { search } = getState().tickets
     const result = await get_tickets_service(search)
     dispatch(ticketsSlice.actions.setTickets(result.data));
   };

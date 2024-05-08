@@ -7,7 +7,7 @@ import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk'
 import { router } from '@inertiajs/react'
 
 export default function ContentDetailsSection() {
-  const { ticket } = useSelector((state) => state.customer_tickets)
+  const { ticket } = useSelector((state) => state.tickets)
   const [isLoading, setIsLoading] = useState(false)
 
   async function close_ticket() {
@@ -22,23 +22,35 @@ export default function ContentDetailsSection() {
       }
     }
   }
+
+  function edit_ticket(params) {
+    router.visit(`/administrator/tickets/details/${ticket.id}/edit`)
+  }
   return (
     <div className='m-5 py-5'>
       <div className="px-4 sm:px-0">
         <div className='flex items-center justify-between'>
           <h3 className="text-base font-semibold leading-7 text-gray-900">Ticket Details</h3>
-          {
-            ticket.status == 'CLOSED' ? <button
-              className='bg-red-500 p-3 text-white rounded-lg hover:bg-red-600 w-48'>
-              {ticket.status}
-            </button> : <button
-              onClick={close_ticket}
-              className='bg-red-500 p-3 text-white rounded-lg hover:bg-red-600  w-48'>
-              {
-                isLoading ? <div className='p-1 w-full flex items-center justify-center'><Loading /></div> : 'CLOSE TICKET'
-              }
+          <div className='flex gap-5'>
+            <button
+              onClick={edit_ticket}
+              className='bg-blue-500 p-2 text-white rounded-lg hover:bg-blue-600  w-48'>
+              <div className='p-1 w-full flex items-center justify-center'>EDIT TICKET</div>
             </button>
-          }
+
+            {
+              ticket.status == 'CLOSED' ? <button
+                className='bg-red-500 p-3 text-white rounded-lg hover:bg-red-600 w-48'>
+                {ticket.status}
+              </button> : <button
+                onClick={close_ticket}
+                className='bg-red-500 p-3 text-white rounded-lg hover:bg-red-600  w-48'>
+                {
+                  isLoading ? <div className='p-1 w-full flex items-center justify-center'><Loading /></div> : 'CLOSE TICKET'
+                }
+              </button>
+            }
+          </div>
         </div>
         <p className="mt-1 max-w-2xl text-sm leading-6  font-medium text-gray-500">Personal details and ticket.</p>
       </div>

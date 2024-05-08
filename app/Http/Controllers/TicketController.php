@@ -8,27 +8,39 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class TicketController extends Controller
 {
 
-    
-    public function get_tickets_by_warehouse($country){
+    public function update(Request $request,$id){
+
+        $ticket= Ticket::where('id',$id)->first();
+        if ($ticket) {
+            $ticket->update($request->all());
+        }
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
+    public function get_tickets_by_warehouse($country)
+    {
         // $ticket = Ticket::where([
         //     ['country','=',$country],
         //     ['status','=','WAREHOUSE']
         // ])->get();
-        $ticket = Ticket::where('country','=',$country)->get();
-     
+        $ticket = Ticket::where('country', '=', $country)->get();
+
         return response()->json([
             'result' => $ticket
         ], 200);
     }
     public function get_tickets_by_ticket_id($ticket_id)
     {
-        $ticket = Ticket::where('id', $ticket_id)->with(['refund','receipt','replacement'])->first();
+        $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement','receipt','refund','repair'])->first();
+        $asc = User::where('id', $ticket->decision_making['id'])->first();
         return response()->json([
-            'result' => $ticket
+            'result' => array_merge($ticket->toArray(), ['asc' => $asc->toArray()]),
         ], 200);
     }
 
@@ -63,16 +75,27 @@ class TicketController extends Controller
     }
     public function index(Request $request)
     {
-        $tickets = Ticket::query();
-        if ($request->ticket_id == 'null') {
-            $data = $tickets->paginate(10);
-            return response()->json($data, 200);
-        } else {
-            $data = Ticket::where('id', $request->ticket_id)->get();
-            return response()->json([
-                'data' => $data
-            ], 200);
-        }
+        $searchQuery = $request->input('search');
+
+        // Get all column names of the table
+        $columns = Schema::getColumnListing('tickets');
+
+        // Start the query builder
+        $query = Ticket::query();
+
+        // Dynamically add where conditions for each column
+        $query->where(function ($query) use ($columns, $searchQuery) {
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'like', '%' . $searchQuery . '%');
+            }
+        });
+
+        // Paginate the results
+        $data = $query->paginate(10);
+
+        return response()->json([
+            'data' => $data ?? [],
+        ], 200);
     }
     public function show($id)
     {
@@ -89,19 +112,21 @@ class TicketController extends Controller
         $user = User::where('email', $request->email)->first();
         $account = [];
         $newData = [];
-        
-        $ticket_id = '';
-        if($request->call_type == 'Parts'){
-            $ticket_id = '#PS'.date("dmy").'0';
-        }else if($request->call_type == 'CF-Warranty Claim'){
-            $ticket_id = '#CF'.date("dmy").'0';
-        }else if($request->call_type == 'TS-Tech Support'){
-            $ticket_id = '#TS'.date("dmy").'0';
+
+
+        $validation = '';
+        if ($request->call_type == 'Parts') {
+            $validation = 'PARTS VALIDATION';
+        } else if ($request->call_type == 'CF-Warranty Claim') {
+            $validation = 'WARRANTY VALIDATION';
+        }
+        if ($request->call_type == 'TS-Tech Support') {
+            $validation = 'TECH VALIDATION';
         }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
 
-          
+
             $account = User::create([
                 'name' => $request->fname . ' ' . $request->lname,
                 'email' => $request->email,
@@ -110,22 +135,43 @@ class TicketController extends Controller
                 'address' => $request->address,
                 'city' => $request->city,
                 'zip_code' => $request->zip_code,
+                'country' => $request->country,
             ]);
 
             $data = Ticket::create(array_merge($request->all(), [
                 'user_id' => $account->id,
+                'status' => $validation
             ]));
 
-            $t = Ticket::where('id',$data->id)->first();
-            $tt = Ticket::where('id',$data->id)->first();
+            $subject = '';
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else if ($length == 3) {
+                $id = date("dmy") . '000' . $data->id;
+            }
+
+            if ($request->call_type == 'Parts') {
+                $subject = '#PS' . $id;
+            } else if ($request->call_type == 'CF-Warranty Claim') {
+                $subject = '#CF' . $id;
+            } else if ($request->call_type == 'TS-Tech Support') {
+                $subject = '#TS' . $id;
+            }
+
+            $t = Ticket::where('id', $data->id)->first();
+            $tt = Ticket::where('id', $data->id)->first();
             $t->update([
-                'ticket_id' => $ticket_id.$t->id
+                'ticket_id' => $subject
             ]);
 
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
                 $newData = array_merge($account->toArray(), [
                     'id' => $data->id,
-                    'ticket_id'=>$tt->ticket_id,
+                    'ticket_id' => $tt->ticket_id,
                     'call_type' => $request->call_type,
                     'isSendEmail' => $request->isSendEmail,
                     'isHasEmail' => $request->isHasEmail,
@@ -146,15 +192,34 @@ class TicketController extends Controller
                 'user_id' => $user->id,
             ]));
 
-            $t = Ticket::where('id',$data->id)->first();
+            $subject = '';
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else if ($length == 3) {
+                $id = date("dmy") . '000' . $data->id;
+            }
+
+            if ($request->call_type == 'Parts') {
+                $subject = '#PS' . $id;
+            } else if ($request->call_type == 'CF-Warranty Claim') {
+                $subject = '#CF' . $id;
+            } else if ($request->call_type == 'TS-Tech Support') {
+                $subject = '#TS' . $id;
+            }
+
+            $t = Ticket::where('id', $data->id)->first();
             $t->update([
-                'ticket_id' => $ticket_id.$t->id
+                'ticket_id' => $subject
             ]);
-            $tt = Ticket::where('id',$data->id)->first();
+            $tt = Ticket::where('id', $data->id)->first();
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
                 $newData = array_merge($user->toArray(), [
                     'id' => $data->id,
-                    'ticket_id'=>$tt->ticket_id,
+                    'ticket_id' => $tt->ticket_id,
                     'call_type' => $request->call_type,
                     'isSendEmail' => $request->isSendEmail,
                     'isHasEmail' => $request->isHasEmail,

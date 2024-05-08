@@ -1,1 +1,0 @@
-import{j as a}from"./app-DteGzxXq.js";import{W as t}from"./warehouse-layout-D0HMqOzY.js";import"./PowerIcon-B466FnYG.js";import"./HomeIcon-DFBSPYNs.js";import"./TicketIcon-ByqmWCxO.js";import"./user-service-BHTKXAsy.js";function n({auth:o}){const r=o.user;return a.jsx(t,{account:r,children:"WarehouseDashboardPage"})}export{n as default};
