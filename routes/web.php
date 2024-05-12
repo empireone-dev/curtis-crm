@@ -200,6 +200,25 @@ Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
     
 });
 
+Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('agent/dashboard/page');
+    })->name('agent.dashboard');
+
+    Route::get('/tickets', function () {
+        return Inertia::render('agent/tickets/page');
+    })->name('agent.tickets');
+    
+    Route::get('/tickets/{id}', function () {
+        return Inertia::render('agent/tickets/details/page');
+    })->name('agent.tickets.details');
+
+    Route::get('/settings', function () {
+        return Inertia::render('agent/settings/page');
+    })->name('agent.settings');
+    
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
