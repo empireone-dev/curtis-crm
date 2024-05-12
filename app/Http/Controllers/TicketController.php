@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\DecisionMaking;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
@@ -14,6 +15,24 @@ use Illuminate\Support\Facades\Schema;
 class TicketController extends Controller
 {
 
+
+
+    public function get_tickets_by_asc(Request $request, $status)
+    {
+        if ($status !== 'undefined') {
+            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=',  $status]])->get();
+            return response()->json([
+                'result' =>  $result
+            ], 200);
+        } else {
+            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=', 'REPAIR']])
+                ->orWhere([['asc_id', '=', $request->id], ['decision_status', '=', 'REPAIRED']])
+                ->orWhere([['asc_id', '=', $request->id], ['decision_status', '=', 'NOT REPAIRED']])->get();
+            return response()->json([
+                'result' => $result
+            ], 200);
+        }
+    }
     public function update(Request $request, $id)
     {
 
@@ -31,7 +50,10 @@ class TicketController extends Controller
         //     ['country','=',$country],
         //     ['status','=','WAREHOUSE']
         // ])->get();
-        $ticket = Ticket::where('country', '=', $country)->get();
+        $ticket = Ticket::where([
+            ['country', '=', $country],
+            ['status', '=', $country == 'CA' ? 'CA WAREHOUSE' : 'US WAREHOUSE']
+        ])->get();
 
         return response()->json([
             'result' => $ticket
@@ -40,9 +62,9 @@ class TicketController extends Controller
     public function get_tickets_by_ticket_id($ticket_id)
     {
         $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
-        $asc = User::where('id', $ticket->decision_making['id'])->first();
+        $asc = DecisionMaking::where('id', $ticket->decision_making_id)->with(['user'])->first();
         return response()->json([
-            'result' => array_merge($ticket->toArray(), ['asc' => $asc->toArray()]),
+            'result' => array_merge($ticket->toArray(), ['asc' => $asc ? $asc->toArray() : null]),
         ], 200);
     }
 

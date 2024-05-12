@@ -155,6 +155,10 @@ Route::middleware('auth:sanctum', 'role:2')->prefix('customer')->group(function 
     Route::get('/tickets/{id}', function () {
         return Inertia::render('customer/tickets/details/page');
     })->name('customer.tickets.details');
+
+    Route::get('/settings', function () {
+        return Inertia::render('customer/settings/page');
+    })->name('customer.settings');
 });
 
 
@@ -171,6 +175,29 @@ Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function
     Route::get('/tickets/{id}', function () {
         return Inertia::render('warehouse/tickets/details/page');
     })->name('warehouse.tickets.details');
+
+    Route::get('/settings', function () {
+        return Inertia::render('warehouse/settings/page');
+    })->name('warehouse.settings');
+});
+
+Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('asc/dashboard/page');
+    })->name('asc.dashboard');
+
+    Route::get('/tickets', function () {
+        return Inertia::render('asc/tickets/page');
+    })->name('asc.tickets');
+    
+    Route::get('/tickets/{id}', function () {
+        return Inertia::render('asc/tickets/details/page');
+    })->name('asc.tickets.details');
+
+    Route::get('/settings', function () {
+        return Inertia::render('asc/settings/page');
+    })->name('asc.settings');
+    
 });
 
 

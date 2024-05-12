@@ -52,6 +52,9 @@ Route::resource('refund',RefundController::class);
 Route::post('/warranty_checkque_shipped', [RefundController::class, 'warranty_checkque_shipped']);
 
 Route::resource('repair',RepairController::class);
+Route::put('/unrepair/{ticketid}', [RepairController::class, 'unrepair']);
+
+
 Route::resource('receipt',ReceiptController::class);
 
 
@@ -72,6 +75,8 @@ Route::resource('notes',AgentNoteController::class);
 
 Route::resource('tickets',TicketController::class);
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
+Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
+
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
 Route::put('/update_tickets_status/{gid}', [TicketController::class, 'update_tickets_status']);
@@ -84,6 +89,9 @@ Route::resource('files',FileController::class);
 
 
 Route::get('/administrator_dashboard', [DashboardController::class, 'administrator_dashboard']);
+Route::get('/customer_dashboard/{userid}', [DashboardController::class, 'customer_dashboard']);
+Route::get('/warehouse_dashboard/{country}', [DashboardController::class, 'warehouse_dashboard']);
+Route::get('/asc_dashboard/{userid}', [DashboardController::class, 'asc_dashboard']);
 
 
 Route::middleware('auth:sanctum')->resource('flights', FlightController::class);

@@ -37,8 +37,10 @@ class DecisionMakingController extends Controller
 
         $ticket = Ticket::where('id', $request->id)->first();
         $ticket->update([
+            'asc_id' => $request->asc,
+            'decision_making_id' => $data->id,
             'status' => $ticket->country . ' WAREHOUSE',
-            'decision_status' => $request->ticket_type
+            'decision_status' => $request->ticket_type,
         ]);
 
         if ($request->template_text) {

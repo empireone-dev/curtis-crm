@@ -20,7 +20,7 @@ class ReceiptController extends Controller
         if ($receipt) {
             Activity::create([
                 'user_id'=>$request->user_id,
-                'ticket_id'=>$request->ticket_id,
+                'ticket_id'=>$request->id,
                 'type'=>'WARRANTY VALIDATION',
                 'message'=>json_encode([
                     'emp_id'=>$request->emp_id,
@@ -45,7 +45,7 @@ class ReceiptController extends Controller
         } else {
             Activity::create([
                 'user_id'=>$request->user_id,
-                'ticket_id'=>$request->ticket_id,
+                'ticket_id'=>$request->id,
                 'type'=>'WARRANTY VALIDATION',
                 'message'=>json_encode([
                     'emp_id'=>$request->emp_id,

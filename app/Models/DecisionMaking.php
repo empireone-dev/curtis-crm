@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DecisionMaking extends Model
 {
@@ -34,4 +35,9 @@ class DecisionMaking extends Model
         'instruction',
         'replacement_notes',
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class,'id','asc');
+    }
 }

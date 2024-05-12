@@ -22,7 +22,6 @@ export default function DecisionMakingSection() {
     const [isLoading1, setIsLoading1] = useState(false)
     const { email_templates } = useSelector((state) => state.email_templates);
 
-
     useEffect(() => {
         async function get_decision_making(params) {
             const response = await get_decision_making_by_ticket_id(ticket.id)

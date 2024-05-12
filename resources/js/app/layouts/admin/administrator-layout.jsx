@@ -10,6 +10,7 @@ export default function AdministratorLayout({ children }) {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.app);
   
+  
   useEffect(() => {
     async function get_account() {
       const result = await get_user_service()

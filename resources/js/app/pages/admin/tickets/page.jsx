@@ -28,7 +28,9 @@ export default function TicketsPage() {
         <div className='m-3'>
         <TicketsSearchSection />
         </div>
-        <TicketTableSection />
+       <div className='px-3'>
+       <TicketTableSection />
+       </div>
       </div>
     </AdministratorLayout>
   )

@@ -40,6 +40,12 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::CUSTOMER); 
         }else if(Auth::user()->role_id == 3){
             return redirect()->intended(RouteServiceProvider::WAREHOUSE); 
+        }else if(Auth::user()->role_id == 4){
+            return redirect()->intended(RouteServiceProvider::ASC); 
+        }else if(Auth::user()->role_id == 5){
+            return redirect()->intended(RouteServiceProvider::AGENT); 
+        }else if(Auth::user()->role_id == 6){
+            return redirect()->intended(RouteServiceProvider::CURTIS); 
         }
     }
 

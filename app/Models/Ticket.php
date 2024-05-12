@@ -12,6 +12,8 @@ class Ticket extends Model
     protected $fillable = [
         'user_id',
         'ticket_id',
+        'asc_id',
+        'decision_making_id',
         'fname',
         'lname',
         'email',
@@ -72,4 +74,5 @@ class Ticket extends Model
     {
         return $this->hasOne(DecisionMaking::class,'ticket_id','id');
     }
+
 }

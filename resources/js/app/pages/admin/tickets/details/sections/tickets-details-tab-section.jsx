@@ -91,7 +91,7 @@ export default function TicketsDetailsTabSection({ account }) {
         },
       ]
       : []),
-    ...(ticket?.isUploading === 'true' && (ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
+    ...(ticket?.isUploading === 'true' && (ticket.status === 'CA WAREHOUSE' || ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
       // && account?.role_id == 3
       ? [
         {

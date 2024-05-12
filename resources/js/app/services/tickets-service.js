@@ -14,6 +14,13 @@ export async function get_tickets_by_warehouse_service(country) {
     return res.data.result;
 }
 
+export async function get_tickets_by_asc_service(id,search) {
+    const res = await axios.post("/api/get_tickets_by_asc/"+search,{
+        id:id
+    });
+    return res.data.result;
+}
+
 export async function store_tickets_service(data) {
     const res = await axios.post("/api/tickets", data);
     return res.data.result;
