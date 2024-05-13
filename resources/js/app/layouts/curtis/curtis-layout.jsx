@@ -5,7 +5,7 @@ import { setUser } from '@/app/redux/app-slice';
 import CurtisLayoutSubSidebarSection from './sections/curtis-layout-sub-sidebar-section';
 import CurtisLayoutSidebarSection from './sections/curtis-layout-sidebar-section';
 
-export default function CustomerLayout({children,account}) {
+export default function CurtisLayout({children,account}) {
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.app);

@@ -1,25 +1,22 @@
-import CustomerLayout from '@/app/layouts/customer/customer-layout'
-import React, { useEffect } from 'react'
-import CustomerTicketsTableSection from './sections/customer-tickets-table-section'
-import store from '@/app/store/store';
-import { get_tickets_by_user_id_thunk } from './redux/customer-tickets-thunk';
+import CustomerLayout from "@/app/layouts/customer/customer-layout";
+import React, { useEffect } from "react";
+import CustomerTicketsTableSection from "./sections/customer-tickets-table-section";
+import store from "@/app/store/store";
+import { useSelector } from "react-redux";
+import { get_tickets_thunk } from "../../admin/tickets/_redux/tickets-thunk";
 
 export default function CustomerTicketsPage({ auth }) {
-    const account = auth.user
-
+    const account = auth.user;
+    const { search } = useSelector((state) => state.tickets);
     useEffect(() => {
-     store.dispatch(get_tickets_by_user_id_thunk(account.id))
-    }, []);
-    
+        store.dispatch(get_tickets_thunk(window.location.search));
+    }, [search.page ?? ""]);
+
     return (
-        <CustomerLayout
-            account={account}
-        >
-           <div className='my-8'>
-           <CustomerTicketsTableSection 
-            
-            />
-           </div>
+        <CustomerLayout account={account}>
+            <div className="my-8">
+                <CustomerTicketsTableSection />
+            </div>
         </CustomerLayout>
-    )
+    );
 }

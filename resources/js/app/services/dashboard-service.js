@@ -38,3 +38,13 @@ export async function asc_dashboard_service(userid) {
         console.log("error", error);
     }
 }
+
+export async function agent_dashboard_service(userid) {
+    try {
+        const res = await axios.get(`/api/agent_dashboard/${userid}`);
+        return res.data;
+    } catch (error) {
+        console.log("error", error);
+    }
+}
+

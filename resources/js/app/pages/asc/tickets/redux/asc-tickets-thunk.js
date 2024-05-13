@@ -1,4 +1,4 @@
-import { get_tickets_by_asc_service, get_tickets_by_user_id, get_tickets_by_warehouse_service, update_explanation_service } from "@/app/services/tickets-service";
+import { get_tickets_by_asc_service,  get_tickets_by_warehouse_service, update_explanation_service } from "@/app/services/tickets-service";
 import { ascTicketsSlice, setFilesData } from "./asc-tickets-slice";
 import {
     delete_upload_picture_videos,

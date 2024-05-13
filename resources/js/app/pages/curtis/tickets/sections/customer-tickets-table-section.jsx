@@ -8,35 +8,9 @@ import moment from "moment";
 import { split } from "postcss/lib/list";
 
 export default function CustomerTicketsTableSection() {
-    const { tickets } = useSelector((state) => state.customer_tickets);
+    const { tickets } = useSelector((state) => state.tickets);
 
-    const search = window.location.search.split("=")[1];
-    let ticketData = [];
-    if (search == "CLOSED") {
-        function searchBy(status) {
-            return tickets.filter((obj) => obj.status == status);
-        }
-        ticketData = searchBy(search);
-    } else if (search == "PROCESSED") {
-        function searchBy() {
-            return tickets.filter(
-                (obj) =>
-                    obj.status != "PARTS VALIDATION" &&
-                    obj.status != "WARRANTY VALIDATION" &&
-                    obj.status != "TECH VALIDATION" &&
-                    obj.status != "CLOSED"
-            );
-        }
-        ticketData = searchBy();
-    } else if (search == "PENDING") {
-        function searchBy() {
-            return tickets.filter((obj) => obj.isUploading == "false");
-        }
-        ticketData = searchBy();
-    } else {
-        ticketData = tickets;
-    }
-
+    let ticketData =tickets;
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
@@ -269,7 +243,7 @@ export default function CustomerTicketsTableSection() {
             render: (_, record) => {
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Link href={"/customer/tickets/" + record.id}>
+                        <Link href={"/curtis/tickets/" + record.id+'#files'}>
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
                     </Tooltip>

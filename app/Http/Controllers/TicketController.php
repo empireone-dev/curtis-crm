@@ -133,6 +133,24 @@ class TicketController extends Controller
         ], 200);
     }
 
+    public function queueing()
+    {
+        $users = User::where('role_id', '=', 5)->get();
+        $userWithSmallestCount = null;
+        $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+        foreach ($users as $user) {
+            $count = Ticket::where('user_id', $user->id)->count();
+
+            if ($count < $smallestCount) {
+                $smallestCount = $count;
+                $userWithSmallestCount = $user;
+            }
+        }
+        return $userWithSmallestCount->id;
+        // $usersWithSmallestCount contains all users with the smallest count of tickets
+    }
+
 
     public function store(Request $request)
     {
@@ -152,8 +170,6 @@ class TicketController extends Controller
         }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
-
-
             $account = User::create([
                 'name' => $request->fname . ' ' . $request->lname,
                 'email' => $request->email,
@@ -166,7 +182,7 @@ class TicketController extends Controller
             ]);
 
             $data = Ticket::create(array_merge($request->all(), [
-                'user_id' => $account->id,
+                'user_id' => $this->queueing(),
                 'status' => $validation
             ]));
 
@@ -216,7 +232,8 @@ class TicketController extends Controller
             ], 200);
         } else {
             $data = Ticket::create(array_merge($request->all(), [
-                'user_id' => $user->id,
+                'user_id' => $this->queueing(),
+                'status' => $validation
             ]));
 
             $subject = '';

@@ -2,7 +2,6 @@ export async function get_tickets_service(search) {
     // const id = search.id == ''?'null':search.id
     // const searchValue = "ticket_id=" + id + "&page=" + search.page+'&tile='+search_tile;
     const res = await axios.get("/api/tickets" + search);
-    console.log('resss',res.data)
     return res.data.data;
 }
 

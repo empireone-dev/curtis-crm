@@ -76,6 +76,7 @@ Route::resource('notes',AgentNoteController::class);
 Route::resource('tickets',TicketController::class);
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
 Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
+Route::get('queueing', [TicketController::class, 'queueing']);
 
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

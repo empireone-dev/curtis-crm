@@ -21,6 +21,8 @@ export default function LayoutSidebarListComponent({
             return "asc.";
         }else if (account?.role_id == 5) {
             return "agent.";
+        }else if (account?.role_id == 6) {
+            return "curtis.";
         } else {
             return "";
         }
