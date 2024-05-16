@@ -23,7 +23,7 @@ export default function WebFormFormSection() {
     useEffect(() => {
         store.dispatch(get_common_issues_thunk());
     }, []);
-    
+
     function formHandler(value, name) {
         dispatch(
             setForm({
@@ -32,7 +32,7 @@ export default function WebFormFormSection() {
             })
         );
     }
-    
+
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
@@ -43,7 +43,7 @@ export default function WebFormFormSection() {
         dispatch(
             setForm({
                 ...form,
-                created_from:'WEB FORM',
+                created_from: "WEB FORM",
                 status: null,
                 isSendEmail: true,
                 email:
@@ -280,6 +280,7 @@ export default function WebFormFormSection() {
                 <div className="md:w-full px-3 mb-3 md:mb-0">
                     {form.call_type == "Parts" ? (
                         <Autocomplete
+                            defaultValue={form.issue ?? "[]"}
                             onChange={formHandler}
                             value={[
                                 {
@@ -298,6 +299,7 @@ export default function WebFormFormSection() {
                         />
                     ) : (
                         <Autocomplete
+                            defaultValue={form.issue ?? "[]"}
                             onChange={formHandler}
                             value={common_issues.map((res) => ({
                                 id: res.id,

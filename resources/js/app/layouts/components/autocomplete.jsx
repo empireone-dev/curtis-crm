@@ -3,13 +3,19 @@ import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 
-export default function Autocomplete({ value, onChange }) {
+export default function Autocomplete({ value, onChange,defaultValue }) {
     const [selectedValue, setSelectedValue] = useState([])
     const [query, setQuery] = useState('')
 
     useEffect(() => {
         onChange(JSON.stringify(selectedValue), 'issue')
+       
     }, [selectedValue.length]);
+
+    useEffect(()=>{
+        setSelectedValue(JSON.parse(defaultValue))
+    },[defaultValue])
+    
     const filteredValue =
         query === ''
             ? value

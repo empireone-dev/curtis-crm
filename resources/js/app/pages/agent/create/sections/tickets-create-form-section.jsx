@@ -290,6 +290,7 @@ export default function TicketCreateFormSection() {
                     {
                         form.call_type == 'Parts' ?
                             <Autocomplete
+                            defaultValue={"[]"}
                                 onChange={formHandler}
                                 value={[
                                     {
@@ -306,6 +307,7 @@ export default function TicketCreateFormSection() {
                             />
                             : <Autocomplete
                                 onChange={formHandler}
+                                defaultValue={"[]"}
                                 value={common_issues.map(res => ({
                                     id: res.id,
                                     name: res.name

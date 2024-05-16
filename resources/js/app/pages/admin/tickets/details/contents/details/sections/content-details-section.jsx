@@ -8,6 +8,7 @@ import { router } from '@inertiajs/react'
 
 export default function ContentDetailsSection() {
   const { ticket } = useSelector((state) => state.tickets)
+  const { user } = useSelector((state) => state.app)
   const [isLoading, setIsLoading] = useState(false)
 
   async function close_ticket() {
@@ -24,7 +25,12 @@ export default function ContentDetailsSection() {
   }
 
   function edit_ticket(params) {
-    router.visit(`/administrator/tickets/details/${ticket.id}/edit`)
+    if (user.role_id == 1) {
+      router.visit(`/administrator/tickets/details/${ticket.id}/edit`)
+    }else{
+      router.visit(`/agent/tickets/details/${ticket.id}/edit`)
+    }
+
   }
   return (
     <div className='m-5 py-5'>

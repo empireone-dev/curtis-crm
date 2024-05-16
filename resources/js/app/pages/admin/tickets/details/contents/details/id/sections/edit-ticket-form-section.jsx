@@ -319,6 +319,7 @@ export default function EditTicketFormSection() {
           {
             form.call_type == 'Parts' ?
               <Autocomplete
+              defaultValue={form.issue??'[]'}
                 onChange={formHandler}
                 value={[
                   {
@@ -334,6 +335,7 @@ export default function EditTicketFormSection() {
                 ]}
               />
               : <Autocomplete
+              defaultValue={form.issue??'[]'}
                 onChange={formHandler}
                 value={common_issues.map(res => ({
                   id: res.id,

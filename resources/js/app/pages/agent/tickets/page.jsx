@@ -18,7 +18,7 @@ export default function AgentTicketsPage({ auth }) {
                 <div className="px-5 flex items-end justify-end">
                     <button
                         onClick={() =>
-                            router.visit("/agent/create")
+                            router.visit("/agent/tickets/create")
                         }
                         className="p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md"
                     >
