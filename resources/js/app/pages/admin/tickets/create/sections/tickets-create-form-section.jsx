@@ -192,7 +192,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name='serial_number'
-                        required={true}
+                        required={false}
                         value={form.serial_number}
                         label='Serial Number'
                         type='text'

@@ -218,6 +218,10 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
     Route::get('/settings', function () {
         return Inertia::render('agent/settings/page');
     })->name('agent.settings');
+
+    Route::get('/create', function () {
+        return Inertia::render('agent/create/page');
+    })->name('agent.tickets.create');
 });
 
 Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function () {
