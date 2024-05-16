@@ -36,15 +36,14 @@ export default function TicketCreateFormSection() {
         setLoading(true)
         dispatch(setForm({
             ...form,
-            // status: form.call_type == 'Parts' ? 'PARTS VALIDATION' : null,
             status: null,
+            created_from:'AGENT FORM',
             email: form.isHasEmail == 'true' || form.isHasEmail == true ? form.email : null
         }))
         const response = await store.dispatch(tickets_create_thunk())
         setLoading(false)
         router.visit('/administrator/tickets?ticket_id=' + response.id)
     }
-
 
     const findCountry = (countryName) => {
         return countries.find(country => country.value === countryName);

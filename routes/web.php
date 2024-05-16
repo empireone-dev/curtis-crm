@@ -56,6 +56,9 @@ Route::get('/ticket-form', function () {
 
 
 
+Route::get('/customer/web_form', function () {
+    return Inertia::render('web_form/page');
+})->name('dashboard');
 
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
 

@@ -38,6 +38,7 @@ class Ticket extends Model
         'availability_notes',
         'callback_notes',
         'internal_notes',
+        'created_from',
         'isUploading',
         'remarks',
         'status',

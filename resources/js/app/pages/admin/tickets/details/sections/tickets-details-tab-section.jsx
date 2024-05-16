@@ -241,8 +241,6 @@ export default function TicketsDetailsTabSection({ account }) {
               );
             })
           }
-
-
         </div>
       </div>
     </div>

@@ -124,12 +124,15 @@ class TicketController extends Controller
             'data' => $data ?? [],
         ], 200);
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
-
-        $data = Ticket::where('user_id', $id)->get();
+        if ($request->search) {
+            $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])->get();
+        } else {
+            $data = Ticket::where('user_id', '=', $id)->get();
+        }
         return response()->json([
-            'result' => $data
+            'result' => $data,
         ], 200);
     }
 

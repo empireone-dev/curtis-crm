@@ -93,6 +93,9 @@ Route::get('/administrator_dashboard', [DashboardController::class, 'administrat
 Route::get('/customer_dashboard/{userid}', [DashboardController::class, 'customer_dashboard']);
 Route::get('/warehouse_dashboard/{country}', [DashboardController::class, 'warehouse_dashboard']);
 Route::get('/asc_dashboard/{userid}', [DashboardController::class, 'asc_dashboard']);
+Route::get('/agent_dashboard/{userid}', [DashboardController::class, 'agent_dashboard']);
+
+
 
 
 Route::middleware('auth:sanctum')->resource('flights', FlightController::class);

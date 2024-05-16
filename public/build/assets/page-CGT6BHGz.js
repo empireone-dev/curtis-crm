@@ -1,1 +1,0 @@
-import{j as r}from"./app-C_s42DSp.js";import o from"./warehouse-received-button-yQG35TSz.js";import"./loading-B1XJ0o9v.js";import"./tickets-thunk-BUa1zEi5.js";import"./tickets-service-HXcuUDZj.js";import"./internals-service-B9kSbxh_.js";function u(){return r.jsx("div",{children:r.jsx(o,{})})}export{u as default};

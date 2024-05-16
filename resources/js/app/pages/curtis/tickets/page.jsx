@@ -1,4 +1,4 @@
-import CustomerLayout from "@/app/layouts/customer/customer-layout";
+import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 import React, { useEffect } from "react";
 import CustomerTicketsTableSection from "./sections/customer-tickets-table-section";
 import store from "@/app/store/store";
@@ -13,10 +13,10 @@ export default function CustomerTicketsPage({ auth }) {
     }, [search.page ?? ""]);
 
     return (
-        <CustomerLayout account={account}>
+        <CurtisLayout account={account}>
             <div className="my-8">
                 <CustomerTicketsTableSection />
             </div>
-        </CustomerLayout>
+        </CurtisLayout>
     );
 }

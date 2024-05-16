@@ -26,8 +26,8 @@ export async function store_tickets_service(data) {
 }
 
 
-export async function get_tickets_by_user_id(id) {
-    const res = await axios.get("/api/tickets/"+ id);
+export async function get_tickets_by_user_id(id,search) {
+    const res = await axios.get("/api/tickets/"+ id+search);
     return res.data.result;
 }
 

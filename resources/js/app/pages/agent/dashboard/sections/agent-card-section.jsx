@@ -27,14 +27,14 @@ import {
     WrenchScrewdriverIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { customer_dashboard_service } from "@/app/services/dashboard-service";
+import { agent_dashboard_service } from "@/app/services/dashboard-service";
 import AgentCardsComponent from "../components/agent-cards-component";
 
 export default function AgentCardsSection({ account }) {
     const [data, setData] = useState([]);
     useEffect(() => {
         async function get_dashboard(params) {
-            const res = await customer_dashboard_service(account.id);
+            const res = await agent_dashboard_service(account.id);
             setData(res);
         }
         get_dashboard();
@@ -42,6 +42,39 @@ export default function AgentCardsSection({ account }) {
     return (
         <div className="mt-12 mr-3">
             <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <DashboardCardsComponent
+                    title="Web Forms Tickets"
+                    count={data.web_form ?? 0}
+                    icon={<BookOpenIcon className="h-10 text-white" />}
+                />
+                <AgentCardsComponent
+                    title="Validation"
+                    link="WARRANTY VALIDATION"
+                    count={data.validation ?? 0}
+                    icon={<ListBulletIcon className="h-10 text-white" />}
+                />
+                <AgentCardsComponent
+                    title="Parts Validation"
+                    link="PARTS VALIDATION"
+                    count={data.parts_validation ?? 0}
+                    icon={
+                        <AdjustmentsHorizontalIcon className="h-10 text-white" />
+                    }
+                />
+                <AgentCardsComponent
+                    title="Resouce Team"
+                    count={data.resource ?? 0}
+                    link="RESOURCE"
+                    icon={
+                        <ArchiveBoxArrowDownIcon className="h-10 text-white" />
+                    }
+                />
+                <AgentCardsComponent
+                    title="Technical"
+                    link="TECHNICAL"
+                    count={data.technical ?? 0}
+                    icon={<WrenchScrewdriverIcon className="h-10 text-white" />}
+                />
                 <AgentCardsComponent
                     title="Parts"
                     count={data.parts ?? 0}
@@ -117,7 +150,7 @@ export default function AgentCardsSection({ account }) {
                     count={data.close ?? 0}
                     icon={<XMarkIcon className="h-10 text-white" />}
                 />
-                {/*  */}
+
                 <AgentCardsComponent
                     title="Willing To Buy"
                     link="CALLBACK"
@@ -145,7 +178,7 @@ export default function AgentCardsSection({ account }) {
                 {/*  */}
                 <AgentCardsComponent
                     title="Processed Tickets"
-                    count="100"
+                    count={data.process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
 

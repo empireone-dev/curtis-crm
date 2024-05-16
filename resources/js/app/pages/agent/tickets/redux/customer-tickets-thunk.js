@@ -9,7 +9,7 @@ import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 
 export function get_tickets_by_user_id_thunk(id) {
     return async function (dispatch, getState) {
-        const result = await get_tickets_by_user_id(id);
+        const result = await get_tickets_by_user_id(id,window.location.search);
         dispatch(customerTicketsSlice.actions.setTickets(result));
     };
 }
