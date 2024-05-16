@@ -57,7 +57,7 @@ export default function EditTicketFormSection() {
         try {
             await update_tickets_by_user_id(data);
             setLoading(false);
-            router.visit(`/administrator/tickets/details/${ticketid}#details`);
+            router.visit(`/agent/tickets/${ticketid}#details`);
         } catch (error) {
             setLoading(false);
         }
