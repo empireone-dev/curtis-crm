@@ -42,7 +42,7 @@ export default function AgentCardsSection({ account }) {
     return (
         <div className="mt-12 mr-3">
             <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-                <DashboardCardsComponent
+                <AgentCardsComponent
                     title="Web Forms Tickets"
                     count={data.web_form ?? 0}
                     icon={<BookOpenIcon className="h-10 text-white" />}
