@@ -23,9 +23,9 @@ export default function ContentRepairFormection() {
             ...ticket.decision_making,
             repair_cost: ticket?.repair?.repair_cost ?? ticket.repair_cost,
             notes: ticket?.repair?.notes ?? ticket.notes,
+            asc_data:ticket.asc
         });
     }, []);
-
     function formHandler(value, name) {
         if (name === "repair_cost") {
             setForm({
@@ -62,7 +62,12 @@ export default function ContentRepairFormection() {
         if (confirm("Are you sure you want to mark as unrepair the ticket?")) {
             setIsLoading2(true);
             try {
-                const result = await unrepair_service(form.ticket_id);
+                const newData = {
+                    ...form,
+                    account: user,
+                    status: "NOT REPAIRED",
+                }
+                const result = await unrepair_service(form.ticket_id,newData);
                 console.log("result", result);
                 setIsLoading2(false);
                 router.visit("#decision");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -23,9 +24,32 @@ class ActivityController extends Controller
 
     public function show($ticket_id)
     {
-        $activities = Activity::where('ticket_id', $ticket_id)->with('user')->orderBy('id','desc')->get();
+        $activities = Activity::where('ticket_id', $ticket_id)
+            ->with(['user', 'ticket'])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $newData = [];
+
+        foreach ($activities as $key => $activity) {
+            // Retrieve the ASC using the ASC ID from the ticket
+            $asc = User::find($activity->ticket['asc_id']);
+
+            // If ASC is found, merge it with activity data
+            if ($asc) {
+                $mergedData = array_merge($activity->toArray(), ['asc_data' => $asc->toArray()]);
+            } else {
+                // If ASC is not found, set asc data to null
+                $mergedData = array_merge($activity->toArray(), ['asc_data' => null]);
+            }
+
+            // Append merged data to newData array
+            $newData[] = $mergedData;
+        }
+
+        // Return the merged data
         return response()->json([
-            'data' => $activities
+            'data' => $newData
         ], 200);
     }
 }

@@ -47,7 +47,6 @@ export function get_activities_by_id_thunk() {
   return async function (dispatch, getState) {
     const { ticket } = getState().customer_tickets
     const result = await get_activities_by_id_service(ticket.id)
-    console.log('waaa', ticket.id)
     dispatch(ticketsSlice.actions.setActivities(result.data));
   };
 }

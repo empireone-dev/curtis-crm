@@ -38,6 +38,7 @@ Route::get('send_mail_create_ticket_form', [EmailTemplateController::class, 'sen
 
 
 // START GOOGLE LOGIN
+Route::get('fetch_emails', [GoogleSignInController::class, 'fetchEmails']);
 Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleSignInController::class, 'handleGoogleCallback']);
 //END GOOGLE LOGIN

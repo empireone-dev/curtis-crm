@@ -37,4 +37,9 @@ return [
         'spreadsheet_id' => env('GOOGLE_SPREADSHEET_ID'),
     ],
 
+    'gmail' => [
+        'username' => env('IMAP_USERNAME'),
+        'password' => env('IMAP_PASSWORD'),
+    ],
+
 ];

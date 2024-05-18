@@ -20,4 +20,9 @@ class Activity extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class, 'id', 'ticket_id');
+    }
 }

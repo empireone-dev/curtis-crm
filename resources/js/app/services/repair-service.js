@@ -9,7 +9,7 @@ export async function update_repair_service(data){
     return res.data
 }
 
-export async function unrepair_service(id){
-    const res = await axios.put('/api/unrepair/'+id)
+export async function unrepair_service(id,newData){
+    const res = await axios.put('/api/unrepair/'+id,newData)
     return res.data
 }
