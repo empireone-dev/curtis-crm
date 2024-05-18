@@ -21,18 +21,17 @@ export default function AdministratorLayout({ children }) {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchEmails = async () => {
-        try {
-            const response = await axios.get('/fetch_emails');
-            console.log('dawdawdwakljl;',response.data);
-        } catch (error) {
-            console.error('Error fetching emails:', error);
-        }
-    };
-
-    fetchEmails();
-}, []);
+//   useEffect(() => {
+//     const fetchEmails = async () => {
+//         try {
+//             const response = await axios.get('/fetch_emails');
+//             console.log('dawdawdwakljl;',response.data);
+//         } catch (error) {
+//             console.error('Error fetching emails:', error);
+//         }
+//     };
+//     fetchEmails();
+// }, []);
   return (
     <div className='flex'>
       <div className='flex-none'>
