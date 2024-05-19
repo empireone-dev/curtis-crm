@@ -1,23 +1,22 @@
 import Modal from "@/app/layouts/components/modal";
 import React, { useState } from "react";
 
-export default function ContentActivitiesWarrantyValidationComponents({
-    data,
-}) {
+export default function ContentActivitiesRefundComponents({ data }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
+    console.log("result", result?.refund);
     return (
         <div>
             <button
                 onClick={() => setOpen(!open)}
-                className="bg-blue-500 p-3 rounded-md text-white hover:bg-blue-600"
+                className={`bg-purple-500  hover:bg-purple-600 p-3 rounded-md text-white`}
             >
-                WARRANTY VALIDATION
+                {data.type}
             </button>
             <Modal
                 open={open}
                 setOpen={setOpen}
-                title="Warranty Validation Activities"
+                title={`${data.type} Activities`}
                 width="max-w-5xl"
                 position=""
             >
@@ -26,7 +25,7 @@ export default function ContentActivitiesWarrantyValidationComponents({
                         <div className="font-black">
                             TICKET INFORMATION
                             <div
-                                className={`text-blue-500 border rounded-md border-blue-500 items-center justify-center flex px-2`}
+                                className={`text-purple-500 border rounded-md border-purple-500 items-center justify-center flex`}
                             >
                                 {data.type}
                             </div>
@@ -93,40 +92,49 @@ export default function ContentActivitiesWarrantyValidationComponents({
                 </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
-                        <div className="font-black">RECEIPTS INFORMATION</div>
-                    </div>
-                    <div className="flex gap-2">
-                        Store Name:
-                        <div className="font-bold">{result?.store ?? ""}</div>
+                        <div className="font-black">REFUND INFORMATION</div>
                     </div>
                     <div className="flex gap-2">
                         Retailer's Price:
                         <div className="font-bold">
-                            $ {result?.retailers_price ?? 0}.00
+                            ${result?.refund?.retailers_price ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Discount:
                         <div className="font-bold">
-                            $ {result?.discount ?? 0}.00
+                            ${result?.refund?.discount ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        Total Price:
+                        Price After Discount:
                         <div className="font-bold">
-                            $ {result?.total_price ?? 0}.00
+                            ${result?.refund?.after_discount ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        Refurbished:
+                        Estimated Cost Of Refund:
                         <div className="font-bold">
-                            $ {result?.total_price ?? 0}.00
+                            ${result?.refund?.cost_refund ?? 0}.00
                         </div>
                     </div>
+                    <div className="flex gap-2">
+                        Cheque Number:
+                        <div className="font-bold">
+                            $ {result?.refund?.cheque_no ?? 0}.00
+                        </div>
+                    </div>
+                    <div className="flex gap-2">
+                        Cheque Amount:
+                        <div className="font-bold">
+                            ${result?.refund?.cheque_amount ?? 0}.00
+                        </div>
+                    </div>
+
                     <div className="flex flex-col">
                         Notes:
                         <div className="indent-8 font-bold">
-                            {result?.notes ?? ""}
+                            {result?.refund?.notes ?? ""}
                         </div>
                     </div>
                 </div>

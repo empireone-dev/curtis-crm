@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\EmailTemplate;
 use App\Mail\MailCreateTicketForm;
 use App\Mail\Validation;
+use App\Models\Activity;
 use App\Models\EmailTemplate as ModelsEmailTemplate;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Mail;
@@ -85,16 +86,19 @@ class EmailTemplateController extends Controller
         }  else {
             $status = 'CLOSED';
         }
-        ActivityController::create_activity(
-            $request->user['id'],
-            $request->ticket['id'],
-            strtoupper($request->user['name']) . ' MOVE TO ' .  $status,
-            'VALIDATION'
-        );
-        Ticket::where('id', $request->ticket['id'])->update([
+      
+        Ticket::where('id', $request->ticket['id'])->first()
+        ->update([
             'status' => $status,
             'warranty_status' => $request->mark,
             'validation_notes' => $request->validation_notes
+        ]);
+        $ticket = Ticket::where('id', $request->ticket['id'])->first();
+        Activity::create([
+            'user_id' => $request->user['id'],
+            'ticket_id' => $request->ticket['id'],
+            'type' => 'PARTS VALIDATION',
+            'message' => json_encode($ticket)
         ]);
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
         return 'Email sent successfully!';
@@ -111,12 +115,15 @@ class EmailTemplateController extends Controller
             'availability_notes' => $request->availability_notes
         ]);
 
-        ActivityController::create_activity(
-            $request->user['id'],
-            $request->ticket['id'],
-            strtoupper($request->user['name']) . ' MOVE TO ' .  $status,
-            'AVAILABILITY'
-        );
+        $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
+
+        Activity::create([
+            'user_id' => $request->user['id'],
+            'ticket_id' => $request->ticket['id'],
+            'type' => 'AVAILABILITY',
+            'message' => json_encode($ticketArray)
+        ]);
+
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
         return response()->json([
             'status' => $ticket,

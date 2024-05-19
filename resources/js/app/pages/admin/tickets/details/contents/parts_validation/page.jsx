@@ -10,7 +10,6 @@ export default function TicketsPartsValidationContent() {
   }, []);
   return (
     <div>
-      
       <ValidationFormSection />
     </div>
   )

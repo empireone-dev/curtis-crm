@@ -46,6 +46,9 @@ Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_ra
 
 
 Route::resource('replacement',ReplacementController::class);
+Route::post('/parts_replacement_shipped', [ReplacementController::class, 'parts_replacement_shipped']);
+Route::post('/parts_replacement_not_shipped', [ReplacementController::class, 'parts_replacement_not_shipped']);
+
 Route::resource('decision_making',DecisionMakingController::class);
 
 Route::resource('refund',RefundController::class);

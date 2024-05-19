@@ -60,7 +60,12 @@ export default function ContentReplacementWarrantyForm() {
         if (confirm(`Are you sure you want to move in refund?`)) {
             setIsLoading2(true)
             try {
-                await store.dispatch(update_tickets_status_thunk(ticket.id, 'REFUND'))
+                await store.dispatch(update_tickets_status_thunk(ticket.id, 'REFUND',{
+                    ...form,
+                    ticket_id:ticket.id,
+                    account: user,
+                    status: 'NOT SHIPPED'
+                }))
                 setIsLoading2(false)
                 router.visit('#refund');
             } catch (error) {

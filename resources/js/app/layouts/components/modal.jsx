@@ -12,6 +12,11 @@ export default function Modal({ children, open, setOpen, title, width, position 
     setOpen(false);
   };
 
+  function capitalizeFirstWords(str) {
+    return str.toLowerCase().replace(/\b\w/g, function(char) {
+        return char.toUpperCase();
+    });
+}
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -48,7 +53,7 @@ export default function Modal({ children, open, setOpen, title, width, position 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <ExclamationCircleIcon className="h-7" />
-                            <div className="ml-2">{title}</div>
+                            <div className="ml-2 ">{capitalizeFirstWords(title)}</div>
                           </div>
                           <button className="ml-auto" onClick={closeModal}>
                             <svg

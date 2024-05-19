@@ -66,7 +66,7 @@ export default function AvailabilitySection() {
     return (
         <div>
             <h1 className='text-2xl mt-5'><b>Availability</b></h1>
-            <section className="container bg-white">
+            <section className="container bg-white px-3">
                 <form className="flex flex-col gap-6">
                     <div className="flex gap-3">
                         <button
@@ -176,12 +176,12 @@ export default function AvailabilitySection() {
                                 ticket.warranty_status == 'OOW' && <>
                                     <button
                                         onClick={() => submitButton('WILLING TO BUY')}
-                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
+                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-500 rounded-sm hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-200 ">
                                         OOW &gt; WILLING TO BUY
                                     </button>
                                     <button
                                         onClick={() => submitButton('NOT WILLING TO BUY')}
-                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                                        type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-500 rounded-sm hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 ">
                                         OOW &gt; NOT WILLING TO BUY
                                     </button>
                                 </>
@@ -189,20 +189,20 @@ export default function AvailabilitySection() {
                             {
                                 ticket.warranty_status == 'IW' && <button
                                     onClick={() => submitButton('CLOSE')}
-                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                     CLOSE
                                 </button>
                             }
 
                             <button
                                 onClick={() => submitButton('PENDING')}
-                                type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                 Not Available - On Order
                             </button>
                             {
                                 ticket.warranty_status == 'IW' && <button
                                     onClick={() => submitButton('FOR REPLACEMENT')}
-                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                    type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-500 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                     FOR REPLACEMENT
                                 </button>
                             }

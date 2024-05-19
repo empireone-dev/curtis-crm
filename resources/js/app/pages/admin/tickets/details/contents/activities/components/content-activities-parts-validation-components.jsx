@@ -1,23 +1,22 @@
 import Modal from "@/app/layouts/components/modal";
 import React, { useState } from "react";
 
-export default function ContentActivitiesWarrantyValidationComponents({
-    data,
-}) {
+export default function ContentActivitiesPartsValidationComponents({ data }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
+   console.log('result',result)
     return (
         <div>
             <button
                 onClick={() => setOpen(!open)}
-                className="bg-blue-500 p-3 rounded-md text-white hover:bg-blue-600"
+                className={`bg-blue-500  hover:bg-blue-600 p-3 rounded-md text-white`}
             >
-                WARRANTY VALIDATION
+                {data.type}
             </button>
             <Modal
                 open={open}
                 setOpen={setOpen}
-                title="Warranty Validation Activities"
+                title={`${data.type} Activities`}
                 width="max-w-5xl"
                 position=""
             >
@@ -26,7 +25,7 @@ export default function ContentActivitiesWarrantyValidationComponents({
                         <div className="font-black">
                             TICKET INFORMATION
                             <div
-                                className={`text-blue-500 border rounded-md border-blue-500 items-center justify-center flex px-2`}
+                                className={`text-blue-500 border rounded-md border-blue-500 items-center justify-center flex`}
                             >
                                 {data.type}
                             </div>
@@ -82,7 +81,12 @@ export default function ContentActivitiesWarrantyValidationComponents({
                                 {data?.ticket?.serial_number ?? ""}
                             </div>
                         </div>
-
+                        <div className="flex gap-2">
+                            Unit:
+                            <div className="font-bold">
+                                {result.unit ?? ""}
+                            </div>
+                        </div>
                         <div className="flex flex-col">
                             Remarks:
                             <div className="indent-8 font-bold">
@@ -93,40 +97,33 @@ export default function ContentActivitiesWarrantyValidationComponents({
                 </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
-                        <div className="font-black">RECEIPTS INFORMATION</div>
+                        <div className="font-black">PARTS VALIDATION INFORMATION</div>
                     </div>
                     <div className="flex gap-2">
-                        Store Name:
-                        <div className="font-bold">{result?.store ?? ""}</div>
-                    </div>
-                    <div className="flex gap-2">
-                        Retailer's Price:
-                        <div className="font-bold">
-                            $ {result?.retailers_price ?? 0}.00
+                        Warranty Status:
+                        <div className="font-bold border border-blue-500 px-2 rounded-md">
+                            {result?.warranty_status == 'IW'?'IN WARRANTY':'OUT OF WARRANTY' ?? ''}
                         </div>
                     </div>
-                    <div className="flex gap-2">
-                        Discount:
-                        <div className="font-bold">
-                            $ {result?.discount ?? 0}.00
-                        </div>
+
+                    <div className="flex gap-2 my-2">
+                        Issue:
+                        {
+                            JSON.parse(result.issue).map(res=>{
+                                return (
+                                    <div className="font-bold border border-blue-500 px-2 rounded-md mx-2">
+                                    {res}
+                                </div>
+                                )
+                            })
+                        }
                     </div>
-                    <div className="flex gap-2">
-                        Total Price:
-                        <div className="font-bold">
-                            $ {result?.total_price ?? 0}.00
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Refurbished:
-                        <div className="font-bold">
-                            $ {result?.total_price ?? 0}.00
-                        </div>
-                    </div>
+                 
+                 
                     <div className="flex flex-col">
                         Notes:
                         <div className="indent-8 font-bold">
-                            {result?.notes ?? ""}
+                            {result?.validation_notes ?? ""}
                         </div>
                     </div>
                 </div>

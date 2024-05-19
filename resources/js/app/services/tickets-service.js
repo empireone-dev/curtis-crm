@@ -50,10 +50,11 @@ export async function update_explanation_service(id,explanation) {
     return res.data.result;
 }
 
-export async function update_tickets_status_service(id,status,user_id) {
+export async function update_tickets_status_service(id,status,user_id,data) {
     const res = await axios.put("/api/update_tickets_status/"+ id,{
         status:status,
-        user_id:user_id
+        user_id:user_id,
+        data
     });
     return res.data.result;
 }

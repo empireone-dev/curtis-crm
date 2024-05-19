@@ -23,7 +23,14 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
             >
                 <div className="flex flex-col w-full my-4">
                     <div className="flex gap-3 items-center justify-between my-3">
-                        <div className="font-black">TICKET INFORMATION</div>
+                        <div className="font-black">
+                            TICKET INFORMATION
+                            <div
+                                className={`text-orange-500 border rounded-md border-orange-500 items-center justify-center flex`}
+                            >
+                                {data.type}
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-col ">
                         <div className="flex gap-2">

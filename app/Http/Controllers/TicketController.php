@@ -76,15 +76,16 @@ class TicketController extends Controller
         ]);
         $user = User::find($request->user_id);
 
-        Activity::create([
-            'user_id' => $request->user_id,
-            'ticket_id' => $id,
-            'type' => 'MOVE',
-            'message' => json_encode([
-                'emp_id' => $user->emp_id,
-                'move' => $user->role_id == 3 ? $ticket->country . ' Warehouse' : $user->name . ' move to ' . strtolower($request->status),
-            ])
-        ]);
+        $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
+
+        if ($request->data) {
+            Activity::create([
+                'user_id' => $request->data['account']['id'],
+                'ticket_id' => $id,
+                'type' => 'REPLACEMENT NOT SHIPPED',
+                'message' => json_encode(array_merge($ticketArray, ['replacement' => $request->data]))
+            ]);
+        }
 
         return response()->json([
             'result' => $ticket
