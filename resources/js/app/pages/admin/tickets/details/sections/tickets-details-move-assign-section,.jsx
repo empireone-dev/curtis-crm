@@ -14,7 +14,7 @@ export default function TicketsDetailsMoveAssignSection() {
 
     return (
         <div className="px-7">
-            {ticket.isUploading == "true" && (
+            {ticket.status !== "CLOSED" && ticket.isUploading == "true" && (
                 <div>
                     {ticket?.call_type &&
                     ticket?.call_type == "CF-Warranty Claim" ? (

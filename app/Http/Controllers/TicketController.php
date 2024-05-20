@@ -16,7 +16,21 @@ class TicketController extends Controller
 {
 
 
+    public function close_ticket(Request $request, $id)
+    {
+        $ticket = Ticket::where('id', '=', $id)->first();
+        $ticket->update([
+            'reason_to_close' => $request->reason,
+            'status' => 'CLOSED'
+        ]);
 
+        Activity::create([
+            'user_id' => $request->user['id'],
+            'ticket_id' => $id,
+            'type' => $request->type,
+            'message' => json_encode($request->all())
+        ]);
+    }
     public function get_tickets_by_asc(Request $request, $status)
     {
         if ($status !== 'undefined') {
@@ -110,14 +124,18 @@ class TicketController extends Controller
 
         // Start the query builder
         $query = Ticket::query();
-
-        // Dynamically add where conditions for each column
-        $query->where(function ($query) use ($columns, $searchQuery) {
-            foreach ($columns as $column) {
-                $query->orWhere($column, 'like', '%' . $searchQuery . '%');
-            }
-        });
-
+        if ($searchQuery) {
+            // Dynamically add where conditions for each column
+            $query->where(function ($query) use ($columns, $searchQuery) {
+                foreach ($columns as $column) {
+                    if ($searchQuery == 'WARRANTY VALIDATION') {
+                        $query->orWhere([[$column, '=',  $searchQuery], ['isUploading', '=', 'true']]);
+                    } else {
+                        $query->orWhere([[$column, '=',  $searchQuery]]);
+                    }
+                }
+            });
+        }
         // Paginate the results
         $data = $query->paginate(10);
 

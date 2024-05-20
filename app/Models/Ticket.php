@@ -41,6 +41,7 @@ class Ticket extends Model
         'created_from',
         'isUploading',
         'remarks',
+        'reason_to_close',
         'status',
     ];
 

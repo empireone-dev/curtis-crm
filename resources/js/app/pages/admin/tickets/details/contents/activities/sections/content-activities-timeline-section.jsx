@@ -10,9 +10,12 @@ import ContentActivitiesReplacementComponents from "../components/content-activi
 import ContentActivitiesPartsValidationComponents from "../components/content-activities-parts-validation-components";
 import ContentActivitiesInternalsComponents from "../components/content-activities-internals-components";
 import ContentActivitiesReplacementPartsComponents from "../components/content-activities-replacement-parts-components";
+import ContentActivitiesAvailabilityComponents from "../components/content-activities-availability-components";
+import ContentActivitiesClosedComponents from "../components/content-activities-closed-components";
 
 export default function ContentActivitiesTimelineSection() {
     const { activities } = useSelector((state) => state.tickets);
+    const { ticket } = useSelector((state) => state.tickets);
 
     return (
         <ol className="relative border-s border-gray-200 mx-3">
@@ -140,46 +143,86 @@ export default function ContentActivitiesTimelineSection() {
                             </li>
                         );
                         break;
-                        case "INTERNALS":
-                            return (
-                                <li key={i} className="mb-10 ms-6">
-                                    <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
-                                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-                                        {res?.user?.name}
-                                        <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
-                                            {formattedTimestamp}
-                                        </span>
-                                    </h3>
-                                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                        Created on{" "}
-                                        {moment(res.created_at).format("LLL")}
-                                    </time>
-                                    <ContentActivitiesInternalsComponents
-                                        data={res}
-                                    />
-                                </li>
-                            );
-                            break;
-                            case "PARTS REPLACEMENT SHIPPED":
-                                return (
-                                    <li key={i} className="mb-10 ms-6">
-                                        <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
-                                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-                                            {res?.user?.name}
-                                            <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
-                                                {formattedTimestamp}
-                                            </span>
-                                        </h3>
-                                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                            Created on{" "}
-                                            {moment(res.created_at).format("LLL")}
-                                        </time>
-                                        <ContentActivitiesReplacementPartsComponents
-                                            data={res}
-                                        />
-                                    </li>
-                                );
-                                break;
+                    case "INTERNALS":
+                        return (
+                            <li key={i} className="mb-10 ms-6">
+                                <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                    {res?.user?.name}
+                                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                        {formattedTimestamp}
+                                    </span>
+                                </h3>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                    Created on{" "}
+                                    {moment(res.created_at).format("LLL")}
+                                </time>
+                                <ContentActivitiesInternalsComponents
+                                    data={res}
+                                />
+                            </li>
+                        );
+                        break;
+                    case "PARTS REPLACEMENT NOT SHIPPED":
+                    case "PARTS REPLACEMENT SHIPPED":
+                        return (
+                            <li key={i} className="mb-10 ms-6">
+                                <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                    {res?.user?.name}
+                                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                        {formattedTimestamp}
+                                    </span>
+                                </h3>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                    Created on{" "}
+                                    {moment(res.created_at).format("LLL")}
+                                </time>
+                                <ContentActivitiesReplacementPartsComponents
+                                    data={res}
+                                />
+                            </li>
+                        );
+                        break;
+                    case "AVAILABILITY":
+                        return (
+                            <li key={i} className="mb-10 ms-6">
+                                <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                    {res?.user?.name}
+                                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                        {formattedTimestamp}
+                                    </span>
+                                </h3>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                    Created on{" "}
+                                    {moment(res.created_at).format("LLL")}
+                                </time>
+                                <ContentActivitiesAvailabilityComponents
+                                    data={res}
+                                />
+                            </li>
+                        );
+                        break;
+
+                    case "TICKET WARRANTY CLOSED":
+                        return (
+                            <li key={i} className="mb-10 ms-6">
+                                <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                    {res?.user?.name}
+                                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                        {formattedTimestamp}
+                                    </span>
+                                </h3>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                    Created on{" "}
+                                    {moment(res.created_at).format("LLL")}
+                                </time>
+                                <ContentActivitiesClosedComponents data={res} />
+                            </li>
+                        );
+                        break;
                     default:
                         break;
                 }

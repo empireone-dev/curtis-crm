@@ -45,7 +45,8 @@ export default function AvailabilitySection() {
             status: status,
             user: user,
             availability_notes: notes,
-            ticket: ticket
+            ticket: ticket,
+            internals:internals
         })
         dispatch(setTicket(result.status))
 

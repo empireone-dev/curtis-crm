@@ -11,19 +11,54 @@ class DashboardController extends Controller
 
     public function agent_dashboard($userid)
     {
-        $parts_validation = Ticket::where([['user_id', '=', $userid], ['status', '=', 'PARTS VALIDATION']])->count();
 
-        $validation = Ticket::where([
+        $warranty_validation = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'WARRANTY VALIDATION']
         ])->count();
 
-        $parts = Ticket::where([
+        $parts_validation = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
             ['isUploading', '=', 'true'],
             ['status', '=', 'PARTS VALIDATION']
+        ])->count();
+
+        $warranty_process_ticket = Ticket::where([
+            ['isUploading', '=', 'true'],
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['status', '=', 'PROCESSED TICKET'],
+            ['user_id', '=', $userid],
+        ])->count();
+
+        $warranty_closed = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
+        ])->count();
+
+        $parts_closed = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
+        ])->count();
+
+        $parts_process_ticket = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'PARTS PROCESSED TICKET']
+        ])->count();
+        
+
+        $tech_closed = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'TS-Tech Support'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
         ])->count();
 
         $resource = Ticket::where([
@@ -99,10 +134,7 @@ class DashboardController extends Controller
             ['status', '=', 'CA WAREHOUSE']
         ])->count();
 
-        $closed = Ticket::where([
-            ['status', '=', 'CLOSED'],
-            ['user_id', '=', $userid],
-        ])->count();
+       
         $check_availability = Ticket::where([
             ['status', '=', 'INTERNALS'],
             ['user_id', '=', $userid],
@@ -118,17 +150,13 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
             ])->count();
 
-        $process_ticket = Ticket::where([
-            ['isUploading', '=', 'true'],
-            ['status', '=', 'PROCESSED TICKET'],
-            ['user_id', '=', $userid],
-        ])->count();
+      
 
         return response()->json([
-            'validation' => $validation,
+            'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,
-            'parts' => $parts,
+            'parts_validation' => $parts_validation,
             'replacement_parts' => $replacement_parts,
             'replacement' => $replacement,
             'internals' => $internals,
@@ -139,11 +167,14 @@ class DashboardController extends Controller
             'waiting_photos' => $waiting_photos,
             'warehouse_us' => $warehouse_us,
             'warehouse_ca' => $warehouse_ca,
-            'closed' => $closed,
+            'warranty_closed' => $warranty_closed,
+            'parts_closed' => $parts_closed,
+            'tech_closed' => $tech_closed,
             'check_availability' => $check_availability,
             'updates_curtis' => $updates_curtis,
             'web_form'=>$web_form,
-            'process_ticket'=>$process_ticket
+            'warranty_process_ticket'=>$warranty_process_ticket,
+            'parts_process_ticket'=>$parts_process_ticket,
         ], 200);
     }
     public function asc_dashboard($id)
@@ -174,11 +205,22 @@ class DashboardController extends Controller
     public function administrator_dashboard()
     {
 
-        $parts_validation = Ticket::where('status', '=', 'PARTS VALIDATION')->count();
-
-        $validation = Ticket::where([
+        $parts_validation = Ticket::where([
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'PARTS VALIDATION']
+        ])->count();
+       
+        $warranty_validation = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
+            ['isUploading', '=', 'true'],
             ['status', '=', 'WARRANTY VALIDATION']
+        ])->count();
+
+        $warranty_closed = Ticket::where([
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
         ])->count();
 
         $parts = Ticket::where([
@@ -248,9 +290,16 @@ class DashboardController extends Controller
             ['created_from', '=', 'WEB FORM']
             ])->count();
 
-        $process_ticket = Ticket::where([
+        $warranty_process_ticket = Ticket::where([
             ['isUploading', '=', 'true'],
-            ['status', '=', 'PROCESSED TICKET']
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['status', '=', 'PROCESSED TICKET'],
+        ])->count();
+
+        $parts_process_ticket = Ticket::where([
+            ['isUploading', '=', 'true'],
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
         
         $warehouse_ca = Ticket::where([
@@ -258,12 +307,23 @@ class DashboardController extends Controller
             ['status', '=', 'CA WAREHOUSE']
         ])->count();
 
-        $closed = Ticket::where('status', '=', 'CLOSED')->count();
+        $tech_closed = Ticket::where([
+            ['call_type', '=', 'TS-Tech Support'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
+        ])->count();
+
+        $parts_closed = Ticket::where([
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'true'],
+            ['status', '=', 'CLOSED']
+        ])->count();
+
         $check_availability = Ticket::where('status', '=', 'INTERNALS')->count();
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
 
         return response()->json([
-            'validation' => $validation,
+            'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,
             'parts' => $parts,
@@ -277,11 +337,14 @@ class DashboardController extends Controller
             'waiting_photos' => $waiting_photos,
             'warehouse_us' => $warehouse_us,
             'warehouse_ca' => $warehouse_ca,
-            'closed' => $closed,
+            'tech_closed' => $tech_closed,
+            'warranty_closed' => $warranty_closed,
+            'parts_closed' => $parts_closed,
             'check_availability' => $check_availability,
             'updates_curtis' => $updates_curtis,
             'web_form' => $web_form,
-            'process_ticket'=>$process_ticket
+            'warranty_process_ticket'=>$warranty_process_ticket,
+            'parts_process_ticket'=>$parts_process_ticket,
         ], 200);
     }
 

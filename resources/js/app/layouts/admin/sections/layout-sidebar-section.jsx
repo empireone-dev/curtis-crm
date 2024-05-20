@@ -56,12 +56,12 @@ export default function LayoutSidebarSection({account}) {
                 icon={<InboxArrowDownIcon className='h-6'/>}   
                 href={'email_template'}
               />
-              <LayoutSidebarListComponent
+              {/* <LayoutSidebarListComponent
               account={account}
                 name="Item Types"
                 icon={<BriefcaseIcon className='h-6'/>}   
                 href={'item_types'}
-              />
+              /> */}
               <LayoutSidebarListComponent
               account={account}
                 name="Common-Issues"

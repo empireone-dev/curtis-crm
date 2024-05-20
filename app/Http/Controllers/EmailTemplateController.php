@@ -115,13 +115,12 @@ class EmailTemplateController extends Controller
             'availability_notes' => $request->availability_notes
         ]);
 
-        $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
 
         Activity::create([
             'user_id' => $request->user['id'],
             'ticket_id' => $request->ticket['id'],
             'type' => 'AVAILABILITY',
-            'message' => json_encode($ticketArray)
+            'message' => json_encode($request->all())
         ]);
 
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
