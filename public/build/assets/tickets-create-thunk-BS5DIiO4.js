@@ -1,1 +1,0 @@
-import{s as o}from"./tickets-service-bhpJOmPK.js";import{L as c}from"./app-B4Uaxbje.js";function a(){return async function(t,e){const r=e().tickets_create.form,s=await o(r);return t(c.actions.setForm({})),s}}export{a as t};

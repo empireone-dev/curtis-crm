@@ -1,1 +1,0 @@
-import{j as t}from"./app-B4Uaxbje.js";function a({name:e}){return t.jsx(t.Fragment,{children:t.jsx("th",{scope:"col",className:"px-12 py-4 text-sm font-normal text-left rtl:text-right text-gray-500 ",children:e})})}export{a as default};
