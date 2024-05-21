@@ -12,7 +12,7 @@ export default function TicketsExportFileSection() {
 
     async function fetchTickets(page) {
         const search = window.location.search.split("&")[1]
-        const { data } = await axios.get( `/api/tickets?page=${3}${search?`&${search}`:'' }`);
+        const { data } = await axios.get( `/api/tickets?page=${page}${search?`&${search}`:'' }`);
         return data.data.data;
     }
 
