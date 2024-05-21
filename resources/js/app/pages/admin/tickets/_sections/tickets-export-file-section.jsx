@@ -11,11 +11,8 @@ export default function TicketsExportFileSection() {
     const [loading, setLoading] = useState(false);
 
     async function fetchTickets(page) {
-        const { data } = await axios.get(
-            `http://127.0.0.1:8000/api/tickets?page=${page}&${
-                window.location.search.split("&")[1]
-            }`
-        );
+        const search = window.location.search.split("&")[1]
+        const { data } = await axios.get( `/api/tickets?page=${3}${search?`&${search}`:'' }`);
         return data.data.data;
     }
 
