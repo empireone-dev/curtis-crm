@@ -91,10 +91,12 @@ const CustomerTicketsClearModel = () => {
     }
 
     async function deleteFileImage(id, ticket_id) {
+        if (confirm('Are you sure you wanna delete the image?')) {
         setIsLoading(true)
         await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
         setIsLoading(false)
         handleCancel()
+        }
     }
 
     return (

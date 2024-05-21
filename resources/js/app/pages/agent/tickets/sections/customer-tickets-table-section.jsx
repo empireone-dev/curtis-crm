@@ -161,8 +161,10 @@ export default function CustomerTicketsTableSection() {
                 text
             ),
     });
-
-    const data = ticketData ?? [];
+    const data = ticketData ?? [].map((res,i)=>({
+        ...res,
+        key:res.id
+    }));
     const columns = [
         {
             title: "Ticket ID",

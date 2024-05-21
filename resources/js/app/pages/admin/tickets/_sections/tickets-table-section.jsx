@@ -138,7 +138,10 @@ export default function TicketTableSection() {
     //     ...tickets.map(res => res.id),
     // }
     // console.log('datas', datas)
-    const data = tickets;
+    const data = tickets.map((res,i)=>({
+        ...res,
+        key:res.id
+    }));
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
     const columns = [
         {

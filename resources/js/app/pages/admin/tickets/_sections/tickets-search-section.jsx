@@ -17,7 +17,7 @@ export default function TicketsSearchSection() {
         
     }
     return (
-        <div className="mt-6 md:flex md:items-center md:justify-between">
+        <div className=" md:flex md:items-center md:justify-between">
         
             <form
                 onSubmit={searchSubmit}

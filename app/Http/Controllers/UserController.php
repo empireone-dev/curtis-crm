@@ -20,8 +20,15 @@ class UserController extends Controller
         return response()->json([
             'data' => $user
         ], 200);
-        
     }
+
+    public function show(Request $request,$role_id){
+        $user = User::where('role_id','=',$role_id)->with('role')->get();
+        return response()->json([
+            'data' => $user
+        ], 200);
+    }
+    
     
     public function store(Request $request)
     {

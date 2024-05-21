@@ -12,6 +12,27 @@ class DashboardController extends Controller
     public function agent_dashboard($userid)
     {
 
+        $open_warranty = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'WARRANTY VALIDATION']
+        ])->count();
+
+        $open_parts = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'PARTS VALIDATION']
+        ])->count();
+
+        $open_tech = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'TS-Tech Support'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'TECH VALIDATION']
+        ])->count();
+
         $warranty_validation = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
@@ -153,6 +174,9 @@ class DashboardController extends Controller
       
 
         return response()->json([
+            'open_warranty'=>$open_warranty,
+            'open_parts'=>$open_parts,
+            'open_tech'=>$open_tech,
             'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,
@@ -204,6 +228,24 @@ class DashboardController extends Controller
     }
     public function administrator_dashboard()
     {
+
+        $open_warranty = Ticket::where([
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'WARRANTY VALIDATION']
+        ])->count();
+
+        $open_parts = Ticket::where([
+            ['call_type', '=', 'Parts'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'PARTS VALIDATION']
+        ])->count();
+
+        $open_tech = Ticket::where([
+            ['call_type', '=', 'TS-Tech Support'],
+            ['isUploading', '=', 'false'],
+            ['status', '=', 'TECH VALIDATION']
+        ])->count();
 
         $parts_validation = Ticket::where([
             ['call_type', '=', 'Parts'],
@@ -323,6 +365,9 @@ class DashboardController extends Controller
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
 
         return response()->json([
+            'open_warranty'=>$open_warranty,
+            'open_parts'=>$open_parts,
+            'open_tech'=>$open_tech,
             'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,

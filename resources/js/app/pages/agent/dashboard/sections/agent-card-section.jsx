@@ -54,6 +54,41 @@ export default function AgentCardsSection({ account }) {
     return (
         <div className="py-4 mx-3">
             <div className="my-6">
+                <div className="text-3xl font-black mb-8">Open Ticket</div>
+                <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                    {agent_type(["Warranty"]) && (
+                        <AgentCardsComponent
+                            title="Open Ticket for Warranty"
+                            link="OPEN WARRANTY"
+                            count={data.open_warranty ?? 0}
+                            icon={
+                                <ListBulletIcon className="h-10 text-white" />
+                            }
+                        />
+                    )}
+
+                    {agent_type(["Parts"]) && (
+                        <AgentCardsComponent
+                            title="Open Ticket for Parts"
+                            link="OPEN PARTS"
+                            count={data.open_parts ?? 0}
+                            icon={
+                                <ListBulletIcon className="h-10 text-white" />
+                            }
+                        />
+                    )}
+
+                    {agent_type(["Tech"]) && (
+                        <AgentCardsComponent
+                            title="Open Ticket for Tech"
+                            link="OPEN TECH"
+                            count={data.open_tech ?? 0}
+                            icon={
+                                <ListBulletIcon className="h-10 text-white" />
+                            }
+                        />
+                    )}
+                </div>
                 <div className="text-3xl font-black my-8">Customers</div>
                 <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                     {agent_type(["Warranty"]) && (

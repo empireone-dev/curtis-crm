@@ -91,10 +91,13 @@ const CustomerTicketsBillOfSaleSection = () => {
     }
 
     async function deleteFileImage(id, ticket_id) {
-        setIsLoading(true)
-        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
-        setIsLoading(false)
-        handleCancel()
+        if (confirm('Are you sure you wanna delete the image?')) {
+            setIsLoading(true)
+            await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
+            setIsLoading(false)
+            handleCancel()
+        }
+       
     }
 
     return (

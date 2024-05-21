@@ -16,6 +16,18 @@ class TicketController extends Controller
 {
 
 
+    public function transfer_ticket(Request $request, $id)
+    {
+        foreach ($request->selected as $key => $value) {
+            $ticket = Ticket::where('id', '=', $value['id'])->first();
+            $ticket->update([
+                'user_id' => $request->agent
+            ]);
+        }
+        return response()->json([
+            'result' => 'success'
+        ], 200);
+    }
     public function close_ticket(Request $request, $id)
     {
         $ticket = Ticket::where('id', '=', $id)->first();
@@ -130,6 +142,12 @@ class TicketController extends Controller
                 foreach ($columns as $column) {
                     if ($searchQuery == 'WARRANTY VALIDATION') {
                         $query->orWhere([[$column, '=',  $searchQuery], ['isUploading', '=', 'true']]);
+                    } else if ($searchQuery == 'OPEN WARRANTY') {
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['isUploading', '=', 'false'], ['status', '=', 'WARRANTY VALIDATION']]);
+                    } else if ($searchQuery == 'OPEN PARTS') {
+                        $query->orWhere([['call_type', '=', 'Parts'], ['isUploading', '=', 'false'], ['status', '=', 'PARTS VALIDATION']]);
+                    } else if ($searchQuery == 'OPEN TECH') {
+                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['isUploading', '=', 'false'], ['status', '=', 'TECH VALIDATION']]);
                     } else {
                         $query->orWhere([[$column, '=',  $searchQuery]]);
                     }

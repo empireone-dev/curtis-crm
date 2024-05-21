@@ -81,7 +81,7 @@ Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get
 Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
 Route::get('queueing', [TicketController::class, 'queueing']);
 Route::put('close_ticket/{ticket_id}', [TicketController::class, 'close_ticket']);
-
+Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ticket']);
 
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

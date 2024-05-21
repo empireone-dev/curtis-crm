@@ -30,6 +30,7 @@ export function get_tickets_thunk(search) {
     // const { search } = getState().tickets
     const result = await get_tickets_service(search)
     dispatch(ticketsSlice.actions.setTickets(result.data));
+    return result;
   };
 }
 

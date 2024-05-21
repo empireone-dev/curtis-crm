@@ -41,7 +41,28 @@ export default function DashboardCardsSection() {
     }, []);
     return (
         <div className="py-12 mr-3 px-5">
-            <div className="text-3xl font-black mb-8">Warranty Claim</div>
+            <div className="text-3xl font-black mb-8">Open Ticket</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <DashboardCardsComponent
+                    title="Open Ticket for Warranty"
+                    link="OPEN WARRANTY"
+                    count={data.open_warranty ?? 0}
+                    icon={<ListBulletIcon className="h-10 text-white" />}
+                />
+                <DashboardCardsComponent
+                    title="Open Ticket for Parts"
+                    link="OPEN PARTS"
+                    count={data.open_parts ?? 0}
+                    icon={<ListBulletIcon className="h-10 text-white" />}
+                />
+                <DashboardCardsComponent
+                    title="Open Ticket for Tech"
+                    link="OPEN TECH"
+                    count={data.open_tech ?? 0}
+                    icon={<ListBulletIcon className="h-10 text-white" />}
+                />
+            </div>
+            <div className="text-3xl font-black my-8">Warranty Claim</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <DashboardCardsComponent
                     title="Warranty Validation"

@@ -7,7 +7,7 @@ import { get_users_thunk } from './redux/users.thunk';
 export default function UsersPage() {
 
   useEffect(() => {
-    store.dispatch(get_users_thunk())
+    store.dispatch(get_users_thunk(5))
   }, []);
   return (
     <AdministratorLayout>

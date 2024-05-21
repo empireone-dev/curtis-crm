@@ -83,6 +83,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/users/page');
     })->name('users');
 
+    Route::get('/users/{userid}', function () {
+        return Inertia::render('admin/users/tickets/page');
+    })->name('users.tickets');
+
     Route::get('/brands', function () {
         return Inertia::render('admin/brands/page');
     })->name('brands');
