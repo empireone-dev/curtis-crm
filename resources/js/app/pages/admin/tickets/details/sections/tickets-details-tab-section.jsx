@@ -23,7 +23,6 @@ import TicketsDetailsMoveAssignComponents from '../components/tickets-details-mo
 import TicketsPartsInternalsContent from '../contents/internals/page';
 import TicketsAvailabilityContent from '../contents/availability/page';
 import ContentsCallBackPage from '../contents/call_back/page';
-import ReplacementWarranty from '../contents/replacement_warranty/page';
 import ReplacementWarrantyPage from '../contents/replacement_warranty/page';
 import Skeleton from '@/app/layouts/components/skeleton';
 
