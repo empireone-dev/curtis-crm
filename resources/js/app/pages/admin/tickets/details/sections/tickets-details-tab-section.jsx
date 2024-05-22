@@ -71,33 +71,33 @@ export default function TicketsDetailsTabSection() {
         }
       ]
       : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.call_type === 'Parts' && (ticket?.status === 'PARTS VALIDATION')
-    //   ? [
-    //     {
-    //       title: 'Parts Validation',
-    //       components: <TicketsPartsValidationContent />,
-    //       hash: '#parts_validation',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'RESOURCE'
-    //   ? [
-    //     {
-    //       title: 'Decision Making',
-    //       components: <TicketsDecisionMakingContent />,
-    //       hash: '#decision',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && (ticket?.status === 'CA WAREHOUSE' || ticket?.status === 'US WAREHOUSE' || ticket?.status === 'CLOSED')
-    //   ? [
-    //     {
-    //       title: ticket?.country + ' Warehouse',
-    //       components: <WarehousePage />,
-    //       hash: '#warehouse',
-    //     },
-    //   ]
-    //   : []),
+    ...(ticket?.isUploading === 'true' && ticket?.call_type === 'Parts' && (ticket?.status === 'PARTS VALIDATION')
+      ? [
+        {
+          title: 'Parts Validation',
+          components: <TicketsPartsValidationContent />,
+          hash: '#parts_validation',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket?.status === 'RESOURCE'
+      ? [
+        {
+          title: 'Decision Making',
+          components: <TicketsDecisionMakingContent />,
+          hash: '#decision',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && (ticket?.status === 'CA WAREHOUSE' || ticket?.status === 'US WAREHOUSE' || ticket?.status === 'CLOSED')
+      ? [
+        {
+          title: ticket?.country + ' Warehouse',
+          components: <WarehousePage />,
+          hash: '#warehouse',
+        },
+      ]
+      : []),
     // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
     //   ? [
     //     {
