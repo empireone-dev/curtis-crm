@@ -28,7 +28,7 @@ import Skeleton from '@/app/layouts/components/skeleton';
 
 
 
-export default function TicketsDetailsTabSection({ account }) {
+export default function TicketsDetailsTabSection() {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { user } = useSelector((state) => state.app)

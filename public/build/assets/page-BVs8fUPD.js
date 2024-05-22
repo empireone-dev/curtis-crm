@@ -1,1 +1,0 @@
-import{j as t}from"./app-BSNI_i52.js";import r from"./content-repair-form-section-CXAa9LgA.js";import"./input-BUaA6w3z.js";import"./textarea-CFhRD8Ag.js";import"./loading-CK6cN_BA.js";function p(){return t.jsx("div",{children:t.jsx(r,{})})}export{p as default};
