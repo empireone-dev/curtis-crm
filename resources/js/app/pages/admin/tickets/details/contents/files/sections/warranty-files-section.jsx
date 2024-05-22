@@ -13,14 +13,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.customer_tickets)
-    
+
     return (
         <>
            {
                 ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? <>
                     <CustomerTicketsBillOfSaleSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsFrontOfTheUnitSection />
+                    {/* <CustomerTicketsFrontOfTheUnitSection /> */}
                     {/* <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsRearOfTheUnitSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
