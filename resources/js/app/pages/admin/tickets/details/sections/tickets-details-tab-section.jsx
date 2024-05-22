@@ -201,7 +201,7 @@ export default function TicketsDetailsTabSection({ account }) {
   const hash = '#' + page.url.split('#')[1]
   return (
     <div className=" font-sans h-full">
-      <div className="px-8">
+      {/* <div className="px-8">
 
         <div className="w-full ">
 
@@ -239,7 +239,7 @@ export default function TicketsDetailsTabSection({ account }) {
             })
           }
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
