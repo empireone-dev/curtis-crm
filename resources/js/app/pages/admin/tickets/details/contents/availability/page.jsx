@@ -9,12 +9,15 @@ import WarehouseLayout from "@/app/layouts/warehouse/warehouse-layout";
 import ASCLayout from "@/app/layouts/asc/asc-layout";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
+import { useSelector } from "react-redux";
 
-export default function TicketsAvailabilityContent({auth}) {
+export default function TicketsAvailabilityContent({ auth }) {
+    const { ticket } = useSelector((state) => state.tickets);
+
     useEffect(() => {
         store.dispatch(get_internals_by_ticket_id_thunk());
         store.dispatch(get_email_templates_thunk());
-    }, []);
+    }, [ticket]);
 
     const account = auth.user.role_id;
     const MainLayout =
@@ -28,9 +31,7 @@ export default function TicketsAvailabilityContent({auth}) {
             ? AgentLayout
             : CurtisLayout;
     return (
-        <MainLayout
-        account={auth.user}
-        >
+        <MainLayout account={auth.user}>
             <TicketsDetailsLayout>
                 <AvailabilitySection />
             </TicketsDetailsLayout>

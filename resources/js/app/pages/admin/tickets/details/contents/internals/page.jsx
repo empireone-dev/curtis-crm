@@ -10,6 +10,7 @@ import AgentLayout from "@/app/layouts/agent/agent-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 
 export default function TicketsPartsInternalsContent({auth}) {
+    
     useEffect(() => {
         store.dispatch(get_internals_by_ticket_id_thunk());
     }, []);

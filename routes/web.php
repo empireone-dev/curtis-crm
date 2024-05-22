@@ -88,7 +88,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/details/contents/internals/page');
         })->name('admin.tickets.details.internals');
 
-        Route::get('/details/{ticket_id}/call_back', function () {
+        Route::get('/details/{ticket_id}/callback', function () {
             return Inertia::render('admin/tickets/details/contents/call_back/page');
         })->name('admin.tickets.details.call_back');
 
@@ -270,7 +270,7 @@ Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function
             return Inertia::render('admin/tickets/details/contents/internals/page');
         })->name('warehouse.tickets.details.internals');
 
-        Route::get('/details/{ticket_id}/call_back', function () {
+        Route::get('/details/{ticket_id}/callback', function () {
             return Inertia::render('admin/tickets/details/contents/call_back/page');
         })->name('warehouse.tickets.details.call_back');
 
@@ -358,7 +358,7 @@ Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
             return Inertia::render('admin/tickets/details/contents/internals/page');
         })->name('asc.tickets.details.internals');
 
-        Route::get('/details/{ticket_id}/call_back', function () {
+        Route::get('/details/{ticket_id}/callback', function () {
             return Inertia::render('admin/tickets/details/contents/call_back/page');
         })->name('asc.tickets.details.call_back');
 
@@ -454,7 +454,7 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
             return Inertia::render('admin/tickets/details/contents/internals/page');
         })->name('agent.tickets.details.internals');
 
-        Route::get('/details/{ticket_id}/call_back', function () {
+        Route::get('/details/{ticket_id}/callback', function () {
             return Inertia::render('admin/tickets/details/contents/call_back/page');
         })->name('agent.tickets.details.call_back');
 
@@ -542,7 +542,7 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
             return Inertia::render('admin/tickets/details/contents/internals/page');
         })->name('curtis.tickets.details.internals');
 
-        Route::get('/details/{ticket_id}/call_back', function () {
+        Route::get('/details/{ticket_id}/callback', function () {
             return Inertia::render('admin/tickets/details/contents/call_back/page');
         })->name('curtis.tickets.details.call_back');
 

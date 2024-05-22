@@ -42,7 +42,7 @@ export default function ValidationButtonSection() {
     }
 
     return (
-        <>
+        <div className="py-4 flex gap-4">
             <button
                 onClick={() => submitValidation("IW")}
                 className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
@@ -67,6 +67,6 @@ export default function ValidationButtonSection() {
             >
                 {loading == "INCOMPLETE" ? <Loading /> : "MARK INCOMPLETE"}
             </button>
-        </>
+        </div>
     );
 }

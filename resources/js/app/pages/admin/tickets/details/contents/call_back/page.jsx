@@ -7,8 +7,9 @@ import WarehouseLayout from "@/app/layouts/warehouse/warehouse-layout";
 import ASCLayout from "@/app/layouts/asc/asc-layout";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
+import TicketsDetailsLayout from "../ticket-content-layout";
 
-export default function ContentsCallBackPage({auth}) {
+export default function ContentsCallBackPage({ auth }) {
     useEffect(() => {
         store.dispatch(get_internals_by_ticket_id_thunk());
     }, []);
@@ -25,9 +26,7 @@ export default function ContentsCallBackPage({auth}) {
             ? AgentLayout
             : CurtisLayout;
     return (
-        <MainLayout
-        account={auth.user}
-        >
+        <MainLayout account={auth.user}>
             <TicketsDetailsLayout>
                 <CallBackFormSection />
             </TicketsDetailsLayout>

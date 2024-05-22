@@ -213,7 +213,7 @@ export default function AvailabilitySection() {
                             value={selectedTemplate?.template_text ?? " "}
                             onChange={formHandlerWysiwyg}
                         />
-                        <div className="flex gap-2 mt-10">
+                        <div className="flex gap-2 mt-10 py-6">
                             {ticket.warranty_status == "OOW" && (
                                 <>
                                     <button
