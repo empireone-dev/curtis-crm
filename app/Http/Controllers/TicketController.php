@@ -160,6 +160,7 @@ class TicketController extends Controller
                 }
             });
         }
+        $query->orderBy('created_at', 'desc');
         // Paginate the results
         $data = $query->paginate(10);
 
