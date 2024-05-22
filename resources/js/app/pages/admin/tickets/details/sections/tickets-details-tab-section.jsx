@@ -34,13 +34,11 @@ function classNames(...classes) {
 // tech support = files,activities,details,agent 
 //parts = files,activities details agent
 //waranty = files,activities details and agent notes
-export default function TicketsDetailsTabSection({ account,setLoading,loading }) {
+export default function TicketsDetailsTabSection({ account,loading }) {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { user } = useSelector((state) => state.app)
-  const { url } = usePage()
   const page = usePage();
-  const dispatch = useDispatch()
 
  
   const tabs = [

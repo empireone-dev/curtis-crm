@@ -7,11 +7,14 @@ import { get_tickets_by_ticket_id } from '@/app/services/tickets-service';
 import { setTicket } from '../_redux/tickets-slice';
 import { setFilesData } from '@/app/pages/customer/tickets/redux/customer-tickets-slice';
 import { usePage } from '@inertiajs/react';
+import { get_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
+import { useDispatch } from 'react-redux';
 
 export default function TicketsDetailsPage() {
 
     const { url } = usePage()
     const [loading, setLoading] = useState(true)
+    const dispatch = useDispatch()
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -31,9 +34,9 @@ export default function TicketsDetailsPage() {
         <AdministratorLayout>
             <div className='mr-3 py-6'>
                 <TicketsDetailsMoveAssignSection />
-                {/* <TicketsDetailsTabSection 
+                <TicketsDetailsTabSection 
                 loading={loading}
-                /> */}
+                />
             </div>
         </AdministratorLayout>
     )
