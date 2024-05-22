@@ -24,7 +24,7 @@ export default function TicketsDetailsContentFiles({ auth }) {
         <MainLayout account={auth.user}>
             <div className="m-5 py-5">
                 <TicketsDetailsLayout>
-                    {/* <WarrantyFilesSection /> */}
+                    <WarrantyFilesSection />
                 </TicketsDetailsLayout>
             </div>
         </MainLayout>

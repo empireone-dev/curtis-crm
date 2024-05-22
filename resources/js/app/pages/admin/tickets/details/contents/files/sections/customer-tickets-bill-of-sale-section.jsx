@@ -8,6 +8,7 @@ import ImageView from '@/app/layouts/components/image-view';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CustomerTicketsBillOfSaleSection = () => {
+    
     const [files, setFiles] = useState([])
     const { user } = useSelector((state) => state.app)
     const { filesData } = useSelector((state) => state.customer_tickets)
