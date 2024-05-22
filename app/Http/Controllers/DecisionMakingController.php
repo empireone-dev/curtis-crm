@@ -39,7 +39,7 @@ class DecisionMakingController extends Controller
         $ticket->update([
             'asc_id' => $request->asc,
             'decision_making_id' => $data->id,
-            'status' => $ticket->country . ' WAREHOUSE',
+            'status' => ($request->instruction != 'Home' )? ($ticket->country . 'WAREHOUSE') : 'REFUND',
             'decision_status' => $request->ticket_type,
         ]);
 
