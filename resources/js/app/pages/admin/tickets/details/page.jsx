@@ -12,9 +12,9 @@ import { useDispatch } from 'react-redux';
 
 export default function TicketsDetailsPage() {
 
-    const { url } = usePage()
+    // const { url } = usePage()
     const [loading, setLoading] = useState(true)
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     // useEffect(() => {
     //     const fetchData = async () => {
     //       try {
