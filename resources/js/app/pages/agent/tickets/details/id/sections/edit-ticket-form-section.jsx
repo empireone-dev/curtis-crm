@@ -16,6 +16,7 @@ import {
     update_tickets_by_user_id,
 } from "@/app/services/tickets-service";
 import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
+import routing from "@/app/pages/admin/tickets/details/components/routing";
 
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export default function EditTicketFormSection() {
         try {
             await update_tickets_by_user_id(data);
             setLoading(false);
-            router.visit(`/agent/tickets/${ticketid}#details`);
+            router.visit(`/agent/tickets/details/${ticketid}/details`);
         } catch (error) {
             setLoading(false);
         }
@@ -78,7 +79,7 @@ export default function EditTicketFormSection() {
                 );
                 setIsLoading(false);
                 router.visit(
-                    `/administrator/tickets/details/${ticket.id}#files`
+                    `/agent/tickets/details/${ticket.id}/details`
                 );
             } catch (error) {
                 setIsLoading(false);

@@ -10,6 +10,7 @@ import Loading from "@/app/layouts/components/loading";
 import { setTicket } from "../../../../_redux/tickets-slice";
 import { parts_replacement_not_shipped_service, parts_replacement_shipped_service } from "@/app/services/replacement-service";
 import moment from "moment";
+import routing from "../../../components/routing";
 
 export default function ContentReplacementPartsForm() {
     const { internals, ticket } = useSelector((state) => state.tickets);
@@ -50,7 +51,7 @@ export default function ContentReplacementPartsForm() {
                 });
                 dispatch(setTicket(result.status));
                 setIsLoading1(false);
-                router.visit("#files");
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading1(false);
             }
@@ -69,7 +70,7 @@ export default function ContentReplacementPartsForm() {
                     activity_status: "PARTS REPLACEMENT NOT SHIPPED",
                 })
                 setIsLoading2(false);
-                router.visit("#replacement_parts");
+                router.visit(routing("replacement_parts"));
             } catch (error) {
                 setIsLoading2(true);
             }

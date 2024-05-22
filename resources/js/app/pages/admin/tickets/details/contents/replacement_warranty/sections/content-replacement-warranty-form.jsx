@@ -10,6 +10,7 @@ import store from '@/app/store/store';
 import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk';
 import moment from 'moment';
 import { store_decision_making_replacement_service } from '@/app/services/replacement-service';
+import routing from '../../../components/routing';
 
 export default function ContentReplacementWarrantyForm() {
     const { internals, ticket } = useSelector((state) => state.tickets);
@@ -50,7 +51,7 @@ export default function ContentReplacementWarrantyForm() {
                 })
                 dispatch(setTicket(result.status))
                 setIsLoading1(false)
-                router.visit('#files');
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading1(false)
             }
@@ -67,7 +68,7 @@ export default function ContentReplacementWarrantyForm() {
                     status: 'NOT SHIPPED'
                 }))
                 setIsLoading2(false)
-                router.visit('#refund');
+                router.visit(routing("refund"));
             } catch (error) {
                 setIsLoading2(true)
             }

@@ -9,6 +9,7 @@ import {
     update_repair_service,
 } from "@/app/services/repair-service";
 import Loading from "@/app/layouts/components/loading";
+import routing from "../../../components/routing";
 
 export default function ContentRepairFormection() {
     const [form, setForm] = useState({});
@@ -51,7 +52,7 @@ export default function ContentRepairFormection() {
                 });
                 // dispatch(setTicket(result.status))
                 setIsLoading1(false);
-                router.visit("#files");
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading1(false);
             }
@@ -70,7 +71,7 @@ export default function ContentRepairFormection() {
                 const result = await unrepair_service(form.ticket_id,newData);
                 console.log("result", result);
                 setIsLoading2(false);
-                router.visit("#decision");
+                router.visit(routing("decision"));
             } catch (error) {
                 setIsLoading2(false);
             }

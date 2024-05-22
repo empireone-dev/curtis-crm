@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 
 export default function TicketsDetailsMoveAssignSection() {
     const { ticket } = useSelector((state) => state.customer_tickets);
-
     return (
         <div className="px-7">
             {ticket.status !== "CLOSED" && ticket.isUploading == "true" && (

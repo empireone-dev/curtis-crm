@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedTemplate } from "../../../../_redux/tickets-slice";
 import { router } from "@inertiajs/react";
+import routing from "../../../components/routing";
 
 export default function ValidationButtonSection() {
     const { selectedTemplate } = useSelector((state) => state.tickets);
@@ -23,20 +24,20 @@ export default function ValidationButtonSection() {
         setLoading("");
         if (ticket.call_type == "CF-Warranty Claim") {
             if (value == "IW" || value == "OOW") {
-                router.visit("#decision");
+                router.visit(routing("decision"));
             } else {
-                router.visit("#files");
+                router.visit(routing("files"));
             }
         } else if (ticket.call_type == "Parts") {
             if (value == "IW") {
-                router.visit("#internals");
+                router.visit(routing("internals"));
             } else if (value == "OOW") {
-                router.visit("#internals");
+                router.visit(routing("internals"));
             } else {
-                router.visit("#files");
+                router.visit(routing("files"));
             }
         } else {
-            router.visit("#files");
+            router.visit(routing("files"));
         }
     }
 

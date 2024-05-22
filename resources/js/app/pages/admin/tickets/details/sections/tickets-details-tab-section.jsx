@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Tab } from '@headlessui/react';
 import TicketsDetailsContentFiles from '../contents/files/page';
 import TicketsDetailsContentActivities from '../contents/activities/page';
 import TicketsDetailsContentStatus from '../contents/status/page';
@@ -23,12 +24,17 @@ import TicketsDetailsMoveAssignComponents from '../components/tickets-details-mo
 import TicketsPartsInternalsContent from '../contents/internals/page';
 import TicketsAvailabilityContent from '../contents/availability/page';
 import ContentsCallBackPage from '../contents/call_back/page';
+import ReplacementWarranty from '../contents/replacement_warranty/page';
 import ReplacementWarrantyPage from '../contents/replacement_warranty/page';
 import Skeleton from '@/app/layouts/components/skeleton';
 
-
-
-export default function TicketsDetailsTabSection() {
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+// tech support = files,activities,details,agent 
+//parts = files,activities details agent
+//waranty = files,activities details and agent notes
+export default function TicketsDetailsTabSection({ account }) {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { user } = useSelector((state) => state.app)
@@ -37,9 +43,6 @@ export default function TicketsDetailsTabSection() {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,59 +58,59 @@ export default function TicketsDetailsTabSection() {
     };
     fetchData();
   }, [url]);
-
   const tabs = [
     {
       title: 'Files',
       components: <TicketsDetailsContentFiles />,
       hash: '#files',
     },
-    // ...(ticket?.isUploading === 'true' && ticket?.call_type === 'CF-Warranty Claim' && ticket?.status == 'WARRANTY VALIDATION'
-    //   ? [
-    //     {
-    //       title: 'Warranty Validation',
-    //       components: <ContentsWarrantyValidationPage />,
-    //       hash: '#warranty_validation',
-    //     }
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.call_type === 'Parts' && (ticket?.status === 'PARTS VALIDATION')
-    //   ? [
-    //     {
-    //       title: 'Parts Validation',
-    //       components: <TicketsPartsValidationContent />,
-    //       hash: '#parts_validation',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'RESOURCE'
-    //   ? [
-    //     {
-    //       title: 'Decision Making',
-    //       components: <TicketsDecisionMakingContent />,
-    //       hash: '#decision',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && (ticket?.status === 'CA WAREHOUSE' || ticket?.status === 'US WAREHOUSE' || ticket?.status === 'CLOSED')
-    //   ? [
-    //     {
-    //       title: ticket?.country + ' Warehouse',
-    //       components: <WarehousePage />,
-    //       hash: '#warehouse',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
-    //   ? [
-    //     {
-    //       title: 'Repair',
-    //       components: <ContentsRepairPage />,
-    //       hash: '#repair',
-    //     },
-    //   ]
-    //   : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
+    ...(ticket?.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == 'WARRANTY VALIDATION'
+      ? [
+        {
+          title: 'Warranty Validation',
+          components: <ContentsWarrantyValidationPage />,
+          hash: '#warranty_validation',
+        }
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.status === 'PARTS VALIDATION')
+      ? [
+        {
+          title: 'Parts Validation',
+          components: <TicketsPartsValidationContent />,
+          hash: '#parts_validation',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket.status === 'RESOURCE'
+      ? [
+        {
+          title: 'Decision Making',
+          components: <TicketsDecisionMakingContent />,
+          hash: '#decision',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && (ticket.status === 'CA WAREHOUSE' || ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
+      // && account?.role_id == 3
+      ? [
+        {
+          title: ticket.country + ' Warehouse',
+          components: <WarehousePage />,
+          hash: '#warehouse',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPAIR'
+      ? [
+        {
+          title: 'Repair',
+          components: <ContentsRepairPage />,
+          hash: '#repair',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket.status === 'AVAILABILITY'
       ? [
         {
           title: 'Availability',
@@ -116,7 +119,7 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'INTERNALS'
       ? [
         {
           title: 'Internals',
@@ -125,7 +128,7 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
+    ...(ticket?.isUploading === 'true' && ticket.status === 'CALLBACK'
       ? [
         {
           title: 'Callback',
@@ -135,42 +138,45 @@ export default function TicketsDetailsTabSection() {
       ]
       : []),
 
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
-    //   ? [
-    //     {
-    //       title: 'Refund',
-    //       components: <ContentsRefundPage />,
-    //       hash: '#refund',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT'
-    //   ? [
-    //     {
-    //       title: 'Replacement',
-    //       components: <ReplacementWarrantyPage />,
-    //       hash: '#replacement',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT PARTS'
-    //   ? [
-    //     {
-    //       title: 'Replacement Parts',
-    //       components: <ContentsReplacementPartsPage />,
-    //       hash: '#replacement_parts',
-    //     },
-    //   ]
-    //   : []),
-    // ...(ticket?.call_type == 'TS-Tech Support' && ticket?.status === 'TECH VALIDATION'
-    //   ? [
-    //     {
-    //       title: 'Update Status',
-    //       components: <TicketsDetailsContentStatus />,
-    //       hash: '#status',
-    //     },
-    //   ]
-    //   : []),
+
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REFUND'
+      ? [
+        {
+          title: 'Refund',
+          components: <ContentsRefundPage />,
+          hash: '#refund',
+        },
+      ]
+      : []),
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+      ? [
+        {
+          title: 'Replacement',
+          components: <ReplacementWarrantyPage />,
+          hash: '#replacement',
+        },
+      ]
+      : []),
+
+    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
+      ? [
+        {
+          title: 'Replacement Parts',
+          components: <ContentsReplacementPartsPage />,
+          hash: '#replacement_parts',
+        },
+      ]
+      : []),
+
+    ...(ticket.call_type == 'TS-Tech Support' && ticket.status === 'TECH VALIDATION'
+      ? [
+        {
+          title: 'Update Status',
+          components: <TicketsDetailsContentStatus />,
+          hash: '#status',
+        },
+      ]
+      : []),
 
     {
       title: 'Activities',
@@ -196,16 +202,14 @@ export default function TicketsDetailsTabSection() {
     router.visit(tabs[index].hash);
   };
   const hash = '#' + page.url.split('#')[1]
-
   return (
     <div className=" font-sans h-full">
-      sss
       <div className="px-8">
 
         <div className="w-full ">
 
           {
-            user.role_id == 3 && ticket?.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
+            user.role_id == 3 && ticket.status === 'WAREHOUSE' && <div className='pt-10'> <TicketsDetailsMoveAssignComponents
               ticket={ticket}
               name="MOVE TO RESOURCE"
               value="RESOURCE"
@@ -214,8 +218,8 @@ export default function TicketsDetailsTabSection() {
             />
             </div>
           }
-          <div className={`py-3 text-3xl font-black flex gap-3 ${ticket?.status == 'CLOSED' ? ' text-red-600' : ' text-blue-600'}`}>
-            <TicketIcon className='h-9' /> {ticket?.status ?? 'Open Ticket'} ({ticket?.call_type})
+          <div className={`py-3 text-3xl font-black flex gap-3 ${ticket.status == 'CLOSED' ? ' text-red-600' : ' text-blue-600'}`}>
+            <TicketIcon className='h-9' /> {ticket.status ?? 'Open Ticket'} ({ticket.call_type})
           </div>
           <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
             {tabs.map((res, i) => (

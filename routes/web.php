@@ -116,14 +116,77 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/page');
         })->name('tickets');
 
-        Route::get('/details/{ticket_id}', function () {
-            return Inertia::render('admin/tickets/details/page');
-        })->name('tickets.details');
+        Route::get('/details/{ticket_id}/files', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('tickets.details.files');
+
+        Route::get('/details/{ticket_id}/activities', function () {
+            return Inertia::render('admin/tickets/details/contents/activities/page');
+        })->name('tickets.details.activities');
+
+        Route::get('/details/{ticket_id}/details', function () {
+            return Inertia::render('admin/tickets/details/contents/details/page');
+        })->name('tickets.details.details');
+
+        Route::get('/details/{ticket_id}/availability', function () {
+            return Inertia::render('admin/tickets/details/contents/availability/page');
+        })->name('tickets.details.availability');
+
+        Route::get('/details/{ticket_id}/internals', function () {
+            return Inertia::render('admin/tickets/details/contents/internals/page');
+        })->name('tickets.details.internals');
+
+        Route::get('/details/{ticket_id}/call_back', function () {
+            return Inertia::render('admin/tickets/details/contents/call_back/page');
+        })->name('tickets.details.call_back');
+
+        Route::get('/details/{ticket_id}/parts_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/parts_validation/page');
+        })->name('tickets.details.parts_validation');
+
+        Route::get('/details/{ticket_id}/refund', function () {
+            return Inertia::render('admin/tickets/details/contents/refund/page');
+        })->name('tickets.details.refund');
+
+        Route::get('/details/{ticket_id}/repair', function () {
+            return Inertia::render('admin/tickets/details/contents/repair/page');
+        })->name('tickets.details.repair');
+
+        Route::get('/details/{ticket_id}/notes', function () {
+            return Inertia::render('admin/tickets/details/contents/notes/page');
+        })->name('tickets.details.notes');
+
+        Route::get('/details/{ticket_id}/replacement_parts', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_parts/page');
+        })->name('tickets.details.replacement_parts');
+
+        Route::get('/details/{ticket_id}/replacement', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
+        })->name('tickets.details.replacement_warranty');
+
+        Route::get('/details/{ticket_id}/replacement_status', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        })->name('tickets.details.replacement_status');
+
+        Route::get('/details/{ticket_id}/status', function () {
+            return Inertia::render('admin/tickets/details/contents/status/page');
+        })->name('tickets.details.status');
+
+        Route::get('/details/{ticket_id}/warehouse', function () {
+            return Inertia::render('admin/tickets/details/contents/warehouse/page');
+        })->name('tickets.details.warehouse');
+
+        Route::get('/details/{ticket_id}/warranty_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/warranty_validation/page');
+        })->name('tickets.details.warranty_validation');
+
+        Route::get('/details/{ticket_id}/decision', function () {
+            return Inertia::render('admin/tickets/details/contents/decision_making/page');
+        })->name('tickets.details.decision_making');
 
         Route::get('/details/{ticket_id}/edit', function () {
             return Inertia::render('admin/tickets/details/contents/details/id/page');
         })->name('tickets.details.edit');
-
         // Route::get('/details/{ticket_id}', function () {
         //     return Inertia::render('admin/tickets/details/id/page');
         // })->name('tickets.details');
@@ -180,9 +243,79 @@ Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function
         return Inertia::render('warehouse/tickets/page');
     })->name('warehouse.tickets');
 
-    Route::get('/tickets/{id}', function () {
-        return Inertia::render('warehouse/tickets/details/page');
-    })->name('warehouse.tickets.details');
+    // Route::get('/tickets/{id}', function () {
+    //     return Inertia::render('warehouse/tickets/details/page');
+    // })->name('warehouse.tickets.details');
+
+    Route::prefix('tickets')->group(function () {
+        Route::get('/details/{ticket_id}/files', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('tickets.details.files');
+
+        Route::get('/details/{ticket_id}/activities', function () {
+            return Inertia::render('admin/tickets/details/contents/activities/page');
+        })->name('tickets.details.activities');
+
+        Route::get('/details/{ticket_id}/details', function () {
+            return Inertia::render('admin/tickets/details/contents/details/page');
+        })->name('tickets.details.details');
+
+        Route::get('/details/{ticket_id}/availability', function () {
+            return Inertia::render('admin/tickets/details/contents/availability/page');
+        })->name('tickets.details.availability');
+
+        Route::get('/details/{ticket_id}/internals', function () {
+            return Inertia::render('admin/tickets/details/contents/internals/page');
+        })->name('tickets.details.internals');
+
+        Route::get('/details/{ticket_id}/call_back', function () {
+            return Inertia::render('admin/tickets/details/contents/call_back/page');
+        })->name('tickets.details.call_back');
+
+        Route::get('/details/{ticket_id}/parts_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/parts_validation/page');
+        })->name('tickets.details.parts_validation');
+
+        Route::get('/details/{ticket_id}/refund', function () {
+            return Inertia::render('admin/tickets/details/contents/refund/page');
+        })->name('tickets.details.refund');
+
+        Route::get('/details/{ticket_id}/repair', function () {
+            return Inertia::render('admin/tickets/details/contents/repair/page');
+        })->name('tickets.details.repair');
+
+        Route::get('/details/{ticket_id}/notes', function () {
+            return Inertia::render('admin/tickets/details/contents/notes/page');
+        })->name('tickets.details.notes');
+
+        Route::get('/details/{ticket_id}/replacement_parts', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_parts/page');
+        })->name('tickets.details.replacement_parts');
+
+        Route::get('/details/{ticket_id}/replacement', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
+        })->name('tickets.details.replacement_warranty');
+
+        Route::get('/details/{ticket_id}/replacement_status', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        })->name('tickets.details.replacement_status');
+
+        Route::get('/details/{ticket_id}/status', function () {
+            return Inertia::render('admin/tickets/details/contents/status/page');
+        })->name('tickets.details.status');
+
+        Route::get('/details/{ticket_id}/warehouse', function () {
+            return Inertia::render('admin/tickets/details/contents/warehouse/page');
+        })->name('tickets.details.warehouse');
+
+        Route::get('/details/{ticket_id}/warranty_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/warranty_validation/page');
+        })->name('tickets.details.warranty_validation');
+
+        Route::get('/details/{ticket_id}/decision', function () {
+            return Inertia::render('admin/tickets/details/contents/decision_making/page');
+        })->name('tickets.details.decision_making');
+    });
 
     Route::get('/settings', function () {
         return Inertia::render('warehouse/settings/page');
@@ -198,9 +331,79 @@ Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
         return Inertia::render('asc/tickets/page');
     })->name('asc.tickets');
 
-    Route::get('/tickets/{id}', function () {
-        return Inertia::render('asc/tickets/details/page');
-    })->name('asc.tickets.details');
+    // Route::get('/tickets/{id}', function () {
+    //     return Inertia::render('asc/tickets/details/page');
+    // })->name('asc.tickets.details');
+
+    Route::prefix('tickets')->group(function () {
+        Route::get('/details/{ticket_id}/files', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('tickets.details.files');
+
+        Route::get('/details/{ticket_id}/activities', function () {
+            return Inertia::render('admin/tickets/details/contents/activities/page');
+        })->name('tickets.details.activities');
+
+        Route::get('/details/{ticket_id}/details', function () {
+            return Inertia::render('admin/tickets/details/contents/details/page');
+        })->name('tickets.details.details');
+
+        Route::get('/details/{ticket_id}/availability', function () {
+            return Inertia::render('admin/tickets/details/contents/availability/page');
+        })->name('tickets.details.availability');
+
+        Route::get('/details/{ticket_id}/internals', function () {
+            return Inertia::render('admin/tickets/details/contents/internals/page');
+        })->name('tickets.details.internals');
+
+        Route::get('/details/{ticket_id}/call_back', function () {
+            return Inertia::render('admin/tickets/details/contents/call_back/page');
+        })->name('tickets.details.call_back');
+
+        Route::get('/details/{ticket_id}/parts_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/parts_validation/page');
+        })->name('tickets.details.parts_validation');
+
+        Route::get('/details/{ticket_id}/refund', function () {
+            return Inertia::render('admin/tickets/details/contents/refund/page');
+        })->name('tickets.details.refund');
+
+        Route::get('/details/{ticket_id}/repair', function () {
+            return Inertia::render('admin/tickets/details/contents/repair/page');
+        })->name('tickets.details.repair');
+
+        Route::get('/details/{ticket_id}/notes', function () {
+            return Inertia::render('admin/tickets/details/contents/notes/page');
+        })->name('tickets.details.notes');
+
+        Route::get('/details/{ticket_id}/replacement_parts', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_parts/page');
+        })->name('tickets.details.replacement_parts');
+
+        Route::get('/details/{ticket_id}/replacement', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
+        })->name('tickets.details.replacement_warranty');
+
+        Route::get('/details/{ticket_id}/replacement_status', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        })->name('tickets.details.replacement_status');
+
+        Route::get('/details/{ticket_id}/status', function () {
+            return Inertia::render('admin/tickets/details/contents/status/page');
+        })->name('tickets.details.status');
+
+        Route::get('/details/{ticket_id}/warehouse', function () {
+            return Inertia::render('admin/tickets/details/contents/warehouse/page');
+        })->name('tickets.details.warehouse');
+
+        Route::get('/details/{ticket_id}/warranty_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/warranty_validation/page');
+        })->name('tickets.details.warranty_validation');
+
+        Route::get('/details/{ticket_id}/decision', function () {
+            return Inertia::render('admin/tickets/details/contents/decision_making/page');
+        })->name('tickets.details.decision_making');
+    });
 
     Route::get('/settings', function () {
         return Inertia::render('asc/settings/page');
@@ -225,9 +428,78 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/create/page');
     })->name('agent.tickets.create');
 
-    Route::get('/tickets/{id}', function () {
-        return Inertia::render('agent/tickets/details/page');
-    })->name('agent.tickets.details');
+    // Route::get('/tickets/{id}', function () {
+    //     return Inertia::render('agent/tickets/details/page');
+    // })->name('agent.tickets.details');
+    Route::prefix('tickets')->group(function () {
+        Route::get('/details/{ticket_id}/files', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('tickets.details.files');
+
+        Route::get('/details/{ticket_id}/activities', function () {
+            return Inertia::render('admin/tickets/details/contents/activities/page');
+        })->name('tickets.details.activities');
+
+        Route::get('/details/{ticket_id}/details', function () {
+            return Inertia::render('admin/tickets/details/contents/details/page');
+        })->name('tickets.details.details');
+
+        Route::get('/details/{ticket_id}/availability', function () {
+            return Inertia::render('admin/tickets/details/contents/availability/page');
+        })->name('tickets.details.availability');
+
+        Route::get('/details/{ticket_id}/internals', function () {
+            return Inertia::render('admin/tickets/details/contents/internals/page');
+        })->name('tickets.details.internals');
+
+        Route::get('/details/{ticket_id}/call_back', function () {
+            return Inertia::render('admin/tickets/details/contents/call_back/page');
+        })->name('tickets.details.call_back');
+
+        Route::get('/details/{ticket_id}/parts_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/parts_validation/page');
+        })->name('tickets.details.parts_validation');
+
+        Route::get('/details/{ticket_id}/refund', function () {
+            return Inertia::render('admin/tickets/details/contents/refund/page');
+        })->name('tickets.details.refund');
+
+        Route::get('/details/{ticket_id}/repair', function () {
+            return Inertia::render('admin/tickets/details/contents/repair/page');
+        })->name('tickets.details.repair');
+
+        Route::get('/details/{ticket_id}/notes', function () {
+            return Inertia::render('admin/tickets/details/contents/notes/page');
+        })->name('tickets.details.notes');
+
+        Route::get('/details/{ticket_id}/replacement_parts', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_parts/page');
+        })->name('tickets.details.replacement_parts');
+
+        Route::get('/details/{ticket_id}/replacement', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
+        })->name('tickets.details.replacement_warranty');
+
+        Route::get('/details/{ticket_id}/replacement_status', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        })->name('tickets.details.replacement_status');
+
+        Route::get('/details/{ticket_id}/status', function () {
+            return Inertia::render('admin/tickets/details/contents/status/page');
+        })->name('tickets.details.status');
+
+        Route::get('/details/{ticket_id}/warehouse', function () {
+            return Inertia::render('admin/tickets/details/contents/warehouse/page');
+        })->name('tickets.details.warehouse');
+
+        Route::get('/details/{ticket_id}/warranty_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/warranty_validation/page');
+        })->name('tickets.details.warranty_validation');
+
+        Route::get('/details/{ticket_id}/decision', function () {
+            return Inertia::render('admin/tickets/details/contents/decision_making/page');
+        })->name('tickets.details.decision_making');
+    });
 
     Route::get('/settings', function () {
         return Inertia::render('agent/settings/page');
@@ -243,9 +515,79 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
         return Inertia::render('curtis/tickets/page');
     })->name('curtis.tickets');
 
-    Route::get('/tickets/{id}', function () {
-        return Inertia::render('curtis/tickets/details/page');
-    })->name('curtis.tickets.details');
+    // Route::get('/tickets/{id}', function () {
+    //     return Inertia::render('curtis/tickets/details/page');
+    // })->name('curtis.tickets.details');
+
+    Route::prefix('tickets')->group(function () {
+        Route::get('/details/{ticket_id}/files', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('tickets.details.files');
+
+        Route::get('/details/{ticket_id}/activities', function () {
+            return Inertia::render('admin/tickets/details/contents/activities/page');
+        })->name('tickets.details.activities');
+
+        Route::get('/details/{ticket_id}/details', function () {
+            return Inertia::render('admin/tickets/details/contents/details/page');
+        })->name('tickets.details.details');
+
+        Route::get('/details/{ticket_id}/availability', function () {
+            return Inertia::render('admin/tickets/details/contents/availability/page');
+        })->name('tickets.details.availability');
+
+        Route::get('/details/{ticket_id}/internals', function () {
+            return Inertia::render('admin/tickets/details/contents/internals/page');
+        })->name('tickets.details.internals');
+
+        Route::get('/details/{ticket_id}/call_back', function () {
+            return Inertia::render('admin/tickets/details/contents/call_back/page');
+        })->name('tickets.details.call_back');
+
+        Route::get('/details/{ticket_id}/parts_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/parts_validation/page');
+        })->name('tickets.details.parts_validation');
+
+        Route::get('/details/{ticket_id}/refund', function () {
+            return Inertia::render('admin/tickets/details/contents/refund/page');
+        })->name('tickets.details.refund');
+
+        Route::get('/details/{ticket_id}/repair', function () {
+            return Inertia::render('admin/tickets/details/contents/repair/page');
+        })->name('tickets.details.repair');
+
+        Route::get('/details/{ticket_id}/notes', function () {
+            return Inertia::render('admin/tickets/details/contents/notes/page');
+        })->name('tickets.details.notes');
+
+        Route::get('/details/{ticket_id}/replacement_parts', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_parts/page');
+        })->name('tickets.details.replacement_parts');
+
+        Route::get('/details/{ticket_id}/replacement', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
+        })->name('tickets.details.replacement_warranty');
+
+        Route::get('/details/{ticket_id}/replacement_status', function () {
+            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        })->name('tickets.details.replacement_status');
+
+        Route::get('/details/{ticket_id}/status', function () {
+            return Inertia::render('admin/tickets/details/contents/status/page');
+        })->name('tickets.details.status');
+
+        Route::get('/details/{ticket_id}/warehouse', function () {
+            return Inertia::render('admin/tickets/details/contents/warehouse/page');
+        })->name('tickets.details.warehouse');
+
+        Route::get('/details/{ticket_id}/warranty_validation', function () {
+            return Inertia::render('admin/tickets/details/contents/warranty_validation/page');
+        })->name('tickets.details.warranty_validation');
+
+        Route::get('/details/{ticket_id}/decision', function () {
+            return Inertia::render('admin/tickets/details/contents/decision_making/page');
+        })->name('tickets.details.decision_making');
+    });
 
     Route::get('/settings', function () {
         return Inertia::render('curtis/settings/page');

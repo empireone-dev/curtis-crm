@@ -27,6 +27,12 @@ export async function get_tickets_by_user_id(id, search) {
     return res.data.result;
 }
 
+export async function get_tickets_by_email(email) {
+    const res = await axios.get("/api/get_tickets_by_email/"+email);
+    return res.data.result;
+}
+
+
 export async function update_tickets_by_user_id(data) {
     const res = await axios.put("/api/tickets/" + data.id, data);
     return res.data.result;

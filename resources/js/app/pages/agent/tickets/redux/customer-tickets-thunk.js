@@ -1,4 +1,4 @@
-import { get_tickets_by_user_id, update_explanation_service } from "@/app/services/tickets-service";
+import { get_tickets_by_email, get_tickets_by_user_id, update_explanation_service } from "@/app/services/tickets-service";
 import { customerTicketsSlice, setFilesData } from "./customer-tickets-slice";
 import {
     delete_upload_picture_videos,
@@ -10,6 +10,13 @@ import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 export function get_tickets_by_user_id_thunk(id) {
     return async function (dispatch, getState) {
         const result = await get_tickets_by_user_id(id,window.location.search);
+        dispatch(customerTicketsSlice.actions.setTickets(result));
+    };
+}
+
+export function get_tickets_by_email_thunk(email) {
+    return async function (dispatch, getState) {
+        const result = await get_tickets_by_email(email);
         dispatch(customerTicketsSlice.actions.setTickets(result));
     };
 }

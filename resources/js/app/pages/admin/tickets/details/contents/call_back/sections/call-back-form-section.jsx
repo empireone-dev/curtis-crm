@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTicket } from '../../../../_redux/tickets-slice';
 import { router } from '@inertiajs/react';
 import Loading from '@/app/layouts/components/loading';
+import routing from '../../../components/routing';
 
 export default function CallBackFormSection() {
 
@@ -28,7 +29,7 @@ export default function CallBackFormSection() {
             })
             dispatch(setTicket(result.status))
             setIsLoading1(false)
-            router.visit('#replacement_parts')
+            router.visit(routing("replacement_parts"));
         } else if (value == 'CANCEL ORDER') {
             setIsLoading2(true)
             const result = await callback_service({
@@ -39,7 +40,7 @@ export default function CallBackFormSection() {
             })
             dispatch(setTicket(result.status))
             setIsLoading2(false)
-            router.visit('#files')
+            router.visit(routing("files"));
         } else {
             alert('No Calls/Answer, Stay here.')
         }

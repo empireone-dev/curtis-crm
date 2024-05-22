@@ -269,7 +269,13 @@ export default function WarehouseTicketsTableSection() {
             render: (_, record) => {
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Link href={"/warehouse/tickets/" + record.id+'#warehouse'}>
+                        <Link
+                            href={
+                                "/warehouse/tickets/details/" +
+                                record.id +
+                                "/warehouse"
+                            }
+                        >
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
                     </Tooltip>

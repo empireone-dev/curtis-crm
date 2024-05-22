@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk'
 import { router } from '@inertiajs/react'
+import routing from '../../../components/routing'
 
 export default function WarehouseReceivedButton() {
     const { ticket } = useSelector((state) => state.tickets)
@@ -14,7 +15,7 @@ export default function WarehouseReceivedButton() {
             setIsLoading(true)
             await store.dispatch(update_tickets_status_thunk(ticket.id, ticket.decision_status))
             setIsLoading(false)
-            router.visit('#' + ticket.decision_status.toLowerCase());
+            router.visit(routing(ticket.decision_status.toLowerCase()));
         }
 
     }

@@ -258,7 +258,7 @@ export default function UserTicketTableSection() {
                             href={
                                 "/administrator/tickets/details/" +
                                 record.id +
-                                "#files"
+                                "/files"
                             }
                         >
                             <EyeOutlined className="text-lg text-blue-500" />

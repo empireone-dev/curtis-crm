@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Schema;
 
 class TicketController extends Controller
 {
-
+    public function get_tickets_by_email($email)
+    {
+        $tickets = Ticket::where('email', '=', $email)->get();
+        return response()->json([
+            'result' => $tickets
+        ], 200);
+    }
 
     public function transfer_ticket(Request $request, $id)
     {

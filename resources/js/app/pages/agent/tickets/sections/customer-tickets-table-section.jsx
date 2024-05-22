@@ -271,7 +271,7 @@ export default function CustomerTicketsTableSection() {
             render: (_, record) => {
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Link href={"/agent/tickets/" + record.id+'#files'}>
+                        <Link href={"/agent/tickets/details/" + record.id+'/files'}>
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
                     </Tooltip>

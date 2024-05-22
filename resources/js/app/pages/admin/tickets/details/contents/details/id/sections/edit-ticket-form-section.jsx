@@ -73,7 +73,7 @@ export default function EditTicketFormSection() {
         try {
             await update_tickets_by_user_id(data);
             setLoading(false);
-            router.visit(`/administrator/tickets/details/${ticketid}#details`);
+            router.visit(`/administrator/tickets/details/${ticketid}/details`);
         } catch (error) {
             setLoading(false);
         }

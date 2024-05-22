@@ -8,6 +8,7 @@ import store from "@/app/store/store";
 import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
 import { close_ticket_service } from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
+import routing from "../../../../components/routing";
 export default function ReasonToClose({ data }) {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +16,6 @@ export default function ReasonToClose({ data }) {
     const { user } = useSelector((state) => state.app);
     const { ticket } = useSelector((state) => state.tickets);
 
-   
     async function close_ticket(e) {
         e.preventDefault();
         setIsLoading(true);
@@ -26,7 +26,7 @@ export default function ReasonToClose({ data }) {
                     ...ticket,
                 });
                 setIsLoading(false);
-                router.visit(`/administrator/tickets/details/${data.id}#files`);
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading(false);
             }
@@ -38,7 +38,7 @@ export default function ReasonToClose({ data }) {
     function formHandler(value) {
         setReason(value);
     }
-    console.log("reason", reason);
+    
     return (
         <div>
             <button

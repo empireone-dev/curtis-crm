@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTicket } from "../../../../_redux/tickets-slice";
 import { router } from "@inertiajs/react";
 import { store_internals_service } from "../../../../../../../services/internals-service";
+import routing from "../../../components/routing";
 
 export default function InternalsAvailabilitySection() {
     const { ticket, internals } = useSelector((state) => state.tickets);
@@ -64,7 +65,7 @@ export default function InternalsAvailabilitySection() {
                 status: "AVAILABILITY",
             });
             dispatch(setTicket(result.status));
-            router.visit("#availability");
+            router.visit(routing("availability"));
         } else {
             if (ticket.warranty_status == "OOW") {
                 const result = await store_internals_service({
@@ -73,7 +74,7 @@ export default function InternalsAvailabilitySection() {
                     status: "AVAILABILITY",
                 });
                 dispatch(setTicket(result.status));
-                router.visit("#availability");
+                router.visit(routing("availability"));
             } else {
                 const result = await store_internals_service({
                     ...data,
@@ -81,7 +82,7 @@ export default function InternalsAvailabilitySection() {
                     status: "REPLACEMENT PARTS",
                 });
                 dispatch(setTicket(result.status));
-                router.visit("#replacement_parts");
+                router.visit(routing("replacement_parts"));
             }
         }
     }

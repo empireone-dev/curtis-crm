@@ -14,6 +14,7 @@ import {
     store_decision_making_service,
 } from "@/app/services/desicion-making-service";
 import { router } from "@inertiajs/react";
+import routing from "../../../components/routing";
 
 export default function DecisionMakingSection() {
     const { user } = useSelector((state) => state.app);
@@ -111,11 +112,11 @@ export default function DecisionMakingSection() {
             data.instruction == "CA Warehouse" ||
             data.instruction == "US Warehouse"
         ) {
-            router.visit("#warehouse");
+            router.visit(routing("warehouse"));
         } else if (data.instruction == "ASC") {
-            router.visit("#refund");
+            router.visit(routing("refund"));
         } else {
-            router.visit("#refund");
+            router.visit(routing("refund"));
         }
         setIsLoading1(false);
     }

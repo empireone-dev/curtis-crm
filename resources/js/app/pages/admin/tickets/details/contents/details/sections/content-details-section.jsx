@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { update_tickets_status_thunk } from "../../../../_redux/tickets-thunk";
 import { router } from "@inertiajs/react";
 import ReasonToClose from "../id/sections/reason-to-close";
+import routing from "../../../components/routing";
 
 export default function ContentDetailsSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -20,7 +21,7 @@ export default function ContentDetailsSection() {
                     update_tickets_status_thunk(ticket.id, "CLOSED")
                 );
                 setIsLoading(false);
-                router.visit("#files");
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading(false);
             }

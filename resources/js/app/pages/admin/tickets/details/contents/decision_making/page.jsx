@@ -10,8 +10,14 @@ import { get_making_decision_thunk } from "../../../_redux/tickets-thunk";
 import Skeleton from "@/app/layouts/components/skeleton";
 import { get_email_templates_thunk } from "@/app/pages/admin/email_template/redux/email-template-thunk";
 import DecisionMakingSection from "./sections/decision-making-section";
+import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
+import TicketsDetailsLayout from "../ticket-content-layout";
+import WarehouseLayout from "@/app/layouts/warehouse/warehouse-layout";
+import ASCLayout from "@/app/layouts/asc/asc-layout";
+import AgentLayout from "@/app/layouts/agent/agent-layout";
+import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 
-export default function TicketsDecisionMakingContent() {
+export default function TicketsDecisionMakingContent({ auth }) {
     const { ticket } = useSelector((state) => state.tickets);
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -28,22 +34,34 @@ export default function TicketsDecisionMakingContent() {
     }
 
     useEffect(() => {
-        store.dispatch(get_email_templates_thunk())
+        store.dispatch(get_email_templates_thunk());
         get_specific_item();
     }, []);
 
+    const account = auth.user.user_role;
+    const MainLayout =
+        account == 1
+            ? AdministratorLayout
+            : account == 3
+            ? WarehouseLayout
+            : account == 4
+            ? ASCLayout
+            : account == 5
+            ? AgentLayout
+            : CurtisLayout;
     return (
-        <div>
-            {isLoading ? (
-                <div className="flex flex-col gap-8">
-                    <Skeleton />
-                    <Skeleton />
-                    <Skeleton />
-                </div>
-            ) : (
-                !isLoading && (
-                    <>
-                        {/* {
+        <MainLayout account={auth.user}>
+            <TicketsDetailsLayout>
+                {isLoading ? (
+                    <div className="flex flex-col gap-8">
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                    </div>
+                ) : (
+                    !isLoading && (
+                        <>
+                            {/* {
                             ticket.country == 'CA' && <RepairSection />
                         }
                         <RepairSection />
@@ -53,10 +71,11 @@ export default function TicketsDecisionMakingContent() {
                         <div className="mt-7">
                             <ReplacementSection />
                         </div> */}
-                        <DecisionMakingSection />
-                    </>
-                )
-            )}
-        </div>
+                            <DecisionMakingSection />
+                        </>
+                    )
+                )}
+            </TicketsDetailsLayout>
+        </MainLayout>
     );
 }

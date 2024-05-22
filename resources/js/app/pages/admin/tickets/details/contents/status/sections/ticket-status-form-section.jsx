@@ -6,6 +6,7 @@ import { router } from '@inertiajs/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { update_tickets_status_thunk } from '../../../../_redux/tickets-thunk'
+import routing from '../../../components/routing'
 
 export default function TicketStatusFormSection() {
     const [form, setForm] = useState({})
@@ -68,7 +69,7 @@ export default function TicketStatusFormSection() {
             try {
                 await store.dispatch(update_tickets_status_thunk(ticket.id, 'CLOSED'))
                 setIsLoading(false)
-                router.visit('#files');
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading(false)
             }

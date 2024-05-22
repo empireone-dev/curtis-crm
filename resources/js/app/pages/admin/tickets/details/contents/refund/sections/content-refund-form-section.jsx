@@ -8,6 +8,7 @@ import { router } from "@inertiajs/react";
 import { patch_warranty_checkque_shipped_service } from "@/app/services/refund-service";
 import { setTicket } from "../../../../_redux/tickets-slice";
 import Loading from "@/app/layouts/components/loading";
+import routing from "../../../components/routing";
 
 export default function ContentRefundFormSection() {
     const [form, setForm] = useState({});
@@ -48,7 +49,7 @@ export default function ContentRefundFormSection() {
                 });
                 dispatch(setTicket(result.status));
                 setIsLoading(false);
-                router.visit("#files");
+                router.visit(routing("files"));
             } catch (error) {
                 setIsLoading(false);
             }
