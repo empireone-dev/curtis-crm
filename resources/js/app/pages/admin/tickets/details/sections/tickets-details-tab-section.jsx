@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Tab } from '@headlessui/react';
 import TicketsDetailsContentFiles from '../contents/files/page';
 import TicketsDetailsContentActivities from '../contents/activities/page';
 import TicketsDetailsContentStatus from '../contents/status/page';
@@ -28,19 +27,36 @@ import ReplacementWarranty from '../contents/replacement_warranty/page';
 import ReplacementWarrantyPage from '../contents/replacement_warranty/page';
 import Skeleton from '@/app/layouts/components/skeleton';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-// tech support = files,activities,details,agent 
-//parts = files,activities details agent
-//waranty = files,activities details and agent notes
-export default function TicketsDetailsTabSection({ account,loading }) {
+
+
+export default function TicketsDetailsTabSection({ account }) {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { user } = useSelector((state) => state.app)
+  const { url } = usePage()
   const page = usePage();
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
- 
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ');
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
+        const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
+        dispatch(setTicket(ress))
+        dispatch(setFilesData(res))
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [url]);
+
   const tabs = [
     {
       title: 'Files',
@@ -75,7 +91,6 @@ export default function TicketsDetailsTabSection({ account,loading }) {
       ]
       : []),
     ...(ticket?.isUploading === 'true' && (ticket.status === 'CA WAREHOUSE' || ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
-      // && account?.role_id == 3
       ? [
         {
           title: ticket.country + ' Warehouse',
