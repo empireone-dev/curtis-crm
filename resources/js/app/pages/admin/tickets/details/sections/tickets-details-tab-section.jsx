@@ -125,51 +125,51 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
-      ? [
-        {
-          title: 'Callback',
-          components: <ContentsCallBackPage />,
-          hash: '#callback',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
-      ? [
-        {
-          title: 'Refund',
-          components: <ContentsRefundPage />,
-          hash: '#refund',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT'
-      ? [
-        {
-          title: 'Replacement',
-          components: <ReplacementWarrantyPage />,
-          hash: '#replacement',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT PARTS'
-      ? [
-        {
-          title: 'Replacement Parts',
-          components: <ContentsReplacementPartsPage />,
-          hash: '#replacement_parts',
-        },
-      ]
-      : []),
-    ...(ticket?.call_type == 'TS-Tech Support' && ticket?.status === 'TECH VALIDATION'
-      ? [
-        {
-          title: 'Update Status',
-          components: <TicketsDetailsContentStatus />,
-          hash: '#status',
-        },
-      ]
-      : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
+    //   ? [
+    //     {
+    //       title: 'Callback',
+    //       components: <ContentsCallBackPage />,
+    //       hash: '#callback',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
+    //   ? [
+    //     {
+    //       title: 'Refund',
+    //       components: <ContentsRefundPage />,
+    //       hash: '#refund',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT'
+    //   ? [
+    //     {
+    //       title: 'Replacement',
+    //       components: <ReplacementWarrantyPage />,
+    //       hash: '#replacement',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT PARTS'
+    //   ? [
+    //     {
+    //       title: 'Replacement Parts',
+    //       components: <ContentsReplacementPartsPage />,
+    //       hash: '#replacement_parts',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.call_type == 'TS-Tech Support' && ticket?.status === 'TECH VALIDATION'
+    //   ? [
+    //     {
+    //       title: 'Update Status',
+    //       components: <TicketsDetailsContentStatus />,
+    //       hash: '#status',
+    //     },
+    //   ]
+    //   : []),
 
     {
       title: 'Activities',
