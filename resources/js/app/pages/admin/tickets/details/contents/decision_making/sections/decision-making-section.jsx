@@ -107,8 +107,13 @@ export default function DecisionMakingSection() {
         e.preventDefault();
         setIsLoading1(true);
         const response = await store_decision_making_service(data);
-        if (data.instruction != "Home") {
+        if (
+            data.instruction == "CA Warehouse" ||
+            data.instruction == "US Warehouse"
+        ) {
             router.visit("#warehouse");
+        } else if (data.instruction == "ASC") {
+            router.visit("#refund");
         } else {
             router.visit("#refund");
         }
@@ -449,6 +454,10 @@ export default function DecisionMakingSection() {
                                                 value: "Home",
                                                 name: "Destroy in Home",
                                             },
+                                            {
+                                                value: "ASC",
+                                                name: "Refer to ASC",
+                                            },
                                         ]}
                                     />
 
@@ -481,88 +490,93 @@ export default function DecisionMakingSection() {
                                         value={data?.template_text ?? null}
                                         onChange={formHandler}
                                     />
-                                    {data.instruction != "Home" && (
-                                        <div className="flex gap-5 my-12">
-                                            <div class="flex items-center">
-                                                <input
-                                                    checked={
-                                                        data.ticket_type ==
-                                                        "REPLACEMENT"
-                                                    }
-                                                    id="default-radio-2"
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            ticket_type:
-                                                                e.target.value,
-                                                        })
-                                                    }
-                                                    type="radio"
-                                                    value="REPLACEMENT"
-                                                    name="ticket_type"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                />
-                                                <label
-                                                    htmlFor="default-radio-2"
-                                                    class="ms-2 text-xl font-medium text-gray-900"
-                                                >
-                                                    Replacement
-                                                </label>
+
+                                    {data.instruction == "CA Warehouse" ||
+                                        (data.instruction == "US Warehouse" && (
+                                            <div className="flex gap-5 my-12">
+                                                <div class="flex items-center">
+                                                    <input
+                                                        checked={
+                                                            data.ticket_type ==
+                                                            "REPLACEMENT"
+                                                        }
+                                                        id="default-radio-2"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                ticket_type:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                        type="radio"
+                                                        value="REPLACEMENT"
+                                                        name="ticket_type"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                    />
+                                                    <label
+                                                        htmlFor="default-radio-2"
+                                                        class="ms-2 text-xl font-medium text-gray-900"
+                                                    >
+                                                        Replacement
+                                                    </label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input
+                                                        checked={
+                                                            data.ticket_type ==
+                                                            "REFUND"
+                                                        }
+                                                        id="default-radio-3"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                ticket_type:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                        type="radio"
+                                                        value="REFUND"
+                                                        name="ticket_type"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                    />
+                                                    <label
+                                                        htmlFor="default-radio-3"
+                                                        class="ms-2 text-xl font-medium text-gray-900"
+                                                    >
+                                                        Refund
+                                                    </label>
+                                                </div>
+                                                <div class="flex items-center ">
+                                                    <input
+                                                        checked={
+                                                            data.ticket_type ==
+                                                            "REPAIR"
+                                                        }
+                                                        id="default-radio-1"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                ticket_type:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                        type="radio"
+                                                        value="REPAIR"
+                                                        name="ticket_type"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                    />
+                                                    <label
+                                                        htmlFor="default-radio-1"
+                                                        class="ms-2 text-xl font-medium text-gray-900"
+                                                    >
+                                                        Repair
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="flex items-center">
-                                                <input
-                                                    checked={
-                                                        data.ticket_type ==
-                                                        "REFUND"
-                                                    }
-                                                    id="default-radio-3"
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            ticket_type:
-                                                                e.target.value,
-                                                        })
-                                                    }
-                                                    type="radio"
-                                                    value="REFUND"
-                                                    name="ticket_type"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                />
-                                                <label
-                                                    htmlFor="default-radio-3"
-                                                    class="ms-2 text-xl font-medium text-gray-900"
-                                                >
-                                                    Refund
-                                                </label>
-                                            </div>
-                                            <div class="flex items-center ">
-                                                <input
-                                                    checked={
-                                                        data.ticket_type ==
-                                                        "REPAIR"
-                                                    }
-                                                    id="default-radio-1"
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            ticket_type:
-                                                                e.target.value,
-                                                        })
-                                                    }
-                                                    type="radio"
-                                                    value="REPAIR"
-                                                    name="ticket_type"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                />
-                                                <label
-                                                    htmlFor="default-radio-1"
-                                                    class="ms-2 text-xl font-medium text-gray-900"
-                                                >
-                                                    Repair
-                                                </label>
-                                            </div>
-                                        </div>
-                                    )}
+                                        ))}
                                     <button
                                         onClick={submit_form}
                                         className="p-3 bg-blue-600 hover:bg-blue-700  w-full font-bold text-white rounded-sm my-8"

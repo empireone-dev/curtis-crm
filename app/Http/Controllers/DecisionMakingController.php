@@ -36,10 +36,22 @@ class DecisionMakingController extends Controller
         ]);
 
         $ticket = Ticket::where('id', $request->id)->first();
+
+        $instruction = '';
+        if (
+            $request->instruction == "CA Warehouse" ||
+            $request->instruction == "US Warehouse"
+        ) {
+            $instruction = $ticket->country . ' WAREHOUSE';
+        } else if ($request->instruction == "ASC") {
+            $instruction = 'REFUND';
+        } else {
+            $instruction = 'REFUND';
+        }
         $ticket->update([
             'asc_id' => $request->asc,
             'decision_making_id' => $data->id,
-            'status' => ($request->instruction != 'Home' )? ($ticket->country . 'WAREHOUSE') : 'REFUND',
+            'status' => $instruction,
             'decision_status' => $request->ticket_type,
         ]);
 

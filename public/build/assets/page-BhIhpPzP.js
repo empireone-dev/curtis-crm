@@ -1,1 +1,0 @@
-import{j as t}from"./app-M6hEPYWg.js";import o from"./content-refund-form-section-V9uDRHwC.js";import"./input-CS2C7aGv.js";import"./textarea-BU57QpNb.js";import"./refund-service-CBZ3piz4.js";import"./loading-_XEwuWGc.js";function s(){return t.jsx("div",{children:t.jsx(o,{})})}export{s as default};
