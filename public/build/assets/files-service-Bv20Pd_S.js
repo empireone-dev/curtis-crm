@@ -1,0 +1,1 @@
+import{e as t}from"./store-aHXURlou.js";async function o(a){return(await t.post("/api/files",a)).data}async function s(a){return(await t.get("/api/files/"+a)).data}async function n(a,e){return await t.delete("/api/files/"+a),(await s(e)).data}export{n as d,s as g,o as u};

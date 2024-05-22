@@ -1,1 +1,0 @@
-import{j as r}from"./app-BLgeolC4.js";import{A as t}from"./administrator-layout-B-51wMrJ.js";import"./PowerIcon-BqMTqxHk.js";import"./TicketIcon-DLtlMyNt.js";import"./UserGroupIcon-BEwTTE6P.js";import"./UserCircleIcon-DKTEIBG9.js";import"./Cog8ToothIcon-CvvuDfPN.js";import"./user-service-C8bNv03m.js";function n(){return r.jsx(t,{children:"BupPage"})}export{n as default};
