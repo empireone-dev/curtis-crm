@@ -1,1 +1,0 @@
-import{j as t}from"./app-wMn08xRK.js";import{A as r}from"./administrator-layout-Bgp1jrUW.js";import"./PowerIcon-SEeIZJnr.js";import"./TicketIcon-BVOtf6xR.js";import"./UserGroupIcon-GlZiaD1_.js";import"./UserCircleIcon-Bk4z2ins.js";import"./Cog8ToothIcon-DPGK2cMr.js";import"./user-service-DCPxCzn9.js";function u(){return t.jsx(r,{children:"HttPage"})}export{u as default};

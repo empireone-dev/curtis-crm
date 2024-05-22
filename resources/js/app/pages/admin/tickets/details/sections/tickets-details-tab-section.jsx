@@ -34,30 +34,15 @@ function classNames(...classes) {
 // tech support = files,activities,details,agent 
 //parts = files,activities details agent
 //waranty = files,activities details and agent notes
-export default function TicketsDetailsTabSection({ account }) {
+export default function TicketsDetailsTabSection({ account,setLoading,loading }) {
 
   const { ticket } = useSelector((state) => state.tickets)
   const { user } = useSelector((state) => state.app)
   const { url } = usePage()
   const page = usePage();
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
-        const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
-        dispatch(setTicket(ress))
-        dispatch(setFilesData(res))
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, [url]);
+ 
   const tabs = [
     {
       title: 'Files',
@@ -203,8 +188,8 @@ export default function TicketsDetailsTabSection({ account }) {
   };
   const hash = '#' + page.url.split('#')[1]
   return (
-    <div className=" font-sans h-full">ss
-      {/* <div className="px-8">
+    <div className=" font-sans h-full">
+      <div className="px-8">
 
         <div className="w-full ">
 
@@ -242,7 +227,7 @@ export default function TicketsDetailsTabSection({ account }) {
             })
           }
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
