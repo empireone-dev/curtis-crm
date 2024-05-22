@@ -13,7 +13,7 @@ const CustomerTicketsBillOfSaleSection = () => {
     const { user } = useSelector((state) => state.app)
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');
-
+    const galleryRef11 = useRef(null);
     const { url } = usePage()
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -130,7 +130,7 @@ const CustomerTicketsBillOfSaleSection = () => {
                 </div>
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
 
-                <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
+                <ul id="gallery" className="flex flex-1 flex-wrap -m-1"  ref={galleryRef11}>
                     <ImageView
                         isLoading={isLoading}
                         deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
