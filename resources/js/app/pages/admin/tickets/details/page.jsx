@@ -15,21 +15,21 @@ export default function TicketsDetailsPage() {
     const { url } = usePage()
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
-    useEffect(() => {
-        const fetchData = async () => {
-        //   try {
-            // const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
-            // const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
-            // dispatch(setTicket(ress))
-            // dispatch(setFilesData(res))
-            setLoading(false)
-        //   } catch (error) {
-        //     setLoading(false)
-        //     console.error('Error fetching data:', error);
-        //   }
-        };
-        fetchData();
-      }, [url]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const res = await store.dispatch(get_upload_ticket_files_thunk(url.split('/')[url.split('/').length - 1].split('#')[0]));
+    //         const ress = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 1].split('#')[0])
+    //         dispatch(setTicket(ress))
+    //         dispatch(setFilesData(res))
+    //         setLoading(false)
+    //       } catch (error) {
+    //         setLoading(false)
+    //         console.error('Error fetching data:', error);
+    //       }
+    //     };
+    //     fetchData();
+    //   }, [url]);
     return (
         <AdministratorLayout>
             <div className='mr-3 py-6'>
