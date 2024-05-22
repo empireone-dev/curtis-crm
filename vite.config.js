@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
     build: {
-        chunkSizeWarningLimit: 100000, // Adjust chunk size warning limit if needed
+        chunkSizeWarningLimit: 100000000000, // Adjust chunk size warning limit if needed
     },
     plugins: [
         laravel({
