@@ -425,9 +425,9 @@
     "file": "assets/product-search-DShxRMT7.js",
     "name": "product-search"
   },
-  "_quill.snow-!~{005}~.js": {
+  "_quill.snow-!~{008}~.js": {
     "file": "assets/quill-DIxs8W_A.css",
-    "src": "_quill.snow-!~{005}~.js"
+    "src": "_quill.snow-!~{008}~.js"
   },
   "_quill.snow-gatOs4h2.js": {
     "file": "assets/quill.snow-gatOs4h2.js",
@@ -1705,7 +1705,7 @@
     ]
   },
   "resources/js/app/pages/admin/settings/sections/settings-password-update-section.jsx": {
-    "file": "assets/settings-password-update-section-DZ9s5dz9.js",
+    "file": "assets/settings-password-update-section-BlhlMmJV.js",
     "name": "settings-password-update-section",
     "src": "resources/js/app/pages/admin/settings/sections/settings-password-update-section.jsx",
     "isDynamicEntry": true,
@@ -2056,6 +2056,17 @@
       "_dialog-DrUbWdM4.js"
     ]
   },
+  "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx": {
+    "file": "assets/page-D4YgNiXW.js",
+    "name": "page",
+    "src": "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
+    "isEntry": true,
+    "imports": [
+      "_store-aHXURlou.js",
+      "_moment-Cl4UOzQZ.js",
+      "_quill.snow-gatOs4h2.js"
+    ]
+  },
   "resources/js/app/pages/admin/tickets/details/contents/activities/sections/content-activities-timeline-section.jsx": {
     "file": "assets/content-activities-timeline-section-C7ARArGy.js",
     "name": "content-activities-timeline-section",
@@ -2342,96 +2353,14 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/page.jsx": {
-    "file": "assets/page-C3XFqleI.js",
+    "file": "assets/page-DxAlbt-g.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/page.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
       "_store-aHXURlou.js",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/warranty-files-section.jsx",
-      "_ticket-content-layout-D6zfgkKd.js",
-      "_administrator-layout-BMP_TLjU.js",
-      "_agent-layout-CiNW2TXQ.js",
-      "_warehouse-layout-MndPkxFm.js",
-      "_asc-layout-Cgs9RZMS.js",
-      "_curtis-layout-DyVJL1J2.js",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-bill-of-sale-section.jsx",
-      "_customer-tickets-thunk-DpFFUugv.js",
-      "_tickets-service-Dyl0GjaC.js",
-      "_files-service-Bv20Pd_S.js",
-      "_loading-_blBWLnD.js",
-      "_image-view-B_2dvUiY.js",
-      "resources/js/app.jsx",
-      "_TrashIcon-D6ynD-IX.js",
-      "_transition-DSoYJ8Na.js",
-      "_dialog-DrUbWdM4.js",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-front-of-the-unit-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-rear-of-the-unit-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-readable-serial-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-defect-issue-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-clear-model.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-parts-model.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-receipt-model.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-serial-model.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/sections/content-activities-timeline-section.jsx",
       "_moment-Cl4UOzQZ.js",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-warranty-validation-components.jsx",
-      "_modal-BZgiEpQ5.js",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-decision-making-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-repair-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-refund-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-replacement-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-parts-validation-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-internals-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-replacement-parts-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-availability-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/components/content-activities-closed-components.jsx",
-      "_UserCircleIcon-n1JZZwqM.js",
-      "_tickets-thunk-D6JPisgK.js",
-      "_internals-service-B9kSbxh_.js",
-      "resources/js/app/pages/admin/tickets/details/contents/status/sections/ticket-status-form-section.jsx",
-      "_select-BWY6oSJS.js",
-      "_textarea-BoYS7idB.js",
-      "_routing-BzgBYGmF.js",
-      "resources/js/app/pages/admin/tickets/details/contents/details/sections/content-details-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/reason-to-close.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/notes/sections/content-notes-comment-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/notes/sections/content-notes-textarea-section.jsx",
-      "_quill.snow-gatOs4h2.js",
-      "_product-search-DShxRMT7.js",
-      "_email-template-thunk-CCcsddTD.js",
-      "_email-template-service-CSnl0Kmh.js",
-      "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/decision-making-section.jsx",
-      "_input-DbjdmRAR.js",
-      "_user-service-iipGlLPs.js",
-      "_fedex-rate-service-C5N1557v.js",
-      "_wysiwyg-DY3V440a.js",
-      "_Squares2X2Icon-DiyExzvZ.js",
-      "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-form-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-button-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/repair/sections/content-repair-form-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx",
-      "_refund-service-CBZ3piz4.js",
-      "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/sections/content-replacement-form.jsx",
-      "_replacement-service-CUrN_spP.js",
-      "resources/js/app/pages/admin/tickets/details/contents/warranty_validation/sections/warraty-validation-section.jsx",
-      "_receipt-service-BD33tn7w.js",
-      "resources/js/app/pages/admin/tickets/details/contents/warehouse/sections/warehouse-received-button.jsx",
-      "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/internals/sections/internals-availability-section.jsx",
-      "_QueueListIcon-DVAvspt5.js",
-      "resources/js/app/pages/admin/tickets/details/contents/availability/sections/availability-section.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/call_back/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/call_back/sections/call-back-form-section.jsx",
-      "_layout-sidebar-list-component-CzsmNv0O.js",
-      "_TicketIcon-Ch3mPyEj.js",
-      "_UserGroupIcon-BS5Ulcs0.js",
-      "_Cog8ToothIcon-wp_ElwWx.js",
-      "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/sections/content-replacement-warranty-form.jsx",
-      "_tickets-details-move-assign-section_-DhLNI7Hi.js",
-      "_WrenchScrewdriverIcon-B-6R6nh-.js",
-      "_CheckBadgeIcon-BEZIFvkj.js",
-      "_ArrowsRightLeftIcon-B426n3_1.js"
+      "_quill.snow-gatOs4h2.js"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-bill-of-sale-section.jsx": {
@@ -2646,6 +2575,17 @@
       "_routing-BzgBYGmF.js",
       "_QueueListIcon-DVAvspt5.js",
       "_TrashIcon-D6ynD-IX.js"
+    ]
+  },
+  "resources/js/app/pages/admin/tickets/details/contents/notes/page.jsx": {
+    "file": "assets/page-Bmh1kXnJ.js",
+    "name": "page",
+    "src": "resources/js/app/pages/admin/tickets/details/contents/notes/page.jsx",
+    "isEntry": true,
+    "imports": [
+      "_store-aHXURlou.js",
+      "_moment-Cl4UOzQZ.js",
+      "_quill.snow-gatOs4h2.js"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/notes/sections/content-notes-comment-section.jsx": {
@@ -3707,7 +3647,7 @@
     ]
   },
   "resources/js/app/pages/asc/settings/sections/settings-password-update-section.jsx": {
-    "file": "assets/settings-password-update-section-BlhlMmJV.js",
+    "file": "assets/settings-password-update-section-DZ9s5dz9.js",
     "name": "settings-password-update-section",
     "src": "resources/js/app/pages/asc/settings/sections/settings-password-update-section.jsx",
     "isDynamicEntry": true,
