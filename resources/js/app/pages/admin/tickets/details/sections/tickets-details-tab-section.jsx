@@ -71,109 +71,105 @@ export default function TicketsDetailsTabSection() {
         }
       ]
       : []),
-    ...(ticket?.isUploading === 'true' && ticket?.call_type === 'Parts' && (ticket?.status === 'PARTS VALIDATION')
-      ? [
-        {
-          title: 'Parts Validation',
-          components: <TicketsPartsValidationContent />,
-          hash: '#parts_validation',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'RESOURCE'
-      ? [
-        {
-          title: 'Decision Making',
-          components: <TicketsDecisionMakingContent />,
-          hash: '#decision',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && (ticket?.status === 'CA WAREHOUSE' || ticket?.status === 'US WAREHOUSE' || ticket?.status === 'CLOSED')
-      ? [
-        {
-          title: ticket?.country + ' Warehouse',
-          components: <WarehousePage />,
-          hash: '#warehouse',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
-      ? [
-        {
-          title: 'Repair',
-          components: <ContentsRepairPage />,
-          hash: '#repair',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
-      ? [
-        {
-          title: 'Availability',
-          components: <TicketsAvailabilityContent />,
-          hash: '#availability',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
-      ? [
-        {
-          title: 'Internals',
-          components: <TicketsPartsInternalsContent />,
-          hash: '#internals',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
-      ? [
-        {
-          title: 'Callback',
-          components: <ContentsCallBackPage />,
-          hash: '#callback',
-        },
-      ]
-      : []),
-
-
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
-      ? [
-        {
-          title: 'Refund',
-          components: <ContentsRefundPage />,
-          hash: '#refund',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT'
-      ? [
-        {
-          title: 'Replacement',
-          components: <ReplacementWarrantyPage />,
-          hash: '#replacement',
-        },
-      ]
-      : []),
-
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT PARTS'
-      ? [
-        {
-          title: 'Replacement Parts',
-          components: <ContentsReplacementPartsPage />,
-          hash: '#replacement_parts',
-        },
-      ]
-      : []),
-
-    ...(ticket?.call_type == 'TS-Tech Support' && ticket?.status === 'TECH VALIDATION'
-      ? [
-        {
-          title: 'Update Status',
-          components: <TicketsDetailsContentStatus />,
-          hash: '#status',
-        },
-      ]
-      : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.call_type === 'Parts' && (ticket?.status === 'PARTS VALIDATION')
+    //   ? [
+    //     {
+    //       title: 'Parts Validation',
+    //       components: <TicketsPartsValidationContent />,
+    //       hash: '#parts_validation',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'RESOURCE'
+    //   ? [
+    //     {
+    //       title: 'Decision Making',
+    //       components: <TicketsDecisionMakingContent />,
+    //       hash: '#decision',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && (ticket?.status === 'CA WAREHOUSE' || ticket?.status === 'US WAREHOUSE' || ticket?.status === 'CLOSED')
+    //   ? [
+    //     {
+    //       title: ticket?.country + ' Warehouse',
+    //       components: <WarehousePage />,
+    //       hash: '#warehouse',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
+    //   ? [
+    //     {
+    //       title: 'Repair',
+    //       components: <ContentsRepairPage />,
+    //       hash: '#repair',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
+    //   ? [
+    //     {
+    //       title: 'Availability',
+    //       components: <TicketsAvailabilityContent />,
+    //       hash: '#availability',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
+    //   ? [
+    //     {
+    //       title: 'Internals',
+    //       components: <TicketsPartsInternalsContent />,
+    //       hash: '#internals',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
+    //   ? [
+    //     {
+    //       title: 'Callback',
+    //       components: <ContentsCallBackPage />,
+    //       hash: '#callback',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
+    //   ? [
+    //     {
+    //       title: 'Refund',
+    //       components: <ContentsRefundPage />,
+    //       hash: '#refund',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT'
+    //   ? [
+    //     {
+    //       title: 'Replacement',
+    //       components: <ReplacementWarrantyPage />,
+    //       hash: '#replacement',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPLACEMENT PARTS'
+    //   ? [
+    //     {
+    //       title: 'Replacement Parts',
+    //       components: <ContentsReplacementPartsPage />,
+    //       hash: '#replacement_parts',
+    //     },
+    //   ]
+    //   : []),
+    // ...(ticket?.call_type == 'TS-Tech Support' && ticket?.status === 'TECH VALIDATION'
+    //   ? [
+    //     {
+    //       title: 'Update Status',
+    //       components: <TicketsDetailsContentStatus />,
+    //       hash: '#status',
+    //     },
+    //   ]
+    //   : []),
 
     {
       title: 'Activities',
@@ -199,7 +195,7 @@ export default function TicketsDetailsTabSection() {
     router.visit(tabs[index].hash);
   };
   const hash = '#' + page.url.split('#')[1]
-  
+
   return (
     <div className=" font-sans h-full">
       sss
@@ -220,15 +216,15 @@ export default function TicketsDetailsTabSection() {
           <div className={`py-3 text-3xl font-black flex gap-3 ${ticket?.status == 'CLOSED' ? ' text-red-600' : ' text-blue-600'}`}>
             <TicketIcon className='h-9' /> {ticket?.status ?? 'Open Ticket'} ({ticket?.call_type})
           </div>
-          {/* <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
+          <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
             {tabs.map((res, i) => (
               <button key={i} onClick={() => handleTabClick(i)} className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash == res.hash ? 'bg-blue-600 text-white' : 'bg-gray-300 hover:bg-blue-200'}`}>
                 {res.title}
               </button>
 
             ))}
-          </div> */}
-          {/* {
+          </div>
+          {
             loading ? <Skeleton /> : tabs.map((res, i) => {
               return (
                 <div
@@ -239,7 +235,7 @@ export default function TicketsDetailsTabSection() {
                 </div>
               );
             })
-          } */}
+          }
         </div>
       </div>
     </div>
