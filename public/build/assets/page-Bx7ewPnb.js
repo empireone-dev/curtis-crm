@@ -1,0 +1,1 @@
+import{j as t}from"./app-CERM6Z__.js";import r from"./content-repair-form-section-DyUYa7KK.js";import"./input-1mLzEWTr.js";import"./textarea-DzchjwKU.js";import"./loading-DDXCZ-U1.js";function p(){return t.jsx("div",{children:t.jsx(r,{})})}export{p as default};
