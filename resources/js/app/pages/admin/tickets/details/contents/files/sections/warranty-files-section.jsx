@@ -18,7 +18,7 @@ export default function WarrantyFilesSection() {
         <>
            {
                 ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? <>
-                    <CustomerTicketsBillOfSaleSection />
+                    {/* <CustomerTicketsBillOfSaleSection /> */}
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsFrontOfTheUnitSection />
                     {/* <div className="h-px my-8 border border-blue-500 w-full" />
