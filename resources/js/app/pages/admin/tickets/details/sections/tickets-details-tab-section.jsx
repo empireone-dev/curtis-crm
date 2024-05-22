@@ -107,15 +107,15 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
-    //   ? [
-    //     {
-    //       title: 'Availability',
-    //       components: <TicketsAvailabilityContent />,
-    //       hash: '#availability',
-    //     },
-    //   ]
-    //   : []),
+    ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
+      ? [
+        {
+          title: 'Availability',
+          components: <TicketsAvailabilityContent />,
+          hash: '#availability',
+        },
+      ]
+      : []),
     // ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
     //   ? [
     //     {
