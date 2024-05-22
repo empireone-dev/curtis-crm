@@ -28,13 +28,13 @@ export default function WarrantyFilesSection() {
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsDefectIssueSection />
                 </> : <>
-                    <CustomerTicketsClearModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsPartsModel />
+                    <CustomerTicketsSerialModel />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReceiptModel />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsSerialModel />
+                    <CustomerTicketsPartsModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsClearModel />
                 </>
             }
         </>

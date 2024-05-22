@@ -106,7 +106,8 @@ const CustomerTicketsReceiptModel = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                Clear copy of your receipt showing the date of purchase, item description and amount
+                Clear and readable picture of the bill of sale showing the date of purchase, item description and unit price.
+
                 </div>
                
                 

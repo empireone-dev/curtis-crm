@@ -256,7 +256,9 @@ export default function TicketsDetailsLayout({ children }) {
                             </button>
                         ))}
                     </div>
-                    {loading ? <Skeleton /> : children}
+                    <div className="my-8">
+                        {loading ? <Skeleton /> : children}
+                    </div>
                 </div>
             </div>
         </div>

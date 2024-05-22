@@ -106,7 +106,7 @@ const CustomerTicketsSerialModel = () => {
         >
             <section className="h-full w-full flex flex-col">
                 <div className='text-xl font-black'>
-                Clear Picture of the Serial#
+                Clear and readable picture of the model and serial number sticker (located at the back of the unit)
                 </div>
                
                 
