@@ -144,6 +144,12 @@ export default function DashboardCardsSection() {
                     count={data.parts_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
+                 <DashboardCardsComponent
+                    title="Updates From Curtis"
+                    link="AVAILABILITY"
+                    count={data.updates_curtis ?? 0}
+                    icon={<ComputerDesktopIcon className="h-10 text-white" />}
+                />
                 <DashboardCardsComponent
                     title="Closed Tickets For Parts"
                     count={data.parts_closed}
@@ -181,12 +187,7 @@ export default function DashboardCardsSection() {
                     count={data.internals ?? 0}
                     icon={<CheckCircleIcon className="h-10 text-white" />}
                 />
-                <DashboardCardsComponent
-                    title="Updates From Curtis"
-                    link="AVAILABILITY"
-                    count={data.updates_curtis ?? 0}
-                    icon={<ComputerDesktopIcon className="h-10 text-white" />}
-                />
+               
             </div>
             <div className="text-3xl font-black my-8">Warehouse</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">

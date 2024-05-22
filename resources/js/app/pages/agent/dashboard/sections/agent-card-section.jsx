@@ -230,6 +230,16 @@ export default function AgentCardsSection({ account }) {
 
                 {agent_type(["Parts"]) && (
                     <AgentCardsComponent
+                        title="Updates From Curtis"
+                        link="AVAILABILITY"
+                        count={data.updates_curtis ?? 0}
+                        icon={
+                            <ComputerDesktopIcon className="h-10 text-white" />
+                        }
+                    />
+                )}
+                {agent_type(["Parts"]) && (
+                    <AgentCardsComponent
                         title="Closed Tickets For Parts"
                         count={data.parts_closed}
                         icon={<UserCircleIcon className="h-10 text-white" />}
@@ -281,17 +291,6 @@ export default function AgentCardsSection({ account }) {
                         link="INTERNALS"
                         count={data.internals ?? 0}
                         icon={<CheckCircleIcon className="h-10 text-white" />}
-                    />
-                )}
-
-                {agent_type(["Parts"]) && (
-                    <AgentCardsComponent
-                        title="Updates From Curtis"
-                        link="AVAILABILITY"
-                        count={data.updates_curtis ?? 0}
-                        icon={
-                            <ComputerDesktopIcon className="h-10 text-white" />
-                        }
                     />
                 )}
             </div>
