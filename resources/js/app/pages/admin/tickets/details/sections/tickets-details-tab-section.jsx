@@ -202,7 +202,7 @@ export default function TicketsDetailsTabSection() {
   return (
     <div className=" font-sans h-full">
       sss
-      {/* <div className="px-8">
+      <div className="px-8">
 
         <div className="w-full ">
 
@@ -219,15 +219,15 @@ export default function TicketsDetailsTabSection() {
           <div className={`py-3 text-3xl font-black flex gap-3 ${ticket.status == 'CLOSED' ? ' text-red-600' : ' text-blue-600'}`}>
             <TicketIcon className='h-9' /> {ticket.status ?? 'Open Ticket'} ({ticket.call_type})
           </div>
-          <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
+          {/* <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
             {tabs.map((res, i) => (
               <button key={i} onClick={() => handleTabClick(i)} className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash == res.hash ? 'bg-blue-600 text-white' : 'bg-gray-300 hover:bg-blue-200'}`}>
                 {res.title}
               </button>
 
             ))}
-          </div>
-          {
+          </div> */}
+          {/* {
             loading ? <Skeleton /> : tabs.map((res, i) => {
               return (
                 <div
@@ -238,9 +238,9 @@ export default function TicketsDetailsTabSection() {
                 </div>
               );
             })
-          }
+          } */}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
