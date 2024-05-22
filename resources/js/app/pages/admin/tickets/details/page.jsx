@@ -8,7 +8,7 @@ export default function TicketsDetailsPage() {
         <AdministratorLayout>
             <div className='mr-3 py-6'>
                 <TicketsDetailsMoveAssignSection />
-                <TicketsDetailsTabSection />
+                {/* <TicketsDetailsTabSection /> */}
             </div>
         </AdministratorLayout>
     )
