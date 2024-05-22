@@ -56,141 +56,141 @@ export default function TicketsDetailsTabSection() {
     fetchData();
   }, [url]);
 
-  const tabs = [
-    {
-      title: 'Files',
-      components: <TicketsDetailsContentFiles />,
-      hash: '#files',
-    },
-    ...(ticket?.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == 'WARRANTY VALIDATION'
-      ? [
-        {
-          title: 'Warranty Validation',
-          components: <ContentsWarrantyValidationPage />,
-          hash: '#warranty_validation',
-        }
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.status === 'PARTS VALIDATION')
-      ? [
-        {
-          title: 'Parts Validation',
-          components: <TicketsPartsValidationContent />,
-          hash: '#parts_validation',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'RESOURCE'
-      ? [
-        {
-          title: 'Decision Making',
-          components: <TicketsDecisionMakingContent />,
-          hash: '#decision',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && (ticket.status === 'CA WAREHOUSE' || ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
-      ? [
-        {
-          title: ticket.country + ' Warehouse',
-          components: <WarehousePage />,
-          hash: '#warehouse',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'REPAIR'
-      ? [
-        {
-          title: 'Repair',
-          components: <ContentsRepairPage />,
-          hash: '#repair',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'AVAILABILITY'
-      ? [
-        {
-          title: 'Availability',
-          components: <TicketsAvailabilityContent />,
-          hash: '#availability',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'INTERNALS'
-      ? [
-        {
-          title: 'Internals',
-          components: <TicketsPartsInternalsContent />,
-          hash: '#internals',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'CALLBACK'
-      ? [
-        {
-          title: 'Callback',
-          components: <ContentsCallBackPage />,
-          hash: '#callback',
-        },
-      ]
-      : []),
+  // const tabs = [
+  //   {
+  //     title: 'Files',
+  //     components: <TicketsDetailsContentFiles />,
+  //     hash: '#files',
+  //   },
+  //   ...(ticket?.isUploading === 'true' && ticket.call_type === 'CF-Warranty Claim' && ticket.status == 'WARRANTY VALIDATION'
+  //     ? [
+  //       {
+  //         title: 'Warranty Validation',
+  //         components: <ContentsWarrantyValidationPage />,
+  //         hash: '#warranty_validation',
+  //       }
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.call_type === 'Parts' && (ticket.status === 'PARTS VALIDATION')
+  //     ? [
+  //       {
+  //         title: 'Parts Validation',
+  //         components: <TicketsPartsValidationContent />,
+  //         hash: '#parts_validation',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'RESOURCE'
+  //     ? [
+  //       {
+  //         title: 'Decision Making',
+  //         components: <TicketsDecisionMakingContent />,
+  //         hash: '#decision',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && (ticket.status === 'CA WAREHOUSE' || ticket.status === 'US WAREHOUSE' || ticket.status === 'CLOSED')
+  //     ? [
+  //       {
+  //         title: ticket.country + ' Warehouse',
+  //         components: <WarehousePage />,
+  //         hash: '#warehouse',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'REPAIR'
+  //     ? [
+  //       {
+  //         title: 'Repair',
+  //         components: <ContentsRepairPage />,
+  //         hash: '#repair',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'AVAILABILITY'
+  //     ? [
+  //       {
+  //         title: 'Availability',
+  //         components: <TicketsAvailabilityContent />,
+  //         hash: '#availability',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'INTERNALS'
+  //     ? [
+  //       {
+  //         title: 'Internals',
+  //         components: <TicketsPartsInternalsContent />,
+  //         hash: '#internals',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'CALLBACK'
+  //     ? [
+  //       {
+  //         title: 'Callback',
+  //         components: <ContentsCallBackPage />,
+  //         hash: '#callback',
+  //       },
+  //     ]
+  //     : []),
 
 
-    ...(ticket?.isUploading === 'true' && ticket.status === 'REFUND'
-      ? [
-        {
-          title: 'Refund',
-          components: <ContentsRefundPage />,
-          hash: '#refund',
-        },
-      ]
-      : []),
-    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT'
-      ? [
-        {
-          title: 'Replacement',
-          components: <ReplacementWarrantyPage />,
-          hash: '#replacement',
-        },
-      ]
-      : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'REFUND'
+  //     ? [
+  //       {
+  //         title: 'Refund',
+  //         components: <ContentsRefundPage />,
+  //         hash: '#refund',
+  //       },
+  //     ]
+  //     : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT'
+  //     ? [
+  //       {
+  //         title: 'Replacement',
+  //         components: <ReplacementWarrantyPage />,
+  //         hash: '#replacement',
+  //       },
+  //     ]
+  //     : []),
 
-    ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
-      ? [
-        {
-          title: 'Replacement Parts',
-          components: <ContentsReplacementPartsPage />,
-          hash: '#replacement_parts',
-        },
-      ]
-      : []),
+  //   ...(ticket?.isUploading === 'true' && ticket.status === 'REPLACEMENT PARTS'
+  //     ? [
+  //       {
+  //         title: 'Replacement Parts',
+  //         components: <ContentsReplacementPartsPage />,
+  //         hash: '#replacement_parts',
+  //       },
+  //     ]
+  //     : []),
 
-    ...(ticket.call_type == 'TS-Tech Support' && ticket.status === 'TECH VALIDATION'
-      ? [
-        {
-          title: 'Update Status',
-          components: <TicketsDetailsContentStatus />,
-          hash: '#status',
-        },
-      ]
-      : []),
+  //   ...(ticket.call_type == 'TS-Tech Support' && ticket.status === 'TECH VALIDATION'
+  //     ? [
+  //       {
+  //         title: 'Update Status',
+  //         components: <TicketsDetailsContentStatus />,
+  //         hash: '#status',
+  //       },
+  //     ]
+  //     : []),
 
-    {
-      title: 'Activities',
-      components: <TicketsDetailsContentActivities />,
-      hash: '#activities',
-    },
-    {
-      title: 'Details',
-      components: <TicketsDetailsContentDetails />,
-      hash: '#details',
-    },
-    {
-      title: 'Agent Notes',
-      components: <TicketsDetailsContentNotes />,
-      hash: '#notes',
-    },
-  ];
+  //   {
+  //     title: 'Activities',
+  //     components: <TicketsDetailsContentActivities />,
+  //     hash: '#activities',
+  //   },
+  //   {
+  //     title: 'Details',
+  //     components: <TicketsDetailsContentDetails />,
+  //     hash: '#details',
+  //   },
+  //   {
+  //     title: 'Agent Notes',
+  //     components: <TicketsDetailsContentNotes />,
+  //     hash: '#notes',
+  //   },
+  // ];
 
   const handleTabClick = (index) => {
     // Update only the first hash dynamically based on the selected tab
