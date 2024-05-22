@@ -1,1 +1,0 @@
-import{j as t}from"./app-Btw7cL1U.js";import i from"./ticket-status-form-section-C34A9MYd.js";import"./loading-Cg05_c_0.js";import"./select-rhApl4EO.js";import"./textarea-DEYrLxli.js";import"./tickets-thunk-tl3Y0xSw.js";import"./tickets-service-bhpJOmPK.js";import"./internals-service-B9kSbxh_.js";function u(){return t.jsx("div",{children:t.jsx(i,{})})}export{u as default};
