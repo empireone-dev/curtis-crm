@@ -30,11 +30,11 @@ export default function TicketsDetailsTabSection({ account }) {
             try {
                 const res = await store.dispatch(
                     get_upload_ticket_files_thunk(
-                        url.split("/")[url.split("/").length - 1].split("#")[0]
+                        url.split("/")[url.split("/").length - 2].split("#")[0]
                     )
                 );
                 const ress = await get_tickets_by_ticket_id(
-                    url.split("/")[url.split("/").length - 1].split("#")[0]
+                    url.split("/")[url.split("/").length - 2].split("#")[0]
                 );
                 dispatch(setTicket(ress));
                 dispatch(setFilesData(res));

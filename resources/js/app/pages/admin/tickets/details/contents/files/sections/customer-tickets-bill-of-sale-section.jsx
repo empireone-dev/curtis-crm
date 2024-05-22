@@ -78,7 +78,7 @@ const CustomerTicketsBillOfSaleSection = () => {
         const fd = new FormData();
         fd.append(
             "ticket_id",
-            url.split("/")[url.split("/").length - 1].split("#")[0]
+            url.split("/")[url.split("/").length - 2].split("#")[0]
         );
         fd.append("user_id", user.id);
         fd.append("type", "bill_of_sale");
@@ -88,7 +88,7 @@ const CustomerTicketsBillOfSaleSection = () => {
         await store.dispatch(
             upload_ticket_files_thunk(
                 fd,
-                url.split("/")[url.split("/").length - 1].split("#")[0]
+                url.split("/")[url.split("/").length - 2].split("#")[0]
             )
         );
 

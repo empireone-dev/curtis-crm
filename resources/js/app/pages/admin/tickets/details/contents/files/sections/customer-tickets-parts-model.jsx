@@ -72,13 +72,13 @@ const CustomerTicketsPartsModel = () => {
         setLoading(true)
         const fd = new FormData()
 
-        fd.append('ticket_id', url.split('/')[url.split('/').length - 1].split('#')[0])
+        fd.append('ticket_id', url.split("/")[url.split("/").length - 2].split("#")[0])
         fd.append('type', 'parts_model')
         fd.append('user_id', user.id)
         files.forEach(value => {
             fd.append('files[]', value.file)
         });
-        await store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[url.split('/').length - 1].split('#')[0]))
+        await store.dispatch(upload_ticket_files_thunk(fd,url.split("/")[url.split("/").length - 2].split("#")[0]))
         setLoading(false)
         setFiles([]);
     }
