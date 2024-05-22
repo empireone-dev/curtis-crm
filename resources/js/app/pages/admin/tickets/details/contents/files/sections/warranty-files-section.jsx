@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import CustomerTicketsBillOfSaleSection from './customer-tickets-bill-of-sale-section'
 import CustomerTicketsFrontOfTheUnitSection from './customer-tickets-front-of-the-unit-section'
 import CustomerTicketsRearOfTheUnitSection from './customer-tickets-rear-of-the-unit-section'
@@ -13,16 +13,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.customer_tickets)
-    const [loading,setLoading] = useState(true)
-    useEffect(()=>{
-        setTimeout(() => {
-            setLoading(false)
-        }, 700);
-    },[])
+    
     return (
         <>
            {
-              !loading && ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? <>
+                ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? <>
                     <CustomerTicketsBillOfSaleSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsFrontOfTheUnitSection />

@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import { Tab } from "@headlessui/react";
-import TicketsDetailsContentFiles from "../contents/files/page";
-import TicketsDetailsContentActivities from "../contents/activities/page";
-import TicketsDetailsContentStatus from "../contents/status/page";
-import TicketsDetailsContentDetails from "../contents/details/page";
-import TicketsDetailsContentNotes from "../contents/notes/page";
 import { router, usePage } from "@inertiajs/react";
-import TicketsDecisionMakingContent from "../contents/decision_making/page";
-import TicketsPartsValidationContent from "../contents/parts_validation/page";
 import store from "@/app/store/store";
 import { get_upload_ticket_files_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
 import { setFilesData } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
@@ -15,18 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { get_tickets_by_ticket_id } from "@/app/services/tickets-service";
 import { setTicket } from "../../_redux/tickets-slice";
 import { InboxStackIcon, TicketIcon } from "@heroicons/react/24/outline";
-import ContentsRepairPage from "../contents/repair/page";
-import ContentsRefundPage from "../contents/refund/page";
-import ContentsReplacementPartsPage from "../contents/replacement_parts/page";
-import ContentsWarrantyValidationPage from "../contents/warranty_validation/page";
-import WarehousePage from "../contents/warehouse/page";
+
 import TicketsDetailsMoveAssignComponents from "../components/tickets-details-move-assign-components";
-import TicketsPartsInternalsContent from "../contents/internals/page";
-import TicketsAvailabilityContent from "../contents/availability/page";
-import ContentsCallBackPage from "../contents/call_back/page";
-import ReplacementWarranty from "../contents/replacement_warranty/page";
-import ReplacementWarrantyPage from "../contents/replacement_warranty/page";
-import Skeleton from "@/app/layouts/components/skeleton";
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
