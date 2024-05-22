@@ -11,6 +11,9 @@ export default defineConfig({
             input: [
                 "resources/js/app.jsx",
                 "resources/js/app/pages/admin/tickets/details/contents/details/page.jsx",
+                'resources/js/app/pages/admin/tickets/details/contents/notes/page.jsx',
+                'resources/js/app/pages/admin/tickets/details/contents/files/page.jsx',
+                'resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx',
             ],
             refresh: true,
         }),
