@@ -63,54 +63,6 @@ Route::get('/customer/web_form', function () {
 
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('admin/dashboard/page');
-    })->name('dashboard');
-
-    Route::get('google_map/{id}', function () {
-        return Inertia::render('admin/maps/page');
-    })->name('google_map');
-
-    Route::get('/permissions', function () {
-        return Inertia::render('admin/permissions/page');
-    })->name('permissions');
-
-    Route::get('/roles', function () {
-        return Inertia::render('admin/roles/page');
-    })->name('roles');
-
-    Route::get('/users', function () {
-        return Inertia::render('admin/users/page');
-    })->name('users');
-
-    Route::get('/users/{userid}', function () {
-        return Inertia::render('admin/users/tickets/page');
-    })->name('users.tickets');
-
-    Route::get('/brands', function () {
-        return Inertia::render('admin/brands/page');
-    })->name('brands');
-
-    Route::get('/settings', function () {
-        return Inertia::render('admin/settings/page');
-    })->name('settings');
-
-    Route::get('/email_template', function () {
-        return Inertia::render('admin/email_template/page');
-    })->name('email_template');
-
-    Route::get('/item_types', function () {
-        return Inertia::render('admin/item_types/page');
-    })->name('item_types');
-
-    Route::get('/common_issues', function () {
-        return Inertia::render('admin/common_issues/page');
-    })->name('common_issues');
-
-    Route::get('/products', function () {
-        return Inertia::render('admin/products/page');
-    })->name('products');
-
     Route::prefix('tickets')->group(function () {
         Route::get('/', function () {
             return Inertia::render('admin/tickets/page');
@@ -195,6 +147,56 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/create/page');
         })->name('tickets.create');
     });
+    
+    Route::get('/dashboard', function () {
+        return Inertia::render('admin/dashboard/page');
+    })->name('dashboard');
+
+    Route::get('google_map/{id}', function () {
+        return Inertia::render('admin/maps/page');
+    })->name('google_map');
+
+    Route::get('/permissions', function () {
+        return Inertia::render('admin/permissions/page');
+    })->name('permissions');
+
+    Route::get('/roles', function () {
+        return Inertia::render('admin/roles/page');
+    })->name('roles');
+
+    Route::get('/users', function () {
+        return Inertia::render('admin/users/page');
+    })->name('users');
+
+    Route::get('/users/{userid}', function () {
+        return Inertia::render('admin/users/tickets/page');
+    })->name('users.tickets');
+
+    Route::get('/brands', function () {
+        return Inertia::render('admin/brands/page');
+    })->name('brands');
+
+    Route::get('/settings', function () {
+        return Inertia::render('admin/settings/page');
+    })->name('settings');
+
+    Route::get('/email_template', function () {
+        return Inertia::render('admin/email_template/page');
+    })->name('email_template');
+
+    Route::get('/item_types', function () {
+        return Inertia::render('admin/item_types/page');
+    })->name('item_types');
+
+    Route::get('/common_issues', function () {
+        return Inertia::render('admin/common_issues/page');
+    })->name('common_issues');
+
+    Route::get('/products', function () {
+        return Inertia::render('admin/products/page');
+    })->name('products');
+
+  
 
 
     Route::get('/asc', function () {
