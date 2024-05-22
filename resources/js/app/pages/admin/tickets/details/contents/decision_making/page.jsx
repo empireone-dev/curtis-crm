@@ -38,7 +38,7 @@ export default function TicketsDecisionMakingContent({ auth }) {
         get_specific_item();
     }, []);
 
-    const account = auth.user.user_role;
+    const account = auth.user.role_id;
     const MainLayout =
         account == 1
             ? AdministratorLayout

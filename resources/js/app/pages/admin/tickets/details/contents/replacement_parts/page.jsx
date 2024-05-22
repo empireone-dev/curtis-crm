@@ -13,7 +13,7 @@ export default function ContentsReplacementPartsPage({auth}) {
     useEffect(() => {
         store.dispatch(get_internals_by_ticket_id_thunk());
     }, []);
-    const account = auth.user.user_role;
+    const account = auth.user.role_id;
     const MainLayout =
     account == 1
         ? AdministratorLayout

@@ -1,0 +1,1 @@
+import{j as t}from"./app-BLgeolC4.js";import{A as r}from"./administrator-layout-B-51wMrJ.js";import"./PowerIcon-BqMTqxHk.js";import"./TicketIcon-DLtlMyNt.js";import"./UserGroupIcon-BEwTTE6P.js";import"./UserCircleIcon-DKTEIBG9.js";import"./Cog8ToothIcon-CvvuDfPN.js";import"./user-service-C8bNv03m.js";function u(){return t.jsx(r,{children:"HttPage"})}export{u as default};

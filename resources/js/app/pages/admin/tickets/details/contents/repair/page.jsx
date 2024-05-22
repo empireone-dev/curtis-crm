@@ -8,7 +8,7 @@ import AgentLayout from "@/app/layouts/agent/agent-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 
 export default function ContentsRepairPage({auth}) {
-    const account = auth.user.user_role;
+    const account = auth.user.role_id;
     const MainLayout =
     account == 1
         ? AdministratorLayout

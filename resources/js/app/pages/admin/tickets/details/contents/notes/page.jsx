@@ -16,7 +16,7 @@ export default function TicketsDetailsContentNotes({auth}) {
         store.dispatch(get_notes_by_id_thunk());
     }, [ticket.id]);
 
-    const account = auth.user.user_role;
+    const account = auth.user.role_id;
     const MainLayout =
         account == 1
             ? AdministratorLayout
