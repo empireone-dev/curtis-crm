@@ -116,24 +116,24 @@ export default function TicketsDetailsTabSection() {
     //     },
     //   ]
     //   : []),
-    ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
-      ? [
-        {
-          title: 'Internals',
-          components: <TicketsPartsInternalsContent />,
-          hash: '#internals',
-        },
-      ]
-      : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
+    // ...(ticket?.isUploading === 'true' && ticket?.status === 'INTERNALS'
     //   ? [
     //     {
-    //       title: 'Callback',
-    //       components: <ContentsCallBackPage />,
-    //       hash: '#callback',
+    //       title: 'Internals',
+    //       components: <TicketsPartsInternalsContent />,
+    //       hash: '#internals',
     //     },
     //   ]
     //   : []),
+    ...(ticket?.isUploading === 'true' && ticket?.status === 'CALLBACK'
+      ? [
+        {
+          title: 'Callback',
+          components: <ContentsCallBackPage />,
+          hash: '#callback',
+        },
+      ]
+      : []),
     // ...(ticket?.isUploading === 'true' && ticket?.status === 'REFUND'
     //   ? [
     //     {
