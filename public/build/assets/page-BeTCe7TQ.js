@@ -1,0 +1,1 @@
+import{j as t}from"./app-BSNI_i52.js";import i from"./ticket-status-form-section-CqrAo0cg.js";import"./loading-CK6cN_BA.js";import"./select-DsZZ3LeN.js";import"./textarea-CFhRD8Ag.js";import"./tickets-thunk-dcasHGNN.js";import"./tickets-service-bhpJOmPK.js";import"./internals-service-B9kSbxh_.js";function u(){return t.jsx("div",{children:t.jsx(i,{})})}export{u as default};

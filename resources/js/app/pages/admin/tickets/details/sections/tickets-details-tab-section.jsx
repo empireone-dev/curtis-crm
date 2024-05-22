@@ -201,6 +201,7 @@ export default function TicketsDetailsTabSection({ account }) {
   const hash = '#' + page.url.split('#')[1]
   return (
     <div className=" font-sans h-full">
+      sss
       {/* <div className="px-8">
 
         <div className="w-full ">

@@ -1,0 +1,1 @@
+import{j as t}from"./app-BSNI_i52.js";import r from"./warraty-validation-section-CWqLGByp.js";import"./input-BUaA6w3z.js";import"./select-DsZZ3LeN.js";import"./receipt-service-FGVQZ4fA.js";import"./product-search-D02tyvLD.js";import"./loading-CK6cN_BA.js";function s(){return t.jsx("div",{children:t.jsx(r,{})})}export{s as default};

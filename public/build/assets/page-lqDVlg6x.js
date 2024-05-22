@@ -1,0 +1,1 @@
+import{j as r}from"./app-BSNI_i52.js";import{A as t}from"./administrator-layout-AnsG_dpu.js";import"./PowerIcon-BFOXoHvX.js";import"./TicketIcon-D0W2GAq8.js";import"./UserGroupIcon-Bwgo9oU7.js";import"./UserCircleIcon-DmclKAJ4.js";import"./Cog8ToothIcon-Cr552qo0.js";import"./user-service-BvMfdHDQ.js";function n(){return r.jsx(t,{children:"BupPage"})}export{n as default};

@@ -1,0 +1,1 @@
+import{j as t}from"./app-BSNI_i52.js";import{A as r}from"./administrator-layout-AnsG_dpu.js";import"./PowerIcon-BFOXoHvX.js";import"./TicketIcon-D0W2GAq8.js";import"./UserGroupIcon-Bwgo9oU7.js";import"./UserCircleIcon-DmclKAJ4.js";import"./Cog8ToothIcon-Cr552qo0.js";import"./user-service-BvMfdHDQ.js";function u(){return t.jsx(r,{children:"HttPage"})}export{u as default};
