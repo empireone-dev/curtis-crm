@@ -98,15 +98,15 @@ export default function TicketsDetailsTabSection() {
         },
       ]
       : []),
-    // ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
-    //   ? [
-    //     {
-    //       title: 'Repair',
-    //       components: <ContentsRepairPage />,
-    //       hash: '#repair',
-    //     },
-    //   ]
-    //   : []),
+    ...(ticket?.isUploading === 'true' && ticket?.status === 'REPAIR'
+      ? [
+        {
+          title: 'Repair',
+          components: <ContentsRepairPage />,
+          hash: '#repair',
+        },
+      ]
+      : []),
     // ...(ticket?.isUploading === 'true' && ticket?.status === 'AVAILABILITY'
     //   ? [
     //     {
