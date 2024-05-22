@@ -1,5 +1,4 @@
 import React from "react";
-import FilesUploadSection from "./sections/files-upload-section";
 import WarrantyFilesSection from "./sections/warranty-files-section";
 import TicketsDetailsLayout from "../ticket-content-layout";
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
@@ -10,7 +9,7 @@ import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 
 export default function TicketsDetailsContentFiles({ auth }) {
     const account = auth.user.role_id;
-   
+
     const MainLayout =
         account == 1
             ? AdministratorLayout
@@ -23,14 +22,11 @@ export default function TicketsDetailsContentFiles({ auth }) {
             : CurtisLayout;
     return (
         <MainLayout account={auth.user}>
-            {/* <AdministratorLayout> */}
             <div className="m-5 py-5">
-                {/* <FilesUploadSection />   */}
                 <TicketsDetailsLayout>
-                    <WarrantyFilesSection />
+                    {/* <WarrantyFilesSection /> */}
                 </TicketsDetailsLayout>
             </div>
-            {/* </AdministratorLayout> */}
         </MainLayout>
     );
 }

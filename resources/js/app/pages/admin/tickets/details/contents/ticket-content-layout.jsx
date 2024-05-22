@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Tab } from "@headlessui/react";
-import TicketsDetailsContentFiles from "../contents/files/page";
 import TicketsDetailsContentActivities from "../contents/activities/page";
 import TicketsDetailsContentStatus from "../contents/status/page";
 import TicketsDetailsContentDetails from "../contents/details/page";
