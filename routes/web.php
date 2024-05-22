@@ -116,9 +116,9 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
         })->name('admin.tickets.details.replacement_warranty');
 
-        Route::get('/details/{ticket_id}/replacement_status', function () {
-            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
-        })->name('admin.tickets.details.replacement_status');
+        // Route::get('/details/{ticket_id}/replacement_status', function () {
+        //     return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        // })->name('admin.tickets.details.replacement_status');
 
         Route::get('/details/{ticket_id}/status', function () {
             return Inertia::render('admin/tickets/details/contents/status/page');
@@ -196,7 +196,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/products/page');
     })->name('products');
 
-  
+
 
 
     Route::get('/asc', function () {
@@ -298,9 +298,9 @@ Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function
             return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
         })->name('warehouse.tickets.details.replacement_warranty');
 
-        Route::get('/details/{ticket_id}/replacement_status', function () {
-            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
-        })->name('warehouse.tickets.details.replacement_status');
+        // Route::get('/details/{ticket_id}/replacement_status', function () {
+        //     return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        // })->name('warehouse.tickets.details.replacement_status');
 
         Route::get('/details/{ticket_id}/status', function () {
             return Inertia::render('admin/tickets/details/contents/status/page');
@@ -386,9 +386,9 @@ Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
             return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
         })->name('asc.tickets.details.replacement_warranty');
 
-        Route::get('/details/{ticket_id}/replacement_status', function () {
-            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
-        })->name('asc.tickets.details.replacement_status');
+        // Route::get('/details/{ticket_id}/replacement_status', function () {
+        //     return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        // })->name('asc.tickets.details.replacement_status');
 
         Route::get('/details/{ticket_id}/status', function () {
             return Inertia::render('admin/tickets/details/contents/status/page');
@@ -482,9 +482,9 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
             return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
         })->name('agent.tickets.details.replacement_warranty');
 
-        Route::get('/details/{ticket_id}/replacement_status', function () {
-            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
-        })->name('agent.tickets.details.replacement_status');
+        // Route::get('/details/{ticket_id}/replacement_status', function () {
+        //     return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        // })->name('agent.tickets.details.replacement_status');
 
         Route::get('/details/{ticket_id}/status', function () {
             return Inertia::render('admin/tickets/details/contents/status/page');
@@ -570,9 +570,9 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
             return Inertia::render('admin/tickets/details/contents/replacement_warranty/page');
         })->name('curtis.tickets.details.replacement_warranty');
 
-        Route::get('/details/{ticket_id}/replacement_status', function () {
-            return Inertia::render('admin/tickets/details/contents/replacement_status/page');
-        })->name('tickets.details.replacement_status');
+        // Route::get('/details/{ticket_id}/replacement_status', function () {
+        //     return Inertia::render('admin/tickets/details/contents/replacement_status/page');
+        // })->name('tickets.details.replacement_status');
 
         Route::get('/details/{ticket_id}/status', function () {
             return Inertia::render('admin/tickets/details/contents/status/page');
