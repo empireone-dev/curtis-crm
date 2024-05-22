@@ -22,11 +22,9 @@ export default function TicketsDetailsContentFiles({ auth }) {
             : CurtisLayout;
     return (
         <MainLayout account={auth.user}>
-            <div className="m-5 py-5">
                 <TicketsDetailsLayout>
                     <WarrantyFilesSection />
                 </TicketsDetailsLayout>
-            </div>
         </MainLayout>
     );
 }

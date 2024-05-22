@@ -61,16 +61,6 @@ export default function TicketsDecisionMakingContent({ auth }) {
                 ) : (
                     !isLoading && (
                         <>
-                            {/* {
-                            ticket.country == 'CA' && <RepairSection />
-                        }
-                        <RepairSection />
-                        <div className="mt-7">
-                            <RefundSection />
-                        </div>
-                        <div className="mt-7">
-                            <ReplacementSection />
-                        </div> */}
                             <DecisionMakingSection />
                         </>
                     )

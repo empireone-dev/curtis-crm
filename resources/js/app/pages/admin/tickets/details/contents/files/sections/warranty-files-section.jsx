@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.customer_tickets)
-
+    
     return (
         <>
            {
@@ -21,20 +21,20 @@ export default function WarrantyFilesSection() {
                     <CustomerTicketsBillOfSaleSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsFrontOfTheUnitSection />
-                    {/* <div className="h-px my-8 border border-blue-500 w-full" />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsRearOfTheUnitSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReadableSerialSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsDefectIssueSection /> */}
+                    <CustomerTicketsDefectIssueSection />
                 </> : <>
-                    {/* <CustomerTicketsClearModel />
+                    <CustomerTicketsClearModel />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsPartsModel />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReceiptModel />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsSerialModel /> */}
+                    <CustomerTicketsSerialModel />
                 </>
             }
         </>

@@ -29,12 +29,10 @@ export default function TicketsDetailsContentNotes({auth}) {
             : CurtisLayout;
     return (
         <MainLayout account={auth.user}>
-            <div className="mx-3 py-1">
                 <TicketsDetailsLayout>
                     <ContentNotesTextareaSection />
                     <ContentNotesCommentSection />
                 </TicketsDetailsLayout>
-            </div>
         </MainLayout>
     );
 }
