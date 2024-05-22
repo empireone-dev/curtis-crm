@@ -48,7 +48,7 @@ export default function TicketCreateFormSection() {
         );
         const response = await store.dispatch(tickets_create_thunk());
         setLoading(false);
-        router.visit("/administrator/tickets?ticket_id=" + response.id);
+        router.visit("/administrator/tickets?search=" + response.id);
     }
 
     const findCountry = (countryName) => {
