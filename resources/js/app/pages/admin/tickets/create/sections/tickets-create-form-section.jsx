@@ -16,6 +16,7 @@ import Autocomplete from "@/app/layouts/components/autocomplete";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
+    const { user } = useSelector((state) => state.app);
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
 
@@ -27,7 +28,6 @@ export default function TicketCreateFormSection() {
             })
         );
     }
-
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
@@ -39,6 +39,7 @@ export default function TicketCreateFormSection() {
             setForm({
                 ...form,
                 status: null,
+                user:user,
                 created_from: "AGENT FORM",
                 email:
                     form.isHasEmail == "true" || form.isHasEmail == true

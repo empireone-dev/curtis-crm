@@ -233,6 +233,13 @@ class TicketController extends Controller
                 'status' => $validation
             ]));
 
+            Activity::create([
+                'user_id' => $request->user['id'],
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($request->all())
+            ]);
+
             $subject = '';
             $length = strlen($data->id);
             $id = '';
@@ -282,6 +289,13 @@ class TicketController extends Controller
                 'user_id' => $this->queueing(),
                 'status' => $validation
             ]));
+
+            Activity::create([
+                'user_id' => $request->user['id'],
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($request->all())
+            ]);
 
             $subject = '';
             $length = strlen($data->id);

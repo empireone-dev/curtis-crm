@@ -23,13 +23,13 @@ export default function TicketsDecisionMakingContent({ auth }) {
     const [isLoading, setIsLoading] = useState(true);
 
     async function get_specific_item() {
-        const result = await get_specific_item_service(ticket);
-        store.dispatch(
-            get_making_decision_thunk({
-                ...ticket,
-                ...result,
-            })
-        );
+        // const result = await get_specific_item_service(ticket);
+        // store.dispatch(
+        //     get_making_decision_thunk({
+        //         ...ticket,
+        //         ...result,
+        //     })
+        // );
         setIsLoading(false);
     }
 

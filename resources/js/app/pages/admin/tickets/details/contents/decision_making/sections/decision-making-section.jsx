@@ -15,6 +15,7 @@ import {
 } from "@/app/services/desicion-making-service";
 import { router } from "@inertiajs/react";
 import routing from "../../../components/routing";
+import { get_specific_item_service } from "@/app/services/product-search";
 
 export default function DecisionMakingSection() {
     const { user } = useSelector((state) => state.app);
@@ -27,6 +28,7 @@ export default function DecisionMakingSection() {
 
     useEffect(() => {
         async function get_decision_making(params) {
+            const result = await get_specific_item_service(ticket);
             const response = await get_decision_making_by_ticket_id(ticket.id);
             if (response.status) {
                 setData({
@@ -35,6 +37,7 @@ export default function DecisionMakingSection() {
                     id: ticket.id,
                     user_id: user.id,
                     emp_id: user.emp_id,
+                    ...result
                 });
             } else {
                 setData({
@@ -45,12 +48,13 @@ export default function DecisionMakingSection() {
                     id: ticket.id,
                     user_id: user.id,
                     emp_id: user.emp_id,
+                    ...result
                 });
             }
         }
         get_decision_making();
     }, []);
-
+console.log('data',data)
     function formHandler(value, name) {
         if (name == "wysiwyg") {
             setData({
