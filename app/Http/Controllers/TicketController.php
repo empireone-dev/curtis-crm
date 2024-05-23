@@ -237,7 +237,7 @@ class TicketController extends Controller
                 'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
                 'type' => 'TICKET CREATED',
-                'message' => json_encode($request->all())
+                'message' => json_encode($data)
             ]);
 
             $subject = '';
@@ -294,7 +294,7 @@ class TicketController extends Controller
                 'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
                 'type' => 'TICKET CREATED',
-                'message' => json_encode($request->all())
+                'message' => json_encode($data)
             ]);
 
             $subject = '';

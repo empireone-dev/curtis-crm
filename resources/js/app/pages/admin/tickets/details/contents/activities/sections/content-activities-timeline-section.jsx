@@ -12,6 +12,7 @@ import ContentActivitiesInternalsComponents from "../components/content-activiti
 import ContentActivitiesReplacementPartsComponents from "../components/content-activities-replacement-parts-components";
 import ContentActivitiesAvailabilityComponents from "../components/content-activities-availability-components";
 import ContentActivitiesClosedComponents from "../components/content-activities-closed-components";
+import ContentActivitiesCreatedTicketComponents from "../components/content-activities-created-components";
 
 export default function ContentActivitiesTimelineSection() {
     const { activities } = useSelector((state) => state.tickets);
@@ -33,7 +34,7 @@ export default function ContentActivitiesTimelineSection() {
                                     </span>
                                 </h3>
                                 <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                Validated on
+                                    Validated on{" "}
                                     {moment(res.created_at).format("LLL")}
                                 </time>
                                 {/* <p className="mb-4 text-base font-normal text-gray-500">
@@ -56,7 +57,7 @@ export default function ContentActivitiesTimelineSection() {
                                     </span>
                                 </h3>
                                 <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                Resourced on{" "}
+                                    Resourced on{" "}
                                     {moment(res.created_at).format("LLL")}
                                 </time>
                                 <ContentActivitiesDecisionMakingComponents
@@ -223,6 +224,24 @@ export default function ContentActivitiesTimelineSection() {
                             </li>
                         );
                         break;
+                        case "TICKET CREATED":
+                            return (
+                                <li key={i} className="mb-10 ms-6">
+                                    <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                        #{res?.user?.emp_id}
+                                        <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                            {formattedTimestamp}
+                                        </span>
+                                    </h3>
+                                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                       Ticket Created on{" "}
+                                        {moment(res.created_at).format("LLL")}
+                                    </time>
+                                    <ContentActivitiesCreatedTicketComponents data={res} />
+                                </li>
+                            );
+                            break;
                     default:
                         break;
                 }
