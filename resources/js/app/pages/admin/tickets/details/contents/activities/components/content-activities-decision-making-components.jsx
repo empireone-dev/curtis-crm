@@ -107,12 +107,12 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                             $ {result?.decision_making?.repair_cost ?? 0}.00
                         </div>
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         Repair Notes:
                         <div className="font-bold indent-8">
                             {result?.decision_making?.repair_notes ?? ""}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
@@ -166,12 +166,12 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                             {result?.date ?? ""}
                         </div>
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         Repair Notes:
                         <div className="font-bold indent-8">
                             {result?.refund_notes ?? ""}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
@@ -217,7 +217,7 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                     </div>
 
                     <div className="flex flex-col">
-                        Repair Notes:
+                        Resource Notes:
                         <div className="font-bold indent-8">
                             {result?.replacement_notes ?? ""}
                         </div>

@@ -37,7 +37,7 @@ export default function DecisionMakingSection() {
                     id: ticket.id,
                     user_id: user.id,
                     emp_id: user.emp_id,
-                    ...result
+                    ...result,
                 });
             } else {
                 setData({
@@ -48,13 +48,13 @@ export default function DecisionMakingSection() {
                     id: ticket.id,
                     user_id: user.id,
                     emp_id: user.emp_id,
-                    ...result
+                    ...result,
                 });
             }
         }
         get_decision_making();
     }, []);
-console.log('data',data)
+    console.log("data", data);
     function formHandler(value, name) {
         if (name == "wysiwyg") {
             setData({
@@ -195,7 +195,7 @@ console.log('data',data)
                                         errorMessage="Repair Cost is required"
                                     />
 
-                                    <Input
+                                    {/* <Input
                                         onChange={formHandler}
                                         name="repair_notes"
                                         span=""
@@ -204,7 +204,7 @@ console.log('data',data)
                                         label="Notes"
                                         type="text"
                                         // errorMessage="Notes is required"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>
@@ -302,7 +302,7 @@ console.log('data',data)
                                         // errorMessage="Mail Date is required"
                                     />
                                 </div>
-                                <Input
+                                {/* <Input
                                     onChange={formHandler}
                                     name="refund_notes"
                                     span=""
@@ -311,7 +311,7 @@ console.log('data',data)
                                     label="Notes"
                                     type="text"
                                     // errorMessage="Notes is required"
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>
@@ -466,17 +466,6 @@ console.log('data',data)
                                         ]}
                                     />
 
-                                    <Input
-                                        onChange={formHandler}
-                                        name="replacement_notes"
-                                        span=""
-                                        // required={false}
-                                        value={data?.replacement_notes ?? ""}
-                                        label="Notes"
-                                        type="text"
-                                        // errorMessage="Notes is required"
-                                    />
-
                                     <Select
                                         onChange={formHandlerTemplates}
                                         name="email_template"
@@ -582,6 +571,21 @@ console.log('data',data)
                                                 </div>
                                             </div>
                                         ))}
+
+                                    <div className="mt-10">
+                                        <Input
+                                            onChange={formHandler}
+                                            name="replacement_notes"
+                                            span=""
+                                            // required={false}
+                                            value={
+                                                data?.replacement_notes ?? ""
+                                            }
+                                            label="Resource Notes"
+                                            type="text"
+                                            // errorMessage="Notes is required"
+                                        />
+                                    </div>
                                     <button
                                         onClick={submit_form}
                                         className="p-3 bg-blue-600 hover:bg-blue-700  w-full font-bold text-white rounded-sm my-8"

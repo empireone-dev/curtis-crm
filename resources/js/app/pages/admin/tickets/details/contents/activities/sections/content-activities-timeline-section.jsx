@@ -33,7 +33,7 @@ export default function ContentActivitiesTimelineSection() {
                                     </span>
                                 </h3>
                                 <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                    Created on
+                                Validated on
                                     {moment(res.created_at).format("LLL")}
                                 </time>
                                 {/* <p className="mb-4 text-base font-normal text-gray-500">
@@ -56,7 +56,7 @@ export default function ContentActivitiesTimelineSection() {
                                     </span>
                                 </h3>
                                 <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                    Created on{" "}
+                                Resourced on{" "}
                                     {moment(res.created_at).format("LLL")}
                                 </time>
                                 <ContentActivitiesDecisionMakingComponents
