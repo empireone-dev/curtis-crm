@@ -5,7 +5,7 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
 
-    console.log("data", result);
+    console.log("datasssss", result);
     return (
         <div>
             <button
@@ -121,55 +121,55 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                     <div className="flex gap-2">
                         Cost of Refund:
                         <div className="font-bold border-red-500 border my-1 px-2 rounded-md">
-                            $ {result?.decision_making?.cost_refund ?? 0}.00
+                            $ {result?.cost_refund ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Repair Cost:
                         <div className="font-bold">
-                            $ {result?.decision_making?.repair_cost ?? 0}.00
+                            $ {result?.repair_cost ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Retailer's Price:
                         <div className="font-bold">
-                            $ {result?.decision_making?.retailers_price ?? 0}.00
+                            $ {result?.retailers_price ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Discount:
                         <div className="font-bold">
-                            $ {result?.decision_making?.discount ?? 0}.00
+                            $ {result?.discount ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Price After Discount:
                         <div className="font-bold">
-                            $ {result?.decision_making?.after_discount ?? 0}.00
+                            $ {result?.after_discount ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Cheque #:
                         <div className="font-bold">
-                            {result?.decision_making?.cheque_no ?? 0}
+                            {result?.cheque_no ?? 0}
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Cheque Amount:
                         <div className="font-bold">
-                            $ {result?.decision_making?.cheque_amount ?? 0}.00
+                            $ {result?.cheque_amount ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Mail Date:
                         <div className="font-bold">
-                            {result?.decision_making?.date ?? ""}
+                            {result?.date ?? ""}
                         </div>
                     </div>
                     <div className="flex flex-col">
                         Repair Notes:
                         <div className="font-bold indent-8">
-                            {result?.decision_making?.refund_notes ?? ""}
+                            {result?.refund_notes ?? ""}
                         </div>
                     </div>
                 </div>
@@ -180,46 +180,46 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                     <div className="flex gap-2">
                         Cost of Unit
                         <div className="font-bold">
-                            $ {result?.decision_making?.cost_of_unit ?? 0}.00
+                            $ {result?.cost_of_unit ?? 0}.00
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Cube Weight
                         <div className="font-bold">
-                            {result?.decision_making?.cube_weight ?? 0}
+                            {result?.cube_weight ?? 0}
                         </div>
                     </div>
                     <div className="flex items-start justify-between border-2 border-black p-1 rounded-sm">
                         <div className="flex gap-2">
                             Length
                             <div className="font-bold">
-                                {result?.decision_making?.repair_cost ?? ""}
+                                {result?.length ?? ""}
                             </div>
                         </div>
                         <div className="flex gap-2">
                             Width
                             <div className="font-bold">
-                                {result?.decision_making?.repair_cost ?? ""}
+                                {result?.width ?? ""}
                             </div>
                         </div>
                         <div className="flex gap-2">
                             height
                             <div className="font-bold">
-                                {result?.decision_making?.repair_cost ?? ""}
+                                {result?.height ?? ""}
                             </div>
                         </div>
                     </div>
                     <div className="flex gap-2">
                         Shipping Cost
                         <div className="font-bold border-red-500 border my-1 px-2 rounded-md">
-                            $ {result?.decision_making?.shipping_cost ?? 0}
+                            $ {result?.shipping_cost ?? 0}
                         </div>
                     </div>
 
                     <div className="flex flex-col">
                         Repair Notes:
                         <div className="font-bold indent-8">
-                            {result?.decision_making?.replacement_notes ?? ""}
+                            {result?.replacement_notes ?? ""}
                         </div>
                     </div>
                 </div>
