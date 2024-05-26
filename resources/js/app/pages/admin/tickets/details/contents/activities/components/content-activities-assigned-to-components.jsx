@@ -4,14 +4,13 @@ import React, { useState } from "react";
 export default function ContentActivitiesAssignedToComponents({ data }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
-console.log('datadatadata',data)
     return (
         <div>
             <button
                 onClick={() => setOpen(!open)}
                 className={`bg-yellow-700  hover:bg-yellow-800 p-3 rounded-md text-white`}
             >
-                TICKET {data.type} {`( ${result.status} )`}
+                TICKET {data.type} {result.status}
             </button>
             <Modal
                 open={open}
@@ -23,7 +22,7 @@ console.log('datadatadata',data)
                 <div className="flex flex-col w-full my-4">
                     <div className="flex gap-3 items-center justify-between my-3">
                         <div className="font-black">
-                            TICKET INFORMATION 
+                            TICKET INFORMATION
                             <div
                                 className={`text-yellow-700 border rounded-md border-yellow-700 items-center justify-center flex px-3`}
                             >
