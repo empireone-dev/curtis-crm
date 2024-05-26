@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Mail;
 class EmailTemplateController extends Controller
 {
 
+    public function store(Request $request)
+    {
+        $email_template = ModelsEmailTemplate::create([
+           'template_name'=>$request->template_name,
+           'template_text'=>$request->template_text,
+        ]);
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $email_template
+        ], 200);
+    }
     public function show($id)
     {
         $email_template = ModelsEmailTemplate::find($id);
