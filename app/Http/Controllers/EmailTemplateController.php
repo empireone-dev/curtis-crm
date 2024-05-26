@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Mail;
 class EmailTemplateController extends Controller
 {
 
+    public function show($id)
+    {
+        $email_template = ModelsEmailTemplate::find($id);
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $email_template
+        ], 200);
+    }
     public function index()
     {
         $email_template = ModelsEmailTemplate::get();
@@ -43,11 +52,11 @@ class EmailTemplateController extends Controller
 
     public function update(Request $request, $id)
     {
-        $email_template = ModelsEmailTemplate::find($id);
+        $email_template = ModelsEmailTemplate::where('id',$id)->first();
         $email_template->update($request->all());
 
         return response()->json([
-            'data' => $this->index()->original['data']
+            'data' => $email_template
         ], 200);
     }
 

@@ -184,6 +184,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/email_template/page');
     })->name('email_template');
 
+    Route::get('/email_template/{id}', function () {
+        return Inertia::render('admin/email_template/id/page');
+    })->name('email_template.id');
+
     Route::get('/item_types', function () {
         return Inertia::render('admin/item_types/page');
     })->name('item_types');

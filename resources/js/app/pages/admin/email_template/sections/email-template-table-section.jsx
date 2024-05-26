@@ -68,13 +68,9 @@ export default function EmailtemplateTableSection() {
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500  justify-center items-center">
                                                 Name
                                             </th>
-                                            <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500  justify-center items-center">
-                                                Template
-                                            </th>
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-right rtl:text-right text-gray-500  justify-center items-center">
                                                 Action
                                             </th>
-
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 ">
@@ -91,16 +87,7 @@ export default function EmailtemplateTableSection() {
                                                             <h2 className="font-medium text-gray-800">{res.template_name}</h2>
                                                         </div>
                                                     </td>
-                                                    <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800">
-                                                                <button className="flex bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-lg h-9 shadow-sm shadow-black">
-                                                                    <DocumentTextIcon className='h-5'/>
-                                                                    <span>VIEW TEMPLATE</span>
-                                                                </button>
-                                                            </h2>
-                                                        </div>
-                                                    </td>
+                                                 
                                                     <td className="px-4 text-sm whitespace-nowrap flex items-center justify-end gap-2 py-2">
                                                         <EmailTemplateEditSection data={res} />
                                                         <EmailTemplateDeleteSection data={res} />

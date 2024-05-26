@@ -20,6 +20,11 @@ export async function update_email_template_service(data){
     return res.data;
 }
 
+export async function get_email_template_by_id_service(id){
+    const res = await axios.get(`/api/email_templates/${id}`);
+    return res.data;
+}
+
 export async function validation_service(data){
     const res = await axios.post(`/api/validation`,data);
     return res.data;

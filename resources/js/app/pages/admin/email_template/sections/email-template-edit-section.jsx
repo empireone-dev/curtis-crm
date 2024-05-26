@@ -4,6 +4,7 @@ import { PencilSquareIcon as SolidPencilSquareIcon } from '@heroicons/react/24/s
 import React, { useEffect, useState } from 'react'
 import { update_email_templates_thunk } from '../redux/email-template-thunk';
 import store from '@/app/store/store';
+import { router } from '@inertiajs/react';
 
 export default function EmailTemplateEditSection({ data }) {
     const [id, setId] = useState('');
@@ -58,7 +59,7 @@ export default function EmailTemplateEditSection({ data }) {
     return (
         <div>
             <button
-                onClick={() => setOpen(true)}
+                onClick={() => router.visit('/administrator/email_template/'+data.id)}
                 type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center"
                 onMouseEnter={(e) => handleMouseEnter(e)}
                 onMouseLeave={() => handleMouseLeave()}>
@@ -67,7 +68,7 @@ export default function EmailTemplateEditSection({ data }) {
                 <span className="tooltip bg-black text-white text-md rounded-xl p-3 absolute z-50" style={{ top: tooltipPosition.y + window.pageYOffset, left: tooltipPosition.x }}>Edit Email Template</span>
             )}
             </button>
-            <Drawer
+            {/* <Drawer
                 open={open}
                 setOpen={setOpen}
                 title="Edit Email Template"
@@ -94,7 +95,7 @@ export default function EmailTemplateEditSection({ data }) {
                         <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                     </div>
                 </form>
-            </Drawer>
+            </Drawer> */}
         </div>
     )
 }

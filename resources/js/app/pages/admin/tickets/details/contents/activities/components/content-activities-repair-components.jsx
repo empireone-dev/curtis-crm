@@ -48,6 +48,12 @@ export default function ContentActivitiesRepairComponents({ data }) {
                             </div>
                         </div>
                         <div className="flex gap-2">
+                            Ticket ID #:
+                            <div className="font-bold">
+                                {data?.ticket?.ticket_id ?? ""}
+                            </div>
+                        </div>
+                        <div className="flex gap-2">
                             Email:
                             <div className="font-bold">
                                 {data?.ticket?.email ?? ""}

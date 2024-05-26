@@ -18,8 +18,8 @@ export function delete_email_templates_thunk(id) {
 
 export function update_email_templates_thunk(data) {
   return async function (dispatch, getState) {
-
    const result = await update_email_template_service(data)
    dispatch(emailTemplatesSlice.actions.setEmailTemplates(result.data));
   };
 }
+
