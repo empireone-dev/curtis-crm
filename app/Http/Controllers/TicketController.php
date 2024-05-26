@@ -110,15 +110,20 @@ class TicketController extends Controller
 
         $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
 
-        if ($request->data) {
+        if ($request->from == 'warehouse') {
             Activity::create([
-                'user_id' => $request->data['account']['id'],
+                'user_id' => $request->user_id,
                 'ticket_id' => $id,
-                'type' => 'REPLACEMENT NOT SHIPPED',
+                'type' => 'WAREHOUSE RECEIVED',
                 'message' => json_encode(array_merge($ticketArray, ['replacement' => $request->data]))
             ]);
         }
-
+        Activity::create([
+            'user_id' => $request->user_id,
+            'ticket_id' => $id,
+            'type' => 'ASSIGNED TO',
+            'message' => json_encode(array_merge($ticketArray, ['data' => $request->all()]))
+        ]);
         return response()->json([
             'result' => $ticket
         ], 200);

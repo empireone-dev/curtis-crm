@@ -35,10 +35,10 @@ export function get_tickets_thunk(search) {
 }
 
 
-export function update_tickets_status_thunk(id, status,data) {
+export function update_tickets_status_thunk(id, status,data,from) {
   return async function (dispatch, getState) {
     const { user } = getState().app
-    const result = await update_tickets_status_service(id, status, user.id,data)
+    const result = await update_tickets_status_service(id, status, user.id,data,from)
     dispatch(customerTicketsSlice.actions.setTicket(result));
     dispatch(ticketsSlice.actions.setTicket(result));
   };

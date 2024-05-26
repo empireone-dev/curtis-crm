@@ -3,7 +3,6 @@ import Textarea from "@/app/layouts/components/textarea";
 import store from "@/app/store/store";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_tickets_status_thunk } from "../../../../_redux/tickets-thunk";
 import { router } from "@inertiajs/react";
 import { patch_warranty_checkque_shipped_service } from "@/app/services/refund-service";
 import { setTicket } from "../../../../_redux/tickets-slice";

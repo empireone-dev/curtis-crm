@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import reasons from "@/app/json/reason.json";
 import Select from "@/app/layouts/components/select";
-import store from "@/app/store/store";
-import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
 import { close_ticket_service } from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
 import routing from "../../../../components/routing";

@@ -13,7 +13,7 @@ export default function WarehouseReceivedButton() {
     async function received_item() {
         if (confirm('Are you sure you want to receive the item?')) {
             setIsLoading(true)
-            await store.dispatch(update_tickets_status_thunk(ticket.id, ticket.decision_status))
+            await store.dispatch(update_tickets_status_thunk(ticket.id, ticket.decision_status,null,'warehouse'))
             setIsLoading(false)
             router.visit(routing(ticket.decision_status.toLowerCase()));
         }

@@ -3,7 +3,6 @@ import { patch_warranty_checkque_shipped_service } from "@/app/services/refund-s
 import { router } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update_tickets_status_thunk } from "../../../../_redux/tickets-thunk";
 import store from "@/app/store/store";
 import Input from "@/app/layouts/components/input";
 import Loading from "@/app/layouts/components/loading";

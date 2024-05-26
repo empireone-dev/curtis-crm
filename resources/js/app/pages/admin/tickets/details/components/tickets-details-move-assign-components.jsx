@@ -4,6 +4,7 @@ import { update_tickets_status_thunk } from "../../_redux/tickets-thunk";
 import Loading from "@/app/layouts/components/loading";
 import { router, usePage } from "@inertiajs/react";
 import { useSelector } from "react-redux";
+import routing from "./routing";
 
 export default function TicketsDetailsMoveAssignComponents({
     name,
@@ -28,13 +29,15 @@ export default function TicketsDetailsMoveAssignComponents({
             await store.dispatch(update_tickets_status_thunk(ticket.id, value));
             setIsLoading(false);
             if (user.role_id == 3) {
-                router.visit(
-                    `/administrator/tickets/details/${ticket.id}/files`
-                );
+                router.visit(routing("files"));
+                // router.visit(
+                //     `/administrator/tickets/details/${ticket.id}/files`
+                // );
             } else {
-                router.visit(
-                    `/administrator/tickets/details/${ticket.id}/${link}`
-                );
+                router.visit(routing(`${link}`));
+                // router.visit(
+                //     `/administrator/tickets/details/${ticket.id}/${link}`
+                // );
             }
         }
         

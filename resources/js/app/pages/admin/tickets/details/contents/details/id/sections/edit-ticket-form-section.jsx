@@ -15,7 +15,6 @@ import {
     get_tickets_by_ticket_id,
     update_tickets_by_user_id,
 } from "@/app/services/tickets-service";
-import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
 import ReasonToClose from "./reason-to-close";
 import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 
