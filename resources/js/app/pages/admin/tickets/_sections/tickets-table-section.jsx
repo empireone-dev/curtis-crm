@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
@@ -11,6 +11,9 @@ export default function TicketTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const [current, setCurrent] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -20,7 +23,7 @@ export default function TicketTableSection() {
         clearFilters();
         setSearchText("");
     };
-
+    console.log("waa", tickets);
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
             setSelectedKeys,
@@ -138,9 +141,9 @@ export default function TicketTableSection() {
     //     ...tickets.map(res => res.id),
     // }
     // console.log('datas', datas)
-    const data = tickets.map((res,i)=>({
+    const data = tickets?.data?.map((res, i) => ({
         ...res,
-        key:res.id
+        key: res.id,
     }));
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
     const columns = [
@@ -263,6 +266,35 @@ export default function TicketTableSection() {
             },
         },
     ];
+    // const handleTableChange = (pagination) => {
+    //     setCurrent(pagination.current);
+    //     setPageSize(pagination.pageSize);
+    // };
 
-    return <Table columns={columns} dataSource={data} />;
+    const url = window.location.pathname + window.location.search;
+
+    const getQueryParam = (url, paramName) => {
+        const searchParams = new URLSearchParams(url.split("?")[1]);
+        return searchParams.get(paramName);
+    };
+
+    const page = getQueryParam(url, "page");
+    const paginationConfig = {
+        current: page,
+        pageSize: pageSize,
+        total: tickets?.last_page?? 0 * pageSize,
+        onChange: (page, pageSize) => {
+            router.visit(window.location.pathname + `?page=${page}`);
+            setCurrent(page);
+            setPageSize(pageSize);
+        },
+    };
+
+    return (
+        <Table
+            columns={columns}
+            pagination={paginationConfig}
+            dataSource={data}
+        />
+    );
 }

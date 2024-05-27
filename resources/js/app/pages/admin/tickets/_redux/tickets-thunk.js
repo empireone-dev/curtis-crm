@@ -29,7 +29,8 @@ export function get_tickets_thunk(search) {
   return async function (dispatch, getState) {
     // const { search } = getState().tickets
     const result = await get_tickets_service(search)
-    dispatch(ticketsSlice.actions.setTickets(result.data));
+
+    dispatch(ticketsSlice.actions.setTickets(result));
     return result;
   };
 }
