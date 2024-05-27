@@ -282,7 +282,7 @@ export default function TicketTableSection() {
     const paginationConfig = {
         current: page,
         pageSize: pageSize,
-        total: tickets?.last_page?? 0 * pageSize,
+        total: tickets?.last_page * pageSize,
         onChange: (page, pageSize) => {
             router.visit(window.location.pathname + `?page=${page}`);
             setCurrent(page);
