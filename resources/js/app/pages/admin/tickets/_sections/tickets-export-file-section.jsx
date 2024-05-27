@@ -23,7 +23,7 @@ export default function TicketsExportFileSection() {
                 get_tickets_thunk(window.location.search)
             );
             const allTickets = [];
-            for (let i = 1; i <= res.total; i++) {
+            for (let i = 1; i <= res.last_page; i++) {
                 const ticketsOnPage = await fetchTickets(i);
                 allTickets.push(...ticketsOnPage);
             }
