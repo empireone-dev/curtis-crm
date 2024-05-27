@@ -1,14 +1,14 @@
-import { Cog8ToothIcon, PowerIcon } from '@heroicons/react/24/outline'
-import { Link, usePage } from '@inertiajs/react'
-import React from 'react'
+import SearchTicketSection from "@/app/pages/sections/search-ticket-section";
+import { Cog8ToothIcon, PowerIcon } from "@heroicons/react/24/outline";
+import { Link, usePage } from "@inertiajs/react";
+import React from "react";
 
 export default function LayoutSubSidebarSection() {
-    const { component } = usePage()
-    const path = component.split('/')[1]
+    const { component } = usePage();
+    const path = component.split("/")[1];
     return (
         <div>
             <div className="flex flex-col flex-shrink-0 h-full px-2 py-4 border-r  bg-slate-200">
-
                 <div className="flex-shrink-0">
                     <a
                         href="#"
@@ -18,10 +18,7 @@ export default function LayoutSubSidebarSection() {
                     </a>
                 </div>
                 <div className="flex flex-col items-center justify-center flex-1 space-y-4">
-
-                    <button
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
-                    >
+                    <button className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800">
                         <span className="sr-only">Open Notification panel</span>
                         <svg
                             className="w-7 h-7"
@@ -40,41 +37,26 @@ export default function LayoutSubSidebarSection() {
                         </svg>
                     </button>
 
-                    <button
+                    <SearchTicketSection />
 
-                        className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
+                    <Link
+                        href="/administrator/settings"
+                        className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${
+                            path == "settings"
+                                ? "bg-blue-500 text-white"
+                                : "hover:bg-blue-100 hover:text-blue-600"
+                        }  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}
                     >
-                        <span className="sr-only">Open search panel</span>
-                        <svg
-                            className="w-7 h-7"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </button>
-
-                    <Link href='/administrator/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-500 text-white' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
-                        <Cog8ToothIcon className=' h-8 ' />
+                        <Cog8ToothIcon className=" h-8 " />
                     </Link>
-
                 </div>
 
                 <div className="relative flex items-center justify-center flex-shrink-0">
-
                     <div className="" x-data="{ open: false }">
                         <Link
                             method="post"
                             as="button"
-                            href={route('logout')}
+                            href={route("logout")}
                             className="block transition-opacity duration-200 rounded-full text-blue-800 hover:text-white"
                         >
                             <span className="sr-only">User menu</span>
@@ -83,13 +65,11 @@ export default function LayoutSubSidebarSection() {
                                 src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"
                                 alt="Ahmed Kamel"
                             /> */}
-                            <PowerIcon className='h-6' />
+                            <PowerIcon className="h-6" />
                         </Link>
-
                     </div>
                 </div>
             </div>
-
         </div>
-    )
+    );
 }

@@ -163,10 +163,11 @@ class TicketController extends Controller
                         $query->orWhere([[$column, '=',  $searchQuery]]);
                     }
                 }
+                $query->orWhere('ticket_id', '=', '#' . $searchQuery);
             });
         }
+
         $query->orderBy('created_at', 'desc');
-        // Paginate the results
         $data = $query->paginate(10);
 
         return response()->json([

@@ -173,7 +173,7 @@ export default function EmailtemplateTableSection() {
                     </div>
                 </div>
 
-                <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
+                {/* <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
                     <div className="text-sm text-gray-500 ">
                         Page{" "}
                         <span className="font-medium text-gray-700 ">
@@ -226,7 +226,7 @@ export default function EmailtemplateTableSection() {
                             </svg>
                         </a>
                     </div>
-                </div>
+                </div> */}
             </section>
         </>
     );
