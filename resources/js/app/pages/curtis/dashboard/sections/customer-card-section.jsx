@@ -31,33 +31,31 @@ import CurtisCardsComponent from "../components/curtis-cards-component";
 import { administrator_dashboard_service } from "@/app/services/dashboard-service";
 
 export default function CustomerCardsSection({ account }) {
-    const [data, setData] = useState({})
+    const [data, setData] = useState({});
     useEffect(() => {
         async function get_tile(params) {
-            const res = await administrator_dashboard_service()
-            console.log('resres',res)
-            setData(res)
+            const res = await administrator_dashboard_service();
+            setData(res);
         }
-        get_tile()
+        get_tile();
     }, []);
     return (
-        <div className="mt-12 mr-3">
-           <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mr-3 px-5">
+            <div className="text-3xl font-black my-8">Warranty Claim</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
-                    title="Parts"
-                    count={data.parts ?? 0}
-                    icon={<CpuChipIcon className="h-10 text-white" />}
+                    title="Warranty Validation"
+                    link="WARRANTY VALIDATION"
+                    count={data.warranty_validation ?? 0}
+                    icon={<ListBulletIcon className="h-10 text-white" />}
                 />
                 <CurtisCardsComponent
-                    title="RMA Request"
-                    count="100"
-                    icon={<ArrowsRightLeftIcon className="h-10 text-white" />}
-                />
-                <CurtisCardsComponent
-                    title="Refund Tickets"
-                    link="REFUND"
-                    count={data.refund ?? 0}
-                    icon={<BanknotesIcon className="h-10 text-white" />}
+                    title="Resouce Team"
+                    count={data.resource ?? 0}
+                    link="RESOURCE"
+                    icon={
+                        <ArchiveBoxArrowDownIcon className="h-10 text-white" />
+                    }
                 />
                 <CurtisCardsComponent
                     title="ASC Tickets"
@@ -65,12 +63,53 @@ export default function CustomerCardsSection({ account }) {
                     count={data.repair ?? 0}
                     icon={<TicketIcon className="h-10 text-white" />}
                 />
-                {/*  */}
                 <CurtisCardsComponent
-                    title="Replacement For Warranty"
+                    title="Refund Tickets"
+                    link="REFUND"
+                    count={data.refund ?? 0}
+                    icon={<BanknotesIcon className="h-10 text-white" />}
+                />
+
+                <CurtisCardsComponent
+                    title="Replacement"
                     link="REPLACEMENT"
                     count={data.replacement ?? 0}
                     icon={<TagIcon className="h-10 text-white" />}
+                />
+                <CurtisCardsComponent
+                    title="Repair"
+                    count={data.repair}
+                    icon={<CheckBadgeIcon className="h-10 text-white" />}
+                />
+                <CurtisCardsComponent
+                    title="Processed Tickets for Warranty"
+                    count={data.warranty_process_ticket ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
+
+                <CurtisCardsComponent
+                    title="Close Tickets for Warranty"
+                    link="CLOSED"
+                    count={data.warranty_closed ?? 0}
+                    icon={<XMarkIcon className="h-10 text-white" />}
+                />
+            </div>
+            <div className="text-3xl font-black my-8">Parts</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <CurtisCardsComponent
+                    title="Parts Validation"
+                    link="PARTS VALIDATION"
+                    count={data.parts_validation ?? 0}
+                    icon={
+                        <AdjustmentsHorizontalIcon className="h-10 text-white" />
+                    }
+                />
+
+                <CurtisCardsComponent
+                    title="Check Availability"
+                    link="INTERNALS"
+                    count={data.internals ?? 0}
+                    icon={<CheckCircleIcon className="h-10 text-white" />}
                 />
 
                 <CurtisCardsComponent
@@ -79,46 +118,41 @@ export default function CustomerCardsSection({ account }) {
                     count={data.replacement_parts ?? 0}
                     icon={<Cog6ToothIcon className="h-10 text-white" />}
                 />
+                <CurtisCardsComponent
+                    title="Processed Tickets For Parts"
+                    count={data.parts_process_ticket ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
+                <CurtisCardsComponent
+                    title="Updates From Curtis"
+                    link="AVAILABILITY"
+                    count={data.updates_curtis ?? 0}
+                    icon={<ComputerDesktopIcon className="h-10 text-white" />}
+                />
+                <CurtisCardsComponent
+                    title="Closed Tickets For Parts"
+                    count={data.parts_closed}
+                    icon={<UserCircleIcon className="h-10 text-white" />}
+                />
+            </div>
+            <div className="text-3xl font-black my-8">Technical Support</div>
 
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
-                    title="US Warehouse"
-                    link="US WAREHOUSE"
-                    count={data.warehouse_us ?? 0}
-                    icon={<HomeModernIcon className="h-10 text-white" />}
-                />
-
-                <CurtisCardsComponent
-                    title="CA Warehouse"
-                    link="CA WAREHOUSE"
-                    count={data.warehouse_ca ?? 0}
-                    icon={<HomeIcon className="h-10 text-white" />}
-                />
-                {/*  */}
-
-                <CurtisCardsComponent
-                    title="Unseen Customer Email Tickets"
-                    count="100"
-                    icon={<AtSymbolIcon className="h-10 text-white" />}
-                />
-
-                <CurtisCardsComponent
-                    title="Customer Responded"
-                    count="100"
-                    icon={<UserGroupIcon className="h-10 text-white" />}
-                />
-
-                <CurtisCardsComponent
-                    title="Incomplete Information"
-                    count="100"
-                    icon={<IdentificationIcon className="h-10 text-white" />}
+                    title="Technical"
+                    link="TECH VALIDATION"
+                    count={data.technical ?? 0}
+                    icon={<WrenchScrewdriverIcon className="h-10 text-white" />}
                 />
                 <CurtisCardsComponent
-                    title="Close Tickets"
-                    link="CLOSED"
-                    count={data.close ?? 0}
-                    icon={<XMarkIcon className="h-10 text-white" />}
+                    title="Close Ticket for Technical"
+                    link="Close"
+                    count={data.tech_closed ?? 0}
+                    icon={<WrenchScrewdriverIcon className="h-10 text-white" />}
                 />
-                {/*  */}
+            </div>
+            <div className="text-3xl font-black my-8">Curtis Internal</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
                     title="Willing To Buy"
                     link="CALLBACK"
@@ -132,22 +166,35 @@ export default function CustomerCardsSection({ account }) {
                     count={data.internals ?? 0}
                     icon={<CheckCircleIcon className="h-10 text-white" />}
                 />
+            </div>
+            <div className="text-3xl font-black my-8">Warehouse</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
-                    title="Updates From Curtis"
-                    link="AVAILABILITY"
-                    count={data.updates_curtis ?? 0}
-                    icon={<ComputerDesktopIcon className="h-10 text-white" />}
+                    title="CA Warehouse"
+                    link="CA WAREHOUSE"
+                    count={data.warehouse_ca ?? 0}
+                    icon={<HomeIcon className="h-10 text-white" />}
                 />
                 <CurtisCardsComponent
-                    title="Repair Success"
-                    count="100"
-                    icon={<CheckBadgeIcon className="h-10 text-white" />}
+                    title="US Warehouse"
+                    link="US WAREHOUSE"
+                    count={data.warehouse_us ?? 0}
+                    icon={<HomeModernIcon className="h-10 text-white" />}
                 />
-                {/*  */}
+            </div>
+
+            <div className="text-3xl font-black my-8">Others</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
-                    title="Processed Tickets"
+                    title="RMA Request"
                     count="100"
-                    icon={<ClipboardIcon className="h-10 text-white" />}
+                    icon={<ArrowsRightLeftIcon className="h-10 text-white" />}
+                />
+
+                <CurtisCardsComponent
+                    title="Incomplete Information"
+                    count="100"
+                    icon={<IdentificationIcon className="h-10 text-white" />}
                 />
 
                 <CurtisCardsComponent

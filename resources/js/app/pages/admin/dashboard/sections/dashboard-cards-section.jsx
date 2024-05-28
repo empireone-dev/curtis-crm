@@ -40,6 +40,7 @@ export default function DashboardCardsSection() {
         get_tile();
     }, []);
     return (
+        
         <div className="py-12 mr-3 px-5">
             <div className="text-3xl font-black mb-8">Open Ticket</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">

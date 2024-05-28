@@ -83,6 +83,7 @@ Route::get('queueing', [TicketController::class, 'queueing']);
 Route::put('close_ticket/{ticket_id}', [TicketController::class, 'close_ticket']);
 Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ticket']);
 Route::get('get_tickets_by_email/{email}', [TicketController::class, 'get_tickets_by_email']);
+Route::post('search_tickets', [TicketController::class, 'search_tickets']);
 
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

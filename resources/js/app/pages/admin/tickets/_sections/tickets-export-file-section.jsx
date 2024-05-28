@@ -2,20 +2,23 @@ import store from "@/app/store/store";
 import React, { useEffect, useState } from "react";
 import { get_tickets_thunk } from "../_redux/tickets-thunk";
 import * as XLSX from "xlsx";
-import moment from "moment";
 import axios from "axios";
 import { Button } from "antd";
 import { FileDoneOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { get_tickets_service } from "@/app/services/tickets-service";
 
 export default function TicketsExportFileSection() {
     const [loading, setLoading] = useState(false);
+    const { tickets } = useSelector((state) => state.tickets);
 
     async function fetchTickets(page) {
-        const search = window.location.search.split("&")[1]
-        const { data } = await axios.get( `/api/tickets?page=${page}${search?`&${search}`:'' }`);
-        return data.data.data;
+        try {
+            const { data } = await get_tickets_service(window.location.search);
+            return data;
+        } catch (error) {}
     }
-
+    
     async function export_ticket() {
         setLoading(true);
         try {
@@ -89,7 +92,7 @@ export default function TicketsExportFileSection() {
                     "Internal Notes",
                     "Is Uploading",
                     "Issue",
-                    "Item Number",
+                    "Model",
                     "Lname",
                     "Phone",
                     "Purchase Date",

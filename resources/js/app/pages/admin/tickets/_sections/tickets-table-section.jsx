@@ -23,7 +23,6 @@ export default function TicketTableSection() {
         clearFilters();
         setSearchText("");
     };
-    console.log("waa", tickets);
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
             setSelectedKeys,
@@ -151,13 +150,13 @@ export default function TicketTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            ...getColumnSearchProps("ticket_id"),
+            // ...getColumnSearchProps("ticket_id"),
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            ...getColumnSearchProps("fullname"),
+            // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
                 return (
                     <div color={"red"} key={i}>
@@ -170,19 +169,19 @@ export default function TicketTableSection() {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            ...getColumnSearchProps("email"),
+            // ...getColumnSearchProps("email"),
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            ...getColumnSearchProps("call_type"),
+            // ...getColumnSearchProps("call_type"),
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            ...getColumnSearchProps("issue"),
+            // ...getColumnSearchProps("issue"),
             render: (_, record, i) => {
                 return (
                     <Tag color={"blue"} key={i}>
@@ -195,7 +194,7 @@ export default function TicketTableSection() {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            ...getColumnSearchProps("status"),
+            // ...getColumnSearchProps("status"),
             render: (_, record, i) => {
                 const color =
                     record.status == "CLOSED"
@@ -224,7 +223,7 @@ export default function TicketTableSection() {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            ...getColumnSearchProps("isUploading"),
+            // ...getColumnSearchProps("isUploading"),
             render: (_, record, i) => {
                 const color = record.isUploading == "true" ? "green" : "red";
                 return (

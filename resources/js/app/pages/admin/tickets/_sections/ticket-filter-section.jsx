@@ -1,0 +1,151 @@
+import React, { useState } from "react";
+import { DatePicker, Space, Select, Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { SearchOutlined } from "@ant-design/icons";
+import { search_tickets_service } from "@/app/services/tickets-service";
+import moment from "moment";
+import { setTickets } from "../_redux/tickets-slice";
+import store from "@/app/store/store";
+import { router } from "@inertiajs/react";
+import dayjs from "dayjs";
+
+export default function TicketFilterSection() {
+    const { RangePicker } = DatePicker;
+    const { products } = useSelector((state) => state.ticket_form);
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const queryParams = new URLSearchParams(window.location.search);
+    const callType = queryParams.get("call_type");
+    const model = queryParams.get("model");
+    const start = queryParams.get("start");
+    const end = queryParams.get("end");
+
+    const [data, setData] = useState({
+        call_type: callType ?? null,
+        start: start ?? moment().format("YYYY-MM-DD"),
+        end: end ?? moment().format("YYYY-MM-DD"),
+        model: model ?? null,
+    });
+
+    const handleChangeData = (value) => {
+        const start = value[0].format("YYYY-MM-DD");
+        const end = value[1].format("YYYY-MM-DD");
+        setData({
+            ...data,
+            start: start,
+            end: end,
+        });
+    };
+
+    function handleChangeModel(value) {
+        setData({
+            ...data,
+            model: value,
+        });
+    }
+    function handleChange(value) {
+        setData({
+            ...data,
+            call_type: value,
+        });
+    }
+    const options = [
+        {
+            value: "CF-Warranty Claim",
+        },
+        {
+            value: "Parts",
+        },
+        {
+            value: "TS-Tech Support",
+        },
+    ];
+
+    const newProducts = products.slice(2).map((res) => ({
+        value: res[1],
+    }));
+    async function search_tickets() {
+        setLoading(true);
+        try {
+            router.visit(
+                window.location.pathname +'?page=1&'+
+                    "&start=" +
+                    data.start +
+                    "&end=" +
+                    data.end +
+                    "&call_type=" +
+                    data.call_type +
+                    "&model=" +
+                    data.model
+            );
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+    const dateFormat = "YYYY/MM/DD";
+    return (
+        <div className="flex gap-4 w-full">
+            <div className="w-full">
+                <RangePicker
+                    defaultValue={[
+                        dayjs(data.start, dateFormat),
+                        dayjs(data.end, dateFormat),
+                    ]}
+                    onChange={handleChangeData}
+                    size="large"
+                />
+            </div>
+            <div className="w-full">
+                <Select
+                    size="large"
+                    style={{
+                        width: "100%",
+                    }}
+                    showSearch
+                    placeholder="Select Model #"
+                    defaultValue={data.model == 'null'?null:data.model}
+                    onChange={handleChangeModel}
+                    options={newProducts}
+                    optionRender={(option) => (
+                        <Space>
+                            <span role="img" aria-label={option.value}>
+                                {option.value}
+                            </span>
+                        </Space>
+                    )}
+                />
+            </div>
+            <div className="w-full">
+                <Select
+                    size="large"
+                    style={{
+                        width: "100%",
+                    }}
+                    defaultValue={data.call_type == 'null'?null:data.call_type}
+                    placeholder="Based On"
+                    onChange={handleChange}
+                    options={options}
+                    optionRender={(option) => (
+                        <Space>
+                            <span role="img" aria-label={option.value}>
+                                {option.value}
+                            </span>
+                        </Space>
+                    )}
+                />
+            </div>
+            <div className="w-full">
+                <Button
+                    loading={loading}
+                    onClick={search_tickets}
+                    type="primary"
+                    size="large"
+                    icon={<SearchOutlined />}
+                >
+                    Search
+                </Button>
+            </div>
+        </div>
+    );
+}

@@ -7,6 +7,7 @@ use App\Models\DecisionMaking;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,33 @@ use Illuminate\Support\Facades\Schema;
 
 class TicketController extends Controller
 {
+    public function search_tickets(Request $request)
+    {
+        // Initialize the query builder
+        $query = Ticket::query();
+
+        // Add the date range filter if start and end are provided
+        if ($request->has('start') && $request->has('end')) {
+            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+            $query->whereBetween('created_at', [$startTime, $endTime]);
+        }
+
+        // Add item_number condition if provided
+        if ($request->model) {
+            $query->where('item_number','=',$request->model);
+        }
+        if ($request->call_type) {
+            $query->where('call_type','=',$request->call_type);
+        }
+        
+
+        $tickets = $query->paginate(10);
+        // Return the result as JSON
+        return response()->json([
+            'data' => $tickets
+        ], 200);
+    }
     public function get_tickets_by_email($email)
     {
         $tickets = Ticket::where('email', '=', $email)->get();
@@ -167,6 +195,20 @@ class TicketController extends Controller
             });
         }
 
+        if ($request->has('start') && $request->has('end')) {
+            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+            $query->whereBetween('created_at', [$startTime, $endTime]);
+        }
+
+        // Add item_number condition if provided
+        if ($request->model) {
+            $query->where('item_number','=',$request->model);
+        }
+        if ($request->call_type) {
+            $query->where('call_type','=',$request->call_type);
+        }
+        
         $query->orderBy('created_at', 'desc');
         $data = $query->paginate(10);
 
