@@ -29,12 +29,12 @@ class TicketController extends Controller
 
         // Add item_number condition if provided
         if ($request->model) {
-            $query->where('item_number','=',$request->model);
+            $query->where('item_number', '=', $request->model);
         }
         if ($request->call_type) {
-            $query->where('call_type','=',$request->call_type);
+            $query->where('call_type', '=', $request->call_type);
         }
-        
+
 
         $tickets = $query->paginate(10);
         // Return the result as JSON
@@ -195,20 +195,20 @@ class TicketController extends Controller
             });
         }
 
-        if ($request->has('start') && $request->has('end')) {
+        if ($request->start && $request->end) {
             $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
             $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
             $query->whereBetween('created_at', [$startTime, $endTime]);
         }
 
         // Add item_number condition if provided
-        if ($request->model) {
-            $query->where('item_number','=',$request->model);
+        if ($request->model && ($request->model != 'null' && $request->model != 'undefined')) {
+            $query->where('item_number', '=', $request->model);
         }
-        if ($request->call_type) {
-            $query->where('call_type','=',$request->call_type);
+        if ($request->call_type  && ($request->call_type != 'null' && $request->call_type != 'undefined')) {
+            $query->where('call_type', '=', $request->call_type);
         }
-        
+
         $query->orderBy('created_at', 'desc');
         $data = $query->paginate(10);
 

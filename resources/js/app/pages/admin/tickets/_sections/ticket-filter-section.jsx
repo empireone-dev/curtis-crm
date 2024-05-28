@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DatePicker, Space, Select, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchOutlined } from "@ant-design/icons";
+import { DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import { search_tickets_service } from "@/app/services/tickets-service";
 import moment from "moment";
 import { setTickets } from "../_redux/tickets-slice";
@@ -68,7 +68,8 @@ export default function TicketFilterSection() {
         setLoading(true);
         try {
             router.visit(
-                window.location.pathname +'?page=1&'+
+                window.location.pathname +
+                    "?page=1&" +
                     "&start=" +
                     data.start +
                     "&end=" +
@@ -98,13 +99,18 @@ export default function TicketFilterSection() {
             </div>
             <div className="w-full">
                 <Select
+                    allowClear={true}
                     size="large"
                     style={{
                         width: "100%",
                     }}
                     showSearch
                     placeholder="Select Model #"
-                    defaultValue={data.model == 'null'?null:data.model}
+                    defaultValue={
+                        data.model == "null" || data.model == "undefined"
+                            ? null
+                            : data.model
+                    }
                     onChange={handleChangeModel}
                     options={newProducts}
                     optionRender={(option) => (
@@ -118,11 +124,17 @@ export default function TicketFilterSection() {
             </div>
             <div className="w-full">
                 <Select
+                    allowClear={true}
                     size="large"
                     style={{
                         width: "100%",
                     }}
-                    defaultValue={data.call_type == 'null'?null:data.call_type}
+                    defaultValue={
+                        data.call_type == "null" ||
+                        data.call_type == "undefined"
+                            ? null
+                            : data.call_type
+                    }
                     placeholder="Based On"
                     onChange={handleChange}
                     options={options}
@@ -135,7 +147,8 @@ export default function TicketFilterSection() {
                     )}
                 />
             </div>
-            <div className="w-full">
+
+            <div className="w-full flex gap-3">
                 <Button
                     loading={loading}
                     onClick={search_tickets}
@@ -144,6 +157,18 @@ export default function TicketFilterSection() {
                     icon={<SearchOutlined />}
                 >
                     Search
+                </Button>
+                <Button
+                    loading={loading}
+                    onClick={() =>
+                        router.visit(window.location.pathname + "?page=1")
+                    }
+                    type="primary"
+                    danger
+                    size="large"
+                    icon={<DeleteOutlined />}
+                >
+                    Reset
                 </Button>
             </div>
         </div>
