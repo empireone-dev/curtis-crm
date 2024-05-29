@@ -175,7 +175,7 @@ const CustomerTicketsSerialModel = () => {
 
 
                             <header
-                                className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
+                                className={`${filesData?.serial_model?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
 
                                 <input
                                     id="hidden-input4"

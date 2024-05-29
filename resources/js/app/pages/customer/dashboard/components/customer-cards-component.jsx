@@ -8,7 +8,7 @@ export default function CustomerCardsComponent({ title, count, icon,link }) {
             {icon}
         </div>
         <div className="p-4 text-right">
-            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">{title.length > 23 ? title.slice(0, 23) + '...' : title}
+            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">{title.length > 35 ? title.slice(0, 35) + '...' : title}
 </p>
             <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{count}</h4>
         </div>

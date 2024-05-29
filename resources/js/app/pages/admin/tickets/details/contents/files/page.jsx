@@ -9,7 +9,7 @@ import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
 
 export default function TicketsDetailsContentFiles({ auth }) {
     const account = auth.user.role_id;
-
+  
     const MainLayout =
         account == 1
             ? AdministratorLayout
@@ -20,11 +20,13 @@ export default function TicketsDetailsContentFiles({ auth }) {
             : account == 5
             ? AgentLayout
             : CurtisLayout;
+
+
     return (
         <MainLayout account={auth.user}>
-                <TicketsDetailsLayout>
-                    <WarrantyFilesSection />
-                </TicketsDetailsLayout>
+            <TicketsDetailsLayout>
+                <WarrantyFilesSection />
+            </TicketsDetailsLayout>
         </MainLayout>
     );
 }

@@ -41,27 +41,19 @@ export default function CustomerCardsSection({ account }) {
     }, []);
     return (
         <div className="mt-12 mr-3">
-            <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
                 <CustomerCardsComponent
-                    title="Pending"
+                    title="Need Information"
                     link="PENDING"
                     count={data.pending??0}
                     icon={<ListBulletIcon className="h-10 text-white" />}
                 />
                 <CustomerCardsComponent
-                    title="Processed"
+                    title="Ticket Activities/Update"
                     link="PROCESSED"
                     count={data.process??0}
                     icon={
                         <AdjustmentsHorizontalIcon className="h-10 text-white" />
-                    }
-                />
-                <CustomerCardsComponent
-                    title="Closed"
-                    link="CLOSED"
-                    count={data.closed??0}
-                    icon={
-                        <ArchiveBoxArrowDownIcon className="h-10 text-white" />
                     }
                 />
             </div>

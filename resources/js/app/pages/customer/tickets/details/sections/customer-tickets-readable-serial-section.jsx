@@ -178,7 +178,7 @@ const CustomerTicketsReadableSerialSection = () => {
 
 
                             <header
-                                className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
+                                className={`${filesData?.readable_serial_section?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
 
                                 <input
                                     id="hidden-input4"

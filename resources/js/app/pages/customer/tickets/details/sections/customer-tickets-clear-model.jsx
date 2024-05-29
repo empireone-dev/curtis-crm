@@ -100,7 +100,6 @@ const CustomerTicketsClearModel = () => {
         setIsLoading(false)
         handleCancel()
     }
-
     return (
         <article
             aria-label="File Upload Modal"
@@ -180,7 +179,7 @@ const CustomerTicketsClearModel = () => {
 
 
                             <header
-                                className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
+                                className={`${filesData?.clear_model?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
 
                                 <input
                                     id="hidden-input1"

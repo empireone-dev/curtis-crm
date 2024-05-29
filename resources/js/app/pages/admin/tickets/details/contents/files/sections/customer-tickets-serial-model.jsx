@@ -4,7 +4,7 @@ import { usePage } from '@inertiajs/react';
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import ImageView from '@/app/layouts/components/image-view';
-import { delete_upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
+import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 
 const CustomerTicketsSerialModel = () => {
     const [files, setFiles] = useState([])
@@ -177,7 +177,7 @@ const CustomerTicketsSerialModel = () => {
 
 
                             <header
-                                className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
+                                className={`${filesData?.serial_model?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
 
                                 <input
                                     id="hidden-input4"

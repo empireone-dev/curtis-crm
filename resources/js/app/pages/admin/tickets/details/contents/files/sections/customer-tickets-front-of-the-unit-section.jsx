@@ -195,7 +195,7 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
                     ))}
                     <li className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24">
                         <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relativecursor-pointer text-transparent hover:text-white shadow-sm">
-                            <header className="border-dashed border-2 border-gray-400 flex flex-col justify-center items-center">
+                            <header className={`${filesData?.front_of_the_unit?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
                                 <input
                                     id="hidden-input2"
                                     type="file"
