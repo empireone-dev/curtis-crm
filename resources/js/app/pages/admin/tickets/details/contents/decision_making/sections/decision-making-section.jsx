@@ -225,16 +225,7 @@ export default function DecisionMakingSection() {
                         <div className="mt-4 mb-4 grid grid-cols-1 gap-x-6 gap-y-8">
                             <div className="flex flex-col gap-6 ">
                                 <div className="flex gap-3 w-full">
-                                    <Input
-                                        onChange={formHandler}
-                                        name="cost_refund"
-                                        span="$"
-                                        required={true}
-                                        value={String(data.cost_refund ?? "0")}
-                                        label="Estimated Cost of Refund"
-                                        type="text"
-                                        errorMessage="Estimated Cost of Refund is required"
-                                    />
+                                   
                                     <Input
                                         onChange={formHandler}
                                         span="$"
@@ -255,6 +246,7 @@ export default function DecisionMakingSection() {
                                         type="number"
                                         errorMessage="Discount is required"
                                     />
+                                    
                                     <Input
                                         onChange={formHandler}
                                         span="$"
@@ -270,6 +262,16 @@ export default function DecisionMakingSection() {
                                         type="number"
                                         errorMessage="Price After Discount is required"
                                         readOnly
+                                    />
+                                     <Input
+                                        onChange={formHandler}
+                                        name="cost_refund"
+                                        span="$"
+                                        required={true}
+                                        value={String(data.cost_refund ?? "0")}
+                                        label="Estimated Cost of Refund"
+                                        type="text"
+                                        errorMessage="Estimated Cost of Refund is required"
                                     />
                                 </div>
 

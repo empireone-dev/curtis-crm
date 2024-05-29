@@ -99,10 +99,10 @@ export default function ContentActivitiesWarrantyValidationComponents({
                 </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
-                        <div className="font-black">RECEIPTS INFORMATION</div>
+                        <div className="font-black">RECEIPT INFORMATION</div>
                     </div>
                     <div className="flex gap-2">
-                        Store Name:
+                        Authorized Service Center:
                         <div className="font-bold">{result?.store ?? ""}</div>
                     </div>
                     <div className="flex gap-2">
@@ -126,7 +126,7 @@ export default function ContentActivitiesWarrantyValidationComponents({
                     <div className="flex gap-2">
                         Refurbished:
                         <div className="font-bold">
-                            $ {result?.total_price ?? 0}.00
+                          {result?.refurbished == 'true'?'Yes':'No'}
                         </div>
                     </div>
                     <div className="flex flex-col">

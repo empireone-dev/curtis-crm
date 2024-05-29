@@ -26,7 +26,7 @@
                         </dd><br />
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                             Good day!
-                        </dd>
+                        </dd><br />
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                             This email is regarding your warranty claim at Curtis International Ltd.
                         </dd>
@@ -38,7 +38,7 @@
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-blue-600">Postal Link</dt>
+                                    <dt class="text-sm font-medium leading-6 text-blue-600">Portal Link</dt>
                                     <a target="_blank" href="https://curtis-staging.cloud/" class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">https://curtis-staging.cloud</a>
                                 </div>
                                 <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">

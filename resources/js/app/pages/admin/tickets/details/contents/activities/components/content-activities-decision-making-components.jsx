@@ -102,7 +102,7 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                         <div className="font-black">REPAIR</div>
                     </div>
                     <div className="flex gap-2">
-                        Store Name:
+                        Authorized Service Center:
                         <div className="font-bold">
                             {data?.asc_data?.name ?? ""}
                         </div>
@@ -168,9 +168,7 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                     </div>
                     <div className="flex gap-2">
                         Mail Date:
-                        <div className="font-bold">
-                            {result?.date ?? ""}
-                        </div>
+                        <div className="font-bold">{result?.date ?? ""}</div>
                     </div>
                     {/* <div className="flex flex-col">
                         Repair Notes:

@@ -105,7 +105,7 @@ export default function ContentActivitiesClosedComponents({ data }) {
                         <div className="font-black">REPAIR</div>
                     </div>
                     <div className="flex gap-2">
-                        Store Name:
+                        Authorized Service Center:
                         <div className="font-bold">
                             {result?.user?.asc?.user?.name ?? ""}
                         </div>

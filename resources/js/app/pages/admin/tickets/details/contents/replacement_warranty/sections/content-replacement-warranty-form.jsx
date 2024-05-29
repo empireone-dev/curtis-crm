@@ -77,7 +77,7 @@ export default function ContentReplacementWarrantyForm() {
     return (
         <div className='bg-white h-full px-3'>
             <div className='mt-10 w-full border-b-2 border-gray-600'>
-                <h1 className='mt-2'>Parts Internal Remarks/Notes:</h1>
+                <h1 className='mt-2'>Warranty Internal Remarks/Notes.</h1>
                 {ticket.validation_notes}
             </div>
 
@@ -131,7 +131,7 @@ export default function ContentReplacementWarrantyForm() {
                         name='serial_number'
                         span=""
                         required={true}
-                        value={String(form.serial_number ?? ' ')}
+                        value=""
                         label="Serial"
                         type='text'
                         errorMessage='Serial is required'
