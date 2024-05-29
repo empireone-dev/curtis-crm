@@ -61,7 +61,7 @@ export default function TicketFilterSection() {
         },
     ];
 
-    const newProducts = products.slice(2).map((res) => ({
+    const newProducts = products?.slice(2).map((res) => ({
         value: res[1],
     }));
     async function search_tickets() {
