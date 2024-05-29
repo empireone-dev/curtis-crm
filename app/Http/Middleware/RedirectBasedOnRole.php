@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class RedirectBasedOnRole
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $account = $request->user(); // Assuming user is authenticated and account information is available
+
+        if ($account) {
+            if ($account->role_id == 1) {
+                return redirect('/administrator/dashboard');
+            } else if ($account->role_id == 2) {
+                return redirect('/customer/dashboard');
+            } else if ($account->role_id == 3) {
+                return redirect('/warehouse/dashboard');
+            } else if ($account->role_id == 4) {
+                return redirect('/asc/dashboard');
+            } else if ($account->role_id == 5) {
+                return redirect('/agent/dashboard');
+            }
+        }
+
+
+        return $next($request);
+    }
+}

@@ -1,0 +1,1 @@
+async function s(e){return(await axios.post("/api/replacement",e)).data}async function t(e){return(await axios.get(`/api/replacement/${e}`)).data.status}async function n(e){return(await axios.post("/api/parts_replacement_shipped",e)).data}async function r(e){return(await axios.post("/api/parts_replacement_not_shipped",e)).data}export{r as a,t as g,n as p,s};
