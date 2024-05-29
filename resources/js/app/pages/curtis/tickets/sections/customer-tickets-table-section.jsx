@@ -254,7 +254,7 @@ export default function CustomerTicketsTableSection() {
                     <Tooltip placement="topLeft" title="View Ticket Details">
                         <Link
                             href={
-                                "/administrator/tickets/details/" +
+                                "/curtis/tickets/details/" +
                                 record.id +
                                 "/files"
                             }
