@@ -51,7 +51,8 @@ export default function ContentReplacementWarrantyForm() {
                 })
                 dispatch(setTicket(result.status))
                 setIsLoading1(false)
-                router.visit(routing("files"));
+                // router.visit(routing("files"));
+                window.location.href=routing("files")
             } catch (error) {
                 setIsLoading1(false)
             }
