@@ -30,6 +30,7 @@ import {
 import { agent_dashboard_service } from "@/app/services/dashboard-service";
 import AgentCardsComponent from "../components/agent-cards-component";
 import { useSelector } from "react-redux";
+import { Link } from "@inertiajs/react";
 
 export default function AgentCardsSection({ account }) {
     const { user } = useSelector((state) => state.app);
@@ -56,6 +57,24 @@ export default function AgentCardsSection({ account }) {
             <div className="my-6">
                 <div className="text-3xl font-black mb-8">Open Ticket</div>
                 <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                    <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <TicketIcon className="h-10" />
+                        </div>
+                        <div className="p-4 text-right">
+                            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">
+                                Create New
+                            </p>
+                        </div>
+                        <div className="border-t border-blue-gray-50 p-4 mt-8">
+                            <Link
+                                href={"/agent/tickets/create"}
+                                className="block antialiased font-sans text-base text-red-600 leading-relaxed font-black text-blue-gray-600"
+                            >
+                                Click to create
+                            </Link>
+                        </div>
+                    </div>
                     {agent_type(["Warranty"]) && (
                         <AgentCardsComponent
                             title="Open Ticket for Warranty"

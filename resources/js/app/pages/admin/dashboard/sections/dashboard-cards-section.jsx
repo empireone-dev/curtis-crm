@@ -29,6 +29,7 @@ import {
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { administrator_dashboard_service } from "@/app/services/dashboard-service";
+import { Link } from "@inertiajs/react";
 
 export default function DashboardCardsSection() {
     const [data, setData] = useState({});
@@ -40,10 +41,27 @@ export default function DashboardCardsSection() {
         get_tile();
     }, []);
     return (
-        
         <div className="py-12 mr-3 px-5">
             <div className="text-3xl font-black mb-8">Open Ticket</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                    <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                        <TicketIcon className="h-10" />
+                    </div>
+                    <div className="p-4 text-right">
+                        <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">
+                            Create New
+                        </p>
+                    </div>
+                    <div className="border-t border-blue-gray-50 p-4 mt-8">
+                        <Link
+                            href={"/administrator/tickets/create"}
+                            className="block antialiased font-sans text-base text-red-600 leading-relaxed font-black text-blue-gray-600"
+                        >
+                            Click to create
+                        </Link>
+                    </div>
+                </div>
                 <DashboardCardsComponent
                     title="Open Ticket for Warranty"
                     link="OPEN WARRANTY"
@@ -145,7 +163,7 @@ export default function DashboardCardsSection() {
                     count={data.parts_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
-                 <DashboardCardsComponent
+                <DashboardCardsComponent
                     title="Updates From Curtis"
                     link="AVAILABILITY"
                     count={data.updates_curtis ?? 0}
@@ -188,7 +206,6 @@ export default function DashboardCardsSection() {
                     count={data.internals ?? 0}
                     icon={<CheckCircleIcon className="h-10 text-white" />}
                 />
-               
             </div>
             <div className="text-3xl font-black my-8">Warehouse</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
