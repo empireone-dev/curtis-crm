@@ -85,6 +85,7 @@ Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ti
 Route::get('get_tickets_by_email/{email}', [TicketController::class, 'get_tickets_by_email']);
 Route::post('search_tickets', [TicketController::class, 'search_tickets']);
 Route::get('/get_users', [TicketController::class, 'get_users']);
+Route::post('forward_ticket', [TicketController::class, 'forward_ticket']);
 
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

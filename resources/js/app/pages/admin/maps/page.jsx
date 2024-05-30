@@ -31,6 +31,7 @@ export default function MapsPage() {
             lng: parseFloat(res.longitude),
             lat: parseFloat(res.latitude),
             name: res.name,
+            ...res
           }))}
           ticket={ticket}
         />

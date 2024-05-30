@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function forward_ticket_service(data) {
+    try {
+        const res = await axios.post("/api/forward_ticket", data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function search_tickets_service(data) {
     try {
         const res = await axios.post("/api/search_tickets", data);

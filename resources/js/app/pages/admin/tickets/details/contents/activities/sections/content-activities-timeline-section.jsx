@@ -15,6 +15,7 @@ import ContentActivitiesClosedComponents from "../components/content-activities-
 import ContentActivitiesCreatedTicketComponents from "../components/content-activities-created-components";
 import ContentActivitiesWarehouseReceivedComponents from "../components/content-activities-warehouse-received-components";
 import ContentActivitiesAssignedToComponents from "../components/content-activities-assigned-to-components";
+import ContentActivitiesChangeCallTypeComponents from "../components/content-activities-change-call-type-components";
 
 export default function ContentActivitiesTimelineSection() {
     const { activities } = useSelector((state) => state.tickets);
@@ -289,6 +290,29 @@ export default function ContentActivitiesTimelineSection() {
                             </li>
                         );
                         break;
+                        case "CHANGE CALL TYPE":
+                            return (
+                                <li key={i} className="mb-10 ms-6">
+                                    <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                        {
+                                            res.user.role_id == 1?'Admin':`#${res?.user?.emp_id}`
+                                        }
+                                        
+                                        <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                            {formattedTimestamp}
+                                        </span>
+                                    </h3>
+                                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                        Ticket Created on{" "}
+                                        {moment(res.created_at).format("LLL")}
+                                    </time>
+                                    <ContentActivitiesChangeCallTypeComponents
+                                        data={res}
+                                    />
+                                </li>
+                            );
+                            break;
                     default:
                         break;
                 }

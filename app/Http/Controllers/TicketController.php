@@ -16,6 +16,23 @@ use Illuminate\Support\Facades\Schema;
 
 class TicketController extends Controller
 {
+    public function forward_ticket(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->id)->first();
+        $ticket->update([
+            'call_type' => $request->where_to_move == 'WARRANTY VALIDATION' ? 'CF-Warranty Claim' : 'Parts',
+            'status' => $request->where_to_move
+        ]);
+        Activity::create([
+            'user_id' => $request->user_id,
+            'ticket_id' => $request->id,
+            'type' => 'CHANGE CALL TYPE',
+            'message' => json_encode($request->all())
+        ]);
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
     public function search_tickets(Request $request)
     {
         // Initialize the query builder
@@ -229,7 +246,8 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function get_users(){
+    public function get_users()
+    {
         $call_type = 'TS-Tech Support';
         $type = '';
         switch ($call_type) {
@@ -249,11 +267,11 @@ class TicketController extends Controller
         $users = User::where('role_id', 5)
             ->where('agent_type', 'like', "%$type%")
             ->get();
-            return response()->json([
-                'result' => $users,
-            ], 200);
+        return response()->json([
+            'result' => $users,
+        ], 200);
     }
-    
+
     public function queueing($call_type)
     {
         $type = '';
@@ -356,7 +374,7 @@ class TicketController extends Controller
             ]);
 
             AgentNote::create([
-                'user_id' =>$account->id,
+                'user_id' => $account->id,
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);
@@ -391,7 +409,7 @@ class TicketController extends Controller
                 'type' => 'TICKET CREATED',
                 'message' => json_encode($data)
             ]);
-          
+
 
             $subject = '';
             $length = strlen($data->id);
@@ -418,10 +436,10 @@ class TicketController extends Controller
             ]);
             $tt = Ticket::where('id', $data->id)->first();
 
-            
-            $account = User::where('email','=',$t->email)->first();
+
+            $account = User::where('email', '=', $t->email)->first();
             AgentNote::create([
-                'user_id' =>$account->id,
+                'user_id' => $account->id,
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);

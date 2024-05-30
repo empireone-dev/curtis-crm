@@ -4,15 +4,18 @@ import Textarea from "@/app/layouts/components/textarea";
 import store from "@/app/store/store";
 import { router } from "@inertiajs/react";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { update_tickets_status_thunk } from "../../../../_redux/tickets-thunk";
 import routing from "../../../components/routing";
+import { forward_ticket_service } from "@/app/services/tickets-service";
+import { setTicket } from "../../../../_redux/tickets-slice";
 
 export default function TicketStatusFormSection() {
     const [form, setForm] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const { ticket } = useSelector((state) => state.tickets);
-
+    const { user } = useSelector((state) => state.app);
+    const dispatch = useDispatch()
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -61,7 +64,6 @@ export default function TicketStatusFormSection() {
             name: "Closed - parts issue",
         },
     ];
-
     async function submit_status() {
         if (confirm("Are you sure you want to update the status?")) {
             setIsLoading(true);
@@ -77,13 +79,28 @@ export default function TicketStatusFormSection() {
         }
     }
 
+    async function forward_ticket(data) {
+       try {
+        const res = await forward_ticket_service({
+            ...form,
+            ...ticket,
+            user_id:user.id,
+            where_to_move:data
+        })
+        dispatch(setTicket(res.result))
+        router.visit(routing("files"));
+       } catch (error) {
+        
+       }
+    }
+
     return (
         <div className="flex flex-col gap-5">
             <Select
                 onChange={formHandler}
-                name="status"
+                name="reason"
                 value={form?.isHasEmail ?? ""}
-                label="Status"
+                label="Reason"
                 errorMessage=""
                 data={status}
             />
@@ -107,10 +124,14 @@ export default function TicketStatusFormSection() {
                 }
             </button> */}
             <div className="flex gap-5">
-                <button className="p-3 bg-green-500 uppercase hover:bg-green-600 text-white rounded-md w-64 flex items-center justify-center">
+                <button 
+                onClick={()=>forward_ticket('WARRANTY VALIDATION')}
+                className="p-3 bg-green-500 uppercase hover:bg-green-600 text-white rounded-md w-64 flex items-center justify-center">
                     Forwarded to Warranty
                 </button>
-                <button className="p-3 bg-blue-500 uppercase hover:bg-blue-600 text-white rounded-md w-64 flex items-center justify-center">
+                <button 
+                onClick={()=>forward_ticket('PARTS VALIDATION')}
+                className="p-3 bg-blue-500 uppercase hover:bg-blue-600 text-white rounded-md w-64 flex items-center justify-center">
                     Forwarded to Parts
                 </button>
             </div>
