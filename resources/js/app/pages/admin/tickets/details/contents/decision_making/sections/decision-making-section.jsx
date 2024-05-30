@@ -118,7 +118,7 @@ export default function DecisionMakingSection() {
         ) {
             router.visit(routing("warehouse"));
         } else if (data.instruction == "ASC") {
-            router.visit(routing("refund"));
+            router.visit(routing("repair"));
         } else {
             router.visit(routing("refund"));
         }

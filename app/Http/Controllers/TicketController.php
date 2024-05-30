@@ -98,7 +98,7 @@ class TicketController extends Controller
     public function get_tickets_by_asc(Request $request, $status)
     {
         if ($status !== 'undefined') {
-            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=',  $status]])->get();
+            $result = Ticket::where([['asc_id', '=', $request->id], ['status', '=',  'REPAIR']])->get();
             return response()->json([
                 'result' =>  $result
             ], 200);

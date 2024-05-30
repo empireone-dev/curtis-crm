@@ -44,7 +44,7 @@ class DecisionMakingController extends Controller
         ) {
             $instruction = $ticket->country . ' WAREHOUSE';
         } else if ($request->instruction == "ASC") {
-            $instruction = 'REFUND';
+            $instruction = 'REPAIR';
         } else {
             $instruction = 'REFUND';
         }
