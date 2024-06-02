@@ -25,7 +25,6 @@ export default function UserTicketTableSection() {
         clearFilters();
         setSearchText("");
     };
-
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
             setSelectedKeys,
@@ -144,7 +143,7 @@ export default function UserTicketTableSection() {
     // }
     // console.log('datas', datas)
     const data = tickets.map((res, i) => ({
-        ...res,
+        ...res.ticket,
         key: res.id,
     }));
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))

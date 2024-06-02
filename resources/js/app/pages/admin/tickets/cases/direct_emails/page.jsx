@@ -24,7 +24,9 @@ export default function TicketDirectEmailsPage() {
             console.log("error", error);
         }
     }, []);
+    
     console.log('tickets',tickets)
+
     return (
         <TicketCasesHandledLayout>
             {tickets.map((res,i) => {
