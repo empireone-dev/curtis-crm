@@ -179,7 +179,7 @@ export default function DirectEmailsListSection({ data }) {
                                     </div>
                                 </li>
                             </ul>
-                            <HtmlParser html={convertToParagraph(res.body)} />
+                            <HtmlParser html={convertToParagraph(res?.body?.split('wrote:')[0])} />
                         </div>
                     );
                 })}
