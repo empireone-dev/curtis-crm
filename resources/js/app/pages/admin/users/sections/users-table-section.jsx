@@ -166,51 +166,58 @@ export default function UsersTableSection() {
                 );
             },
         },
+        // {
+        //     title: "Handled Cases",
+        //     dataIndex: "email",
+        //     key: "email",
+        //     ...getColumnSearchProps("email"),
+        // },
+        // {
+        //     title: "Handled Direct Emails",
+        //     dataIndex: "agent_type",
+        //     key: "agent_type",
+        //     // ...getColumnSearchProps("agent_type"),
+        //     render: (_, record, i) => {
+        //         console.log("record", record);
+        //         return (
+        //             <Tag color={"blue"} key={i}>
+        //                 {record.agent_type ?? ""}
+        //             </Tag>
+        //         );
+        //     },
+        // },
+        // {
+        //     title: "Remaining Open Cases",
+        //     dataIndex: "agent_type",
+        //     key: "agent_type",
+        //     // ...getColumnSearchProps("agent_type"),
+        //     render: (_, record, i) => {
+        //         console.log("record", record);
+        //         return (
+        //             <Tag color={"blue"} key={i}>
+        //                 {record.agent_type ?? ""}
+        //             </Tag>
+        //         );
+        //     },
+        // },
         {
             title: "Handled Cases",
-            dataIndex: "email",
-            key: "email",
-            ...getColumnSearchProps("email"),
-        },
-        {
-            title: "Handled Direct Emails",
             dataIndex: "agent_type",
             key: "agent_type",
             // ...getColumnSearchProps("agent_type"),
             render: (_, record, i) => {
                 console.log("record", record);
                 return (
-                    <Tag color={"blue"} key={i}>
-                        {record.agent_type ?? ""}
-                    </Tag>
-                );
-            },
-        },
-        {
-            title: "Remaining Open Cases",
-            dataIndex: "agent_type",
-            key: "agent_type",
-            // ...getColumnSearchProps("agent_type"),
-            render: (_, record, i) => {
-                console.log("record", record);
-                return (
-                    <Tag color={"blue"} key={i}>
-                        {record.agent_type ?? ""}
-                    </Tag>
-                );
-            },
-        },
-        {
-            title: "Total",
-            dataIndex: "agent_type",
-            key: "agent_type",
-            // ...getColumnSearchProps("agent_type"),
-            render: (_, record, i) => {
-                console.log("record", record);
-                return (
-                    <Tag color={"blue"} key={i}>
-                        {record.agent_type ?? ""}
-                    </Tag>
+                    <Tooltip placement="topLeft" title="View Ticket Cases">
+                        <Link
+                            className="text-blue-500 underline"
+                            href={
+                                "/administrator/users/" + record.id + "/cases/handled"
+                            }
+                        >
+                            Visit Cases
+                        </Link>
+                    </Tooltip>
                 );
             },
         },
@@ -231,7 +238,6 @@ export default function UsersTableSection() {
             },
         },
 
-        
         {
             title: "Created At",
             dataIndex: "status",

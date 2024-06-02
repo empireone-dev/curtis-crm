@@ -19,12 +19,14 @@ export default function TicketFilterSection() {
     const model = queryParams.get("model");
     const start = queryParams.get("start");
     const end = queryParams.get("end");
+    const status = queryParams.get("status");
 
     const [data, setData] = useState({
         call_type: callType ?? null,
         start: start ?? moment().format("YYYY-MM-DD"),
         end: end ?? moment().format("YYYY-MM-DD"),
-        model: model ?? null,
+        model: model?.split(",") ?? null,
+        status: status ?? null,
     });
 
     const handleChangeData = (value) => {
@@ -49,6 +51,13 @@ export default function TicketFilterSection() {
             call_type: value,
         });
     }
+    function handleStatusChange(value) {
+        setData({
+            ...data,
+            status: value,
+        });
+    }
+
     const options = [
         {
             value: "CF-Warranty Claim",
@@ -59,6 +68,55 @@ export default function TicketFilterSection() {
         {
             value: "TS-Tech Support",
         },
+    ];
+
+    const statusData = [
+        {
+            value: "CLOSED",
+        },
+        {
+            value: "WARRANTY VALIDATION",
+        },
+        {
+            value: "PARTS VALIDATION",
+        },
+        {
+            value: "US WAREHOUSE",
+        },
+        {
+            value: "CA WAREHOUSE",
+        },
+        {
+            value: "REPAIR",
+        },
+        {
+            value: "AVAILABILITY",
+        },
+        {
+            value: "INTERNALS",
+        },
+        {
+            value: "CALLBACK",
+        },
+        {
+            value: "REFUND",
+        },
+        {
+            value: "REPLACEMENT",
+        },
+        {
+            value: "REPLACEMENT PARTS",
+        },
+        {
+            value: "TECH VALIDATION",
+        },
+        {
+            value: "WEB FORM",
+        },
+        {
+            value: "AGENT FORM",
+        },
+       
     ];
 
     const newProducts = products?.slice(2).map((res) => ({
@@ -77,7 +135,9 @@ export default function TicketFilterSection() {
                     "&call_type=" +
                     data.call_type +
                     "&model=" +
-                    data.model
+                    data.model +
+                    "&status=" +
+                    data.status
             );
             setLoading(false);
         } catch (error) {
@@ -97,8 +157,11 @@ export default function TicketFilterSection() {
                     size="large"
                 />
             </div>
+
             <div className="w-full">
                 <Select
+                    maxTagCount="responsive"
+                    mode="multiple"
                     allowClear={true}
                     size="large"
                     style={{
@@ -112,7 +175,7 @@ export default function TicketFilterSection() {
                             : data.model
                     }
                     onChange={handleChangeModel}
-                    options={newProducts}
+                    options={newProducts.sort((a, b) => a.length - b.length)}
                     optionRender={(option) => (
                         <Space>
                             <span role="img" aria-label={option.value}>
@@ -138,6 +201,31 @@ export default function TicketFilterSection() {
                     placeholder="Based On"
                     onChange={handleChange}
                     options={options}
+                    optionRender={(option) => (
+                        <Space>
+                            <span role="img" aria-label={option.value}>
+                                {option.value}
+                            </span>
+                        </Space>
+                    )}
+                />
+            </div>
+
+            <div className="w-full">
+                <Select
+                    allowClear={true}
+                    size="large"
+                    style={{
+                        width: "100%",
+                    }}
+                    defaultValue={
+                        data.status == "null" || data.status == "undefined"
+                            ? null
+                            : data.status
+                    }
+                    placeholder="Status"
+                    onChange={handleStatusChange}
+                    options={statusData}
                     optionRender={(option) => (
                         <Space>
                             <span role="img" aria-label={option.value}>

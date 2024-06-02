@@ -13,12 +13,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
     public function forward_ticket(Request $request)
     {
-        $ticket = Ticket::where('id', $request->id)->first();
+
+        $subject = '';
+        $length = strlen($request->id);
+        $id = '';
+        if ($length == 1) {
+            $id = date("dmy") . '00000' . $request->id;
+        } else if ($length == 2) {
+            $id = date("dmy") . '0000' . $request->id;
+        } else if ($length == 3) {
+            $id = date("dmy") . '000' . $request->id;
+        }
+
+        if ($request->call_type == 'Parts') {
+            $subject = '#PS' . $id;
+        } else if ($request->call_type == 'CF-Warranty Claim') {
+            $subject = '#CF' . $id;
+        } else {
+            $subject = '#TS' . $id;
+        }
+
+        $ticket = Ticket::where('id', $request->id)->with('user')->first();
+
         $ticket->update([
             'call_type' => $request->where_to_move == 'WARRANTY VALIDATION' ? 'CF-Warranty Claim' : 'Parts',
             'status' => $request->where_to_move
@@ -29,6 +51,18 @@ class TicketController extends Controller
             'type' => 'CHANGE CALL TYPE',
             'message' => json_encode($request->all())
         ]);
+
+        $newData = array_merge($ticket->user->toArray(), [
+            'id' => $request->id,
+            'ticket_id' => $subject,
+            'call_type' => $request->where_to_move == 'WARRANTY VALIDATION' ? 'CF-Warranty Claim' : 'Parts',
+            'email' => $ticket->email,
+            'isSendEmail' => 'true',
+        ]);
+
+        $emailController = App::make(EmailTemplateController::class);
+        $emailController->send_mail_create_ticket_form($newData);
+
         return response()->json([
             'result' => $ticket
         ], 200);
@@ -221,10 +255,21 @@ class TicketController extends Controller
 
         // Add item_number condition if provided
         if ($request->model && ($request->model != 'null' && $request->model != 'undefined')) {
-            $query->where('item_number', '=', $request->model);
+            $models = explode(',', $request->model);
+            $query->whereIn('item_number', $models);
         }
         if ($request->call_type  && ($request->call_type != 'null' && $request->call_type != 'undefined')) {
             $query->where('call_type', '=', $request->call_type);
+        }
+        if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
+            $query->where('status', '=', $request->status);
+        }
+
+        if ($request->status == 'WEB FORM') {
+            $query->orWhere('created_from', '=', $request->status);
+        }
+        if ($request->status == 'AGENT FORM') {
+            $query->orWhere('created_from', '=', $request->status);
         }
 
         $query->orderBy('created_at', 'desc');
@@ -240,7 +285,28 @@ class TicketController extends Controller
             $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])->get();
         } else {
             $data = Ticket::where('user_id', '=', $id)->get();
+            $emails = []; // Initialize an empty array to store emails
+            foreach ($data as $key => $value) {
+                $numEmails = 100;
+                $searchSubject = substr($value->ticket_id, 1);
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+    
+                // Make a GET request to the Google Apps Script Web App
+                $response = Http::get($scriptUrl);
+    
+                // Check if the request was successful
+                if ($response->successful()) {
+                    // Get the emails from the response and merge them with ticket info
+                    $emails[] = [
+                        'ticket' => $value,
+                        'emails' => $response->json()
+                    ];
+                } 
+            }
+            // Assign the merged emails to the $data variable
+            $data = $emails;
         }
+        
         return response()->json([
             'result' => $data,
         ], 200);

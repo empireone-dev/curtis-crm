@@ -222,7 +222,7 @@ export default function TicketsDetailsLayout({ children }) {
             <TicketsDetailsMoveAssignSection />
             <div className="px-8">
                 <div className="w-full ">
-                    {user.role_id == 3 && ticket.status === "WAREHOUSE" && (
+                    {/* {user.role_id == 3 && ticket.status === "WAREHOUSE" && (
                         <div className="pt-10">
                             {" "}
                             <TicketsDetailsMoveAssignComponents
@@ -233,7 +233,7 @@ export default function TicketsDetailsLayout({ children }) {
                                 link="decision"
                             />
                         </div>
-                    )}
+                    )} */}
                     <div
                         className={`py-3 text-3xl font-black flex gap-3 ${
                             ticket.status == "CLOSED"

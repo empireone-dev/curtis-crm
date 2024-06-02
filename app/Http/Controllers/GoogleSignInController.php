@@ -14,6 +14,7 @@ use App\Services\GmailService;
 use Webklex\IMAP\Facades\Client;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
 
 class GoogleSignInController extends Controller
 {
@@ -25,7 +26,7 @@ class GoogleSignInController extends Controller
     // {
     //     $this->gmailService = $gmailService;
     // }
-    
+
     // public function fetchEmails()
     // {
     //     $inbox = $this->gmailService->getInbox();
@@ -37,47 +38,44 @@ class GoogleSignInController extends Controller
         $this->emailService = $emailService;
     }
 
-    public function fetchEmails(Request $request)
+    public function sendEmail(Request $request)
     {
-        ini_set('memory_limit', '512M'); // Increase memory limit to 512 MB
-        set_time_limit(100); // Increase the execution time to 100 seconds
+        $recipient = 'eogs.marlou@gmail.com'; // Replace with the recipient's email address
+        $subject = 'The The Item';
+        $body = '<b>Your HTML body content</b>';
 
-        $client = Client::account('default');
-        $client->connect();
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbzqsNb6x7pLbvl5xHWuW43PfF0yisgF0pY44Y5y53KmCg33rjraMzkk-coD2Fr9QKSF/exec';
 
-        // Get the inbox folder
-        $folder = $client->getFolder('INBOX');
-
-        // Get the latest message in the inbox
-        $latestMessage = $folder->messages()->all()->limit(1)->fetchOrder('desc')->get()->first();
-
-       
-        if ($latestMessage) {
-            $emailDetails = [
-                'subject' => $latestMessage->getSubject(),
-                'from' => $latestMessage->getFrom()[0]->mail,
-                'date' => $latestMessage->getDate()[0]->format('Y-m-d H:i:s'), // Correctly format the date
-                'body' => $latestMessage->getHTMLBody(),
-            ];
-
-            return response()->json([
-                'status' => 'success',
-                'email' => $emailDetails
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No emails found'
-            ], 404);
-        }
+        $response = Http::get($scriptUrl, [
+            'recipient' => $recipient,
+            'subject' => $subject,
+            'body' => $body,
+        ]);
+        dd($response);
+        return $response->body();
     }
 
-    private function paginate(Collection $items, $perPage, $page, $options = [])
+    public function fetch_emails()
     {
-        $page = $page ?: (LengthAwarePaginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        $paginatedItems = $items->forPage($page, $perPage);
-        return new LengthAwarePaginator($paginatedItems, $items->count(), $perPage, $page, $options);
+        // Define the URL with parameters
+        $numEmails = 100;
+        $searchSubject = 'CF240524070120';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+
+        // Make a GET request to the Google Apps Script Web App
+        $response = Http::get($scriptUrl);
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Get the emails from the response
+            $emails = $response->json();
+            return response()->json([
+                'emails' => $emails
+            ], 200);
+        } else {
+            // Handle the error
+            return response()->json(['error' => 'Failed to fetch emails'], 500);
+        }
     }
 
     public function redirectToGoogle()

@@ -1,11 +1,12 @@
-import AdministratorLayout from '@/app/layouts/admin/administrator-layout'
-import React from 'react'
-import DashboardCardsSection from './sections/dashboard-cards-section'
+import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
+import React, { useEffect, useState } from "react";
+import DashboardCardsSection from "./sections/dashboard-cards-section";
 
 export default function DashboardPage() {
-  return (
-    <AdministratorLayout>
-     <DashboardCardsSection />
-    </AdministratorLayout>
-  )
+   
+    return (
+        <AdministratorLayout>
+            <DashboardCardsSection />
+        </AdministratorLayout>
+    );
 }

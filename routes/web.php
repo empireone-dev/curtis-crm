@@ -39,7 +39,8 @@ Route::get('sendNotification', [EmailTemplateController::class, 'sendNotificatio
 
 
 // START GOOGLE LOGIN
-Route::get('fetch_emails', [GoogleSignInController::class, 'fetchEmails']);
+Route::get('fetch_emails', [GoogleSignInController::class, 'fetch_emails']);
+Route::get('/send_email', [GoogleSignInController::class, 'sendEmail']);
 Route::get('auth/google', [GoogleSignInController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleSignInController::class, 'handleGoogleCallback']);
 //END GOOGLE LOGIN
@@ -172,6 +173,22 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     Route::get('/users', function () {
         return Inertia::render('admin/users/page');
     })->name('users');
+
+    Route::get('/users/{userid}/cases/handled', function () {
+        return Inertia::render('admin/tickets/cases/handled/page');
+    })->name('users.cases.handled');
+
+    Route::get('/users/{userid}/cases/direct_emails', function () {
+        return Inertia::render('admin/tickets/cases/direct_emails/page');
+    })->name('users.cases.direct_emails');
+
+    Route::get('/users/{userid}/cases/assigned_cases', function () {
+        return Inertia::render('admin/tickets/cases/assigned_cases/page');
+    })->name('users.cases.assigned_cases');
+    
+    Route::get('/users/{userid}/cases/remaining_cases', function () {
+        return Inertia::render('admin/tickets/cases/remaining_cases/page');
+    })->name('users.cases.remaining_cases');
 
     Route::get('/users/{userid}', function () {
         return Inertia::render('admin/users/tickets/page');

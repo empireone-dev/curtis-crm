@@ -30,20 +30,20 @@ export default function TicketsPage() {
     return (
         <AdministratorLayout>
             <div className="py-12">
-                <div className="px-5 flex items-start justify-start">
+                <div className="px-5 flex items-start justify-between gap-4">
                     <button
                         onClick={() =>
                             router.visit("/administrator/tickets/create")
                         }
-                        className="p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md"
+                        className="p-2 bg-green-500 text-white hover:bg-green-600 rounded-md"
                     >
                         CREATE TICKET
                     </button>
+                    <TicketsExportFileSection />
                 </div>
                 <div className="m-3 flex items-center justify-between gap-3 ">
                     <TicketsSearchSection />
                     <TicketFilterSection />
-                    <TicketsExportFileSection />
                 </div>
                 <div className="px-3">
                     <TicketTableSection />
