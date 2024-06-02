@@ -28,10 +28,7 @@ export default function TicketDirectEmailsPage() {
     return (
         <TicketCasesHandledLayout>
             {tickets.map((res,i) => {
-                
-                return (
-                    <DirectEmailsListSection key={i} data={res} />
-                );
+                return  res.emails.length !== 0 &&   <DirectEmailsListSection key={i} data={res} />
             })}
         </TicketCasesHandledLayout>
     );
