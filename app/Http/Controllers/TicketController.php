@@ -281,10 +281,18 @@ class TicketController extends Controller
     }
     public function show(Request $request, $id)
     {
+        // Number of results per page
+        $perPage = 10; 
+    
         if ($request->search) {
-            $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])->get();
+            // Use pagination with search query
+            $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])
+                          ->paginate($perPage);
         } else {
-            $data = Ticket::where('user_id', '=', $id)->get();
+            // Use pagination without search query
+            $data = Ticket::where('user_id', '=', $id)
+                          ->paginate($perPage);
+    
             $emails = []; // Initialize an empty array to store emails
             foreach ($data as $key => $value) {
                 $numEmails = 100;
@@ -303,14 +311,21 @@ class TicketController extends Controller
                     ];
                 } 
             }
-            // Assign the merged emails to the $data variable
-            $data = $emails;
+            // Replace the paginated data items with the merged emails
+            $data->setCollection(collect($emails));
         }
-        
+    
         return response()->json([
-            'result' => $data,
+            'result' => $data->items(),
+            'pagination' => [
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'per_page' => $data->perPage(),
+                'total' => $data->total(),
+            ],
         ], 200);
     }
+    
 
     public function get_users()
     {

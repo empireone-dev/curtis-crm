@@ -175,19 +175,19 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     })->name('users');
 
     Route::get('/users/{userid}/cases/handled', function () {
-        return Inertia::render('admin/tickets/cases/handled/page');
+        return Inertia::render('admin/users/cases/handled/page');
     })->name('users.cases.handled');
 
     Route::get('/users/{userid}/cases/direct_emails', function () {
-        return Inertia::render('admin/tickets/cases/direct_emails/page');
+        return Inertia::render('admin/users/cases/direct_emails/page');
     })->name('users.cases.direct_emails');
 
     Route::get('/users/{userid}/cases/assigned_cases', function () {
-        return Inertia::render('admin/tickets/cases/assigned_cases/page');
+        return Inertia::render('admin/users/cases/assigned_cases/page');
     })->name('users.cases.assigned_cases');
     
     Route::get('/users/{userid}/cases/remaining_cases', function () {
-        return Inertia::render('admin/tickets/cases/remaining_cases/page');
+        return Inertia::render('admin/users/cases/remaining_cases/page');
     })->name('users.cases.remaining_cases');
 
     Route::get('/users/{userid}', function () {

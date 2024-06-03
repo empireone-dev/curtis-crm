@@ -212,7 +212,7 @@ export default function UsersTableSection() {
                         <Link
                             className="text-blue-500 underline"
                             href={
-                                "/administrator/users/" + record.id + "/cases/direct_emails"
+                                "/administrator/users/" + record.id + "/cases/handled"
                             }
                         >
                             Visit Cases
