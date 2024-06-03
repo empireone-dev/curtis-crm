@@ -5,6 +5,7 @@ import {
     ClipboardDocumentIcon,
     CloudArrowDownIcon,
     CloudArrowUpIcon,
+    EnvelopeIcon,
     ExclamationTriangleIcon,
     HomeIcon,
     InboxArrowDownIcon,
@@ -55,6 +56,12 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 name="Handled Cases"
                                 icon={<InboxStackIcon className="h-6" />}
                                 href={"handled"}
+                            />
+                             <LayoutSidebarListComponent
+                                account={account}
+                                name="Closed Cases"
+                                icon={<EnvelopeIcon className="h-6" />}
+                                href={"closed_cases"}
                             />
                         </ul>
                     </div>

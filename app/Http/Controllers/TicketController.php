@@ -286,7 +286,7 @@ class TicketController extends Controller
     {
         // Number of results per page
         $perPage = 10;
-        $data=[];
+        $data = [];
         if ($request->cases == 'open_cases') {
             $dataQuery = Ticket::where('user_id', $request->user_id)
                 ->whereIn('status', ['PARTS VALIDATION', 'WARRANTY VALIDATION']);
@@ -316,7 +316,32 @@ class TicketController extends Controller
             $data = Ticket::where('user_id', $request->user_id)
                 ->where(function ($query) {
                     $query->where('status', '<>', 'PARTS VALIDATION')
-                        ->Where('status', '<>', 'WARRANTY VALIDATION');
+                        ->where('status', '<>', 'WARRANTY VALIDATION')
+                        ->where('status', '<>', 'CLOSED');
+                })
+                ->paginate($perPage);
+
+            $emails = []; // Initialize an empty array to store emails
+            foreach ($data as $key => $value) {
+                $numEmails = 100;
+                $searchSubject = substr($value->ticket_id, 1);
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+
+                // Make a GET request to the Google Apps Script Web App
+                $response = Http::get($scriptUrl);
+                if ($response->successful()) {
+                    $emails[] = [
+                        'ticket' => $value,
+                        'emails' => $response->json()
+                    ];
+                }
+            }
+            // Replace the paginated data items with the merged emails
+            $data->setCollection(collect($emails));
+        } else  if ($request->cases == 'closed_cases') {
+            $data = Ticket::where('user_id', $request->user_id)
+                ->where(function ($query) {
+                    $query->where('status', '=', 'CLOSED');
                 })
                 ->paginate($perPage);
 

@@ -29,7 +29,7 @@ export default function TicketOpenCasesPage() {
             <div className="mx-3">
                 <Collapse
                     accordion
-                    items={tickets.map((res, i) => ({
+                    items={tickets?.map((res, i) => ({
                         key: i,
                         label: (
                             <div className="flex justify-between items-center">
