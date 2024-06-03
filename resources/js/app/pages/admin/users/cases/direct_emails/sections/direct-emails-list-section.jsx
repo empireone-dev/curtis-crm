@@ -37,7 +37,6 @@ export default function DirectEmailsListSection({ data }) {
         return data === 'support2@curtiscs.com';
     }
 
-    console.log("resres", data.from);
     const emailString = data.from;
 
     // Regular expression to extract name and email

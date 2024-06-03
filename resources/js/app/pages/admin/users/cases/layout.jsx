@@ -1,16 +1,29 @@
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
+import Skeleton from "@/app/layouts/components/skeleton";
+import {  setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
 import { get_tickets_by_user_id_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
+import { cases_service } from "@/app/services/tickets-service";
 import store from "@/app/store/store";
 import { Link } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function TicketCasesHandledLayout({ children }) {
-
+    const [loading, setLoading] = useState(true);
     const account_id = window.location.pathname.split("/")[3];
+    const cases = window.location.pathname.split("/")[5];
+    const dispatch = useDispatch()
     useEffect(() => {
-        store.dispatch(get_tickets_by_user_id_thunk(account_id));
+        async function fetch_date(params) {
+           const res = await cases_service(window.location.search,cases,account_id)
+           console.log('resresres',res)
+           dispatch(setTickets(res))
+            // await store.dispatch(get_tickets_by_user_id_thunk(account_id));
+            setLoading(false);
+        }
+        fetch_date();
     }, []);
-    
+
     const userid = window.location.pathname.split("/")[3];
     const path = window.location.pathname.split("/")[5];
 
@@ -27,9 +40,37 @@ export default function TicketCasesHandledLayout({ children }) {
                 <div className="w-72  sticky top-0">
                     <div className="px-2 pt-4 pb-8 border-r border-gray-300">
                         <ul className="space-y-2">
+                            
+                        <li>
+                                <Link
+                                    href={`/administrator/users/${userid}/cases/open_cases?page=1`}
+                                    className={active("open_cases")}
+                                >
+                                    <span className="flex items-center space-x-2">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                                            ></path>
+                                        </svg>
+                                        <span>Open Cases</span>
+                                    </span>
+                                    <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                                        3
+                                    </span>
+                                </Link>
+                            </li>
                             <li>
                                 <Link
-                                    href={`/administrator/users/${userid}/cases/handled`}
+                                    href={`/administrator/users/${userid}/cases/handled?page=1`}
                                     className={active("handled")}
                                 >
                                     <span className="flex items-center space-x-2">
@@ -82,35 +123,8 @@ export default function TicketCasesHandledLayout({ children }) {
                                 </Link>
                             </li> */}
 
-                            <li>
-                                <Link
-                                    href={`/administrator/users/${userid}/cases/assigned_cases`}
-                                    className={active("assigned_cases")}
-                                >
-                                    <span className="flex items-center space-x-2">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-5 w-5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                                            ></path>
-                                        </svg>
-                                        <span>Assigned Cases</span>
-                                    </span>
-                                    <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
-                                        3
-                                    </span>
-                                </Link>
-                            </li>
 
-                            <li>
+                            {/* <li>
                                 <Link
                                     href={`/administrator/users/${userid}/cases/remaining_cases`}
                                     className={active("remaining_cases")}
@@ -136,7 +150,7 @@ export default function TicketCasesHandledLayout({ children }) {
                                         1
                                     </span>
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>
@@ -284,7 +298,9 @@ export default function TicketCasesHandledLayout({ children }) {
                             </button>
                         </div>
                     </div>
-                    <ul>{children}</ul>
+                    <ul>{loading ? <div className="mx-3">
+                        <Skeleton /> 
+                    </div>: children}</ul>
                 </div>
             </div>
         </AdministratorLayout>

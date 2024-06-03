@@ -1,92 +1,118 @@
-import React, { useState } from 'react';
-import LayoutSidebarListComponent from '../../components/layout-sidebar-list-component';
-import { BriefcaseIcon, ClipboardDocumentIcon, CloudArrowDownIcon, CloudArrowUpIcon, ExclamationTriangleIcon, HomeIcon, InboxArrowDownIcon, KeyIcon, PuzzlePieceIcon, ReceiptPercentIcon, ShoppingCartIcon, TicketIcon, UserCircleIcon, UserGroupIcon, UserIcon } from '@heroicons/react/24/outline'
+import React, { useState } from "react";
+import LayoutSidebarListComponent from "../../components/layout-sidebar-list-component";
+import {
+    BriefcaseIcon,
+    ClipboardDocumentIcon,
+    CloudArrowDownIcon,
+    CloudArrowUpIcon,
+    ExclamationTriangleIcon,
+    HomeIcon,
+    InboxArrowDownIcon,
+    KeyIcon,
+    PuzzlePieceIcon,
+    ReceiptPercentIcon,
+    ShoppingCartIcon,
+    TicketIcon,
+    UserCircleIcon,
+    UserGroupIcon,
+    UserIcon,
+} from "@heroicons/react/24/outline";
 
+export default function LayoutSidebarSection({ account }) {
+    // State to track whether the sidebar is open or closed
 
-export default function LayoutSidebarSection({account}) {
-  // State to track whether the sidebar is open or closed
-
-  return (
-    <>
-      <div className="h-screen flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
-        <div className="flex flex-col left-0 w-52 bg-white h-screen border-r">
-          <div className="flex items-center justify-center h-14 border-b">
-            <img src="/images/logo.png" className='w-full h-12 px-4 py-2'/>
-          </div>
-          <div className="overflow-y-auto overflow-x-hidden flex-grow">
-            <ul className="flex flex-col py-4 space-y-1">
-              {/* <li className="px-5">
+    return (
+        <>
+            <div className="h-screen flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
+                <div className="flex flex-col left-0 w-52 bg-white h-screen border-r">
+                    <div className="flex items-center justify-center h-14 border-b">
+                        <img
+                            src="/images/logo.png"
+                            className="w-full h-12 px-4 py-2"
+                        />
+                    </div>
+                    <div className="overflow-y-auto overflow-x-hidden flex-grow">
+                        <ul className="flex flex-col py-4 space-y-1">
+                            {/* <li className="px-5">
                 <div className="flex flex-row items-center h-8">
                   <div className="text-sm font-light tracking-wide text-gray-500">Menu</div>
                 </div>
               </li> */}
-              <LayoutSidebarListComponent
-              account={account}
-                name="Dashboard"
-                icon={<HomeIcon className='h-6'/>}
-                href={'dashboard'}
-              />
-              <LayoutSidebarListComponent
-              account={account}
-                name="Permissions"
-                icon={<KeyIcon className='h-6'/>}   
-                href={'permissions'}
-              />
-              <LayoutSidebarListComponent
-              account={account}
-                name="Roles"
-                icon={<UserIcon className='h-6'/>}   
-                href={'roles'}
-              />
-              <LayoutSidebarListComponent
-              account={account}
-                name="Users"
-                icon={<UserGroupIcon className='h-6'/>}   
-                href={'users'}
-              />
-               {/* <LayoutSidebarListComponent
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Dashboard"
+                                icon={<HomeIcon className="h-6" />}
+                                href={"dashboard"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Permissions"
+                                icon={<KeyIcon className="h-6" />}
+                                href={"permissions"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Roles"
+                                icon={<UserIcon className="h-6" />}
+                                href={"roles"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Users"
+                                icon={<UserGroupIcon className="h-6" />}
+                                href={"users"}
+                            />
+                            {/* <LayoutSidebarListComponent
                account={account}
                 name="Brands"
                 icon={<ReceiptPercentIcon className='h-6'/>}   
                 href={'brands'}
               /> */}
-              <LayoutSidebarListComponent
-              account={account}
-                name="Email Template"
-                icon={<InboxArrowDownIcon className='h-6'/>}   
-                href={'email_template'}
-              />
-              {/* <LayoutSidebarListComponent
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Email Template"
+                                icon={<InboxArrowDownIcon className="h-6" />}
+                                href={"email_template"}
+                            />
+                            {/* <LayoutSidebarListComponent
               account={account}
                 name="Item Types"
                 icon={<BriefcaseIcon className='h-6'/>}   
                 href={'item_types'}
               /> */}
-              <LayoutSidebarListComponent
-              account={account}
-                name="Common-Issues"
-                icon={<ExclamationTriangleIcon className='h-6'/>}   
-                href={'common_issues'}
-              />
-              {/* <LayoutSidebarListComponent
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Common-Issues"
+                                icon={
+                                    <ExclamationTriangleIcon className="h-6" />
+                                }
+                                href={"common_issues"}
+                            />
+                            {/* <LayoutSidebarListComponent
               account={account}
                 name="Products"
                 icon={<ShoppingCartIcon className='h-6'/>}   
                 href={'products'}
               /> */}
-              <LayoutSidebarListComponent
-              account={account}
-                name="Tickets"
-                icon={<TicketIcon className='h-6'/>}   
-                href={'tickets'}
-              />
-             <LayoutSidebarListComponent
-             account={account}
-                name="ASC"
-                icon={<UserCircleIcon className='h-6'/>}   
-                href={'asc'}
-              />
-              {/*   <LayoutSidebarListComponent
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Tickets"
+                                icon={<TicketIcon className="h-6" />}
+                                href={"tickets"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="ASC"
+                                icon={<UserCircleIcon className="h-6" />}
+                                href={"asc"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Productivity"
+                                icon={<UserCircleIcon className="h-6" />}
+                                href={"productivity"}
+                            />
+                            {/*   <LayoutSidebarListComponent
               account={account}
                 name="Bulk Upload Products"
                 icon={<CloudArrowDownIcon className='h-6'/>}   
@@ -104,7 +130,7 @@ export default function LayoutSidebarSection({account}) {
                 icon={<PuzzlePieceIcon className='h-6'/>}   
                 href={'htt'}
               /> */}
-              {/* <li className="px-5">
+                            {/* <li className="px-5">
                 <div className="flex flex-row items-center h-8">
                   <div className="text-sm font-light tracking-wide text-gray-500">Tasks</div>
                 </div>
@@ -158,10 +184,10 @@ export default function LayoutSidebarSection({account}) {
                   <span className="ml-2 text-sm tracking-wide truncate">Logout</span>
                 </a>
               </li> */}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}

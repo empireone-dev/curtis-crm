@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function cases_service(page,cases,user_id) {
+    try {
+        const res = await axios.get(`/api/cases${page}&cases=${cases}&user_id=${user_id}`);
+        return res.data.result.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function forward_ticket_service(data) {
     try {
         const res = await axios.post("/api/forward_ticket", data);

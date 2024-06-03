@@ -3,27 +3,27 @@ import TicketCasesHandledLayout from "../layout";
 import axios from "axios";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Collapse } from "antd";
+import { Collapse, Tag } from "antd";
 import HandledCasesListSection from "./sections/handled-cases-list-section";
 export default function TicketCasesHandledPage() {
     const { tickets } = useSelector((state) => state.customer_tickets);
     const [emails, setEmails] = useState([]);
 
-    useEffect(() => {
-        try {
-            axios
-                .get("/fetch_emails")
-                .then((res) => {
-                    console.log("ress", res.data);
-                    setEmails(res.data);
-                })
-                .catch((err) => {
-                    console.error("Error fetching emails:", err);
-                });
-        } catch (error) {
-            console.log("error", error);
-        }
-    }, []);
+    // useEffect(() => {
+    //     try {
+    //         axios
+    //             .get("/fetch_emails")
+    //             .then((res) => {
+    //                 console.log("ress", res.data);
+    //                 setEmails(res.data);
+    //             })
+    //             .catch((err) => {
+    //                 console.error("Error fetching emails:", err);
+    //             });
+    //     } catch (error) {
+    //         console.log("error", error);
+    //     }
+    // }, []);
     return (
         <TicketCasesHandledLayout>
             <div className="mx-3">
@@ -33,15 +33,24 @@ export default function TicketCasesHandledPage() {
                         key: i,
                         label: (
                             <div className="flex justify-between items-center">
-                                <div>{res.emails[0].emails[0].from}</div>
+                                <div>{res.emails[0]?.emails[0]?.from??'No Emails'}</div>
                                 <div>
+                                    {res.ticket.status == "CLOSED" ? (
+                                        <Tag color="red">
+                                            {res.ticket.status}
+                                        </Tag>
+                                    ) : (
+                                        <Tag color="green">
+                                            {res.ticket.status}
+                                        </Tag>
+                                    )}
                                     {moment(
-                                        res.emails[0].emails[0].date
+                                        res?.emails[0]?.emails[0]?.date
                                     ).format("LLL")}
                                 </div>
                             </div>
                         ),
-                        children: res.emails[0].emails.map((res) => {
+                        children: res.emails[0]?.emails.map((res) => {
                             return <HandledCasesListSection data={res} />;
                         }),
                     }))}

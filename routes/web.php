@@ -174,6 +174,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/users/page');
     })->name('users');
 
+    Route::get('/users/{userid}/cases/open_cases', function () {
+        return Inertia::render('admin/users/cases/open_cases/page');
+    })->name('users.cases.open_cases');
+
     Route::get('/users/{userid}/cases/handled', function () {
         return Inertia::render('admin/users/cases/handled/page');
     })->name('users.cases.handled');
@@ -182,9 +186,9 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/users/cases/direct_emails/page');
     })->name('users.cases.direct_emails');
 
-    Route::get('/users/{userid}/cases/assigned_cases', function () {
-        return Inertia::render('admin/users/cases/assigned_cases/page');
-    })->name('users.cases.assigned_cases');
+    // Route::get('/users/{userid}/cases/assigned_cases', function () {
+    //     return Inertia::render('admin/users/cases/assigned_cases/page');
+    // })->name('users.cases.assigned_cases');
     
     Route::get('/users/{userid}/cases/remaining_cases', function () {
         return Inertia::render('admin/users/cases/remaining_cases/page');
@@ -226,6 +230,9 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/products/page');
     })->name('products');
 
+    Route::get('/productivity', function () {
+        return Inertia::render('admin/productivity/page');
+    })->name('productivity');
 
 
 
@@ -459,6 +466,14 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
     Route::get('/tickets/create', function () {
         return Inertia::render('agent/create/page');
     })->name('agent.tickets.create');
+
+    Route::get('/open_cases', function () {
+        return Inertia::render('agent/open_cases/page');
+    })->name('agent.open_cases');
+
+    Route::get('/handled', function () {
+        return Inertia::render('agent/handled/page');
+    })->name('agent.handled');
 
     // Route::get('/tickets/{id}', function () {
     //     return Inertia::render('agent/tickets/details/page');

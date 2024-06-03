@@ -8,6 +8,7 @@ import {
     ExclamationTriangleIcon,
     HomeIcon,
     InboxArrowDownIcon,
+    InboxStackIcon,
     KeyIcon,
     PuzzlePieceIcon,
     ReceiptPercentIcon,
@@ -30,7 +31,6 @@ export default function AgentLayoutSidebarSection({ account }) {
                     </div>
                     <div className="overflow-y-auto overflow-x-hidden flex-grow">
                         <ul className="flex flex-col py-4 space-y-1">
-                   
                             <LayoutSidebarListComponent
                                 account={account}
                                 name="Dashboard"
@@ -43,6 +43,18 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 name="Tickets"
                                 icon={<TicketIcon className="h-6" />}
                                 href={"tickets"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Open Cases"
+                                icon={<InboxArrowDownIcon className="h-6" />}
+                                href={"open_cases"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Handled Cases"
+                                icon={<InboxStackIcon className="h-6" />}
+                                href={"handled"}
                             />
                         </ul>
                     </div>

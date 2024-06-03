@@ -218,6 +218,8 @@ class TicketController extends Controller
             'result' => $ticket
         ], 200);
     }
+
+
     public function index(Request $request)
     {
         $searchQuery = $request->input('search');
@@ -279,42 +281,100 @@ class TicketController extends Controller
             'data' => $data ?? [],
         ], 200);
     }
-    public function show(Request $request, $id)
+
+    public function cases(Request $request)
     {
         // Number of results per page
-        $perPage = 10; 
-    
-        if ($request->search) {
-            // Use pagination with search query
-            $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])
-                          ->paginate($perPage);
-        } else {
-            // Use pagination without search query
-            $data = Ticket::where('user_id', '=', $id)
-                          ->paginate($perPage);
-    
+        $perPage = 10;
+        $data=[];
+        if ($request->cases == 'open_cases') {
+            $dataQuery = Ticket::where('user_id', $request->user_id)
+                ->whereIn('status', ['PARTS VALIDATION', 'WARRANTY VALIDATION']);
+
+            // Paginate the data
+            $data = $dataQuery->paginate($perPage);
+
+            $emails = []; // Initialize an empty array to store emails
+
+            // Loop through each paginated item
+            foreach ($data as $key => $value) {
+                $numEmails = 100;
+                $searchSubject = substr($value->ticket_id, 1);
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+
+                // Make a GET request to the Google Apps Script Web App
+                $response = Http::get($scriptUrl);
+                if ($response->successful()) {
+                    $emails[] = [
+                        'ticket' => $value,
+                        'emails' => $response->json()
+                    ];
+                }
+            }
+            $data->setCollection(collect($emails));
+        } else  if ($request->cases == 'handled') {
+            $data = Ticket::where('user_id', $request->user_id)
+                ->where(function ($query) {
+                    $query->where('status', '<>', 'PARTS VALIDATION')
+                        ->Where('status', '<>', 'WARRANTY VALIDATION');
+                })
+                ->paginate($perPage);
+
             $emails = []; // Initialize an empty array to store emails
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
                 $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
-    
+
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
-    
-                // Check if the request was successful
                 if ($response->successful()) {
-                    // Get the emails from the response and merge them with ticket info
                     $emails[] = [
                         'ticket' => $value,
                         'emails' => $response->json()
                     ];
-                } 
+                }
             }
             // Replace the paginated data items with the merged emails
             $data->setCollection(collect($emails));
         }
-    
+
+        return response()->json([
+            'result' => $data,
+        ], 200);
+    }
+    public function show(Request $request, $id)
+    {
+        // Number of results per page
+        $perPage = 10;
+
+        if ($request->search) {
+            // Use pagination with search query
+            $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])
+                ->paginate($perPage);
+        } else {
+            // Use pagination without search query
+            $data = Ticket::where('user_id', '=', $id)
+                ->paginate($perPage);
+            $emails = []; // Initialize an empty array to store emails
+            foreach ($data as $key => $value) {
+                $numEmails = 100;
+                $searchSubject = substr($value->ticket_id, 1);
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbwFfvYRTxJBfXlbmH0CnTytNxdgFWH209XIg8VfSHqYl-gdZqOgqwnf-ppM2F41zTPY/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+
+                // Make a GET request to the Google Apps Script Web App
+                $response = Http::get($scriptUrl);
+                if ($response->successful()) {
+                    $emails[] = [
+                        'ticket' => $value,
+                        'emails' => $response->json()
+                    ];
+                }
+            }
+            // Replace the paginated data items with the merged emails
+            $data->setCollection(collect($emails));
+        }
+
         return response()->json([
             'result' => $data->items(),
             'pagination' => [
@@ -325,7 +385,7 @@ class TicketController extends Controller
             ],
         ], 200);
     }
-    
+
 
     public function get_users()
     {

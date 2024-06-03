@@ -8,46 +8,25 @@ import { Collapse } from 'antd';
 
 export default function TicketDirectEmailsPage() {
     const { tickets } = useSelector((state) => state.customer_tickets);
-    const [emails, setEmails] = useState([]);
+    // const [emails, setEmails] = useState([]);
 
-    useEffect(() => {
-        try {
-            axios
-                .get("/fetch_emails")
-                .then((res) => {
-                    console.log("ress", res.data);
-                    setEmails(res.data);
-                })
-                .catch((err) => {
-                    console.error("Error fetching emails:", err);
-                });
-        } catch (error) {
-            console.log("error", error);
-        }
-    }, []);
-    const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-    console.log('tickets',tickets)
-    const items = [
-        {
-          key: '1',
-          label: 'This is panel header 1',
-          children: <p>{text}</p>,
-        },
-        {
-          key: '2',
-          label: 'This is panel header 2',
-          children: <p>{text}</p>,
-        },
-        {
-          key: '3',
-          label: 'This is panel header 3',
-          children: <p>{text}</p>,
-        },
-      ];
+    // useEffect(() => {
+    //     try {
+    //         axios
+    //             .get("/fetch_emails")
+    //             .then((res) => {
+    //                 console.log("ress", res.data);
+    //                 setEmails(res.data);
+    //             })
+    //             .catch((err) => {
+    //                 console.error("Error fetching emails:", err);
+    //             });
+    //     } catch (error) {
+    //         console.log("error", error);
+    //     }
+    // }, []);
+
+
     return (
         <TicketCasesHandledLayout>
             {/* {tickets.map((res,i) => {
