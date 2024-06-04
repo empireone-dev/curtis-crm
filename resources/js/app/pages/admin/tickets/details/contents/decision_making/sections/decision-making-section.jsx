@@ -107,7 +107,7 @@ export default function DecisionMakingSection() {
             template_text: findTemplates.template_text,
         });
     }
-
+console.log('if the radio button not appear please check the warranty instruction and add open and close parenthesis.')
     async function submit_form(e) {
         e.preventDefault();
         setIsLoading1(true);
@@ -440,7 +440,7 @@ export default function DecisionMakingSection() {
                                                 value: "",
                                                 name: "",
                                             },
-                                            ...(data.country === "CA"
+                                            ...((data.country === "CA")
                                                 ? [
                                                       {
                                                           value: "CA Warehouse",
@@ -448,7 +448,7 @@ export default function DecisionMakingSection() {
                                                       },
                                                   ]
                                                 : []),
-                                            ...(data.country === "US"
+                                            ...((data.country === "US")
                                                 ? [
                                                       {
                                                           value: "US Warehouse",
