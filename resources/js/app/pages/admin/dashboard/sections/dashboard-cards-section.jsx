@@ -118,10 +118,12 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Repair"
+                    link="REPAIR"
                     count={data.repair}
                     icon={<CheckBadgeIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
+                    link="PROCESSED TICKET"
                     title="Processed Tickets for Warranty"
                     count={data.warranty_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
