@@ -1,24 +1,33 @@
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
 import Skeleton from "@/app/layouts/components/skeleton";
-import {  setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
+import { setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
 import { get_tickets_by_user_id_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
 import { cases_service } from "@/app/services/tickets-service";
 import store from "@/app/store/store";
-import { EnvelopeIcon, InboxArrowDownIcon, InboxStackIcon } from "@heroicons/react/24/solid";
+import {
+    EnvelopeIcon,
+    InboxArrowDownIcon,
+    InboxStackIcon,
+} from "@heroicons/react/24/solid";
 import { Link } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import UsersCasesPaginationSection from "./sections/users-cases-pagination-section";
 
 export default function TicketCasesHandledLayout({ children }) {
     const [loading, setLoading] = useState(true);
     const account_id = window.location.pathname.split("/")[3];
     const cases = window.location.pathname.split("/")[5];
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
         async function fetch_date(params) {
-           const res = await cases_service(window.location.search,cases,account_id)
-           console.log('resresres',res)
-           dispatch(setTickets(res))
+            const res = await cases_service(
+                window.location.search,
+                cases,
+                account_id
+            );
+            console.log("resresres", res);
+            dispatch(setTickets(res));
             // await store.dispatch(get_tickets_by_user_id_thunk(account_id));
             setLoading(false);
         }
@@ -41,14 +50,13 @@ export default function TicketCasesHandledLayout({ children }) {
                 <div className="w-72  sticky top-0">
                     <div className="px-2 pt-4 pb-8 border-r border-gray-300">
                         <ul className="space-y-2">
-                            
-                        <li>
+                            <li>
                                 <Link
                                     href={`/administrator/users/${userid}/cases/open_cases?page=1`}
                                     className={active("open_cases")}
                                 >
                                     <span className="flex items-center space-x-2">
-                                       <InboxArrowDownIcon className="h-6"/>
+                                        <InboxArrowDownIcon className="h-6" />
                                         <span>Open Cases</span>
                                     </span>
                                     <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
@@ -62,7 +70,7 @@ export default function TicketCasesHandledLayout({ children }) {
                                     className={active("handled")}
                                 >
                                     <span className="flex items-center space-x-2">
-                                    <InboxStackIcon className="h-6"/>
+                                        <InboxStackIcon className="h-6" />
                                         <span>Handled Cases</span>
                                     </span>
                                     <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
@@ -76,7 +84,7 @@ export default function TicketCasesHandledLayout({ children }) {
                                     className={active("closed_cases")}
                                 >
                                     <span className="flex items-center space-x-2">
-                                    <EnvelopeIcon className="h-6"/>
+                                        <EnvelopeIcon className="h-6" />
                                         <span>Closed Cases</span>
                                     </span>
                                     <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
@@ -84,7 +92,6 @@ export default function TicketCasesHandledLayout({ children }) {
                                     </span>
                                 </Link>
                             </li>
-                          
                         </ul>
                     </div>
                 </div>
@@ -232,9 +239,22 @@ export default function TicketCasesHandledLayout({ children }) {
                             </button>
                         </div>
                     </div>
-                    <ul>{loading ? <div className="mx-3">
-                        <Skeleton /> 
-                    </div>: children}</ul>
+                    <ul>
+                        {loading ? (
+                            <div className="mx-3">
+                                <Skeleton />
+                            </div>
+                        ) : (
+                            <div className="p-3 flex gap-5 flex-col justify-between w-full h-full">
+                                <div className="overflow-auto h-[80vh]">
+                                    {children}
+                                </div>
+                                <div className="flex items-center justify-end">
+                                    <UsersCasesPaginationSection />
+                                </div>
+                            </div>
+                        )}
+                    </ul>
                 </div>
             </div>
         </AdministratorLayout>

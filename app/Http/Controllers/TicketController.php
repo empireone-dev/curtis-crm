@@ -288,6 +288,7 @@ class TicketController extends Controller
         $perPage = 10;
         $data = [];
         if ($request->cases == 'open_cases') {
+            $count = Ticket::where('user_id', $request->user_id)->whereIn('status', ['PARTS VALIDATION', 'WARRANTY VALIDATION'])->count();
             $dataQuery = Ticket::where('user_id', $request->user_id)
                 ->whereIn('status', ['PARTS VALIDATION', 'WARRANTY VALIDATION']);
 
@@ -307,12 +308,18 @@ class TicketController extends Controller
                 if ($response->successful()) {
                     $emails[] = [
                         'ticket' => $value,
-                        'emails' => $response->json()
+                        'emails' => $response->json(),
+                        'count' => $count
                     ];
                 }
             }
             $data->setCollection(collect($emails));
         } else  if ($request->cases == 'handled') {
+            $count = Ticket::where('user_id', $request->user_id)->where(function ($query) {
+                $query->where('status', '<>', 'PARTS VALIDATION')
+                    ->where('status', '<>', 'WARRANTY VALIDATION')
+                    ->where('status', '<>', 'CLOSED');
+            })->count();
             $data = Ticket::where('user_id', $request->user_id)
                 ->where(function ($query) {
                     $query->where('status', '<>', 'PARTS VALIDATION')
@@ -332,13 +339,17 @@ class TicketController extends Controller
                 if ($response->successful()) {
                     $emails[] = [
                         'ticket' => $value,
-                        'emails' => $response->json()
+                        'emails' => $response->json(),
+                        'count' => $count
                     ];
                 }
             }
             // Replace the paginated data items with the merged emails
             $data->setCollection(collect($emails));
         } else  if ($request->cases == 'closed_cases') {
+            $count = Ticket::where('user_id', $request->user_id)->where(function ($query) {
+                $query->where('status', '=', 'CLOSED');
+            })->count();
             $data = Ticket::where('user_id', $request->user_id)
                 ->where(function ($query) {
                     $query->where('status', '=', 'CLOSED');
@@ -356,7 +367,8 @@ class TicketController extends Controller
                 if ($response->successful()) {
                     $emails[] = [
                         'ticket' => $value,
-                        'emails' => $response->json()
+                        'emails' => $response->json(),
+                        'count' => $count
                     ];
                 }
             }
@@ -365,7 +377,7 @@ class TicketController extends Controller
         }
 
         return response()->json([
-            'result' => $data,
+            'result' => $data
         ], 200);
     }
     public function show(Request $request, $id)
