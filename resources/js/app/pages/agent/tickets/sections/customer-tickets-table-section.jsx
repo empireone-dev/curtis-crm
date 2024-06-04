@@ -9,17 +9,19 @@ import { split } from "postcss/lib/list";
 
 export default function CustomerTicketsTableSection() {
     const { tickets } = useSelector((state) => state.customer_tickets);
+    
 
     const search = window.location.search.split("=")[1];
     let ticketData = [];
+    
     if (search == "CLOSED") {
         function searchBy(status) {
-            return tickets.filter((obj) => obj.status == status);
+            return tickets?.data?.filter((obj) => obj.status == status);
         }
         ticketData = searchBy(search);
     } else if (search == "PROCESSED") {
         function searchBy() {
-            return tickets.filter(
+            return tickets.data.filter(
                 (obj) =>
                     obj.status != "PARTS VALIDATION" &&
                     obj.status != "WARRANTY VALIDATION" &&
@@ -30,11 +32,11 @@ export default function CustomerTicketsTableSection() {
         ticketData = searchBy();
     } else if (search == "PENDING") {
         function searchBy() {
-            return tickets.filter((obj) => obj.isUploading == "false");
+            return tickets.data.filter((obj) => obj.isUploading == "false");
         }
         ticketData = searchBy();
     } else {
-        ticketData = tickets;
+        ticketData = tickets.data;
     }
 
     const [searchText, setSearchText] = useState("");
@@ -161,9 +163,10 @@ export default function CustomerTicketsTableSection() {
                 text
             ),
     });
-    const data = ticketData?.map((res,i)=>({
-        ...res.ticket,
-        key:res.id
+
+    const data = ticketData?.map((res, i) => ({
+        ...res,
+        key: res.id,
     }));
     
     const columns = [
@@ -270,7 +273,6 @@ export default function CustomerTicketsTableSection() {
             title: "action",
             dataIndex: "action",
             render: (_, record) => {
-
                 function route_link(data) {
                     if (data.call_type == "TS-Tech Support") {
                         return (
@@ -300,15 +302,17 @@ export default function CustomerTicketsTableSection() {
                 }
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Tooltip placement="topLeft" title="View Ticket Details">
-                        {route_link(record)}
-                    </Tooltip>
+                        <Tooltip
+                            placement="topLeft"
+                            title="View Ticket Details"
+                        >
+                            {route_link(record)}
+                        </Tooltip>
                     </Tooltip>
                 );
             },
         },
     ];
 
-  
     return <Table columns={columns} dataSource={data} />;
 }

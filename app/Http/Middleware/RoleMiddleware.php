@@ -4,13 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, $role_id)
     {
         if (!$request->user() || !$this->checkRole($request->user()->role_id, $role_id)) {
-            abort(403, 'Unauthorized.');
+            return Inertia::location(route('home.login')); 
         }
 
         return $next($request);

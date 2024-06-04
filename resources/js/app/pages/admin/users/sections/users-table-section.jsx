@@ -209,14 +209,17 @@ export default function UsersTableSection() {
                 console.log("record", record);
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Cases">
-                        <Link
+                        <button
                             className="text-blue-500 underline"
-                            href={
-                                "/administrator/users/" + record.id + "/cases/open_cases?page=1"
+                            onClick={() =>
+                                (window.location.href =
+                                    "/administrator/users/" +
+                                    record.id +
+                                    "/cases/open_cases?page=1")
                             }
                         >
                             Visit Cases
-                        </Link>
+                        </button>
                     </Tooltip>
                 );
             },

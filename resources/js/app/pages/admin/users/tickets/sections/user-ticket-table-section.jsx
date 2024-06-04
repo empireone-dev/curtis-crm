@@ -15,7 +15,7 @@ export default function UserTicketTableSection() {
     const [selectionType, setSelectionType] = useState("checkbox");
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -142,8 +142,8 @@ export default function UserTicketTableSection() {
     //     ...tickets.map(res => res.id),
     // }
     // console.log('datas', datas)
-    const data = tickets.map((res, i) => ({
-        ...res.ticket,
+    const data = tickets?.data?.map((res, i) => ({
+        ...res,
         key: res.id,
     }));
     // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
@@ -280,10 +280,10 @@ export default function UserTicketTableSection() {
 
     return (
         <>
-        {
-            hasSelected && <UserTicketTransferSection selected={selectedRowKeys}/>
-        }
-        
+            {hasSelected && (
+                <UserTicketTransferSection selected={selectedRowKeys} />
+            )}
+
             <Table
                 rowSelection={{
                     type: selectionType,

@@ -24,6 +24,7 @@ export default function TicketOpenCasesPage() {
     //         console.log("error", error);
     //     }
     // }, []);
+    console.log('tickets',tickets)
     return (
         <TicketCasesHandledLayout>
             <div className="mx-3">

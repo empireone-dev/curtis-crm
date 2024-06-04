@@ -225,7 +225,6 @@ export default function DecisionMakingSection() {
                         <div className="mt-4 mb-4 grid grid-cols-1 gap-x-6 gap-y-8">
                             <div className="flex flex-col gap-6 ">
                                 <div className="flex gap-3 w-full">
-                                   
                                     <Input
                                         onChange={formHandler}
                                         span="$"
@@ -246,7 +245,7 @@ export default function DecisionMakingSection() {
                                         type="number"
                                         errorMessage="Discount is required"
                                     />
-                                    
+
                                     <Input
                                         onChange={formHandler}
                                         span="$"
@@ -263,7 +262,7 @@ export default function DecisionMakingSection() {
                                         errorMessage="Price After Discount is required"
                                         readOnly
                                     />
-                                     <Input
+                                    <Input
                                         onChange={formHandler}
                                         name="cost_refund"
                                         span="$"
@@ -487,92 +486,90 @@ export default function DecisionMakingSection() {
                                         onChange={formHandler}
                                     />
 
-                                    {data.instruction == "CA Warehouse" ||
-                                        (data.instruction == "US Warehouse" && (
-                                            <div className="flex gap-5 my-12">
-                                                <div class="flex items-center">
-                                                    <input
-                                                        checked={
-                                                            data.ticket_type ==
-                                                            "REPLACEMENT"
-                                                        }
-                                                        id="default-radio-2"
-                                                        onChange={(e) =>
-                                                            setData({
-                                                                ...data,
-                                                                ticket_type:
-                                                                    e.target
-                                                                        .value,
-                                                            })
-                                                        }
-                                                        type="radio"
-                                                        value="REPLACEMENT"
-                                                        name="ticket_type"
-                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                    />
-                                                    <label
-                                                        htmlFor="default-radio-2"
-                                                        class="ms-2 text-xl font-medium text-gray-900"
-                                                    >
-                                                        Replacement
-                                                    </label>
-                                                </div>
-                                                <div class="flex items-center">
-                                                    <input
-                                                        checked={
-                                                            data.ticket_type ==
-                                                            "REFUND"
-                                                        }
-                                                        id="default-radio-3"
-                                                        onChange={(e) =>
-                                                            setData({
-                                                                ...data,
-                                                                ticket_type:
-                                                                    e.target
-                                                                        .value,
-                                                            })
-                                                        }
-                                                        type="radio"
-                                                        value="REFUND"
-                                                        name="ticket_type"
-                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                    />
-                                                    <label
-                                                        htmlFor="default-radio-3"
-                                                        class="ms-2 text-xl font-medium text-gray-900"
-                                                    >
-                                                        Refund
-                                                    </label>
-                                                </div>
-                                                <div class="flex items-center ">
-                                                    <input
-                                                        checked={
-                                                            data.ticket_type ==
-                                                            "REPAIR"
-                                                        }
-                                                        id="default-radio-1"
-                                                        onChange={(e) =>
-                                                            setData({
-                                                                ...data,
-                                                                ticket_type:
-                                                                    e.target
-                                                                        .value,
-                                                            })
-                                                        }
-                                                        type="radio"
-                                                        value="REPAIR"
-                                                        name="ticket_type"
-                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                                    />
-                                                    <label
-                                                        htmlFor="default-radio-1"
-                                                        class="ms-2 text-xl font-medium text-gray-900"
-                                                    >
-                                                        Repair
-                                                    </label>
-                                                </div>
+                                    {(data.instruction == "CA Warehouse" ||
+                                        data.instruction == "US Warehouse") && (
+                                        <div className="flex gap-5 my-12">
+                                            <div class="flex items-center">
+                                                <input
+                                                    checked={
+                                                        data.ticket_type ==
+                                                        "REPLACEMENT"
+                                                    }
+                                                    id="default-radio-2"
+                                                    onChange={(e) =>
+                                                        setData({
+                                                            ...data,
+                                                            ticket_type:
+                                                                e.target.value,
+                                                        })
+                                                    }
+                                                    type="radio"
+                                                    value="REPLACEMENT"
+                                                    name="ticket_type"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                />
+                                                <label
+                                                    htmlFor="default-radio-2"
+                                                    class="ms-2 text-xl font-medium text-gray-900"
+                                                >
+                                                    Replacement
+                                                </label>
                                             </div>
-                                        ))}
+
+                                            <div class="flex items-center">
+                                                <input
+                                                    checked={
+                                                        data.ticket_type ==
+                                                        "REFUND"
+                                                    }
+                                                    id="default-radio-3"
+                                                    onChange={(e) =>
+                                                        setData({
+                                                            ...data,
+                                                            ticket_type:
+                                                                e.target.value,
+                                                        })
+                                                    }
+                                                    type="radio"
+                                                    value="REFUND"
+                                                    name="ticket_type"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                />
+                                                <label
+                                                    htmlFor="default-radio-3"
+                                                    class="ms-2 text-xl font-medium text-gray-900"
+                                                >
+                                                    Refund
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center ">
+                                                <input
+                                                    checked={
+                                                        data.ticket_type ==
+                                                        "REPAIR"
+                                                    }
+                                                    id="default-radio-1"
+                                                    onChange={(e) =>
+                                                        setData({
+                                                            ...data,
+                                                            ticket_type:
+                                                                e.target.value,
+                                                        })
+                                                    }
+                                                    type="radio"
+                                                    value="REPAIR"
+                                                    name="ticket_type"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                />
+                                                <label
+                                                    htmlFor="default-radio-1"
+                                                    class="ms-2 text-xl font-medium text-gray-900"
+                                                >
+                                                    Repair
+                                                </label>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <div className="mt-10">
                                         <Input

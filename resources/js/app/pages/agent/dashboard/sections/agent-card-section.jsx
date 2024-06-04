@@ -78,7 +78,7 @@ export default function AgentCardsSection({ account }) {
                     {agent_type(["Warranty"]) && (
                         <AgentCardsComponent
                             title="Open Ticket for Warranty"
-                            link="OPEN WARRANTY"
+                            link="WARRANTY VALIDATION"
                             count={data.open_warranty ?? 0}
                             icon={
                                 <ListBulletIcon className="h-10 text-white" />
