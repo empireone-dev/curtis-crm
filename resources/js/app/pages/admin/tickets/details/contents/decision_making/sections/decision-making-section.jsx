@@ -108,6 +108,7 @@ export default function DecisionMakingSection() {
         });
     }
 console.log('if the radio button not appear please check the warranty instruction and add open and close parenthesis.')
+console.log('data',data)
     async function submit_form(e) {
         e.preventDefault();
         setIsLoading1(true);

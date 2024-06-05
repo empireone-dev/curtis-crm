@@ -288,8 +288,8 @@ class TicketController extends Controller
         $perPage = 10;
         $data = [];
         if ($request->cases == 'open_cases') {
-            $count = Ticket::where([['user_id','=',$request->user_id],['cases_status','=','open']])->count();
-            $dataQuery = Ticket::where([['user_id','=',$request->user_id],['cases_status','=','open']]);
+            $count = Ticket::where('user_id', '=', $request->user_id)->count();
+            $dataQuery = Ticket::where('user_id', '=', $request->user_id);
 
             // Paginate the data
             $data = $dataQuery->paginate($perPage);
@@ -300,11 +300,14 @@ class TicketController extends Controller
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbz3qreMdr3x7sHDX1eshLp140ei3Tg3lEnJec1EEd-v29hPUj7CVIbqwA0qdSaG99E_/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
-                if ($response->successful()) {
+                $input = $response->json()[0]['emails'][0]['from'];
+                preg_match('/<(.+)>/', $input, $matches);
+                $email = $matches[1];
+                if ($response->successful() && $email !== 'support2@curtiscs.com') {
                     $emails[] = [
                         'ticket' => $value,
                         'emails' => $response->json(),
@@ -314,24 +317,21 @@ class TicketController extends Controller
             }
             $data->setCollection(collect($emails));
         } else  if ($request->cases == 'handled') {
-            $count = Ticket::where('user_id', $request->user_id)->where(function ($query) {
-                $query->where('cases_status','=','handled');
-            })->count();
+            $count = Ticket::where('user_id', $request->user_id)->count();
             $data = Ticket::where('user_id', $request->user_id)
-                ->where(function ($query) {
-                    $query->where('cases_status','=','handled');
-                })
                 ->paginate($perPage);
 
             $emails = []; // Initialize an empty array to store emails
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbz3qreMdr3x7sHDX1eshLp140ei3Tg3lEnJec1EEd-v29hPUj7CVIbqwA0qdSaG99E_/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
-                // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
-                if ($response->successful()) {
+                $input = $response->json()[0]['emails'][0]['from'];
+                preg_match('/<(.+)>/', $input, $matches);
+                $email = $matches[1];
+                if ($response->successful()  && $email == 'support2@curtiscs.com') {
                     $emails[] = [
                         'ticket' => $value,
                         'emails' => $response->json(),
@@ -355,7 +355,7 @@ class TicketController extends Controller
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbz3qreMdr3x7sHDX1eshLp140ei3Tg3lEnJec1EEd-v29hPUj7CVIbqwA0qdSaG99E_/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
@@ -485,7 +485,7 @@ class TicketController extends Controller
             $data = Ticket::create(array_merge($request->all(), [
                 'user_id' => $this->queueing($request->call_type),
                 'status' => $validation,
-                'cases_status'=>'handled'
+                'cases_status' => 'handled'
             ]));
 
             Activity::create([
@@ -548,7 +548,7 @@ class TicketController extends Controller
             $data = Ticket::create(array_merge($request->all(), [
                 'user_id' => $this->queueing($request->call_type),
                 'status' => $validation,
-                'cases_status'=>'handled'
+                'cases_status' => 'handled'
             ]));
 
             Activity::create([

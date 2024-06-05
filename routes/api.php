@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CasesLogController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakingController;
@@ -97,6 +98,9 @@ Route::resource('brands', BrandController::class);
 Route::resource('item_types', ItemTypeController::class);
 Route::resource('common_issues', CommonIssueController::class);
 Route::resource('files', FileController::class);
+
+
+Route::resource('caseslog', CasesLogController::class);
 
 
 Route::get('/administrator_dashboard', [DashboardController::class, 'administrator_dashboard']);

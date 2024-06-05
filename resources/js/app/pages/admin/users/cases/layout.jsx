@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UsersCasesPaginationSection from "./sections/users-cases-pagination-section";
 
 export default function TicketCasesHandledLayout({ children }) {
@@ -19,6 +19,7 @@ export default function TicketCasesHandledLayout({ children }) {
     const account_id = window.location.pathname.split("/")[3];
     const cases = window.location.pathname.split("/")[5];
     const dispatch = useDispatch();
+    const { tickets } = useSelector((state) => state.customer_tickets);
     useEffect(() => {
         async function fetch_date(params) {
             const res = await cases_service(
@@ -44,6 +45,7 @@ export default function TicketCasesHandledLayout({ children }) {
             return "hover:bg-gray-500 hover:bg-opacity-10 hover:text-blue-600 flex items-center justify-between text-gray-700 py-1.5 px-4 rounded space-x-2 cursor-pointer";
         }
     }
+    console.log('tickets',tickets.length)
     return (
         <AdministratorLayout>
             <div class="w-full  flex overflow-x-auto custom-scrollbar pt-6 h-screen">
@@ -59,9 +61,9 @@ export default function TicketCasesHandledLayout({ children }) {
                                         <InboxArrowDownIcon className="h-6" />
                                         <span>Open Cases</span>
                                     </span>
-                                    <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                                    {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                                         3
-                                    </span>
+                                    </span> */}
                                 </Link>
                             </li>
                             <li>
@@ -73,9 +75,9 @@ export default function TicketCasesHandledLayout({ children }) {
                                         <InboxStackIcon className="h-6" />
                                         <span>Handled Cases</span>
                                     </span>
-                                    <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                                    {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                                         3
-                                    </span>
+                                    </span> */}
                                 </Link>
                             </li>
                             <li>
@@ -87,9 +89,9 @@ export default function TicketCasesHandledLayout({ children }) {
                                         <EnvelopeIcon className="h-6" />
                                         <span>Closed Cases</span>
                                     </span>
-                                    <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                                    {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                                         3
-                                    </span>
+                                    </span> */}
                                 </Link>
                             </li>
                         </ul>
