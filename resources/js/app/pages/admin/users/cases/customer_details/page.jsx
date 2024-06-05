@@ -11,6 +11,8 @@ import { router } from '@inertiajs/react'
 import { get_caseslog_by_ticket_id_service } from '@/app/services/cases-log-service'
 import { useDispatch } from 'react-redux'
 import { set_cases_log } from '../../redux/users-slice'
+import store from '@/app/store/store'
+import { get_users_thunk } from '../../redux/users.thunk'
 
 export default function UserCasesCustomerDetailsPage({auth}) {
   const [data,setData]=useState({})
@@ -24,6 +26,10 @@ export default function UserCasesCustomerDetailsPage({auth}) {
     }
     fetch_data()
   },[])
+
+  useEffect(() => {
+    store.dispatch(get_users_thunk(5))
+  }, []);
   return (
     <AdministratorLayout>
       <div className="p-5 md:p-10 bg-gray-100">

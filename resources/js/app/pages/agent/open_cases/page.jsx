@@ -207,20 +207,37 @@ export default function AgentOpenCasesEMail({ auth }) {
                                 {tickets.map((res, i) => {
                                     return (
                                         <tr class="bg-white border-b">
-                                            <td class="px-6 py-3">{moment(res.ticket.updated_at).format('LLL')}</td>
-                                            <td class="px-6 py-3">{moment(res.ticket.updated_at).add(2, 'days').format('LLL')}</td>
+                                            <td class="px-6 py-3">
+                                                {moment(
+                                                    res.ticket.updated_at
+                                                ).format("LLL")}
+                                            </td>
+                                            <td class="px-6 py-3">
+                                                {moment(res.ticket.updated_at)
+                                                    .add(2, "days")
+                                                    .format("LLL")}
+                                            </td>
                                             <th
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
                                                 {res.ticket.ticket_id}
                                             </th>
-                                            <td class="px-6 py-3"> {res.ticket.email}</td>
+                                            <td class="px-6 py-3">
+                                                {" "}
+                                                {res.ticket.email}
+                                            </td>
                                             <td class="px-6 py-3">
                                                 <button
-                                                onClick={()=>router.visit(`/agent/customer_details/${res.ticket.id}`)}
-                                                className="text-white bg-green-500 px-5 p-1.5 rounded-md">
-                                                  VIEW
+                                                    onClick={() =>
+                                                        window.open(
+                                                            `/agent/customer_details/${res.ticket.id}`,
+                                                            "_blank"
+                                                        )
+                                                    }
+                                                    className="text-white bg-green-500 px-5 py-1.5 rounded-md"
+                                                >
+                                                    VIEW
                                                 </button>
                                             </td>
                                         </tr>

@@ -35,6 +35,8 @@ export default function ContentDetailsSection() {
             router.visit(`/agent/tickets/details/${ticket.id}/edit`);
         }
     }
+
+    console.log('ticket',ticket)
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
@@ -77,13 +79,27 @@ export default function ContentDetailsSection() {
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Phone :</b> {ticket.phone}
+                            <b>Phone :</b>{" "}
+                            {ticket.phone?.replace(
+                                /(\d{3})(\d{3})(\d{4})/,
+                                "($1) $2-$3"
+                            )}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Purchase Date :</b> {ticket.purchase_date}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  
+                        <dt className="text-sm font-medium leading-6 text-gray-900">
+                            <b>Store Name:</b> {ticket?.receipt?.store??'NA'}
+                        </dt>
+                        <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
+                            {/* <b>Unit :</b> {ticket.unit} */}
+                        </dd>
+                    </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Model # :</b> {ticket.item_number}
                         </dt>

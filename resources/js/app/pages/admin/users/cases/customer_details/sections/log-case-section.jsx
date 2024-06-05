@@ -8,6 +8,7 @@ export default function LogCaseSection({ datas, account }) {
     const [data, setData] = useState({
         isEscalate: "true",
     });
+  
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     async function submit_case_log(params) {
