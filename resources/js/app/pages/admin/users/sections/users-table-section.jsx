@@ -166,12 +166,12 @@ export default function UsersTableSection() {
                 );
             },
         },
-        // {
-        //     title: "Handled Cases",
-        //     dataIndex: "email",
-        //     key: "email",
-        //     ...getColumnSearchProps("email"),
-        // },
+        {
+            title: "Position",
+            dataIndex: "agent_type",
+            key: "agent_type",
+            ...getColumnSearchProps("agent_type"),
+        },
         // {
         //     title: "Handled Direct Emails",
         //     dataIndex: "agent_type",
@@ -201,7 +201,7 @@ export default function UsersTableSection() {
         //     },
         // },
         {
-            title: "Handled Cases",
+            title: "Cases",
             dataIndex: "agent_type",
             key: "agent_type",
             // ...getColumnSearchProps("agent_type"),
