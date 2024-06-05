@@ -41,7 +41,7 @@ export default function UserCasesCustomerDetailsPage({auth}) {
                 <div className="border-l p-2 md:pl-4 overflow-auto">
                   <div className="flex gap-4">
                     <button
-                    onClick={()=>router.visit(window.location.pathname.substring(0,30)+'open_cases')}
+                    onClick={()=>router.visit('/agent/open_cases?page=1')}
                     className="bg-gray-300 hover:bg-gray-400 items-center justify-center font-bold w-full py-2 px-4 rounded">
                       <ArrowLeftOutlined className="mr-2" />
                       Previous
