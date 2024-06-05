@@ -190,6 +190,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/users/cases/direct_emails/page');
     })->name('users.cases.direct_emails');
 
+    Route::get('/users/{userid}/cases/customer_details', function () {
+        return Inertia::render('admin/users/cases/customer_details/page');
+    })->name('users.cases.customer_details');
+
     // Route::get('/users/{userid}/cases/assigned_cases', function () {
     //     return Inertia::render('admin/users/cases/assigned_cases/page');
     // })->name('users.cases.assigned_cases');
@@ -201,6 +205,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     Route::get('/users/{userid}', function () {
         return Inertia::render('admin/users/tickets/page');
     })->name('users.tickets');
+    
 
     Route::get('/brands', function () {
         return Inertia::render('admin/brands/page');
