@@ -6,6 +6,7 @@ export default function CaseDetailsSection() {
     const { users } = useSelector((state) => state.users);
     const ticket_id = window.location.pathname.split('/')[6]
     
+    
     return (
         <div>
             <div class="text-gray-600 mb-2">

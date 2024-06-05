@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
+    public function transfer_ticket_cases(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->ticket_id);
+        $ticket->update([
+            'user_id' => $request->user_id
+        ]);
+    }
     public function forward_ticket(Request $request)
     {
 
@@ -304,19 +311,26 @@ class TicketController extends Controller
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
-                $input = $response->json()[0]['emails'][0]['from'];
-                preg_match('/<(.+)>/', $input, $matches);
-                $email = $matches[1];
-                if ($response->successful() && $email !== 'support2@curtiscs.com') {
-                    $emails[] = [
-                        'ticket' => $value,
-                        'emails' => $response->json(),
-                        'count' => $count
-                    ];
+                $responseData = $response->json();
+
+                if (isset($responseData[0]['emails'][0]['from'])) {
+                    $input = $responseData[0]['emails'][0]['from'];
+                    preg_match('/<(.+)>/', $input, $matches);
+                    $email = $matches[1];
+                    if ($response->successful() && $email !== 'support2@curtiscs.com') {
+                        $emails[] = [
+                            'ticket' => $value,
+                            'emails' => $responseData,
+                            'count' => $count
+                        ];
+                    }
+                } else {
+                    // Handle the case where the expected structure is not present
+                    error_log('Expected data structure not found in response');
                 }
             }
             $data->setCollection(collect($emails));
-        } else  if ($request->cases == 'handled') {
+        } else if ($request->cases == 'handled') {
             $count = Ticket::where('user_id', $request->user_id)->count();
             $data = Ticket::where('user_id', $request->user_id)
                 ->paginate($perPage);
@@ -328,23 +342,31 @@ class TicketController extends Controller
                 $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 $response = Http::get($scriptUrl);
-                $input = $response->json()[0]['emails'][0]['from'];
-                preg_match('/<(.+)>/', $input, $matches);
-                $email = $matches[1];
-                if ($response->successful()  && $email == 'support2@curtiscs.com') {
-                    $emails[] = [
-                        'ticket' => $value,
-                        'emails' => $response->json(),
-                        'count' => $count
-                    ];
+                $responseData = $response->json();
+
+                if (isset($responseData[0]['emails'][0]['from'])) {
+                    $input = $responseData[0]['emails'][0]['from'];
+                    preg_match('/<(.+)>/', $input, $matches);
+                    $email = $matches[1];
+                    if ($response->successful() && $email == 'support2@curtiscs.com') {
+                        $emails[] = [
+                            'ticket' => $value,
+                            'emails' => $responseData,
+                            'count' => $count
+                        ];
+                    }
+                } else {
+                    // Handle the case where the expected structure is not present
+                    error_log('Expected data structure not found in response');
                 }
             }
             // Replace the paginated data items with the merged emails
             $data->setCollection(collect($emails));
-        } else  if ($request->cases == 'closed_cases') {
+        } else if ($request->cases == 'closed_cases') {
             $count = Ticket::where('user_id', $request->user_id)->where(function ($query) {
                 $query->where('status', '=', 'CLOSED');
             })->count();
+
             $data = Ticket::where('user_id', $request->user_id)
                 ->where(function ($query) {
                     $query->where('status', '=', 'CLOSED');
@@ -359,12 +381,23 @@ class TicketController extends Controller
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
-                if ($response->successful()) {
-                    $emails[] = [
-                        'ticket' => $value,
-                        'emails' => $response->json(),
-                        'count' => $count
-                    ];
+                $responseData = $response->json();
+
+                if (isset($responseData[0]['emails'][0]['from'])) {
+                    $input = $responseData[0]['emails'][0]['from'];
+                    preg_match('/<(.+)>/', $input, $matches);
+                    $email = $matches[1];
+
+                    if ($response->successful()) {
+                        $emails[] = [
+                            'ticket' => $value,
+                            'emails' => $responseData,
+                            'count' => $count
+                        ];
+                    }
+                } else {
+                    // Handle the case where the expected structure is not present
+                    error_log('Expected data structure not found in response');
                 }
             }
             // Replace the paginated data items with the merged emails
