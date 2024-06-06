@@ -6,8 +6,8 @@ import ProductivityTotalHandledCases from './sections/productivity-total-handled
 export default function ProductivityPage() {
   return (
     <AdministratorLayout>
-      <div className="flex items-center gap-x-3 p-3">
-        <h2 className="text-lg font-medium text-gray-800">
+      <div className="flex items-center gap-x-3 p-5">
+        <h2 className="text-xl font-medium text-gray-800">
           <b>Dashboard</b>
         </h2>
       </div>

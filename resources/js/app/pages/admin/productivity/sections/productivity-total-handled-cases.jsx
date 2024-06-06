@@ -38,7 +38,7 @@ export default function ProductivityTotalHandledCases() {
                             25
                         </span>
                     </div>
-                    <p className="text-center">Total Handled Cases</p>
+                    <p className="text-center text-lg">Total Handled Cases</p>
                 </div>
             </div>
         </div>

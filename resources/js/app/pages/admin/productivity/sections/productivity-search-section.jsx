@@ -15,7 +15,7 @@ export default function ProductivitySearchSection() {
         
     }
     return (
-        <div className=" md:flex md:items-center md:justify-between mb-2">
+        <div className=" md:flex md:items-center md:justify-end">
         
             <form
                 onSubmit={searchSubmit}

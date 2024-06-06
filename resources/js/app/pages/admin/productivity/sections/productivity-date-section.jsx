@@ -53,7 +53,7 @@ export default function ProductivityDateSection() {
         <div className="flex gap-4 w-full mb-4">
             
             <div className="w-full pl-2">
-            <p>Start Date: &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;End Date:</p>
+            <p>Filter by date:</p>
                 <RangePicker
                     defaultValue={[
                         dayjs(data.start, dateFormat),
