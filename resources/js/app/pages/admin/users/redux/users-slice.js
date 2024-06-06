@@ -4,7 +4,11 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
-    cases_logs:[]
+    cases_logs:[],
+    search: {
+      id: null,
+      page: 1,
+  },
   },
   reducers: {
     setUsers: (state, action) => {
@@ -13,8 +17,11 @@ export const usersSlice = createSlice({
     set_cases_log: (state, action) => {
       state.cases_logs = action.payload
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+  },
   },
 })
-export const { setUsers,set_cases_log } = usersSlice.actions
+export const { setUsers, set_cases_log, setSearch } = usersSlice.actions
 
 export default usersSlice.reducer

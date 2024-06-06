@@ -16,6 +16,7 @@ import {
     UserCircleIcon,
     UserGroupIcon,
     UserIcon,
+    WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 
 export default function LayoutSidebarSection({ account }) {
@@ -103,7 +104,7 @@ export default function LayoutSidebarSection({ account }) {
                             <LayoutSidebarListComponent
                                 account={account}
                                 name="ASC"
-                                icon={<UserCircleIcon className="h-6" />}
+                                icon={<WrenchScrewdriverIcon className="h-6" />}
                                 href={"asc"}
                             />
                             <LayoutSidebarListComponent
