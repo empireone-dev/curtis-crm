@@ -16,6 +16,7 @@ class CasesLog extends Model
         'isEscalate',
         'case_type',
         'case_status',
+        'log_from'
     ];
     public function user(): HasOne
     {

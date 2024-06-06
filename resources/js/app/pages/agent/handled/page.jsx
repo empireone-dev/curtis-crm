@@ -20,7 +20,7 @@ export default function TicketCasesHandledPage({ auth }) {
             const res = await cases_service(
                 window.location.search,
                 cases,
-                account.id
+                account.id,
             );
             dispatch(setTickets(res));
             // await store.dispatch(get_tickets_by_user_id_thunk(account_id));

@@ -88,6 +88,7 @@ Route::post('search_tickets', [TicketController::class, 'search_tickets']);
 Route::get('/get_users', [TicketController::class, 'get_users']);
 Route::post('forward_ticket', [TicketController::class, 'forward_ticket']);
 Route::get('cases', [TicketController::class, 'cases']);
+Route::get('direct_emails', [TicketController::class, 'direct_emails']);
 Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_cases']);
 
 

@@ -20,6 +20,16 @@ export async function cases_service(page,cases,user_id) {
         return [];
     }
 }
+
+export async function direct_emails_service() {
+    try {
+        const res = await axios.get(`/api/direct_emails`);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function forward_ticket_service(data) {
     try {
         const res = await axios.post("/api/forward_ticket", data);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('isEscalate')->nullable();
             $table->string('case_type')->nullable();
             $table->string('case_status')->nullable();
+            $table->string('log_from')->nullable();
             $table->timestamps();
         });
     }

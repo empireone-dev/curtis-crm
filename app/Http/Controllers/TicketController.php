@@ -289,6 +289,16 @@ class TicketController extends Controller
         ], 200);
     }
 
+    public function direct_emails(Request $request){
+        $numEmails = 10;
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyOqi9TMq5vxCGBOKCe-He2rD6Nfij0vE_kJKxFdvW8RA7KX15xqqnmBnqBNrOq9rKn/exec?numEmails=' . $numEmails ;
+        // Make a GET request to the Google Apps Script Web App
+        $response = Http::get($scriptUrl);
+        $responseData = $response->json();
+        return response()->json([
+            'result' => $responseData
+        ], 200);
+    }
     public function cases(Request $request)
     {
         // Number of results per page
@@ -305,7 +315,7 @@ class TicketController extends Controller
 
             // Loop through each paginated item
             foreach ($data as $key => $value) {
-                $numEmails = 100;
+                $numEmails = 20;
                 $searchSubject = substr($value->ticket_id, 1);
                 $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 

@@ -26,7 +26,6 @@ export default function AgentLayout({children,account}) {
                     <AgentLayoutSubSidebarSection />
                     <AgentLayoutSidebarSection account={account}/>
                 </div>
-
             </div>
             <div className="flex-1">
                 {children}

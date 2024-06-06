@@ -2,34 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CasesLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function get_user_by_role($role_id){
-        $user = User::where('role_id','=',$role_id)->get();
+    public function get_user_by_role($role_id)
+    {
+        $users = User::where('role_id', '=', $role_id)->get();
+
+
         return response()->json([
-            'data' => $user
+            'data' => $users
         ], 200);
     }
-    
 
-    public function index(){
+
+    public function index()
+    {
         $user = User::with('role')->limit(10)->get();
         return response()->json([
             'data' => $user
         ], 200);
     }
 
-    public function show(Request $request,$role_id){
-        $user = User::where('role_id','=',$role_id)->with('role')->get();
+    public function show(Request $request, $role_id)
+    {
+        $users = User::where('role_id', '=', $role_id)->with('role')->get();
+        if ($role_id == 5) {
+            foreach ($users as $user) {
+                $handledCount = CasesLog::where([
+                    ['user_id', '=', $user->id],
+                    ['log_from', '=', 'handled']
+                ])->count();
+
+                // Add handled_count attribute to the user instance
+                $user->handled_count = $handledCount;
+            }
+        }
+
         return response()->json([
-            'data' => $user
+            'data' => $users
         ], 200);
     }
-    
-    
+
+
     public function store(Request $request)
     {
         // User::create($request->validate([
@@ -54,9 +72,9 @@ class UserController extends Controller
                 'message' => 'user not found'
             ], 404);
         }
-    
+
         $user->delete();
-    
+
         $users = user::get();
         return response()->json([
             'status' => 'success',
@@ -64,7 +82,8 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $user = User::find($id);
         $user->update($request->all());
 

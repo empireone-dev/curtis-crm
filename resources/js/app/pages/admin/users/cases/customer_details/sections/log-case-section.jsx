@@ -17,6 +17,7 @@ export default function LogCaseSection({ datas, account }) {
             ...data,
             ticket_id: datas.id,
             user_id: account.id,
+            log_from:'handled'
         });
         setData({
             isEscalate: "true",
