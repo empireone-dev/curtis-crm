@@ -290,8 +290,7 @@ class TicketController extends Controller
     }
 
     public function direct_emails(Request $request){
-        $numEmails = 10;
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyOqi9TMq5vxCGBOKCe-He2rD6Nfij0vE_kJKxFdvW8RA7KX15xqqnmBnqBNrOq9rKn/exec?numEmails=' . $numEmails ;
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxkobyG8yzc-9mpH284FZ54Z9VoS26gXiaYHuoMxCbfDj2WTf38i7Ufs8rlYabNs6gH/exec?page=' .$request->page ;
         // Make a GET request to the Google Apps Script Web App
         $response = Http::get($scriptUrl);
         $responseData = $response->json();

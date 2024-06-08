@@ -492,6 +492,10 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/direct_emails/page');
     })->name('agent.direct_emails');
 
+    Route::get('/direct_emails/{id}', function () {
+        return Inertia::render('agent/direct_emails/id/page');
+    })->name('agent.direct_emails.id');
+
     Route::get('/closed_cases', function () {
         return Inertia::render('agent/closed_cases/page');
     })->name('agent.closed_cases');

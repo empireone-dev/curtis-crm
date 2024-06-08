@@ -10,6 +10,8 @@ import Highlighter from "react-highlight-words";
 // import ProductivityDateSection from './productivity-date-section';
 import { useSelector } from "react-redux";
 import { direct_emails_service } from "@/app/services/tickets-service";
+import moment from "moment";
+import { router } from "@inertiajs/react";
 
 export default function AgentDirectEmailsTableSection() {
     const { users } = useSelector((state) => state.users);
@@ -17,6 +19,8 @@ export default function AgentDirectEmailsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const [dataTable, setDataTable] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const [pageSize, setPageSize] = useState(10);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -29,8 +33,9 @@ export default function AgentDirectEmailsTableSection() {
 
     useEffect(() => {
         async function fetch_data() {
-            const res = await direct_emails_service();
-            setDataTable(res);
+            const res = await direct_emails_service(window.location.search ?? 'page=1');
+            setDataTable(res.result);
+            setLoading(false)
         }
         fetch_data();
     }, []);
@@ -147,47 +152,16 @@ export default function AgentDirectEmailsTableSection() {
             ),
     });
 
-    // const data = [
-    //     {
-    //         key: '1',
-    //         overdue_cases: 32,
-    //         overdue_direct_emails: 32,
-    //         cases_due_today: 32,
-    //         direct_emails_due_today: 32,
-    //         handled_cases: 32,
-    //         handled_direct_emails: 'John Brown',
-    //         total: '8',
-    //         agent: '24',
-    //     },
 
-    // ];
 
-    // const data = dataTable?.result?.map((res,i)=>({
-    //     email:res?.email[0]?.from,
-    //     position:res.agent_type,
-    //     handled_cases:res.handled_count
-    // }))
-    const emailRegex = /<?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>?/g;
-
-    
-    const extractedEmails = dataTable?.result?.map((res, i) => ({
-        email:res.emails[0].from.match(emailRegex)
-    })).filter(email => email !== null);
-    const data = extractedEmails;
-    console.log("extractedEmails", extractedEmails);
+    const data = dataTable.map((res, i) => ({
+        key: i,
+        email: res.from,
+        date: moment(res.date).format('LLLL'),
+        link: res.link,
+        id: res.id
+    }));
     const columns = [
-        {
-            title: "Added On",
-            dataIndex: "agent",
-            key: "agent",
-            // ...getColumnSearchProps('app_id'),
-        },
-        {
-            title: "Due On",
-            dataIndex: "position",
-            key: "position",
-            // ...getColumnSearchProps('app_id'),
-        },
         {
             title: "Email",
             dataIndex: "email",
@@ -195,12 +169,50 @@ export default function AgentDirectEmailsTableSection() {
             // ...getColumnSearchProps('app_name'),
         },
         {
+            title: "Date Completed",
+            dataIndex: "date",
+            key: "date",
+            // ...getColumnSearchProps('app_name'),
+        },
+        {
+            title: "Email Link",
+            dataIndex: "link",
+            key: "link",
+            render: (_, record) => (
+                <a href={record.link} target="_blank">
+                    {record.link}
+                </a>
+            )
+        },
+        {
             title: "Action",
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
-            // ...getColumnSearchProps('app_name'),
+            render: (_, record) => {
+                const str = record.email;
+                const emailRegex = /<([^>]+)>/;
+                const match = str.match(emailRegex);
+                
+                return (
+                    <a
+                        target="_blank"
+                        href={`${window.location.pathname}/${record.id}?email= ${match ? match[1] : ''}`}
+                        className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3">
+                        VIEW
+                    </a>)
+            }
         },
     ];
+    const paginationConfig = {
+        showSizeChanger: false,
+        current: parseInt(window.location.search.split('=')[1] ?? 1),
+        pageSize: pageSize,
+        total: 1300,
+        onChange: (page, pageSize) => {
+            router.visit(window.location.pathname + `?page=${page}`);
+        },
+    };
+
 
     return (
         <div>
@@ -209,7 +221,10 @@ export default function AgentDirectEmailsTableSection() {
                     {/* <ProductivityDateSection/>
                 <ProductivitySearchSection/> */}
                 </div>
-                <Table columns={columns} dataSource={data} />
+                <Table
+                    loading={loading}
+                    pagination={paginationConfig}
+                    columns={columns} dataSource={data} />
             </div>
         </div>
     );
