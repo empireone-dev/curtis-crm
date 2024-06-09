@@ -1,1 +1,0 @@
-import{c as t}from"./store-CG9dSQPZ.js";async function o(a){return(await t.post("/api/files",a)).data}async function s(a){return(await t.get("/api/files/"+a)).data}async function n(a,e){return await t.delete("/api/files/"+a),(await s(e)).data}export{n as d,s as g,o as u};

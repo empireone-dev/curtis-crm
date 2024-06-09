@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cases_logs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('ticket_id')->nullable();
+            $table->string('ticket_id')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->string('remarks')->nullable();
             $table->string('isEscalate')->nullable();

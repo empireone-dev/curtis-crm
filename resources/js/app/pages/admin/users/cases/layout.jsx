@@ -27,7 +27,6 @@ export default function TicketCasesHandledLayout({ children }) {
                 cases,
                 account_id
             );
-            console.log("resresres", res);
             dispatch(setTickets(res));
             // await store.dispatch(get_tickets_by_user_id_thunk(account_id));
             setLoading(false);
