@@ -7,6 +7,7 @@ import ProductivityDateSection from './productivity-date-section';
 import { useSelector } from 'react-redux';
 
 export default function ProductivityTableSection() {
+    
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -135,9 +136,10 @@ export default function ProductivityTableSection() {
     const data = users.map((res,i)=>({
         agent:res.name,
         position:res.agent_type,
-        handled_cases:res.handled_count
+        handled_cases:res.handled_count,
+        handled_direct_emails:res.handled_direct_emails
     }))
-
+    
     const columns = [
         {
             title: 'Agent',

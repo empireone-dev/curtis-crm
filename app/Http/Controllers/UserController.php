@@ -37,8 +37,14 @@ class UserController extends Controller
                     ['log_from', '=', 'handled']
                 ])->count();
 
+                $direct_emails_count = CasesLog::where([
+                    ['user_id', '=', $user->id],
+                    ['log_from', '=', 'direct_emails']
+                ])->count();
+
                 // Add handled_count attribute to the user instance
                 $user->handled_count = $handledCount;
+                $user->handled_direct_emails = $direct_emails_count;
             }
         }
 
