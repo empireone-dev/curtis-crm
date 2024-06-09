@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CasesLog;
+use App\Models\Ticket;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -29,7 +32,10 @@ class UserController extends Controller
 
     public function show(Request $request, $role_id)
     {
+        $twoDaysAgo = Carbon::now()->subDays(2)->toDateTimeString();
+        $today = Carbon::today()->toDateString();
         $users = User::where('role_id', '=', $role_id)->with('role')->get();
+
         if ($role_id == 5) {
             foreach ($users as $user) {
                 $handledCount = CasesLog::where([
@@ -41,9 +47,21 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
                 ])->count();
+                
 
+                $overdueTicketsCount = Ticket::where([
+                    ['user_id', '=', $user->id],
+                    ['status', '<>', 'CLOSED'],
+                    ['updated_at', '<=', $twoDaysAgo]
+                ])->count();
+                $dueTodayTicketsCount = Ticket::where([
+                    ['user_id', '=', $user->id],
+                    ['status', '<>', 'CLOSED'],
+                ]) ->whereDate('updated_at', '=', $today)->count();
                 // Add handled_count attribute to the user instance
                 $user->handled_count = $handledCount;
+                $user->cases_due_today = $dueTodayTicketsCount;
+                $user->overdue_cases = $overdueTicketsCount;
                 $user->handled_direct_emails = $direct_emails_count;
             }
         }

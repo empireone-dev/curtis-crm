@@ -33,7 +33,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
     }, []);
     return (
         <AgentLayout account={account}>
-            <div className="p-5 md:p-10 bg-gray-100">
+            <div className="p-10 bg-gray-100 min-h-screen">
                 <div className="container mx-auto">
                     <div className="bg-white rounded-lg shadow-lg p-2 md:p-4">
                         <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">

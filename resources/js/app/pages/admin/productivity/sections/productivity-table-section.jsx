@@ -1,16 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { ExclamationCircleFilled, FolderOpenFilled, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
-import Highlighter from 'react-highlight-words';
-import ProductivitySearchSection from './productivity-search-section';
-import ProductivityDateSection from './productivity-date-section';
-import { useSelector } from 'react-redux';
+import React, { useRef, useState } from "react";
+import {
+    ExclamationCircleFilled,
+    FolderOpenFilled,
+    SearchOutlined,
+} from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import ProductivitySearchSection from "./productivity-search-section";
+import ProductivityDateSection from "./productivity-date-section";
+import { useSelector } from "react-redux";
 
 export default function ProductivityTableSection() {
-    
     const { users } = useSelector((state) => state.users);
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -19,11 +22,17 @@ export default function ProductivityTableSection() {
     };
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText('');
+        setSearchText("");
     };
 
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        filterDropdown: ({
+            setSelectedKeys,
+            selectedKeys,
+            confirm,
+            clearFilters,
+            close,
+        }) => (
             <div
                 style={{
                     padding: 8,
@@ -34,17 +43,23 @@ export default function ProductivityTableSection() {
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onChange={(e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    }
+                    onPressEnter={() =>
+                        handleSearch(selectedKeys, confirm, dataIndex)
+                    }
                     style={{
                         marginBottom: 8,
-                        display: 'block',
+                        display: "block",
                     }}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -54,7 +69,9 @@ export default function ProductivityTableSection() {
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() =>
+                            clearFilters && handleReset(clearFilters)
+                        }
                         size="small"
                         style={{
                             width: 90,
@@ -90,12 +107,15 @@ export default function ProductivityTableSection() {
         filterIcon: (filtered) => (
             <SearchOutlined
                 style={{
-                    color: filtered ? '#1677ff' : undefined,
+                    color: filtered ? "#1677ff" : undefined,
                 }}
             />
         ),
         onFilter: (value, record) =>
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -105,109 +125,97 @@ export default function ProductivityTableSection() {
             searchedColumn === dataIndex ? (
                 <Highlighter
                     highlightStyle={{
-                        backgroundColor: '#ffc069',
+                        backgroundColor: "#ffc069",
                         padding: 0,
                     }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text.toString() : ""}
                 />
             ) : (
                 text
             ),
     });
 
-    // const data = [
-    //     {
-    //         key: '1',
-    //         overdue_cases: 32,
-    //         overdue_direct_emails: 32,
-    //         cases_due_today: 32,
-    //         direct_emails_due_today: 32,
-    //         handled_cases: 32,
-    //         handled_direct_emails: 'John Brown',
-    //         total: '8',
-    //         agent: '24',
-    //     },
-       
-      
-    // ];
-
-    const data = users.map((res,i)=>({
-        agent:res.name,
-        position:res.agent_type,
-        handled_cases:res.handled_count,
-        handled_direct_emails:res.handled_direct_emails
-    }))
-    
+    const data = users.map((res, i) => ({
+        agent: res.name,
+        position: res.agent_type,
+        overdue_cases:res.overdue_cases,
+        cases_due_today:res.cases_due_today,
+        overdue_direct_emails:0,
+        direct_emails_due_today:0,
+        handled_cases: res.handled_count,
+        handled_direct_emails: res.handled_direct_emails,
+        total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails)+parseInt(res.overdue_cases)+parseInt(res.cases_due_today),
+    }));
+console.log(data)
     const columns = [
         {
-            title: 'Agent',
-            dataIndex: 'agent',
-            key: 'agent',
+            title: "Agent",
+            dataIndex: "agent",
+            key: "agent",
             // ...getColumnSearchProps('app_id'),
         },
         {
-            title: 'Position',
-            dataIndex: 'position',
-            key: 'position',
+            title: "Position",
+            dataIndex: "position",
+            key: "position",
             // ...getColumnSearchProps('app_id'),
         },
         {
-            title: 'Overdue Cases',
-            dataIndex: 'overdue_cases',
-            key: 'overdue_cases',
+            title: "Overdue Cases",
+            dataIndex: "overdue_cases",
+            key: "overdue_cases",
             // ...getColumnSearchProps('app_name'),
         },
         {
-            title: 'Overdue Direct Emails',
-            dataIndex: 'overdue_direct_emails',
-            key: 'overdue_direct_emails',
+            title: "Cases Due Today",
+            dataIndex: "cases_due_today",
+            key: "cases_due_today",
             // ...getColumnSearchProps('app_name'),
         },
         {
-            title: 'Cases Due Today',
-            dataIndex: 'cases_due_today',
-            key: 'cases_due_today',
+            title: "Overdue Direct Emails",
+            dataIndex: "overdue_direct_emails",
+            key: "overdue_direct_emails",
+            // ...getColumnSearchProps('app_name'),
+        },
+      
+        {
+            title: "Direct Emails Due Today",
+            dataIndex: "direct_emails_due_today",
+            key: "direct_emails_due_today",
             // ...getColumnSearchProps('app_name'),
         },
         {
-            title: 'Direct Emails Due Today',
-            dataIndex: 'direct_emails_due_today',
-            key: 'direct_emails_due_today',
+            title: "Handled Cases",
+            dataIndex: "handled_cases",
+            key: "handled_cases",
             // ...getColumnSearchProps('app_name'),
         },
         {
-            title: 'Handled Cases',
-            dataIndex: 'handled_cases',
-            key: 'handled_cases',
+            title: "Handled Direct Emails",
+            dataIndex: "handled_direct_emails",
+            key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
         },
+
         {
-            title: 'Handled Direct Emails',
-            dataIndex: 'handled_direct_emails',
-            key: 'handled_direct_emails',
-            // ...getColumnSearchProps('app_name'),
-        },
-       
-        {
-            title: 'Total',
-            dataIndex: 'total',
-            key: 'total',
+            title: "Total",
+            dataIndex: "total",
+            key: "total",
         },
     ];
 
     return (
         <div>
             <div className="p-3 rounded-md">
-                <div className='flex'>
-                <ProductivityDateSection/>
-                <ProductivitySearchSection/>
+                <div className="flex">
+                    <ProductivityDateSection />
+                    <ProductivitySearchSection />
                 </div>
                 <Table columns={columns} dataSource={data} />
             </div>
         </div>
     );
-    
-    
-};
+}
