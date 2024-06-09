@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function ProductivityTotalHandledCases() {
     const [isTodaySelected, setIsTodaySelected] = useState(true);
-
+    const { users } = useSelector((state) => state.users);
     const handleTodayClick = () => {
         setIsTodaySelected(true);
     };
@@ -13,7 +14,7 @@ export default function ProductivityTotalHandledCases() {
 
     return (
         <div>
-            <div className='flex justify-center items-center mb-4 '>
+            {/* <div className='flex justify-center items-center mb-4 '>
                 <div className="w-full max-w-md rounded flex flex-col ">
                     <div className="shadow rounded-full h-8 flex p-2 relative items-center justify-center pb-2 border-solid border-2 border-slate-700">
                         <div className="w-96 flex justify-center">
@@ -30,12 +31,14 @@ export default function ProductivityTotalHandledCases() {
 
                     </div>
                 </div>
-            </div>
-            <div className='flex items-center justify-center'>
+            </div> */}
+            <div className="flex items-center justify-center">
                 <div>
                     <div className="text-center p-2 rounded-full bg-green-600 text-white">
                         <span className="text-xl font-bold">
-                            25
+                            {users.reduce((accumulator, ticket) => {
+                                return parseInt(accumulator) + parseInt(ticket.handled_count??0);
+                            }, 0)}
                         </span>
                     </div>
                     <p className="text-center text-lg">Total Handled Cases</p>
