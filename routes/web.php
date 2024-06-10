@@ -51,7 +51,7 @@ Route::middleware('redirectBasedOnRole')->get('/', function () {
 
 Route::get('/ticket-form', function () {
     return Inertia::render('ticket_form/page');
-})->name('dashboard');
+})->name('ticket.form');
 
 // Route::get('/show_ticket_email', function () {
 //     return view('mail.mail-create-ticket-form');
