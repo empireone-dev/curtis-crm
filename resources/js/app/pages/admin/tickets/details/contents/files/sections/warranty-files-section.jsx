@@ -17,6 +17,7 @@ export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.tickets);
     const { filesData } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(false);
+    const [isLoading,setIsLoading] =useState(true)
     function notes_notification() {
         if (
             ticket.call_type == "CF-Warranty Claim" &&
@@ -41,6 +42,13 @@ export default function WarrantyFilesSection() {
             return false;
         }
     }
+
+    useEffect(()=>{
+       setTimeout(() => {
+        setIsLoading(false)
+       }, 1000);
+    },[])
+    
     async function uploadPhoto(params) {
         setLoading(true);
         try {
@@ -66,7 +74,7 @@ export default function WarrantyFilesSection() {
                     </div>
                 )}
             </div>
-            {ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
+            {!isLoading && ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
                 <>
                     <CustomerTicketsBillOfSaleSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
