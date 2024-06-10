@@ -1,27 +1,16 @@
-import Loading from '@/app/layouts/components/loading';
+
 import store from '@/app/store/store';
-import { usePage } from '@inertiajs/react';
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import ImageView from '@/app/layouts/components/image-view';
 import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 import DetailsFileUploadComponent from '../components/details-contents-file-components-file';
 
 const CustomerTicketsRearOfTheUnitSection = () => {
-    const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
-    const galleryRef3 = useRef(null);
-    const { url } = usePage()
-    const [isLoading, setIsLoading] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const { user } = useSelector((state) => state.app)
 
     async function deleteFileImage(id, ticket_id) {
         if (confirm('Are you sure you wanna delete the image?')) {
-        setIsLoading(true)
         await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
-        setIsLoading(false)
-        handleCancel()
         }
     }
 
