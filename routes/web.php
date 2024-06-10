@@ -65,7 +65,7 @@ Route::get('/customer/web_form', function () {
 
 Route::get('/logout', function () {
     return Inertia::render('logout');
-})->name('tickets');
+})->name('tickets.logout');
 
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
 
