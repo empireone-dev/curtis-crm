@@ -151,7 +151,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
 
         Route::get('/create', function () {
             return Inertia::render('admin/tickets/create/page');
-        })->name('tickets.create');
+        })->name('tickets.creates');
     });
 
     Route::get('/dashboard', function () {
