@@ -61,7 +61,7 @@ Route::get('/ticket-form', function () {
 
 Route::get('/customer/web_form', function () {
     return Inertia::render('web_form/page');
-})->name('dashboard');
+})->name('web_form');
 
 Route::get('/logout', function () {
     return Inertia::render('logout');
