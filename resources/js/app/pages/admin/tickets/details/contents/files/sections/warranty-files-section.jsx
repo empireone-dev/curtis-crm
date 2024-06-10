@@ -73,19 +73,25 @@ export default function WarrantyFilesSection() {
                 <>
                     <CustomerTicketsBillOfSaleSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsFrontOfTheUnitSection />
+                    {/* <CustomerTicketsFrontOfTheUnitSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsRearOfTheUnitSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsReadableSerialSection />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsDefectIssueSection />
+                    <CustomerTicketsDefectIssueSection /> */}
                 </>
             );
         } else {
             return (
                 <>
-               
+                    {/* <CustomerTicketsSerialModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsReceiptModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsPartsModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsClearModel /> */}
                 </>
             );
         }
