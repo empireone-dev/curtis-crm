@@ -85,13 +85,7 @@ export default function WarrantyFilesSection() {
         } else {
             return (
                 <>
-                    <CustomerTicketsSerialModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReceiptModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsPartsModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsClearModel />
+               
                 </>
             );
         }
