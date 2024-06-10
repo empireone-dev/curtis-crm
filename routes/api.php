@@ -100,6 +100,7 @@ Route::resource('brands', BrandController::class);
 Route::resource('item_types', ItemTypeController::class);
 Route::resource('common_issues', CommonIssueController::class);
 Route::resource('files', FileController::class);
+Route::post('/upload_photo_status', [FileController::class, 'upload_photo_status']);
 
 
 Route::resource('caseslog', CasesLogController::class);

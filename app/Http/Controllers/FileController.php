@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
+    public function upload_photo_status(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
+        $ticket->update([
+            'isUploading' => 'true'
+        ]);
+        return response()->json([
+            'url' => 'success',
+            'status' => $ticket
+        ], 200);
+    }
     public function store(Request $request)
     {
         // having an error for not same file extension
@@ -25,9 +36,7 @@ class FileController extends Controller
             }
         }
         $ticket = Ticket::where('id', $request->ticket_id)->first();
-        $ticket->update([
-            'isUploading' => 'true'
-        ]);
+
         // $user_id,$ticket_id,$message,$type
         if ($ticket->type !== 'upload') {
             ActivityController::create_activity(
@@ -40,7 +49,7 @@ class FileController extends Controller
 
         return response()->json([
             'url' => 'success',
-            'status'=>$ticket
+            'status' => $ticket
         ], 200);
     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomerTicketsBillOfSaleSection from "./customer-tickets-bill-of-sale-section";
 import CustomerTicketsFrontOfTheUnitSection from "./customer-tickets-front-of-the-unit-section";
 import CustomerTicketsRearOfTheUnitSection from "./customer-tickets-rear-of-the-unit-section";
@@ -8,12 +8,15 @@ import CustomerTicketsClearModel from "./customer-tickets-clear-model";
 import CustomerTicketsPartsModel from "./customer-tickets-parts-model";
 import CustomerTicketsReceiptModel from "./customer-tickets-receipt-model";
 import CustomerTicketsSerialModel from "./customer-tickets-serial-model";
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "antd";
+import { upload_photo_status } from "@/app/services/files-service";
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.tickets);
     const { filesData } = useSelector((state) => state.customer_tickets);
+    const [loading, setLoading] = useState(false);
     function notes_notification() {
         if (
             ticket.call_type == "CF-Warranty Claim" &&
@@ -21,7 +24,8 @@ export default function WarrantyFilesSection() {
             filesData.front_of_the_unit &&
             filesData.rear_of_the_unit &&
             filesData.readable_serial_section &&
-            filesData.defect_issue
+            filesData.defect_issue &&
+            ticket.isUploading == "true"
         ) {
             return true;
         } else if (
@@ -29,24 +33,39 @@ export default function WarrantyFilesSection() {
             filesData.clear_model &&
             filesData.parts_model &&
             filesData.receipt_model &&
-            filesData.serial_model
+            filesData.serial_model &&
+            ticket.isUploading == "true"
         ) {
             return true;
         } else {
             return false;
         }
     }
+    async function uploadPhoto(params) {
+        setLoading(true);
+        try {
+            await upload_photo_status({
+                ticket_id: ticket.id,
+            });
+            router.visit(window.location.pathname);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
     return (
         <>
-            {notes_notification() ? (
-                <div className="text-green-600 text-2xl font-black border border-green-600 p-2 px-5">
-                    Information Completed{" "}
-                </div>
-            ) : (
-                <div className="text-red-600 text-2xl font-black border border-red-600 p-2  px-5">
-                    Incomplete Information
-                </div>
-            )}
+            <div className="my-3">
+                {notes_notification() ? (
+                    <div className="text-green-600 text-2xl font-black border border-green-600 p-2 px-5">
+                        Information Completed{" "}
+                    </div>
+                ) : (
+                    <div className="text-red-600 text-2xl font-black border border-red-600 p-2  px-5">
+                        Incomplete Information
+                    </div>
+                )}
+            </div>
             {ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
                 <>
                     <CustomerTicketsBillOfSaleSection />
@@ -70,6 +89,14 @@ export default function WarrantyFilesSection() {
                     <CustomerTicketsClearModel />
                 </>
             )}
+            <Button
+                onClick={uploadPhoto}
+                type="primary"
+                size="large"
+                className="my-10 w-full"
+            >
+                UPLOAD PHOTOS
+            </Button>
         </>
     );
 }
