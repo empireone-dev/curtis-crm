@@ -18,6 +18,7 @@ export default function WarrantyFilesSection() {
     const { filesData } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    
     function notes_notification() {
         if (
             ticket.call_type == "CF-Warranty Claim" &&
@@ -61,6 +62,40 @@ export default function WarrantyFilesSection() {
             setLoading(false);
         }
     }
+
+    function fetch_upload(params) {
+        if (
+            !isLoading &&
+            ticket?.call_type &&
+            ticket?.call_type == "CF-Warranty Claim"
+        ) {
+            return (
+                <>
+                    <CustomerTicketsBillOfSaleSection />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsFrontOfTheUnitSection />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsRearOfTheUnitSection />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsReadableSerialSection />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsDefectIssueSection />
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <CustomerTicketsSerialModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsReceiptModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsPartsModel />
+                    <div className="h-px my-8 border border-blue-500 w-full" />
+                    <CustomerTicketsClearModel />
+                </>
+            );
+        }
+    }
     return (
         <>
             <div className="my-3">
@@ -74,31 +109,9 @@ export default function WarrantyFilesSection() {
                     </div>
                 )}
             </div>
-            {!isLoading &&
-            ticket?.call_type &&
-            ticket?.call_type == "CF-Warranty Claim" ? (
-                <>
-                    <CustomerTicketsBillOfSaleSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsFrontOfTheUnitSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsRearOfTheUnitSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReadableSerialSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsDefectIssueSection />
-                </>
-            ) : (
-                <>
-                    <CustomerTicketsSerialModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReceiptModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsPartsModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsClearModel />
-                </>
-            )}
+            {
+                fetch_upload()
+            }
             <Button
                 onClick={uploadPhoto}
                 type="primary"
