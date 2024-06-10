@@ -221,7 +221,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
 
     Route::get('/email_template/create', function () {
         return Inertia::render('admin/email_template/create/page');
-    })->name('email_template.id');
+    })->name('create.email_template.id');
     
     Route::get('/email_template/{id}', function () {
         return Inertia::render('admin/email_template/id/page');
