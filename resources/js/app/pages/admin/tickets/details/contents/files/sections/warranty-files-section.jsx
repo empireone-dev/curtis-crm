@@ -112,6 +112,10 @@ export default function WarrantyFilesSection() {
                 <div className="text-xl"> REMARKS: </div>
                 <div className="text-xl font-bold">{ticket.remarks}</div>
             </div>
+            <div className="flex gap-2 border-b border-black my-5">
+                <div className="text-xl"> Details Explanation: </div>
+                <div className="text-xl font-bold">{ticket.explanation}</div>
+            </div>
             {fetch_upload()}
             <Button
                 onClick={uploadPhoto}
