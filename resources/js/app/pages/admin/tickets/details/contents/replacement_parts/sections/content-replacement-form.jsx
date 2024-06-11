@@ -48,11 +48,13 @@ export default function ContentReplacementPartsForm() {
                     status: "PARTS PROCESSED TICKET",
                     activity_status: "PARTS REPLACEMENT SHIPPED",
                 });
-                dispatch(setTicket(result.status));
-                setIsLoading1(false);
+                router.visit(routing("files"));
+                // dispatch(setTicket(result.status));
+                // setIsLoading1(false);
                 // router.visit(routing("files"));
-                window.location.href=routing("files")
+                // window.location.href=routing("files")
             } catch (error) {
+                router.visit(routing("files"));
                 setIsLoading1(false);
             }
         }

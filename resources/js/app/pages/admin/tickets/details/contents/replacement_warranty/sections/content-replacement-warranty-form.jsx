@@ -50,11 +50,11 @@ export default function ContentReplacementWarrantyForm() {
                     account: user,
                     status: 'PROCESSED TICKET'
                 })
-                dispatch(setTicket(result.status))
-                setIsLoading1(false)
-                // router.visit(routing("files"));
-                window.location.href=routing("files")
+                // dispatch(setTicket(result.status))
+                // setIsLoading1(false)
+                router.visit(routing("files"));
             } catch (error) {
+                router.visit(routing("files"));
                 setIsLoading1(false)
             }
         }
