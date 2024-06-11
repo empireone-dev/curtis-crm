@@ -116,7 +116,28 @@ export default function WarrantyFilesSection() {
                 <div className="text-xl"> Detailed Explanation: </div>
                 <div className="text-xl font-bold">{ticket.explanation}</div>
             </div>
-            {fetch_upload()}
+            <div className="text-4xl font-black text-blue-600">
+                Warranty Files
+            </div>
+            <CustomerTicketsBillOfSaleSection />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsFrontOfTheUnitSection />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsRearOfTheUnitSection />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsReadableSerialSection />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsDefectIssueSection />
+            <div className="text-4xl font-black text-blue-600  border-t-2 border-black my-6">
+                Part Files
+            </div>
+            <CustomerTicketsSerialModel />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsReceiptModel />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsPartsModel />
+            <div className="h-px my-8 border border-blue-500 w-full" />
+            <CustomerTicketsClearModel />
             <Button
                 onClick={uploadPhoto}
                 type="primary"
