@@ -32,6 +32,7 @@ class RefundController extends Controller
                 'cheque_amount' => $request->cheque_amount,
                 'cost_refund' => $request->cost_refund,
                 'notes' => $request->notes,
+                'ship_date' => $request->ship_date,
             ]);
         } else {
             Refund::create([
@@ -43,6 +44,7 @@ class RefundController extends Controller
                 'cheque_amount' => $request->cheque_amount,
                 'cost_refund' => $request->cost_refund,
                 'notes' => $request->notes,
+                'ship_date' => $request->ship_date,
             ]);
         }
         if ($decision) {

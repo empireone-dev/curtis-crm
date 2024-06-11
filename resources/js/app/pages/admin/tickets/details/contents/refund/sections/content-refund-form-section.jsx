@@ -8,6 +8,7 @@ import { patch_warranty_checkque_shipped_service } from "@/app/services/refund-s
 import { setTicket } from "../../../../_redux/tickets-slice";
 import Loading from "@/app/layouts/components/loading";
 import routing from "../../../components/routing";
+import moment from "moment";
 
 export default function ContentRefundFormSection() {
     const [form, setForm] = useState({});
@@ -36,7 +37,6 @@ export default function ContentRefundFormSection() {
             });
         }
     }
-
     async function process_ticket_handler() {
         if (confirm("Are you sure you want to shipped the ticket?")) {
             setIsLoading(true);
@@ -53,10 +53,24 @@ export default function ContentRefundFormSection() {
                 setIsLoading(false);
             }
         }
-        
     }
     return (
         <div className="flex flex-col gap-8 my-12">
+            <div className="flex flex-col">
+                Date: {form.ship_date ?? ""}
+                <input
+                    type="date"
+                    className="w-52"
+                    name="ship_date"
+                    pattern="\d{1,2}/\d{1,2}/\d{4}"
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            ship_date: moment(e.target.value).format("L"),
+                        })
+                    }
+                />
+            </div>
             <div className="grid grid-cols-4 gap-4">
                 <Input
                     onChange={formHandler}

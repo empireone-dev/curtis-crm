@@ -22,7 +22,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                 open={open}
                 setOpen={setOpen}
                 title="Replacement Activities"
-                width="max-w-5xl"
+                width="max-w-5xl h-full"
                 position=""
             >
                 <div className="flex flex-col w-full my-4">
@@ -40,116 +40,92 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col ">
-                        <div className="flex gap-2">
-                            Customer's Name:
-                            <div className="font-bold">
-                                {data?.ticket?.fname ?? ""}{" "}
-                                {data?.ticket?.lname ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Ticket ID #:
-                            <div className="font-bold">
-                                {data?.ticket?.ticket_id ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Email:
-                            <div className="font-bold">
-                                {data?.ticket?.email ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Phone:
-                            <div className="font-bold">
-                                {data?.ticket?.phone ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Address:
-                            <div className="font-bold">
-                                {data?.ticket?.address ?? ""}{" "}
-                                {data?.ticket?.city ?? ""}{" "}
-                                {data?.ticket?.state ?? ""}{" "}
-                                {data?.ticket?.zip_code ?? ""}{" "}
-                                {data?.ticket?.country == "CA"
-                                    ? "CANADA"
-                                    : "UNITED STATE" ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Brand:
-                            <div className="font-bold">
-                                {data?.ticket?.brand ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Item Number:
-                            <div className="font-bold">
-                                {data?.ticket?.item_number ?? ""}
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            Number Serial:
-                            <div className="font-bold">
-                                {data?.ticket?.serial_number ?? ""}
-                            </div>
-                        </div>
 
-                        <div className="flex flex-col">
-                            Remarks:
-                            <div className="indent-8 font-bold">
-                                {data?.ticket?.remarks ?? ""}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col w-full ">
-                    <div className="flex gap-3  my-3">
-                        <div className="font-black">SHIP INFORMATION</div>
-                    </div>
-                    <div className="flex gap-2">
-                        Ship Date:
-                        <div className="font-bold">
-                            {result?.replacement?.ship_date ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Unit:
-                        <div className="font-bold">
-                            {result?.replacement?.unit ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Brand:
-                        <div className="font-bold">
-                            {result?.replacement?.brand ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Model:
-                        <div className="font-bold">
-                            {result?.replacement?.model ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Serial:
-                        <div className="font-bold">
-                            $ {result?.replacement?.serial_number ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        Tracking:
-                        <div className="font-bold">
-                            {result?.replacement?.tracking ?? ""}
-                        </div>
-                    </div>
-                    <div className="flex flex-col">
-                        Notes:
-                        <div className="indent-8 font-bold">
-                            {result?.replacement?.notes ?? ""}
-                        </div>
+                    <div class="flex h-full items-center justify-center bg-red-400 w-full">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        Shipped Date:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {" "}
+                                        {result?.replacement?.ship_date ?? ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        UNIT:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {" "}
+                                        {result?.replacement?.unit ?? ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        BRAND:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {result?.replacement?.brand ?? ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        MODEL #:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {result?.replacement?.model ?? ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        SERIAL #:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {result?.replacement?.serial_number ??
+                                            ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        TRACKING #:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {result?.replacement?.tracking ?? ""}
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                    >
+                                        NOTES:
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {result?.replacement?.notes ?? ""}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </Modal>

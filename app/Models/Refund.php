@@ -17,5 +17,6 @@ class Refund extends Model
         'cheque_amount',
         'cost_refund',
         'notes',
+        'ship_date'
     ];
 }
