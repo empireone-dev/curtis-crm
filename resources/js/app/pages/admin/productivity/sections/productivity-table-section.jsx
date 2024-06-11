@@ -137,18 +137,20 @@ export default function ProductivityTableSection() {
             ),
     });
 
-    const data = users.map((res, i) => ({
-        agent: res.name,
-        position: res.agent_type,
-        overdue_cases:res.overdue_cases,
-        cases_due_today:res.cases_due_today,
-        overdue_direct_emails:0,
-        direct_emails_due_today:0,
-        handled_cases: res.handled_count,
-        handled_direct_emails: res.handled_direct_emails,
-        total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails)+parseInt(res.overdue_cases)+parseInt(res.cases_due_today),
-    }));
-console.log(data)
+    const data = users.map((res, i) => 
+        res.agent_type === 'Warranty' ? {
+            agent: res.name,
+            position: res.agent_type,
+            overdue_cases: res.overdue_cases,
+            cases_due_today: res.cases_due_today,
+            overdue_direct_emails: 0,
+            direct_emails_due_today: 0,
+            handled_cases: res.handled_count,
+            handled_direct_emails: res.handled_direct_emails,
+            total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails) + parseInt(res.overdue_cases) + parseInt(res.cases_due_today),
+        } : null
+    ).filter(item => item !== null);
+    
     const columns = [
         {
             title: "Agent",
