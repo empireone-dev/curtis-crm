@@ -147,7 +147,7 @@ export default function ProductivityTableSection() {
             direct_emails_due_today: 0,
             handled_cases: res.handled_count,
             handled_direct_emails: res.handled_direct_emails,
-            total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails) + parseInt(res.overdue_cases) + parseInt(res.cases_due_today),
+            total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails),
         } : null
     ).filter(item => item !== null);
     
@@ -158,12 +158,12 @@ export default function ProductivityTableSection() {
             key: "agent",
             // ...getColumnSearchProps('app_id'),
         },
-        {
-            title: "Position",
-            dataIndex: "position",
-            key: "position",
-            // ...getColumnSearchProps('app_id'),
-        },
+        // {
+        //     title: "Position",
+        //     dataIndex: "position",
+        //     key: "position",
+        //     // ...getColumnSearchProps('app_id'),
+        // },
         {
             title: "Overdue Cases",
             dataIndex: "overdue_cases",
