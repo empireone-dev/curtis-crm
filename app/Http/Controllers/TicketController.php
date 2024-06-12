@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\AgentNote;
 use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
+use App\Models\ExportFile;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
@@ -18,6 +19,28 @@ use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
+    public function create_verify_tickets(Request $request)
+    {
+        ExportFile::create([
+            'export_name' => $request->search
+        ]);
+        return response()->json([
+            'result' => 'success'
+        ], 200);
+    }
+    public function verify_tickets(Request $request)
+    {
+        $export = ExportFile::where('export_name', $request->search)->first();
+        if ($export) {
+            return response()->json([
+                'result' => 'exist'
+            ], 200);
+        } else {
+            return response()->json([
+                'result' => 'unexist'
+            ], 200);
+        }
+    }
     public function transfer_ticket_cases(Request $request)
     {
         $ticket = Ticket::where('id', $request->ticket_id);
@@ -318,11 +341,11 @@ class TicketController extends Controller
                 }
 
                 DirectEmail::create([
-                    'email' =>$value['emails'][0]['from'] ,
+                    'email' => $value['emails'][0]['from'],
                     'threadId' => $value['threadId'],
                     'user_id' => $userWithSmallestCount->id,
                     'count' => $value['count'],
-                    'email_date' =>$value['emails'][0]['date'] ,
+                    'email_date' => $value['emails'][0]['date'],
                 ]);
             } else {
                 if ($value['count'] != $direct->count) {
@@ -334,13 +357,13 @@ class TicketController extends Controller
         }
 
         return response()->json([
-            'result' =>$responseData
+            'result' => $responseData
         ], 200);
     }
 
     public function direct_emails(Request $request)
     {
-        $direct = DirectEmail::where([['user_id','=', $request->user_id],['isHide','=', 'false']])->paginate();
+        $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->paginate();
         return response()->json([
             'result' => $direct
         ], 200);

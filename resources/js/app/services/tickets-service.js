@@ -1,7 +1,27 @@
 import axios from "axios";
 
 
+export async function create_verify_tickets_service(data) {
+    try {
+        const res = await axios.post("/api/create_verify_tickets", {
+            search:data
+        });
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 
+export async function verify_tickets_service(data) {
+    try {
+        const res = await axios.post("/api/verify_tickets",{
+            search:data
+        });
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 
 export async function transfer_ticket_cases_service(data) {
     try {
