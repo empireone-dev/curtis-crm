@@ -207,7 +207,7 @@ export default function AgentDirectEmailsTableSection({account}) {
         showSizeChanger: false,
         current: parseInt(window.location.search.split('=')[1] ?? 1),
         pageSize: pageSize,
-        total: 1300,
+        total: parseInt(window.location.search.split('=')[1] ?? 1) * pageSize,
         onChange: (page, pageSize) => {
             router.visit(window.location.pathname + `?page=${page}`);
         },
