@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CasesLog;
+use App\Models\DirectEmail;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
@@ -47,7 +48,7 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
                 ])->count();
-                
+
 
                 $overdueTicketsCount = Ticket::where([
                     ['user_id', '=', $user->id],
@@ -57,11 +58,23 @@ class UserController extends Controller
                 $dueTodayTicketsCount = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
-                ]) ->whereDate('updated_at', '=', $today)->count();
+                ])->whereDate('updated_at', '=', $today)->count();
+
+
+                $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
+                    ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
+                    ->count();
+
+                $direct_emails_due_today = DirectEmail::where('user_id', $user->id)
+                    ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
+                    ->count();
+
                 // Add handled_count attribute to the user instance
                 $user->handled_count = $handledCount;
                 $user->cases_due_today = $dueTodayTicketsCount;
                 $user->overdue_cases = $overdueTicketsCount;
+                $user->overdue_direct_emails = $overdue_direct_emails;
+                $user->direct_emails_due_today = $direct_emails_due_today;
                 $user->handled_direct_emails = $direct_emails_count;
             }
         }
