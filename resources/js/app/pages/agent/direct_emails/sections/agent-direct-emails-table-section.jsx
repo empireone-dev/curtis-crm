@@ -13,7 +13,7 @@ import { direct_emails_service } from "@/app/services/tickets-service";
 import moment from "moment";
 import { router } from "@inertiajs/react";
 
-export default function AgentDirectEmailsTableSection() {
+export default function AgentDirectEmailsTableSection({account}) {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -30,11 +30,11 @@ export default function AgentDirectEmailsTableSection() {
         clearFilters();
         setSearchText("");
     };
-
     useEffect(() => {
         async function fetch_data() {
-            const res = await direct_emails_service(window.location.search ?? 'page=1');
-            setDataTable(res.result);
+            const res = await direct_emails_service(account.id,window.location.search ?? 'page=1');
+            console.log('res.result',res.result.data)
+            setDataTable(res.result.data);
             setLoading(false)
         }
         fetch_data();
@@ -156,9 +156,9 @@ export default function AgentDirectEmailsTableSection() {
 
     const data = dataTable.map((res, i) => ({
         key: i,
-        email: res.from,
+        email: res.email,
         date: moment(res.date).format('LLLL'),
-        link: res.link,
+        link: res.threadId,
         id: res.id
     }));
     const columns = [
@@ -179,8 +179,8 @@ export default function AgentDirectEmailsTableSection() {
             dataIndex: "link",
             key: "link",
             render: (_, record) => (
-                <a href={record.link} target="_blank">
-                    {record.link}
+                <a href={'https://mail.google.com/mail/u/0/#inbox/'+record?.link} target="_blank">
+                    {'https://mail.google.com/mail/u/0/#inbox/'+record?.link}
                 </a>
             )
         },
@@ -189,14 +189,14 @@ export default function AgentDirectEmailsTableSection() {
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
             render: (_, record) => {
-                const str = record.email;
+                const str = record?.email;
                 const emailRegex = /<([^>]+)>/;
-                const match = str.match(emailRegex);
+                const match = str?.match(emailRegex);
                 
                 return (
                     <a
                         target="_blank"
-                        href={`${window.location.pathname}/${record.id}?email= ${match ? match[1] : ''}`}
+                        href={`${window.location.pathname}/${record?.id}?email= ${match ? match[1] : ''}`}
                         className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3">
                         VIEW
                     </a>)

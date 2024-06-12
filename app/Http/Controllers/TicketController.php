@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\AgentNote;
 use App\Models\DecisionMaking;
+use App\Models\DirectEmail;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
@@ -289,13 +290,58 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function direct_emails(Request $request){
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxkobyG8yzc-9mpH284FZ54Z9VoS26gXiaYHuoMxCbfDj2WTf38i7Ufs8rlYabNs6gH/exec?page=' .$request->page ;
+    public function save_direct_emails()
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxzB_dWfwRilwtyw8PEziCIUzROGhBe1EekGoMyH5j8VfJTsO7akZR_xXGGJrUB8JOB/exec?page=' . '1';
         // Make a GET request to the Google Apps Script Web App
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
+
+
+
+        foreach ($responseData as $key => $value) {
+            $direct =  DirectEmail::where('threadId', '=', $value['threadId'])->first();
+            if (!$direct) {
+                $users = User::where('role_id', 5)
+                    ->where('agent_type', '=', "Warranty")
+                    ->get();
+                $userWithSmallestCount = null;
+                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+                foreach ($users as $user) {
+                    $count = DirectEmail::where('user_id', $user->id)->count();
+
+                    if ($count < $smallestCount) {
+                        $smallestCount = $count;
+                        $userWithSmallestCount = $user;
+                    }
+                }
+
+                DirectEmail::create([
+                    'email' =>$value['emails'][0]['from'] ,
+                    'threadId' => $value['threadId'],
+                    'user_id' => $userWithSmallestCount->id,
+                    'count' => $value['count'],
+                ]);
+            } else {
+                if ($value['count'] != $direct->count) {
+                    $direct->update([
+                        'isHide' => 'false'
+                    ]);
+                }
+            }
+        }
+
         return response()->json([
-            'result' => $responseData
+            'result' =>$responseData
+        ], 200);
+    }
+
+    public function direct_emails(Request $request)
+    {
+        $direct = DirectEmail::where([['user_id','=', $request->user_id],['isHide','=', 'false']])->paginate();
+        return response()->json([
+            'result' => $direct
         ], 200);
     }
     public function cases(Request $request)

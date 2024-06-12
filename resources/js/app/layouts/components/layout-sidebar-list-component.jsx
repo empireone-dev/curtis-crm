@@ -28,7 +28,7 @@ export default function LayoutSidebarListComponent({
         }
     }
     return (
-        <Link href={route(loginAccount() + href)+((href =='tickets' || href =='open_cases' || href =='handled' || href =='closed_cases')?'?page=1':'')}>
+        <Link href={route(loginAccount() + href)+((href =='tickets' || href =='open_cases' || href =='handled' || href =='closed_cases' || href =='direct_emails')?'?page=1':'')}>
             <li
                 className={`focus:outline-none  text-gray-600 ${
                     path == href

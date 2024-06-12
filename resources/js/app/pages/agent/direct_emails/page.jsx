@@ -10,7 +10,7 @@ export default function AgentDirectEmailsPage({ auth }) {
             <div className="text-3xl mt-12 font-extrabold mx-3">
             Direct Emails Page
             </div>
-            <AgentDirectEmailsTableSection />
+            <AgentDirectEmailsTableSection account={account}/>
         </AgentLayout>
     );
 }

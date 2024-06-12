@@ -21,9 +21,11 @@ export async function cases_service(page,cases,user_id) {
     }
 }
 
-export async function direct_emails_service(search) {
+export async function direct_emails_service(user_id,search) {
+    // save_direct_emails
+    // direct_emails
     try {
-        const res = await axios.get(`/api/direct_emails${search}`);
+        const res = await axios.get(`/api/direct_emails${search}&user_id=${user_id}`);
         return res.data;
     } catch (error) {
         return [];
