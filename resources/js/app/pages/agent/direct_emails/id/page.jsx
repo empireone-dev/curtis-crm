@@ -45,7 +45,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
                                 <div className="flex gap-4">
                                     <button
                                         onClick={() =>
-                                            router.visit("/agent/direct_emails")
+                                            router.visit("/agent/direct_emails?page=1")
                                         }
                                         className="bg-gray-300 hover:bg-gray-400 items-center justify-center font-bold w-full py-2 px-4 rounded"
                                     >
