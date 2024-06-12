@@ -14,6 +14,7 @@ class DirectEmail extends Model
         'user_id',
         'count',
         'isHide',
+        'email_date'
     ];
     
 }

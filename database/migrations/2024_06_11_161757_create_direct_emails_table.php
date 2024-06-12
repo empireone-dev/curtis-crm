@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('count')->nullable();
+            $table->string('email_date')->nullable();
             $table->enum('isHide', ['true', 'false'])->default('false');
             $table->timestamps();
         });

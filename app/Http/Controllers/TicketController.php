@@ -322,6 +322,7 @@ class TicketController extends Controller
                     'threadId' => $value['threadId'],
                     'user_id' => $userWithSmallestCount->id,
                     'count' => $value['count'],
+                    'email_date' =>$value['emails'][0]['date'] ,
                 ]);
             } else {
                 if ($value['count'] != $direct->count) {
