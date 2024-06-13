@@ -409,12 +409,12 @@ class TicketController extends Controller
             }
         }
         return response()->json([
-            'result' => 'success'
+            'result' => $responseDataParts
         ], 200);
     }
     public function save_direct_emails()
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbydgD8mjXQ1YS_gj_FfRt9C2Boo-v1Umko-lnbVP93qw---tR-YOnH_yuqga14CLtuD/exec?page=' . '1';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwWQdAAw8agPIO1LdBS1qA2B2fGELrqUBEF12WhcVXbQFxmXbaBbqYS4VhuYmwYv4wB/exec?page=' . '1';
         // this for warranty
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
@@ -440,7 +440,7 @@ class TicketController extends Controller
                     'email' => $value['emails'][0]['from'],
                     'threadId' => $value['threadId'],
                     'user_id' => $userWithSmallestCount->id,
-                    'count' => $value['count'],
+                    'count' => $value['count']??0,
                     'email_date' => $value['emails'][0]['date'],
                 ]);
             } else {
