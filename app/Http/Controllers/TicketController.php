@@ -6,11 +6,13 @@ use App\Models\Activity;
 use App\Models\AgentNote;
 use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
+use App\Models\EmailTemplate;
 use App\Models\ExportFile;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +21,60 @@ use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
+    public function send_warranty_email($recipient, $subject, $body)
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbygsAn0dDZyLFcs1wwAC4dIyQD8K8dgMrPyL5sdgwYV7G9YaG8SaJSSwVgD5g_SPdUC/exec';
+
+        $params = [
+            'recipient' => $recipient,
+            'subject' => $subject,
+            'body' => $body
+        ];
+        $client = new Client();
+        $response = $client->post($scriptUrl, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ],
+            'form_params' => $params
+        ]);
+        $body = $response->getBody()->getContents();
+        return $body;
+    }
+    public function send_parts_email($recipient, $subject, $body)
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbx9LsPiFQTvydnoCEmDPAMUTyQSEmdOHYxrSS507QZbiIAYrNWOLTogRWAUcX8BTx3x/exec';
+        $params = [
+            'recipient' => $recipient,
+            'subject' => $subject,
+            'body' => $body
+        ];
+        $client = new Client();
+        $response = $client->post($scriptUrl, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ],
+            'form_params' => $params
+        ]);
+        $body = $response->getBody()->getContents();
+        return $body;
+    }
+    public function move_ticket_assignment(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
+        $ticket->update([
+            'call_type' => $request->call_type,
+            'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
+            'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
+        ]);
+        if ($request->call_type == 'CF-Warranty Claim') {
+            $this->send_warranty_email($request->recipient, $request->subject, $request->body);
+        } else if ($request->call_type == 'Parts') {
+            $this->send_parts_email($request->recipient, $request->subject, $request->body);
+        }
+        return response()->json([
+            'result' => 'success'
+        ], 200);
+    }
     public function create_verify_tickets(Request $request)
     {
         ExportFile::create([
@@ -313,15 +369,55 @@ class TicketController extends Controller
         ], 200);
     }
 
+    public function save_direct_emails_parts(){
+        $scriptUrlParts = 'https://script.google.com/macros/s/AKfycbxB47GclMU6dAK5A7to2-JIOAq1BWKKbPwVmv5-1_jCsSkkA56PjsAY2OZKqrIJ_niW/exec?page=' . '1';
+        // This for parts
+        $responseParts = Http::get($scriptUrlParts);
+        $responseDataParts = $responseParts->json();
+
+        foreach ($responseDataParts as $key => $value) {
+            $direct =  DirectEmail::where('threadId', '=', $value['threadId'])->first();
+            if (!$direct) {
+                $users = User::where('role_id', 5)
+                    ->where('agent_type', '=', "Parts")
+                    ->get();
+                $userWithSmallestCount = null;
+                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+                foreach ($users as $user) {
+                    $count = DirectEmail::where('user_id', $user->id)->count();
+
+                    if ($count < $smallestCount) {
+                        $smallestCount = $count;
+                        $userWithSmallestCount = $user;
+                    }
+                }
+
+                DirectEmail::create([
+                    'email' => $value['emails'][0]['from'],
+                    'threadId' => $value['threadId'],
+                    'user_id' => $userWithSmallestCount->id,
+                    'count' => $value['count'],
+                    'email_date' => $value['emails'][0]['date'],
+                ]);
+            } else {
+                if ($value['count'] != $direct->count) {
+                    $direct->update([
+                        'isHide' => 'false'
+                    ]);
+                }
+            }
+        }
+        return response()->json([
+            'result' => 'success'
+        ], 200);
+    }
     public function save_direct_emails()
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxzB_dWfwRilwtyw8PEziCIUzROGhBe1EekGoMyH5j8VfJTsO7akZR_xXGGJrUB8JOB/exec?page=' . '1';
-        // Make a GET request to the Google Apps Script Web App
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbydgD8mjXQ1YS_gj_FfRt9C2Boo-v1Umko-lnbVP93qw---tR-YOnH_yuqga14CLtuD/exec?page=' . '1';
+        // this for warranty
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
-
-
-
         foreach ($responseData as $key => $value) {
             $direct =  DirectEmail::where('threadId', '=', $value['threadId'])->first();
             if (!$direct) {
@@ -355,7 +451,6 @@ class TicketController extends Controller
                 }
             }
         }
-
         return response()->json([
             'result' => $responseData
         ], 200);
@@ -386,7 +481,7 @@ class TicketController extends Controller
             foreach ($data as $key => $value) {
                 $numEmails = 20;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
@@ -418,7 +513,7 @@ class TicketController extends Controller
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 $response = Http::get($scriptUrl);
                 $responseData = $response->json();
@@ -456,7 +551,7 @@ class TicketController extends Controller
             foreach ($data as $key => $value) {
                 $numEmails = 100;
                 $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbxl_HddmTtyL_qBodNst6YWTelLYN8QGThUNqnQdA1FHxGZzcTENiYeaC5FU6NzYFit/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
+                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
 
                 // Make a GET request to the Google Apps Script Web App
                 $response = Http::get($scriptUrl);
@@ -637,24 +732,30 @@ class TicketController extends Controller
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);
-            if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
-                $newData = array_merge($account->toArray(), [
-                    'id' => $data->id,
-                    'ticket_id' => $tt->ticket_id,
-                    'call_type' => $request->call_type,
-                    'isSendEmail' => $request->isSendEmail,
-                    'isHasEmail' => $request->isHasEmail,
-                ]);
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
+                // $newData = array_merge($account->toArray(), [
+                //     'id' => $data->id,
+                //     'ticket_id' => $tt->ticket_id,
+                //     'call_type' => $request->call_type,
+                //     'isSendEmail' => $request->isSendEmail,
+                //     'isHasEmail' => $request->isHasEmail,
+                // ]);
 
-                $emailController = App::make(EmailTemplateController::class);
-                $emailController->send_mail_create_ticket_form($newData);
+                // $emailController = App::make(EmailTemplateController::class);
+                // $emailController->send_mail_create_ticket_form($newData);
+                if ($request->call_type == 'CF-Warranty Claim') {
+                    $this->send_warranty_email($request->email, $subject, $request->body);
+                } else if ($request->call_type == 'Parts') {
+                    $this->send_parts_email($request->email, $subject, $request->body);
+                }
             }
 
             return response()->json([
                 'result' => $data,
                 array_merge($request->all(), [
                     'user_id' => $account->id,
-                ])
+                ]),
+                'ticket_id'=>$subject
             ], 200);
         } else {
             $data = Ticket::create(array_merge($request->all(), [
@@ -664,7 +765,7 @@ class TicketController extends Controller
             ]));
 
             Activity::create([
-                'user_id' => $request->user['id'],
+                'user_id' => $request->user['id']??0,
                 'ticket_id' => $data->id,
                 'type' => 'TICKET CREATED',
                 'message' => json_encode($data)
@@ -694,7 +795,6 @@ class TicketController extends Controller
             $t->update([
                 'ticket_id' => $subject
             ]);
-            $tt = Ticket::where('id', $data->id)->first();
 
 
             $account = User::where('email', '=', $t->email)->first();
@@ -704,21 +804,27 @@ class TicketController extends Controller
                 'message' => $request->remarks,
             ]);
 
-            if ($request->isSendEmail == 'true' || $request->isSendEmail == true) {
-                $newData = array_merge($user->toArray(), [
-                    'id' => $data->id,
-                    'ticket_id' => $tt->ticket_id,
-                    'call_type' => $request->call_type,
-                    'isSendEmail' => $request->isSendEmail,
-                    'isHasEmail' => $request->isHasEmail,
-                ]);
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true  || $request->email && $request->isSendEmail) {
+                // $newData = array_merge($user->toArray(), [
+                //     'id' => $data->id,
+                //     'ticket_id' => $tt->ticket_id,
+                //     'call_type' => $request->call_type,
+                //     'isSendEmail' => $request->isSendEmail,
+                //     'isHasEmail' => $request->isHasEmail,
+                // ]);
 
-                $emailController = App::make(EmailTemplateController::class);
-                $emailController->send_mail_create_ticket_form($newData);
+                // $emailController = App::make(EmailTemplateController::class);
+                // $emailController->send_mail_create_ticket_form($newData);
+                if ($request->call_type == 'CF-Warranty Claim') {
+                    $this->send_warranty_email($request->email, $subject, $request->body);
+                } else if ($request->call_type == 'Parts') {
+                    $this->send_parts_email($request->email, $subject, $request->body);
+                }
             }
 
             return response()->json([
                 'result' => $data,
+                'ticket_id'=>$subject
             ], 200);
         }
     }

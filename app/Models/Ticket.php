@@ -43,7 +43,8 @@ class Ticket extends Model
         'remarks',
         'reason_to_close',
         'status',
-        'cases_status'
+        'cases_status',
+        'move_status'
     ];
 
     

@@ -90,9 +90,12 @@ Route::post('forward_ticket', [TicketController::class, 'forward_ticket']);
 Route::get('cases', [TicketController::class, 'cases']);
 Route::get('direct_emails', [TicketController::class, 'direct_emails']);
 Route::get('save_direct_emails', [TicketController::class, 'save_direct_emails']);
+Route::get('save_direct_emails_parts', [TicketController::class, 'save_direct_emails_parts']);
 Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_cases']);
 Route::post('create_verify_tickets', [TicketController::class, 'create_verify_tickets']);
 Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
+Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
+
 
 
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);

@@ -7,6 +7,7 @@ import { update_tickets_status_thunk } from "../../../../_redux/tickets-thunk";
 import { router } from "@inertiajs/react";
 import ReasonToClose from "../id/sections/reason-to-close";
 import routing from "../../../components/routing";
+import MoveTicketAssignement from "./move-ticket-assignement";
 
 export default function ContentDetailsSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -36,7 +37,6 @@ export default function ContentDetailsSection() {
         }
     }
 
-    console.log('ticket',ticket)
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
@@ -44,7 +44,9 @@ export default function ContentDetailsSection() {
                     <h3 className="text-base font-semibold leading-7 text-gray-900">
                         Ticket Details
                     </h3>
+
                     <div className="flex gap-5">
+                        <MoveTicketAssignement />
                         <button
                             onClick={edit_ticket}
                             className="bg-blue-500 p-2 text-white  hover:bg-blue-600  w-48"
@@ -63,6 +65,9 @@ export default function ContentDetailsSection() {
                         )}
                     </div>
                 </div>
+                <h3 className="text-base font-semibold leading-7 text-red-600">
+                    {ticket.move_status ?? ""}
+                </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6  font-medium text-gray-500">
                     Personal details and ticket.
                 </p>
@@ -90,16 +95,14 @@ export default function ContentDetailsSection() {
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Store Name:</b> {ticket?.receipt?.store??'NA'}
+                            <b>Store Name:</b> {ticket?.receipt?.store ?? "NA"}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             {/* <b>Unit :</b> {ticket.unit} */}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Model # :</b> {ticket.item_number}
                         </dt>

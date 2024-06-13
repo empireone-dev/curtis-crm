@@ -8,9 +8,31 @@ use App\Models\DecisionMaking;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use GuzzleHttp\Client;
 
 class DecisionMakingController extends Controller
 {
+    public function send_warranty_email($recipient, $subject, $body)
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbygsAn0dDZyLFcs1wwAC4dIyQD8K8dgMrPyL5sdgwYV7G9YaG8SaJSSwVgD5g_SPdUC/exec';
+
+        $params = [
+            'recipient' => $recipient,
+            'subject' => $subject,
+            'body' => $body
+        ];
+        $client = new Client();
+        $response = $client->post($scriptUrl, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ],
+            'form_params' => $params
+        ]);
+        $body = $response->getBody()->getContents();
+        return $body;
+    }
+    
+
     public function store(Request $request)
     {
         $data = DecisionMaking::where('ticket_id', $request->id)->first();
@@ -56,7 +78,7 @@ class DecisionMakingController extends Controller
         ]);
 
         if ($request->template_text) {
-            Mail::to($ticket->email)->send(new EmailTemplate($request->template_text, $ticket));
+            $this->send_warranty_email($ticket->email, $ticket->ticket_id, $request->template_text);
         }
         return  $data;
     }

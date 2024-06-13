@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function move_ticket_assignment_service(data) {
+    try {
+        const res = await axios.post("/api/move_ticket_assignment",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 
 export async function create_verify_tickets_service(data) {
     try {
@@ -92,7 +100,7 @@ export async function get_tickets_by_asc_service(id, search) {
 
 export async function store_tickets_service(data) {
     const res = await axios.post("/api/tickets", data);
-    return res.data.result;
+    return res.data;
 }
 
 export async function get_tickets_by_user_id(id, search) {

@@ -54,7 +54,7 @@ export default function DecisionMakingSection() {
         }
         get_decision_making();
     }, []);
-    console.log("data", data);
+
     function formHandler(value, name) {
         if (name == "wysiwyg") {
             setData({
@@ -107,8 +107,7 @@ export default function DecisionMakingSection() {
             template_text: findTemplates.template_text,
         });
     }
-console.log('if the radio button not appear please check the warranty instruction and add open and close parenthesis.')
-console.log('data',data)
+    
     async function submit_form(e) {
         e.preventDefault();
         setIsLoading1(true);

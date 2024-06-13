@@ -10,9 +10,28 @@ use App\Models\Activity;
 use App\Models\EmailTemplate as ModelsEmailTemplate;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Mail;
+use GuzzleHttp\Client;
 
 class EmailTemplateController extends Controller
 {
+    public function send_parts_email($recipient, $subject, $body)
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbx9LsPiFQTvydnoCEmDPAMUTyQSEmdOHYxrSS507QZbiIAYrNWOLTogRWAUcX8BTx3x/exec';
+        $params = [
+            'recipient' => $recipient,
+            'subject' => $subject,
+            'body' => $body
+        ];
+        $client = new Client();
+        $response = $client->post($scriptUrl, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ],
+            'form_params' => $params
+        ]);
+        $body = $response->getBody()->getContents();
+        return $body;
+    }
 
     public function store(Request $request)
     {
@@ -120,6 +139,7 @@ class EmailTemplateController extends Controller
             'message' => json_encode($ticket)
         ]);
         Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        $this->send_parts_email($request->ticket['email'], $ticket->ticket_id, $request->template_text);
         return 'Email sent successfully!';
     }
 

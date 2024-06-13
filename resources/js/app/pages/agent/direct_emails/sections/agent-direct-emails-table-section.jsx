@@ -33,7 +33,6 @@ export default function AgentDirectEmailsTableSection({account}) {
     useEffect(() => {
         async function fetch_data() {
             const res = await direct_emails_service(account.id,window.location.search ?? 'page=1');
-            console.log('res.result',res.result.data)
             setDataTable(res.result.data);
             setLoading(false)
         }

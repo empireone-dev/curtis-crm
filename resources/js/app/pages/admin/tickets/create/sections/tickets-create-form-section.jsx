@@ -13,6 +13,7 @@ import { tickets_create_thunk } from "../redux/tickets-create-thunk";
 import { router } from "@inertiajs/react";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
+import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
@@ -32,6 +33,9 @@ export default function TicketCreateFormSection() {
         store.dispatch(get_products_thunk());
     }, []);
 
+    const warranty = warranty_initial(form);
+    const parts = parts_initial(form);
+
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
@@ -39,17 +43,18 @@ export default function TicketCreateFormSection() {
             setForm({
                 ...form,
                 status: null,
-                user:user,
+                user: user,
                 created_from: "AGENT FORM",
                 email:
                     form.isHasEmail == "true" || form.isHasEmail == true
                         ? form.email
                         : null,
+                body: form.call_type == "Parts" ? parts : warranty,
             })
         );
         const response = await store.dispatch(tickets_create_thunk());
         setLoading(false);
-        router.visit("/administrator/tickets?search=" + response.id);
+        router.visit("/administrator/tickets?search=" + response?.ticket_id);
     }
 
     const findCountry = (countryName) => {
@@ -299,7 +304,7 @@ export default function TicketCreateFormSection() {
                 <div className="md:w-full px-3 mb-3 md:mb-0">
                     {form.call_type == "Parts" ? (
                         <Autocomplete
-                        defaultValue={"[]"}
+                            defaultValue={"[]"}
                             onChange={formHandler}
                             value={[
                                 {

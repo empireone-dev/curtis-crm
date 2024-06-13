@@ -13,6 +13,7 @@ import Autocomplete from "@/app/layouts/components/autocomplete";
 import { tickets_create_thunk } from "../../admin/tickets/create/redux/tickets-create-thunk";
 import { get_common_issues_thunk } from "../../admin/common_issues/redux/common-issues-thunk";
 import { setForm } from "../../admin/tickets/create/redux/tickets-create-slice";
+import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 
 export default function WebFormFormSection() {
     const dispatch = useDispatch();
@@ -37,6 +38,10 @@ export default function WebFormFormSection() {
         store.dispatch(get_products_thunk());
     }, []);
 
+    
+    const warranty = warranty_initial(form);
+    const parts = parts_initial(form);
+
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
@@ -50,6 +55,7 @@ export default function WebFormFormSection() {
                     form.isHasEmail == "true" || form.isHasEmail == true
                         ? form.email
                         : null,
+                body: form.call_type == "Parts" ? parts : warranty,
             })
         );
         const response = await store.dispatch(tickets_create_thunk());
