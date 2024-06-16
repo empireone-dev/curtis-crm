@@ -200,30 +200,30 @@ export default function UsersTableSection() {
         //         );
         //     },
         // },
-        {
-            title: "Cases",
-            dataIndex: "agent_type",
-            key: "agent_type",
-            // ...getColumnSearchProps("agent_type"),
-            render: (_, record, i) => {
-                console.log("record", record);
-                return (
-                    <Tooltip placement="topLeft" title="View Ticket Cases">
-                        <button
-                            className="text-blue-500 underline"
-                            onClick={() =>
-                                (window.location.href =
-                                    "/administrator/users/" +
-                                    record.id +
-                                    "/cases/open_cases?page=1")
-                            }
-                        >
-                            Visit Cases
-                        </button>
-                    </Tooltip>
-                );
-            },
-        },
+        // {
+        //     title: "Cases",
+        //     dataIndex: "agent_type",
+        //     key: "agent_type",
+        //     // ...getColumnSearchProps("agent_type"),
+        //     render: (_, record, i) => {
+        //         console.log("record", record);
+        //         return (
+        //             <Tooltip placement="topLeft" title="View Ticket Cases">
+        //                 <button
+        //                     className="text-blue-500 underline"
+        //                     onClick={() =>
+        //                         (window.location.href =
+        //                             "/administrator/users/" +
+        //                             record.id +
+        //                             "/cases/open_cases?page=1")
+        //                     }
+        //                 >
+        //                     Visit Cases
+        //                 </button>
+        //             </Tooltip>
+        //         );
+        //     },
+        // },
         {
             title: "Status",
             dataIndex: "status",

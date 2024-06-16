@@ -209,11 +209,11 @@ export default function AgentOpenCasesEMail({ auth }) {
                                         <tr class="bg-white border-b">
                                             <td class="px-6 py-3">
                                                 {moment(
-                                                    res.ticket.updated_at
+                                                    res.ticket?.updated_at
                                                 ).format("LLL")}
                                             </td>
                                             <td class="px-6 py-3">
-                                                {moment(res.ticket.updated_at)
+                                                {moment(res.ticket?.updated_at)
                                                     .add(2, "days")
                                                     .format("LLL")}
                                             </td>
@@ -221,17 +221,17 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {res.ticket.ticket_id}
+                                                {res.ticket?.ticket_id}
                                             </th>
                                             <td class="px-6 py-3">
                                                 {" "}
-                                                {res.ticket.email}
+                                                {res.ticket?.email}
                                             </td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>
                                                         window.open(
-                                                            `/agent/customer_details/${res.ticket.id}`,
+                                                            `/agent/customer_details/${res.ticket?.id}`,
                                                             "_blank"
                                                         )
                                                     }
@@ -262,14 +262,14 @@ export default function AgentOpenCasesEMail({ auth }) {
                                         //             ?.from ?? "No Emails"}
                                         //     </div>
                                         //     <div>
-                                        //         {res.ticket.status ==
+                                        //         {res.ticket?.status ==
                                         //         "CLOSED" ? (
                                         //             <Tag color="red">
-                                        //                 {res.ticket.status}
+                                        //                 {res.ticket?.status}
                                         //             </Tag>
                                         //         ) : (
                                         //             <Tag color="green">
-                                        //                 {res.ticket.status}
+                                        //                 {res.ticket?.status}
                                         //             </Tag>
                                         //         )}
                                         //         {moment(

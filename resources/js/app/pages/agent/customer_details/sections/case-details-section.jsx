@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function CaseDetailsSection() {
     const { users } = useSelector((state) => state.users);
+    const { user } = useSelector((state) => state.app);
     const [data, setData] = useState({});
     const ticket_id = window.location.pathname.split("/")[3];
     const [loading, setLoading] = useState(false);
@@ -42,7 +43,14 @@ export default function CaseDetailsSection() {
                         Select
                     </option>
                     {users.map((res, i) => {
-                        return <option value={res.id}>{res.name}</option>;
+                        if (res.agent_type === user.agent_type) {
+                            return (
+                                <option key={res.id} value={res.id}>
+                                    {res.name}
+                                </option>
+                            );
+                        }
+                        return null; // Ensure there's a return value in all branches
                     })}
                 </select>
             </div>

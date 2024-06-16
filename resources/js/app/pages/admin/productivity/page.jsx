@@ -17,7 +17,7 @@ export default function ProductivityPage() {
           <b>Productivity</b>
         </h2>
       </div>
-      <ProductivityTotalHandledCases/>
+      {/* <ProductivityTotalHandledCases/> */}
       <ProductivityTableSection />
     </AdministratorLayout>
   )

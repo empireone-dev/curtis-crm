@@ -182,7 +182,71 @@ export default function TicketCasesHandledPage({ auth }) {
                             </div>
                         </div>
                         <div className="overflow-auto h-full">
-                            <Collapse
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Added On
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Due On
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Case File
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Email
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tickets.map((res, i) => {
+                                        return (
+                                            <tr class="bg-white border-b">
+                                                <td class="px-6 py-3">
+                                                    {moment(
+                                                        res.ticket?.updated_at
+                                                    ).format("LLL")}
+                                                </td>
+                                                <td class="px-6 py-3">
+                                                    {moment(
+                                                        res.ticket?.updated_at
+                                                    )
+                                                        .add(2, "days")
+                                                        .format("LLL")}
+                                                </td>
+                                                <th
+                                                    scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                                >
+                                                    {res.ticket?.ticket_id}
+                                                </th>
+                                                <td class="px-6 py-3">
+                                                    {" "}
+                                                    {res.ticket?.email}
+                                                </td>
+                                                <td class="px-6 py-3">
+                                                    <button
+                                                        onClick={() =>
+                                                            window.open(
+                                                                `/agent/customer_details/${res.ticket?.id}`,
+                                                                "_blank"
+                                                            )
+                                                        }
+                                                        className="text-white bg-green-500 px-5 py-1.5 rounded-md"
+                                                    >
+                                                        VIEW
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                            {/* <Collapse
                                 accordion
                                 items={tickets.map((res, i) => ({
                                     key: i,
@@ -220,7 +284,7 @@ export default function TicketCasesHandledPage({ auth }) {
                                         }
                                     ),
                                 }))}
-                            />
+                            /> */}
                         </div>
                     </div>
                 )}

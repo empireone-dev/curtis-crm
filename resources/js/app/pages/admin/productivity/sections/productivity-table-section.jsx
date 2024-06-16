@@ -138,7 +138,7 @@ export default function ProductivityTableSection() {
     });
 
     const data = users.map((res, i) => 
-        res.agent_type === 'Warranty' ? {
+        res.agent_type === 'Warranty' || res.agent_type === 'Parts'? {
             agent: res.name,
             position: res.agent_type,
             overdue_cases: res.overdue_cases,

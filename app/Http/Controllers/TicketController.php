@@ -62,6 +62,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
+            'user_id'=>$this->queueing($request->call_type),
             'call_type' => $request->call_type,
             'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
@@ -369,7 +370,8 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function save_direct_emails_parts(){
+    public function save_direct_emails_parts()
+    {
         $scriptUrlParts = 'https://script.google.com/macros/s/AKfycbxB47GclMU6dAK5A7to2-JIOAq1BWKKbPwVmv5-1_jCsSkkA56PjsAY2OZKqrIJ_niW/exec?page=' . '1';
         // This for parts
         $responseParts = Http::get($scriptUrlParts);
@@ -414,7 +416,7 @@ class TicketController extends Controller
     }
     public function save_direct_emails()
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwWQdAAw8agPIO1LdBS1qA2B2fGELrqUBEF12WhcVXbQFxmXbaBbqYS4VhuYmwYv4wB/exec?page=' . '1';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwpQMUrI6JbMffJkzfIHYD6wZdnpONtQS_ou43KD3BcbkUnVLZLIbs9QusfbHmGeaus/exec?page=' . '1';
         // this for warranty
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
@@ -440,7 +442,7 @@ class TicketController extends Controller
                     'email' => $value['emails'][0]['from'],
                     'threadId' => $value['threadId'],
                     'user_id' => $userWithSmallestCount->id,
-                    'count' => $value['count']??0,
+                    'count' => $value['count'],
                     'email_date' => $value['emails'][0]['date'],
                 ]);
             } else {
@@ -468,113 +470,111 @@ class TicketController extends Controller
         // Number of results per page
         $perPage = 10;
         $data = [];
+        $user = User::where('id', $request->user_id)->first();
+        if ($user->agent_type == 'Warranty') {
+            $call_type = 'CF-Warranty Claim';
+        } elseif ($user->agent_type == 'Parts') {
+            $call_type = 'Parts';
+        } else {
+            $call_type = 'Tech';
+        }
+
         if ($request->cases == 'open_cases') {
-            $count = Ticket::where('user_id', '=', $request->user_id)->count();
-            $dataQuery = Ticket::where('user_id', '=', $request->user_id);
-
-            // Paginate the data
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
             $data = $dataQuery->paginate($perPage);
-
-            $emails = []; // Initialize an empty array to store emails
-
-            // Loop through each paginated item
-            foreach ($data as $key => $value) {
-                $numEmails = 20;
-                $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
-
-                // Make a GET request to the Google Apps Script Web App
-                $response = Http::get($scriptUrl);
-                $responseData = $response->json();
-
-                if (isset($responseData[0]['emails'][0]['from'])) {
-                    $input = $responseData[0]['emails'][0]['from'];
-                    preg_match('/<(.+)>/', $input, $matches);
-                    $email = $matches[1];
-                    if ($response->successful() && $email !== 'support2@curtiscs.com') {
-                        $emails[] = [
-                            'ticket' => $value,
-                            'emails' => $responseData,
-                            'count' => $count
-                        ];
+            $emails = [];
+            foreach ($data as $ticket) {
+                $searchSubject = substr($ticket->ticket_id, 1);
+                if ($ticket->call_type == 'CF-Warranty Claim') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUoR8Q2_YTZAfJbT_nAev_swdU74hmQpIWMF6dKm_GePzCf1aEKjnsaK1--mrrtw/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
+                        if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
+                            $emails[] = [
+                                'ticket' => $ticket,
+                                'emails' => $responseData,
+                            ];
+                        }
                     }
-                } else {
-                    // Handle the case where the expected structure is not present
-                    error_log('Expected data structure not found in response');
+                } else if ($ticket->call_type == 'Parts') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
+                        if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
+                            $emails[] = [
+                                'ticket' => $ticket,
+                                'emails' => $responseData,
+                            ];
+                        }
+                    }
                 }
             }
+            // Set the emails collection to the data
             $data->setCollection(collect($emails));
         } else if ($request->cases == 'handled') {
-            $count = Ticket::where('user_id', $request->user_id)->count();
-            $data = Ticket::where('user_id', $request->user_id)
-                ->paginate($perPage);
-
-            $emails = []; // Initialize an empty array to store emails
-            foreach ($data as $key => $value) {
-                $numEmails = 100;
-                $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
-
-                $response = Http::get($scriptUrl);
-                $responseData = $response->json();
-
-                if (isset($responseData[0]['emails'][0]['from'])) {
-                    $input = $responseData[0]['emails'][0]['from'];
-                    preg_match('/<(.+)>/', $input, $matches);
-                    $email = $matches[1];
-                    if ($response->successful() && $email == 'support2@curtiscs.com') {
-                        $emails[] = [
-                            'ticket' => $value,
-                            'emails' => $responseData,
-                            'count' => $count
-                        ];
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
+            $data = $dataQuery->paginate($perPage);
+            $emails = [];
+            foreach ($data as $ticket) {
+                $searchSubject = substr($ticket->ticket_id, 1);
+                if ($ticket->call_type == 'CF-Warranty Claim') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUoR8Q2_YTZAfJbT_nAev_swdU74hmQpIWMF6dKm_GePzCf1aEKjnsaK1--mrrtw/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
+                        if ($responseData[0]['from'] != 'support2@curtiscs.com' || $responseData[0]['from'] == 'Support2 Curtis <support2@curtiscs.com>') {
+                            $emails[] = [
+                                'ticket' => $ticket,
+                                'emails' => $responseData,
+                            ];
+                        }
                     }
-                } else {
-                    // Handle the case where the expected structure is not present
-                    error_log('Expected data structure not found in response');
+                } else if ($ticket->call_type == 'Parts') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
+                        if ($responseData[0]['from'] == 'parts@curtiscs.com' || $responseData[0]['from'] == 'Parts Team <parts@curtiscs.com>') {
+                            $emails[] = [
+                                'ticket' => $ticket,
+                                'emails' => $responseData,
+                            ];
+                        }
+                    }
                 }
             }
             // Replace the paginated data items with the merged emails
             $data->setCollection(collect($emails));
         } else if ($request->cases == 'closed_cases') {
-            $count = Ticket::where('user_id', $request->user_id)->where(function ($query) {
-                $query->where('status', '=', 'CLOSED');
-            })->count();
-
-            $data = Ticket::where('user_id', $request->user_id)
-                ->where(function ($query) {
-                    $query->where('status', '=', 'CLOSED');
-                })
-                ->paginate($perPage);
-
-            $emails = []; // Initialize an empty array to store emails
-            foreach ($data as $key => $value) {
-                $numEmails = 100;
-                $searchSubject = substr($value->ticket_id, 1);
-                $scriptUrl = 'https://script.google.com/macros/s/AKfycbzNaT_liDNpxVm0iA6q4GHOtVchcm2z3o87EaaGPM4_iP_EUyDTU4oTkRLVz1_xA9JL/exec?numEmails=' . $numEmails . '&search=' . $searchSubject;
-
-                // Make a GET request to the Google Apps Script Web App
-                $response = Http::get($scriptUrl);
-                $responseData = $response->json();
-
-                if (isset($responseData[0]['emails'][0]['from'])) {
-                    $input = $responseData[0]['emails'][0]['from'];
-                    preg_match('/<(.+)>/', $input, $matches);
-                    $email = $matches[1];
-
-                    if ($response->successful()) {
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type], ['status', '=', 'CLOSED']]);
+            $data = $dataQuery->paginate($perPage);
+            $emails = [];
+            foreach ($data as $ticket) {
+                $searchSubject = substr($ticket->ticket_id, 1);
+                if ($ticket->call_type == 'CF-Warranty Claim') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUoR8Q2_YTZAfJbT_nAev_swdU74hmQpIWMF6dKm_GePzCf1aEKjnsaK1--mrrtw/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
                         $emails[] = [
-                            'ticket' => $value,
+                            'ticket' => $ticket,
                             'emails' => $responseData,
-                            'count' => $count
                         ];
                     }
-                } else {
-                    // Handle the case where the expected structure is not present
-                    error_log('Expected data structure not found in response');
+                } else if ($ticket->call_type == 'Parts') {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $response = Http::get($scriptUrl);
+                    $responseData = $response->json();
+                    if ($response->successful() && count($responseData) != 0) {
+                        $emails[] = [
+                            'ticket' => $ticket,
+                            'emails' => $responseData,
+                        ];
+                    }
                 }
             }
-            // Replace the paginated data items with the merged emails
             $data->setCollection(collect($emails));
         }
 
@@ -755,7 +755,7 @@ class TicketController extends Controller
                 array_merge($request->all(), [
                     'user_id' => $account->id,
                 ]),
-                'ticket_id'=>$subject
+                'ticket_id' => $subject
             ], 200);
         } else {
             $data = Ticket::create(array_merge($request->all(), [
@@ -765,7 +765,7 @@ class TicketController extends Controller
             ]));
 
             Activity::create([
-                'user_id' => $request->user['id']??0,
+                'user_id' => $request->user['id'] ?? 0,
                 'ticket_id' => $data->id,
                 'type' => 'TICKET CREATED',
                 'message' => json_encode($data)
@@ -824,7 +824,7 @@ class TicketController extends Controller
 
             return response()->json([
                 'result' => $data,
-                'ticket_id'=>$subject
+                'ticket_id' => $subject
             ], 200);
         }
     }
