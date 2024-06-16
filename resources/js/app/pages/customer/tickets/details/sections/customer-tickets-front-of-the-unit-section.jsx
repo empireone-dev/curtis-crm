@@ -1,34 +1,39 @@
-import Loading from '@/app/layouts/components/loading';
-import store from '@/app/store/store';
-import { usePage } from '@inertiajs/react';
-import React, { useState, useRef } from 'react';
-import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import { useSelector } from 'react-redux';
-import ImageView from '@/app/layouts/components/image-view';
+import Loading from "@/app/layouts/components/loading";
+import store from "@/app/store/store";
+import { usePage } from "@inertiajs/react";
+import React, { useState, useRef } from "react";
+import {
+    delete_upload_ticket_files_thunk,
+    upload_ticket_files_thunk,
+} from "../../redux/customer-tickets-thunk";
+import { useSelector } from "react-redux";
+import ImageView from "@/app/layouts/components/image-view";
 
-const CustomerTicketsFrontOfTheUnitSection = () => {
-    const [files, setFiles] = useState([])
-    const { filesData } = useSelector((state) => state.customer_tickets)
-    const overlay = document.getElementById('overlay');
+const CustomerTicketsFrontOfTheUnitSection = ({ isTranslate }) => {
+    const [files, setFiles] = useState([]);
+    const { filesData } = useSelector((state) => state.customer_tickets);
+    const overlay = document.getElementById("overlay");
     const galleryRef2 = useRef(null);
-    const [loading,setLoading] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const {url} = usePage()
-    const { user } = useSelector((state) => state.app)
+    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { url } = usePage();
+    const { user } = useSelector((state) => state.app);
 
     const addFile = (file) => {
-        const isImage = file.type.match('image.*');
+        const isImage = file.type.match("image.*");
         const objectURL = URL.createObjectURL(file);
 
         setFiles((prevFiles) => [...prevFiles, { objectURL, file }]);
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const handleDelete = (target) => {
-        setFiles((prevFiles) => prevFiles.filter((file) => file.objectURL !== target));
+        setFiles((prevFiles) =>
+            prevFiles.filter((file) => file.objectURL !== target)
+        );
     };
 
-    const hasFiles = (e) => e.dataTransfer.types.indexOf('Files') > -1;
+    const hasFiles = (e) => e.dataTransfer.types.indexOf("Files") > -1;
 
     const dropHandler = (e) => {
         e.preventDefault();
@@ -40,13 +45,13 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
     const dragEnterHandler = (e) => {
         e.preventDefault();
         if (hasFiles(e)) {
-            overlay.classList.add('draggedover');
+            overlay.classList.add("draggedover");
         }
     };
 
     const dragLeaveHandler = (e) => {
         e.preventDefault();
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const dragOverHandler = (e) => {
@@ -56,7 +61,7 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input2').click();
+        document.getElementById("hidden-input2").click();
     };
 
     const handleFileChange = (e) => {
@@ -69,27 +74,24 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
         setFiles([]);
     }
     async function handleSubmit() {
-        setLoading(true)
-        const fd = new FormData()
-        fd.append('ticket_id', url.split('/')[3])
-        fd.append('user_id', user.id)
-        fd.append('type', 'front_of_the_unit')
-        files.forEach(value => {
-            fd.append('files[]', value.file)
+        setLoading(true);
+        const fd = new FormData();
+        fd.append("ticket_id", url.split("/")[3]);
+        fd.append("user_id", user.id);
+        fd.append("type", "front_of_the_unit");
+        files.forEach((value) => {
+            fd.append("files[]", value.file);
         });
-        await  store.dispatch(upload_ticket_files_thunk(fd,url.split('/')[3]))
-        setLoading(false)
+        await store.dispatch(upload_ticket_files_thunk(fd, url.split("/")[3]));
+        setLoading(false);
         setFiles([]);
     }
 
- 
-    
-    
     async function deleteFileImage(id, ticket_id) {
-        setIsLoading(true)
-        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
-        setIsLoading(false)
-        handleCancel()
+        setIsLoading(true);
+        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id));
+        setIsLoading(false);
+        handleCancel();
     }
 
     return (
@@ -102,85 +104,108 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
             onDragEnter={dragEnterHandler}
         >
             <section className="h-full w-full flex flex-col">
-                <div className='text-xl font-black'>
-                A clear picture of the front of the unit
-                </div>
-                <div className='text-gray-400'>
-                for TVs, a full frontal picture while the tv is turned on.
-                 
+                {!isTranslate ? (
+                    <>
+                        <div className="text-xl font-black">
+                            Une image claire de l'avant de l'unité
+                        </div>
+                        <div className="text-gray-400">
+                            pour les téléviseurs, une image frontale complète
+                            lorsque le téléviseur est allumé.
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="text-xl font-black">
+                            A clear picture of the front of the unit
+                        </div>
+                        <div className="text-gray-400">
+                            for TVs, a full frontal picture while the tv is
+                            turned on.
+                        </div>
+                    </>
+                )}
 
-                </div>
-                
-                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
+                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">
+                    To Upload
+                </h1>
 
-                <ul id="gallery" className="flex flex-1 flex-wrap -m-1" ref={galleryRef2}>
-                <ImageView
+                <ul
+                    id="gallery"
+                    className="flex flex-1 flex-wrap -m-1"
+                    ref={galleryRef2}
+                >
+                    <ImageView
                         isLoading={isLoading}
-                        deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.front_of_the_unit??[]} />
-                 
+                        deleteFileImage={(id, ticket_id) =>
+                            deleteFileImage(id, ticket_id)
+                        }
+                        files={filesData?.front_of_the_unit ?? []}
+                    />
+
                     {files.map(({ objectURL, file }) => (
-                
-                            <li
-                                key={objectURL}
-                                className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
-                                id={objectURL}
-                            >
-                                <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-                                    <img
-                                        className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-                                        alt="upload preview"
-                                        src={objectURL}
-                                    />
-                                    <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                                        <h1 className="flex-1 ">{file.name}</h1>
-                                        <div className="flex">
-                                            <span className="p-1">
-                                                <i></i>
-                                            </span>
-                                            <p className="p-1 size text-xs">
-                                                {file.size > 1024
-                                                    ? file.size > 1048576
-                                                        ? Math.round(file.size / 1048576) + 'mb'
-                                                        : Math.round(file.size / 1024) + 'kb'
-                                                    : file.size + 'b'}
-                                            </p>
-                                            <button
-                                                className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                                onClick={() => handleDelete(objectURL)}
+                        <li
+                            key={objectURL}
+                            className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
+                            id={objectURL}
+                        >
+                            <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
+                                <img
+                                    className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+                                    alt="upload preview"
+                                    src={objectURL}
+                                />
+                                <section className="flex hover:bg-gray-300 flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                    <h1 className="flex-1 ">{file.name}</h1>
+                                    <div className="flex">
+                                        <span className="p-1">
+                                            <i></i>
+                                        </span>
+                                        <p className="p-1 size text-xs">
+                                            {file.size > 1024
+                                                ? file.size > 1048576
+                                                    ? Math.round(
+                                                          file.size / 1048576
+                                                      ) + "mb"
+                                                    : Math.round(
+                                                          file.size / 1024
+                                                      ) + "kb"
+                                                : file.size + "b"}
+                                        </p>
+                                        <button
+                                            className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+                                            onClick={() =>
+                                                handleDelete(objectURL)
+                                            }
+                                        >
+                                            <svg
+                                                className="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
                                             >
-                                                <svg
-                                                    className="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        className="pointer-events-none"
-                                                        d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </section>
-                                </article>
-
-                            </li>
-
-
+                                                <path
+                                                    className="pointer-events-none"
+                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </section>
+                            </article>
+                        </li>
                     ))}
-                   
-                    <li
-                        className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
 
-                    >
+                    <li className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24">
                         <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-
-
                             <header
-                                className={`${filesData?.front_of_the_unit?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
-
+                                className={`${
+                                    filesData?.front_of_the_unit
+                                        ? "border-gray-400"
+                                        : "border-red-600"
+                                } border-dashed border-2  flex flex-col justify-center items-center`}
+                            >
                                 <input
                                     id="hidden-input2"
                                     type="file"
@@ -209,7 +234,8 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
                                             </svg>
                                         </i>
                                         <p className="text-lg text-blue-700">
-                                            <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+                                            <span>Drag and drop your</span>
+                                            &nbsp;<span>files anywhere or</span>
                                         </p>
                                     </div>
                                 </button>
@@ -226,7 +252,7 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                {loading?<Loading />:' Upload now'}
+                    {loading ? <Loading /> : " Upload now"}
                 </button>
                 <button
                     id="cancel"

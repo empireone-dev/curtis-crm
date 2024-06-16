@@ -18,7 +18,7 @@ import CustomerTicketsSerialModel from "./customer-tickets-serial-model";
 export default function TicketsDetailsFormSection() {
     const { url } = usePage();
     const dispatch = useDispatch();
-
+    const [isTranslate,setIsTranslate] =useState(false)
     const { ticket, filesData } = useSelector(
         (state) => state.customer_tickets
     );
@@ -60,7 +60,15 @@ export default function TicketsDetailsFormSection() {
     }
     return (
         <>
-            <CustomerTicketsUpdateExplanation />
+          <button
+          onClick={()=>setIsTranslate(!isTranslate)}
+          className="p-3 bg-orange-500 hover:bg-orange-600 text-white my-3 font-black rounded-md">
+                TRANSLATE
+            </button>
+            <CustomerTicketsUpdateExplanation
+            isTranslate={isTranslate}
+            />
+          
             {notes_notification() ? (
                 <div className="text-green-600 text-2xl font-black border border-green-600 p-2 px-5">
                     Information Completed{" "}
@@ -70,27 +78,33 @@ export default function TicketsDetailsFormSection() {
                     Incomplete Information
                 </div>
             )}
+          
             {ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
                 <>
-                    <CustomerTicketsBillOfSaleSection />
+                    <CustomerTicketsBillOfSaleSection 
+                    isTranslate={isTranslate}
+                    />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsFrontOfTheUnitSection />
+                    <CustomerTicketsFrontOfTheUnitSection 
+                    isTranslate={isTranslate}
+                    />
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsRearOfTheUnitSection />
+                    <CustomerTicketsRearOfTheUnitSection 
+                    isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReadableSerialSection />
+                    <CustomerTicketsReadableSerialSection isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsDefectIssueSection />
+                    <CustomerTicketsDefectIssueSection isTranslate={isTranslate}/>
                 </>
             ) : (
                 <>
-                    <CustomerTicketsClearModel />
+                    <CustomerTicketsClearModel isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsPartsModel />
+                    <CustomerTicketsPartsModel isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReceiptModel />
+                    <CustomerTicketsReceiptModel isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsSerialModel />
+                    <CustomerTicketsSerialModel isTranslate={isTranslate}/>
                 </>
             )}
         </>

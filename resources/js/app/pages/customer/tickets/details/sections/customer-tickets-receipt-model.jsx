@@ -6,7 +6,7 @@ import { delete_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../
 import { useSelector } from 'react-redux';
 import ImageView from '@/app/layouts/components/image-view';
 
-const CustomerTicketsReceiptModel = () => {
+const CustomerTicketsReceiptModel = ({isTranslate}) => {
     const [files, setFiles] = useState([])
     const { filesData } = useSelector((state) => state.customer_tickets)
     const overlay = document.getElementById('overlay');

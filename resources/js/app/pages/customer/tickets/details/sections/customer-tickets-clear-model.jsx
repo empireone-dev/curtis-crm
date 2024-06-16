@@ -1,41 +1,43 @@
-import { upload_picture_videos } from '@/app/services/files-service';
-import store from '@/app/store/store';
-import React, { useState, useRef, useEffect } from 'react';
-import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import { usePage } from '@inertiajs/react';
-import Loading from '@/app/layouts/components/loading';
-import ImageView from '@/app/layouts/components/image-view';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilesData } from '../../redux/customer-tickets-slice';
+import { upload_picture_videos } from "@/app/services/files-service";
+import store from "@/app/store/store";
+import React, { useState, useRef, useEffect } from "react";
+import {
+    delete_upload_ticket_files_thunk,
+    get_upload_ticket_files_thunk,
+    upload_ticket_files_thunk,
+} from "../../redux/customer-tickets-thunk";
+import { usePage } from "@inertiajs/react";
+import Loading from "@/app/layouts/components/loading";
+import ImageView from "@/app/layouts/components/image-view";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilesData } from "../../redux/customer-tickets-slice";
 
-const CustomerTicketsClearModel = () => {
-    const [files, setFiles] = useState([])
-    const { filesData } = useSelector((state) => state.customer_tickets)
-    const overlay = document.getElementById('overlay');
+const CustomerTicketsClearModel = ({ isTranslate }) => {
+    const [files, setFiles] = useState([]);
+    const { filesData } = useSelector((state) => state.customer_tickets);
+    const overlay = document.getElementById("overlay");
     const galleryRef1 = useRef(null);
-    const dispatch = useDispatch()
-    const { url } = usePage()
-    const [isLoading, setIsLoading] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const { user } = useSelector((state) => state.app)
-
-
-
-
+    const dispatch = useDispatch();
+    const { url } = usePage();
+    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { user } = useSelector((state) => state.app);
 
     const addFile = (file) => {
-        const isImage = file.type.match('image.*');
+        const isImage = file.type.match("image.*");
         const objectURL = URL.createObjectURL(file);
 
         setFiles((prevFiles) => [...prevFiles, { objectURL, file }]);
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const handleDelete = (target) => {
-        setFiles((prevFiles) => prevFiles.filter((file) => file.objectURL !== target));
+        setFiles((prevFiles) =>
+            prevFiles.filter((file) => file.objectURL !== target)
+        );
     };
 
-    const hasFiles = (e) => e.dataTransfer.types.indexOf('Files') > -1;
+    const hasFiles = (e) => e.dataTransfer.types.indexOf("Files") > -1;
 
     const dropHandler = (e) => {
         e.preventDefault();
@@ -47,13 +49,13 @@ const CustomerTicketsClearModel = () => {
     const dragEnterHandler = (e) => {
         e.preventDefault();
         if (hasFiles(e)) {
-            overlay.classList.add('draggedover');
+            overlay.classList.add("draggedover");
         }
     };
 
     const dragLeaveHandler = (e) => {
         e.preventDefault();
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const dragOverHandler = (e) => {
@@ -63,7 +65,7 @@ const CustomerTicketsClearModel = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input1').click();
+        document.getElementById("hidden-input1").click();
     };
 
     const handleFileChange = (e) => {
@@ -75,30 +77,29 @@ const CustomerTicketsClearModel = () => {
         setFiles([]);
     }
     async function handleSubmit() {
-        setLoading(true)
-        const fd = new FormData()
-        fd.append('ticket_id', url.split('/')[3])
-        fd.append('user_id', user.id)
-        fd.append('type', 'clear_model')
-        files.forEach(value => {
-            fd.append('files[]', value.file)
+        setLoading(true);
+        const fd = new FormData();
+        fd.append("ticket_id", url.split("/")[3]);
+        fd.append("user_id", user.id);
+        fd.append("type", "clear_model");
+        files.forEach((value) => {
+            fd.append("files[]", value.file);
         });
-        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd, url.split("/")[3]));
 
-        setLoading(false)
+        setLoading(false);
         setFiles([]);
     }
-
 
     function handleCancel() {
         setFiles([]);
     }
 
     async function deleteFileImage(id, ticket_id) {
-        setIsLoading(true)
-        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
-        setIsLoading(false)
-        handleCancel()
+        setIsLoading(true);
+        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id));
+        setIsLoading(false);
+        handleCancel();
     }
     return (
         <article
@@ -110,19 +111,30 @@ const CustomerTicketsClearModel = () => {
             onDragEnter={dragEnterHandler}
         >
             <section className="h-full w-full flex flex-col">
-                <div className='text-xl font-black'>
-                Clear Picture of the Model#
+                {!isTranslate ? (
+                    <div className="text-xl font-black">
+                        Image claire du modèle #
+                    </div>
+                ) : (
+                    <div className="text-xl font-black">
+                        Clear Picture of the Model#
+                    </div>
+                )}
+                <div className="text-xl font-black">
+                    Clear Picture of the Model#
                 </div>
-              
+
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
                     <ImageView
                         isLoading={isLoading}
-                        deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.clear_model ?? []} />
+                        deleteFileImage={(id, ticket_id) =>
+                            deleteFileImage(id, ticket_id)
+                        }
+                        files={filesData?.clear_model ?? []}
+                    />
                     {files.map(({ objectURL, file }) => (
-
                         <li
                             key={objectURL}
                             className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
@@ -143,13 +155,19 @@ const CustomerTicketsClearModel = () => {
                                         <p className="p-1 size text-xs">
                                             {file.size > 1024
                                                 ? file.size > 1048576
-                                                    ? Math.round(file.size / 1048576) + 'mb'
-                                                    : Math.round(file.size / 1024) + 'kb'
-                                                : file.size + 'b'}
+                                                    ? Math.round(
+                                                          file.size / 1048576
+                                                      ) + "mb"
+                                                    : Math.round(
+                                                          file.size / 1024
+                                                      ) + "kb"
+                                                : file.size + "b"}
                                         </p>
                                         <button
                                             className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                            onClick={() => handleDelete(objectURL)}
+                                            onClick={() =>
+                                                handleDelete(objectURL)
+                                            }
                                         >
                                             <svg
                                                 className="pointer-events-none fill-current w-4 h-4 ml-auto"
@@ -167,20 +185,17 @@ const CustomerTicketsClearModel = () => {
                                     </div>
                                 </section>
                             </article>
-
                         </li>
-
                     ))}
-                    <li
-                        className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
-
-                    >
+                    <li className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24">
                         <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-
-
                             <header
-                                className={`${filesData?.clear_model?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
-
+                                className={`${
+                                    filesData?.clear_model
+                                        ? "border-gray-400"
+                                        : "border-red-600"
+                                } border-dashed border-2  flex flex-col justify-center items-center`}
+                            >
                                 <input
                                     id="hidden-input1"
                                     type="file"
@@ -209,7 +224,8 @@ const CustomerTicketsClearModel = () => {
                                             </svg>
                                         </i>
                                         <p className="text-lg text-blue-700">
-                                            <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+                                            <span>Drag and drop your</span>
+                                            &nbsp;<span>files anywhere or</span>
                                         </p>
                                     </div>
                                 </button>
@@ -226,7 +242,7 @@ const CustomerTicketsClearModel = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                    {loading ? <Loading /> : ' Upload now'}
+                    {loading ? <Loading /> : " Upload now"}
                 </button>
                 <button
                     id="cancel"

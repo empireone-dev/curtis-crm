@@ -1,42 +1,44 @@
-import { upload_picture_videos } from '@/app/services/files-service';
-import store from '@/app/store/store';
-import React, { useState, useRef, useEffect } from 'react';
-import { delete_upload_ticket_files_thunk, get_upload_ticket_files_thunk, upload_ticket_files_thunk } from '../../redux/customer-tickets-thunk';
-import { usePage } from '@inertiajs/react';
-import Loading from '@/app/layouts/components/loading';
-import ImageView from '@/app/layouts/components/image-view';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilesData } from '../../redux/customer-tickets-slice';
+import { upload_picture_videos } from "@/app/services/files-service";
+import store from "@/app/store/store";
+import React, { useState, useRef, useEffect } from "react";
+import {
+    delete_upload_ticket_files_thunk,
+    get_upload_ticket_files_thunk,
+    upload_ticket_files_thunk,
+} from "../../redux/customer-tickets-thunk";
+import { usePage } from "@inertiajs/react";
+import Loading from "@/app/layouts/components/loading";
+import ImageView from "@/app/layouts/components/image-view";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilesData } from "../../redux/customer-tickets-slice";
 
-const CustomerTicketsBillOfSaleSection = () => {
-    const [files, setFiles] = useState([])
-    const { filesData } = useSelector((state) => state.customer_tickets)
-    const overlay = document.getElementById('overlay');
+const CustomerTicketsBillOfSaleSection = ({ isTranslate }) => {
+    const [files, setFiles] = useState([]);
+    const { filesData } = useSelector((state) => state.customer_tickets);
+    const overlay = document.getElementById("overlay");
     const galleryRef1 = useRef(null);
-    const dispatch = useDispatch()
-    const { url } = usePage()
-    const [isLoading, setIsLoading] = useState(false)
-    const [loading, setLoading] = useState(false)
-    
-    const { user } = useSelector((state) => state.app)
+    const dispatch = useDispatch();
+    const { url } = usePage();
+    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-
-
-
+    const { user } = useSelector((state) => state.app);
 
     const addFile = (file) => {
-        const isImage = file.type.match('image.*');
+        const isImage = file.type.match("image.*");
         const objectURL = URL.createObjectURL(file);
 
         setFiles((prevFiles) => [...prevFiles, { objectURL, file }]);
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const handleDelete = (target) => {
-        setFiles((prevFiles) => prevFiles.filter((file) => file.objectURL !== target));
+        setFiles((prevFiles) =>
+            prevFiles.filter((file) => file.objectURL !== target)
+        );
     };
 
-    const hasFiles = (e) => e.dataTransfer.types.indexOf('Files') > -1;
+    const hasFiles = (e) => e.dataTransfer.types.indexOf("Files") > -1;
 
     const dropHandler = (e) => {
         e.preventDefault();
@@ -48,13 +50,13 @@ const CustomerTicketsBillOfSaleSection = () => {
     const dragEnterHandler = (e) => {
         e.preventDefault();
         if (hasFiles(e)) {
-            overlay.classList.add('draggedover');
+            overlay.classList.add("draggedover");
         }
     };
 
     const dragLeaveHandler = (e) => {
         e.preventDefault();
-        overlay.classList.remove('draggedover');
+        overlay.classList.remove("draggedover");
     };
 
     const dragOverHandler = (e) => {
@@ -64,7 +66,7 @@ const CustomerTicketsBillOfSaleSection = () => {
     };
 
     const handleClick = () => {
-        document.getElementById('hidden-input1').click();
+        document.getElementById("hidden-input1").click();
     };
 
     const handleFileChange = (e) => {
@@ -76,30 +78,29 @@ const CustomerTicketsBillOfSaleSection = () => {
         setFiles([]);
     }
     async function handleSubmit() {
-        setLoading(true)
-        const fd = new FormData()
-        fd.append('ticket_id', url.split('/')[3])
-        fd.append('user_id', user.id)
-        fd.append('type', 'bill_of_sale')
-        files.forEach(value => {
-            fd.append('files[]', value.file)
+        setLoading(true);
+        const fd = new FormData();
+        fd.append("ticket_id", url.split("/")[3]);
+        fd.append("user_id", user.id);
+        fd.append("type", "bill_of_sale");
+        files.forEach((value) => {
+            fd.append("files[]", value.file);
         });
-        await store.dispatch(upload_ticket_files_thunk(fd, url.split('/')[3]))
+        await store.dispatch(upload_ticket_files_thunk(fd, url.split("/")[3]));
 
-        setLoading(false)
+        setLoading(false);
         setFiles([]);
     }
-
 
     function handleCancel() {
         setFiles([]);
     }
 
     async function deleteFileImage(id, ticket_id) {
-        setIsLoading(true)
-        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id))
-        setIsLoading(false)
-        handleCancel()
+        setIsLoading(true);
+        await store.dispatch(delete_upload_ticket_files_thunk(id, ticket_id));
+        setIsLoading(false);
+        handleCancel();
     }
     return (
         <article
@@ -111,32 +112,71 @@ const CustomerTicketsBillOfSaleSection = () => {
             onDragEnter={dragEnterHandler}
         >
             <section className="h-full w-full flex flex-col">
-                <div className='text-xl font-black'>
-                    A clear and readable picture of the bill of sale
-                </div>
-                <div className='text-gray-400'>
-                    Please note the bill of sale must show the following:
-                    <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
-                        <li>Store Name and Address *except if purchased online</li>
-                        <li>Date of purchase</li>
-                        <li>Item description</li>
-                        <li>Unit Price</li>
-                        <li>Total amount paid</li>
-                    </ul>
+                {!isTranslate ? (
+                    <>
+                        <div className="text-xl font-black">
+                            Une image claire et lisible de l'acte de vente
+                        </div>
+                        <div className="text-gray-400">
+                            Veuillez noter que l'acte de vente doit indiquer les
+                            éléments suivants :
+                            <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
+                                <li>
+                                    Nom et adresse du magasin *sauf si acheté en
+                                    ligne
+                                </li>
+                                <li>Date d'achat</li>
+                                <li>Description de l'article</li>
+                                <li>Prix ​​unitaire</li>
+                                <li>Montant total payé</li>
+                            </ul>
+                        </div>
+                        <div className="text-md font-gray-500">
+                            Si vous n'avez pas l'acte de vente, vous pouvez
+                            essayer de contacter le service client du revendeur
+                            pour une assistance supplémentaire.
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="text-xl font-black">
+                            A clear and readable picture of the bill of sale
+                        </div>
+                        <div className="text-gray-400">
+                            Please note the bill of sale must show the
+                            following:
+                            <ul className="max-w-md space-y-1 text-gray-400 list-disc list-inside mt-2">
+                                <li>
+                                    Store Name and Address *except if purchased
+                                    online
+                                </li>
+                                <li>Date of purchase</li>
+                                <li>Item description</li>
+                                <li>Unit Price</li>
+                                <li>Total amount paid</li>
+                            </ul>
+                        </div>
+                        <div className="text-md font-gray-500">
+                            If you do not have the bill of sale, you may try
+                            contacting the dealer’s customer care department for
+                            added support.
+                        </div>
+                    </>
+                )}
 
-                </div>
-                <div className='text-md font-gray-500'>
-                    If you do not have the bill of sale, you may try contacting the dealer’s customer care department for added support.
-                </div>
-                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
+                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">
+                    To Upload
+                </h1>
 
                 <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
                     <ImageView
                         isLoading={isLoading}
-                        deleteFileImage={(id, ticket_id) => deleteFileImage(id, ticket_id)}
-                        files={filesData?.bill_of_sale ?? []} />
+                        deleteFileImage={(id, ticket_id) =>
+                            deleteFileImage(id, ticket_id)
+                        }
+                        files={filesData?.bill_of_sale ?? []}
+                    />
                     {files.map(({ objectURL, file }) => (
-
                         <li
                             key={objectURL}
                             className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-36"
@@ -157,13 +197,19 @@ const CustomerTicketsBillOfSaleSection = () => {
                                         <p className="p-1 size text-xs">
                                             {file.size > 1024
                                                 ? file.size > 1048576
-                                                    ? Math.round(file.size / 1048576) + 'mb'
-                                                    : Math.round(file.size / 1024) + 'kb'
-                                                : file.size + 'b'}
+                                                    ? Math.round(
+                                                          file.size / 1048576
+                                                      ) + "mb"
+                                                    : Math.round(
+                                                          file.size / 1024
+                                                      ) + "kb"
+                                                : file.size + "b"}
                                         </p>
                                         <button
                                             className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                                            onClick={() => handleDelete(objectURL)}
+                                            onClick={() =>
+                                                handleDelete(objectURL)
+                                            }
                                         >
                                             <svg
                                                 className="pointer-events-none fill-current w-4 h-4 ml-auto"
@@ -181,20 +227,17 @@ const CustomerTicketsBillOfSaleSection = () => {
                                     </div>
                                 </section>
                             </article>
-
                         </li>
-
                     ))}
-                    <li
-                        className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24"
-
-                    >
+                    <li className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/5 h-24">
                         <article className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer text-transparent hover:text-white shadow-sm">
-
-
                             <header
-                                className={`${filesData?.bill_of_sale?'border-gray-400':'border-red-600'} border-dashed border-2  flex flex-col justify-center items-center`}>
-
+                                className={`${
+                                    filesData?.bill_of_sale
+                                        ? "border-gray-400"
+                                        : "border-red-600"
+                                } border-dashed border-2  flex flex-col justify-center items-center`}
+                            >
                                 <input
                                     id="hidden-input1"
                                     type="file"
@@ -223,7 +266,8 @@ const CustomerTicketsBillOfSaleSection = () => {
                                             </svg>
                                         </i>
                                         <p className="text-lg text-blue-700">
-                                            <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+                                            <span>Drag and drop your</span>
+                                            &nbsp;<span>files anywhere or</span>
                                         </p>
                                     </div>
                                 </button>
@@ -240,7 +284,7 @@ const CustomerTicketsBillOfSaleSection = () => {
                     className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                     onClick={handleSubmit}
                 >
-                    {loading ? <Loading /> : ' Upload now'}
+                    {loading ? <Loading /> : " Upload now"}
                 </button>
                 <button
                     id="cancel"

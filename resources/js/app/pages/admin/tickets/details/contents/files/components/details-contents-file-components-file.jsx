@@ -63,7 +63,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                     `https://docs.google.com/gview?url=${encodedUrl}&embedded=true`,
                     "_blank"
                 );
-            }else if (["mp4", "webm", "ogg"].includes(file.extension)) {
+            }else if (["mp4", "webm", "ogg", "mov"].includes(file.extension)) {
                 window.open(file.url, '_blank');
             } else {
                 if (!file.url && !file.preview) {
