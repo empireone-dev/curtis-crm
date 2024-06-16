@@ -460,9 +460,9 @@ class TicketController extends Controller
 
     public function direct_emails(Request $request)
     {
-        $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->paginate();
+        $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->paginate(10);
         return response()->json([
-            'result' => $direct
+            'result' => $direct,
         ], 200);
     }
     public function cases(Request $request)

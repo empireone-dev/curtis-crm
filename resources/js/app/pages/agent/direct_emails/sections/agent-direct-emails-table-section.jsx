@@ -21,6 +21,7 @@ export default function AgentDirectEmailsTableSection({account}) {
     const [dataTable, setDataTable] = useState([]);
     const [loading, setLoading] = useState(true)
     const [pageSize, setPageSize] = useState(10);
+    const [total,setTotal] =useState(0)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -34,6 +35,7 @@ export default function AgentDirectEmailsTableSection({account}) {
         async function fetch_data() {
             const res = await direct_emails_service(account.id,window.location.search ?? 'page=1');
             setDataTable(res.result.data);
+            setTotal(res.result.total)
             setLoading(false)
         }
         fetch_data();
@@ -206,13 +208,11 @@ export default function AgentDirectEmailsTableSection({account}) {
         showSizeChanger: false,
         current: parseInt(window.location.search.split('=')[1] ?? 1),
         pageSize: pageSize,
-        total: parseInt(window.location.search.split('=')[1] ?? 1) * pageSize,
+        total: total,
         onChange: (page, pageSize) => {
             router.visit(window.location.pathname + `?page=${page}`);
         },
     };
-
-
     return (
         <div>
             <div className="p-3 rounded-md">

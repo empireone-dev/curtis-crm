@@ -49,16 +49,44 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                 name: "uploaded",
                 url: res.url,
                 status: "done",
+                extension: res.url.split("/").pop().split(".").pop(),
             })),
         ]);
     }, []);
     const handlePreview = async (file) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
+        try {
+            if (file.extension === "pdf") {
+                window.open(file.url, "_blank");
+            } else if (file.extension === "docx") {
+                const encodedUrl = encodeURIComponent(file.url);
+                window.open(
+                    `https://docs.google.com/gview?url=${encodedUrl}&embedded=true`,
+                    "_blank"
+                );
+            }else if (["mp4", "webm", "ogg"].includes(file.extension)) {
+                window.open(file.url, '_blank');
+            } else {
+                if (!file.url && !file.preview) {
+                    file.preview = await getBase64(file.originFileObj);
+                }
+                setPreviewImage(file.url || file.preview);
+                setPreviewOpen(true);
+            }
+        } catch (error) {
+            console.error("Error handling file preview:", error);
         }
-        setPreviewImage(file.url || file.preview);
-        setPreviewOpen(true);
     };
+
+    // Function to convert file to Base64 (assuming you have this function defined)
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
     function checkStatus(data) {
         // Check if there is any object with status 'active'
         const hasActive = data.some((obj) => obj.status !== "done");
