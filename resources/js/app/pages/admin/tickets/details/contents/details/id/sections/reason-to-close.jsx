@@ -24,7 +24,7 @@ export default function ReasonToClose({ data }) {
                     ...ticket,
                 });
                 setIsLoading(false);
-                router.visit(routing("files"));
+                router.visit(routing("details"));
             } catch (error) {
                 setIsLoading(false);
             }

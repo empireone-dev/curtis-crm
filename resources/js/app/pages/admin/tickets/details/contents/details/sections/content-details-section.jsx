@@ -22,7 +22,7 @@ export default function ContentDetailsSection() {
                     update_tickets_status_thunk(ticket.id, "CLOSED")
                 );
                 setIsLoading(false);
-                router.visit(routing("files"));
+                router.visit(routing("details"));
             } catch (error) {
                 setIsLoading(false);
             }
@@ -36,7 +36,20 @@ export default function ContentDetailsSection() {
             router.visit(`/agent/tickets/details/${ticket.id}/edit`);
         }
     }
-
+    async function open_ticket(params) {
+        if (confirm("Are you sure you want to open the ticket?")) {
+            setIsLoading(true);
+            try {
+                await store.dispatch(
+                    update_tickets_status_thunk(ticket.id, "OPEN")
+                );
+                setIsLoading(false);
+                router.visit(routing("details"));
+            } catch (error) {
+                setIsLoading(false);
+            }
+        }
+    }
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
@@ -57,8 +70,11 @@ export default function ContentDetailsSection() {
                         </button>
 
                         {ticket.status == "CLOSED" ? (
-                            <button className="bg-red-500 p-3 text-white  hover:bg-red-600 w-48">
-                                {ticket.status}
+                            <button
+                                onClick={open_ticket}
+                                className="bg-violet-500 p-3 text-white  hover:bg-violet-600 w-48"
+                            >
+                                OPEN
                             </button>
                         ) : (
                             <ReasonToClose data={ticket} />

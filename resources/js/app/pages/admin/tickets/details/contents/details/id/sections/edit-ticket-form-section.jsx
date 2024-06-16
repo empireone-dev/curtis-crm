@@ -17,40 +17,61 @@ import {
 } from "@/app/services/tickets-service";
 import ReasonToClose from "./reason-to-close";
 import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
+import { get_retailers } from "@/app/services/product-search";
+import Skeleton from "@/app/layouts/components/skeleton";
 
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        store: "",
+        isHasEmail: "true",
+    });
     const { common_issues } = useSelector((state) => state.common_issues);
     const { ticket } = useSelector((state) => state.tickets);
     const [loading, setLoading] = useState(false);
     const ticketid = window.location.pathname.split("/")[4];
+    const [storeData, setStoreData] = useState([]);
+    const { url } = usePage();
+    const [load, setLoad] = useState(false);
 
-    const { url } = usePage()
-  
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const res = await get_tickets_by_ticket_id(url.split('/')[url.split('/').length - 2].split('#')[0])
-          dispatch(setTicket(res))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-      fetchData();
+        const fetchData = async () => {
+            try {
+                const res = await get_tickets_by_ticket_id(
+                    url.split("/")[url.split("/").length - 2].split("#")[0]
+                );
+                dispatch(setTicket(res));
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     }, [url]);
 
     useEffect(() => {
         async function get_ticket(params) {
-            const res = await get_tickets_by_ticket_id(ticketid);
-            setForm({
-                ...res,
-                isHasEmail: "true",
-            });
+             const res = await get_tickets_by_ticket_id(ticketid);
+            setForm(res);
         }
         get_ticket();
     }, []);
-
+    
+    useEffect(() => {
+        async function get_ticket(params) {
+            setLoad(true);
+            const result = await get_retailers();
+            setStoreData(
+                result.map((res) => ({
+                    name: res,
+                    value: res,
+                }))
+            );
+            setLoad(false);
+        }
+        get_ticket();
+    }, []);
+    
+  
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -89,299 +110,317 @@ export default function EditTicketFormSection() {
             onSubmit={submitFormTicket}
             className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3"
         >
-            <div className="flex items-center justify-center font-black text-3xl my-6">
-                EDIT TICKET FORM
-            </div>
-            <div className=" md:flex mb-3">
-                <div className="md:w-1/2 px-3 mb-3 md:mb-0">
-                    <Input
-                        required={true}
-                        onChange={formHandler}
-                        name="fname"
-                        value={form.fname}
-                        label="First Name"
-                        type="text"
-                        errorMessage="First Name is required"
-                    />
-                </div>
-                <div className="md:w-1/2 px-3">
-                    <Input
-                        required={true}
-                        onChange={formHandler}
-                        name="lname"
-                        value={form.lname}
-                        label="Last Name"
-                        type="text"
-                        errorMessage="Last Name is required"
-                    />
-                </div>
-            </div>
-            <div className=" md:flex mb-3">
-                <div className="md:w-1/2 px-3 mb-3 md:mb-0">
-                    <div className="flex gap-4">
-                        <div className="basis-1/3">
+            {load ? (
+                <Skeleton />
+            ) : (
+                <>
+                    <div className="flex items-center justify-center font-black text-3xl my-6">
+                        EDIT TICKET FORM
+                    </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                            <Input
+                                required={true}
+                                onChange={formHandler}
+                                name="fname"
+                                value={form.fname}
+                                label="First Name"
+                                type="text"
+                                errorMessage="First Name is required"
+                            />
+                        </div>
+                        <div className="md:w-1/2 px-3">
+                            <Input
+                                required={true}
+                                onChange={formHandler}
+                                name="lname"
+                                value={form.lname}
+                                label="Last Name"
+                                type="text"
+                                errorMessage="Last Name is required"
+                            />
+                        </div>
+                    </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                            <div className="flex gap-4">
+                                <div className="basis-1/3">
+                                    <Select
+                                        onChange={formHandler}
+                                        name="isHasEmail"
+                                        required={false}
+                                        value={form.isHasEmail ?? true}
+                                        label="Has Email?"
+                                        errorMessage=""
+                                        data={[
+                                            {
+                                                value: true,
+                                                name: "Yes",
+                                            },
+                                            {
+                                                value: false,
+                                                name: "No",
+                                            },
+                                        ]}
+                                    />
+                                </div>
+
+                                <div className="basis-full">
+                                    {form.isHasEmail == "true" ? (
+                                        <Input
+                                            required={true}
+                                            onChange={formHandler}
+                                            name="email"
+                                            value={form.email}
+                                            label="Email"
+                                            type="email"
+                                            errorMessage="Email is required"
+                                        />
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="md:w-1/2 px-3">
+                            <Input
+                                onChange={formHandler}
+                                name="phone"
+                                required={true}
+                                value={form.phone}
+                                label="Phone Number"
+                                type="phone"
+                                errorMessage="Phone Number is required"
+                            />
+                        </div>
+                    </div>
+                    <div className="basis-full">
+                        <div className="md:wfull px-3 mb-3 md:mb-0">
                             <Select
                                 onChange={formHandler}
-                                name="isHasEmail"
-                                required={false}
-                                value={form.isHasEmail ?? true}
-                                label="Has Email?"
-                                errorMessage=""
-                                data={[
-                                    {
-                                        value: true,
-                                        name: "Yes",
-                                    },
-                                    {
-                                        value: false,
-                                        name: "No",
-                                    },
-                                ]}
+                                name="store"
+                                value={form.store}
+                                label="Store Name"
+                                errorMessage="Store Name is required"
+                                data={storeData}
+                            />
+                        </div>
+                    </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                            <TicketCreateSearchProductSection />
+                        </div>
+                    </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="item_number"
+                                required={true}
+                                value={form.item_number}
+                                label="Item Number"
+                                type="text"
+                                errorMessage="Item Number is required"
+                            />
+                        </div>
+                        <div className="md:w-1/2 px-3">
+                            <Input
+                                onChange={formHandler}
+                                name="unit"
+                                required={true}
+                                value={form.unit}
+                                label="Item Unit"
+                                type="text"
+                                errorMessage="Item Unit is required"
+                            />
+                        </div>
+                    </div>
+
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="brand"
+                                required={true}
+                                value={form.brand}
+                                label="Brand"
+                                type="text"
+                                errorMessage="Brand is required"
+                            />
+                        </div>
+                        <div className="md:w-1/2 px-3">
+                            <Input
+                                onChange={formHandler}
+                                name="class"
+                                required={true}
+                                value={form.class}
+                                label="Item Class"
+                                type="text"
+                                errorMessage="Item Class is required"
+                            />
+                        </div>
+                    </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-2/6 px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="serial_number"
+                                required={true}
+                                value={form.serial_number}
+                                label="Serial Number"
+                                type="text"
+                                errorMessage="Serial Number is required"
                             />
                         </div>
 
-                        <div className="basis-full">
-                            {form.isHasEmail == "true" ? (
-                                <Input
-                                    required={true}
-                                    onChange={formHandler}
-                                    name="email"
-                                    value={form.email}
-                                    label="Email"
-                                    type="email"
-                                    errorMessage="Email is required"
-                                />
-                            ) : (
-                                <></>
-                            )}
+                        <div className="md:w-2/6 px-3">
+                            <Select
+                                onChange={formHandler}
+                                name="call_type"
+                                required={true}
+                                value={form.call_type}
+                                label="Call Type"
+                                errorMessage="Call Type is required"
+                                data={call_type}
+                            />
+                        </div>
+                        <div className="md:w-2/6 px-3">
+                            <Input
+                                onChange={formHandler}
+                                name="purchase_date"
+                                // required={true}
+                                value={form.purchase_date}
+                                label="Purchase Date"
+                                type="date"
+                                errorMessage="Purchase Date is required"
+                            />
                         </div>
                     </div>
-                </div>
-                <div className="md:w-1/2 px-3">
-                    <Input
-                        onChange={formHandler}
-                        name="phone"
-                        required={true}
-                        value={form.phone}
-                        label="Phone Number"
-                        type="phone"
-                        errorMessage="Phone Number is required"
-                    />
-                </div>
-            </div>
-            <div className=" md:flex mb-3">
-                <div className="md:w-full px-3 mb-3 md:mb-0">
-                    <TicketCreateSearchProductSection />
-                </div>
-            </div>
-            <div className=" md:flex mb-3">
-                <div className="md:w-1/2 px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="item_number"
-                        required={true}
-                        value={form.item_number}
-                        label="Item Number"
-                        type="text"
-                        errorMessage="Item Number is required"
-                    />
-                </div>
-                <div className="md:w-1/2 px-3">
-                    <Input
-                        onChange={formHandler}
-                        name="unit"
-                        required={true}
-                        value={form.unit}
-                        label="Item Unit"
-                        type="text"
-                        errorMessage="Item Unit is required"
-                    />
-                </div>
-            </div>
 
-            <div className=" md:flex mb-3">
-                <div className="md:w-1/2 px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="brand"
-                        required={true}
-                        value={form.brand}
-                        label="Brand"
-                        type="text"
-                        errorMessage="Brand is required"
-                    />
-                </div>
-                <div className="md:w-1/2 px-3">
-                    <Input
-                        onChange={formHandler}
-                        name="class"
-                        required={true}
-                        value={form.class}
-                        label="Item Class"
-                        type="text"
-                        errorMessage="Item Class is required"
-                    />
-                </div>
-            </div>
-            <div className=" md:flex mb-3">
-                <div className="md:w-2/6 px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="serial_number"
-                        required={true}
-                        value={form.serial_number}
-                        label="Serial Number"
-                        type="text"
-                        errorMessage="Serial Number is required"
-                    />
-                </div>
+                    <div className=" md:flex mb-3">
+                        <div className="md:w-1/4 px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="zip_code"
+                                required={true}
+                                value={form.zip_code}
+                                label="Zip Code / Postal Code"
+                                type="text"
+                                errorMessage="Zip Code is required"
+                            />
+                        </div>
 
-                <div className="md:w-2/6 px-3">
-                    <Select
-                        onChange={formHandler}
-                        name="call_type"
-                        required={true}
-                        value={form.call_type}
-                        label="Call Type"
-                        errorMessage="Call Type is required"
-                        data={call_type}
-                    />
-                </div>
-                <div className="md:w-2/6 px-3">
-                    <Input
-                        onChange={formHandler}
-                        name="purchase_date"
-                        // required={true}
-                        value={form.purchase_date}
-                        label="Purchase Date"
-                        type="date"
-                        errorMessage="Purchase Date is required"
-                    />
-                </div>
-            </div>
-
-            <div className=" md:flex mb-3">
-                <div className="md:w-1/4 px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="zip_code"
-                        required={true}
-                        value={form.zip_code}
-                        label="Zip Code / Postal Code"
-                        type="text"
-                        errorMessage="Zip Code is required"
-                    />
-                </div>
-
-                <div className="md:w-1/4 px-3">
-                    <Select
-                        onChange={formHandler}
-                        name="country"
-                        required={true}
-                        value={form.country}
-                        label="Country"
-                        errorMessage="Country is required"
-                        data={countries.map((res) => ({
-                            name: res.name,
-                            value: res.value,
-                        }))}
-                    />
-                </div>
-                <div className="md:w-1/4 px-3">
-                    <Select
-                        onChange={formHandler}
-                        name="state"
-                        required={true}
-                        value={form.state}
-                        label="State"
-                        errorMessage="State is required"
-                        data={regions}
-                    />
-                </div>
-                <div className="md:w-1/4 px-3">
-                    <Input
-                        onChange={formHandler}
-                        name="city"
-                        required={true}
-                        value={form.city}
-                        label="City"
-                        type="text"
-                        errorMessage="City is required"
-                    />
-                </div>
-            </div>
-            <div className="flex flex-col gap-4 mb-3">
-                <div className="md:w-full px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="address"
-                        // required={true}
-                        value={form.address}
-                        label="Address"
-                        type="text"
-                        // errorMessage='Address is required'
-                    />
-                </div>
-                <div className="md:w-full px-3 mb-3 md:mb-0">
-                    {form.call_type == "Parts" ? (
-                        <Autocomplete
-                            defaultValue={form.issue ?? "[]"}
-                            onChange={formHandler}
-                            value={[
-                                {
-                                    id: "Missing Parts",
-                                    name: "Missing Parts",
-                                },
-                                {
-                                    id: "Damage Parts",
-                                    name: "Damage Parts",
-                                },
-                                {
-                                    id: "Want to buy Parts",
-                                    name: "Want to buy Parts",
-                                },
-                            ]}
-                        />
-                    ) : (
-                        <Autocomplete
-                            defaultValue={form.issue ?? "[]"}
-                            onChange={formHandler}
-                            value={common_issues.map((res) => ({
-                                id: res.id,
-                                name: res.name,
-                            }))}
-                        />
-                    )}
-                </div>
-                <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
-                    <div className="basis-full">
-                        <Textarea
-                            required={true}
-                            onChange={formHandler}
-                            name="remarks"
-                            value={form.remarks}
-                            label="Remarks"
-                            type="text"
-                            errorMessage="Remarks is required"
-                        />
+                        <div className="md:w-1/4 px-3">
+                            <Select
+                                onChange={formHandler}
+                                name="country"
+                                required={true}
+                                value={form.country}
+                                label="Country"
+                                errorMessage="Country is required"
+                                data={countries.map((res) => ({
+                                    name: res.name,
+                                    value: res.value,
+                                }))}
+                            />
+                        </div>
+                        <div className="md:w-1/4 px-3">
+                            <Select
+                                onChange={formHandler}
+                                name="state"
+                                required={true}
+                                value={form.state}
+                                label="State"
+                                errorMessage="State is required"
+                                data={regions}
+                            />
+                        </div>
+                        <div className="md:w-1/4 px-3">
+                            <Input
+                                onChange={formHandler}
+                                name="city"
+                                required={true}
+                                value={form.city}
+                                label="City"
+                                type="text"
+                                errorMessage="City is required"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="flex gap-4 items-center justify-center">
-                    <button
-                        type="submit"
-                        className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
-                    >
-                        {loading ? (
-                            <div className="py-1.5">
-                                <Loading />
+                    <div className="flex flex-col gap-4 mb-3">
+                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="address"
+                                // required={true}
+                                value={form.address}
+                                label="Address"
+                                type="text"
+                                // errorMessage='Address is required'
+                            />
+                        </div>
+                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                            {form.call_type == "Parts" ? (
+                                <Autocomplete
+                                    defaultValue={form.issue ?? "[]"}
+                                    onChange={formHandler}
+                                    value={[
+                                        {
+                                            id: "Missing Parts",
+                                            name: "Missing Parts",
+                                        },
+                                        {
+                                            id: "Damage Parts",
+                                            name: "Damage Parts",
+                                        },
+                                        {
+                                            id: "Want to buy Parts",
+                                            name: "Want to buy Parts",
+                                        },
+                                    ]}
+                                />
+                            ) : (
+                                <Autocomplete
+                                    defaultValue={form.issue ?? "[]"}
+                                    onChange={formHandler}
+                                    value={common_issues.map((res) => ({
+                                        id: res.id,
+                                        name: res.name,
+                                    }))}
+                                />
+                            )}
+                        </div>
+                        <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
+                            <div className="basis-full">
+                                <Textarea
+                                    required={true}
+                                    onChange={formHandler}
+                                    name="remarks"
+                                    value={form.remarks}
+                                    label="Remarks"
+                                    type="text"
+                                    errorMessage="Remarks is required"
+                                />
                             </div>
-                        ) : (
-                            "UPDATE"
-                        )}
-                    </button>
-                    <ReasonToClose data={form} />
-                </div>
-            </div>
+                        </div>
+                        <div className="flex gap-4 items-center justify-center">
+                            <button
+                                type="submit"
+                                className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
+                            >
+                                {loading ? (
+                                    <div className="py-1.5">
+                                        <Loading />
+                                    </div>
+                                ) : (
+                                    "UPDATE"
+                                )}
+                            </button>
+                            <ReasonToClose data={form} />
+                        </div>
+                    </div>
+                </>
+            )}
         </form>
     );
 }

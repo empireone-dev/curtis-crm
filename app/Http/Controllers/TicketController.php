@@ -8,6 +8,7 @@ use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
 use App\Models\EmailTemplate;
 use App\Models\ExportFile;
+use App\Models\Receipt;
 use App\Models\Replacement;
 use App\Models\Ticket;
 use App\Models\User;
@@ -62,7 +63,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
-            'user_id'=>$this->queueing($request->call_type),
+            'user_id' => $this->queueing($request->call_type),
             'call_type' => $request->call_type,
             'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
@@ -239,6 +240,23 @@ class TicketController extends Controller
         $ticket = Ticket::where('id', $id)->first();
         if ($ticket) {
             $ticket->update($request->all());
+        }
+        $receipt = Receipt::where('ticket_id', $id)->first();
+        if ($receipt) {
+            $receipt->update([
+                'store' => $request->store
+            ]);
+        } else {
+            Receipt::create([
+                'store' => $request->store,
+                'user_id' => $ticket->user_id,
+                'ticket_id' => $id,
+                'retailers_price' => 0,
+                'discount' => 0,
+                'total_price' => 0,
+                'refurbished' => 'true',
+                'notes' => '',
+            ]);
         }
         return response()->json([
             'result' => $ticket
