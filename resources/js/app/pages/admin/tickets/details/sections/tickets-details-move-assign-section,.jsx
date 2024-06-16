@@ -13,7 +13,7 @@ export default function TicketsDetailsMoveAssignSection() {
     const { ticket } = useSelector((state) => state.customer_tickets);
     return (
         <div className="px-7">
-            {ticket.status !== "CLOSED" && ticket.isUploading == "true" && (
+            {ticket.status !== "WARRANTY VALIDATION" && ticket.status !== "CLOSED" && ticket.isUploading == "true" && (
                 <div>
                     {ticket?.call_type &&
                     ticket?.call_type == "CF-Warranty Claim" ? (

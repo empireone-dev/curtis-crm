@@ -90,7 +90,7 @@ export default function EditTicketFormSection() {
             className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3"
         >
             <div className="flex items-center justify-center font-black text-3xl my-6">
-                EDIT Ticket Form
+                EDIT TICKET FORM
             </div>
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
