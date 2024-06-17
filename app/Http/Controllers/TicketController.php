@@ -73,7 +73,7 @@ class TicketController extends Controller
             'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
         ]);
-
+        
         return response()->json([
             'result' => 'success'
         ], 200);

@@ -12,7 +12,7 @@ export default function ValidationButtonSection() {
     const { user } = useSelector((state) => state.app);
     const [loading, setLoading] = useState("");
     const dispatch = useDispatch();
-    
+
     async function submitValidation(value) {
         setLoading(value);
         await validation_service({
