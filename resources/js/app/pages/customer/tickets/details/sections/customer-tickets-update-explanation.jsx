@@ -31,20 +31,44 @@ export default function CustomerTicketsUpdateExplanation({ isTranslate }) {
         setIsLoading(false);
     }
 
+    function defect_notes() {
+        if (ticket.call_type == "Parts") {
+            return true;
+        } else if (ticket.call_type == "CF-Warranty Claim") {
+            return false;
+        }
+    }
     return (
         <form onSubmit={submitExplanation} className="px-5 w-full">
-            <Textarea
-                name="explanation"
-                value={ticket.explanation ?? " "}
-                label={
-                    !isTranslate
-                        ? "Write a detailed explanation of the defect/issue."
-                        : "Rédigez une explication détaillée du défaut/problème."
-                }
-                type=""
-                errorMessage="Please write an explanation "
-                onChange={formHandler}
-            />
+            {defect_notes() == false && (
+                <Textarea
+                    name="explanation"
+                    value={ticket.explanation ?? " "}
+                    label={
+                        !isTranslate
+                            ? "Rédigez une explication détaillée du défaut/problème."
+                            : "Write a detailed explanation of the defect/issue."
+                    }
+                    type=""
+                    errorMessage="Please write an explanation "
+                    onChange={formHandler}
+                />
+            )}
+
+            {defect_notes() == true && (
+                <Textarea
+                    name="explanation"
+                    value={ticket.explanation ?? " "}
+                    label={
+                        !isTranslate
+                            ? "Description de la ou des pièces que vous recherchez.."
+                            : "Description of the part/s that you’re looking for."
+                    }
+                    type=""
+                    errorMessage="Please write an explanation "
+                    onChange={formHandler}
+                />
+            )}
 
             <button className="bg-blue-500 hover:bg-blue-500 p-3 rounded-md text-white my-5">
                 {isLoading ? "Loading..." : "Save"}

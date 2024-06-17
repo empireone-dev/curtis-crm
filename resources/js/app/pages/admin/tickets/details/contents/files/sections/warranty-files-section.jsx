@@ -18,8 +18,11 @@ export default function WarrantyFilesSection() {
     const { filesData } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
     function notes_notification() {
-        if (
+        if (ticket.isUploading == 'true') {
+            return true;
+        }else if (
             ticket.call_type == "CF-Warranty Claim" &&
             filesData.bill_of_sale &&
             filesData.front_of_the_unit &&
@@ -48,7 +51,6 @@ export default function WarrantyFilesSection() {
             setIsLoading(false);
         }, 1000);
     }, []);
-
     async function uploadPhoto(params) {
         setLoading(true);
         try {
@@ -62,39 +64,6 @@ export default function WarrantyFilesSection() {
         }
     }
 
-    function fetch_upload(params) {
-        if (
-            !isLoading &&
-            ticket?.call_type &&
-            ticket?.call_type == "CF-Warranty Claim"
-        ) {
-            return (
-                <>
-                    <CustomerTicketsBillOfSaleSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsFrontOfTheUnitSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsRearOfTheUnitSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReadableSerialSection />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsDefectIssueSection />
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <CustomerTicketsSerialModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsReceiptModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsPartsModel />
-                    <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsClearModel />
-                </>
-            );
-        }
-    }
     return (
         <>
             <div className="my-3">
@@ -112,10 +81,15 @@ export default function WarrantyFilesSection() {
                 <div className="text-xl"> REMARKS: </div>
                 <div className="text-xl font-bold">{ticket.remarks}</div>
             </div> */}
-            <div className="flex gap-2 border-b border-black my-5">
-                <div className="text-xl"> Detailed Explanation: </div>
-                <div className="text-xl font-bold">{ticket.explanation}</div>
-            </div>
+            {ticket.call_type == "CF-Warranty Claim" && (
+                <div className="flex gap-2 border-b border-black my-5">
+                    <div className="text-xl"> Detailed Explanation: </div>
+                    <div className="text-xl font-bold">
+                        {ticket.explanation}
+                    </div>
+                </div>
+            )}
+
             <div className="text-4xl font-black text-blue-600">
                 Warranty Files
             </div>
@@ -131,6 +105,14 @@ export default function WarrantyFilesSection() {
             <div className="text-4xl font-black text-blue-600  border-t-2 border-black my-6">
                 Part Files
             </div>
+            {ticket.call_type == "Parts" && (
+                <div className="flex gap-2 border-b border-black my-5">
+                    <div className="text-xl"> Detailed Explanation: </div>
+                    <div className="text-xl font-bold">
+                        {ticket.explanation}
+                    </div>
+                </div>
+            )}
             <CustomerTicketsSerialModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsReceiptModel />
@@ -139,7 +121,7 @@ export default function WarrantyFilesSection() {
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsClearModel />
             <Button
-                onClick={uploadPhoto}
+                onClick={()=>uploadPhoto()}
                 type="primary"
                 size="large"
                 className="my-10 w-full"

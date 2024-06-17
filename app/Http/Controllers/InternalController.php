@@ -12,26 +12,24 @@ class InternalController extends Controller
     public function store(Request $request)
     {
         foreach ($request->parts as $value) {
-            if (array_key_exists('id', $value)) {
+            if (isset($value['id'])) {
                 $internal = Internal::where('id', $value['id'])->first();
-                if ($internal) {
-                    $internal->update([
-                        'name' => $value['name'],
-                        'part_number' => $value['part_number'],
-                        'location' => $value['location'],
-                        'cost' => $value['cost'],
-                        'status' => $value['status'],
-                    ]);
-                } else {
-                    Internal::create([
-                        'ticket_id' => $request->ticket_id,
-                        'name' => $value['name'],
-                        'part_number' => $value['part_number'],
-                        'location' => $value['location'],
-                        'cost' => $value['cost'],
-                        'status' => $value['status'],
-                    ]);
-                }
+                $internal->update([
+                    'name' => $value['name'],
+                    'part_number' => $value['part_number'] ?? '',
+                    'location' => $value['location'] ?? '',
+                    'cost' => $value['cost'],
+                    'status' => $value['status'],
+                ]);
+            } else {
+                Internal::create([
+                    'ticket_id' => $request->ticket_id,
+                    'name' => $value['name'],
+                    'part_number' => $value['part_number'] ?? '',
+                    'location' => $value['location'] ?? '',
+                    'cost' => $value['cost'],
+                    'status' => $value['status'],
+                ]);
             }
         }
 
@@ -52,7 +50,7 @@ class InternalController extends Controller
         ]);
 
         return response()->json([
-            'status' => $ticket
+            'status' => $request->parts
         ], 200);
     }
 

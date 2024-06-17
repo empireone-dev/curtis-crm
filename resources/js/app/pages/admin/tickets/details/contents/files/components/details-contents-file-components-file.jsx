@@ -55,9 +55,9 @@ const DetailsFileUploadComponent = ({ files, type }) => {
     }, []);
     const handlePreview = async (file) => {
         try {
-            if (file.extension === "pdf") {
+            if (file.extension == "pdf") {
                 window.open(file.url, "_blank");
-            } else if (file.extension === "docx") {
+            } else if (file.extension == "docx") {
                 const encodedUrl = encodeURIComponent(file.url);
                 window.open(
                     `https://docs.google.com/gview?url=${encodedUrl}&embedded=true`,

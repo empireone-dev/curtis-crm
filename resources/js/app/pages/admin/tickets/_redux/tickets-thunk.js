@@ -19,7 +19,7 @@ export function get_making_decision_thunk(data) {
 export function get_internals_by_ticket_id_thunk() {
   return async function (dispatch, getState) {
     const { ticket } = getState().tickets
-    const result = await get_internals_by_ticket_id_service(ticket.id)
+    const result = await get_internals_by_ticket_id_service(window.location.pathname.split('/')[4])
     dispatch(ticketsSlice.actions.setInternals(result.status));
   };
 }

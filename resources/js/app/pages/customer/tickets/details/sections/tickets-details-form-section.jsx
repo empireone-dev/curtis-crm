@@ -8,12 +8,14 @@ import CustomerTicketsUpdateExplanation from "./customer-tickets-update-explanat
 import store from "@/app/store/store";
 import { get_upload_ticket_files_thunk } from "../../redux/customer-tickets-thunk";
 import { setFilesData } from "../../redux/customer-tickets-slice";
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomerTicketsClearModel from "./customer-tickets-clear-model";
 import CustomerTicketsPartsModel from "./customer-tickets-parts-model";
 import CustomerTicketsReceiptModel from "./customer-tickets-receipt-model";
 import CustomerTicketsSerialModel from "./customer-tickets-serial-model";
+import { Button } from "antd";
+import { upload_photo_status } from "@/app/services/files-service";
 
 export default function TicketsDetailsFormSection() {
     const { url } = usePage();
@@ -22,22 +24,26 @@ export default function TicketsDetailsFormSection() {
     const { ticket, filesData } = useSelector(
         (state) => state.customer_tickets
     );
+    const [loading,setLoading] =useState(true)
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await store.dispatch(
                     get_upload_ticket_files_thunk(url.split("/")[3])
                 );
-                console.log("res", res);
                 dispatch(setFilesData(res));
+                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setLoading(false)
             }
         };
         fetchData();
     }, [url]);
     function notes_notification() {
-        if (
+        if (ticket.isUploading == 'true') {
+            return true;
+        }else if (
             ticket.call_type == "CF-Warranty Claim" &&
             filesData.bill_of_sale &&
             filesData.front_of_the_unit &&
@@ -58,6 +64,19 @@ export default function TicketsDetailsFormSection() {
             return false;
         }
     }
+    async function uploadPhoto(params) {
+        setLoading(true);
+        try {
+            await upload_photo_status({
+                ticket_id: ticket.id,
+            });
+            router.visit(window.location.pathname);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+
     return (
         <>
           <button
@@ -79,7 +98,8 @@ export default function TicketsDetailsFormSection() {
                 </div>
             )}
           
-            {ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
+          
+            {!loading && ticket?.call_type && ticket?.call_type == "CF-Warranty Claim" ? (
                 <>
                     <CustomerTicketsBillOfSaleSection 
                     isTranslate={isTranslate}
@@ -98,6 +118,7 @@ export default function TicketsDetailsFormSection() {
                 </>
             ) : (
                 <>
+
                     <CustomerTicketsClearModel isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsPartsModel isTranslate={isTranslate}/>
@@ -107,6 +128,14 @@ export default function TicketsDetailsFormSection() {
                     <CustomerTicketsSerialModel isTranslate={isTranslate}/>
                 </>
             )}
+                <Button
+                onClick={()=>uploadPhoto()}
+                type="primary"
+                size="large"
+                className="my-10 w-full"
+            >
+                UPLOAD PHOTOS
+            </Button>
         </>
     );
 }

@@ -60,10 +60,6 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
                                         <ArrowLeftOutlined className="mr-2" />
                                         Previous
                                     </button>
-                                    {/* <button className="bg-gray-300 hover:bg-gray-400 items-center justify-center font-bold w-full py-2 px-4 rounded">
-                      Next
-                      <ArrowRightOutlined className="ml-2" />
-                    </button> */}
                                 </div>
                                 <LogCaseSection
                                     account={auth.user}

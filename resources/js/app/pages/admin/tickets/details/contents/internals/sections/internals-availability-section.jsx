@@ -189,7 +189,7 @@ export default function InternalsAvailabilitySection() {
                                         }
                                         name="part_number"
                                         span=""
-                                        required={true}
+                                        required={false}
                                         value={part.part_number ?? ""}
                                         label="Part Number"
                                         type="text"
@@ -203,7 +203,7 @@ export default function InternalsAvailabilitySection() {
                                         }
                                         name="location"
                                         span=""
-                                        required={true}
+                                        required={false}
                                         value={part.location ?? ""}
                                         label="Location"
                                         type="text"
@@ -217,7 +217,7 @@ export default function InternalsAvailabilitySection() {
                                         }
                                         name="cost"
                                         span=""
-                                        required={true}
+                                        required={false}
                                         value={part.cost ?? ""}
                                         label="Cost"
                                         type="text"
