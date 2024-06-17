@@ -50,12 +50,12 @@ export default function EditTicketFormSection() {
 
     useEffect(() => {
         async function get_ticket(params) {
-             const res = await get_tickets_by_ticket_id(ticketid);
+            const res = await get_tickets_by_ticket_id(ticketid);
             setForm(res);
         }
         get_ticket();
     }, []);
-    
+
     useEffect(() => {
         async function get_ticket(params) {
             setLoad(true);
@@ -70,8 +70,7 @@ export default function EditTicketFormSection() {
         }
         get_ticket();
     }, []);
-    
-  
+
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -113,7 +112,7 @@ export default function EditTicketFormSection() {
             {load ? (
                 <Skeleton />
             ) : (
-                <>
+                <div className="min-h-screen h-full">
                     <div className="flex items-center justify-center font-black text-3xl my-6">
                         EDIT TICKET FORM
                     </div>
@@ -194,21 +193,22 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                     </div>
-                    <div className="basis-full">
-                        <div className="md:wfull px-3 mb-3">
-                            <Select
-                                onChange={formHandler}
-                                name="store"
-                                value={form.store}
-                                label="Store Name"
-                                errorMessage="Store Name is required"
-                                data={storeData}
-                            />
-                        </div>
-                    </div>
+
                     <div className=" md:flex mb-3">
-                        <div className="md:w-full px-3 mb-3">
+                        <div className="md:w-1/4 px-3 mb-3">
                             <TicketCreateSearchProductSection />
+                        </div>
+                        <div className="basis-full">
+                            <div className="md:wfull px-3 mb-3">
+                                <Select
+                                    onChange={formHandler}
+                                    name="store"
+                                    value={form.store}
+                                    label="Store Name"
+                                    errorMessage="Store Name is required"
+                                    data={storeData}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className=" md:flex mb-3">
@@ -419,7 +419,7 @@ export default function EditTicketFormSection() {
                             <ReasonToClose data={form} />
                         </div>
                     </div>
-                </>
+                </div>
             )}
         </form>
     );

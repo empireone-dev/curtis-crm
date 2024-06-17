@@ -63,7 +63,7 @@ export default function TicketCreateSearchProductSection() {
     <div>
       <button
       type="button"
-      onClick={() => isOpenModal()} className="p-3 rounded-sm bg-blue-500 text-white hover:bg-blue-600">
+      onClick={() => isOpenModal()} className="p-3 rounded-sm bg-blue-500 text-white hover:bg-blue-600 w-full">
         Select Product
       </button>
       <Modal
