@@ -366,7 +366,7 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
-                            {form?.issue && (
+                            {form?.issue && form.call_type == "Parts" && (
                                 <SelectData
                                     mode="multiple"
                                     size={"large"}
@@ -392,6 +392,25 @@ export default function EditTicketFormSection() {
                                             label: "Want to buy Parts",
                                         },
                                     ]}
+                                />
+                            )}
+
+                            {form?.issue && form.call_type !== "Parts" && (
+                                <SelectData
+                                    mode="multiple"
+                                    size={"large"}
+                                    placeholder="Please select"
+                                    defaultValue={
+                                        JSON.parse(form.issue ?? "[]") ?? []
+                                    }
+                                    onChange={formHandlerIssue}
+                                    style={{
+                                        width: "100%",
+                                    }}
+                                    options={common_issues.map((res) => ({
+                                        value: res.id,
+                                        label: res.name,
+                                    }))}
                                 />
                             )}
 
