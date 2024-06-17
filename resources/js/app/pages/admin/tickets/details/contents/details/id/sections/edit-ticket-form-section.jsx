@@ -19,7 +19,7 @@ import ReasonToClose from "./reason-to-close";
 import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
-
+import { Select as SelectData } from "antd";
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
     const [form, setForm] = useState({
@@ -103,7 +103,13 @@ export default function EditTicketFormSection() {
     };
 
     const { regions } = findCountry(form.country ?? "CA");
-
+    function formHandlerIssue(params) {
+        setForm({
+            ...form,
+            issue: JSON.stringify(params),
+        });
+    }
+    console.log("form.issue", form.issue);
     return (
         <form
             onSubmit={submitFormTicket}
@@ -359,8 +365,37 @@ export default function EditTicketFormSection() {
                                 // errorMessage='Address is required'
                             />
                         </div>
-                        <div className="md:w-full px-3 mb-3 py-6">
-                            {form.call_type == "Parts" ? (
+                        <div className="md:w-full px-3 mb-3">
+                            {form?.issue && (
+                                <SelectData
+                                    mode="multiple"
+                                    size={"large"}
+                                    placeholder="Please select"
+                                    defaultValue={
+                                        JSON.parse(form.issue ?? "[]") ?? []
+                                    }
+                                    onChange={formHandlerIssue}
+                                    style={{
+                                        width: "100%",
+                                    }}
+                                    options={[
+                                        {
+                                            value: "Missing Parts",
+                                            label: "Missing Parts",
+                                        },
+                                        {
+                                            value: "Damage Parts",
+                                            label: "Damage Parts",
+                                        },
+                                        {
+                                            value: "Want to buy Parts",
+                                            label: "Want to buy Parts",
+                                        },
+                                    ]}
+                                />
+                            )}
+
+                            {/* {form.call_type == "Parts" ? (
                                 <Autocomplete
                                     defaultValue={form.issue ?? "[]"}
                                     onChange={formHandler}
@@ -388,7 +423,7 @@ export default function EditTicketFormSection() {
                                         name: res.name,
                                     }))}
                                 />
-                            )}
+                            )} */}
                         </div>
                         <div className="md:w-full flex px-3 mb-3 gap-5">
                             <div className="basis-full">
