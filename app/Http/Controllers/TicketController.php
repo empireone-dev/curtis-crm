@@ -62,17 +62,18 @@ class TicketController extends Controller
     public function move_ticket_assignment(Request $request)
     {
         $ticket = Ticket::where('id', $request->ticket_id)->first();
+        if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'CF-Warranty Claim') {
+            $this->send_warranty_email($request->recipient, $request->subject, $request->body);
+        } else if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'Parts') {
+            $this->send_parts_email($request->recipient, $request->subject, $request->body);
+        }
         $ticket->update([
             'user_id' => $this->queueing($request->call_type),
             'call_type' => $request->call_type,
             'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
         ]);
-        if ($request->call_type == 'CF-Warranty Claim') {
-            $this->send_warranty_email($request->recipient, $request->subject, $request->body);
-        } else if ($request->call_type == 'Parts') {
-            $this->send_parts_email($request->recipient, $request->subject, $request->body);
-        }
+
         return response()->json([
             'result' => 'success'
         ], 200);

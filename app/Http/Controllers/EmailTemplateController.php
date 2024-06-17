@@ -138,7 +138,7 @@ class EmailTemplateController extends Controller
             'type' => 'PARTS VALIDATION',
             'message' => json_encode($ticket)
         ]);
-        Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        // Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
         $this->send_parts_email($request->ticket['email'], $ticket->ticket_id, $request->template_text);
         return 'Email sent successfully!';
     }
