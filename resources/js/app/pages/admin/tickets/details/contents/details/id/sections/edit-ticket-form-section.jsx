@@ -118,7 +118,7 @@ export default function EditTicketFormSection() {
                         EDIT TICKET FORM
                     </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                        <div className="md:w-1/2 px-3 mb-3">
                             <Input
                                 required={true}
                                 onChange={formHandler}
@@ -142,7 +142,7 @@ export default function EditTicketFormSection() {
                         </div>
                     </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                        <div className="md:w-1/2 px-3 mb-3">
                             <div className="flex gap-4">
                                 <div className="basis-1/3">
                                     <Select
@@ -195,7 +195,7 @@ export default function EditTicketFormSection() {
                         </div>
                     </div>
                     <div className="basis-full">
-                        <div className="md:wfull px-3 mb-3 md:mb-0">
+                        <div className="md:wfull px-3 mb-3">
                             <Select
                                 onChange={formHandler}
                                 name="store"
@@ -207,12 +207,12 @@ export default function EditTicketFormSection() {
                         </div>
                     </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                        <div className="md:w-full px-3 mb-3">
                             <TicketCreateSearchProductSection />
                         </div>
                     </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                        <div className="md:w-1/2 px-3 mb-3">
                             <Input
                                 onChange={formHandler}
                                 name="item_number"
@@ -237,7 +237,7 @@ export default function EditTicketFormSection() {
                     </div>
 
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/2 px-3 mb-3 md:mb-0">
+                        <div className="md:w-1/2 px-3 mb-3">
                             <Input
                                 onChange={formHandler}
                                 name="brand"
@@ -261,7 +261,7 @@ export default function EditTicketFormSection() {
                         </div>
                     </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-2/6 px-3 mb-3 md:mb-0">
+                        <div className="md:w-2/6 px-3 mb-3">
                             <Input
                                 onChange={formHandler}
                                 name="serial_number"
@@ -298,7 +298,7 @@ export default function EditTicketFormSection() {
                     </div>
 
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/4 px-3 mb-3 md:mb-0">
+                        <div className="md:w-1/4 px-3 mb-3">
                             <Input
                                 onChange={formHandler}
                                 name="zip_code"
@@ -348,7 +348,7 @@ export default function EditTicketFormSection() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 mb-3">
-                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                        <div className="md:w-full px-3 mb-3">
                             <Input
                                 onChange={formHandler}
                                 name="address"
@@ -359,7 +359,7 @@ export default function EditTicketFormSection() {
                                 // errorMessage='Address is required'
                             />
                         </div>
-                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                        <div className="md:w-full px-3 mb-3 py-6">
                             {form.call_type == "Parts" ? (
                                 <Autocomplete
                                     defaultValue={form.issue ?? "[]"}
@@ -390,7 +390,7 @@ export default function EditTicketFormSection() {
                                 />
                             )}
                         </div>
-                        <div className="md:w-full flex px-3 mb-3 md:mb-0 gap-5">
+                        <div className="md:w-full flex px-3 mb-3 gap-5">
                             <div className="basis-full">
                                 <Textarea
                                     required={true}
