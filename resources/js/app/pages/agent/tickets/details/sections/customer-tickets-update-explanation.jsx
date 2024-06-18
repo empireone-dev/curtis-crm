@@ -10,7 +10,7 @@ export default function CustomerTicketsUpdateExplanation() {
 
     const { ticket } = useSelector((state) => state.customer_tickets)
     const { url } = usePage()
-    const ticket_id = url.split('/')[3]
+    const ticket_id = window.location.pathname.split('/')[4]
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -29,6 +29,7 @@ export default function CustomerTicketsUpdateExplanation() {
          setIsLoading(false)
     }
 console.log('ticket',ticket.explanation)
+
     return (
         <form
             onSubmit={submitExplanation}

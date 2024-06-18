@@ -6,6 +6,7 @@ import AgentLayout from "@/app/layouts/agent/agent-layout";
 import WarehouseLayout from "@/app/layouts/warehouse/warehouse-layout";
 import ASCLayout from "@/app/layouts/asc/asc-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
+import CustomerTicketsUpdateExplanation from "@/app/pages/agent/tickets/details/sections/customer-tickets-update-explanation";
 
 export default function TicketsDetailsContentFiles({ auth }) {
     const account = auth.user.role_id;
@@ -25,6 +26,7 @@ export default function TicketsDetailsContentFiles({ auth }) {
     return (
         <MainLayout account={auth.user}>
             <TicketsDetailsLayout>
+                <CustomerTicketsUpdateExplanation />
                 <WarrantyFilesSection />
             </TicketsDetailsLayout>
         </MainLayout>
