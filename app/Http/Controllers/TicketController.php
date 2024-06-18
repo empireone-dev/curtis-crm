@@ -122,11 +122,11 @@ class TicketController extends Controller
         }
 
         if ($request->call_type == 'Parts') {
-            $subject = '#PS' . $id;
+            $subject = 'PS' . $id;
         } else if ($request->call_type == 'CF-Warranty Claim') {
-            $subject = '#CF' . $id;
+            $subject = 'CF' . $id;
         } else {
-            $subject = '#TS' . $id;
+            $subject = 'TS' . $id;
         }
 
         $ticket = Ticket::where('id', $request->id)->with('user')->first();
@@ -352,7 +352,7 @@ class TicketController extends Controller
                         $query->orWhere([[$column, '=',  $searchQuery]]);
                     }
                 }
-                $query->orWhere('ticket_id', '=', '#' . $searchQuery);
+                $query->orWhere('ticket_id', '=', $searchQuery);
             });
         }
 
@@ -733,11 +733,11 @@ class TicketController extends Controller
             }
 
             if ($request->call_type == 'Parts') {
-                $subject = '#PS' . $id;
+                $subject = 'PS' . $id;
             } else if ($request->call_type == 'CF-Warranty Claim') {
-                $subject = '#CF' . $id;
+                $subject = 'CF' . $id;
             } else {
-                $subject = '#TS' . $id;
+                $subject = 'TS' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();
@@ -803,11 +803,11 @@ class TicketController extends Controller
             }
 
             if ($request->call_type == 'Parts') {
-                $subject = '#PS' . $id;
+                $subject = 'PS' . $id;
             } else if ($request->call_type == 'CF-Warranty Claim') {
-                $subject = '#CF' . $id;
+                $subject = 'CF' . $id;
             } else if ($request->call_type == 'TS-Tech Support') {
-                $subject = '#TS' . $id;
+                $subject = 'TS' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();

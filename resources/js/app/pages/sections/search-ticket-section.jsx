@@ -14,19 +14,14 @@ export default function SearchTicketSection() {
 
     async function search_ticket(e) {
         e.preventDefault();
-        if (search[0] == "#") {
-            const res = await get_tickets_service(`?search=${search.slice(1)}`);
-            setData(res.data);
-        } else {
-            const res = await get_tickets_service(`?search=${search}`);
-            setData(res.data);
-        }
+        const res = await get_tickets_service(`?search=${search}`);
+        setData(res.data);
     }
 
     function moveToSearch(value) {
         if (user.role_id == 1) {
             router.visit("/administrator/tickets?search=" + value);
-        }else if (user.role_id == 6) {
+        } else if (user.role_id == 6) {
             router.visit("/curtis/tickets?search=" + value);
         } else {
             router.visit("/agent/tickets?search=" + value);
