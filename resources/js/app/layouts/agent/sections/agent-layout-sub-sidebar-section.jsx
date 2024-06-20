@@ -43,9 +43,9 @@ export default function AgentLayoutSubSidebarSection() {
                     </button>
 
                     <SearchTicketSection />
-                    <Link href='/agent/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-500 text-white' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
+                    {/* <Link href='/agent/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-500 text-white' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
                         <Cog8ToothIcon className=' h-8 ' />
-                    </Link>
+                    </Link> */}
                 </div>
 
                 <div className="relative flex items-center justify-center flex-shrink-0">
