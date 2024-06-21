@@ -8,7 +8,7 @@ import moment from "moment";
 import { split } from "postcss/lib/list";
 
 export default function CustomerTicketsTableSection() {
-    const { tickets } = useSelector((state) => state.customer_tickets);
+    const { tickets } = useSelector((state) => state.tickets);
     
 
     const search = window.location.search.split("=")[1];

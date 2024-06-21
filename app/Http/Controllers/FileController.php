@@ -65,7 +65,8 @@ class FileController extends Controller
                 'clear_model',
                 'parts_model',
                 'receipt_model',
-                'serial_model'
+                'serial_model',
+                'destroy_ticket'
             ])
             ->get()
             ->groupBy('type');

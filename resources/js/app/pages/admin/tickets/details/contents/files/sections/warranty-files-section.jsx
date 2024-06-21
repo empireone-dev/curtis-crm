@@ -12,6 +12,7 @@ import { router, usePage } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
 import { upload_photo_status } from "@/app/services/files-service";
+import CustomerTicketDistroy from "./customer-tickets-destroy";
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -20,9 +21,9 @@ export default function WarrantyFilesSection() {
     const [isLoading, setIsLoading] = useState(true);
 
     function notes_notification() {
-        if (ticket.isUploading == 'true') {
+        if (ticket.isUploading == "true") {
             return true;
-        }else if (
+        } else if (
             ticket.call_type == "CF-Warranty Claim" &&
             filesData.bill_of_sale &&
             filesData.front_of_the_unit &&
@@ -120,8 +121,14 @@ export default function WarrantyFilesSection() {
             <CustomerTicketsPartsModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsClearModel />
+            <div className="flex flex-col gap-2 border-t border-black my-5">
+                <div className="text-xl font-black">Destroy or Cut Cord Photo: </div>
+                <div className="text-xl font-bold">
+                    <CustomerTicketDistroy />
+                </div>
+            </div>
             <Button
-                onClick={()=>uploadPhoto()}
+                onClick={() => uploadPhoto()}
                 type="primary"
                 size="large"
                 className="my-10 w-full"

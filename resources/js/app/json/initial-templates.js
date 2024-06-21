@@ -1,8 +1,6 @@
 export function warranty_initial(ticket) {
     return `<p><span style="color: rgb(11, 83, 148);">
-     Hi ${ticket.fname} ${
-        ticket.lname
-    },</span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Good day!
+     Hi,</span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Good day!
      </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">This email is regarding your warranty claim at Curtis International Ltd.
      </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">
      For us to better serve you and start processing your claim, we require the following information to be uploaded in the portal below.</span></p>
@@ -30,9 +28,7 @@ export function warranty_initial(ticket) {
      **Note - We are open from 9 AM - 6 PM EST, Mondays to Fridays. Response time would be 48 to 72 business hours.</em></p><p><br></p><p>
      <span style="color: rgb(11, 83, 148);">Thank you,</span></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Customer Support</strong></p>
      <p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p>________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
-     <p><br></p><p><span style="color: rgb(11, 83, 148);">Salut ${
-         ticket.fname
-     } ${ticket.lname},
+     <p><br></p><p><span style="color: rgb(11, 83, 148);">Salut,
      </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Bonne journée!</span></p><p><br></p>
      <p><span style="color: rgb(11, 83, 148);">Cet e-mail concerne votre demande de garantie auprès de Curtis International Ltd.</span></p><p><br></p>
      <p><span style="color: rgb(11, 83, 148);">Pour que nous puissions mieux vous servir et commencer à traiter votre réclamation, nous avons besoin que les informations suivantes soient téléchargées sur 
@@ -59,11 +55,7 @@ export function warranty_initial(ticket) {
        <p><br></p><p><strong style="color: rgb(11, 83, 148);">Client de service</strong></p><p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p><br></p>'`;
 }
 export function parts_initial(ticket) {
-    return `<p><span style="color: rgb(0, 71, 178);">Hi ${
-        ticket.fname
-    } ${
-        ticket.lname
-    },</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
+    return `<p><span style="color: rgb(0, 71, 178);">Hi,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
     Thank you for reaching out to us. For us to proceed, we would need the following information. Below are your Login Credentials
     </span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Portal Link: https://curtis-css.com</span></p><p>
     <span style="color: rgb(0, 71, 178);">ID:&nbsp;&nbsp; ${
@@ -85,11 +77,7 @@ export function parts_initial(ticket) {
      Thank you.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Customer Support</span></p><p><span style="color: rgb(0, 71, 178);">
      Curtis International Ltd.</span></p><p><br></p><p><u>
      ______________________________________________________________________________________________________________________________________________________</u>
-     </p><p><br></p><p><span style="color: rgb(0, 71, 178);">Bonjour ${
-         ticket.fname
-     } ${
-        ticket.lname
-    },</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Ceci concerne votre demande
+     </p><p><br></p><p><span style="color: rgb(0, 71, 178);">Bonjour,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Ceci concerne votre demande
       de pièces.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Pour que nous puissions mieux vous servir, nous avons besoin que des informations
        vitales soient téléchargées sur le portail où vous pouvez également suivre l'évolution de votre dossier.</span></p><p><span style="color: rgb(0, 71, 178);">
        Cliquez sur le lien et utilisez les informations d'identification ci-dessous ;</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">

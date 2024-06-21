@@ -4,12 +4,23 @@ import store from "@/app/store/store";
 import { get_tickets_by_user_id_thunk } from "./redux/customer-tickets-thunk";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import { router } from "@inertiajs/react";
+import { get_tickets_thunk } from "../../admin/tickets/_redux/tickets-thunk";
 
 export default function AgentTicketsPage({ auth }) {
     const account = auth.user;
 
     useEffect(() => {
-        store.dispatch(get_tickets_by_user_id_thunk(account.id));
+        if (account.agent_type == 'CSR') {
+            if (window.location.hash == "") {
+                store.dispatch(get_tickets_thunk(window.location.search));
+            } else {
+                store.dispatch(
+                    get_tickets_thunk("?search=" + window.location.hash.slice(1))
+                );
+            }
+        }else{
+            store.dispatch(get_tickets_by_user_id_thunk(account.id));
+        }
     }, []);
 
     return (

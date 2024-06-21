@@ -158,7 +158,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name="item_number"
-                        required={true}
+                        required={false}
                         value={form.item_number}
                         label="Item Number"
                         type="text"

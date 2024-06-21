@@ -56,7 +56,6 @@ class DashboardController extends Controller
         $warranty_closed = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 
@@ -261,7 +260,6 @@ class DashboardController extends Controller
 
         $warranty_closed = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 

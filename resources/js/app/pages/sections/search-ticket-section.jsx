@@ -11,11 +11,12 @@ export default function SearchTicketSection() {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
     const { user } = useSelector((state) => state.app);
-
+    const [random,setRandom] =useState(null)
     async function search_ticket(e) {
         e.preventDefault();
         const res = await get_tickets_service(`?search=${search}`);
         setData(res.data);
+        setRandom(Math.random())
     }
 
     function moveToSearch(value) {
@@ -92,6 +93,11 @@ export default function SearchTicketSection() {
                                 <th className="text-left p-3 px-5">Issue</th>
                                 <th className="text-left p-3 px-5">Action</th>
                             </tr>
+                            {data.length == 0 && search !== "" && random !==null && (
+                                <div className="text-red-500 font-black">
+                                    No Record Found.
+                                </div>
+                            )}
                             {data.map((res, index) => (
                                 <tr
                                     key={index}

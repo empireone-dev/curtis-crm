@@ -353,6 +353,7 @@ class TicketController extends Controller
                     }
                 }
                 $query->orWhere('ticket_id', '=', $searchQuery);
+                $query->orWhere('phone', '=', $searchQuery);
             });
         }
 
