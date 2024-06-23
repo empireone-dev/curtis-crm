@@ -23,7 +23,7 @@ export default function TicketFilterSection() {
 
     const [data, setData] = useState({
         call_type: callType ?? null,
-        start: start ?? moment().format("YYYY-MM-DD"),
+        start: start ?? moment().subtract(30, 'days').format("YYYY-MM-DD"),
         end: end ?? moment().format("YYYY-MM-DD"),
         model: model?.split(",") ?? null,
         status: status ?? null,

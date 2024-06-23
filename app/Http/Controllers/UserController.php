@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -87,17 +88,25 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // User::create($request->validate([
-        //     'name' => 'required|unique:user',
-        //     'details' => 'required',
-        //     'start' => 'required',
-        //     'due' => 'required',
-        //     'status' => 'required'
-        // ]));
-        // return response()->json([
-        //     'status' => 'success',
-        //    'data'=>$this->index()->original['data']
-        // ], 200);
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            return response()->json([
+                'status' => 'exist',
+            ], 200);
+        } else {
+            User::create([
+                'email' => $request->email,
+                'emp_id' => $request->emp_id,
+                'name' => $request->name,
+                'agent_type' => $request->agent_type,
+                'role_id' =>  $request->agent_type == null || $request->agent_type == 'null' ? 1 : 5,
+                'password' => Hash::make('Business12!@')
+            ]);
+            $users = User::where('role_id', '=', 5)->with('role')->get();
+            return response()->json([
+                'status' => $users,
+            ], 200);
+        }
     }
 
     public function destroy($id)
