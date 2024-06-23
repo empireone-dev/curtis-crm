@@ -69,10 +69,10 @@ export default function TicketFilterSection() {
             value: "TS-Tech Support",
         },
         {
-            value: "GENERAL INQUIRY",
+            value: "General Inquiry",
         },
         {
-            value: "OTHERS",
+            value: "Others",
         },
     ];
 
