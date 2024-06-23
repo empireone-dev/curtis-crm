@@ -68,6 +68,12 @@ export default function TicketFilterSection() {
         {
             value: "TS-Tech Support",
         },
+        {
+            value: "GENERAL INQUIRY",
+        },
+        {
+            value: "OTHERS",
+        },
     ];
 
     const statusData = [
@@ -116,7 +122,6 @@ export default function TicketFilterSection() {
         {
             value: "AGENT FORM",
         },
-       
     ];
 
     const newProducts = products?.slice(2).map((res) => ({

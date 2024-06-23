@@ -68,7 +68,6 @@ Route::get('/logout', function () {
 })->name('tickets.logout');
 
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
-
     Route::prefix('tickets')->group(function () {
         Route::get('/', function () {
             return Inertia::render('admin/tickets/page');

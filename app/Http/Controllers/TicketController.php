@@ -73,7 +73,7 @@ class TicketController extends Controller
             'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
         ]);
-        
+
         return response()->json([
             'result' => 'success'
         ], 200);
@@ -693,8 +693,10 @@ class TicketController extends Controller
             $validation = 'PARTS VALIDATION';
         } else if ($request->call_type == 'CF-Warranty Claim') {
             $validation = 'WARRANTY VALIDATION';
-        } else {
+        } else if ($request->call_type == 'TS-Tech Support') {
             $validation = 'TECH VALIDATION';
+        } else {
+            $validation = $request->call_type;
         }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
@@ -737,14 +739,18 @@ class TicketController extends Controller
                 $subject = 'PS' . $id;
             } else if ($request->call_type == 'CF-Warranty Claim') {
                 $subject = 'CF' . $id;
-            } else {
+            } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
+            } else if ($request->call_type == 'General Inquiry') {
+                $subject = 'GI' . $id;
+            } else {
+                $subject = 'ETC' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();
-            $tt = Ticket::where('id', $data->id)->first();
             $t->update([
-                'ticket_id' => $subject
+                'ticket_id' => $subject,
+                'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
             ]);
 
             AgentNote::create([
@@ -809,11 +815,16 @@ class TicketController extends Controller
                 $subject = 'CF' . $id;
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
+            } else if ($request->call_type == 'General Inquiry') {
+                $subject = 'GI' . $id;
+            } else {
+                $subject = 'ETC' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();
             $t->update([
-                'ticket_id' => $subject
+                'ticket_id' => $subject,
+                'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
             ]);
 
 
