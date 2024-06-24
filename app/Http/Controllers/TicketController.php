@@ -343,11 +343,11 @@ class TicketController extends Controller
                     if ($searchQuery == 'WARRANTY VALIDATION') {
                         $query->orWhere([[$column, '=',  $searchQuery], ['isUploading', '=', 'true']]);
                     } else if ($searchQuery == 'OPEN WARRANTY') {
-                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['isUploading', '=', 'false'], ['status', '=', 'WARRANTY VALIDATION']]);
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
                     } else if ($searchQuery == 'OPEN PARTS') {
-                        $query->orWhere([['call_type', '=', 'Parts'], ['isUploading', '=', 'false'], ['status', '=', 'PARTS VALIDATION']]);
+                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
                     } else if ($searchQuery == 'OPEN TECH') {
-                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['isUploading', '=', 'false'], ['status', '=', 'TECH VALIDATION']]);
+                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
                     } else {
                         $query->orWhere([[$column, '=',  $searchQuery]]);
                     }
