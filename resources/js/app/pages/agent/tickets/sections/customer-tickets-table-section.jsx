@@ -10,7 +10,7 @@ import { split } from "postcss/lib/list";
 export default function CustomerTicketsTableSection() {
     const { tickets } = useSelector((state) => state.tickets);
     
-
+console.log('ticketssss',tickets)
     const search = window.location.search.split("=")[1];
     let ticketData = [];
     

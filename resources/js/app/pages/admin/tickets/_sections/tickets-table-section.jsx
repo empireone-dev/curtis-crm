@@ -210,7 +210,7 @@ export default function TicketTableSection() {
                             {(record.status == "PARTS VALIDATION" ||
                                 record.status == "WARRANTY VALIDATION" ||
                                 record.status == "TECH VALIDATION") &&
-                            record.isUploading == "false"
+                            record.status == null
                                 ? "OPEN"
                                 : record.status}
                         </Tag>

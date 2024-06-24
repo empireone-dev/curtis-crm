@@ -9,7 +9,7 @@ import {
     get_upload_picture_videos,
     upload_picture_videos,
 } from "@/app/services/files-service";
-import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
+import { setTicket,ticketsSlice } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 
 export function get_tickets_by_user_id_thunk(id) {
     return async function (dispatch, getState) {
