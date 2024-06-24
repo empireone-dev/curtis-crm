@@ -685,18 +685,22 @@ class TicketController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $account = [];
-        $newData = [];
 
 
         $validation = '';
-        if ($request->call_type == 'Parts') {
-            $validation = 'PARTS VALIDATION';
-        } else if ($request->call_type == 'CF-Warranty Claim') {
-            $validation = 'WARRANTY VALIDATION';
-        } else if ($request->call_type == 'TS-Tech Support') {
-            $validation = 'TECH VALIDATION';
-        } else {
-            $validation = $request->call_type;
+        switch ($request->call_type) {
+            case 'Parts':
+                $validation = 'PARTS VALIDATION';
+                break;
+            case 'CF-Warranty Claim':
+                $validation = 'WARRANTY VALIDATION';
+                break;
+            case 'TS-Tech Support':
+                $validation = 'TECH VALIDATION';
+                break;
+            default:
+                $validation = $request->call_type;
+                break;
         }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
@@ -750,7 +754,7 @@ class TicketController extends Controller
             $t = Ticket::where('id', $data->id)->first();
             $t->update([
                 'ticket_id' => $subject,
-                'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
+                // 'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
             ]);
 
             AgentNote::create([

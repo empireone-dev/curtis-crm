@@ -35,7 +35,7 @@ export default function TicketCreateFormSection() {
 
     const warranty = warranty_initial(form);
     const parts = parts_initial(form);
-
+console.log('form',form)
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
