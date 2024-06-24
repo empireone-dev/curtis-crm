@@ -341,7 +341,7 @@ class TicketController extends Controller
             $query->where(function ($query) use ($columns, $searchQuery) {
                 foreach ($columns as $column) {
                     if ($searchQuery == 'WARRANTY VALIDATION') {
-                        $query->orWhere([[$column, '=',  $searchQuery], ['isUploading', '=', 'true']]);
+                        $query->orWhere($column, '=',  $searchQuery);
                     } else if ($searchQuery == 'OPEN WARRANTY') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
                     } else if ($searchQuery == 'OPEN PARTS') {
@@ -629,7 +629,7 @@ class TicketController extends Controller
             $query->where(function ($query) use ($columns, $searchQuery) {
                 foreach ($columns as $column) {
                     if ($searchQuery == 'WARRANTY VALIDATION') {
-                        $query->orWhere([[$column, '=', $searchQuery], ['isUploading', '=', 'true']]);
+                        $query->orWhere($column, '=', $searchQuery);
                     } elseif ($searchQuery == 'OPEN WARRANTY') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
                     } elseif ($searchQuery == 'OPEN PARTS') {
