@@ -622,25 +622,26 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::where('user_id', '=', $id)->query();
+        $query = Ticket::where('user_id', $id);
+
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
                 foreach ($columns as $column) {
                     if ($searchQuery == 'WARRANTY VALIDATION') {
-                        $query->orWhere([[$column, '=',  $searchQuery], ['isUploading', '=', 'true']]);
-                    } else if ($searchQuery == 'OPEN WARRANTY') {
+                        $query->orWhere([[$column, '=', $searchQuery], ['isUploading', '=', 'true']]);
+                    } elseif ($searchQuery == 'OPEN WARRANTY') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
-                    } else if ($searchQuery == 'OPEN PARTS') {
+                    } elseif ($searchQuery == 'OPEN PARTS') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
-                    } else if ($searchQuery == 'OPEN TECH') {
+                    } elseif ($searchQuery == 'OPEN TECH') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
                     } else {
-                        $query->orWhere([[$column, '=',  $searchQuery]]);
+                        $query->orWhere($column, 'like', '%' . $searchQuery . '%');
                     }
                 }
-                $query->orWhere('ticket_id', '=', $searchQuery);
-                $query->orWhere('phone', '=', $searchQuery);
+                $query->orWhere('ticket_id', $searchQuery)
+                    ->orWhere('phone', $searchQuery);
             });
         }
 
@@ -651,22 +652,21 @@ class TicketController extends Controller
         }
 
         // Add item_number condition if provided
-        if ($request->model && ($request->model != 'null' && $request->model != 'undefined')) {
+        if ($request->model && !in_array($request->model, ['null', 'undefined'])) {
             $models = explode(',', $request->model);
             $query->whereIn('item_number', $models);
         }
-        if ($request->call_type  && ($request->call_type != 'null' && $request->call_type != 'undefined')) {
-            $query->where('call_type', '=', $request->call_type);
-        }
-        if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
-            $query->where('status', '=', $request->status);
+
+        if ($request->call_type && !in_array($request->call_type, ['null', 'undefined'])) {
+            $query->where('call_type', $request->call_type);
         }
 
-        if ($request->status == 'WEB FORM') {
-            $query->orWhere('created_from', '=', $request->status);
+        if ($request->status && !in_array($request->status, ['null', 'undefined'])) {
+            $query->where('status', $request->status);
         }
-        if ($request->status == 'AGENT FORM') {
-            $query->orWhere('created_from', '=', $request->status);
+
+        if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
+            $query->orWhere('created_from', $request->status);
         }
 
         $query->orderBy('created_at', 'desc');
