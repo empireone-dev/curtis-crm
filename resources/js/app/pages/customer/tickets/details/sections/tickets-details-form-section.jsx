@@ -20,7 +20,7 @@ import { upload_photo_status } from "@/app/services/files-service";
 export default function TicketsDetailsFormSection() {
     const { url } = usePage();
     const dispatch = useDispatch();
-    const [isTranslate,setIsTranslate] =useState(false)
+    const [isTranslate,setIsTranslate] =useState(true)
     const { ticket, filesData } = useSelector(
         (state) => state.customer_tickets
     );

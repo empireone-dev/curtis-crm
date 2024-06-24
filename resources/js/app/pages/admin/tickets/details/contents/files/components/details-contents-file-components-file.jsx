@@ -101,7 +101,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         const ticket_id = url
             .split("/")
             [url.split("/").length - 2].split("#")[0];
-        fd.append("ticket_id", ticket_id);
+        fd.append("ticket_id", ticket_id == 'tickets'?window.location.pathname.split('/')[3]:ticket_id);
         fd.append("user_id", user.id);
         fd.append("type", type);
 
