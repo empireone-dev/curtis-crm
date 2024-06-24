@@ -21,10 +21,17 @@ const CustomerTicketsReceiptModel = ({ isTranslate }) => {
             className="relative flex flex-col container  w-full h-1/2"
         >
             <section className="h-full w-full flex flex-col">
-                <div className="text-xl font-black">
-                    Clear copy of your receipt showing the date of purchase,
-                    item description and amount
-                </div>
+                {!isTranslate ? (
+                    <div className="text-xl font-black">
+                        Copie claire de votre reçu indiquant la date d'achat, la
+                        description de l'article et le montant.
+                    </div>
+                ) : (
+                    <div className="text-xl font-black">
+                        Clear copy of your receipt showing the date of purchase,
+                        item description and amount
+                    </div>
+                )}
 
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
                 <DetailsFileUploadComponent
@@ -32,7 +39,6 @@ const CustomerTicketsReceiptModel = ({ isTranslate }) => {
                     files={filesData?.receipt_model ?? []}
                 />
             </section>
-
         </article>
     );
 };

@@ -20,7 +20,7 @@ export default function ContentNotesCommentSection() {
                                        <p className="inline-flex items-center mr-3 text-sm text-gray-900font-semibold"><img
                                             className="mr-2 w-6 h-6 rounded-full"
                                             src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                            alt="Michael Gough" />{res.user.name}</p>
+                                            alt="Michael Gough" />{res?.user?.emp_id??''}</p>
                                         <p className="text-sm text-gray-600 ">{moment(res.created_at).format('LLL')}
 
                                       </p>

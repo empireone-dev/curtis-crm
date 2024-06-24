@@ -23,11 +23,11 @@ const CustomerTicketsSerialModel = (isTranslate) => {
                 .
                 {!isTranslate ? (
                     <div className="text-xl font-black">
-                        Clear Picture of the Serial#
+                        Image claire du numéro de série
                     </div>
                 ) : (
                     <div className="text-xl font-black">
-                        Image claire du numéro de série
+                        Clear Picture of the Serial#
                     </div>
                 )}
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>
