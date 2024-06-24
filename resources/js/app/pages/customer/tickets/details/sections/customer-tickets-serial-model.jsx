@@ -4,7 +4,7 @@ import { delete_upload_ticket_files_thunk } from "../../redux/customer-tickets-t
 import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "@/app/pages/admin/tickets/details/contents/files/components/details-contents-file-components-file";
 
-const CustomerTicketsSerialModel = (isTranslate) => {
+const CustomerTicketsSerialModel = ({isTranslate}) => {
     const { filesData } = useSelector((state) => state.customer_tickets);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -20,7 +20,7 @@ const CustomerTicketsSerialModel = (isTranslate) => {
             className="relative flex flex-col container  w-full h-1/2"
         >
             <section className="h-full w-full flex flex-col">
-                .
+                
                 {!isTranslate ? (
                     <div className="text-xl font-black">
                         Image claire du numéro de série
