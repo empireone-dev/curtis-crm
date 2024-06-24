@@ -828,7 +828,7 @@ class TicketController extends Controller
             $t = Ticket::where('id', $data->id)->first();
             $t->update([
                 'ticket_id' => $subject,
-                'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
+                // 'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
             ]);
 
 
