@@ -201,15 +201,16 @@ export default function TicketTableSection() {
                         ? "red"
                         : record.status == "PARTS VALIDATION" ||
                           record.status == "WARRANTY VALIDATION" ||
-                          record.status == "TECH VALIDATION"
+                          record.status == "TECH VALIDATION"||
+                          record.status == null
                         ? "orange"
                         : "green";
                 return (
                     <>
                         <Tag color={color} key={i}>
-                            {(record.status == "PARTS VALIDATION" ||
-                                record.status == "WARRANTY VALIDATION" ||
-                                record.status == "TECH VALIDATION") &&
+                            {record.status == "PARTS VALIDATION" ||
+                            record.status == "WARRANTY VALIDATION" ||
+                            record.status == "TECH VALIDATION" ||
                             record.status == null
                                 ? "OPEN"
                                 : record.status}
