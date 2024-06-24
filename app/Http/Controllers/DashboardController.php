@@ -42,12 +42,10 @@ class DashboardController extends Controller
         $parts_validation = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
 
         $warranty_process_ticket = Ticket::where([
-            ['isUploading', '=', 'true'],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'PROCESSED TICKET'],
             ['user_id', '=', $userid],
@@ -62,29 +60,25 @@ class DashboardController extends Controller
         $parts_closed = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 
         $parts_process_ticket = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'PARTS PROCESSED TICKET']
         ])->count();
-        
+
 
         $tech_closed = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'TS-Tech Support'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 
         $resource = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'RESOURCE'],
         ])->count();
 
@@ -92,14 +86,12 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REFUND'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $replacement_parts = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
             ['status', '=', 'REPLACEMENT PARTS'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
@@ -107,27 +99,23 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REPLACEMENT'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
         $internals = Ticket::where([
             ['user_id', '=', $userid],
             ['status', '=', 'INTERNALS'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $repair = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REPAIR'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $callback = Ticket::where([
             ['user_id', '=', $userid],
             ['status', '=', 'CALLBACK'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
@@ -154,7 +142,7 @@ class DashboardController extends Controller
             ['status', '=', 'CA WAREHOUSE']
         ])->count();
 
-       
+
         $check_availability = Ticket::where([
             ['status', '=', 'INTERNALS'],
             ['user_id', '=', $userid],
@@ -165,17 +153,16 @@ class DashboardController extends Controller
         ])->count();
 
         $web_form = Ticket::where([
-            ['isUploading', '=', 'true'],
             ['created_from', '=', 'WEB FORM'],
             ['user_id', '=', $userid],
-            ])->count();
+        ])->count();
 
-      
+
 
         return response()->json([
-            'open_warranty'=>$open_warranty,
-            'open_parts'=>$open_parts,
-            'open_tech'=>$open_tech,
+            'open_warranty' => $open_warranty,
+            'open_parts' => $open_parts,
+            'open_tech' => $open_tech,
             'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,
@@ -195,9 +182,9 @@ class DashboardController extends Controller
             'tech_closed' => $tech_closed,
             'check_availability' => $check_availability,
             'updates_curtis' => $updates_curtis,
-            'web_form'=>$web_form,
-            'warranty_process_ticket'=>$warranty_process_ticket,
-            'parts_process_ticket'=>$parts_process_ticket,
+            'web_form' => $web_form,
+            'warranty_process_ticket' => $warranty_process_ticket,
+            'parts_process_ticket' => $parts_process_ticket,
         ], 200);
     }
     public function asc_dashboard($id)
@@ -248,13 +235,11 @@ class DashboardController extends Controller
 
         $parts_validation = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
-       
+
         $warranty_validation = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'WARRANTY VALIDATION']
         ])->count();
 
@@ -265,50 +250,42 @@ class DashboardController extends Controller
 
         $parts = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
 
         $resource = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'RESOURCE'],
         ])->count();
 
         $refund = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REFUND'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $replacement_parts = Ticket::where([
             ['call_type', '=', 'Parts'],
             ['status', '=', 'REPLACEMENT PARTS'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
         $replacement = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REPLACEMENT'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
         $internals = Ticket::where([
             ['status', '=', 'INTERNALS'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $repair = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'REPAIR'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
         $callback = Ticket::where([
             ['status', '=', 'CALLBACK'],
-            ['isUploading', '=', 'true'],
         ])->count();
 
 
@@ -326,22 +303,19 @@ class DashboardController extends Controller
         ])->count();
 
         $web_form = Ticket::where([
-            ['isUploading', '=', 'true'],
             ['created_from', '=', 'WEB FORM']
-            ])->count();
+        ])->count();
 
         $warranty_process_ticket = Ticket::where([
-            ['isUploading', '=', 'true'],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'PROCESSED TICKET'],
         ])->count();
 
         $parts_process_ticket = Ticket::where([
-            ['isUploading', '=', 'true'],
             ['call_type', '=', 'CF-Warranty Claim'],
             ['status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
-        
+
         $warehouse_ca = Ticket::where([
             ['country', '=', 'CA'],
             ['status', '=', 'CA WAREHOUSE']
@@ -349,13 +323,11 @@ class DashboardController extends Controller
 
         $tech_closed = Ticket::where([
             ['call_type', '=', 'TS-Tech Support'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 
         $parts_closed = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'true'],
             ['status', '=', 'CLOSED']
         ])->count();
 
@@ -363,9 +335,9 @@ class DashboardController extends Controller
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
 
         return response()->json([
-            'open_warranty'=>$open_warranty,
-            'open_parts'=>$open_parts,
-            'open_tech'=>$open_tech,
+            'open_warranty' => $open_warranty,
+            'open_parts' => $open_parts,
+            'open_tech' => $open_tech,
             'warranty_validation' => $warranty_validation,
             'parts_validation' => $parts_validation,
             'resource' => $resource,
@@ -386,8 +358,8 @@ class DashboardController extends Controller
             'check_availability' => $check_availability,
             'updates_curtis' => $updates_curtis,
             'web_form' => $web_form,
-            'warranty_process_ticket'=>$warranty_process_ticket,
-            'parts_process_ticket'=>$parts_process_ticket,
+            'warranty_process_ticket' => $warranty_process_ticket,
+            'parts_process_ticket' => $parts_process_ticket,
         ], 200);
     }
 
@@ -395,10 +367,10 @@ class DashboardController extends Controller
     {
         $pending = Ticket::where([['user_id', '=', $userid], ['isUploading', '=', 'false']])->count();
         $closed = Ticket::where([['user_id', '=', $userid], ['status', '=', 'CLOSED']])->count();
-        $process = Ticket::where([['user_id', '=', $userid], ['isUploading', '=', 'true'], ['status', '<>', 'PARTS VALIDATION']])
-            ->Where([['user_id', '=', $userid], ['isUploading', '=', 'true'], ['status', '<>', 'WARRANTY VALIDATION']])
-            ->Where([['user_id', '=', $userid], ['isUploading', '=', 'true'], ['status', '<>', 'TECH VALIDATION']])
-            ->Where([['user_id', '=', $userid], ['isUploading', '=', 'true'], ['status', '<>', 'CLOSED']])->count();
+        $process = Ticket::where([['user_id', '=', $userid], ['status', '<>', 'PARTS VALIDATION']])
+            ->Where([['user_id', '=', $userid], ['status', '<>', 'WARRANTY VALIDATION']])
+            ->Where([['user_id', '=', $userid], ['status', '<>', 'TECH VALIDATION']])
+            ->Where([['user_id', '=', $userid], ['status', '<>', 'CLOSED']])->count();
 
         return response()->json([
             'pending' => $pending,
