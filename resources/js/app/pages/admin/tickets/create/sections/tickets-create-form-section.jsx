@@ -35,7 +35,7 @@ export default function TicketCreateFormSection() {
 
     const warranty = warranty_initial(form);
     const parts = parts_initial(form);
-console.log('form',form)
+    console.log("form", form);
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
@@ -103,7 +103,7 @@ console.log('form',form)
                                 onChange={formHandler}
                                 name="isHasEmail"
                                 required={false}
-                                value={form.isHasEmail ?? 'true'}
+                                value={form.isHasEmail ?? "true"}
                                 label="Has Email?"
                                 errorMessage=""
                                 data={[
@@ -120,7 +120,7 @@ console.log('form',form)
                         </div>
 
                         <div className="basis-full">
-                            {form.isHasEmail??'true' == "true" ? (
+                            {form.isHasEmail ?? "true" == "true" ? (
                                 <Input
                                     required={true}
                                     onChange={formHandler}
@@ -165,7 +165,7 @@ console.log('form',form)
                         errorMessage="Item Number is required"
                     />
                 </div>
-                
+
                 <div className="md:w-1/2 px-3">
                     <Input
                         onChange={formHandler}
@@ -347,7 +347,7 @@ console.log('form',form)
                     </div>
                     <div className="basis-1/4 flex items-center justify-center">
                         <div className="flex items-center justify-center">
-                            {form.isHasEmail == "true" && (
+                            {(form.isHasEmail ?? "true") == "true" && (
                                 <>
                                     <input
                                         id="checked-checkbox"
