@@ -57,7 +57,7 @@ class TicketController extends Controller
     }
     public function send_parts_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxkZZRxz5lQvMn_gs4-cYLeMvWwiR1OZQBKYOI_WU1Z38UVPfEqeOPVFdsO06F_PtO-/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycby4GpC3Wp4VE3JSTsM6e60ymzb1E44SJUnwND_1Ra3vXzjWxbTZbgtvRu6n54Sj5Obn/exec';
         $params = [
             'recipient' => $recipient,
             'subject' => $subject,
