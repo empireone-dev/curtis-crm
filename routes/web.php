@@ -73,7 +73,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/page');
         })->name('tickets');
 
-        Route::get('/details/{ticket_id}/files', function () {
+        Route::get('/details/{ticketid}/files', function () {
             return Inertia::render('admin/tickets/details/contents/files/page');
         })->name('admin.tickets.details.files');
 
