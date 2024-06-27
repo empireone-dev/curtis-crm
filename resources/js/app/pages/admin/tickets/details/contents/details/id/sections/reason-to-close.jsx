@@ -36,15 +36,24 @@ export default function ReasonToClose({ data }) {
     function formHandler(value) {
         setReason(value);
     }
-    
+    console.log('data.name',data.remarks)
+    function click_close(e) {
+        e.preventDefault()
+        if ((data.fname == null || data.fname == '' || data.fname == undefined) || (data.phone == null || data.phone == '' || data.phone == undefined) || (data.remarks == null || data.remarks == ''|| data.remarks == undefined)) {
+            alert('Name, Phone Number & Remarks must be required!')
+        }else{
+            setOpen(true)
+        }
+        //
+    }
     return (
         <div>
             <button
                 type="button"
-                onClick={() => setOpen(true)}
+                onClick={(e) =>click_close(e)}
                 className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600"
             >
-                CLOSED
+                CLOSE
             </button>
             <Modal open={open} setOpen={setOpen} title="Close Ticket">
                 <form onSubmit={close_ticket}>

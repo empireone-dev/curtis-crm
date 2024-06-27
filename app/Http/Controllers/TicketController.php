@@ -22,6 +22,20 @@ use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
+
+
+    public function resend_email_templete(Request $request)
+    {
+        if ($request->call_type == 'CF-Warranty Claim') {
+            $this->send_warranty_email($request->recipient, $request->subject, $request->body);
+        } else if ($request->call_type == 'Parts') {
+            $this->send_parts_email($request->recipient, $request->subject, $request->body);
+        }
+        return response()->json([
+            'result' => 'success'
+        ], 200);
+    }
+
     public function send_warranty_email($recipient, $subject, $body)
     {
         $scriptUrl = 'https://script.google.com/macros/s/AKfycbygsAn0dDZyLFcs1wwAC4dIyQD8K8dgMrPyL5sdgwYV7G9YaG8SaJSSwVgD5g_SPdUC/exec';
@@ -909,6 +923,172 @@ class TicketController extends Controller
 
                 // $emailController = App::make(EmailTemplateController::class);
                 // $emailController->send_mail_create_ticket_form($newData);
+                if ($request->call_type == 'CF-Warranty Claim') {
+                    $this->send_warranty_email($request->email, $subject, $request->body);
+                } else if ($request->call_type == 'Parts') {
+                    $this->send_parts_email($request->email, $subject, $request->body);
+                }
+            }
+
+            return response()->json([
+                'result' => $data,
+                'ticket_id' => $subject
+            ], 200);
+        }
+    }
+
+
+    public function create_ticket_close(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        $account = [];
+
+
+        $validation = '';
+        switch ($request->call_type) {
+            case 'Parts':
+                $validation = 'PARTS VALIDATION';
+                break;
+            case 'CF-Warranty Claim':
+                $validation = 'WARRANTY VALIDATION';
+                break;
+            case 'TS-Tech Support':
+                $validation = 'TECH VALIDATION';
+                break;
+            default:
+                $validation = $request->call_type;
+                break;
+        }
+
+        if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
+            $account = User::create([
+                'name' => $request->fname . ' ' . $request->lname,
+                'email' => $request->email,
+                'password' => Hash::make('12345678'),
+                'role_id' => '2',
+                'address' => $request->address,
+                'city' => $request->city,
+                'zip_code' => $request->zip_code,
+                'country' => $request->country,
+            ]);
+
+            $data = Ticket::create(array_merge($request->all(), [
+                'user_id' => $this->queueing($request->call_type),
+                'status' => 'CLOSED',
+                'reason_to_close' => $request->reason,
+                'cases_status' => 'handled',
+            ]));
+
+            Activity::create([
+                'user_id' => $request->user['id'],
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
+
+            $subject = '';
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else if ($length == 3) {
+                $id = date("dmy") . '000' . $data->id;
+            }
+
+            if ($request->call_type == 'Parts') {
+                $subject = 'PS' . $id;
+            } else if ($request->call_type == 'CF-Warranty Claim') {
+                $subject = 'CF' . $id;
+            } else if ($request->call_type == 'TS-Tech Support') {
+                $subject = 'TS' . $id;
+            } else if ($request->call_type == 'General Inquiry') {
+                $subject = 'GI' . $id;
+            } else {
+                $subject = 'ETC' . $id;
+            }
+
+            $t = Ticket::where('id', $data->id)->first();
+            $t->update([
+                'ticket_id' => $subject,
+            ]);
+
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
+
+                if ($request->call_type == 'CF-Warranty Claim') {
+                    $this->send_warranty_email($request->email, $subject, $request->body);
+                } else if ($request->call_type == 'Parts') {
+                    $this->send_parts_email($request->email, $subject, $request->body);
+                }
+            }
+
+            return response()->json([
+                'result' => $data,
+                array_merge($request->all(), [
+                    'user_id' => $account->id,
+                ]),
+                'ticket_id' => $subject
+            ], 200);
+        } else {
+            $data = Ticket::create(array_merge($request->all(), [
+                'user_id' => $this->queueing($request->call_type),
+                'status' => 'CLOSED',
+                'reason_to_close' => $request->reason,
+                'cases_status' => 'handled'
+            ]));
+
+            Activity::create([
+                'user_id' => $request->user['id'] ?? 0,
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
+
+
+            $subject = '';
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else if ($length == 3) {
+                $id = date("dmy") . '000' . $data->id;
+            }
+
+            if ($request->call_type == 'Parts') {
+                $subject = 'PS' . $id;
+            } else if ($request->call_type == 'CF-Warranty Claim') {
+                $subject = 'CF' . $id;
+            } else if ($request->call_type == 'TS-Tech Support') {
+                $subject = 'TS' . $id;
+            } else if ($request->call_type == 'General Inquiry') {
+                $subject = 'GI' . $id;
+            } else {
+                $subject = 'ETC' . $id;
+            }
+
+            $t = Ticket::where('id', $data->id)->first();
+            $t->update([
+                'ticket_id' => $subject,
+                // 'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
+            ]);
+
+
+            $account = User::where('email', '=', $t->email)->first();
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+
+            if ($request->isSendEmail == 'true' || $request->isSendEmail == true  || $request->email && $request->isSendEmail) {
                 if ($request->call_type == 'CF-Warranty Claim') {
                     $this->send_warranty_email($request->email, $subject, $request->body);
                 } else if ($request->call_type == 'Parts') {

@@ -95,6 +95,8 @@ Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_c
 Route::post('create_verify_tickets', [TicketController::class, 'create_verify_tickets']);
 Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
 Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
+Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
+Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
 
 
 

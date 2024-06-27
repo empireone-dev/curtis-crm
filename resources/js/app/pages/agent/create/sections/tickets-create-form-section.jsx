@@ -13,6 +13,7 @@ import { tickets_create_thunk } from '../redux/tickets-create-thunk'
 import { router } from '@inertiajs/react'
 import Loading from '@/app/layouts/components/loading'
 import Autocomplete from '@/app/layouts/components/autocomplete'
+import TicketCloseSection from '@/app/pages/admin/tickets/create/sections/ticket-close-section'
 
 export default function TicketCreateFormSection() {
     
@@ -20,6 +21,7 @@ export default function TicketCreateFormSection() {
     const { form } = useSelector((state) => state.tickets_create)
     const { common_issues } = useSelector((state) => state.common_issues)
     const [loading, setLoading] = useState(false)
+    const { user } = useSelector((state) => state.app);
 
     function formHandler(value, name) {
 
@@ -40,18 +42,22 @@ export default function TicketCreateFormSection() {
             ...form,
             status: null,
             created_from:'AGENT FORM',
-            email: form.isHasEmail == 'true' || form.isHasEmail == true ? form.email : null
+            email: form?.isHasEmail == 'true' || form?.isHasEmail == true ? form?.email : null
         }))
         const response = await store.dispatch(tickets_create_thunk())
         setLoading(false)
-        router.visit('/administrator/tickets?ticket_id=' + response.id)
+        if (user.role_id == 1) {
+            router.visit(`/administrator/tickets?search=` + response?.ticket_id);
+        }else{
+            router.visit(`/agent/tickets?search=` + response?.ticket_id);
+        }
     }
 
     const findCountry = (countryName) => {
         return countries.find(country => country.value === countryName);
     };
 
-    const { regions } = findCountry(form.country ?? 'CA');
+    const { regions } = findCountry(form?.country ?? 'CA');
 
     return (
         <form onSubmit={submitFormTicket} className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3">
@@ -61,10 +67,10 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
-                        required={false}
+                        required={true}
                         onChange={formHandler}
                         name='fname'
-                        value={form.fname}
+                        value={form?.fname}
                         label='First Name'
                         type='text'
                         errorMessage='First Name is required'
@@ -75,7 +81,7 @@ export default function TicketCreateFormSection() {
                         required={false}
                         onChange={formHandler}
                         name='lname'
-                        value={form.lname}
+                        value={form?.lname}
                         label='Last Name'
                         type='text'
                         errorMessage='Last Name is required'
@@ -90,7 +96,7 @@ export default function TicketCreateFormSection() {
                                 onChange={formHandler}
                                 name='isHasEmail'
                                 required={true}
-                                value={form.isHasEmail ?? true}
+                                value={form?.isHasEmail ?? true}
                                 label='Has Email?'
                                 errorMessage=''
                                 data={[
@@ -108,11 +114,11 @@ export default function TicketCreateFormSection() {
 
                         <div className='basis-full'>
                             {
-                                form.isHasEmail == 'true' ? <Input
+                                form?.isHasEmail == 'true' ? <Input
                                     required={true}
                                     onChange={formHandler}
                                     name='email'
-                                    value={form.email}
+                                    value={form?.email}
                                     label='Email'
                                     type='email'
                                     errorMessage='Email is required'
@@ -127,8 +133,8 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name='phone'
-                        required={false}
-                        value={form.phone}
+                        required={true}
+                        value={form?.phone}
                         label='Phone Number'
                         type='phone'
                         errorMessage='Phone Number is required'
@@ -146,7 +152,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='item_number'
                         required={false}
-                        value={form.item_number}
+                        value={form?.item_number}
                         label='Item Number'
                         type='text'
                         errorMessage='Item Number is required'
@@ -157,7 +163,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='unit'
                         required={false}
-                        value={form.unit}
+                        value={form?.unit}
                         label='Item Unit'
                         type='text'
                         errorMessage='Item Unit is required'
@@ -171,7 +177,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='brand'
                         required={false}
-                        value={form.brand}
+                        value={form?.brand}
                         label='Brand'
                         type='text'
                         errorMessage='Brand is required'
@@ -182,7 +188,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='class'
                         required={false}
-                        value={form.class}
+                        value={form?.class}
                         label='Item Class'
                         type='text'
                         errorMessage='Item Class is required'
@@ -195,7 +201,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='serial_number'
                         required={false}
-                        value={form.serial_number}
+                        value={form?.serial_number}
                         label='Serial Number'
                         type='text'
                         errorMessage='Serial Number is required'
@@ -207,8 +213,8 @@ export default function TicketCreateFormSection() {
                     <Select
                         onChange={formHandler}
                         name='call_type'
-                        required={true}
-                        value={form.call_type}
+                        required={false}
+                        value={form?.call_type}
                         label='Call Type'
                         errorMessage='Call Type is required'
                         data={call_type}
@@ -219,7 +225,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='purchase_date'
                         // required={true}
-                        value={form.purchase_date}
+                        value={form?.purchase_date}
                         label='Purchase Date'
                         type='date'
                         errorMessage='Purchase Date is required'
@@ -233,7 +239,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='zip_code'
                         required={false}
-                        value={form.zip_code}
+                        value={form?.zip_code}
                         label='Zip Code / Postal Code'
                         type='text'
                         errorMessage='Zip Code is required'
@@ -245,7 +251,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='country'
                         required={false}
-                        value={form.country}
+                        value={form?.country}
                         label='Country'
                         errorMessage='Country is required'
                         data={countries.map(res => ({ name: res.name, value: res.value }))}
@@ -256,7 +262,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='state'
                         required={false}
-                        value={form.state}
+                        value={form?.state}
                         label='State'
                         errorMessage='State is required'
                         data={regions}
@@ -267,7 +273,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name='city'
                         required={false}
-                        value={form.city}
+                        value={form?.city}
                         label='City'
                         type='text'
                         errorMessage='City is required'
@@ -279,8 +285,8 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name='address'
-                        // required={true}
-                        value={form.address}
+                        required={false}
+                        value={form?.address}
                         label='Address'
                         type='text'
                         // errorMessage='Address is required'
@@ -288,7 +294,7 @@ export default function TicketCreateFormSection() {
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
                     {
-                        form.call_type == 'Parts' ?
+                        form?.call_type == 'Parts' ?
                             <Autocomplete
                             defaultValue={"[]"}
                                 onChange={formHandler}
@@ -323,7 +329,7 @@ export default function TicketCreateFormSection() {
                             required={true}
                             onChange={formHandler}
                             name='remarks'
-                            value={form.remarks}
+                            value={form?.remarks}
                             label='Remarks'
                             type='text'
                             errorMessage='Remarks is required'
@@ -332,9 +338,9 @@ export default function TicketCreateFormSection() {
                     <div className='basis-1/4 flex items-center justify-center'>
                         <div className="flex items-center justify-center">
                             {
-                                form.isHasEmail == 'true' && <>
+                                form?.isHasEmail == 'true' && <>
                                     <input id="checked-checkbox"
-                                        checked={form.isSendEmail}
+                                        checked={form?.isSendEmail}
                                         onChange={(e) => formHandler(e.target.checked, 'isSendEmail')}
                                         type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
                                     <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 ">Send Initial Email</label>
@@ -352,9 +358,11 @@ export default function TicketCreateFormSection() {
                         </div> : 'Open'}
 
                     </button>
-                    <button className='p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600'>
+                    {/* <button className='p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600'>
                         Closed
-                    </button>
+                    </button> */}
+                    
+                    <TicketCloseSection data={form} />
                 </div>
             </div>
         </form>

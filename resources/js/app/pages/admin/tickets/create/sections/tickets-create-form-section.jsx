@@ -14,6 +14,8 @@ import { router } from "@inertiajs/react";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
 import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import ReasonToClose from "../../details/contents/details/id/sections/reason-to-close";
+import TicketCloseSection from "./ticket-close-section";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
@@ -54,14 +56,19 @@ export default function TicketCreateFormSection() {
         );
         const response = await store.dispatch(tickets_create_thunk());
         setLoading(false);
-        router.visit("/administrator/tickets?search=" + response?.ticket_id);
+        if (user.role_id == 1) {
+            router.visit(
+                `/administrator/tickets?search=` + response?.ticket_id
+            );
+        } else {
+            router.visit(`/agent/tickets?search=` + response?.ticket_id);
+        }
     }
-
     const findCountry = (countryName) => {
         return countries.find((country) => country.value === countryName);
     };
 
-    const { regions } = findCountry(form.country ?? "CA");
+    const { regions } = findCountry(form.country ?? "");
 
     return (
         <form
@@ -74,7 +81,7 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3">
                     <Input
-                        required={false}
+                        required={true}
                         onChange={formHandler}
                         name="fname"
                         value={form.fname}
@@ -120,9 +127,9 @@ export default function TicketCreateFormSection() {
                         </div>
 
                         <div className="basis-full">
-                            {form.isHasEmail ?? "true" == "true" ? (
+                            {(form.isHasEmail ?? "true") == "true" && (
                                 <Input
-                                    required={true}
+                                    required={false}
                                     onChange={formHandler}
                                     name="email"
                                     value={form.email}
@@ -130,8 +137,6 @@ export default function TicketCreateFormSection() {
                                     type="email"
                                     errorMessage="Email is required"
                                 />
-                            ) : (
-                                <></>
                             )}
                         </div>
                     </div>
@@ -140,7 +145,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name="phone"
-                        required={false}
+                        required={true}
                         value={form.phone}
                         label="Phone Number"
                         type="phone"
@@ -231,7 +236,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name="purchase_date"
-                        // required={false}
+                        required={false}
                         value={form.purchase_date}
                         label="Purchase Date"
                         type="date"
@@ -295,7 +300,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name="address"
-                        // required={false}
+                        required={false}
                         value={form.address}
                         label="Address"
                         type="text"
@@ -336,7 +341,7 @@ export default function TicketCreateFormSection() {
                 <div className=" flex px-3 mb-3 gap-5">
                     <div className="basis-3/4">
                         <Textarea
-                            required={false}
+                            required={true}
                             onChange={formHandler}
                             name="remarks"
                             value={form.remarks}
@@ -383,9 +388,10 @@ export default function TicketCreateFormSection() {
                             "Open"
                         )}
                     </button>
-                    <button className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600">
+                    {/* <button className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600">
                         Closed
-                    </button>
+                    </button> */}
+                    <TicketCloseSection data={form} />
                 </div>
             </div>
         </form>

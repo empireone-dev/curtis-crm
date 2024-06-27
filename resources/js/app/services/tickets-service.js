@@ -1,8 +1,26 @@
 import axios from "axios";
 
+
+export async function create_ticket_close_service(data) {
+    try {
+        const res = await axios.post("/api/create_ticket_close",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function move_ticket_assignment_service(data) {
     try {
         const res = await axios.post("/api/move_ticket_assignment",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function resend_email_templete_service(data) {
+    try {
+        const res = await axios.post("/api/resend_email_templete",data);
         return res.data;
     } catch (error) {
         return [];

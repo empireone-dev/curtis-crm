@@ -8,6 +8,7 @@ import { router } from "@inertiajs/react";
 import ReasonToClose from "../id/sections/reason-to-close";
 import routing from "../../../components/routing";
 import MoveTicketAssignement from "./move-ticket-assignement";
+import ResendInitialEmail from "./resend-initial-email";
 
 export default function ContentDetailsSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -59,6 +60,7 @@ export default function ContentDetailsSection() {
                     </h3>
 
                     <div className="flex gap-5">
+                        {ticket.email && <ResendInitialEmail />}
                         <MoveTicketAssignement />
                         <button
                             onClick={edit_ticket}

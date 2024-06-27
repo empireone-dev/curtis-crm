@@ -20,20 +20,25 @@ import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
 import { Select as SelectData } from "antd";
+import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
-    const [form, setForm] = useState({
-        store: "",
-        isHasEmail: "true",
-    });
+    // const [form, setForm] = useState({
+    //     store: "",
+    //     isHasEmail: "true",
+    // });
+
+  
     const { common_issues } = useSelector((state) => state.common_issues);
     const { ticket } = useSelector((state) => state.tickets);
+    const { form } = useSelector((state) => state.tickets_create)
     const [loading, setLoading] = useState(false);
     const ticketid = window.location.pathname.split("/")[4];
     const [storeData, setStoreData] = useState([]);
     const { url } = usePage();
     const [load, setLoad] = useState(false);
 
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,7 +56,7 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-            setForm(res);
+            dispatch(setForm(res))
         }
         get_ticket();
     }, []);
@@ -72,10 +77,10 @@ export default function EditTicketFormSection() {
     }, []);
 
     function formHandler(value, name) {
-        setForm({
+        dispatch(setForm({
             ...form,
             [name]: value,
-        });
+        }))
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
@@ -104,10 +109,10 @@ export default function EditTicketFormSection() {
 
     const { regions } = findCountry(form.country ?? "CA");
     function formHandlerIssue(params) {
-        setForm({
+        dispatch(setForm({
             ...form,
             issue: JSON.stringify(params),
-        });
+        }));
     }
     console.log("form.issue", form.issue);
     return (
@@ -128,7 +133,7 @@ export default function EditTicketFormSection() {
                                 required={true}
                                 onChange={formHandler}
                                 name="fname"
-                                value={form.fname}
+                                value={form?.fname}
                                 label="First Name"
                                 type="text"
                                 errorMessage="First Name is required"
@@ -136,10 +141,10 @@ export default function EditTicketFormSection() {
                         </div>
                         <div className="md:w-1/2 px-3">
                             <Input
-                                required={true}
+                                required={false}
                                 onChange={formHandler}
                                 name="lname"
-                                value={form.lname}
+                                value={form?.lname}
                                 label="Last Name"
                                 type="text"
                                 errorMessage="Last Name is required"
@@ -154,7 +159,7 @@ export default function EditTicketFormSection() {
                                         onChange={formHandler}
                                         name="isHasEmail"
                                         required={false}
-                                        value={form.isHasEmail ?? true}
+                                        value={form?.isHasEmail ?? true}
                                         label="Has Email?"
                                         errorMessage=""
                                         data={[
@@ -171,12 +176,12 @@ export default function EditTicketFormSection() {
                                 </div>
 
                                 <div className="basis-full">
-                                    {form.isHasEmail == "true" ? (
+                                    {form?.isHasEmail == "true" ? (
                                         <Input
-                                            required={true}
+                                            required={false}
                                             onChange={formHandler}
                                             name="email"
-                                            value={form.email}
+                                            value={form?.email}
                                             label="Email"
                                             type="email"
                                             errorMessage="Email is required"
@@ -192,7 +197,7 @@ export default function EditTicketFormSection() {
                                 onChange={formHandler}
                                 name="phone"
                                 required={true}
-                                value={form.phone}
+                                value={form?.phone}
                                 label="Phone Number"
                                 type="phone"
                                 errorMessage="Phone Number is required"
@@ -209,7 +214,7 @@ export default function EditTicketFormSection() {
                                 <Select
                                     onChange={formHandler}
                                     name="store"
-                                    value={form.store}
+                                    value={form?.store}
                                     label="Store Name"
                                     errorMessage="Store Name is required"
                                     data={storeData}
@@ -222,8 +227,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="item_number"
-                                required={true}
-                                value={form.item_number}
+                                required={false}
+                                value={form?.item_number}
                                 label="Item Number"
                                 type="text"
                                 errorMessage="Item Number is required"
@@ -233,8 +238,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="unit"
-                                required={true}
-                                value={form.unit}
+                                required={false}
+                                value={form?.unit}
                                 label="Item Unit"
                                 type="text"
                                 errorMessage="Item Unit is required"
@@ -247,8 +252,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="brand"
-                                required={true}
-                                value={form.brand}
+                                required={false}
+                                value={form?.brand}
                                 label="Brand"
                                 type="text"
                                 errorMessage="Brand is required"
@@ -258,8 +263,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="class"
-                                required={true}
-                                value={form.class}
+                                required={false}
+                                value={form?.class}
                                 label="Item Class"
                                 type="text"
                                 errorMessage="Item Class is required"
@@ -271,8 +276,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="serial_number"
-                                required={true}
-                                value={form.serial_number}
+                                required={false}
+                                value={form?.serial_number}
                                 label="Serial Number"
                                 type="text"
                                 errorMessage="Serial Number is required"
@@ -283,8 +288,8 @@ export default function EditTicketFormSection() {
                             <Select
                                 onChange={formHandler}
                                 name="call_type"
-                                required={true}
-                                value={form.call_type}
+                                required={false}
+                                value={form?.call_type}
                                 label="Call Type"
                                 errorMessage="Call Type is required"
                                 data={call_type}
@@ -294,8 +299,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="purchase_date"
-                                // required={true}
-                                value={form.purchase_date}
+                               required={false}
+                                value={form?.purchase_date}
                                 label="Purchase Date"
                                 type="date"
                                 errorMessage="Purchase Date is required"
@@ -308,8 +313,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="zip_code"
-                                required={true}
-                                value={form.zip_code}
+                                required={false}
+                                value={form?.zip_code}
                                 label="Zip Code / Postal Code"
                                 type="text"
                                 errorMessage="Zip Code is required"
@@ -320,8 +325,8 @@ export default function EditTicketFormSection() {
                             <Select
                                 onChange={formHandler}
                                 name="country"
-                                required={true}
-                                value={form.country}
+                                required={false}
+                                value={form?.country}
                                 label="Country"
                                 errorMessage="Country is required"
                                 data={countries.map((res) => ({
@@ -334,8 +339,8 @@ export default function EditTicketFormSection() {
                             <Select
                                 onChange={formHandler}
                                 name="state"
-                                required={true}
-                                value={form.state}
+                                required={false}
+                                value={form?.state}
                                 label="State"
                                 errorMessage="State is required"
                                 data={regions}
@@ -345,8 +350,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="city"
-                                required={true}
-                                value={form.city}
+                                required={false}
+                                value={form?.city}
                                 label="City"
                                 type="text"
                                 errorMessage="City is required"
@@ -358,8 +363,8 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="address"
-                                // required={true}
-                                value={form.address}
+                                required={false}
+                                value={form?.address}
                                 label="Address"
                                 type="text"
                                 // errorMessage='Address is required'
@@ -414,9 +419,9 @@ export default function EditTicketFormSection() {
                                 />
                             )}
 
-                            {/* {form.call_type == "Parts" ? (
+                            {/* {form?.call_type == "Parts" ? (
                                 <Autocomplete
-                                    defaultValue={form.issue ?? "[]"}
+                                    defaultValue={form?.issue ?? "[]"}
                                     onChange={formHandler}
                                     value={[
                                         {
@@ -435,7 +440,7 @@ export default function EditTicketFormSection() {
                                 />
                             ) : (
                                 <Autocomplete
-                                    defaultValue={form.issue ?? "[]"}
+                                    defaultValue={form?.issue ?? "[]"}
                                     onChange={formHandler}
                                     value={common_issues.map((res) => ({
                                         id: res.id,
@@ -450,7 +455,7 @@ export default function EditTicketFormSection() {
                                     required={true}
                                     onChange={formHandler}
                                     name="remarks"
-                                    value={form.remarks}
+                                    value={form?.remarks}
                                     label="Remarks"
                                     type="text"
                                     errorMessage="Remarks is required"
