@@ -38,7 +38,7 @@ class TicketController extends Controller
 
     public function send_warranty_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbygsAn0dDZyLFcs1wwAC4dIyQD8K8dgMrPyL5sdgwYV7G9YaG8SaJSSwVgD5g_SPdUC/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycby6ewiJK00HyUnvUU3ibrWjOlOXEa0A9h9JOCHq0oFTtmVV0oZJE_JhL9DqzqzPSfSj/exec';
 
         $params = [
             'recipient' => $recipient,
@@ -57,7 +57,7 @@ class TicketController extends Controller
     }
     public function send_parts_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbx9LsPiFQTvydnoCEmDPAMUTyQSEmdOHYxrSS507QZbiIAYrNWOLTogRWAUcX8BTx3x/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxkZZRxz5lQvMn_gs4-cYLeMvWwiR1OZQBKYOI_WU1Z38UVPfEqeOPVFdsO06F_PtO-/exec';
         $params = [
             'recipient' => $recipient,
             'subject' => $subject,
