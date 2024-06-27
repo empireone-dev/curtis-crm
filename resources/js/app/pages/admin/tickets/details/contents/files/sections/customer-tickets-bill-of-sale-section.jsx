@@ -1,13 +1,10 @@
-
 import store from "@/app/store/store";
 import React, { useState } from "react";
-import {
-    delete_upload_ticket_files_thunk,
-} from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
-import {  useSelector } from "react-redux";
+import { delete_upload_ticket_files_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
+import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
-const CustomerTicketsBillOfSaleSection = () => {
+export default function CustomerTicketsBillOfSaleSection() {
     const { filesData } = useSelector((state) => state.customer_tickets);
 
     async function deleteFileImage(id, ticket_id) {
@@ -46,11 +43,10 @@ const CustomerTicketsBillOfSaleSection = () => {
                 </h1>
 
                 <DetailsFileUploadComponent
-                type="bill_of_sale"
-                files={filesData?.bill_of_sale??[]} />
+                    type="bill_of_sale"
+                    files={filesData?.bill_of_sale ?? []}
+                />
             </section>
         </div>
     );
-};
-
-export default CustomerTicketsBillOfSaleSection;
+}

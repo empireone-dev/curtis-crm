@@ -72,10 +72,6 @@ export default function WarrantyFilesSection() {
                     </div>
                 )}
             </div>
-            {/* <div className="flex gap-2 border-b border-black my-5">
-                <div className="text-xl"> REMARKS: </div>
-                <div className="text-xl font-bold">{ticket.remarks}</div>
-            </div> */}
             {ticket.call_type == "CF-Warranty Claim" && (
                 <div className="flex gap-2 border-b border-black my-5">
                     <div className="text-xl"> Detailed Explanation: </div>

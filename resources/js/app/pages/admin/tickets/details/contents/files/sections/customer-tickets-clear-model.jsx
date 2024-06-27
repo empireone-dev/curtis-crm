@@ -7,7 +7,8 @@ import {
 import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
-const CustomerTicketsClearModel = () => {
+
+export default function CustomerTicketsClearModel() {
     const { filesData } = useSelector((state) => state.customer_tickets);
 
     async function deleteFileImage(id, ticket_id) {
@@ -40,6 +41,5 @@ const CustomerTicketsClearModel = () => {
 
         </article>
     );
-};
+}
 
-export default CustomerTicketsClearModel;

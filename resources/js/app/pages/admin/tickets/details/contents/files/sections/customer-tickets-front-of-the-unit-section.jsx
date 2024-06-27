@@ -6,10 +6,9 @@ import {
 import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
-const CustomerTicketsFrontOfTheUnitSection = () => {
+
+export default function CustomerTicketsFrontOfTheUnitSection() {
     const { filesData } = useSelector((state) => state.customer_tickets);
-
-
 
     async function deleteFileImage(id, ticket_id) {
         if (confirm("Are you sure you wanna delete the image?")) {
@@ -44,6 +43,5 @@ const CustomerTicketsFrontOfTheUnitSection = () => {
             </section>
         </article>
     );
-};
+}
 
-export default CustomerTicketsFrontOfTheUnitSection;

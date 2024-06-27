@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { delete_upload_ticket_files_thunk,  } from '@/app/pages/customer/tickets/redux/customer-tickets-thunk';
 import DetailsFileUploadComponent from '../components/details-contents-file-components-file';
 
-const CustomerTicketsSerialModel = () => {
+
+export default function CustomerTicketsSerialModel() {
     const { filesData } = useSelector((state) => state.customer_tickets)
 
     
@@ -39,6 +40,4 @@ const CustomerTicketsSerialModel = () => {
 
         </article>
     );
-};
-
-export default CustomerTicketsSerialModel;
+}

@@ -7,7 +7,8 @@ import {
 import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
-const CustomerTicketsDefectIssueSection = () => {
+
+export default function CustomerTicketsDefectIssueSection() {
     const { filesData } = useSelector((state) => state.customer_tickets);
    
   
@@ -41,6 +42,5 @@ const CustomerTicketsDefectIssueSection = () => {
             </section>
         </article>
     );
-};
+}
 
-export default CustomerTicketsDefectIssueSection;

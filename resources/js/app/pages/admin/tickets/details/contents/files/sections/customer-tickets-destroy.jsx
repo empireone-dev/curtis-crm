@@ -4,7 +4,7 @@ import { delete_upload_ticket_files_thunk } from "@/app/pages/customer/tickets/r
 import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
-const CustomerTicketDistroy = () => {
+export default function CustomerTicketDistroy() {
     const { filesData } = useSelector((state) => state.customer_tickets);
 
     async function deleteFileImage(id, ticket_id) {
@@ -35,6 +35,5 @@ const CustomerTicketDistroy = () => {
             </article>
         </div>
     );
-};
+}
 
-export default CustomerTicketDistroy;
