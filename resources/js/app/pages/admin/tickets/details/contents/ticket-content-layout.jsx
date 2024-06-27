@@ -217,9 +217,13 @@ export default function TicketsDetailsLayout({ children }) {
         router.visit(tabs[index].hash);
     };
     const hash = window.location.pathname.split("/")[5];
+    console.log('user',user)
     return (
         <div className=" font-sans h-full">
-            <TicketsDetailsMoveAssignSection />
+            {
+                user.agent_type !== 'CSR' && <TicketsDetailsMoveAssignSection />
+            }
+          
             <div className="px-8">
                 <div className="w-full ">
                     {/* {user.role_id == 3 && ticket.status === "WAREHOUSE" && (

@@ -18,7 +18,6 @@ export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.tickets);
     const { filesData } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
 
     function notes_notification() {
         if (ticket.isUploading == "true") {
@@ -47,11 +46,6 @@ export default function WarrantyFilesSection() {
         }
     }
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
-    }, []);
     async function uploadPhoto(params) {
         setLoading(true);
         try {
@@ -103,6 +97,12 @@ export default function WarrantyFilesSection() {
             <CustomerTicketsReadableSerialSection />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsDefectIssueSection />
+            <div className="flex flex-col gap-2 border-t border-black my-5">
+                <div className="text-xl font-black">Destroy or Cut Cord Photo: </div>
+                <div className="text-xl font-bold">
+                    <CustomerTicketDistroy />
+                </div>
+            </div>
             <div className="text-4xl font-black text-blue-600  border-t-2 border-black my-6">
                 Part Files
             </div>
@@ -121,13 +121,9 @@ export default function WarrantyFilesSection() {
             <CustomerTicketsPartsModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsClearModel />
-            <div className="flex flex-col gap-2 border-t border-black my-5">
-                <div className="text-xl font-black">Destroy or Cut Cord Photo: </div>
-                <div className="text-xl font-bold">
-                    <CustomerTicketDistroy />
-                </div>
-            </div>
+           
             <Button
+                loading={loading}
                 onClick={() => uploadPhoto()}
                 type="primary"
                 size="large"

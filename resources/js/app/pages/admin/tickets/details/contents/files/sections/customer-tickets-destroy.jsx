@@ -1,10 +1,7 @@
-
 import store from "@/app/store/store";
 import React, { useState } from "react";
-import {
-    delete_upload_ticket_files_thunk,
-} from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
-import {  useSelector } from "react-redux";
+import { delete_upload_ticket_files_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
+import { useSelector } from "react-redux";
 import DetailsFileUploadComponent from "../components/details-contents-file-components-file";
 
 const CustomerTicketDistroy = () => {
@@ -21,21 +18,21 @@ const CustomerTicketDistroy = () => {
     }
     return (
         <div>
-          <article
-            aria-label="File Upload Modal"
-            className="relative flex flex-col container  w-full h-1/2"
-        >
-            <section className="h-full w-full flex flex-col">
-             
-                <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
+            <article
+                aria-label="File Upload Modal"
+                className="relative flex flex-col container  w-full h-1/2"
+            >
+                <section className="h-full w-full flex flex-col">
+                    <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900">
+                        To Upload
+                    </h1>
 
-                <DetailsFileUploadComponent
-                    type="destroy_ticket"
-                    files={filesData?.destroy_ticket ?? []}
-                />
-            </section>
-
-        </article>
+                    <DetailsFileUploadComponent
+                        type="destroy_ticket"
+                        files={filesData?.destroy_ticket ?? []}
+                    />
+                </section>
+            </article>
         </div>
     );
 };
