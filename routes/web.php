@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         })->name('tickets');
 
         Route::get('/details/{ticket_id}/files', function () {
-            return Inertia::render('admin/tickets/details/contents/files/page');
+            return Inertia::render('admin/tickets/details/files/page');
         })->name('admin.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
@@ -295,7 +295,7 @@ Route::middleware('auth:sanctum', 'role:3')->prefix('warehouse')->group(function
 
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
-            return Inertia::render('admin/tickets/details/contents/files/page');
+            return Inertia::render('admin/tickets/details/files/page');
         })->name('warehouse.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
@@ -383,7 +383,7 @@ Route::middleware('auth:sanctum', 'role:4')->prefix('asc')->group(function () {
 
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
-            return Inertia::render('admin/tickets/details/contents/files/page');
+            return Inertia::render('admin/tickets/details/files/page');
         })->name('asc.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
@@ -503,7 +503,7 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
     // })->name('agent.tickets.details');
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
-            return Inertia::render('admin/tickets/details/contents/files/page');
+            return Inertia::render('admin/tickets/details/files/page');
         })->name('agent.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
@@ -591,7 +591,7 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
 
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
-            return Inertia::render('admin/tickets/details/contents/files/page');
+            return Inertia::render('admin/tickets/details/files/page');
         })->name('curtis.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
