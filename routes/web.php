@@ -67,17 +67,15 @@ Route::get('/logout', function () {
     return Inertia::render('logout');
 })->name('tickets.logout');
 
-Route::get('/administrator/tickets/details/{ticket_id}/files', function () {
-    return Inertia::render('admin/tickets/details/contents/files/page');
-})->name('admin.tickets.details.files');
-
 Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(function () {
     Route::prefix('tickets')->group(function () {
         Route::get('/', function () {
             return Inertia::render('admin/tickets/page');
         })->name('tickets');
 
-       
+        Route::get('/details/{ticket_id}/file', function () {
+            return Inertia::render('admin/tickets/details/contents/files/page');
+        })->name('admin.tickets.details.files');
 
         Route::get('/details/{ticket_id}/activities', function () {
             return Inertia::render('admin/tickets/details/contents/activities/page');
