@@ -25,10 +25,10 @@ export default function TicketsDetailsContentFiles({ auth }) {
 
     return (
         <MainLayout account={auth.user}>
-            {/* <TicketsDetailsLayout> */}
+            <TicketsDetailsLayout>
                 <CustomerTicketsUpdateExplanation />
                 <WarrantyFilesSection />
-            {/* </TicketsDetailsLayout> */}
+            </TicketsDetailsLayout>
         </MainLayout>
     );
 }

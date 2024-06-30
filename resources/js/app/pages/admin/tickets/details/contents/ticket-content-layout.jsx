@@ -27,17 +27,11 @@ import ReplacementWarrantyPage from "../contents/replacement_warranty/page";
 import Skeleton from "@/app/layouts/components/skeleton";
 import TicketsDetailsMoveAssignSection from "../sections/tickets-details-move-assign-section,";
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-}
-// tech support = files,activities,details,agent
-//parts = files,activities details agent
-//waranty = files,activities details and agent notes
+
 export default function TicketsDetailsLayout({ children }) {
     const { ticket } = useSelector((state) => state.tickets);
     const { user } = useSelector((state) => state.app);
     const { url } = usePage();
-    const page = usePage();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
 
@@ -62,6 +56,7 @@ export default function TicketsDetailsLayout({ children }) {
         };
         fetchData();
     }, [url]);
+
     const tabs = [
         ...(ticket.call_type != "TS-Tech Support"
             ? [
@@ -106,7 +101,7 @@ export default function TicketsDetailsLayout({ children }) {
         (ticket.status === "CA WAREHOUSE" ||
             ticket.status === "US WAREHOUSE" ||
             ticket.status === "CLOSED")
-            ? // && account?.role_id == 3
+            ? 
               [
                   {
                       title: ticket.country + " Warehouse",
@@ -211,13 +206,9 @@ export default function TicketsDetailsLayout({ children }) {
     ];
 
     const handleTabClick = (index) => {
-        // Update only the first hash dynamically based on the selected tab
-        // setFirstHash(tabs[index].hash.split('#')[0]);
-        // Visit the URL with the updated hash
         router.visit(tabs[index].hash);
     };
     const hash = window.location.pathname.split("/")[5];
-    console.log('user',user)
     return (
         <div className=" font-sans h-full">
             {
@@ -226,18 +217,6 @@ export default function TicketsDetailsLayout({ children }) {
           
             <div className="px-8">
                 <div className="w-full ">
-                    {/* {user.role_id == 3 && ticket.status === "WAREHOUSE" && (
-                        <div className="pt-10">
-                            {" "}
-                            <TicketsDetailsMoveAssignComponents
-                                ticket={ticket}
-                                name="MOVE TO RESOURCE"
-                                value="RESOURCE"
-                                icon={<InboxStackIcon className="h-6" />}
-                                link="decision"
-                            />
-                        </div>
-                    )} */}
                     <div
                         className={`py-3 text-3xl font-black flex gap-3 ${
                             ticket.status == "CLOSED"
