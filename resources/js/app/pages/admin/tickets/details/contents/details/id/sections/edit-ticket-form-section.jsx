@@ -176,7 +176,7 @@ export default function EditTicketFormSection() {
                                 </div>
 
                                 <div className="basis-full">
-                                    {form?.isHasEmail == "true" ? (
+                                    {(form?.isHasEmail??'true') == "true" ? (
                                         <Input
                                             required={false}
                                             onChange={formHandler}
