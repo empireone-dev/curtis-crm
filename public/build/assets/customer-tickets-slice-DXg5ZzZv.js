@@ -1,1 +1,0 @@
-import{c as a}from"./store--_0FO_Aa.js";const s=a({name:"customer_tickets",initialState:{tickets:[],ticket:{},filesData:[]},reducers:{setTickets:(t,e)=>{t.tickets=e.payload},setFilesData:(t,e)=>{t.filesData=e.payload},setTicket:(t,e)=>{t.ticket=e.payload}}}),{setTickets:i,setFilesData:o,setTicket:k}=s.actions;s.reducer;export{o as a,i as b,s as c,k as s};
