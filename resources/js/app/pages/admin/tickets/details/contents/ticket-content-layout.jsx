@@ -36,25 +36,25 @@ export default function TicketsDetailsLayout({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await store.dispatch(
-                    get_upload_ticket_files_thunk(
-                        url.split("/")[url.split("/").length - 2].split("#")[0]
-                    )
-                );
-                const ress = await get_tickets_by_ticket_id(
-                    url.split("/")[url.split("/").length - 2].split("#")[0]
-                );
-                dispatch(setTicket(ress));
-                dispatch(setFilesData(res));
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchData();
+    //   async function fetchData(params) {
+    //     try {
+    //         const res = await store.dispatch(
+    //             get_upload_ticket_files_thunk(
+    //                 url.split("/")[url.split("/").length - 2].split("#")[0]
+    //             )
+    //         );
+    //         const ress = await get_tickets_by_ticket_id(
+    //             url.split("/")[url.split("/").length - 2].split("#")[0]
+    //         );
+    //         dispatch(setTicket(ress));
+    //         dispatch(setFilesData(res));
+    //         setLoading(false);
+    //     } catch (error) {
+    //         setLoading(false);
+    //         console.error("Error fetching data:", error);
+    //     }
+    //    }
+    //     fetchData();
     }, [url]);
 
     const tabs = [
