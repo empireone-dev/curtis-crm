@@ -67,7 +67,7 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
-                        required={true}
+                        required={false}
                         onChange={formHandler}
                         name='fname'
                         value={form?.fname}

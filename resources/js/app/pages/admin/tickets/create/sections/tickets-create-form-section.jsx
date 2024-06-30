@@ -23,6 +23,7 @@ export default function TicketCreateFormSection() {
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
 
+    
     function formHandler(value, name) {
         dispatch(
             setForm({
@@ -81,7 +82,7 @@ export default function TicketCreateFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3">
                     <Input
-                        required={true}
+                        required={false}
                         onChange={formHandler}
                         name="fname"
                         value={form.fname}
