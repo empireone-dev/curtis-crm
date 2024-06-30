@@ -36,174 +36,174 @@ export default function TicketsDetailsLayout({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-    //   async function fetchData(params) {
-    //     try {
-    //         const res = await store.dispatch(
-    //             get_upload_ticket_files_thunk(
-    //                 url.split("/")[url.split("/").length - 2].split("#")[0]
-    //             )
-    //         );
-    //         const ress = await get_tickets_by_ticket_id(
-    //             url.split("/")[url.split("/").length - 2].split("#")[0]
-    //         );
-    //         dispatch(setTicket(ress));
-    //         dispatch(setFilesData(res));
-    //         setLoading(false);
-    //     } catch (error) {
-    //         setLoading(false);
-    //         console.error("Error fetching data:", error);
-    //     }
-    //    }
-    //     fetchData();
+      async function fetchData(params) {
+        try {
+            const res = await store.dispatch(
+                get_upload_ticket_files_thunk(
+                    url.split("/")[url.split("/").length - 2].split("#")[0]
+                )
+            );
+            const ress = await get_tickets_by_ticket_id(
+                url.split("/")[url.split("/").length - 2].split("#")[0]
+            );
+            dispatch(setTicket(ress));
+            dispatch(setFilesData(res));
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            console.error("Error fetching data:", error);
+        }
+       }
+        fetchData();
     }, [url]);
-const tabs = []
-    // const tabs = [
-    //     ...(ticket.call_type != "TS-Tech Support"
-    //         ? [
-    //               {
-    //                   title: "Files",
-    //                   hash: "files",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" &&
-    //     ticket.call_type === "CF-Warranty Claim" &&
-    //     ticket.status == "WARRANTY VALIDATION"
-    //         ? [
-    //               {
-    //                   title: "Warranty Validation",
-    //                   components: <ContentsWarrantyValidationPage />,
-    //                   hash: "warranty_validation",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" &&
-    //     ticket.call_type === "Parts" &&
-    //     ticket.status === "PARTS VALIDATION"
-    //         ? [
-    //               {
-    //                   title: "Parts Validation",
-    //                   components: <TicketsPartsValidationContent />,
-    //                   hash: "parts_validation",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "RESOURCE"
-    //         ? [
-    //               {
-    //                   title: "Decision Making",
-    //                   components: <TicketsDecisionMakingContent />,
-    //                   hash: "decision",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" &&
-    //     (ticket.status === "CA WAREHOUSE" ||
-    //         ticket.status === "US WAREHOUSE" ||
-    //         ticket.status === "CLOSED")
-    //         ? 
-    //           [
-    //               {
-    //                   title: ticket.country + " Warehouse",
-    //                   components: <WarehousePage />,
-    //                   hash: "warehouse",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "REPAIR"
-    //         ? [
-    //               {
-    //                   title: "Repair",
-    //                   components: <ContentsRepairPage />,
-    //                   hash: "repair",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "AVAILABILITY"
-    //         ? [
-    //               {
-    //                   title: "Availability",
-    //                   components: <TicketsAvailabilityContent />,
-    //                   hash: "availability",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "INTERNALS"
-    //         ? [
-    //               {
-    //                   title: "Internals",
-    //                   components: <TicketsPartsInternalsContent />,
-    //                   hash: "internals",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "CALLBACK"
-    //         ? [
-    //               {
-    //                   title: "Callback",
-    //                   components: <ContentsCallBackPage />,
-    //                   hash: "callback",
-    //               },
-    //           ]
-    //         : []),
 
-    //     ...(ticket?.isUploading === "true" && ticket.status === "REFUND"
-    //         ? [
-    //               {
-    //                   title: "Refund",
-    //                   components: <ContentsRefundPage />,
-    //                   hash: "refund",
-    //               },
-    //           ]
-    //         : []),
-    //     ...(ticket?.isUploading === "true" && ticket.status === "REPLACEMENT"
-    //         ? [
-    //               {
-    //                   title: "Replacement",
-    //                   components: <ReplacementWarrantyPage />,
-    //                   hash: "replacement",
-    //               },
-    //           ]
-    //         : []),
+    const tabs = [
+        ...(ticket.call_type != "TS-Tech Support"
+            ? [
+                  {
+                      title: "Files",
+                      hash: "files",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" &&
+        ticket.call_type === "CF-Warranty Claim" &&
+        ticket.status == "WARRANTY VALIDATION"
+            ? [
+                  {
+                      title: "Warranty Validation",
+                      components: <ContentsWarrantyValidationPage />,
+                      hash: "warranty_validation",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" &&
+        ticket.call_type === "Parts" &&
+        ticket.status === "PARTS VALIDATION"
+            ? [
+                  {
+                      title: "Parts Validation",
+                      components: <TicketsPartsValidationContent />,
+                      hash: "parts_validation",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "RESOURCE"
+            ? [
+                  {
+                      title: "Decision Making",
+                      components: <TicketsDecisionMakingContent />,
+                      hash: "decision",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" &&
+        (ticket.status === "CA WAREHOUSE" ||
+            ticket.status === "US WAREHOUSE" ||
+            ticket.status === "CLOSED")
+            ? 
+              [
+                  {
+                      title: ticket.country + " Warehouse",
+                      components: <WarehousePage />,
+                      hash: "warehouse",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "REPAIR"
+            ? [
+                  {
+                      title: "Repair",
+                      components: <ContentsRepairPage />,
+                      hash: "repair",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "AVAILABILITY"
+            ? [
+                  {
+                      title: "Availability",
+                      components: <TicketsAvailabilityContent />,
+                      hash: "availability",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "INTERNALS"
+            ? [
+                  {
+                      title: "Internals",
+                      components: <TicketsPartsInternalsContent />,
+                      hash: "internals",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "CALLBACK"
+            ? [
+                  {
+                      title: "Callback",
+                      components: <ContentsCallBackPage />,
+                      hash: "callback",
+                  },
+              ]
+            : []),
 
-    //     ...(ticket?.isUploading === "true" &&
-    //     ticket.status === "REPLACEMENT PARTS"
-    //         ? [
-    //               {
-    //                   title: "Replacement Parts",
-    //                   components: <ContentsReplacementPartsPage />,
-    //                   hash: "replacement_parts",
-    //               },
-    //           ]
-    //         : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "REFUND"
+            ? [
+                  {
+                      title: "Refund",
+                      components: <ContentsRefundPage />,
+                      hash: "refund",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "REPLACEMENT"
+            ? [
+                  {
+                      title: "Replacement",
+                      components: <ReplacementWarrantyPage />,
+                      hash: "replacement",
+                  },
+              ]
+            : []),
 
-    //     ...(ticket.call_type == "TS-Tech Support" &&
-    //     ticket.status === "TECH VALIDATION"
-    //         ? [
-    //               {
-    //                   title: "Update Status",
-    //                   components: <TicketsDetailsContentStatus />,
-    //                   hash: "status",
-    //               },
-    //           ]
-    //         : []),
+        ...(ticket?.isUploading === "true" &&
+        ticket.status === "REPLACEMENT PARTS"
+            ? [
+                  {
+                      title: "Replacement Parts",
+                      components: <ContentsReplacementPartsPage />,
+                      hash: "replacement_parts",
+                  },
+              ]
+            : []),
 
-    //     {
-    //         title: "Activities",
-    //         components: <TicketsDetailsContentActivities />,
-    //         hash: "activities",
-    //     },
-    //     {
-    //         title: "Details",
-    //         components: <TicketsDetailsContentDetails />,
-    //         hash: "details",
-    //     },
-    //     {
-    //         title: "Agent Notes",
-    //         components: <TicketsDetailsContentNotes />,
-    //         hash: "notes",
-    //     },
-    // ];
+        ...(ticket.call_type == "TS-Tech Support" &&
+        ticket.status === "TECH VALIDATION"
+            ? [
+                  {
+                      title: "Update Status",
+                      components: <TicketsDetailsContentStatus />,
+                      hash: "status",
+                  },
+              ]
+            : []),
+
+        {
+            title: "Activities",
+            components: <TicketsDetailsContentActivities />,
+            hash: "activities",
+        },
+        {
+            title: "Details",
+            components: <TicketsDetailsContentDetails />,
+            hash: "details",
+        },
+        {
+            title: "Agent Notes",
+            components: <TicketsDetailsContentNotes />,
+            hash: "notes",
+        },
+    ];
 
     const handleTabClick = (index) => {
         router.visit(tabs[index].hash);
@@ -228,7 +228,7 @@ const tabs = []
                         {ticket.status ?? "Open Ticket"} ({ticket.call_type})
                     </div>
                     <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
-                        {tabs.map((res, i) => (
+                        {!loading && tabs.map((res, i) => (
                             <button
                                 key={i}
                                 onClick={() => handleTabClick(i)}
