@@ -1,1 +1,0 @@
-import{m as t}from"./store-BmvU72nI.js";function a(n){return n&&t.isValidElement(n)&&n.type===t.Fragment}const i=(n,e,r)=>t.isValidElement(n)?t.cloneElement(n,typeof r=="function"?r(n.props||{}):r):e;function m(n,e){return i(n,n,e)}export{m as c,a as i,i as r};
