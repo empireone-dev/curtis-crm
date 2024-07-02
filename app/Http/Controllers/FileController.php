@@ -26,7 +26,7 @@ class FileController extends Controller
         // having an error for not same file extension
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $uploadedFile) {
-                $path = $uploadedFile->store('images', 's3');
+                $path = $uploadedFile->store(date("Y"), 's3');
                 $url = Storage::disk('s3')->url($path);
                 File::create([
                     'ticket_id' => $request->ticket_id,

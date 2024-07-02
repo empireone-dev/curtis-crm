@@ -99,7 +99,7 @@ export default function EditTicketFormSection() {
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
-                        required={true}
+                        required={false}
                         onChange={formHandler}
                         name="fname"
                         value={form.fname}
@@ -110,7 +110,7 @@ export default function EditTicketFormSection() {
                 </div>
                 <div className="md:w-1/2 px-3">
                     <Input
-                        required={true}
+                        required={false}
                         onChange={formHandler}
                         name="lname"
                         value={form.lname}
@@ -147,7 +147,7 @@ export default function EditTicketFormSection() {
                         <div className="basis-full">
                             {form.isHasEmail == "true" ? (
                                 <Input
-                                    required={true}
+                                    required={false}
                                     onChange={formHandler}
                                     name="email"
                                     value={form.email}
@@ -183,7 +183,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="item_number"
-                        required={true}
+                        required={false}
                         value={form.item_number}
                         label="Item Number"
                         type="text"
@@ -194,7 +194,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="unit"
-                        required={true}
+                        required={false}
                         value={form.unit}
                         label="Item Unit"
                         type="text"
@@ -208,7 +208,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="brand"
-                        required={true}
+                        required={false}
                         value={form.brand}
                         label="Brand"
                         type="text"
@@ -219,7 +219,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="class"
-                        required={true}
+                        required={false}
                         value={form.class}
                         label="Item Class"
                         type="text"
@@ -232,7 +232,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="serial_number"
-                        required={true}
+                        required={false}
                         value={form.serial_number}
                         label="Serial Number"
                         type="text"
@@ -244,7 +244,7 @@ export default function EditTicketFormSection() {
                     <Select
                         onChange={formHandler}
                         name="call_type"
-                        required={true}
+                        required={false}
                         value={form.call_type}
                         label="Call Type"
                         errorMessage="Call Type is required"
@@ -255,7 +255,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="purchase_date"
-                        // required={true}
+                        required={false}
                         value={form.purchase_date}
                         label="Purchase Date"
                         type="date"
@@ -269,7 +269,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="zip_code"
-                        required={true}
+                        required={false}
                         value={form.zip_code}
                         label="Zip Code / Postal Code"
                         type="text"
@@ -281,7 +281,7 @@ export default function EditTicketFormSection() {
                     <Select
                         onChange={formHandler}
                         name="country"
-                        required={true}
+                        required={false}
                         value={form.country}
                         label="Country"
                         errorMessage="Country is required"
@@ -295,7 +295,7 @@ export default function EditTicketFormSection() {
                     <Select
                         onChange={formHandler}
                         name="state"
-                        required={true}
+                        required={false}
                         value={form.state}
                         label="State"
                         errorMessage="State is required"
@@ -306,7 +306,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="city"
-                        required={true}
+                        required={false}
                         value={form.city}
                         label="City"
                         type="text"
@@ -319,7 +319,7 @@ export default function EditTicketFormSection() {
                     <Input
                         onChange={formHandler}
                         name="address"
-                        // required={true}
+                         required={false}
                         value={form.address}
                         label="Address"
                         type="text"
