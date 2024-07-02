@@ -17,10 +17,12 @@ import {
 } from "@/app/services/tickets-service";
 import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
 import routing from "@/app/pages/admin/tickets/details/components/routing";
+import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
+import ReasonToClose from "@/app/pages/admin/tickets/details/contents/details/id/sections/reason-to-close";
 
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
-    const [form, setForm] = useState({});
+    const { form } = useSelector((state) => state.tickets_create)
     const { common_issues } = useSelector((state) => state.common_issues);
     const { ticket } = useSelector((state) => state.tickets);
     const [loading, setLoading] = useState(false);
@@ -30,18 +32,18 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-            setForm({
+            dispatch(setForm({
                 ...res,
                 isHasEmail: "true",
-            });
+            }));
         }
         get_ticket();
     }, []);
     function formHandler(value, name) {
-        setForm({
+        dispatch(setForm({
             ...form,
             [name]: value,
-        });
+        }));
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
@@ -381,19 +383,7 @@ export default function EditTicketFormSection() {
                             "UPDATE"
                         )}
                     </button>
-                    <button
-                        type="button"
-                        onClick={close_ticket}
-                        className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600"
-                    >
-                        {isLoading ? (
-                            <div className="py-1.5">
-                                <Loading />
-                            </div>
-                        ) : (
-                            "Closed"
-                        )}
-                    </button>
+                    <ReasonToClose data={form} />
                 </div>
             </div>
         </form>
