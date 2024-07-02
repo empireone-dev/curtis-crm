@@ -11,12 +11,12 @@ export default function SearchTicketSection() {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
     const { user } = useSelector((state) => state.app);
-    const [random,setRandom] =useState(null)
+    const [random, setRandom] = useState(null);
     async function search_ticket(e) {
         e.preventDefault();
         const res = await get_tickets_service(`?search=${search}`);
         setData(res.data);
-        setRandom(Math.random())
+        setRandom(Math.random());
     }
 
     function moveToSearch(value) {
@@ -26,6 +26,14 @@ export default function SearchTicketSection() {
             router.visit("/curtis/tickets?search=" + value);
         } else {
             router.visit("/agent/tickets?search=" + value);
+        }
+    }
+
+    function create_ticket(params) {
+        if (user.role_id == 5) {
+            window.location.href = "/agent/tickets/create";
+        } else if (user.role_id == 1) {
+            window.location.href = "/administrator/tickets/create";
         }
     }
     return (
@@ -93,11 +101,27 @@ export default function SearchTicketSection() {
                                 <th className="text-left p-3 px-5">Issue</th>
                                 <th className="text-left p-3 px-5">Action</th>
                             </tr>
-                            {data.length == 0 && search !== "" && random !==null && (
-                                <div className="text-red-500 font-black">
-                                    No Record Found.
-                                </div>
-                            )}
+                            {data.length == 0 &&
+                                search !== "" &&
+                                random !== null && (
+                                    <>
+                                        <div className="text-red-500 font-black">
+                                            No Record Found.
+                                        </div>
+                                        <div className="my-8">
+                                            <div className=" flex items-start justify-start">
+                                                <button
+                                                    onClick={() =>
+                                                        create_ticket()
+                                                    }
+                                                    className="p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md"
+                                                >
+                                                    CREATE TICKET
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             {data.map((res, index) => (
                                 <tr
                                     key={index}

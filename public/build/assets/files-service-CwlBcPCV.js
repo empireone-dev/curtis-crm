@@ -1,1 +1,0 @@
-import{c as s}from"./page-BdFAeS7-.js";async function r(a){return(await s.post("/api/upload_photo_status",a)).data}async function n(a){return(await s.post("/api/files",a)).data}async function e(a){return(await s.get("/api/files/"+a)).data}async function u(a,t){return await s.delete("/api/files/"+a),(await e(t)).data}export{r as a,u as d,e as g,n as u};

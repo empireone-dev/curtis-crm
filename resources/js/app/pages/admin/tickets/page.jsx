@@ -33,7 +33,8 @@ export default function TicketsPage() {
                 <div className="px-5 flex items-start justify-between gap-4">
                     <button
                         onClick={() =>
-                            router.visit("/administrator/tickets/create")
+                            // router.visit("/administrator/tickets/create")
+                            window.location.href='/administrator/tickets/create'
                         }
                         className="p-2 bg-green-500 text-white hover:bg-green-600 rounded-md"
                     >

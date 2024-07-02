@@ -367,7 +367,7 @@ class TicketController extends Controller
                     }
                 }
                 $query->orWhere('ticket_id', '=', $searchQuery);
-                $query->orWhere('phone', '=', $searchQuery);
+                $query->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
             });
         }
 
