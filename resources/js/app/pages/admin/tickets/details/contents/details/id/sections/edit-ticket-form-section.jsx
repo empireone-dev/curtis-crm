@@ -130,7 +130,7 @@ export default function EditTicketFormSection() {
                     <div className=" md:flex mb-3">
                         <div className="md:w-1/2 px-3 mb-3">
                             <Input
-                                required={true}
+                                required={false}
                                 onChange={formHandler}
                                 name="fname"
                                 value={form?.fname}
