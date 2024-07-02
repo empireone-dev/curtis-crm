@@ -17,10 +17,11 @@ export default function Input({
         } else if (type == "phone") {
             const phoneNumber = value?.replace(/\D/g, "").substring(0, 10);
             if (phoneNumber?.length === 10) {
-                return phoneNumber?.replace(
-                    /(\d{3})(\d{3})(\d{4})/,
-                    "($1) $2-$3"
-                );
+                // return phoneNumber?.replace(
+                //     /(\d{3})(\d{3})(\d{4})/,
+                //     "($1) $2-$3"
+                // );
+                return phoneNumber;
             } else {
                 // Handle invalid phone number format
                 return phoneNumber;

@@ -340,7 +340,7 @@ export default function TicketCreateFormSection() {
                             {
                               (form.email !== '' &&  form.email  !== null && form.email  !== undefined) && (form.isHasEmail ?? "true") == "true" && <>
                                     <input id="checked-checkbox"
-                                        checked={form?.isSendEmail}
+                                       checked={form.isSendEmail??true}
                                         onChange={(e) => formHandler(e.target.checked, 'isSendEmail')}
                                         type="checkbox" name="isSendEmail" className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 " />
                                     <label htmlFor="checked-checkbox" className="ms-2 text-sm font-black text-gray-900 ">Send Initial Email</label>

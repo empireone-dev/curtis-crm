@@ -357,7 +357,7 @@ export default function TicketCreateFormSection() {
                                 <>
                                     <input
                                         id="checked-checkbox"
-                                        checked={form.isSendEmail}
+                                        checked={form.isSendEmail??true}
                                         onChange={(e) =>
                                             formHandler(
                                                 e.target.checked,
