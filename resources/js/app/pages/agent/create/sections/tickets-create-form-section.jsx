@@ -95,7 +95,7 @@ export default function TicketCreateFormSection() {
                             <Select
                                 onChange={formHandler}
                                 name='isHasEmail'
-                                required={true}
+                                required={false}
                                 value={form?.isHasEmail ?? true}
                                 label='Has Email?'
                                 errorMessage=''
@@ -115,7 +115,7 @@ export default function TicketCreateFormSection() {
                         <div className='basis-full'>
                             {
                                 form?.isHasEmail == 'true' ? <Input
-                                    required={true}
+                                    required={false}
                                     onChange={formHandler}
                                     name='email'
                                     value={form?.email}
@@ -224,7 +224,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name='purchase_date'
-                        // required={true}
+                        required={false}
                         value={form?.purchase_date}
                         label='Purchase Date'
                         type='date'
