@@ -1,5 +1,4 @@
-export function warranty_initial(ticket) {
-    return `<p><span style="color: rgb(11, 83, 148);">
+function s(_){return`<p><span style="color: rgb(11, 83, 148);">
      Hi,</span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Good day!
      </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">This email is regarding your warranty claim at Curtis International Ltd.
      </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">
@@ -7,9 +6,7 @@ export function warranty_initial(ticket) {
      <p><br></p><p><span style="color: rgb(34, 34, 34);">Portal Link:&nbsp; 
      </span>
      <a href="https://curtis-css.com/" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204);">https://curtis-css.com</a></p>
-     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;${
-         ticket?.email??''
-     }</span></p><p><span style="color: rgb(11, 83, 148);">PW:&nbsp;&nbsp;${12345678}</span></p><p><br></p><p>
+     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;${(_==null?void 0:_.email)??""}</span></p><p><span style="color: rgb(11, 83, 148);">PW:&nbsp;&nbsp;12345678</span></p><p><br></p><p>
      <span style="color: rgb(11, 83, 148);">Also, kindly include filling out the information below:</span></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">
      Name:&nbsp;__________________________</strong></p><p><strong style="color: rgb(11, 83, 148);">Address: ________________________ </strong>
      <em style="color: rgb(255, 0, 0);">*must be a physical address</em></p><p><strong style="color: rgb(11, 83, 148);">City: ____________________________</strong>
@@ -34,9 +31,7 @@ export function warranty_initial(ticket) {
      <p><span style="color: rgb(11, 83, 148);">Pour que nous puissions mieux vous servir et commencer à traiter votre réclamation, nous avons besoin que les informations suivantes soient téléchargées sur 
      le portail ci-dessous où vous pouvez également suivre l'évolution de votre réclamation.</span></p>
      <p><span style="color: rgb(34, 34, 34);">Lien portail:&nbsp; </span><a href="https://curtis-css.com/" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204);">https://curtis-css.com</a></p>
-     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;&nbsp;${
-         ticket?.email??''
-     }</span></p><p><span style="color: rgb(11, 83, 148);">mot de passe:&nbsp;&nbsp;${12345678}</span></p><p><br></p>
+     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;&nbsp;${(_==null?void 0:_.email)??""}</span></p><p><span style="color: rgb(11, 83, 148);">mot de passe:&nbsp;&nbsp;12345678</span></p><p><br></p>
      <p><span style="color: rgb(11, 83, 148);">Veuillez également inclure les informations ci-dessous:</span><span style="color: rgb(255, 0, 0);"> </span></p><p><br></p>
      <p><strong style="color: rgb(11, 83, 148);">Nom:&nbsp;__________________________</strong></p><p>
      <strong style="color: rgb(11, 83, 148);">Adresse: _______________________ </strong><em style="color: rgb(255, 0, 0);">*doit être une adresse physique</em></p>
@@ -52,15 +47,10 @@ export function warranty_initial(ticket) {
       pour le faire lorsque nous aurons déjà reçu et vérifié toutes les informations importantes. Si l'unité est éliminée ou n'est plus avec vous, nous ne pouvons 
       pas vous aider davantage avec votre réclamation.**</em></strong></p><p><em style="color: rgb(255, 0, 0);">**Remarque - Nous sommes ouverts de 9h00 à 18h00 HNE,
        du lundi au vendredi. Le délai de réponse serait de 48 à 72 heures ouvrables.</em></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Merci,</span></p>
-       <p><br></p><p><strong style="color: rgb(11, 83, 148);">Client de service</strong></p><p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p><br></p>'`;
-}
-export function parts_initial(ticket) {
-    return `<p><span style="color: rgb(0, 71, 178);">Hi,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
+       <p><br></p><p><strong style="color: rgb(11, 83, 148);">Client de service</strong></p><p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p><br></p>'`}function e(_){return`<p><span style="color: rgb(0, 71, 178);">Hi,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
     Thank you for reaching out to us. For us to proceed, we would need the following information. Below are your Login Credentials
     </span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Portal Link: https://curtis-css.com</span></p><p>
-    <span style="color: rgb(0, 71, 178);">ID:&nbsp;&nbsp; ${
-        ticket?.email??''
-    }</span></p><p><span style="color: rgb(0, 71, 178);">PW:&nbsp;${12345678}</span></p>
+    <span style="color: rgb(0, 71, 178);">ID:&nbsp;&nbsp; ${(_==null?void 0:_.email)??""}</span></p><p><span style="color: rgb(0, 71, 178);">PW:&nbsp;12345678</span></p>
     <p><br></p><p><span style="color: rgb(0, 71, 178);">Note that we only need a sample picture of the part to fully identify what is missing 
     or needed to resolve the issue.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Also, please kindly include filling out the information
      below:</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Recipient Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,10 +71,8 @@ export function parts_initial(ticket) {
       de pièces.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Pour que nous puissions mieux vous servir, nous avons besoin que des informations
        vitales soient téléchargées sur le portail où vous pouvez également suivre l'évolution de votre dossier.</span></p><p><span style="color: rgb(0, 71, 178);">
        Cliquez sur le lien et utilisez les informations d'identification ci-dessous ;</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
-       Lien portail:&nbsp;https://curtis-css.com</span></p><p><span style="color: rgb(0, 71, 178);">IDENTIFIANT:&nbsp; ${
-           ticket?.email??''
-       }</span></p><p>
-       <span style="color: rgb(0, 71, 178);">Mot de passe:&nbsp;&nbsp;${12345678}</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Veuillez également répondre 
+       Lien portail:&nbsp;https://curtis-css.com</span></p><p><span style="color: rgb(0, 71, 178);">IDENTIFIANT:&nbsp; ${(_==null?void 0:_.email)??""}</span></p><p>
+       <span style="color: rgb(0, 71, 178);">Mot de passe:&nbsp;&nbsp;12345678</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Veuillez également répondre 
        à cet e-mail en fournissant les informations mises à jour sur les éléments suivants:</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
        Nom du destinataire:&nbsp;________________________</span></p><p><span style="color: rgb(0, 71, 178);">Adrese:&nbsp;________________________</span> 
        <span style="color: rgb(230, 0, 0);">*doit être une adresse physique</span></p><p><span style="color: rgb(0, 71, 178);">
@@ -96,6 +84,4 @@ export function parts_initial(ticket) {
         pas de mise à jour dans les 7 jours.**</strong></p><p><strong style="color: rgb(230, 0, 0);">**Veuillez vous assurer que le numéro de dossier figure 
         dans la ligne d'objet **</strong></p><p><strong style="color: rgb(230, 0, 0);">**Remarque - Nous sommes ouverts de 9h00 à 18h00 HNE, du lundi au vendredi.
          Le délai de réponse serait de 48 à 72 heures ouvrables.</strong></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Merci,</span></p><p><br></p><p>
-         <span style="color: rgb(0, 71, 178);">Service client</span></p><p><span style="color: rgb(0, 71, 178);">Curtis International Ltd.</span></p><p><br></p>`;
-
-}
+         <span style="color: rgb(0, 71, 178);">Service client</span></p><p><span style="color: rgb(0, 71, 178);">Curtis International Ltd.</span></p><p><br></p>`}export{e as p,s as w};
