@@ -40,12 +40,12 @@ export default function TicketCreateFormSection() {
 
     const warranty = warranty_initial(form);
     const parts = parts_initial(form);
-
     async function submitFormTicket(e) {
         e.preventDefault()
         setLoading(true)
         dispatch(setForm({
             ...form,
+            user: user,
             status: null,
             created_from:'AGENT FORM',
             email: form?.isHasEmail == 'true' || form?.isHasEmail == true ? form?.email : null,

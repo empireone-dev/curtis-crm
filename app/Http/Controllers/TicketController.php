@@ -844,17 +844,17 @@ class TicketController extends Controller
                 }
             }
 
-            // AgentNote::create([
-            //     'user_id' => $account->id,
-            //     'ticket_id' => $data->id,
-            //     'message' => $request->remarks,
-            // ]);
-            // Activity::create([
-            //     'user_id' => $request->user['id'],
-            //     'ticket_id' => $data->id,
-            //     'type' => 'TICKET CREATED',
-            //     'message' => json_encode($data)
-            // ]);
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+            Activity::create([
+                'user_id' => $request->user['id'],
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
             return response()->json([
                 'result' => $data,
                 array_merge($request->all(), [
@@ -926,17 +926,17 @@ class TicketController extends Controller
                 }
             }
 
-            // AgentNote::create([
-            //     'user_id' => $account->id,
-            //     'ticket_id' => $data->id,
-            //     'message' => $request->remarks,
-            // ]);
-            // Activity::create([
-            //     'user_id' => $request->user['id'] ?? 0,
-            //     'ticket_id' => $data->id,
-            //     'type' => 'TICKET CREATED',
-            //     'message' => json_encode($data)
-            // ]);
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+            Activity::create([
+                'user_id' => $request->user['id'] ?? 0,
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
             return response()->json([
                 'result' => $data,
                 'ticket_id' => $subject
