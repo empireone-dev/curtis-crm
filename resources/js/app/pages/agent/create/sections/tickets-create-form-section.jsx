@@ -14,6 +14,8 @@ import { router } from '@inertiajs/react'
 import Loading from '@/app/layouts/components/loading'
 import Autocomplete from '@/app/layouts/components/autocomplete'
 import TicketCloseSection from '@/app/pages/admin/tickets/create/sections/ticket-close-section'
+import { parts_initial, warranty_initial } from '@/app/json/initial-templates'
+
 
 export default function TicketCreateFormSection() {
     
@@ -35,6 +37,10 @@ export default function TicketCreateFormSection() {
         store.dispatch(get_products_thunk())
     }, []);
 
+
+    const warranty = warranty_initial(form);
+    const parts = parts_initial(form);
+
     async function submitFormTicket(e) {
         e.preventDefault()
         setLoading(true)
@@ -42,7 +48,8 @@ export default function TicketCreateFormSection() {
             ...form,
             status: null,
             created_from:'AGENT FORM',
-            email: form?.isHasEmail == 'true' || form?.isHasEmail == true ? form?.email : null
+            email: form?.isHasEmail == 'true' || form?.isHasEmail == true ? form?.email : null,
+            body: form.call_type == "Parts" ? parts : warranty,
         }))
         const response = await store.dispatch(tickets_create_thunk())
         setLoading(false)
