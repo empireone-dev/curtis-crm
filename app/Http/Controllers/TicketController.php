@@ -794,13 +794,6 @@ class TicketController extends Controller
                 'cases_status' => 'handled'
             ]));
 
-            Activity::create([
-                'user_id' => $request->user['id'],
-                'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
-            ]);
-
             $subject = '';
             $length = strlen($data->id);
             $id = '';
@@ -832,11 +825,7 @@ class TicketController extends Controller
                     $t->update(['ticket_id' => $subject]);
                 }
             }
-            AgentNote::create([
-                'user_id' => $account->id,
-                'ticket_id' => $data->id,
-                'message' => $request->remarks,
-            ]);
+
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
                 // $newData = array_merge($account->toArray(), [
                 //     'id' => $data->id,
@@ -855,6 +844,17 @@ class TicketController extends Controller
                 }
             }
 
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+            Activity::create([
+                'user_id' => $request->user['id'],
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
             return response()->json([
                 'result' => $data,
                 array_merge($request->all(), [
@@ -869,12 +869,6 @@ class TicketController extends Controller
                 'cases_status' => 'handled'
             ]));
 
-            Activity::create([
-                'user_id' => $request->user['id'] ?? 0,
-                'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
-            ]);
 
 
             $subject = '';
@@ -912,11 +906,7 @@ class TicketController extends Controller
 
 
             $account = User::where('email', '=', $tt->email)->first();
-            AgentNote::create([
-                'user_id' => $account->id,
-                'ticket_id' => $data->id,
-                'message' => $request->remarks,
-            ]);
+
 
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true  || $request->email && $request->isSendEmail) {
                 // $newData = array_merge($user->toArray(), [
@@ -936,6 +926,17 @@ class TicketController extends Controller
                 }
             }
 
+            AgentNote::create([
+                'user_id' => $account->id,
+                'ticket_id' => $data->id,
+                'message' => $request->remarks,
+            ]);
+            Activity::create([
+                'user_id' => $request->user['id'] ?? 0,
+                'ticket_id' => $data->id,
+                'type' => 'TICKET CREATED',
+                'message' => json_encode($data)
+            ]);
             return response()->json([
                 'result' => $data,
                 'ticket_id' => $subject
