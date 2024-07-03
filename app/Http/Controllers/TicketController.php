@@ -532,7 +532,7 @@ class TicketController extends Controller
                         }
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -554,7 +554,7 @@ class TicketController extends Controller
             foreach ($data as $ticket) {
                 $searchSubject = substr($ticket->ticket_id, 1);
                 if ($ticket->call_type == 'CF-Warranty Claim') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUoR8Q2_YTZAfJbT_nAev_swdU74hmQpIWMF6dKm_GePzCf1aEKjnsaK1--mrrtw/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -566,7 +566,7 @@ class TicketController extends Controller
                         }
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -588,7 +588,7 @@ class TicketController extends Controller
             foreach ($data as $ticket) {
                 $searchSubject = substr($ticket->ticket_id, 1);
                 if ($ticket->call_type == 'CF-Warranty Claim') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUoR8Q2_YTZAfJbT_nAev_swdU74hmQpIWMF6dKm_GePzCf1aEKjnsaK1--mrrtw/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -598,7 +598,7 @@ class TicketController extends Controller
                         ];
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyF4mHjcDMhQX_Sllsw6ribQpj0KfEmryBMnxJBBi2Q3ivSewPK1wDfve4yaE9p5aUT/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
