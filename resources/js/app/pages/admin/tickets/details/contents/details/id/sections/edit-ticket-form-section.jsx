@@ -28,17 +28,15 @@ export default function EditTicketFormSection() {
     //     isHasEmail: "true",
     // });
 
-  
     const { common_issues } = useSelector((state) => state.common_issues);
     const { ticket } = useSelector((state) => state.tickets);
-    const { form } = useSelector((state) => state.tickets_create)
+    const { form } = useSelector((state) => state.tickets_create);
     const [loading, setLoading] = useState(false);
     const ticketid = window.location.pathname.split("/")[4];
     const [storeData, setStoreData] = useState([]);
     const { url } = usePage();
     const [load, setLoad] = useState(false);
 
-    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -56,7 +54,7 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-            dispatch(setForm(res))
+            dispatch(setForm(res));
         }
         get_ticket();
     }, []);
@@ -77,10 +75,12 @@ export default function EditTicketFormSection() {
     }, []);
 
     function formHandler(value, name) {
-        dispatch(setForm({
-            ...form,
-            [name]: value,
-        }))
+        dispatch(
+            setForm({
+                ...form,
+                [name]: value,
+            })
+        );
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
@@ -109,10 +109,12 @@ export default function EditTicketFormSection() {
 
     const { regions } = findCountry(form.country ?? "CA");
     function formHandlerIssue(params) {
-        dispatch(setForm({
-            ...form,
-            issue: JSON.stringify(params),
-        }));
+        dispatch(
+            setForm({
+                ...form,
+                issue: JSON.stringify(params),
+            })
+        );
     }
     console.log("form.issue", form.issue);
     return (
@@ -176,7 +178,7 @@ export default function EditTicketFormSection() {
                                 </div>
 
                                 <div className="basis-full">
-                                    {(form?.isHasEmail??'true') == "true" ? (
+                                    {(form?.isHasEmail ?? "true") == "true" ? (
                                         <Input
                                             required={false}
                                             onChange={formHandler}
@@ -299,7 +301,7 @@ export default function EditTicketFormSection() {
                             <Input
                                 onChange={formHandler}
                                 name="purchase_date"
-                               required={false}
+                                required={false}
                                 value={form?.purchase_date}
                                 label="Purchase Date"
                                 type="date"
@@ -464,6 +466,7 @@ export default function EditTicketFormSection() {
                         </div>
                         <div className="flex gap-4 items-center justify-center">
                             <button
+                                disabled={loading}
                                 type="submit"
                                 className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
                             >
