@@ -845,7 +845,7 @@ class TicketController extends Controller
             }
 
             AgentNote::create([
-                'user_id' => $account->id,
+                'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);
@@ -927,7 +927,7 @@ class TicketController extends Controller
             }
 
             AgentNote::create([
-                'user_id' => $account->id,
+                'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);
