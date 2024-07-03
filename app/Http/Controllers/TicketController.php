@@ -131,7 +131,7 @@ class TicketController extends Controller
             $id = date("dmy") . '00000' . $request->id;
         } else if ($length == 2) {
             $id = date("dmy") . '0000' . $request->id;
-        } else if ($length == 3) {
+        } else {
             $id = date("dmy") . '000' . $request->id;
         }
 
@@ -808,7 +808,7 @@ class TicketController extends Controller
                 $id = date("dmy") . '00000' . $data->id;
             } else if ($length == 2) {
                 $id = date("dmy") . '0000' . $data->id;
-            } else if ($length == 3) {
+            } else {
                 $id = date("dmy") . '000' . $data->id;
             }
 
@@ -884,7 +884,7 @@ class TicketController extends Controller
                 $id = date("dmy") . '00000' . $data->id;
             } else if ($length == 2) {
                 $id = date("dmy") . '0000' . $data->id;
-            } else if ($length == 3) {
+            } else {
                 $id = date("dmy") . '000' . $data->id;
             }
 
@@ -999,7 +999,7 @@ class TicketController extends Controller
                 $id = date("dmy") . '00000' . $data->id;
             } else if ($length == 2) {
                 $id = date("dmy") . '0000' . $data->id;
-            } else if ($length == 3) {
+            } else {
                 $id = date("dmy") . '000' . $data->id;
             }
 
@@ -1064,7 +1064,7 @@ class TicketController extends Controller
                 $id = date("dmy") . '00000' . $data->id;
             } else if ($length == 2) {
                 $id = date("dmy") . '0000' . $data->id;
-            } else if ($length == 3) {
+            } else {
                 $id = date("dmy") . '000' . $data->id;
             }
 
