@@ -825,10 +825,13 @@ class TicketController extends Controller
             }
 
             $t = Ticket::where('id', $data->id)->first();
-            $t->update([
-                'ticket_id' => $subject,
-            ]);
 
+            if ($t) {
+                $t->update(['ticket_id' => $subject]);
+                if ($t->ticket_id === null) {
+                    $t->update(['ticket_id' => $subject]);
+                }
+            }
             AgentNote::create([
                 'user_id' => $account->id,
                 'ticket_id' => $data->id,
@@ -897,13 +900,18 @@ class TicketController extends Controller
                 $subject = 'ETC' . $id;
             }
 
-            $t = Ticket::where('id', $data->id)->first();
-            $t->update([
-                'ticket_id' => $subject,
-            ]);
+            $tt = Ticket::where('id', $data->id)->first();
+
+            if ($tt) {
+                $tt->update(['ticket_id' => $subject]);
+                if ($tt->ticket_id === null) {
+                    $tt->update(['ticket_id' => $subject]);
+                }
+            }
 
 
-            $account = User::where('email', '=', $t->email)->first();
+
+            $account = User::where('email', '=', $tt->email)->first();
             AgentNote::create([
                 'user_id' => $account->id,
                 'ticket_id' => $data->id,
