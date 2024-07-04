@@ -637,8 +637,8 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        if ($searchQuery) {
-            $query = Ticket::get();
+        if (isset($searchQuery)) {
+            $query = Ticket::query();
         }else{
             $query = Ticket::where('user_id', $id);
         }
