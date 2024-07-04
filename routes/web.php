@@ -482,9 +482,9 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/customer_details/page');
     })->name('agent.cases.customer_details');
 
-    Route::get('/handled', function () {
-        return Inertia::render('agent/handled/page');
-    })->name('agent.handled');
+    // Route::get('/handled', function () {
+    //     return Inertia::render('agent/handled/page');
+    // })->name('agent.handled');
 
     Route::get('/direct_emails', function () {
         return Inertia::render('agent/direct_emails/page');
@@ -494,9 +494,9 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/direct_emails/id/page');
     })->name('agent.direct_emails.id');
 
-    Route::get('/closed_cases', function () {
-        return Inertia::render('agent/closed_cases/page');
-    })->name('agent.closed_cases');
+    // Route::get('/closed_cases', function () {
+    //     return Inertia::render('agent/closed_cases/page');
+    // })->name('agent.closed_cases');
 
     Route::get('/productivity', function () {
         return Inertia::render('agent/productivity/page');
