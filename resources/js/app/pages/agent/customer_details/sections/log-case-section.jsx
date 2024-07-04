@@ -1,15 +1,16 @@
 import { create_caseslog_service } from "@/app/services/cases-log-service";
-import { Button } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
-
+import { Button, message, Space } from "antd";
 export default function LogCaseSection({ datas, account }) {
+    const [messageApi, contextHolder] = message.useMessage();
     const [data, setData] = useState({
         isEscalate: "true",
     });
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+
     async function submit_case_log(params) {
         setLoading(true);
         const res = await create_caseslog_service({
@@ -21,11 +22,16 @@ export default function LogCaseSection({ datas, account }) {
         setData({
             isEscalate: "true",
         });
+        messageApi.open({
+            type: "success",
+            content: "Submitted Successfully",
+        });
         dispatch(set_cases_log(res.data));
         setLoading(false);
     }
     return (
         <div>
+            {contextHolder}
             <div class="text-gray-600 mb-4 mt-3">
                 <p class="font-medium text-lg">Log Case</p>
                 <div className="flex flex-1 gap-4 mt-1">
