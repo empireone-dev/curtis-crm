@@ -514,11 +514,11 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'open_cases') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['cases_status', '=', 'handled']]);
             $data = $dataQuery->paginate($perPage);
             $emails = [];
             foreach ($data as $ticket) {
-                $searchSubject = substr($ticket->ticket_id, 1);
+                $searchSubject = $ticket->ticket_id;
                 if ($ticket->call_type == 'CF-Warranty Claim') {
                     $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
@@ -532,7 +532,7 @@ class TicketController extends Controller
                         }
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -552,7 +552,7 @@ class TicketController extends Controller
             $data = $dataQuery->paginate($perPage);
             $emails = [];
             foreach ($data as $ticket) {
-                $searchSubject = substr($ticket->ticket_id, 1);
+                $searchSubject = $ticket->ticket_id;
                 if ($ticket->call_type == 'CF-Warranty Claim') {
                     $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
@@ -566,7 +566,7 @@ class TicketController extends Controller
                         }
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
@@ -586,7 +586,7 @@ class TicketController extends Controller
             $data = $dataQuery->paginate($perPage);
             $emails = [];
             foreach ($data as $ticket) {
-                $searchSubject = substr($ticket->ticket_id, 1);
+                $searchSubject = $ticket->ticket_id;
                 if ($ticket->call_type == 'CF-Warranty Claim') {
                     $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
@@ -598,7 +598,7 @@ class TicketController extends Controller
                         ];
                     }
                 } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxiv4dltqInhDcUG6IQfupCxp5-EjiTAGYJld_S-PhdwjqQu1PSDJE_fN5VRMhaaaew/exec?ticket_id=' . $searchSubject;
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
