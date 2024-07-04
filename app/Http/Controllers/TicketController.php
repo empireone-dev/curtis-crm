@@ -514,7 +514,7 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'open_cases') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['cases_status', '=', 'handled']]);
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id],['status', '<>', 'CLOSED'],['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
             $data = $dataQuery->paginate($perPage);
             $emails = [];
             foreach ($data as $ticket) {
@@ -536,81 +536,82 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
-                        if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
+                       if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
                             $emails[] = [
                                 'ticket' => $ticket,
                                 'emails' => $responseData,
                             ];
-                        }
+                         }
                     }
                 }
             }
             // Set the emails collection to the data
             $data->setCollection(collect($emails));
-        } else if ($request->cases == 'handled') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
-            $data = $dataQuery->paginate($perPage);
-            $emails = [];
-            foreach ($data as $ticket) {
-                $searchSubject = $ticket->ticket_id;
-                if ($ticket->call_type == 'CF-Warranty Claim') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
-                    $response = Http::get($scriptUrl);
-                    $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        if ($responseData[0]['from'] != 'support2@curtiscs.com' || $responseData[0]['from'] == 'Support2 Curtis <support2@curtiscs.com>') {
-                            $emails[] = [
-                                'ticket' => $ticket,
-                                'emails' => $responseData,
-                            ];
-                        }
-                    }
-                } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
-                    $response = Http::get($scriptUrl);
-                    $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        if ($responseData[0]['from'] == 'parts@curtiscs.com' || $responseData[0]['from'] == 'Parts Team <parts@curtiscs.com>') {
-                            $emails[] = [
-                                'ticket' => $ticket,
-                                'emails' => $responseData,
-                            ];
-                        }
-                    }
-                }
-            }
-            // Replace the paginated data items with the merged emails
-            $data->setCollection(collect($emails));
-        } else if ($request->cases == 'closed_cases') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type], ['status', '=', 'CLOSED']]);
-            $data = $dataQuery->paginate($perPage);
-            $emails = [];
-            foreach ($data as $ticket) {
-                $searchSubject = $ticket->ticket_id;
-                if ($ticket->call_type == 'CF-Warranty Claim') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
-                    $response = Http::get($scriptUrl);
-                    $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        $emails[] = [
-                            'ticket' => $ticket,
-                            'emails' => $responseData,
-                        ];
-                    }
-                } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
-                    $response = Http::get($scriptUrl);
-                    $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        $emails[] = [
-                            'ticket' => $ticket,
-                            'emails' => $responseData,
-                        ];
-                    }
-                }
-            }
-            $data->setCollection(collect($emails));
-        }
+        } 
+        // else if ($request->cases == 'handled') {
+        //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
+        //     $data = $dataQuery->paginate($perPage);
+        //     $emails = [];
+        //     foreach ($data as $ticket) {
+        //         $searchSubject = $ticket->ticket_id;
+        //         if ($ticket->call_type == 'CF-Warranty Claim') {
+        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
+        //             $response = Http::get($scriptUrl);
+        //             $responseData = $response->json();
+        //             if ($response->successful() && count($responseData) != 0) {
+        //                 if ($responseData[0]['from'] != 'support2@curtiscs.com' || $responseData[0]['from'] == 'Support2 Curtis <support2@curtiscs.com>') {
+        //                     $emails[] = [
+        //                         'ticket' => $ticket,
+        //                         'emails' => $responseData,
+        //                     ];
+        //                 }
+        //             }
+        //         } else if ($ticket->call_type == 'Parts') {
+        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
+        //             $response = Http::get($scriptUrl);
+        //             $responseData = $response->json();
+        //             if ($response->successful() && count($responseData) != 0) {
+        //                 if ($responseData[0]['from'] == 'parts@curtiscs.com' || $responseData[0]['from'] == 'Parts Team <parts@curtiscs.com>') {
+        //                     $emails[] = [
+        //                         'ticket' => $ticket,
+        //                         'emails' => $responseData,
+        //                     ];
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     // Replace the paginated data items with the merged emails
+        //     $data->setCollection(collect($emails));
+        // } else if ($request->cases == 'closed_cases') {
+        //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type], ['status', '=', 'CLOSED']]);
+        //     $data = $dataQuery->paginate($perPage);
+        //     $emails = [];
+        //     foreach ($data as $ticket) {
+        //         $searchSubject = $ticket->ticket_id;
+        //         if ($ticket->call_type == 'CF-Warranty Claim') {
+        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
+        //             $response = Http::get($scriptUrl);
+        //             $responseData = $response->json();
+        //             if ($response->successful() && count($responseData) != 0) {
+        //                 $emails[] = [
+        //                     'ticket' => $ticket,
+        //                     'emails' => $responseData,
+        //                 ];
+        //             }
+        //         } else if ($ticket->call_type == 'Parts') {
+        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
+        //             $response = Http::get($scriptUrl);
+        //             $responseData = $response->json();
+        //             if ($response->successful() && count($responseData) != 0) {
+        //                 $emails[] = [
+        //                     'ticket' => $ticket,
+        //                     'emails' => $responseData,
+        //                 ];
+        //             }
+        //         }
+        //     }
+        //     $data->setCollection(collect($emails));
+        // }
 
         return response()->json([
             'result' => $data

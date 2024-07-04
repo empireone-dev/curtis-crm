@@ -498,6 +498,10 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/closed_cases/page');
     })->name('agent.closed_cases');
 
+    Route::get('/productivity', function () {
+        return Inertia::render('agent/productivity/page');
+    })->name('agent.productivity');
+
     // Route::get('/tickets/{id}', function () {
     //     return Inertia::render('agent/tickets/details/page');
     // })->name('agent.tickets.details');

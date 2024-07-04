@@ -51,7 +51,7 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 icon={<InboxArrowDownIcon className="h-6" />}
                                 href={"open_cases"}
                             />
-                            <LayoutSidebarListComponent
+                            {/* <LayoutSidebarListComponent
                                 account={account}
                                 name="Handled Cases"
                                 icon={<InboxStackIcon className="h-6" />}
@@ -62,12 +62,18 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 name="Closed Cases"
                                 icon={<EnvelopeIcon className="h-6" />}
                                 href={"closed_cases"}
-                            />
+                            /> */}
                             <LayoutSidebarListComponent
                                 account={account}
                                 name="Direct Emails"
                                 icon={<EnvelopeIcon className="h-6" />}
                                 href={"direct_emails"}
+                            />
+                            <LayoutSidebarListComponent
+                                account={account}
+                                name="Productivity"
+                                icon={<EnvelopeIcon className="h-6" />}
+                                href={"productivity"}
                             />
                         </ul>
                     </div>
