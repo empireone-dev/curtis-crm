@@ -523,14 +523,14 @@ class TicketController extends Controller
                     $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
-                            $emails[] = [
-                                'ticket' => $ticket,
-                                'emails' => $responseData,
-                            ];
-                        }
-                    }
+                    // if ($response->successful() && count($responseData) != 0) {
+                    //     if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
+                    //         $emails[] = [
+                    //             'ticket' => $ticket,
+                    //             'emails' => $responseData,
+                    //         ];
+                    //     }
+                    // }
                 } else if ($ticket->call_type == 'Parts') {
                     $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
                     $response = Http::get($scriptUrl);
