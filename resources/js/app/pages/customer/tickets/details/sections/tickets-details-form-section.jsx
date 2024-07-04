@@ -134,7 +134,7 @@ export default function TicketsDetailsFormSection() {
                 size="large"
                 className="my-10 w-full"
             >
-                UPLOAD PHOTOS
+                UPLOAD
             </Button>
         </>
     );
