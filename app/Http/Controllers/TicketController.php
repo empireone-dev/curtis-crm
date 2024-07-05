@@ -818,12 +818,14 @@ class TicketController extends Controller
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
             } else if ($request->call_type == 'General Inquiry') {
-                $subject = 'GI' . $id;
+                // $subject = 'GI' . $id;
+                $subject = '';
             } else {
                 if ($request->call_type == null) {
                     $subject = 'CF' . $id;
                 } else {
-                    $subject = 'ETC' . $id;
+                    // $subject = 'ETC' . $id;
+                    $subject = '';
                 }
             }
 

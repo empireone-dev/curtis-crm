@@ -23,7 +23,6 @@ export default function TicketCreateFormSection() {
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
 
-    
     function formHandler(value, name) {
         dispatch(
             setForm({
@@ -353,44 +352,51 @@ export default function TicketCreateFormSection() {
                     </div>
                     <div className="basis-1/4 flex items-center justify-center">
                         <div className="flex items-center justify-center">
-                            {(form.email !== '' &&  form.email  !== null && form.email  !== undefined) && (form.isHasEmail ?? "true") == "true" && (
-                                <>
-                                    <input
-                                        id="checked-checkbox"
-                                        checked={form.isSendEmail??true}
-                                        onChange={(e) =>
-                                            formHandler(
-                                                e.target.checked,
-                                                "isSendEmail"
-                                            )
-                                        }
-                                        type="checkbox"
-                                        name="isSendEmail"
-                                        className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
-                                    />
-                                    <label
-                                        htmlFor="checked-checkbox"
-                                        className="ms-2 text-sm font-black text-gray-900 "
-                                    >
-                                        Send Initial Email
-                                    </label>
-                                </>
-                            )}
+                            {form.email !== "" &&
+                                form.email !== null &&
+                                form.email !== undefined &&
+                                (form.isHasEmail ?? "true") == "true" && (
+                                    <>
+                                        <input
+                                            id="checked-checkbox"
+                                            checked={form.isSendEmail ?? true}
+                                            onChange={(e) =>
+                                                formHandler(
+                                                    e.target.checked,
+                                                    "isSendEmail"
+                                                )
+                                            }
+                                            type="checkbox"
+                                            name="isSendEmail"
+                                            className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
+                                        />
+                                        <label
+                                            htmlFor="checked-checkbox"
+                                            className="ms-2 text-sm font-black text-gray-900 "
+                                        >
+                                            Send Initial Email
+                                        </label>
+                                    </>
+                                )}
                         </div>
                     </div>
                 </div>
                 <div className="flex gap-4 items-center justify-center">
-                    <button 
-                    disabled={loading}
-                    className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600">
-                        {loading ? (
-                            <div className="py-1.5">
-                                <Loading />
-                            </div>
-                        ) : (
-                            "Open"
-                        )}
-                    </button>
+                    {(form?.call_type !== "General Inquiry" &&
+                        form?.call_type !== "Others") && (
+                        <button
+                            disabled={loading}
+                            className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
+                        >
+                            {loading ? (
+                                <div className="py-1.5">
+                                    <Loading />
+                                </div>
+                            ) : (
+                                "Open"
+                            )}
+                        </button>
+                    )}
                     {/* <button className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600">
                         Closed
                     </button> */}

@@ -302,9 +302,11 @@ export default function TicketTableSection() {
         current: page,
         pageSize: pageSize,
         total: tickets?.last_page * pageSize,
-        onChange: (page, pageSize) => {
+        onChange: (pages, pageSize) => {
+            console.log('pages',pages)
+            console.log('pageSize',pageSize)
             router.visit(window.location.pathname + `?page=${page}${window.location.search.slice(7)}`);
-            setCurrent(page);
+            setCurrent(pages);
             setPageSize(pageSize);
         },
     };
