@@ -16,6 +16,7 @@ import {
 import { router } from "@inertiajs/react";
 import routing from "../../../components/routing";
 import { get_specific_item_service } from "@/app/services/product-search";
+import { message } from "antd";
 
 export default function DecisionMakingSection() {
     const { user } = useSelector((state) => state.app);
@@ -25,6 +26,7 @@ export default function DecisionMakingSection() {
     const [isLoading, setIsLoading] = useState(false);
     const [isLoading1, setIsLoading1] = useState(false);
     const { email_templates } = useSelector((state) => state.email_templates);
+    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
         async function get_decision_making(params) {
@@ -110,25 +112,33 @@ export default function DecisionMakingSection() {
 
     async function submit_form(e) {
         e.preventDefault();
-        setIsLoading1(true);
-        const response = await store_decision_making_service(data);
-        if (
-            data.instruction == "CA Warehouse" ||
-            data.instruction == "US Warehouse"
-        ) {
-            router.visit(routing("warehouse"));
-        } else if (data.instruction == "ASC") {
-            router.visit(routing("repair"));
-        } else if (data.instruction == "Home") {
-            router.visit(routing("files"));
+        if (data.instruction) {
+            setIsLoading1(true);
+            const response = await store_decision_making_service(data);
+            if (
+                data.instruction == "CA Warehouse" ||
+                data.instruction == "US Warehouse"
+            ) {
+                router.visit(routing("warehouse"));
+            } else if (data.instruction == "ASC") {
+                router.visit(routing("repair"));
+            } else if (data.instruction == "Home") {
+                router.visit(routing("files"));
+            }
+            //  else {
+            //     router.visit(routing("refund"));
+            // }
+            setIsLoading1(false);
+        } else {
+            messageApi.open({
+                type: "error",
+                content: "Warranty Instruction is Required!",
+            });
         }
-        //  else {
-        //     router.visit(routing("refund"));
-        // }
-        setIsLoading1(false);
     }
     return (
-        <form>
+        <form onSubmit={submit_form}>
+            {contextHolder}
             <section className="container ">
                 <div className="flex gap-3 mt-2 px-4">
                     <button
@@ -430,12 +440,11 @@ export default function DecisionMakingSection() {
                                             errorMessage="Estimated Cost is required"
                                         />
                                     </div>
-
                                     <Select
                                         onChange={formHandler}
                                         name="instruction"
-                                        required={false}
-                                        value={data.instruction ?? ""}
+                                        required={true}
+                                        value={data.instruction ?? null}
                                         label="Warranty Instruction"
                                         errorMessage=""
                                         data={[
@@ -481,13 +490,14 @@ export default function DecisionMakingSection() {
                                             value: res.id,
                                         }))}
                                     />
-
-                                    <Wysiwyg
-                                        label=""
-                                        name="wysiwyg"
-                                        value={data?.template_text ?? null}
-                                        onChange={formHandler}
-                                    />
+                                    {data.instruction && (
+                                        <Wysiwyg
+                                            label=""
+                                            name="wysiwyg"
+                                            value={data?.template_text ?? null}
+                                            onChange={formHandler}
+                                        />
+                                    )}
 
                                     <div className="flex gap-5 my-12">
                                         <div class="flex items-center">
@@ -584,6 +594,7 @@ export default function DecisionMakingSection() {
                                         />
                                     </div>
                                     <button
+                                        type="submit"
                                         onClick={submit_form}
                                         className="p-3 bg-blue-600 hover:bg-blue-700  w-full font-bold text-white rounded-sm my-8"
                                     >
