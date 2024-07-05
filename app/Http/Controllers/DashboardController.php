@@ -157,9 +157,13 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
         ])->count();
 
-
+        $waiting_for_photos = Ticket::where([
+            ['status', '=', 'WAITING FOR PHOTOS'],
+            ['user_id', '=', $userid],
+        ])->count();
 
         return response()->json([
+            'waiting_for_photos' => $waiting_for_photos,
             'open_warranty' => $open_warranty,
             'open_parts' => $open_parts,
             'open_tech' => $open_tech,
@@ -331,10 +335,13 @@ class DashboardController extends Controller
             ['status', '=', 'CLOSED']
         ])->count();
 
+        $waiting_for_photos =  Ticket::where('status', '=', 'WAITING FOR PHOTOS')->count();
+
         $check_availability = Ticket::where('status', '=', 'INTERNALS')->count();
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
 
         return response()->json([
+            'waiting_for_photos' => $waiting_for_photos,
             'open_warranty' => $open_warranty,
             'open_parts' => $open_parts,
             'open_tech' => $open_tech,

@@ -76,14 +76,22 @@ export default function AgentCardsSection({ account }) {
                         </div>
                     </div>
                     {agent_type(["Warranty"]) && (
-                        <AgentCardsComponent
-                            title="Open Ticket for Warranty"
-                            link="WARRANTY VALIDATION"
-                            count={data.open_warranty ?? 0}
-                            icon={
-                                <ListBulletIcon className="h-10 text-white" />
-                            }
-                        />
+                        <>
+                            <AgentCardsComponent
+                                title="Open Ticket for Warranty"
+                                link="WARRANTY VALIDATION"
+                                count={data.open_warranty ?? 0}
+                                icon={
+                                    <ListBulletIcon className="h-10 text-white" />
+                                }
+                            />
+                            <AgentCardsComponent
+                                link="WAITING FOR PHOTOS"
+                                title="Waiting for Photos"
+                                count={data.waiting_for_photos ?? 0}
+                                icon={<PhotoIcon className="h-10 text-white" />}
+                            />
+                        </>
                     )}
 
                     {agent_type(["Parts"]) && (
@@ -110,14 +118,14 @@ export default function AgentCardsSection({ account }) {
                 </div>
                 <div className="text-3xl font-black my-8">Customers</div>
                 <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-                    {agent_type(["Warranty"]) && (
+                    {/* {agent_type(["Warranty"]) && (
                         <AgentCardsComponent
                             title="Waiting For The Photos"
                             link="false"
                             count={data.waiting_photos ?? 0}
                             icon={<PhotoIcon className="h-10 text-white" />}
                         />
-                    )}
+                    )} */}
 
                     {/* <AgentCardsComponent
                         title="Unseen Customer Email Tickets"

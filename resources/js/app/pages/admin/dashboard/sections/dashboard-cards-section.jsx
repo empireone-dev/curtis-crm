@@ -128,6 +128,13 @@ export default function DashboardCardsSection() {
                     count={data.warranty_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
+                 <DashboardCardsComponent
+                    link="WAITING FOR PHOTOS"
+                    title="Waiting for Photos"
+                    count={data.waiting_for_photos ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
+
 
                 <DashboardCardsComponent
                     title="Close Tickets for Warranty"
