@@ -119,9 +119,12 @@ export default function DecisionMakingSection() {
             router.visit(routing("warehouse"));
         } else if (data.instruction == "ASC") {
             router.visit(routing("repair"));
-        } else {
-            router.visit(routing("refund"));
+        } else if (data.instruction == "Home") {
+            router.visit(routing("files"));
         }
+        //  else {
+        //     router.visit(routing("refund"));
+        // }
         setIsLoading1(false);
     }
     return (

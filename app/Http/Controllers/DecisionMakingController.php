@@ -31,7 +31,7 @@ class DecisionMakingController extends Controller
         $body = $response->getBody()->getContents();
         return $body;
     }
-    
+
 
     public function store(Request $request)
     {
@@ -67,9 +67,12 @@ class DecisionMakingController extends Controller
             $instruction = $ticket->country . ' WAREHOUSE';
         } else if ($request->instruction == "ASC") {
             $instruction = 'REPAIR';
-        } else {
-            $instruction = 'REFUND';
-        }
+        } else if ($request->instruction == "Home") {
+            $instruction = 'WAITING FOR PHOTOS';
+        } 
+        // else {
+        //     $instruction = 'REFUND';
+        // }
         $ticket->update([
             'asc_id' => $request->asc,
             'decision_making_id' => $data->id,
