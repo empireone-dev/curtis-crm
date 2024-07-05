@@ -901,7 +901,11 @@ class TicketController extends Controller
             } else if ($request->call_type == 'General Inquiry') {
                 $subject = 'GI' . $id;
             } else {
-                $subject = 'ETC' . $id;
+                if ($request->call_type == null) {
+                    $subject = 'CF' . $id;
+                } else {
+                    $subject = 'ETC' . $id;
+                }
             }
 
             $tt = Ticket::where('id', $data->id)->first();
