@@ -48,7 +48,7 @@ export default function ContentRepairFormection() {
                 const result = await update_repair_service({
                     ...form,
                     account: user,
-                    status: "PROCESSED TICKET",
+                    status: "REPAIR SUCCESS",
                 });
                 // dispatch(setTicket(result.status))
                 setIsLoading1(false);
@@ -66,7 +66,7 @@ export default function ContentRepairFormection() {
                 const newData = {
                     ...form,
                     account: user,
-                    status: "NOT REPAIRED",
+                    status: "REPAIR UNSUCCESSFUL",
                 }
                 const result = await unrepair_service(form.ticket_id,newData);
                 console.log("result", result);

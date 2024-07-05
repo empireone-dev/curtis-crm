@@ -16,7 +16,7 @@ class RepairController extends Controller
     {
         $ticket = Ticket::where('id', '=', $id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
         $ticket->update([
-            'status' => 'RESOURCE',
+            'status' => 'REPAIR UNSUCCESSFUL',
             'decision_status' => $request->status
         ]);
         Activity::create([

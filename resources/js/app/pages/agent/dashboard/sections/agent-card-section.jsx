@@ -78,6 +78,22 @@ export default function AgentCardsSection({ account }) {
                     {agent_type(["Warranty"]) && (
                         <>
                             <AgentCardsComponent
+                                title="Repair Success"
+                                link="REPAIR SUCCESS"
+                                count={data.repair_success?? 0}
+                                icon={
+                                    <CheckBadgeIcon className="h-10 text-white" />
+                                }
+                            />
+                            <AgentCardsComponent
+                                title="Repair Unsuccessful"
+                                link="REPAIR UNSUCCESSFUL"
+                                count={data.repair_unsuccessful?? 0}
+                                icon={
+                                    <CheckBadgeIcon className="h-10 text-white" />
+                                }
+                            />
+                            <AgentCardsComponent
                                 title="Open Ticket for Warranty"
                                 link="WARRANTY VALIDATION"
                                 count={data.open_warranty ?? 0}

@@ -162,7 +162,18 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
         ])->count();
 
+        $repair_success = Ticket::where([
+            ['status', '=', 'REPAIR SUCCESS'],
+            ['user_id', '=', $userid],
+        ])->count();
+        $repair_unsuccessful = Ticket::where([
+            ['status', '=', 'REPAIR UNSUCCESSFUL'],
+            ['user_id', '=', $userid],
+        ])->count();
+
         return response()->json([
+            'repair_unsuccessful' => $repair_unsuccessful,
+            'repair_success' => $repair_success,
             'waiting_for_photos' => $waiting_for_photos,
             'open_warranty' => $open_warranty,
             'open_parts' => $open_parts,
@@ -334,6 +345,8 @@ class DashboardController extends Controller
             ['call_type', '=', 'Parts'],
             ['status', '=', 'CLOSED']
         ])->count();
+        $repair_unsuccessful = Ticket::where('status', '=', 'REPAIR UNSUCCESSFUL')->count();
+        $repair_success = Ticket::where('status', '=', 'REPAIR SUCCESS')->count();
 
         $waiting_for_photos =  Ticket::where('status', '=', 'WAITING FOR PHOTOS')->count();
 
@@ -341,6 +354,8 @@ class DashboardController extends Controller
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
 
         return response()->json([
+            'repair_unsuccessful' => $repair_unsuccessful,
+            'repair_success' => $repair_success,
             'waiting_for_photos' => $waiting_for_photos,
             'open_warranty' => $open_warranty,
             'open_parts' => $open_parts,

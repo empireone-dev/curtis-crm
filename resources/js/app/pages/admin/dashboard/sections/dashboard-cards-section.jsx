@@ -117,24 +117,30 @@ export default function DashboardCardsSection() {
                     icon={<TagIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
-                    title="Repair"
-                    link="REPAIR"
-                    count={data.repair}
+                    title="Repair Success"
+                    link="REPAIR SUCCESS"
+                    count={data.repair_success?? 0}
                     icon={<CheckBadgeIcon className="h-10 text-white" />}
                 />
+                <DashboardCardsComponent
+                    title="Repair Unsuccessful"
+                    link="REPAIR UNSUCCESSFUL"
+                    count={data.repair_unsuccessful?? 0}
+                    icon={<CheckBadgeIcon className="h-10 text-white" />}
+                />
+
                 <DashboardCardsComponent
                     link="PROCESSED TICKET"
                     title="Processed Tickets for Warranty"
                     count={data.warranty_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
-                 <DashboardCardsComponent
+                <DashboardCardsComponent
                     link="WAITING FOR PHOTOS"
                     title="Waiting for Photos"
                     count={data.waiting_for_photos ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
-
 
                 <DashboardCardsComponent
                     title="Close Tickets for Warranty"
