@@ -51,6 +51,7 @@ export default function ContentDetailsSection() {
             }
         }
     }
+    console.log('ticket',ticket)
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">

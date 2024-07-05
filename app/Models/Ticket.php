@@ -44,7 +44,8 @@ class Ticket extends Model
         'reason_to_close',
         'status',
         'cases_status',
-        'move_status'
+        'move_status',
+        'purchase_date'
     ];
 
     
