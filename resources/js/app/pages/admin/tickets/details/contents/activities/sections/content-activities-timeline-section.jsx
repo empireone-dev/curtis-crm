@@ -53,27 +53,43 @@ export default function ContentActivitiesTimelineSection() {
                         console.log("resresres", res);
                         return (
                             <>
-                                {res?.ticket?.status == "WAITING FOR PHOTOS" && (
-                                    <li key={i} className="mb-10 ms-6 bg-white p-3 rounded-md shadow-md">
-                                        <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
-                                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-                                            #{res?.user?.emp_id}
-                                            <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
-                                                {formattedTimestamp}
-                                            </span>
-                                        </h3>
-                                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                                            Resourced on{" "}
-                                            {moment(res.created_at).format(
-                                                "LLL"
-                                            )}
-                                        </time>
+                                (
+                                <li
+                                    key={i}
+                                    className="mb-10 ms-6 bg-white p-3 rounded-md shadow-md"
+                                >
+                                    <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
+                                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                        #{res?.user?.emp_id}
+                                        <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">
+                                            {formattedTimestamp}
+                                        </span>
+                                    </h3>
+                                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                                        Resourced on{" "}
+                                        {moment(res.created_at).format("LLL")}
+                                    </time>
+                                    {res?.ticket?.status ==
+                                        "WAITING FOR PHOTOS" && (
                                         <div className="text-2xl">
-                                            Waiting for Proof of destroy - PHOTOS
+                                            Waiting for Proof of destroy -
+                                            PHOTOS
                                         </div>
-                                    </li>
-                                )}
+                                    )}
 
+                                    {res?.ticket?.status == "US WAREHOUSE" && (
+                                        <div className="text-2xl">
+                                            Ticket assigned to US Warehouse
+                                        </div>
+                                    )}
+
+                                    {res?.ticket?.status == "CA WAREHOUSE" && (
+                                        <div className="text-2xl">
+                                            Ticket assigned to CA Warehouse
+                                        </div>
+                                    )}
+                                </li>
+                                )
                                 <li key={i} className="mb-10 ms-6">
                                     <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
                                     <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
