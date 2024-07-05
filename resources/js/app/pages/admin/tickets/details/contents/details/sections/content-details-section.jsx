@@ -9,6 +9,7 @@ import ReasonToClose from "../id/sections/reason-to-close";
 import routing from "../../../components/routing";
 import MoveTicketAssignement from "./move-ticket-assignement";
 import ResendInitialEmail from "./resend-initial-email";
+import moment from "moment";
 
 export default function ContentDetailsSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -20,7 +21,7 @@ export default function ContentDetailsSection() {
             setIsLoading(true);
             try {
                 await store.dispatch(
-                    update_tickets_status_thunk(ticket.id, "CLOSED")
+                    update_tickets_status_thunk(ticket?.id, "CLOSED")
                 );
                 setIsLoading(false);
                 router.visit(routing("details"));
@@ -32,9 +33,9 @@ export default function ContentDetailsSection() {
 
     function edit_ticket(params) {
         if (user.role_id == 1) {
-            router.visit(`/administrator/tickets/details/${ticket.id}/edit`);
+            router.visit(`/administrator/tickets/details/${ticket?.id}/edit`);
         } else {
-            router.visit(`/agent/tickets/details/${ticket.id}/edit`);
+            router.visit(`/agent/tickets/details/${ticket?.id}/edit`);
         }
     }
     async function open_ticket(params) {
@@ -42,7 +43,7 @@ export default function ContentDetailsSection() {
             setIsLoading(true);
             try {
                 await store.dispatch(
-                    update_tickets_status_thunk(ticket.id, "OPEN")
+                    update_tickets_status_thunk(ticket?.id, "OPEN")
                 );
                 setIsLoading(false);
                 router.visit(routing("details"));
@@ -51,7 +52,7 @@ export default function ContentDetailsSection() {
             }
         }
     }
-    console.log('ticket',ticket)
+    console.log("ticket", ticket);
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
@@ -61,7 +62,7 @@ export default function ContentDetailsSection() {
                     </h3>
 
                     <div className="flex gap-5">
-                        {ticket.email && <ResendInitialEmail />}
+                        {ticket?.email && <ResendInitialEmail />}
                         <MoveTicketAssignement />
                         <button
                             onClick={edit_ticket}
@@ -72,7 +73,7 @@ export default function ContentDetailsSection() {
                             </div>
                         </button>
 
-                        {ticket.status == "CLOSED" ? (
+                        {ticket?.status == "CLOSED" ? (
                             <button
                                 onClick={open_ticket}
                                 className="bg-violet-500 p-3 text-white  hover:bg-violet-600 w-48"
@@ -85,32 +86,33 @@ export default function ContentDetailsSection() {
                     </div>
                 </div>
                 <h3 className="text-base font-semibold leading-7 text-red-600">
-                    {ticket.move_status ?? ""}
+                    {ticket?.move_status ?? ""}
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6  font-medium text-gray-500">
-                    Personal details and ticket.
+                    Personal details and ticket?.
                 </p>
             </div>
             <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Full name :</b> {ticket.fname} {ticket.lname}
+                            <b>Full name :</b> {ticket?.fname} {ticket?.lname}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Email :</b> {ticket.email}
+                            <b>Email :</b> {ticket?.email}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Phone :</b>{" "}
-                            {ticket.phone?.replace(
+                            {ticket?.phone?.replace(
                                 /(\d{3})(\d{3})(\d{4})/,
                                 "($1) $2-$3"
                             )}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Purchase Date :</b> {ticket.purchase_date}
+                            <b>Purchase Date :</b>{" "}
+                            {moment(ticket?.purchase_date).format("LL")}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -118,30 +120,30 @@ export default function ContentDetailsSection() {
                             <b>Store Name:</b> {ticket?.receipt?.store ?? "NA"}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            {/* <b>Unit :</b> {ticket.unit} */}
+                            {/* <b>Unit :</b> {ticket?.unit} */}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Model # :</b> {ticket.item_number}
+                            <b>Model # :</b> {ticket?.item_number}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Unit :</b> {ticket.unit}
+                            <b>Unit :</b> {ticket?.unit}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Serial # :</b> {ticket.serial_number}
+                            <b>Serial # :</b> {ticket?.serial_number}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Item Type :</b> {ticket.class}
+                            <b>Item Type :</b> {ticket?.class}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900 flex">
                             <b>Issue :</b>{" "}
-                            {ticket.issue &&
-                                JSON.parse(ticket.issue).map((item, j) => {
+                            {ticket?.issue &&
+                                JSON.parse(ticket?.issue).map((item, j) => {
                                     return (
                                         <div
                                             key={j}
@@ -155,28 +157,28 @@ export default function ContentDetailsSection() {
                                 })}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Resolution :</b> {ticket.call_type}
+                            <b>Resolution :</b> {ticket?.call_type}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Country :</b> {ticket.country}
+                            <b>Country :</b> {ticket?.country}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Zip Code / Postal :</b> {ticket.zip_code}
+                            <b>Zip Code / Postal :</b> {ticket?.zip_code}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Address :</b> {ticket.address}
+                            <b>Address :</b> {ticket?.address}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>State :</b> {ticket.state}
+                            <b>State :</b> {ticket?.state}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>City :</b> {ticket.city}
+                            <b>City :</b> {ticket?.city}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Authorized Service Center:</b> N/A
@@ -184,10 +186,10 @@ export default function ContentDetailsSection() {
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Remarks :</b> {ticket.remarks}
+                            <b>Remarks :</b> {ticket?.remarks}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            <b>Explanation :</b> {ticket.explanation}
+                            <b>Explanation :</b> {ticket?.explanation}
                         </dd>
                     </div>
                 </dl>
