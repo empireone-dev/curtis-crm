@@ -514,7 +514,7 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'open_cases') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id],['status', '<>', 'CLOSED'],['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
+            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['status', '<>', 'CLOSED'], ['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
             $data = $dataQuery->paginate($perPage);
             $emails = [];
             foreach ($data as $ticket) {
@@ -536,18 +536,18 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     if ($response->successful() && count($responseData) != 0) {
-                       if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
+                        if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
                             $emails[] = [
                                 'ticket' => $ticket,
                                 'emails' => $responseData,
                             ];
-                         }
+                        }
                     }
                 }
             }
             // Set the emails collection to the data
             $data->setCollection(collect($emails));
-        } 
+        }
         // else if ($request->cases == 'handled') {
         //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
         //     $data = $dataQuery->paginate($perPage);
@@ -639,10 +639,10 @@ class TicketController extends Controller
         // Start the query builder
         if (isset($searchQuery)) {
             $query = Ticket::query();
-        }else{
+        } else {
             $query = Ticket::where('user_id', $id);
         }
-      
+
 
         if ($searchQuery) {
             // Dynamically add where conditions for each column
@@ -820,7 +820,11 @@ class TicketController extends Controller
             } else if ($request->call_type == 'General Inquiry') {
                 $subject = 'GI' . $id;
             } else {
-                $subject = 'ETC' . $id;
+                if ($request->call_type == null) {
+                    $subject = 'CF' . $id;
+                } else {
+                    $subject = 'ETC' . $id;
+                }
             }
 
             $t = Ticket::where('id', $data->id)->first();
