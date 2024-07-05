@@ -53,7 +53,6 @@ export default function ContentActivitiesTimelineSection() {
                         console.log("resresres", res);
                         return (
                             <>
-                                (
                                 <li
                                     key={i}
                                     className="mb-10 ms-6 bg-white p-3 rounded-md shadow-md"
@@ -89,7 +88,6 @@ export default function ContentActivitiesTimelineSection() {
                                         </div>
                                     )}
                                 </li>
-                                )
                                 <li key={i} className="mb-10 ms-6">
                                     <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
                                     <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
