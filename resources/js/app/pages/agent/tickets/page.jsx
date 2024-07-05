@@ -26,7 +26,7 @@ export default function AgentTicketsPage({ auth }) {
     return (
         <AgentLayout account={account}>
             <div className="my-8">
-                <div className="px-5 flex items-end justify-end">
+                <div className="px-5 flex items-start justify-start">
                     <button
                         onClick={() =>
                             // router.visit("/agent/tickets/create")
