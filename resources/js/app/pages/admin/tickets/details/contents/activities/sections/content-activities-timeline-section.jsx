@@ -87,6 +87,11 @@ export default function ContentActivitiesTimelineSection() {
                                             Ticket assigned to CA Warehouse
                                         </div>
                                     )}
+                                    {res?.ticket?.status == "REPAIR" && (
+                                        <div className="text-2xl">
+                                            Ticket assigned to ASC
+                                        </div>
+                                    )}
                                 </li>
                                 <li key={i} className="mb-10 ms-6">
                                     <UserCircleIcon className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white" />
