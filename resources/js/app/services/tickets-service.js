@@ -1,6 +1,14 @@
 import axios from "axios";
 
 
+export async function check_serial_number_service(serial_number) {
+    try {
+        const res = await axios.get("/api/check_serial_number/"+serial_number);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function create_ticket_close_service(data) {
     try {
         const res = await axios.post("/api/create_ticket_close",data);

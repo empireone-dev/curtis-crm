@@ -23,7 +23,13 @@ use Illuminate\Support\Facades\Http;
 class TicketController extends Controller
 {
 
-
+    public function check_serial_number($serial_number)
+    {
+        $ticket = Ticket::where('serial_number',$serial_number)->first();
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
     public function resend_email_templete(Request $request)
     {
         if ($request->call_type == 'CF-Warranty Claim') {

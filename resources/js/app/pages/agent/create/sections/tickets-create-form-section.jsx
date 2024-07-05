@@ -15,6 +15,8 @@ import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
 import TicketCloseSection from "@/app/pages/admin/tickets/create/sections/ticket-close-section";
 import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import { message } from "antd";
+import { check_serial_number_service } from "@/app/services/tickets-service";
 
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
@@ -22,6 +24,7 @@ export default function TicketCreateFormSection() {
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => state.app);
+    const [messageApi, contextHolder] = message.useMessage();
 
     function formHandler(value, name) {
         dispatch(
@@ -41,27 +44,36 @@ export default function TicketCreateFormSection() {
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
-        dispatch(
-            setForm({
-                ...form,
-                user: user,
-                status: null,
-                created_from: "AGENT FORM",
-                email:
-                    form?.isHasEmail == "true" || form?.isHasEmail == true
-                        ? form?.email
-                        : null,
-                body: form.call_type == "Parts" ? parts : warranty,
-            })
-        );
-        const response = await store.dispatch(tickets_create_thunk());
-        setLoading(false);
-        if (user.role_id == 1) {
-            router.visit(
-                `/administrator/tickets?search=` + response?.ticket_id
+        const data = await check_serial_number_service(form.serial_number);
+        if (!data.result) {
+            dispatch(
+                setForm({
+                    ...form,
+                    user: user,
+                    status: null,
+                    created_from: "AGENT FORM",
+                    email:
+                        form?.isHasEmail == "true" || form?.isHasEmail == true
+                            ? form?.email
+                            : null,
+                    body: form.call_type == "Parts" ? parts : warranty,
+                })
             );
+            const response = await store.dispatch(tickets_create_thunk());
+            setLoading(false);
+            if (user.role_id == 1) {
+                router.visit(
+                    `/administrator/tickets?search=` + response?.ticket_id
+                );
+            } else {
+                router.visit(`/agent/tickets?search=` + response?.ticket_id);
+            }
         } else {
-            router.visit(`/agent/tickets?search=` + response?.ticket_id);
+            messageApi.open({
+                type: "error",
+                content: "Serial number is already exist!",
+            });
+            setLoading(false);
         }
     }
 
@@ -76,6 +88,7 @@ export default function TicketCreateFormSection() {
             onSubmit={submitFormTicket}
             className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3"
         >
+            {contextHolder}
             <div className="flex items-center justify-center font-black text-3xl">
                 Ticket Form
             </div>

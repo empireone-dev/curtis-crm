@@ -16,12 +16,15 @@ import Autocomplete from "@/app/layouts/components/autocomplete";
 import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 import ReasonToClose from "../../details/contents/details/id/sections/reason-to-close";
 import TicketCloseSection from "./ticket-close-section";
+import { check_serial_number_service } from "@/app/services/tickets-service";
+import { message } from 'antd';
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
     const { user } = useSelector((state) => state.app);
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
     function formHandler(value, name) {
         dispatch(
@@ -41,27 +44,36 @@ export default function TicketCreateFormSection() {
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
-        dispatch(
-            setForm({
-                ...form,
-                status: null,
-                user: user,
-                created_from: "AGENT FORM",
-                email:
-                    form.isHasEmail == "true" || form.isHasEmail == true
-                        ? form.email
-                        : null,
-                body: form.call_type == "Parts" ? parts : warranty,
-            })
-        );
-        const response = await store.dispatch(tickets_create_thunk());
-        setLoading(false);
-        if (user.role_id == 1) {
-            router.visit(
-                `/administrator/tickets?search=` + response?.ticket_id
+        const data = await check_serial_number_service(form.serial_number);
+        if (!data.result) {
+            dispatch(
+                setForm({
+                    ...form,
+                    status: null,
+                    user: user,
+                    created_from: "AGENT FORM",
+                    email:
+                        form.isHasEmail == "true" || form.isHasEmail == true
+                            ? form.email
+                            : null,
+                    body: form.call_type == "Parts" ? parts : warranty,
+                })
             );
+            const response = await store.dispatch(tickets_create_thunk());
+            setLoading(false);
+            if (user.role_id == 1) {
+                router.visit(
+                    `/administrator/tickets?search=` + response?.ticket_id
+                );
+            } else {
+                router.visit(`/agent/tickets?search=` + response?.ticket_id);
+            }
         } else {
-            router.visit(`/agent/tickets?search=` + response?.ticket_id);
+            messageApi.open({
+                type: 'error',
+                content: 'Serial number is already exist!',
+              });
+              setLoading(false);
         }
     }
     const findCountry = (countryName) => {
@@ -75,6 +87,7 @@ export default function TicketCreateFormSection() {
             onSubmit={submitFormTicket}
             className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3"
         >
+            {contextHolder}
             <div className="flex items-center justify-center font-black text-3xl">
                 Ticket Form
             </div>
@@ -382,21 +395,21 @@ export default function TicketCreateFormSection() {
                     </div>
                 </div>
                 <div className="flex gap-4 items-center justify-center">
-                    {(form?.call_type !== "General Inquiry" &&
-                        form?.call_type !== "Others") && (
-                        <button
-                            disabled={loading}
-                            className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
-                        >
-                            {loading ? (
-                                <div className="py-1.5">
-                                    <Loading />
-                                </div>
-                            ) : (
-                                "Open"
-                            )}
-                        </button>
-                    )}
+                    {form?.call_type !== "General Inquiry" &&
+                        form?.call_type !== "Others" && (
+                            <button
+                                disabled={loading}
+                                className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
+                            >
+                                {loading ? (
+                                    <div className="py-1.5">
+                                        <Loading />
+                                    </div>
+                                ) : (
+                                    "Open"
+                                )}
+                            </button>
+                        )}
                     {/* <button className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600">
                         Closed
                     </button> */}

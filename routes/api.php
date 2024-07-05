@@ -97,6 +97,7 @@ Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
 Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
 Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
 Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
+Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
 
 
 
