@@ -201,7 +201,7 @@ export default function TicketTableSection() {
                         ? "red"
                         : record.status == "PARTS VALIDATION" ||
                           record.status == "WARRANTY VALIDATION" ||
-                          record.status == "TECH VALIDATION"||
+                          record.status == "TECH VALIDATION" ||
                           record.status == null
                         ? "orange"
                         : "green";
@@ -285,10 +285,7 @@ export default function TicketTableSection() {
             },
         },
     ];
-    // const handleTableChange = (pagination) => {
-    //     setCurrent(pagination.current);
-    //     setPageSize(pagination.pageSize);
-    // };
+
 
     const url = window.location.pathname + window.location.search;
 
@@ -298,14 +295,27 @@ export default function TicketTableSection() {
     };
 
     const page = getQueryParam(url, "page");
+    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+
     const paginationConfig = {
-        current: page,
+        current: currentPage,
         pageSize: pageSize,
-        total: tickets?.last_page * pageSize,
-        onChange: (pages, pageSize) => {
-            router.visit(window.location.pathname + `?page=${pages}${window.location.search.slice(7)}`);
-            setCurrent(pages);
+        total: tickets?.last_page * pageSize, // Replace tickets with your actual data source
+        onChange: (currentPage, pageSize) => {
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("page", currentPage);
+            const newUrl =
+                window.location.pathname + "?" + searchParams.toString();
+
+            // Example of what to do with the new URL (replace with your logic)
+            console.log("Navigating to:", newUrl);
+            router.visit(newUrl)
+            // Example of setting state with currentPage and pageSize
+            setCurrent(currentPage);
             setPageSize(pageSize);
+
+            // Example of navigation using router (replace with your logic)
+            // router.visit(newUrl);
         },
     };
     return (
