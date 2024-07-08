@@ -150,6 +150,12 @@ export async function get_tickets_by_ticket_id(id) {
     return res.data.result;
 }
 
+export async function get_tickets_by_ticket_details_id(id) {
+    const res = await axios.get("/api/get_tickets_by_ticket_details_id/" + id);
+    return res.data.result;
+}
+
+
 export async function update_explanation_service(id, explanation) {
     const res = await axios.put("/api/update_explanation/" + id, {
         explanation: explanation,

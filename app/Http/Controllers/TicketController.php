@@ -307,6 +307,15 @@ class TicketController extends Controller
         ], 200);
     }
 
+    public function get_tickets_by_ticket_details_id($ticket_id)
+    {
+        $ticket = Ticket::where('ticket_id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
+        $asc = DecisionMaking::where('id', $ticket->decision_making_id)->with(['user'])->first();
+        return response()->json([
+            'result' => array_merge($ticket->toArray(), ['asc' => $asc ? $asc->toArray() : null]),
+        ], 200);
+    }
+
     public function update_tickets_status(Request $request, $id)
     {
         $ticket = Ticket::where('id', $id)->first();

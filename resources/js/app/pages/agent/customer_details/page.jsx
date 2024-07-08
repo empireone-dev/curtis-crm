@@ -5,7 +5,7 @@ import RecordDetailsSection from "./sections/record-details-section";
 import CaseLogsSection from "./sections/case-logs-section";
 import LogCaseSection from "./sections/log-case-section";
 import CaseDetailsSection from "./sections/case-details-section";
-import { get_tickets_by_ticket_id } from "@/app/services/tickets-service";
+import { get_tickets_by_ticket_details_id} from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
 import { get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
 
     useEffect(() => {
         async function fetch_data(params) {
-            const ress = await get_tickets_by_ticket_id(
+            const ress = await get_tickets_by_ticket_details_id(
                 window.location.pathname.split("/")[3]
             );
             const res = await get_caseslog_by_ticket_id_service(

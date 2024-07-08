@@ -104,6 +104,7 @@ Route::get('check_serial_number/{serial_number}', [TicketController::class, 'che
 Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explanation']);
 Route::put('/update_tickets_status/{gid}', [TicketController::class, 'update_tickets_status']);
 Route::get('/get_tickets_by_ticket_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_id']);
+Route::get('/get_tickets_by_ticket_details_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_details_id']);
 
 Route::resource('brands', BrandController::class);
 Route::resource('item_types', ItemTypeController::class);
