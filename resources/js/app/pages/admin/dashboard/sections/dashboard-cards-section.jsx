@@ -70,14 +70,14 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Open Ticket for Parts"
-                    link="OPEN PARTS"
-                    count={data.open_parts ?? 0}
+                    link="PARTS VALIDATION"
+                    count={data.parts_validation ?? 0}
                     icon={<ListBulletIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
                     title="Open Ticket for Tech"
-                    link="OPEN TECH"
-                    count={data.open_tech ?? 0}
+                    link="TECH VALIDATION"
+                    count={data.technical ?? 0}
                     icon={<ListBulletIcon className="h-10 text-white" />}
                 />
             </div>
