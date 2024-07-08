@@ -25,6 +25,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                 cases,
                 account.id
             );
+            console.log('resresresres',res)
             dispatch(setTickets(res));
             setLoading(false);
         }
@@ -203,16 +204,16 @@ export default function AgentOpenCasesEMail({ auth }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tickets.map((res, i) => {
+                                {tickets?.result.map((res, i) => {
                                     return (
                                         <tr class="bg-white border-b">
                                             <td class="px-6 py-3">
                                                 {moment(
-                                                    res.ticket?.updated_at
+                                                    res.date
                                                 ).format("LLL")}
                                             </td>
                                             <td class="px-6 py-3">
-                                                {moment(res.ticket?.updated_at)
+                                                {moment(res.date)
                                                     .add(2, "days")
                                                     .format("LLL")}
                                             </td>
@@ -220,17 +221,17 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {res.ticket?.ticket_id}
+                                                {res.subject}
                                             </th>
                                             <td class="px-6 py-3">
                                                 {" "}
-                                                {res.ticket?.email}
+                                                {res.to}
                                             </td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>
                                                         window.open(
-                                                            `/agent/customer_details/${res.ticket?.id}`,
+                                                            `/agent/customer_details/${res.subject}`,
                                                             "_blank"
                                                         )
                                                     }

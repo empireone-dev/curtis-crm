@@ -300,7 +300,7 @@ class TicketController extends Controller
     }
     public function get_tickets_by_ticket_id($ticket_id)
     {
-        $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
+        $ticket = Ticket::where('ticket_id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
         $asc = DecisionMaking::where('id', $ticket->decision_making_id)->with(['user'])->first();
         return response()->json([
             'result' => array_merge($ticket->toArray(), ['asc' => $asc ? $asc->toArray() : null]),
@@ -520,68 +520,47 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'open_cases') {
-            $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['status', '<>', 'CLOSED'], ['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
-            $data = $dataQuery->paginate($perPage);
-            $emails = [];
-            foreach ($data as $ticket) {
-                $searchSubject = $ticket->ticket_id;
-                if ($ticket->call_type == 'CF-Warranty Claim') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
+
+
+            $dataQuery = Ticket::where([
+                ['user_id', '=', $request->user_id],
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['call_type', '=', $call_type]
+            ]);
+
+            $dataQueryCount = $dataQuery->count();
+
+            $dataPaginator = $dataQuery->paginate($perPage);
+            $data = $dataPaginator->items(); // Extracting only the items from the paginator
+            $data = $dataPaginator->pluck('ticket_id')->toArray();
+            if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
+                if (count($data) !== 0) {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwqlIi2Dsfh8OmfFWUvmIvmObUQkHZ05vsh-14WlmJSEi5IqcV9bqe5VWaQkw1svhJ9/exec?data=' . json_encode($data);
+
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
-                    // if ($response->successful() && count($responseData) != 0) {
-                    //     if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
-                    //         $emails[] = [
-                    //             'ticket' => $ticket,
-                    //             'emails' => $responseData,
-                    //         ];
-                    //     }
-                    // }
-                } else if ($ticket->call_type == 'Parts') {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
+
+                    return response()->json([
+                        'data_count' => count($data),
+                        'ticket_count' => $dataQueryCount,
+                        'result' => $responseData
+                    ], 200);
+                }
+            } else if ($call_type == 'Parts') {
+                if (count($data) !== 0) {
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyqtnaVtRhY3xOc6Qgq0HyoGMPjAHJMJpnDBqK8rJL0TKbhlBFfkSa160KtJf9fRozB/exec?data=' . json_encode($data);
+
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
-                    if ($response->successful() && count($responseData) != 0) {
-                        if ($responseData[0]['from'] != 'parts@curtiscs.com' && $responseData[0]['from'] != 'Parts Team <parts@curtiscs.com>') {
-                            $emails[] = [
-                                'ticket' => $ticket,
-                                'emails' => $responseData,
-                            ];
-                        }
-                    }
+
+                    return response()->json([
+                        'data_count' => count($data),
+                        'ticket_count' => $dataQueryCount,
+                        'result' => $responseData
+                    ], 200);
                 }
             }
-            // Set the emails collection to the data
-            $data->setCollection(collect($emails));
-
-
-
-
-
-            // $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['status', '<>', 'CLOSED'], ['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
-            // $ticketIds = $dataQuery->pluck('ticket_id')->toArray();
-            // $data = $dataQuery->paginate($perPage);
-            // $emails = [];
-            // if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
-            //     $scriptUrl = 'https://script.google.com/macros/s/AKfycbxJizz6LlW8hRU9MCfiGOyfjTDiFdNRV1e9cZyPfgC_nA3uSE-kP84-WeZ94if8Ql0N/exec?ticket_id=' . $data;
-            //     $response = Http::get($scriptUrl);
-            //     $responseData = $response->json();
-            //     // if ($response->successful() && count($responseData) != 0) {
-            //     //     if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
-            //     //         $emails[] = [
-            //     //             'ticket' => $ticket,
-            //     //             'emails' => $responseData,
-            //     //         ];
-            //     //     }
-            //     // }
-            //     // return response()->json([
-            //     //     'result' => $data
-            //     // ], 200);
-            //     return response()->json([
-            //         'result' => $responseData
-            //     ], 200);
-            // } else if ($call_type == 'Parts') {
-            // }
         }
         // else if ($request->cases == 'handled') {
         //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
@@ -648,9 +627,6 @@ class TicketController extends Controller
         //     $data->setCollection(collect($emails));
         // }
 
-        return response()->json([
-            'result' => $data
-        ], 200);
     }
     public function show(Request $request, $id)
     {

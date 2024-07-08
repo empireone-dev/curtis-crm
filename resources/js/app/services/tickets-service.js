@@ -69,7 +69,8 @@ export async function transfer_ticket_cases_service(data) {
 export async function cases_service(page,cases,user_id) {
     try {
         const res = await axios.get(`/api/cases${page}&cases=${cases}&user_id=${user_id}`);
-        return res.data.result.data;
+        console.log('resres',res)
+        return res.data;
     } catch (error) {
         return [];
     }
