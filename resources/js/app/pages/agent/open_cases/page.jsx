@@ -25,7 +25,6 @@ export default function AgentOpenCasesEMail({ auth }) {
                 cases,
                 account.id
             );
-            console.log("resres", res);
             dispatch(setTickets(res));
             setLoading(false);
         }

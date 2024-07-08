@@ -25,7 +25,7 @@ class TicketController extends Controller
 
     public function check_serial_number($serial_number)
     {
-        $ticket = Ticket::where('serial_number',$serial_number)->first();
+        $ticket = Ticket::where('serial_number', $serial_number)->first();
         return response()->json([
             'result' => $ticket
         ], 200);
@@ -807,15 +807,9 @@ class TicketController extends Controller
             ]));
 
             $subject = '';
-            $length = strlen($data->id);
-            $id = '';
-            if ($length == 1) {
-                $id = date("dmy") . '00000' . $data->id;
-            } else if ($length == 2) {
-                $id = date("dmy") . '0000' . $data->id;
-            } else {
-                $id = date("dmy") . '000' . $data->id;
-            }
+            $idLength = strlen($data->id);
+            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
+            $id = date("dmy") . $leadingZeros . $data->id;
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -890,15 +884,9 @@ class TicketController extends Controller
 
 
             $subject = '';
-            $length = strlen($data->id);
-            $id = '';
-            if ($length == 1) {
-                $id = date("dmy") . '00000' . $data->id;
-            } else if ($length == 2) {
-                $id = date("dmy") . '0000' . $data->id;
-            } else {
-                $id = date("dmy") . '000' . $data->id;
-            }
+            $idLength = strlen($data->id);
+            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
+            $id = date("dmy") . $leadingZeros . $data->id;
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -1018,15 +1006,9 @@ class TicketController extends Controller
             ]);
 
             $subject = '';
-            $length = strlen($data->id);
-            $id = '';
-            if ($length == 1) {
-                $id = date("dmy") . '00000' . $data->id;
-            } else if ($length == 2) {
-                $id = date("dmy") . '0000' . $data->id;
-            } else {
-                $id = date("dmy") . '000' . $data->id;
-            }
+            $idLength = strlen($data->id);
+            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
+            $id = date("dmy") . $leadingZeros . $data->id;
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -1083,15 +1065,9 @@ class TicketController extends Controller
 
 
             $subject = '';
-            $length = strlen($data->id);
-            $id = '';
-            if ($length == 1) {
-                $id = date("dmy") . '00000' . $data->id;
-            } else if ($length == 2) {
-                $id = date("dmy") . '0000' . $data->id;
-            } else {
-                $id = date("dmy") . '000' . $data->id;
-            }
+            $idLength = strlen($data->id);
+            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
+            $id = date("dmy") . $leadingZeros . $data->id;
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;

@@ -99,7 +99,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name="fname"
                         value={form?.fname}
-                        label="First Name"
+                        label="First Namess"
                         type="text"
                         // errorMessage='First Name is required'
                     />

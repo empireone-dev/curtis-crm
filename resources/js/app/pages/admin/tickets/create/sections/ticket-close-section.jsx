@@ -43,8 +43,8 @@ console.log('user',user)
     }
     async function click_close(e) {
         e.preventDefault()
-        if ((data.fname == undefined) || (data.phone == null || data.phone == '' || data.phone == undefined) || (data.remarks == null || data.remarks == ''|| data.remarks == undefined)) {
-            alert('Name, Phone Number & Remarks must be required!')
+        if ((data.phone == null || data.phone == '' || data.phone == undefined) || (data.remarks == null || data.remarks == ''|| data.remarks == undefined)) {
+            alert('Phone Number & Remarks must be required!')
         }else{
             setOpen(true)
         }
