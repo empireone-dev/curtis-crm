@@ -64,8 +64,8 @@ export default function DashboardCardsSection() {
                 </div>
                 <DashboardCardsComponent
                     title="Open Ticket for Warranty"
-                    link="OPEN WARRANTY"
-                    count={data.open_warranty ?? 0}
+                    link="WARRANTY VALIDATION"
+                    count={data.warranty_validation ?? 0}
                     icon={<ListBulletIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
