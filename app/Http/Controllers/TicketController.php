@@ -1046,9 +1046,9 @@ class TicketController extends Controller
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
             } else if ($request->call_type == 'General Inquiry') {
-                $subject = 'GI' . $id;
+                $subject = '';
             } else {
-                $subject = 'ETC' . $id;
+                $subject = '';
             }
 
             $t = Ticket::where('id', $data->id)->first();
@@ -1105,9 +1105,9 @@ class TicketController extends Controller
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
             } else if ($request->call_type == 'General Inquiry') {
-                $subject = 'GI' . $id;
+                $subject = '';
             } else {
-                $subject = 'ETC' . $id;
+                $subject = '';
             }
 
             $t = Ticket::where('id', $data->id)->first();
