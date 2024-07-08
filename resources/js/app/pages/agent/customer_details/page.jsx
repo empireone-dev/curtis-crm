@@ -27,6 +27,7 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
             const res = await get_caseslog_by_ticket_id_service(
                 window.location.pathname.split("/")[3]
             );
+            console.log('res.data',res.data)
             dispatch(set_cases_log(res.data));
             setData(ress);
         }

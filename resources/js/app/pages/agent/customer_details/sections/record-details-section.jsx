@@ -9,7 +9,7 @@ export default function RecordDetailsSection({data}) {
                 </div>
                 <div class="md:col-span-5">
                     <label>Case File No.</label>
-                    <input type="text" class="h-10 border mt-1 mb-2 rounded px-4 w-full bg-gray-50" value={data?.ticket_id?.slice(1)}/>
+                    <input type="text" class="h-10 border mt-1 mb-2 rounded px-4 w-full bg-gray-50" value={data?.ticket_id}/>
                 </div>
                 <div className='flex flex-1 gap-4 w-full mb-2'>
                     <div class="w-full">
