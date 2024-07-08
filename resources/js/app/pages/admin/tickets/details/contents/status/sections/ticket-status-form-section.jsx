@@ -15,7 +15,7 @@ export default function TicketStatusFormSection() {
     const [isLoading, setIsLoading] = useState(false);
     const { ticket } = useSelector((state) => state.tickets);
     const { user } = useSelector((state) => state.app);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     function formHandler(value, name) {
         setForm({
             ...form,
@@ -65,7 +65,7 @@ export default function TicketStatusFormSection() {
         },
     ];
     async function submit_status() {
-        if (confirm("Are you sure you want to update the status?")) {
+        if (confirm("Are you sure you want to close the ticket?")) {
             setIsLoading(true);
             try {
                 await store.dispatch(
@@ -80,18 +80,16 @@ export default function TicketStatusFormSection() {
     }
 
     async function forward_ticket(data) {
-       try {
-        const res = await forward_ticket_service({
-            ...form,
-            ...ticket,
-            user_id:user.id,
-            where_to_move:data
-        })
-        dispatch(setTicket(res.result))
-        router.visit(routing("files"));
-       } catch (error) {
-        
-       }
+        try {
+            const res = await forward_ticket_service({
+                ...form,
+                ...ticket,
+                user_id: user.id,
+                where_to_move: data,
+            });
+            dispatch(setTicket(res.result));
+            router.visit(routing("files"));
+        } catch (error) {}
     }
 
     return (
@@ -124,15 +122,23 @@ export default function TicketStatusFormSection() {
                 }
             </button> */}
             <div className="flex gap-5">
-                <button 
-                onClick={()=>forward_ticket('WARRANTY VALIDATION')}
-                className="p-3 bg-green-500 uppercase hover:bg-green-600 text-white rounded-md w-64 flex items-center justify-center">
+                <button
+                    onClick={() => forward_ticket("WARRANTY VALIDATION")}
+                    className="p-3 bg-green-500 uppercase hover:bg-green-600 text-white rounded-md w-64 flex items-center justify-center"
+                >
                     Forwarded to Warranty
                 </button>
-                <button 
-                onClick={()=>forward_ticket('PARTS VALIDATION')}
-                className="p-3 bg-blue-500 uppercase hover:bg-blue-600 text-white rounded-md w-64 flex items-center justify-center">
+                <button
+                    onClick={() => forward_ticket("PARTS VALIDATION")}
+                    className="p-3 bg-blue-500 uppercase hover:bg-blue-600 text-white rounded-md w-64 flex items-center justify-center"
+                >
                     Forwarded to Parts
+                </button>
+                <button
+                    onClick={() => submit_status("PARTS VALIDATION")}
+                    className="p-3 bg-red-500 uppercase hover:bg-red-600 text-white rounded-md w-64 flex items-center justify-center"
+                >
+                    CLOSE TICKET
                 </button>
             </div>
         </div>
