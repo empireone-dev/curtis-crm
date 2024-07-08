@@ -553,6 +553,35 @@ class TicketController extends Controller
             }
             // Set the emails collection to the data
             $data->setCollection(collect($emails));
+
+
+
+
+
+            // $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['status', '<>', 'CLOSED'], ['ticket_id', '<>', null], ['call_type', '=', $call_type]]);
+            // $ticketIds = $dataQuery->pluck('ticket_id')->toArray();
+            // $data = $dataQuery->paginate($perPage);
+            // $emails = [];
+            // if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
+            //     $scriptUrl = 'https://script.google.com/macros/s/AKfycbxJizz6LlW8hRU9MCfiGOyfjTDiFdNRV1e9cZyPfgC_nA3uSE-kP84-WeZ94if8Ql0N/exec?ticket_id=' . $data;
+            //     $response = Http::get($scriptUrl);
+            //     $responseData = $response->json();
+            //     // if ($response->successful() && count($responseData) != 0) {
+            //     //     if ($responseData[0]['from'] != 'support2@curtiscs.com' && $responseData[0]['from'] != 'Support2 Curtis <support2@curtiscs.com>') {
+            //     //         $emails[] = [
+            //     //             'ticket' => $ticket,
+            //     //             'emails' => $responseData,
+            //     //         ];
+            //     //     }
+            //     // }
+            //     // return response()->json([
+            //     //     'result' => $data
+            //     // ], 200);
+            //     return response()->json([
+            //         'result' => $responseData
+            //     ], 200);
+            // } else if ($call_type == 'Parts') {
+            // }
         }
         // else if ($request->cases == 'handled') {
         //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
