@@ -25,7 +25,7 @@ class TicketController extends Controller
 
     public function check_serial_number($serial_number)
     {
-        $ticket = Ticket::where('serial_number', $serial_number)->first();
+        $ticket = Ticket::where('serial_number',$serial_number)->first();
         return response()->json([
             'result' => $ticket
         ], 200);
@@ -300,7 +300,7 @@ class TicketController extends Controller
     }
     public function get_tickets_by_ticket_id($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
+        $ticket = Ticket::where('id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
         $asc = DecisionMaking::where('id', $ticket->decision_making_id)->with(['user'])->first();
         return response()->json([
             'result' => array_merge($ticket->toArray(), ['asc' => $asc ? $asc->toArray() : null]),
@@ -520,8 +520,6 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'open_cases') {
-
-
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
                 ['status', '<>', 'CLOSED'],
@@ -562,71 +560,10 @@ class TicketController extends Controller
                 }
             }
         }
-        // else if ($request->cases == 'handled') {
-        //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type]]);
-        //     $data = $dataQuery->paginate($perPage);
-        //     $emails = [];
-        //     foreach ($data as $ticket) {
-        //         $searchSubject = $ticket->ticket_id;
-        //         if ($ticket->call_type == 'CF-Warranty Claim') {
-        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
-        //             $response = Http::get($scriptUrl);
-        //             $responseData = $response->json();
-        //             if ($response->successful() && count($responseData) != 0) {
-        //                 if ($responseData[0]['from'] != 'support2@curtiscs.com' || $responseData[0]['from'] == 'Support2 Curtis <support2@curtiscs.com>') {
-        //                     $emails[] = [
-        //                         'ticket' => $ticket,
-        //                         'emails' => $responseData,
-        //                     ];
-        //                 }
-        //             }
-        //         } else if ($ticket->call_type == 'Parts') {
-        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
-        //             $response = Http::get($scriptUrl);
-        //             $responseData = $response->json();
-        //             if ($response->successful() && count($responseData) != 0) {
-        //                 if ($responseData[0]['from'] == 'parts@curtiscs.com' || $responseData[0]['from'] == 'Parts Team <parts@curtiscs.com>') {
-        //                     $emails[] = [
-        //                         'ticket' => $ticket,
-        //                         'emails' => $responseData,
-        //                     ];
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     // Replace the paginated data items with the merged emails
-        //     $data->setCollection(collect($emails));
-        // } else if ($request->cases == 'closed_cases') {
-        //     $dataQuery = Ticket::where([['user_id', '=', $request->user_id], ['call_type', '=', $call_type], ['status', '=', 'CLOSED']]);
-        //     $data = $dataQuery->paginate($perPage);
-        //     $emails = [];
-        //     foreach ($data as $ticket) {
-        //         $searchSubject = $ticket->ticket_id;
-        //         if ($ticket->call_type == 'CF-Warranty Claim') {
-        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbyoD6VJplke2Zw04JEIL0k2K3TAz5vM0tkVLFVuUVVgPzDE9NF0qILBfdYw7aLXGJVl/exec?ticket_id=' . $searchSubject;
-        //             $response = Http::get($scriptUrl);
-        //             $responseData = $response->json();
-        //             if ($response->successful() && count($responseData) != 0) {
-        //                 $emails[] = [
-        //                     'ticket' => $ticket,
-        //                     'emails' => $responseData,
-        //                 ];
-        //             }
-        //         } else if ($ticket->call_type == 'Parts') {
-        //             $scriptUrl = 'https://script.google.com/macros/s/AKfycbwg1PV5t1ih7w99uCP84f4JiFr3VcJ9uNiZuAOFH3WcJA41JOPgMFDpB8Bkre1BYi8_/exec?ticket_id=' . $searchSubject;
-        //             $response = Http::get($scriptUrl);
-        //             $responseData = $response->json();
-        //             if ($response->successful() && count($responseData) != 0) {
-        //                 $emails[] = [
-        //                     'ticket' => $ticket,
-        //                     'emails' => $responseData,
-        //                 ];
-        //             }
-        //         }
-        //     }
-        //     $data->setCollection(collect($emails));
-        // }
 
+        return response()->json([
+            'result' => $data
+        ], 200);
     }
     public function show(Request $request, $id)
     {
@@ -812,9 +749,15 @@ class TicketController extends Controller
             ]));
 
             $subject = '';
-            $idLength = strlen($data->id);
-            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
-            $id = date("dmy") . $leadingZeros . $data->id;
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else {
+                $id = date("dmy") . '000' . $data->id;
+            }
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -889,9 +832,15 @@ class TicketController extends Controller
 
 
             $subject = '';
-            $idLength = strlen($data->id);
-            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
-            $id = date("dmy") . $leadingZeros . $data->id;
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else {
+                $id = date("dmy") . '000' . $data->id;
+            }
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -1011,9 +960,15 @@ class TicketController extends Controller
             ]);
 
             $subject = '';
-            $idLength = strlen($data->id);
-            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
-            $id = date("dmy") . $leadingZeros . $data->id;
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else {
+                $id = date("dmy") . '000' . $data->id;
+            }
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -1022,9 +977,9 @@ class TicketController extends Controller
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
             } else if ($request->call_type == 'General Inquiry') {
-                $subject = '';
+                $subject = 'GI' . $id;
             } else {
-                $subject = '';
+                $subject = 'ETC' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();
@@ -1070,9 +1025,15 @@ class TicketController extends Controller
 
 
             $subject = '';
-            $idLength = strlen($data->id);
-            $leadingZeros = str_repeat('0', 6 - $idLength); // Calculate the number of leading zeros needed
-            $id = date("dmy") . $leadingZeros . $data->id;
+            $length = strlen($data->id);
+            $id = '';
+            if ($length == 1) {
+                $id = date("dmy") . '00000' . $data->id;
+            } else if ($length == 2) {
+                $id = date("dmy") . '0000' . $data->id;
+            } else {
+                $id = date("dmy") . '000' . $data->id;
+            }
 
             if ($request->call_type == 'Parts') {
                 $subject = 'PS' . $id;
@@ -1081,9 +1042,9 @@ class TicketController extends Controller
             } else if ($request->call_type == 'TS-Tech Support') {
                 $subject = 'TS' . $id;
             } else if ($request->call_type == 'General Inquiry') {
-                $subject = '';
+                $subject = 'GI' . $id;
             } else {
-                $subject = '';
+                $subject = 'ETC' . $id;
             }
 
             $t = Ticket::where('id', $data->id)->first();
