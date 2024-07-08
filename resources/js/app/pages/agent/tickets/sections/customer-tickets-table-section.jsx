@@ -2,18 +2,20 @@ import React, { useRef, useState } from "react";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { split } from "postcss/lib/list";
 
 export default function CustomerTicketsTableSection() {
     const { tickets } = useSelector((state) => state.tickets);
-    
-console.log('ticketssss',tickets)
+    const [pageSize, setPageSize] = useState(10);
+    const [current, setCurrent] = useState(1);
+
+    console.log("ticketssss", tickets);
     const search = window.location.search.split("=")[1];
     let ticketData = [];
-    
+
     if (search == "CLOSED") {
         function searchBy(status) {
             return tickets?.data?.filter((obj) => obj.status == status);
@@ -168,7 +170,7 @@ console.log('ticketssss',tickets)
         ...res,
         key: res.id,
     }));
-    
+
     const columns = [
         {
             title: "Ticket ID",
@@ -314,5 +316,31 @@ console.log('ticketssss',tickets)
         },
     ];
 
-    return <Table columns={columns} dataSource={data} />;
+    const url = window.location.pathname + window.location.search;
+    const getQueryParam = (url, paramName) => {
+        const searchParams = new URLSearchParams(url.split("?")[1]);
+        return searchParams.get(paramName);
+    };
+
+    const page = getQueryParam(url, "page");
+    const paginationConfig = {
+        current: page,
+        pageSize: pageSize,
+        total: tickets?.last_page * pageSize,
+        onChange: (pages, pageSize) => {
+            router.visit(
+                window.location.pathname +
+                    `?page=${pages}${window.location.search.slice(7)}`
+            );
+            setCurrent(pages);
+            setPageSize(pageSize);
+        },
+    };
+    return (
+        <Table
+            pagination={paginationConfig}
+            columns={columns}
+            dataSource={data}
+        />
+    );
 }
