@@ -12,9 +12,50 @@ use App\Models\Replacement;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use League\Csv\Reader;
+use League\Csv\Statement;
 
 class RefundController extends Controller
 {
+    public function upload_csv_file(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt'
+        ]);
+    
+        $file = $request->file('csv_file'); // Retrieve the uploaded file
+    
+        // Parse CSV data without setting header offset
+        $csv = Reader::createFromPath($file->getPathname(), 'r');
+        
+        $records = $csv->getRecords(); // Get all CSV rows as iterator
+    
+        $csvData = [];
+        $firstRowSkipped = false;
+        foreach ($records as $record) {
+            // Skip the first row
+            if (!$firstRowSkipped) {
+                $firstRowSkipped = true;
+                continue;
+            }
+    
+            // Check if the record is empty or contains only empty strings
+            if (empty(array_filter($record))) {
+                continue; // Skip empty row
+            }
+    
+            $csvData[] = $record; // Build array of CSV row data
+        }
+    
+        // Process and return data (e.g., save to database, manipulate, etc.)
+        return response()->json([
+            'data' => $csvData
+        ]);
+    }
+    
+
+
     public function warranty_checkque_shipped(Request $request)
     {
         $ticket = Ticket::where('id', $request->ticket_id)->first();
@@ -71,7 +112,7 @@ class RefundController extends Controller
         Activity::create([
             'user_id' => $request->account['id'],
             'ticket_id' => $request->ticket_id,
-            'type' =>'REFUND SHIPPED',
+            'type' => 'REFUND SHIPPED',
             'message' => json_encode(array_merge($ticketArray, ['refund' => $request->all()]))
         ]);
 

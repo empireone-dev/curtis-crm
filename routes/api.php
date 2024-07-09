@@ -54,6 +54,7 @@ Route::resource('decision_making', DecisionMakingController::class);
 
 Route::resource('refund', RefundController::class);
 Route::post('/warranty_checkque_shipped', [RefundController::class, 'warranty_checkque_shipped']);
+Route::post('/upload_csv_file', [RefundController::class, 'upload_csv_file']);
 
 Route::resource('repair', RepairController::class);
 Route::put('/unrepair/{ticketid}', [RepairController::class, 'unrepair']);

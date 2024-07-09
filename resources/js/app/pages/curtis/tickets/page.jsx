@@ -7,6 +7,7 @@ import { get_tickets_thunk } from "../../admin/tickets/_redux/tickets-thunk";
 import TicketFilterSection from "../../admin/tickets/_sections/ticket-filter-section";
 import { get_products_thunk } from "../../admin/ticket_form/redux/ticket-form-thunk";
 import TicketsExportFileSection from "../../admin/tickets/_sections/tickets-export-file-section";
+import TicketsImportFileSection from "../../admin/tickets/_sections/tickets-import-file-section";
 
 export default function CustomerTicketsPage({ auth }) {
     const account = auth.user;
@@ -27,9 +28,12 @@ export default function CustomerTicketsPage({ auth }) {
     return (
         <CurtisLayout account={account}>
             <div className="my-8">
-                <div className="my-3 flex px-3">
-                <TicketFilterSection />
-                <TicketsExportFileSection />
+                <div className="flex px-2 w-full items-center justify-between">
+                    <TicketsImportFileSection />
+                    <TicketsExportFileSection />
+                </div>
+                <div className="my-3 flex ">
+                    <TicketFilterSection />
                 </div>
                 <CustomerTicketsTableSection />
             </div>

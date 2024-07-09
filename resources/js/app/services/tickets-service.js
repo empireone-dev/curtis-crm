@@ -48,8 +48,8 @@ export async function create_verify_tickets_service(data) {
 
 export async function verify_tickets_service(data) {
     try {
-        const res = await axios.post("/api/verify_tickets",{
-            search:data
+        const res = await axios.post(`/api/verify_tickets${data}`,{
+            searchData:data
         });
         return res.data;
     } catch (error) {

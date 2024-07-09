@@ -25,12 +25,35 @@ export default function AgentOpenCasesEMail({ auth }) {
                 cases,
                 account.id
             );
-            console.log('resresresres',res)
+            console.log("resresresres", res);
             dispatch(setTickets(res));
             setLoading(false);
         }
         fetch_date();
     }, []);
+
+    function addDaysSkippingWeekends(date, daysToAdd) {
+        let dueDate = moment(date);
+        let dayOfWeek = dueDate.day();
+
+        if (dayOfWeek === 4) {
+            // Thursday (4), add 4 days to make it Monday (1)
+            dueDate = dueDate.add(4, 'days');
+        } else if (dayOfWeek === 5) {
+            // Friday (5), add 4 days to make it Tuesday (2)
+            dueDate = dueDate.add(4, 'days');
+        } else if (dayOfWeek === 6) {
+            // Saturday (6), add 3 days to make it Tuesday (2)
+            dueDate = dueDate.add(3, 'days');
+        } else if (dayOfWeek === 0) {
+            // Sunday (0), add 2 days to make it Tuesday (2)
+            dueDate = dueDate.add(2, 'days');
+        }else{
+            dueDate = dueDate.add(2, 'days');
+        }
+        return dueDate.format("LLL");
+    }
+
     return (
         <AgentLayout account={account}>
             <div className="p-3 flex gap-5 flex-col justify-between w-full h-full">
@@ -208,14 +231,16 @@ export default function AgentOpenCasesEMail({ auth }) {
                                     return (
                                         <tr class="bg-white border-b">
                                             <td class="px-6 py-3">
-                                                {moment(
-                                                    res.date
-                                                ).format("LLL")}
+                                                {moment(res.date).format("LLL")}
                                             </td>
                                             <td class="px-6 py-3">
-                                                {moment(res.date)
+                                                {/* {moment(res.date)
                                                     .add(2, "days")
-                                                    .format("LLL")}
+                                                    .format("LLL")} */}
+                                                {addDaysSkippingWeekends(
+                                                    moment(res.date),
+                                                    2
+                                                )}
                                             </td>
                                             <th
                                                 scope="row"
@@ -223,10 +248,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                             >
                                                 {res.subject}
                                             </th>
-                                            <td class="px-6 py-3">
-                                                {" "}
-                                                {res.to}
-                                            </td>
+                                            <td class="px-6 py-3"> {res.to}</td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>

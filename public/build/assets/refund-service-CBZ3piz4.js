@@ -1,1 +1,0 @@
-async function s(a){return(await axios.post("/api/refund",a)).data}async function t(a){return(await axios.get(`/api/replacement/${a}`)).data.status}async function n(a){return(await axios.post("/api/warranty_checkque_shipped",a)).data}export{t as g,n as p,s};

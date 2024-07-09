@@ -103,19 +103,76 @@ class TicketController extends Controller
         ExportFile::create([
             'export_name' => $request->search
         ]);
-        return response()->json([
-            'result' => 'success'
-        ], 200);
+     
     }
     public function verify_tickets(Request $request)
     {
-        $export = ExportFile::where('export_name', $request->search)->first();
+        $export = ExportFile::where('export_name', $request->searchData)->first();
+
+        $searchQuery = $request->search;
+
+        // Get all column names of the table
+        $columns = Schema::getColumnListing('tickets');
+
+        // Start the query builder
+        $query = Ticket::query();
+        if ($searchQuery) {
+            // Dynamically add where conditions for each column
+            $query->where(function ($query) use ($columns, $searchQuery) {
+                foreach ($columns as $column) {
+                    if ($searchQuery == 'WARRANTY VALIDATION') {
+                        $query->orWhere($column, '=',  $searchQuery);
+                    } else if ($searchQuery == 'OPEN WARRANTY') {
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
+                    } else if ($searchQuery == 'OPEN PARTS') {
+                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
+                    } else if ($searchQuery == 'OPEN TECH') {
+                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
+                    } else {
+                        $query->orWhere([[$column, '=',  $searchQuery]]);
+                    }
+                }
+                $query->orWhere('ticket_id', '=', $searchQuery);
+                $query->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
+            });
+        }
+
+        if ($request->start && $request->end) {
+            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+            $query->whereBetween('created_at', [$startTime, $endTime]);
+        }
+
+        // Add item_number condition if provided
+        if ($request->model && ($request->model != 'null' && $request->model != 'undefined')) {
+            $models = explode(',', $request->model);
+            $query->whereIn('item_number', $models);
+        }
+        if ($request->call_type  && ($request->call_type != 'null' && $request->call_type != 'undefined')) {
+            $query->where('call_type', '=', $request->call_type);
+        }
+        if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
+            $query->where('status', '=', $request->status);
+        }
+
+        if ($request->status == 'WEB FORM') {
+            $query->orWhere('created_from', '=', $request->status);
+        }
+        if ($request->status == 'AGENT FORM') {
+            $query->orWhere('created_from', '=', $request->status);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        $data = $query->get();
+
         if ($export) {
             return response()->json([
+                'data' => $data ?? [] ,
                 'result' => 'exist'
             ], 200);
         } else {
             return response()->json([
+                'data' => $data ?? [],
                 'result' => 'unexist'
             ], 200);
         }

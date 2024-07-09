@@ -32,11 +32,7 @@ export default function TicketsExportFileSection() {
             const exist = await verify_tickets_service(window.location.search);
 
             async function export_files() {
-                const allTickets = [];
-                for (let i = 1; i <= res.last_page; i++) {
-                    const ticketsOnPage = await fetchTickets(i);
-                    allTickets.push(...ticketsOnPage);
-                }
+                const allTickets = exist.data;
                 setLoading(false);
                 const newData = allTickets.map((res) => [
                     res.address ?? "",

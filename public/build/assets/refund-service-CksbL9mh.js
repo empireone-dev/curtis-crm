@@ -1,0 +1,1 @@
+async function e(a){return(await axios.post("/api/upload_csv_file",a)).data}async function t(a){return(await axios.post("/api/refund",a)).data}async function i(a){return(await axios.get(`/api/replacement/${a}`)).data.status}async function n(a){return(await axios.post("/api/warranty_checkque_shipped",a)).data}export{i as g,n as p,t as s,e as u};
