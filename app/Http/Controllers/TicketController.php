@@ -103,7 +103,6 @@ class TicketController extends Controller
         ExportFile::create([
             'export_name' => $request->search
         ]);
-     
     }
     public function verify_tickets(Request $request)
     {
@@ -124,6 +123,10 @@ class TicketController extends Controller
                         $query->orWhere($column, '=',  $searchQuery);
                     } else if ($searchQuery == 'OPEN WARRANTY') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
+                    } else if ($searchQuery == 'REFUND') {
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REFUND']]);
+                    } else if ($searchQuery == 'REPLACEMENT') {
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REPLACEMENT']]);
                     } else if ($searchQuery == 'OPEN PARTS') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
                     } else if ($searchQuery == 'OPEN TECH') {
@@ -167,7 +170,7 @@ class TicketController extends Controller
 
         if ($export) {
             return response()->json([
-                'data' => $data ?? [] ,
+                'data' => $data ?? [],
                 'result' => 'exist'
             ], 200);
         } else {
@@ -434,7 +437,7 @@ class TicketController extends Controller
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REFUND']]);
                     } else if ($searchQuery == 'REPLACEMENT') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REPLACEMENT']]);
-                    }else if ($searchQuery == 'OPEN PARTS') {
+                    } else if ($searchQuery == 'OPEN PARTS') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
                     } else if ($searchQuery == 'OPEN TECH') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
