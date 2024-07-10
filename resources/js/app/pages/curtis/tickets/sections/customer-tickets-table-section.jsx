@@ -279,14 +279,27 @@ export default function CustomerTicketsTableSection() {
     };
 
     const page = getQueryParam(url, "page");
+    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+
     const paginationConfig = {
-        current: page,
+        current: currentPage,
         pageSize: pageSize,
-        total: tickets?.last_page * pageSize,
-        onChange: (page, pageSize) => {
-            router.visit(window.location.pathname + `?page=${page}`);
-            setCurrent(page);
+        total: tickets?.last_page * pageSize, // Replace tickets with your actual data source
+        onChange: (currentPage, pageSize) => {
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("page", currentPage);
+            const newUrl =
+                window.location.pathname + "?" + searchParams.toString();
+
+            // Example of what to do with the new URL (replace with your logic)
+            console.log("Navigating to:", newUrl);
+            router.visit(newUrl)
+            // Example of setting state with currentPage and pageSize
+            setCurrent(currentPage);
             setPageSize(pageSize);
+
+            // Example of navigation using router (replace with your logic)
+            // router.visit(newUrl);
         },
     };
 
