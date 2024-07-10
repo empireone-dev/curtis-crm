@@ -62,25 +62,34 @@ export default function MoveTicketAssignement() {
                     defaultValue={callType}
                     onChange={handleChange}
                     options={[
-                        ...(ticket.call_type !== "CF-Warranty Claim"
-                            ? [
-                                  {
-                                      value: "CF-Warranty Claim",
-                                      label: "CF-Warranty Claim",
-                                  },
-                              ]
-                            : []),
-                        ...(ticket.call_type !== "Parts"
-                            ? [{ value: "Parts", label: "Parts" }]
-                            : []),
-                        ...(ticket.call_type !== "TS-Tech Support"
-                            ? [
-                                  {
-                                      value: "TS-Tech Support",
-                                      label: "TS-Tech Support",
-                                  },
-                              ]
-                            : []),
+                        // ...(ticket.call_type !== "CF-Warranty Claim"
+                        //     ? [
+                        //           {
+                        //               value: "CF-Warranty Claim",
+                        //               label: "CF-Warranty Claim",
+                        //           },
+                        //       ]
+                        //     : []),
+                        // ...(ticket.call_type !== "Parts"
+                        //     ? [{ value: "Parts", label: "Parts" }]
+                        //     : []),
+                        // ...(ticket.call_type !== "TS-Tech Support"
+                        //     ? [
+                        //           {
+                        //               value: "TS-Tech Support",
+                        //               label: "TS-Tech Support",
+                        //           },
+                        //       ]
+                        //     : []),
+                        {
+                            value: "CF-Warranty Claim",
+                            label: "CF-Warranty Claim",
+                        },
+                        { value: "Parts", label: "Parts" },
+                        {
+                            value: "TS-Tech Support",
+                            label: "TS-Tech Support",
+                        },
                     ]}
                 />
             </Modal>

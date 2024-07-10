@@ -813,7 +813,7 @@ class TicketController extends Controller
                 array_merge($request->all(), [
                     'user_id' => $account->id,
                 ]),
-                'ticket_id' => $subject
+                'ticket_id' => $subject,
             ], 200);
         } else {
             $data = $this->createTicket($request, $validation);
@@ -836,7 +836,7 @@ class TicketController extends Controller
 
             return response()->json([
                 'result' => $data,
-                'ticket_id' => $subject
+                'ticket_id' => $subject,
             ], 200);
         }
     }
