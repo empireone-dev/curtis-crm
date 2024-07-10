@@ -99,7 +99,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name="fname"
                         value={form?.fname}
-                        label="First Namess"
+                        label="First Name"
                         type="text"
                         // errorMessage='First Name is required'
                     />
@@ -141,18 +141,16 @@ export default function TicketCreateFormSection() {
                         </div>
 
                         <div className="basis-full">
-                            {form?.isHasEmail == "true" ? (
+                            {(form.isHasEmail ?? "true") == "true" && (
                                 <Input
                                     required={false}
                                     onChange={formHandler}
                                     name="email"
-                                    value={form?.email}
+                                    value={form.email}
                                     label="Email"
                                     type="email"
-                                    // errorMessage='Email is required'
+                                    // errorMessage="Email is required"
                                 />
-                            ) : (
-                                <></>
                             )}
                         </div>
                     </div>
