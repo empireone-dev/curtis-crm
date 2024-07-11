@@ -228,7 +228,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tickets?.result.map((res, i) => {
+                                {tickets?.result && tickets?.result?.map((res, i) => {
                                     return (
                                         <tr class="bg-white border-b">
                                             <td class="px-6 py-3">
