@@ -616,12 +616,12 @@ class TicketController extends Controller
                         if ($value['isReply']) {
                             Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'handled',
-                                'email_date' => $value['date']
+                                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
                             ]);
                         } else {
                             Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'hide',
-                                'email_date' => $value['date']
+                                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
                             ]);
                         }
                     }
@@ -645,12 +645,12 @@ class TicketController extends Controller
                         if ($value['isReply']) {
                             Ticket::where('ticket_id', $value['subject'])->update([
                                 'cases_status' => 'handled',
-                                'email_date' => $value['date']
+                                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
                             ]);
                         } else {
                             Ticket::where('ticket_id', $value['subject'])->update([
                                 'cases_status' => 'hide',
-                                'email_date' => $value['date']
+                                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
                             ]);
                         }
                     }
