@@ -44,12 +44,14 @@ class UserController extends Controller
                 $overdue_cases = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
+                    ['cases_status', '=', 'handled'],
                     ['updated_at', '<=', $twoDaysAgo]
                 ])->count();
 
                 $cases_due_today = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
+                    ['cases_status', '=', 'handled'],
                 ])->whereDate('updated_at', '=', $today)->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
