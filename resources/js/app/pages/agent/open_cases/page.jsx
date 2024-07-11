@@ -249,7 +249,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                             >
                                                 {res.subject}
                                             </th>
-                                            <td class="px-6 py-3"> {res.to}</td>
+                                            <td class="px-6 py-3"> {res.email}</td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>
