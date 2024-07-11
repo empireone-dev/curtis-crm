@@ -597,7 +597,8 @@ class TicketController extends Controller
                 ['user_id', '=', $request->user_id],
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
-                ['call_type', '=', $call_type]
+                ['call_type', '=', $call_type],
+                ['cases_status', '<>', 'hide'],
             ]);
 
             $dataQueryCount = $dataQuery->count();
@@ -607,36 +608,60 @@ class TicketController extends Controller
             $data = $dataPaginator->pluck('ticket_id')->toArray();
             if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwqlIi2Dsfh8OmfFWUvmIvmObUQkHZ05vsh-14WlmJSEi5IqcV9bqe5VWaQkw1svhJ9/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbzyeYfwSUEYehxOpqc0_hPWzxa5hFGxdi3TjoYLT10PA1_gt25H-7FBwh3aUdVRB3mA/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
+                    foreach ($responseData as $key => $value) {
+                        if ($value['isReply']) {
+                            Ticket::where('ticket_id', $value['subject'])->update([
+                                'cases_status' => 'handled'
+                            ]);
+                        } else {
+                            Ticket::where('ticket_id', $value['subject'])->update([
+                                'cases_status' => 'hide'
+                            ]);
+                        }
+                    }
+
+                    $collection = collect($responseData);
+                    $unique = $collection->unique('subject')->values()->all();
 
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' => $responseData
+                        'result' => $unique
                     ], 200);
                 }
             } else if ($call_type == 'Parts') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyqtnaVtRhY3xOc6Qgq0HyoGMPjAHJMJpnDBqK8rJL0TKbhlBFfkSa160KtJf9fRozB/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbz9RYWOQ0upWcdOnYMZSDz8WkGEGsr_9kvv4vs20tlZoXegRdsOL1fMyAO43QnJfwH2/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
+                    foreach ($responseData as $key => $value) {
+                        if ($value['isReply']) {
+                            Ticket::where('ticket_id', $value['subject'])->update([
+                                'cases_status' => 'handled'
+                            ]);
+                        } else {
+                            Ticket::where('ticket_id', $value['subject'])->update([
+                                'cases_status' => 'hide'
+                            ]);
+                        }
+                    }
+
+                    $collection = collect($responseData);
+                    $unique = $collection->unique('subject')->values()->all();
 
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' => $responseData
+                        'result' => $unique
                     ], 200);
                 }
             }
         }
-
-        return response()->json([
-            'result' => $data
-        ], 200);
     }
     public function show(Request $request, $id)
     {

@@ -40,43 +40,44 @@ class UserController extends Controller
 
         if ($role_id == 5) {
             foreach ($users as $user) {
-                $handledCount = CasesLog::where([
-                    ['user_id', '=', $user->id],
-                    ['log_from', '=', 'handled']
-                ])->count();
 
-                $direct_emails_count = CasesLog::where([
-                    ['user_id', '=', $user->id],
-                    ['log_from', '=', 'direct_emails']
-                ])->count();
-
-
-                $overdueTicketsCount = Ticket::where([
+                $overdue_cases = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                     ['updated_at', '<=', $twoDaysAgo]
                 ])->count();
-                $dueTodayTicketsCount = Ticket::where([
+
+                $cases_due_today = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                 ])->whereDate('updated_at', '=', $today)->count();
 
-
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
-                    ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
-                    ->count();
+                ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
+                ->count();
 
                 $direct_emails_due_today = DirectEmail::where('user_id', $user->id)
                     ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
                     ->count();
 
+                $handled_cases = CasesLog::where([
+                    ['user_id', '=', $user->id],
+                    ['log_from', '=', 'handled']
+                ])->whereDate('updated_at', '=', $today)->count();
+
+                $handled_direct_emails = CasesLog::where([
+                    ['user_id', '=', $user->id],
+                    ['log_from', '=', 'direct_emails']
+                ])->count();
+
+
                 // Add handled_count attribute to the user instance
-                $user->handled_count = $handledCount;
-                $user->cases_due_today = $dueTodayTicketsCount;
-                $user->overdue_cases = $overdueTicketsCount;
+                $user->handled_cases = $handled_cases;
+                $user->cases_due_today = $cases_due_today;
+                $user->overdue_cases = $overdue_cases;
                 $user->overdue_direct_emails = $overdue_direct_emails;
                 $user->direct_emails_due_today = $direct_emails_due_today;
-                $user->handled_direct_emails = $direct_emails_count;
+                $user->handled_direct_emails = $handled_direct_emails;
             }
         }
 
