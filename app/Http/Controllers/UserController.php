@@ -58,7 +58,6 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
-                    ['call_type', '=', $user->call_type],
                     ['cases_status', '=', 'handled'],
                     ['updated_at', '<=', $two_overdue_cases]
                 ])->count();
