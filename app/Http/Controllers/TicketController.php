@@ -608,7 +608,7 @@ class TicketController extends Controller
             $data = $dataPaginator->pluck('ticket_id')->toArray();
             if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbya3-1OfaMzXRrz4SSTfm9eyjcZ2XEynXN_i5DIxy2vhRGA5omiULKBwUaeAs-fs1w/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbyutHQ7hW7FSXEKLy3_ZRpp6nd1-n23Sl_V-4NRWWItESXJHxRT-OByjwyRjCljV6g/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
