@@ -139,7 +139,7 @@ class EmailTemplateController extends Controller
             'message' => json_encode($ticket)
         ]);
         // Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
-        $this->send_parts_email($request->ticket['email'], $ticket->ticket_id, $request->template_text);
+        $this->send_parts_email($ticket->email, $ticket->ticket_id, $request->template_text);
         return 'Email sent successfully!';
     }
 
@@ -162,7 +162,8 @@ class EmailTemplateController extends Controller
             'message' => json_encode($request->all())
         ]);
 
-        Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        // Mail::to($request->ticket['email'])->send(new Validation($request->template_text));
+        $this->send_parts_email($request->ticket['email'], $ticket->ticket_id, $request->template_text);
         return response()->json([
             'status' => $ticket,
         ], 200);

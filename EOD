@@ -5,3 +5,12 @@ Daily Update May 8, 2024
 * Fixed Feature Adjustment: Allow to proceed the ticket even without notes from the Internal
 * Fixed Feature Adjustment: allow to proceed even without notes
 * Added radio button for initial decision.
+
+
+SELECT *
+FROM tickets
+WHERE user_id = 58
+  AND status <> 'CLOSED'
+  AND ticket_id IS NOT NULL
+  AND call_type = 'CF-Warranty Claim'
+  AND cases_status <> 'hide';
