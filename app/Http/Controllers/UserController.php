@@ -59,7 +59,7 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    ['updated_at', '<=', $two_overdue_cases]
+                    ['updated_at', '<=', $twoDaysAgo]
                 ])->count();
 
                 $cases_due_today = Ticket::where([
