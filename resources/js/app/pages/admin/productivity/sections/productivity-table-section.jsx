@@ -145,12 +145,13 @@ export default function ProductivityTableSection() {
             cases_due_today: res.cases_due_today,
             overdue_direct_emails:res.overdue_direct_emails,
             direct_emails_due_today: res.direct_emails_due_today,
-            handled_cases: res.handled_count,
+            handled_cases: res.handled_cases,
             handled_direct_emails: res.handled_direct_emails,
-            total: parseInt(res.handled_count) + parseInt(res.handled_direct_emails),
+            total: parseInt(res.handled_cases) + parseInt(res.handled_direct_emails),
         } : null
     ).filter(item => item !== null);
     
+
     const columns = [
         {
             title: "Agent",
