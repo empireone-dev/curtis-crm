@@ -50,7 +50,7 @@ class UserController extends Controller
         } else {
             $days = 2;
         }
-        $two_overdue_cases = Carbon::now()->subDays($days)->toDateTimeString();
+        $two_overdue_cases = Carbon::now()->subDays($twoDaysAgo)->toDateTimeString();
         if ($role_id == 5) {
             foreach ($users as $user) {
 
@@ -59,7 +59,7 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    // ['updated_at', '<=', $two_overdue_cases]
+                    ['updated_at', '<=', $two_overdue_cases]
                 ])->count();
 
                 $cases_due_today = Ticket::where([
