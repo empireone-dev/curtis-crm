@@ -608,17 +608,17 @@ class TicketController extends Controller
             $data = $dataPaginator->pluck('ticket_id')->toArray();
             if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbz_u2fPCE6SR-9K5je81HmJNmt804NnpojMbdJD5UvBPQTjewSrVwv7g1XOyeeKop0/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycby9uXliUU_N0O5aSEBnnHx612j6yHC0YaVtbkErW5uDm01qw7mFWhXvIVGgADEos2U/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     foreach ($responseData as $key => $value) {
                         if ($value['isReply']) {
-                            Ticket::where('ticket_id', $value['subject'])->update([
+                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'handled'
                             ]);
                         } else {
-                            Ticket::where('ticket_id', $value['subject'])->update([
+                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'hide'
                             ]);
                         }
@@ -635,7 +635,7 @@ class TicketController extends Controller
                 }
             } else if ($call_type == 'Parts') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbzZxZk-kNlvfGTlp6Q4s7BEdSThF_OZ9hRAu8Y5Onx13CdDUa7Cr1E32BW98TvKCKBo/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwxJlF_dYXKGuMnvW_pERXmn9HPSkRbr6KaU1c2hEsC0L5o6zV-yh9Le0QMXa3_uhXO/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
