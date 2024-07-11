@@ -41,13 +41,13 @@ class UserController extends Controller
         $days = date("N");
         if (date("N") == 4) {
             $days = 4;
-        }else if (date("N") == 5) {
+        } else if (date("N") == 5) {
             $days = 4;
-        }else if (date("N") == 6) {
+        } else if (date("N") == 6) {
             $days = 3;
-        }else if (date("N") == 7) {
+        } else if (date("N") == 7) {
             $days = 2;
-        }else{
+        } else {
             $days = 2;
         }
         $two_overdue_cases = Carbon::now()->subDays($days)->toDateTimeString();
@@ -69,8 +69,8 @@ class UserController extends Controller
                 ])->whereDate('updated_at', '=', $today)->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
-                ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
-                ->count();
+                    ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
+                    ->count();
 
                 $direct_emails_due_today = DirectEmail::where('user_id', $user->id)
                     ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
@@ -98,7 +98,14 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'data' => $users
+            'data' => $users,
+            'sample' => Ticket::where([
+                ['user_id', '=', $user->id],
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['cases_status', '<>', 'hide'],
+                // ['updated_at', '<=', $two_overdue_cases]
+            ])
         ], 200);
     }
 
