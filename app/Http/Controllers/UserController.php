@@ -105,7 +105,7 @@ class UserController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
                 // ['updated_at', '<=', $two_overdue_cases]
-            ])
+            ])->get()
         ], 200);
     }
 
