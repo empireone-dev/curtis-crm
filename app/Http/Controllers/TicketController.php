@@ -635,7 +635,7 @@ class TicketController extends Controller
                 }
             } else if ($call_type == 'Parts') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwaAFGjkKI-nUszygdR81XJdqWOjCXcVqyv6VSAfx1BDLXtDp4WcN6mPJE2xTGYDU48/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbzx7nYhJQ1_jo50A0J50UgQxBu0AznwCyBGzfXZveHf8gBirMMsnUujwEE-f_voH0nY/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
