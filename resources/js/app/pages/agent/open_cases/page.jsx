@@ -254,7 +254,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 <button
                                                     onClick={() =>
                                                         window.open(
-                                                            `/agent/customer_details/${res.subject}`,
+                                                            `/agent/customer_details/${res.subject.replace(/^WARRANTY CLAIM #/, "")}`,
                                                             "_blank"
                                                         )
                                                     }
