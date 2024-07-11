@@ -614,11 +614,11 @@ class TicketController extends Controller
                     $responseData = $response->json();
                     foreach ($responseData as $key => $value) {
                         if ($value['isReply']) {
-                            Ticket::where('ticket_id', $value['subject'])->update([
+                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'handled'
                             ]);
                         } else {
-                            Ticket::where('ticket_id', $value['subject'])->update([
+                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                 'cases_status' => 'hide'
                             ]);
                         }
@@ -635,7 +635,7 @@ class TicketController extends Controller
                 }
             } else if ($call_type == 'Parts') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwxJlF_dYXKGuMnvW_pERXmn9HPSkRbr6KaU1c2hEsC0L5o6zV-yh9Le0QMXa3_uhXO/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwaAFGjkKI-nUszygdR81XJdqWOjCXcVqyv6VSAfx1BDLXtDp4WcN6mPJE2xTGYDU48/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
