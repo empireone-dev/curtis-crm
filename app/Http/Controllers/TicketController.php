@@ -625,7 +625,7 @@ class TicketController extends Controller
                     }
 
                     $collection = collect($responseData);
-                    $unique = $collection->unique('subject')->values()->all();
+                    $unique = $collection->unique('subject')->sortBy('date')->values()->all();
 
                     return response()->json([
                         'data_count' => count($data),
@@ -652,7 +652,7 @@ class TicketController extends Controller
                     }
 
                     $collection = collect($responseData);
-                    $unique = $collection->unique('subject')->values()->all();
+                    $unique = $collection->unique('subject')->sortBy('date')->values()->all();
 
                     return response()->json([
                         'data_count' => count($data),
