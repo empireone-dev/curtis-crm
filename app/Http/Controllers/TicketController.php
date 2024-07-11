@@ -597,7 +597,7 @@ class TicketController extends Controller
                 ['user_id', '=', $request->user_id],
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
-                ['call_type', '=', $call_type],
+                // ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hide'],
             ]);
 
