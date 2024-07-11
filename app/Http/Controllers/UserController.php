@@ -59,6 +59,7 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
+                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
                     // ['updated_at', '<=', $twoDaysAgo]
                 ])->count();
 
