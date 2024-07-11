@@ -60,7 +60,7 @@ class UserController extends Controller
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                    ['email_date', '<=', $two_overdue_cases]
+                    ['updated_at', '<=', $twoDaysAgo]
                 ])->count();
 
                 $cases_due_today = Ticket::where([
