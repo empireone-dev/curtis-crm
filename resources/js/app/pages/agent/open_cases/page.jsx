@@ -33,7 +33,7 @@ export default function AgentOpenCasesEMail({ auth }) {
     }, []);
 //     const aa= "\u003Cparts@curtiscs.com\u003E"
 // console.log('dawdwadwa',aa.match(/<([^>]*)>/)[1])
-    function addDaysSkippingWeekends(date, daysToAdd) {
+    function addDaysSkippingWeekends(date) {
         let dueDate = moment(date);
         let dayOfWeek = dueDate.day();
 
