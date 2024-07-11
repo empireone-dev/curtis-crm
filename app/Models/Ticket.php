@@ -45,7 +45,8 @@ class Ticket extends Model
         'status',
         'cases_status',
         'move_status',
-        'purchase_date'
+        'purchase_date',
+        'email_date'
     ];
 
     

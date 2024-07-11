@@ -615,11 +615,13 @@ class TicketController extends Controller
                     foreach ($responseData as $key => $value) {
                         if ($value['isReply']) {
                             Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
-                                'cases_status' => 'handled'
+                                'cases_status' => 'handled',
+                                'email_date' => $value['date']
                             ]);
                         } else {
                             Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
-                                'cases_status' => 'hide'
+                                'cases_status' => 'hide',
+                                'email_date' => $value['date']
                             ]);
                         }
                     }
