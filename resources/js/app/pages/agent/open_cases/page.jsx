@@ -247,14 +247,14 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {res.subject.replace(/^WARRANTY CLAIM #/, "")}
+                                                {(res.subject.replace(/^WARRANTY CLAIM #/, "")).replace(/Re: /, "")}
                                             </th>
                                             <td class="px-6 py-3"> {res.email}</td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>
                                                         window.open(
-                                                            `/agent/customer_details/${res.subject.replace(/^WARRANTY CLAIM #/, "")}`,
+                                                            `/agent/customer_details/${(res.subject.replace(/^WARRANTY CLAIM #/, "")).replace(/Re: /, "")}`,
                                                             "_blank"
                                                         )
                                                     }
