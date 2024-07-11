@@ -5,7 +5,7 @@ export async function get_user_service(){
     return res.data
 }
 export async function get_users_service(role_id){
-    const res = await axios.get('/api/users/'+role_id)
+    const res = await axios.get('/api/users/'+role_id+window.location.search)
     return res.data
 }
 

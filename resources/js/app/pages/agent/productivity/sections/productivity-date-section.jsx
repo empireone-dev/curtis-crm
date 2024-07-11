@@ -6,28 +6,24 @@ import moment from "moment";
 import { router } from "@inertiajs/react";
 import dayjs from "dayjs";
 
-export default function ProductivityDateSection() {
+export default function ProductivityDateSection({data,setData}) {
     const { RangePicker } = DatePicker;
     const { products } = useSelector((state) => state.ticket_form);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const queryParams = new URLSearchParams(window.location.search);
-    const start = queryParams.get("start");
-    const end = queryParams.get("end");
+   
 
-    const [data, setData] = useState({
-        start: start ?? moment().format("YYYY-MM-DD"),
-        end: end ?? moment().format("YYYY-MM-DD"),
-    });
+
 
     const handleChangeData = (value) => {
         const start = value[0].format("YYYY-MM-DD");
         const end = value[1].format("YYYY-MM-DD");
-        setData({
-            ...data,
-            start: start,
-            end: end,
-        });
+        router.visit(window.location.pathname+`?start=${start}&end=${end}`)
+        // setData({
+        //     ...data,
+        //     start: start,
+        //     end: end,
+        // });
     };
     const newProducts = products?.slice(2).map((res) => ({
         value: res[1],

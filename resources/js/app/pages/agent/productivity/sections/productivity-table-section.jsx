@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     ExclamationCircleFilled,
     FolderOpenFilled,
@@ -9,12 +9,25 @@ import Highlighter from "react-highlight-words";
 import ProductivitySearchSection from "./productivity-search-section";
 import ProductivityDateSection from "./productivity-date-section";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import { router } from "@inertiajs/react";
 
 export default function ProductivityTableSection() {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const queryParams = new URLSearchParams(window.location.search);
+
+    const start = queryParams.get("start") ?? moment().format("YYYY-MM-DD");
+    const end = queryParams.get("end") ?? moment().format("YYYY-MM-DD");
+    // useEffect(() => {}, [
+    //     router.visit(window.location.pathname+`?start=${start}&end=${end}`)
+    // ]);
+    const [datas, setDatas] = useState({
+        start: start ?? moment().format("YYYY-MM-DD"),
+        end: end ?? moment().format("YYYY-MM-DD"),
+    });
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -137,20 +150,26 @@ export default function ProductivityTableSection() {
             ),
     });
 
-    const data = users.map((res, i) => 
-        res.agent_type === 'Warranty' || res.agent_type === 'Parts'? {
-            agent: res.name,
-            position: res.agent_type,
-            overdue_cases: res.overdue_cases,
-            cases_due_today: res.cases_due_today,
-            overdue_direct_emails:res.overdue_direct_emails,
-            direct_emails_due_today: res.direct_emails_due_today,
-            handled_cases: res.handled_cases,
-            handled_direct_emails: res.handled_direct_emails,
-            total: parseInt(res.handled_cases) + parseInt(res.handled_direct_emails),
-        } : null
-    ).filter(item => item !== null);
-    
+    const data = users
+        .map((res, i) =>
+            res.agent_type === "Warranty" || res.agent_type === "Parts"
+                ? {
+                      agent: res.name,
+                      position: res.agent_type,
+                      overdue_cases: res.overdue_cases,
+                      cases_due_today: res.cases_due_today,
+                      overdue_direct_emails: res.overdue_direct_emails,
+                      direct_emails_due_today: res.direct_emails_due_today,
+                      handled_cases: res.handled_cases,
+                      handled_direct_emails: res.handled_direct_emails,
+                      total:
+                          parseInt(res.handled_cases) +
+                          parseInt(res.handled_direct_emails),
+                  }
+                : null
+        )
+        .filter((item) => item !== null);
+
     const columns = [
         {
             title: "Agent",
@@ -182,7 +201,7 @@ export default function ProductivityTableSection() {
             key: "overdue_direct_emails",
             // ...getColumnSearchProps('app_name'),
         },
-      
+
         {
             title: "Direct Emails Due Today",
             dataIndex: "direct_emails_due_today",
@@ -213,7 +232,7 @@ export default function ProductivityTableSection() {
         <div>
             <div className="p-3 rounded-md">
                 <div className="flex">
-                    <ProductivityDateSection />
+                    <ProductivityDateSection data={datas} setData={setDatas} />
                     <ProductivitySearchSection />
                 </div>
                 <Table columns={columns} dataSource={data} />

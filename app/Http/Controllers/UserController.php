@@ -79,21 +79,36 @@ class UserController extends Controller
                 $handled_cases = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'handled']
-                ])->count();
+                ]);
+
+                if ($request->start && $request->end) {
+                    $handled_cases->whereBetween('created_at', [$request->start, $request->end]);
+                } else {
+                    $today = Carbon::today()->toDateString();
+                    $handled_cases->whereDate('created_at', $today);
+                }
+                $handled_cases_count = $handled_cases->count();
 
                 $handled_direct_emails = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
-                ])->count();
+                ]);
+                if ($request->start && $request->end) {
+                    $handled_direct_emails->whereBetween('created_at', [$request->start, $request->end]);
+                } else {
+                    $today = Carbon::today()->toDateString();
+                    $handled_direct_emails->whereDate('created_at', $today);
+                }
+                $handled_direct_emails_count = $handled_direct_emails->count();
 
 
                 // Add handled_count attribute to the user instance
-                $user->handled_cases = $handled_cases;
+                $user->handled_cases = $handled_cases_count;
                 $user->cases_due_today = $cases_due_today;
                 $user->overdue_cases = $overdue_cases;
                 $user->overdue_direct_emails = $overdue_direct_emails;
                 $user->direct_emails_due_today = $direct_emails_due_today;
-                $user->handled_direct_emails = $handled_direct_emails;
+                $user->handled_direct_emails = $handled_direct_emails_count;
             }
         }
 
