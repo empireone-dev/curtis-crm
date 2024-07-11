@@ -614,11 +614,11 @@ class TicketController extends Controller
                     $responseData = $response->json();
                     foreach ($responseData as $key => $value) {
                         if ($value['isReply']) {
-                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
+                            Ticket::where('ticket_id', $value['subject'])->update([
                                 'cases_status' => 'handled'
                             ]);
                         } else {
-                            Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
+                            Ticket::where('ticket_id', $value['subject'])->update([
                                 'cases_status' => 'hide'
                             ]);
                         }
