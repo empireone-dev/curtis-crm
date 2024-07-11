@@ -39,14 +39,9 @@ class UserController extends Controller
         $users = User::where('role_id', '=', $role_id)->with('role')->get();
 
         $days = date("N");
-        if (date("N") == 4) {
-            $days = 4;
-        } else if (date("N") == 5) {
-            $days = 4;
-        } else if (date("N") == 6) {
-            $days = 3;
-        } else if (date("N") == 7) {
-            $days = 2;
+
+        if ($days >= 4) {
+            $days = 6 - $days;
         } else {
             $days = 2;
         }
@@ -60,7 +55,7 @@ class UserController extends Controller
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                    ['updated_at', '<=', $twoDaysAgo]
+                    ['email_date', '<=', $two_overdue_cases]
                 ])->count();
 
                 $cases_due_today = Ticket::where([
