@@ -851,7 +851,6 @@ class TicketController extends Controller
                 'ticket_id' => $subject,
             ], 200);
         } else {
-            $account = $this->createUserAccount($request);
             $data = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $data->id);
 
@@ -870,6 +869,7 @@ class TicketController extends Controller
                 'message' => json_encode($data)
             ]);
 
+            $account = $this->createUserAccount($request);
             return response()->json([
                 'result' => $data,
                 'ticket_id' => $subject,
