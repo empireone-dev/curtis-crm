@@ -41,7 +41,7 @@ class UserController extends Controller
         $days = date("N");
 
         if ($days === 4) {
-            $daysCount = 16;
+            $daysCount = 4;
         }else if($days === 5){
             $daysCount = 4;
         }else if($days === 6){
@@ -49,7 +49,7 @@ class UserController extends Controller
         }else if($days === 7){
             $daysCount = 2;
         }else{
-            $daysCount = 2;
+            $daysCount = 16;
         }
         $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
         if ($role_id == 5) {
