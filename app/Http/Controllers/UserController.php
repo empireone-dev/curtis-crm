@@ -123,11 +123,11 @@ class UserController extends Controller
         return response()->json([
             'data' => $users,
             'sample' =>Ticket::where([
-                ['user_id', '=', $user->id],
+                ['user_id', '=', $users[1]['id']],
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
-                ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
+                ['call_type', '=', $users[1]['agent_type'] == 'Warranty'?'CF-Warranty Claim':'Parts'],
                 // ['email_date', '<=', $twoDaysAgo]
             ])->get()
         ], 200);
