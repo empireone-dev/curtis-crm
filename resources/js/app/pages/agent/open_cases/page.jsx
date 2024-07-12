@@ -238,10 +238,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 {/* {moment(res.date)
                                                     .add(2, "days")
                                                     .format("LLL")} */}
-                                                {addDaysSkippingWeekends(
-                                                    moment(res.date),
-                                                    2
-                                                )}
+                                                {addDaysSkippingWeekends(moment(res.date))}
                                             </td>
                                             <th
                                                 scope="row"
