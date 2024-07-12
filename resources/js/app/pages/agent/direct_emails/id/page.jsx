@@ -11,6 +11,9 @@ import { get_tickets_by_ticket_id } from "@/app/services/tickets-service";
 import { useDispatch } from "react-redux";
 import { get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
+import TransferDirectEmails from "./sections/transfer-direct-email";
+import store from "@/app/store/store";
+import { get_users_thunk } from "@/app/pages/admin/users/redux/users.thunk";
 
 export default function AgentDirectEmailIDPage({ auth }) {
     const account = auth.user;
@@ -30,6 +33,9 @@ export default function AgentDirectEmailIDPage({ auth }) {
             // setData(ress)
         }
         fetch_data();
+    }, []);
+    useEffect(() => {
+        store.dispatch(get_users_thunk(5));
     }, []);
     return (
         <AgentLayout account={account}>
@@ -59,6 +65,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
                                         window.location.pathname.split("/")[3]
                                     }
                                 />
+                                <TransferDirectEmails />
                             </div>
                         </div>
                     </div>

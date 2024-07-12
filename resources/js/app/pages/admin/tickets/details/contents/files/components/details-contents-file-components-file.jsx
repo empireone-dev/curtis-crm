@@ -49,8 +49,9 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                 if (!file.url && !file.preview) {
                     file.preview = await getBase64(file.originFileObj);
                 }
-                setPreviewImage(file.url || file.preview);
-                setPreviewOpen(true);
+                // setPreviewImage(file.url || file.preview);
+                // setPreviewOpen(true);
+                window.open(file.url, '_blank');
             }
         } catch (error) {
             console.error("Error handling file preview:", error);

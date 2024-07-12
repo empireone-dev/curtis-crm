@@ -5,9 +5,6 @@ import { useSelector } from "react-redux";
 import reasons from "@/app/json/reason.json";
 import Select from "@/app/layouts/components/select";
 import store from "@/app/store/store";
-import { update_tickets_status_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
-import { close_ticket_service } from "@/app/services/tickets-service";
-import { router } from "@inertiajs/react";
 import { transfer_ticket_service } from "@/app/services/user-service";
 import { get_tickets_by_user_id_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
 

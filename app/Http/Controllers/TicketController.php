@@ -292,11 +292,17 @@ class TicketController extends Controller
             'status' => 'CLOSED'
         ]);
 
+        // Activity::create([
+        //     'user_id' => $request->user['id'],
+        //     'ticket_id' => $id,
+        //     'type' => $request->type,
+        //     'message' => json_encode($request->all())
+        // ]);
         Activity::create([
             'user_id' => $request->user['id'],
             'ticket_id' => $id,
-            'type' => $request->type,
-            'message' => json_encode($request->all())
+            'type' => 'TICKET CLOSED',
+            'message' => $request->reason
         ]);
     }
     public function get_tickets_by_asc(Request $request, $status)
@@ -992,11 +998,18 @@ class TicketController extends Controller
                 'cases_status' => 'handled',
             ]));
 
+            // Activity::create([
+            //     'user_id' => $request->user['id'],
+            //     'ticket_id' => $data->id,
+            //     'type' => 'TICKET CREATED',
+            //     'message' => json_encode($data)
+            // ]);
+
             Activity::create([
                 'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
+                'type' => 'TICKET CLOSED',
+                'message' => $request->reason
             ]);
 
             $subject = '';
@@ -1051,11 +1064,12 @@ class TicketController extends Controller
                 'cases_status' => 'handled'
             ]));
 
+
             Activity::create([
-                'user_id' => $request->user['id'] ?? 0,
+                'user_id' => $request->user['id'],
                 'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
+                'type' => 'TICKET CLOSED',
+                'message' => $request->reason
             ]);
 
 

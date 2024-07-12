@@ -7,6 +7,7 @@ use App\Http\Controllers\CasesLogController;
 use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakingController;
+use App\Http\Controllers\DirectEmailController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
@@ -99,6 +100,9 @@ Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_ass
 Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
 Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
 Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
+
+
+Route::put('transfer_direct_email', [DirectEmailController::class, 'transfer_direct_email']);
 
 
 

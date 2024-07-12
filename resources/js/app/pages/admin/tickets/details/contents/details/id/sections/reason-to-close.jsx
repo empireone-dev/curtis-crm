@@ -20,8 +20,8 @@ export default function ReasonToClose({ data }) {
         if (reason) {
             try {
                 await close_ticket_service(data, reason, {
-                    ...user,
                     ...ticket,
+                    ...user,
                 });
                 setIsLoading(false);
                 router.visit(routing("details"));
@@ -32,25 +32,39 @@ export default function ReasonToClose({ data }) {
             setIsLoading(false);
         }
     }
-
     function formHandler(value) {
         setReason(value);
     }
-    console.log('data.name',data.remarks)
+    console.log("data.name", data.remarks);
     function click_close(e) {
-        e.preventDefault()
-        if ((data.fname == null || data.fname == '' || data.fname == undefined) || (data.phone == null || data.phone == '' || data.phone == undefined) || (data.remarks == null || data.remarks == ''|| data.remarks == undefined)) {
-            alert('Name, Phone Number & Remarks must be required!')
-        }else{
-            setOpen(true)
+        e.preventDefault();
+        if ((window.location.pathname.split("/")[5] ?? "") == "details") {
+            setOpen(true);
+        } else {
+            if (
+                data.fname == null ||
+                data.fname == "" ||
+                data.fname == undefined ||
+                data.phone == null ||
+                data.phone == "" ||
+                data.phone == undefined ||
+                data.remarks == null ||
+                data.remarks == "" ||
+                data.remarks == undefined
+            ) {
+                alert("Name, Phone Number & Remarks must be required!");
+            } else {
+                setOpen(true);
+            }
         }
+
         //
     }
     return (
         <div>
             <button
                 type="button"
-                onClick={(e) =>click_close(e)}
+                onClick={(e) => click_close(e)}
                 className="p-3 w-36 bg-red-500 text-white rounded-sm hover:to-red-600"
             >
                 CLOSE

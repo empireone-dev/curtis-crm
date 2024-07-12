@@ -21,6 +21,7 @@ console.log('user',user)
             try {
                 const response= await create_ticket_close_service({
                     ...data,
+                    user: user,
                     reason:reason
                 })
                 setIsLoading(false);
