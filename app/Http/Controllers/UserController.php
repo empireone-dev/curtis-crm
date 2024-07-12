@@ -41,11 +41,11 @@ class UserController extends Controller
         $days = date("N");
 
         if ($days === 4) {
-            $daysCount = 4;
+            $daysCount = 16;
         }else if($days === 5){
             $daysCount = 4;
         }else if($days === 6){
-            $daysCount = 16;
+            $daysCount = 3;
         }else if($days === 7){
             $daysCount = 2;
         }else{
