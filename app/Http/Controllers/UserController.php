@@ -41,9 +41,9 @@ class UserController extends Controller
         $days = date("N");
 
         if ($days >= 4) {
-            $daysToAdd = 6 - $days;
+            $days = 6 - $days;
         } else {
-            $daysToAdd = 2 - $days;
+            $days = 2;
         }
         $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
         if ($role_id == 5) {
@@ -54,9 +54,10 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
+                    // ['email_date', '<=', $twoDaysAgo]
                 ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) <= ?', [$daysToAdd, $today])
+                ->whereRaw('DATE_ADD(email_date, INTERVAL 2 DAY) <= ?', [$today])
                 ->count();
 
                 $cases_due_today = Ticket::where([

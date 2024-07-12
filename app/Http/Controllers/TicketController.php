@@ -605,7 +605,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hide'],
-            ]);
+            ])->orderBy('email_date', 'desc');;
 
             $dataQueryCount = $dataQuery->count();
 
