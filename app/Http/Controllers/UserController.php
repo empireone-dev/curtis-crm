@@ -70,7 +70,10 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                     ['cases_status', '=', 'handled'],
-                ])->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [strval($daysCount), $today])
+                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
+                    ['email_date', '=', $today]
+                ])
+                // ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [strval($daysCount), $today])
                 ->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
