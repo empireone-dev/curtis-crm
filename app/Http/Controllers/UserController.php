@@ -55,14 +55,16 @@ class UserController extends Controller
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                    ['updated_at', '<=', $twoDaysAgo]
-                ])->count();
+                    ['email_date', '<=', $twoDaysAgo]
+                ])
+                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) <= ?', [$days, $today])
+                ->count();
 
                 $cases_due_today = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                     ['cases_status', '=', 'handled'],
-                ])->whereDate('updated_at', '=', $today)->count();
+                ])->whereDate('email_date', '=', $today)->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
                     ->whereRaw('DATE_ADD(updated_at, INTERVAL 2 DAY) <= ?', [$today])
