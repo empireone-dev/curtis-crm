@@ -43,7 +43,7 @@ class UserController extends Controller
         if ($days === 4) {
             $daysCount = 4;
         }else if($days === 5){
-            $daysCount = 10;
+            $daysCount = 16;
         }else if($days === 6){
             $daysCount = 3;
         }else if($days === 7){
