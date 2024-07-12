@@ -55,8 +55,9 @@ class UserController extends Controller
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                    ['email_date', '<=', $twoDaysAgo]
+                    // ['email_date', '<=', $twoDaysAgo]
                 ])
+                ->whereRaw('DATE_ADD(email_date, INTERVAL 2 DAY) <= ?', [$today])
                 ->count();
 
                 $cases_due_today = Ticket::where([
