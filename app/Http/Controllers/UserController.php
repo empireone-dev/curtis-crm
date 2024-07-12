@@ -43,7 +43,7 @@ class UserController extends Controller
         if ($days >= 4) {
             $daysToAdd = 6 - $days;
         } else {
-            $daysToAdd = 6 - $days;
+            $daysToAdd = 2 - $days;
         }
         $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
         if ($role_id == 5) {
