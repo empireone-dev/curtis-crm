@@ -41,15 +41,15 @@ class UserController extends Controller
         $days = date("N");
 
         if ($days == '4') {
-            $daysCount = '4';
+            $addDays = '4';
         }else if($days == '5'){
-            $daysCount = '4';
+            $addDays = '4';
         }else if($days == '6'){
-            $daysCount = '3';
+            $addDays = '3';
         }else if($days == '7'){
-            $daysCount = '2';
+            $addDays = '2';
         }else{
-            $daysCount = '2';
+            $addDays = '2';
         }
         $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
         if ($role_id == 5) {
@@ -63,7 +63,7 @@ class UserController extends Controller
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
                     // ['email_date', '<=', $twoDaysAgo]
                 ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [$daysCount, $today])
+                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [$addDays, $today])
                 ->count();
 
                 $cases_due_today = Ticket::where([
@@ -73,7 +73,7 @@ class UserController extends Controller
                     ['cases_status', '<>', 'hide'],
                     ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
                 ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) = ?', [$daysCount, $today])
+                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) = ?', [$addDays, $today])
                 ->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
@@ -122,7 +122,14 @@ class UserController extends Controller
 
         return response()->json([
             'data' => $users,
-            'sample' =>$daysCount
+            'sample' =>Ticket::where([
+                ['user_id', '=', $user->id],
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['cases_status', '<>', 'hide'],
+                ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
+                // ['email_date', '<=', $twoDaysAgo]
+            ])->get()
         ], 200);
     }
 
