@@ -70,6 +70,8 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
                     ['cases_status', '=', 'handled'],
+                    ['cases_status', '<>', 'hide'],
+                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
                 ])
                 ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) <= ?', [$daysCount, $today])
                 ->count();
