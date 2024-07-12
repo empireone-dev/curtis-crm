@@ -851,6 +851,7 @@ class TicketController extends Controller
                 'ticket_id' => $subject,
             ], 200);
         } else {
+            $account = $this->createUserAccount($request);
             $data = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $data->id);
 
