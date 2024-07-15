@@ -1,1 +1,0 @@
-const a=[{name:"CF-Warranty Claim",value:"CF-Warranty Claim"},{name:"TS-Tech Support",value:"TS-Tech Support"},{name:"Parts",value:"Parts"},{name:"General Inquiry",value:"General Inquiry"},{name:"Others",value:"Others"}];export{a as c};

@@ -114,7 +114,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query();
+        $query = Ticket::query()->with(['refund','repair','receipt','replacement','decision_making']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -430,7 +430,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query();
+        $query = Ticket::query()->with(['refund','repair','receipt','replacement','decision_making']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -614,7 +614,7 @@ class TicketController extends Controller
             $data = $dataPaginator->pluck('ticket_id')->toArray();
             if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbx72JJPr3l35quLjOqrTYQoPo3UmXMSDlRJuvJr2S0nDguBDkn0AzFrSCKfAhc9fB95/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwS4V6nv6v8HpCZLWlX2EwpRRYrZP1xmRDYT4cSgVN020DUjKNEez5G67aZNhvXMwXL/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
@@ -631,7 +631,6 @@ class TicketController extends Controller
                             ]);
                         }
                     }
-
                     $collection = collect($responseData);
                     $unique = $collection->unique('subject')->sortBy('date')->values()->all();
 

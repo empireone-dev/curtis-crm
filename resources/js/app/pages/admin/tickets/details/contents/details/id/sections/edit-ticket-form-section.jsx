@@ -85,7 +85,6 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
-
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
@@ -93,6 +92,7 @@ export default function EditTicketFormSection() {
             ...form,
             id: ticketid,
             status: ticket.status,
+            store: ticket?.receipt?.store ?? "",
         };
         try {
             await update_tickets_by_user_id(data);
@@ -116,7 +116,7 @@ export default function EditTicketFormSection() {
             })
         );
     }
-    console.log("form.issue", form.issue);
+
     return (
         <form
             onSubmit={submitFormTicket}
@@ -373,13 +373,13 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
-                            {form?.issue && form.call_type == "Parts" && (
+                            {/* {form?.issue && form.call_type == "Parts" && (
                                 <SelectData
                                     mode="multiple"
                                     size={"large"}
                                     placeholder="Please select"
                                     defaultValue={
-                                        JSON.parse(form.issue ?? "[]") ?? []
+                                        JSON.parse(form.issue ?? "[]") 
                                     }
                                     onChange={formHandlerIssue}
                                     style={{
@@ -419,8 +419,39 @@ export default function EditTicketFormSection() {
                                         label: res.name,
                                     }))}
                                 />
-                            )}
+                            )} */}
 
+                            <div className="md:w-full  mb-3 md:mb-0">
+                                {form.call_type == "Parts" ? (
+                                    <Autocomplete
+                                        defaultValue={form.issue ?? "[]"}
+                                        onChange={formHandler}
+                                        value={[
+                                            {
+                                                id: "Missing Parts",
+                                                name: "Missing Parts",
+                                            },
+                                            {
+                                                id: "Damage Parts",
+                                                name: "Damage Parts",
+                                            },
+                                            {
+                                                id: "Want to buy Parts",
+                                                name: "Want to buy Parts",
+                                            },
+                                        ]}
+                                    />
+                                ) : (
+                                    <Autocomplete
+                                        defaultValue={form.issue ?? "[]"}
+                                        onChange={formHandler}
+                                        value={common_issues.map((res) => ({
+                                            id: res.id,
+                                            name: res.name,
+                                        }))}
+                                    />
+                                )}
+                            </div>
                             {/* {form?.call_type == "Parts" ? (
                                 <Autocomplete
                                     defaultValue={form?.issue ?? "[]"}
