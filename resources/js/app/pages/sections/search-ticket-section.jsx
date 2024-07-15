@@ -40,7 +40,7 @@ export default function SearchTicketSection() {
         <div>
             <button
                 onClick={() => setOpen(true)}
-                className="text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
+                className="text-blue-400 flex items-center justify-center transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:bg-blue-100 focus:ring-blue-800"
             >
                 <MagnifyingGlassCircleIcon className="h-12" />
             </button>
