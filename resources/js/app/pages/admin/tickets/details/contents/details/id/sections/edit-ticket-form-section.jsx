@@ -92,7 +92,7 @@ export default function EditTicketFormSection() {
             ...form,
             id: ticketid,
             status: ticket.status,
-            store: ticket?.receipt?.store ?? "",
+            store: ticket?.receipt?.store ?? "N/A",
         };
         try {
             await update_tickets_by_user_id(data);

@@ -48,7 +48,6 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
-
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
@@ -56,6 +55,7 @@ export default function EditTicketFormSection() {
             ...form,
             id: ticketid,
             status: ticket.status,
+            store:ticket?.receipt?.store??'N/A'
         };
         try {
             await update_tickets_by_user_id(data);
