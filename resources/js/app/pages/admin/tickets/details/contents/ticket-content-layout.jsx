@@ -172,7 +172,7 @@ export default function TicketsDetailsLayout({ children }) {
     const hash = window.location.pathname.split("/")[5];
     return (
         <div className="font-sans ">
-            <div className="sticky top-0 bg-white z-50">
+            <div className="sticky top-0 bg-white z-10">
                 {user.agent_type !== "CSR" && (
                     <TicketsDetailsMoveAssignSection />
                 )}

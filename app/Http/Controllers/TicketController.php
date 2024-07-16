@@ -614,7 +614,7 @@ class TicketController extends Controller
             $data = $dataPaginator->pluck('ticket_id')->toArray();
             if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwS4V6nv6v8HpCZLWlX2EwpRRYrZP1xmRDYT4cSgVN020DUjKNEez5G67aZNhvXMwXL/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbxUje66rydZz7-25Vwu_MOWHpiJQAXwtC-H8e0H_b7RHG0uAuaqURUG_vpnFT8XpE6X/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
@@ -642,7 +642,7 @@ class TicketController extends Controller
                 }
             } else if ($call_type == 'Parts') {
                 if (count($data) !== 0) {
-                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbzx7nYhJQ1_jo50A0J50UgQxBu0AznwCyBGzfXZveHf8gBirMMsnUujwEE-f_voH0nY/exec?data=' . json_encode($data);
+                    $scriptUrl = 'https://script.google.com/macros/s/AKfycbwbnXuws4If4P3qZUtLD7NAQANgvD09AFXd-pzOPRy5qoYVMuTD74dGHx1evJqrexq3/exec?data=' . json_encode($data);
 
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
