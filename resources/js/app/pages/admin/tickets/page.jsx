@@ -29,7 +29,7 @@ export default function TicketsPage() {
 
     return (
         <AdministratorLayout>
-            <div>
+            <div className="py-3">
                 <div className="px-3 flex items-start justify-between gap-4">
                     <button
                         onClick={() =>

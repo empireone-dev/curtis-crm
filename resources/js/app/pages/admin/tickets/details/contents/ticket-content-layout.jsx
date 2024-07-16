@@ -172,9 +172,11 @@ export default function TicketsDetailsLayout({ children }) {
     const hash = window.location.pathname.split("/")[5];
     return (
         <div className="font-sans h-full">
-            {user.agent_type !== "CSR" && <TicketsDetailsMoveAssignSection />}
-            <div className="px-8">
-                <div className="w-full ">
+            <div className="sticky top-0 bg-white z-50">
+                {user.agent_type !== "CSR" && (
+                    <TicketsDetailsMoveAssignSection />
+                )}
+                <div className="w-full px-8">
                     <div
                         className={`py-3 text-3xl font-black flex gap-3 ${
                             ticket.status === "CLOSED"
