@@ -16,6 +16,8 @@ import moment from "moment";
 export default function TicketsExportFileSection() {
     const [loading, setLoading] = useState(false);
     const { tickets } = useSelector((state) => state.tickets);
+    const queryParams = new URLSearchParams(window.location.search);
+    const searchQuery = queryParams.get("search");
 
     async function fetchTickets(page) {
         try {
@@ -23,7 +25,7 @@ export default function TicketsExportFileSection() {
             return data;
         } catch (error) {}
     }
-console.log('ticketssss',tickets)
+    console.log("hheheheh", tickets);
     async function export_ticket() {
         setLoading(true);
         try {
@@ -35,90 +37,111 @@ console.log('ticketssss',tickets)
             async function export_files() {
                 const allTickets = exist.data;
                 setLoading(false);
-                const newData = allTickets.map((res) => [
-                    moment(res.created_at).format('L'),
-                    moment(res.updated_at).format('L'),
-                    res.ticket_id ?? "N/A",
-                    res.fname ?? "N/A",
-                    res.lname ?? "N/A",
-                    res.phone ?? "N/A",
-                    res.email ?? "N/A",
-                    res.serial_number ?? "N/A",
-                    res.item_number ?? "N/A",
-                    res.unit ?? "N/A",
-                    res.class ?? "N/A",//10
-                    res.brand ?? "N/A",
-                    res.call_type ?? "N/A",
-                    res.purchase_date ?? "N/A",
-                    res.zip_code ?? "N/A",
-                    res.country ?? "N/A",
-                    res.state ?? "N/A",
-                    res.city ?? "N/A",
-                    res.address ?? "N/A",
-                    res.issue ?? "N/A",
-                    res.status ?? "N/A",//10
-                    res.reason_to_close ?? "N/A",
-                    res.receipt?.discount??"N/A",
-                    res.receipt?.retailers_price??'N/A',
-                    res.receipt?.total_price??'N/A',
-                    res.decision_making?.shipping_cost??'0',
-                    res.decision_making?.shipping_cost??'0',
-                    res.replacement?.ship_date??'N/A',
-                    res.replacement?.tracking??'N/A',
-                    res.refund?.ship_date??'N/A',
-                    res.refund?.cheque_no??'N/A',//10
-                    res.refund?.cheque_amount??'N/A',
-                    (res.country == 'CA'?'CAD':'USD')??'N/A',
-                    res.receipt?.store??"N/A",
-                    "No",
-                    (res.isUploading == 'true'?'YES':'NO')??'NO',
-                    res.status??'N/A',
-                    moment(res.updated_at).format('L'),//7
-                ]);
 
-                const data = [
-                    [
-                        "Date Created",
-                        "Date Last Updated",
-                        "Ticket #",
-                        "First Name",
-                        "Last Name",
-                        "Phone",
-                        "Email",
-                        "Serial #",
-                        "Model #",
-                        "Unit",
-                        "Item Class",//10
-                        "Brand",
-                        "Resolution",
-                        "Purchase Date",
-                        "Zipcode",
-                        "Country",
-                        "State",
-                        "City",
-                        "Address",
-                        "Issue",
-                        "Ticket Status",//10
-                        "Reason",
-                        "Discount",
-                        "Price After Discount",
-                        "Purchase Price",
-                        "Cost Price",
-                        "Shipping Cost",
-                        "Replacement Ship Date",
-                        "Tracking #",
-                        "Cheque Ship Date",
-                        "Cheque #",//10
-                        "Cheque Amount",
-                        "Cheque Currency",
-                        "Retail Store",
-                        "From Parts",
-                        "Is Downloaded",
-                        "Warranty Decision",
-                        "Validation Date",
-                    ],
-                    ...newData,
-                ];
+                let newData = [];
+                let data = []
+                if (searchQuery == "RESOURCE") {
+                    newData = allTickets.map((res) => [
+                        moment(res?.receipt?.created_at).format("L"),
+                        res.ticket_id,
+                        res.user?.name??'N/A'
+                    ]);
+                    newData.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+                    data = [
+                        [
+                            "Validated Date",
+                            "Ticket Number",
+                            "Agent Name",
+                        ],
+                        ...newData,
+                    ];
+                } else {
+                    newData = allTickets.map((res) => [
+                        moment(res.created_at).format("L"),
+                        moment(res.updated_at).format("L"),
+                        res.ticket_id ?? "N/A",
+                        res.fname ?? "N/A",
+                        res.lname ?? "N/A",
+                        res.phone ?? "N/A",
+                        res.email ?? "N/A",
+                        res.serial_number ?? "N/A",
+                        res.item_number ?? "N/A",
+                        res.unit ?? "N/A",
+                        res.class ?? "N/A", //10
+                        res.brand ?? "N/A",
+                        res.call_type ?? "N/A",
+                        res.purchase_date ?? "N/A",
+                        res.zip_code ?? "N/A",
+                        res.country ?? "N/A",
+                        res.state ?? "N/A",
+                        res.city ?? "N/A",
+                        res.address ?? "N/A",
+                        res.issue ?? "N/A",
+                        res.status ?? "N/A", //10
+                        res.reason_to_close ?? "N/A",
+                        res.receipt?.discount ?? "N/A",
+                        res.receipt?.retailers_price ?? "N/A",
+                        res.receipt?.total_price ?? "N/A",
+                        res.decision_making?.shipping_cost ?? "0",
+                        res.decision_making?.shipping_cost ?? "0",
+                        res.replacement?.ship_date ?? "N/A",
+                        res.replacement?.tracking ?? "N/A",
+                        res.refund?.ship_date ?? "N/A",
+                        res.refund?.cheque_no ?? "N/A", //10
+                        res.refund?.cheque_amount ?? "N/A",
+                        (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
+                        res.receipt?.store ?? "N/A",
+                        "No",
+                        (res.isUploading == "true" ? "YES" : "NO") ?? "NO",
+                        res.status ?? "N/A",
+                        moment(res.updated_at).format("L"), //7
+                    ]);
+
+                    data = [
+                        [
+                            "Date Created",
+                            "Date Last Updated",
+                            "Ticket #",
+                            "First Name",
+                            "Last Name",
+                            "Phone",
+                            "Email",
+                            "Serial #",
+                            "Model #",
+                            "Unit",
+                            "Item Class", //10
+                            "Brand",
+                            "Resolution",
+                            "Purchase Date",
+                            "Zipcode",
+                            "Country",
+                            "State",
+                            "City",
+                            "Address",
+                            "Issue",
+                            "Ticket Status", //10
+                            "Reason",
+                            "Discount",
+                            "Price After Discount",
+                            "Purchase Price",
+                            "Cost Price",
+                            "Shipping Cost",
+                            "Replacement Ship Date",
+                            "Tracking #",
+                            "Cheque Ship Date",
+                            "Cheque #", //10
+                            "Cheque Amount",
+                            "Cheque Currency",
+                            "Retail Store",
+                            "From Parts",
+                            "Is Downloaded",
+                            "Warranty Decision",
+                            "Validation Date",
+                        ],
+                        ...newData,
+                    ];
+                }
+
                 const ws = XLSX.utils.aoa_to_sheet(data);
 
                 // Define the style for the header row

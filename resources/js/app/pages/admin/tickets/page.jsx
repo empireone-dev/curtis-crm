@@ -29,8 +29,8 @@ export default function TicketsPage() {
 
     return (
         <AdministratorLayout>
-            <div className="py-12">
-                <div className="px-5 flex items-start justify-between gap-4">
+            <div>
+                <div className="px-3 flex items-start justify-between gap-4">
                     <button
                         onClick={() =>
                             // router.visit("/administrator/tickets/create")
@@ -46,9 +46,7 @@ export default function TicketsPage() {
                     <TicketsSearchSection />
                     <TicketFilterSection />
                 </div>
-                <div className="px-3">
-                    <TicketTableSection />
-                </div>
+                <TicketTableSection />
             </div>
         </AdministratorLayout>
     );

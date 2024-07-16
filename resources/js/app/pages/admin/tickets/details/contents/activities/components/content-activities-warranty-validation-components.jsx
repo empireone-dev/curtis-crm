@@ -6,6 +6,7 @@ export default function ContentActivitiesWarrantyValidationComponents({
 }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
+    console.log('check',result)
     return (
         <div>
             <button

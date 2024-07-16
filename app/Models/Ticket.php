@@ -46,13 +46,19 @@ class Ticket extends Model
         'cases_status',
         'move_status',
         'purchase_date',
-        'email_date'
+        'email_date',
+        'validator_id'
     ];
 
     
     public function user(): HasOne
     {
         return $this->hasOne(User::class,'id','user_id');
+    }
+
+    public function validator(): HasOne
+    {
+        return $this->hasOne(User::class,'id','validator_id');
     }
 
     public function refund(): HasOne
@@ -79,6 +85,10 @@ class Ticket extends Model
     public function decision_making(): HasOne
     {
         return $this->hasOne(DecisionMaking::class,'ticket_id','id');
+    }
+    public function activity(): HasOne
+    {
+        return $this->hasOne(Activity::class,'ticket_id','id');
     }
 
 }
