@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { usePage } from "@inertiajs/react";
 import store from "@/app/store/store";
 import { upload_ticket_files_thunk } from "@/app/pages/customer/tickets/redux/customer-tickets-thunk";
+import moment from "moment";
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -26,7 +27,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
             ...fileList,
             ...files.map((res) => ({
                 uid: res.id,
-                name: "uploaded",
+                name: moment(res.created_at).format('LLLL'),
                 url: res.url,
                 status: "done",
                 extension: res.url.split("/").pop().split(".").pop(),
@@ -125,7 +126,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                 multiple
                 method="GET"
                 action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                listType="picture-card"
+                listType="picture"
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
