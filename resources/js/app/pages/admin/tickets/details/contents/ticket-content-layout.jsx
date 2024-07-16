@@ -20,8 +20,12 @@ export default function TicketsDetailsLayout({ children }) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const ticketId = url.split("/")[url.split("/").length - 2].split("#")[0];
-                const res = await store.dispatch(get_upload_ticket_files_thunk(ticketId));
+                const ticketId = url
+                    .split("/")
+                    [url.split("/").length - 2].split("#")[0];
+                const res = await store.dispatch(
+                    get_upload_ticket_files_thunk(ticketId)
+                );
                 const ress = await get_tickets_by_ticket_id(ticketId);
                 dispatch(setTicket(ress));
                 dispatch(setFilesData(res));
@@ -183,24 +187,22 @@ export default function TicketsDetailsLayout({ children }) {
                     </div>
                     <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
                         {tabs.map((res, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => handleTabClick(i)}
-                                    className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${
-                                        hash === res.hash
-                                            ? "bg-blue-600 text-white"
-                                            : "bg-gray-300 hover:bg-blue-200"
-                                    }`}
-                                >
-                                    {res.title}
-                                </button>
-                            ))}
-                    </div>
-                    <div className="my-8">
-                        {loading ? <Skeleton /> : children}
+                            <button
+                                key={i}
+                                onClick={() => handleTabClick(i)}
+                                className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${
+                                    hash === res.hash
+                                        ? "bg-blue-600 text-white"
+                                        : "bg-gray-300 hover:bg-blue-200"
+                                }`}
+                            >
+                                {res.title}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
+            <div className="mx-8">{loading ? <Skeleton /> : children}</div>
         </div>
     );
 }

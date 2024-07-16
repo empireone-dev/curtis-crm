@@ -42,7 +42,7 @@ export default function TicketsExportFileSection() {
                 let data = []
                 if (searchQuery == "RESOURCE") {
                     newData = allTickets.map((res) => [
-                        moment(res?.receipt?.created_at).format("L"),
+                        moment(res?.receipt?.updated_at).format("L"),
                         res.ticket_id,
                         res.user?.name??'N/A'
                     ]);
