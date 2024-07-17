@@ -23,11 +23,11 @@ const CustomerTicketsSerialModel = ({isTranslate}) => {
                 
                 {!isTranslate ? (
                     <div className="text-xl font-black">
-                        Image claire du numéro de série
+                        Image claire et lisible de l'autocollant du modèle et du numéro de série (situé à l'arrière de l'appareil)
                     </div>
                 ) : (
                     <div className="text-xl font-black">
-                        Clear Picture of the Serial#
+                        Clear and readable picture of the model and serial number sticker (located at the back of the unit)
                     </div>
                 )}
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>

@@ -24,11 +24,11 @@ const CustomerTicketsClearModel = ({ isTranslate }) => {
             <section className="h-full w-full flex flex-col">
                 {!isTranslate ? (
                     <div className="text-xl font-black">
-                        Image claire du modèle #
+                            Description de la ou des pièces que vous recherchez
                     </div>
                 ) : (
                     <div className="text-xl font-black">
-                        Clear Picture of the Model#
+                         Description of the part/s that you are looking for.
                     </div>
                 )}
                 <h1 className=" pb-3 font-semibold sm:text-lg text-gray-900"></h1>

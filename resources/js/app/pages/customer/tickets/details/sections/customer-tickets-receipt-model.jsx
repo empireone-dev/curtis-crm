@@ -23,13 +23,13 @@ const CustomerTicketsReceiptModel = ({ isTranslate }) => {
             <section className="h-full w-full flex flex-col">
                 {!isTranslate ? (
                     <div className="text-xl font-black">
-                        Copie claire de votre reçu indiquant la date d'achat, la
-                        description de l'article et le montant.
+                       Photo claire et lisible de l'acte de vente faisant apparaître le
+                       date d'achat, description de l'article et prix unitaire.
                     </div>
                 ) : (
                     <div className="text-xl font-black">
-                        Clear copy of your receipt showing the date of purchase,
-                        item description and amount
+                        Clear and readable picture of the bill of sale showing the
+                        date of purchase, item description and unit price.
                     </div>
                 )}
 
