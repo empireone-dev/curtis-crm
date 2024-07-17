@@ -52,7 +52,13 @@ export default function ContentDetailsSection() {
             }
         }
     }
-    console.log("ticket", ticket);
+    const formatPhone = (phone) => {
+        if (!phone) return "N/A";
+        const cleaned = phone.replace(/[^\d]/g, "");
+        if (cleaned.length !== 10) return "N/A";
+        const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        return formatted;
+    };
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
@@ -105,10 +111,10 @@ export default function ContentDetailsSection() {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Phone :</b>{" "}
-                            {(ticket?.phone.replace(/[ .]/g, ''))?.replace(
-                                /(\d{3})(\d{3})(\d{4})/,
-                                "($1) $2-$3"
-                            )}
+                           
+                            {
+                                formatPhone(ticket?.phone)
+                            }
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Purchase Date :</b>{" "}

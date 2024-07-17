@@ -25,7 +25,13 @@ export default function TicketsExportFileSection() {
             return data;
         } catch (error) {}
     }
-    console.log("hheheheh", tickets);
+    const formatPhone = (phone) => {
+        if (!phone) return "N/A";
+        const cleaned = phone.replace(/[^\d]/g, "");
+        if (cleaned.length !== 10) return "N/A";
+        const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        return formatted;
+    };
     async function export_ticket() {
         setLoading(true);
         try {
@@ -39,34 +45,26 @@ export default function TicketsExportFileSection() {
                 setLoading(false);
 
                 let newData = [];
-                let data = []
+                let data = [];
                 if (searchQuery == "RESOURCE") {
                     newData = allTickets.map((res) => [
                         moment(res?.receipt?.updated_at).format("L"),
                         res.ticket_id,
-                        res.user?.name??'N/A'
+                        res.user?.name ?? "N/A",
                     ]);
                     newData.sort((a, b) => new Date(a[0]) - new Date(b[0]));
                     data = [
-                        [
-                            "Validated Date",
-                            "Ticket Number",
-                            "Agent Name",
-                        ],
+                        ["Validated Date", "Ticket Number", "Agent Name"],
                         ...newData,
                     ];
                 } else {
-                  
                     newData = allTickets.map((res) => [
                         moment(res.created_at).format("L"),
                         moment(res.updated_at).format("L"),
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
                         res.lname ?? "N/A",
-                        (res.phone?.replace(/[ .]/g, ''))?.replace(
-                            /(\d{3})(\d{3})(\d{4})/,
-                            "($1) $2-$3"
-                        )?? "N/A",
+                        formatPhone(res.phone),                        
                         res.email ?? "N/A",
                         res.serial_number ?? "N/A",
                         res.item_number ?? "N/A",
