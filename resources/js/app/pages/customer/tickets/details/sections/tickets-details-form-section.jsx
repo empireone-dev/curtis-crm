@@ -126,7 +126,7 @@ export default function TicketsDetailsFormSection() {
                     <div className="h-px my-8 border border-blue-500 w-full" />
                     <CustomerTicketsPartsModel isTranslate={isTranslate}/>
                     <div className="h-px my-8 border border-blue-500 w-full" />
-                    <CustomerTicketsClearModel isTranslate={isTranslate}/>
+                    {/* <CustomerTicketsClearModel isTranslate={isTranslate}/> */}
                 </>
             )}
                 <Button

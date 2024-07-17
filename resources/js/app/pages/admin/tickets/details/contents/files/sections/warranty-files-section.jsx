@@ -103,20 +103,21 @@ export default function WarrantyFilesSection() {
                 Part Files
             </div>
             {ticket.call_type == "Parts" && (
-                <div className="flex gap-2 border-b border-black my-5">
+                <div className="flex gap-2 my-5">
                     <div className="text-xl"> Detailed Explanation: </div>
                     <div className="text-xl font-bold">
                         {ticket.explanation}
                     </div>
                 </div>
             )}
+            <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsSerialModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsReceiptModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsPartsModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
-            <CustomerTicketsClearModel />
+            {/* <CustomerTicketsClearModel /> */}
            
             <Button
                 loading={loading}
