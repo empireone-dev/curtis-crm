@@ -105,7 +105,7 @@ export default function ContentDetailsSection() {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Phone :</b>{" "}
-                            {ticket?.phone?.replace(
+                            {(ticket?.phone.replace(/[ .]/g, ''))?.replace(
                                 /(\d{3})(\d{3})(\d{4})/,
                                 "($1) $2-$3"
                             )}

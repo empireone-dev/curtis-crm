@@ -56,13 +56,17 @@ export default function TicketsExportFileSection() {
                         ...newData,
                     ];
                 } else {
+                  
                     newData = allTickets.map((res) => [
                         moment(res.created_at).format("L"),
                         moment(res.updated_at).format("L"),
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
                         res.lname ?? "N/A",
-                        res.phone ?? "N/A",
+                        (res.phone?.replace(/[ .]/g, ''))?.replace(
+                            /(\d{3})(\d{3})(\d{4})/,
+                            "($1) $2-$3"
+                        )?? "N/A",
                         res.email ?? "N/A",
                         res.serial_number ?? "N/A",
                         res.item_number ?? "N/A",

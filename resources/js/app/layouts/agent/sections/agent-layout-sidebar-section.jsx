@@ -45,12 +45,6 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 icon={<TicketIcon className="h-6" />}
                                 href={"tickets"}
                             />
-                            <LayoutSidebarListComponent
-                                account={account}
-                                name="Open Cases"
-                                icon={<InboxArrowDownIcon className="h-6" />}
-                                href={"open_cases"}
-                            />
                             {/* <LayoutSidebarListComponent
                                 account={account}
                                 name="Handled Cases"
@@ -63,18 +57,30 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 icon={<EnvelopeIcon className="h-6" />}
                                 href={"closed_cases"}
                             /> */}
-                            <LayoutSidebarListComponent
-                                account={account}
-                                name="Direct Emails"
-                                icon={<EnvelopeIcon className="h-6" />}
-                                href={"direct_emails"}
-                            />
-                            <LayoutSidebarListComponent
-                                account={account}
-                                name="Productivity"
-                                icon={<EnvelopeIcon className="h-6" />}
-                                href={"productivity"}
-                            />
+                            {account.agent_type !== "CSR" && (
+                                <>
+                                    <LayoutSidebarListComponent
+                                        account={account}
+                                        name="Open Cases"
+                                        icon={
+                                            <InboxArrowDownIcon className="h-6" />
+                                        }
+                                        href={"open_cases"}
+                                    />
+                                    <LayoutSidebarListComponent
+                                        account={account}
+                                        name="Direct Emails"
+                                        icon={<EnvelopeIcon className="h-6" />}
+                                        href={"direct_emails"}
+                                    />
+                                    <LayoutSidebarListComponent
+                                        account={account}
+                                        name="Productivity"
+                                        icon={<EnvelopeIcon className="h-6" />}
+                                        href={"productivity"}
+                                    />
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>
