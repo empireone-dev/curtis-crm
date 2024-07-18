@@ -830,17 +830,20 @@ class TicketController extends Controller
             $this->updateTicket($data->id, $subject);
             $this->sendEmailIfNeeded($request, $subject);
 
-            AgentNote::create([
-                'user_id' => $request->user['id'],
-                'ticket_id' => $data->id,
-                'message' => $request->remarks,
-            ]);
-            Activity::create([
-                'user_id' => $request->user['id'],
-                'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
-            ]);
+            if ($request->user()) {
+                AgentNote::create([
+                    'user_id' => $request->user['id'],
+                    'ticket_id' => $data->id,
+                    'message' => $request->remarks,
+                ]);
+                Activity::create([
+                    'user_id' => $request->user['id'],
+                    'ticket_id' => $data->id,
+                    'type' => 'TICKET CREATED',
+                    'message' => json_encode($data)
+                ]);
+            }
+           
 
             return response()->json([
                 'result' => $data,
@@ -856,17 +859,20 @@ class TicketController extends Controller
             $this->updateTicket($data->id, $subject);
             $this->sendEmailIfNeeded($request, $subject);
 
-            AgentNote::create([
-                'user_id' => $request->user['id'],
-                'ticket_id' => $data->id,
-                'message' => $request->remarks,
-            ]);
-            Activity::create([
-                'user_id' => $request->user['id'] ?? 0,
-                'ticket_id' => $data->id,
-                'type' => 'TICKET CREATED',
-                'message' => json_encode($data)
-            ]);
+           if ($request->user()) {
+                AgentNote::create([
+                    'user_id' => $request->user['id'],
+                    'ticket_id' => $data->id,
+                    'message' => $request->remarks,
+                ]);
+                Activity::create([
+                    'user_id' => $request->user['id'] ?? 0,
+                    'ticket_id' => $data->id,
+                    'type' => 'TICKET CREATED',
+                    'message' => json_encode($data)
+                ]);
+            }
+           
 
             $account = $this->createUserAccount($request);
             return response()->json([

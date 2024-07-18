@@ -7,7 +7,7 @@ import store from "@/app/store/store";
 import Textarea from "@/app/layouts/components/textarea";
 import { get_products_thunk } from "@/app/pages/admin/ticket_form/redux/ticket-form-thunk";
 import { countries } from "./../../../json/country.json";
-import { call_type } from "./../../../json/call_type.json";
+// import { call_type } from "./../../../json/call_type.json";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
 import { tickets_create_thunk } from "../../admin/tickets/create/redux/tickets-create-thunk";
@@ -21,7 +21,21 @@ export default function WebFormFormSection() {
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
 
+    const getQueryParam = (paramName) => {
+        const searchParams = new URLSearchParams(window.location.search);
+        return searchParams.get(paramName);
+    };
+    
+    const call_type = getQueryParam("call_type");
+
+    console.log('window.location',call_type)
+    
     useEffect(() => {
+        if(call_type == 'CF-Warranty Claim'  || call_type == 'Parts' ){
+
+        }else{
+            window.location.href = "https://www.curtisint.com/product-support/"
+        }
         store.dispatch(get_common_issues_thunk());
     }, []);
 
@@ -51,6 +65,7 @@ export default function WebFormFormSection() {
                 created_from: "WEB FORM",
                 status: null,
                 isSendEmail: true,
+                call_type:call_type,
                 email:
                     form.isHasEmail == "true" || form.isHasEmail == true
                         ? form.email
@@ -76,7 +91,7 @@ export default function WebFormFormSection() {
             className=" w-full px-8 pt-6 pb-8 mb-4 flex flex-col gap-3"
         >
             <div className="flex items-center justify-center font-black text-3xl">
-                Web Ticket Form
+                Web Ticket Form ({`${call_type}`})
             </div>
             <div className=" md:flex mb-3">
                 <div className="md:w-1/2 px-3 mb-3 md:mb-0">
@@ -185,7 +200,7 @@ export default function WebFormFormSection() {
                 </div>
             </div>
             <div className=" md:flex mb-3">
-                <div className="md:w-2/6 px-3 mb-3 md:mb-0">
+                <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                     <Input
                         onChange={formHandler}
                         name="serial_number"
@@ -197,7 +212,7 @@ export default function WebFormFormSection() {
                     />
                 </div>
 
-                <div className="md:w-2/6 px-3">
+                {/* <div className="md:w-2/6 px-3">
                     <Select
                         onChange={formHandler}
                         name="call_type"
@@ -207,8 +222,8 @@ export default function WebFormFormSection() {
                         errorMessage="Call Type is required"
                         data={call_type}
                     />
-                </div>
-                <div className="md:w-2/6 px-3">
+                </div> */}
+                <div className="md:w-1/2 px-3">
                     <Input
                         onChange={formHandler}
                         name="purchase_date"
