@@ -831,8 +831,8 @@ class TicketController extends Controller
             $data = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $data->id);
 
-            $this->updateTicket($data->id, $subject);
             $this->sendEmailIfNeeded($request, $subject);
+            $this->updateTicket($data->id, $subject);
 
             if ($request->user()) {
                 AgentNote::create([
@@ -860,8 +860,8 @@ class TicketController extends Controller
             $data = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $data->id);
 
-            $this->updateTicket($data->id, $subject);
             $this->sendEmailIfNeeded($request, $subject);
+            $this->updateTicket($data->id, $subject);
 
            if ($request->user()) {
                 AgentNote::create([
