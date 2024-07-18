@@ -48,7 +48,6 @@ export default function InternalsAvailabilitySection() {
         }
         get_fetch();
     }, [loading]);
-
     const isNotAvailable =
         data.parts.find(
             (option) =>
@@ -154,7 +153,12 @@ export default function InternalsAvailabilitySection() {
                 )}
 
                 <div className="flex justify-between">
-                    <div className="text-2xl">Availability</div>
+                    <div>
+                        <div className="text-2xl">Availability</div>
+                        <div className="text-red-500 text-lg">
+                            {ticket.validation_notes}
+                        </div>
+                    </div>
 
                     <button
                         onClick={addRow}
