@@ -4,6 +4,7 @@ import { get_user_service } from '@/app/services/user-service';
 import { setUser } from '@/app/redux/app-slice';
 import AgentLayoutSubSidebarSection from './sections/agent-layout-sub-sidebar-section';
 import AgentLayoutSidebarSection from './sections/agent-layout-sidebar-section';
+import axios from 'axios';
 
 export default function AgentLayout({children,account}) {
 
@@ -19,6 +20,11 @@ export default function AgentLayout({children,account}) {
         get_account()
       }
     }, [user]);
+
+    // useEffect(()=>{
+    //  const aa=  axios.get('https://mail.google.com/mail/u/0/#inbox')
+    //  console.log('aa',aa)
+    // },[])
     return (
         <div className='flex gap-3'>
             <div className='flex-none'>

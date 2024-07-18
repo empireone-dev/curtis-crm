@@ -57,7 +57,8 @@ export default function AgentLayoutSidebarSection({ account }) {
                                 icon={<EnvelopeIcon className="h-6" />}
                                 href={"closed_cases"}
                             /> */}
-                            {account.agent_type == "Parts" && (
+                            {/* account.agent_type !== "CSR" */}
+                            {account.agent_type !== "CSR" && (
                                 <>
                                     <LayoutSidebarListComponent
                                         account={account}
