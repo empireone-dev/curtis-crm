@@ -102,34 +102,36 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         fd.append("ticket_id", resolvedTicketId);
         fd.append("user_id", user.id);
         fd.append("type", type);
-
-        // Set the file list early to provide instant feedback
-        setFileList(newFileList);
-
-        // Check status and append files to FormData
+     
         if (checkStatus(newFileList)) {
             newFileList.forEach((file) => {
                 if (file.name !== "uploaded" && file.status === "done") {
                     fd.append("files[]", file.originFileObj);
                 }
             });
+        }else{
+            setFileList(newFileList);
         }
 
         // Upload the files
-        const data = await store.dispatch(
-            upload_ticket_files_thunk(fd, resolvedTicketId)
-        );
 
+        if (newFileList.length !== 0) {
+            const data = await store.dispatch(
+                upload_ticket_files_thunk(fd, resolvedTicketId)
+            );
+
+            setFileList(
+                data.resp.map((res) => ({
+                    uid: res.id,
+                    name: moment(res.created_at).format("LLLL"),
+                    url: res.url,
+                    status: "done",
+                    extension: res.url.split("/").pop().split(".").pop(),
+                }))
+            );
+        }
         // Update file list with the response data
-        setFileList(
-            data.resp.map((res) => ({
-                uid: res.id,
-                name: moment(res.created_at).format("LLLL"),
-                url: res.url,
-                status: "done",
-                extension: res.url.split("/").pop().split(".").pop(),
-            }))
-        );
+
         // setTimeout(() => {
         //     messageApi.open({
         //         key,
@@ -139,7 +141,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         //     });
         // }, 1500);
     }
-
+    console.log("fileList", fileList);
     const uploadButton = (
         <button
             style={{
@@ -160,7 +162,6 @@ const DetailsFileUploadComponent = ({ files, type }) => {
     );
 
     async function remove_image(value) {
-
         const ticket_id = url
             .split("/")
             [url.split("/").length - 2].split("#")[0];
@@ -169,15 +170,15 @@ const DetailsFileUploadComponent = ({ files, type }) => {
             const res = await store.dispatch(
                 delete_upload_ticket_files_thunk(value.uid, ticket_id)
             );
-            // setFileList(
-            //     res.data.map((res) => ({
-            //         uid: res.id,
-            //         name: moment(res.created_at).format("LLLL"),
-            //         url: res.url,
-            //         status: "done",
-            //         extension: res.url.split("/").pop().split(".").pop(),
-            //     }))
-            // );
+            setFileList(
+                res.data.map((res) => ({
+                    uid: res.id,
+                    name: moment(res.created_at).format("LLLL"),
+                    url: res.url,
+                    status: "done",
+                    extension: res.url.split("/").pop().split(".").pop(),
+                }))
+            );
         }
     }
     return (
@@ -197,7 +198,8 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                     {fileList.length >= 8 ? null : uploadButton}
                 </Upload>
             </div>
-            {previewImage && (
+            
+            {previewImage && fileList.length !== 0 && (
                 <Image.PreviewGroup
                     preview={{
                         visible: previewOpen,

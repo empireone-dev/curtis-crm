@@ -37,7 +37,7 @@ export function get_upload_ticket_files_thunk(ticket_id) {
 export function delete_upload_ticket_files_thunk(id, ticket_id) {
     return async function (dispatch, getState) {
         const files = await delete_upload_picture_videos(id, ticket_id);
-        const result = await get_upload_picture_videos(ticket_id);
+        // const result = await get_upload_picture_videos(ticket_id);
         // dispatch(setFilesData(result.data));
         return files;
         //  dispatch(customerTicketsSlice.actions.setTickets(result));
