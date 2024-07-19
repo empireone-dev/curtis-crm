@@ -36,7 +36,7 @@ class FileController extends Controller
             }
         }
         $ticket = Ticket::where('id', $request->ticket_id)->first();
-
+        $files = File::where([['ticket_id','=',$request->ticket_id],['type','=',$request->type]])->get();
         // $user_id,$ticket_id,$message,$type
         if ($ticket->type !== 'upload') {
             ActivityController::create_activity(
@@ -49,7 +49,8 @@ class FileController extends Controller
 
         return response()->json([
             'url' => 'success',
-            'status' => $ticket
+            'status' => $ticket,
+            'resp' => $files,
         ], 200);
     }
 
@@ -79,7 +80,9 @@ class FileController extends Controller
 
     public function destroy($id)
     {
-        $files  = File::where('id', $id)->delete();
+        $file = File::where('id', $id)->first();
+        $file->delete();
+        $files = File::where([['ticket_id','=',$file->ticket_id],['type','=',$file->type]])->get();
         return response()->json([
             'data' => $files,
         ], 200);

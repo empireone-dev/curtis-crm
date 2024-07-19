@@ -87,13 +87,19 @@ class TicketController extends Controller
         } else if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'Parts') {
             $this->send_parts_email($request->recipient, $request->subject, $request->body);
         }
+        $move =$ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->call_type . ' move to ' . $request->call_type;
         $ticket->update([
             'user_id' => $this->queueing($request->call_type),
             'call_type' => $request->call_type,
-            'move_status' => $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->move_status . ' move to ' . $request->call_type,
+            'move_status' => $move,
             'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
         ]);
-
+        Activity::create([
+            'user_id' => $request->user['id'],
+            'ticket_id' => $request->ticket_id,
+            'type' => 'TRANSFER TICKET',
+            'message' => $move
+        ]);
         return response()->json([
             'result' => 'success'
         ], 200);

@@ -10,16 +10,18 @@ export default function MoveTicketAssignement() {
     const [isLoading, setIsLoading] = useState(false);
     const { ticket } = useSelector((state) => state.tickets);
     const [callType, setCallType] = useState("");
+    const { user } = useSelector((state) => state.app);
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const warranty = warranty_initial(ticket);
     const parts = parts_initial(ticket);
-
+    
     async function handleOk() {
         setIsLoading(true);
         await move_ticket_assignment_service({
+            user:user,
             ticket_id: ticket.id,
             call_type: callType,
             body: callType == "Parts" ? parts : warranty,
@@ -27,9 +29,9 @@ export default function MoveTicketAssignement() {
             recipient: ticket.email,
         });
         if (callType == "TS-Tech Support") {
-            router.visit("status");
+            router.visit("details");
         } else {
-            router.visit("files");
+            router.visit("details");
         }
     }
     const handleCancel = () => {
