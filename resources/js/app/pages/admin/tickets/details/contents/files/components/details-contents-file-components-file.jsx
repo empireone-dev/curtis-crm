@@ -102,33 +102,49 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         fd.append("ticket_id", resolvedTicketId);
         fd.append("user_id", user.id);
         fd.append("type", type);
-     
+
         if (checkStatus(newFileList)) {
             newFileList.forEach((file) => {
                 if (file.name !== "uploaded" && file.status === "done") {
                     fd.append("files[]", file.originFileObj);
                 }
             });
-        }else{
-            setFileList(newFileList);
+        } else {
+            newFileList.forEach((file) => {
+                if (file.status === "uploading") {
+                    setFileList(newFileList);
+                }
+            });
         }
-
         // Upload the files
 
         if (newFileList.length !== 0) {
             const data = await store.dispatch(
                 upload_ticket_files_thunk(fd, resolvedTicketId)
             );
-
-            setFileList(
-                data.resp.map((res) => ({
-                    uid: res.id,
-                    name: moment(res.created_at).format("LLLL"),
-                    url: res.url,
-                    status: "done",
-                    extension: res.url.split("/").pop().split(".").pop(),
-                }))
-            );
+            newFileList.forEach((file) => {
+                if (data.resp.length !== 0) {
+                    // console.log('newFileLists',data.resp)
+                    if (file.status === "uploading") {
+                        setFileList(newFileList);
+                    }else{
+                        setFileList(
+                            data.resp.map((res) => ({
+                                uid: res.id,
+                                name: moment(res.created_at).format("LLLL"),
+                                url: res.url,
+                                status: "done",
+                                extension: res.url
+                                    .split("/")
+                                    .pop()
+                                    .split(".")
+                                    .pop(),
+                            }))
+                        );
+                    }
+                    // setFileList(newFileList);
+                }
+            });
         }
         // Update file list with the response data
 
@@ -141,7 +157,6 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         //     });
         // }, 1500);
     }
-    console.log("fileList", fileList);
     const uploadButton = (
         <button
             style={{
@@ -184,6 +199,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
     return (
         <>
             {contextHolder}
+            <div class="px-4 py-3 ">
             <div className="border border-blue-500 hover:border-blue-600 p-2.5 rounded-md">
                 <Upload
                     multiple
@@ -198,7 +214,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                     {fileList.length >= 8 ? null : uploadButton}
                 </Upload>
             </div>
-            
+
             {previewImage && fileList.length !== 0 && (
                 <Image.PreviewGroup
                     preview={{
@@ -216,6 +232,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                     />
                 </Image.PreviewGroup>
             )}
+            </div>
         </>
     );
 };
