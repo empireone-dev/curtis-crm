@@ -44,9 +44,9 @@ class RefundController extends Controller
             if (empty(array_filter($record))) {
                 continue; // Skip empty row
             }
-            Ticket::where('id', $record[0])->update([
-                'phone'=>$record[1]
-            ]);
+            // Ticket::where('id', $record[0])->update([
+            //     'phone'=>$record[1]
+            // ]);
             $csvData[] = $record; // Build array of CSV row data
         }
     

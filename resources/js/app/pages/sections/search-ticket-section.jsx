@@ -83,7 +83,7 @@ export default function SearchTicketSection() {
                             onChange={(e) =>
                                 setSearch({
                                     ...search,
-                                    phone: e.replace(
+                                    phone: e?.replace(/ /g,"")?.replace(
                                         /(\d{3})(\d{3})(\d{4})/,
                                         "($1) $2-$3"
                                     ),
