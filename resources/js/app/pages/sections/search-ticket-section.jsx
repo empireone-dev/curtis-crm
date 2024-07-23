@@ -184,6 +184,7 @@ export default function SearchTicketSection() {
                                     Ticket ID
                                 </th>
                                 <th className="text-left p-3 px-5">Email</th>
+                                <th className="text-left p-3 px-5">Phone</th>
                                 <th className="text-left p-3 px-5">Fullname</th>
                                 <th className="text-left p-3 px-5">
                                     Resolution
@@ -221,6 +222,7 @@ export default function SearchTicketSection() {
                                         {res.ticket_id}
                                     </td>
                                     <td className="p-3 px-5">{res.email}</td>
+                                    <td className="p-3 px-5">{res.phone}</td>
                                     <td className="p-3 px-5">
                                         {res.fname} {res.lname}
                                     </td>

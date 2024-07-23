@@ -49,7 +49,7 @@ https://script.google.com/macros/s/AKfycbyqtnaVtRhY3xOc6Qgq0HyoGMPjAHJMJpnDBqK8r
     "https://www.googleapis.com/auth/script.external_request"
   ],
 
-
+(928) 910-9677
 
 -- Update the phone format for '318 532 83 42' to '(865) 719-3408'
 UPDATE tickets
@@ -83,3 +83,6 @@ WHERE phone LIKE '___.___.____'
 
 
 
+SELECT ticket_id,phone
+FROM tickets
+WHERE phone = '(865) 719-3408' AND id > 3629;

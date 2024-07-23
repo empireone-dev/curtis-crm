@@ -63,6 +63,11 @@ Route::get('/customer/web_form', function () {
     return Inertia::render('web_form/page');
 })->name('web_form');
 
+Route::get('/print/ticket_details/{id}', function () {
+    return Inertia::render('ticket_details/page');
+})->name('web_form');
+
+
 Route::get('/logout', function () {
     return Inertia::render('logout');
 })->name('tickets.logout');

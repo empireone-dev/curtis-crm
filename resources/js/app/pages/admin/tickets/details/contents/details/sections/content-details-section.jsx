@@ -56,16 +56,28 @@ export default function ContentDetailsSection() {
         if (!phone) return "N/A";
         const cleaned = phone.replace(/[^\d]/g, "");
         if (cleaned.length !== 10) return "N/A";
-        const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        const formatted = cleaned.replace(
+            /(\d{3})(\d{3})(\d{4})/,
+            "($1) $2-$3"
+        );
         return formatted;
     };
+
+    function print_pdf() {
+        window.open('/print/ticket_details/'+ticket?.id, '_blank');
+    }
     return (
         <div className="m-5 py-5">
             <div className="px-4 sm:px-0">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold leading-7 text-gray-900">
-                        Ticket Details
-                    </h3>
+                    <div>
+                        <h3 className="text-base font-semibold leading-7 text-gray-900">
+                            Ticket Details
+                        </h3>
+                        <button 
+                        onClick={print_pdf}
+                        className="p-2 bg-green-500 hover:bg-green-600 rounded-md text-white">Print PDF</button>
+                    </div>
 
                     <div className="flex gap-5">
                         {ticket?.email && <ResendInitialEmail />}
@@ -110,11 +122,7 @@ export default function ContentDetailsSection() {
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>Phone :</b>{" "}
-                           
-                            {
-                                formatPhone(ticket?.phone)
-                            }
+                            <b>Phone :</b> {formatPhone(ticket?.phone)}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Purchase Date :</b>{" "}
