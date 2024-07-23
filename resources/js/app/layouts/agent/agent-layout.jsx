@@ -20,15 +20,16 @@ import {
 } from "@heroicons/react/24/outline";
 
 import {
+    DownOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
 import SearchTicketSection from "@/app/pages/sections/search-ticket-section";
+import { Button, Layout, Menu, theme, Dropdown, Space } from "antd";
 const { Header, Sider, Content } = Layout;
 
 export default function AgentLayout({ children, account }) {
@@ -105,6 +106,22 @@ export default function AgentLayout({ children, account }) {
     } else if (path == "productivity") {
         active = "5";
     }
+
+    const items = [
+        {
+            label: (
+                <Link
+                    method="post"
+                    as="button"
+                    href={route("logout")}
+                    className="block transition-opacity duration-200 rounded-full text-blue-800 hover:text-blue-600"
+                >
+                    LOGOUT
+                </Link>
+            ),
+            key: "1",
+        },
+    ];
     return (
         <Layout className="h-screen">
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -144,20 +161,30 @@ export default function AgentLayout({ children, account }) {
                         <div className="mx-5 flex gap-4">
                             <SearchTicketSection />
 
-                            <Link
+                            {/* <Link
                                 method="post"
                                 as="button"
                                 href={route("logout")}
                                 className="block transition-opacity duration-200 rounded-full text-blue-800 hover:text-blue-600"
                             >
                                 <span className="sr-only">User menu</span>
-                                {/* <img
-                          className="w-10 h-10 rounded-full"
-                          src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"
-                          alt="Ahmed Kamel"
-                      /> */}
                                 <PowerIcon className="h-10" />
-                            </Link>
+                            </Link> */}
+                            <Dropdown
+                                menu={{
+                                    items,
+                                }}
+                                trigger={["click"]}
+                            >
+                                <a onClick={(e) => e.preventDefault()}>
+                                    <Space>
+                                        <div className="capitalize">
+                                            {user.name}
+                                        </div>
+                                        <DownOutlined />
+                                    </Space>
+                                </a>
+                            </Dropdown>
                         </div>
                     </div>
                 </Header>
