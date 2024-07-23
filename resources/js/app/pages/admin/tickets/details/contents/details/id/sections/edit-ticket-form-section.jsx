@@ -74,13 +74,45 @@ export default function EditTicketFormSection() {
         get_ticket();
     }, []);
 
+    function formatPhoneNumber(value) {
+        const cleaned = ("" + value).replace(/\D/g, "");
+        let numberToFormat = cleaned;
+        if (cleaned.length === 11) {
+            numberToFormat = cleaned.slice(0, -1);
+        }
+        if (numberToFormat.length === 10) {
+            return numberToFormat.replace(
+                /(\d{3})(\d{3})(\d{4})/,
+                "($1) $2-$3"
+            );
+        }
+        return value; 
+    }
+    
+    // function formHandler(value, name) {
+    //     dispatch(
+    //         setForm({
+    //             ...form,
+    //             [name]: value,
+    //         })
+    //     );
+    // }
     function formHandler(value, name) {
-        dispatch(
-            setForm({
-                ...form,
-                [name]: value,
-            })
-        );
+        if (name == "phone") {
+            dispatch(
+                setForm({
+                    ...form,
+                    phone: formatPhoneNumber(value),
+                })
+            );
+        } else {
+            dispatch(
+                setForm({
+                    ...form,
+                    [name]: value,
+                })
+            );
+        }
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());

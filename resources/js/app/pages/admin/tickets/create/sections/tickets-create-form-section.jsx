@@ -17,7 +17,7 @@ import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 import ReasonToClose from "../../details/contents/details/id/sections/reason-to-close";
 import TicketCloseSection from "./ticket-close-section";
 import { check_serial_number_service } from "@/app/services/tickets-service";
-import { message } from 'antd';
+import { message } from "antd";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
@@ -26,13 +26,36 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
 
+    function formatPhoneNumber(value) {
+        const cleaned = ("" + value).replace(/\D/g, "");
+        let numberToFormat = cleaned;
+        if (cleaned.length === 11) {
+            numberToFormat = cleaned.slice(0, -1);
+        }
+        if (numberToFormat.length === 10) {
+            return numberToFormat.replace(
+                /(\d{3})(\d{3})(\d{4})/,
+                "($1) $2-$3"
+            );
+        }
+        return value; 
+    }
     function formHandler(value, name) {
-        dispatch(
-            setForm({
-                ...form,
-                [name]: value,
-            })
-        );
+        if (name == "phone") {
+            dispatch(
+                setForm({
+                    ...form,
+                    phone: formatPhoneNumber(value),
+                })
+            );
+        } else {
+            dispatch(
+                setForm({
+                    ...form,
+                    [name]: value,
+                })
+            );
+        }
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
@@ -70,10 +93,10 @@ export default function TicketCreateFormSection() {
             }
         } else {
             messageApi.open({
-                type: 'error',
-                content: 'Serial number is already exist!',
-              });
-              setLoading(false);
+                type: "error",
+                content: "Serial number is already exist!",
+            });
+            setLoading(false);
         }
     }
     const findCountry = (countryName) => {

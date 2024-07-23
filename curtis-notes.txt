@@ -51,6 +51,35 @@ https://script.google.com/macros/s/AKfycbyqtnaVtRhY3xOc6Qgq0HyoGMPjAHJMJpnDBqK8r
 
 
 
+-- Update the phone format for '318 532 83 42' to '(865) 719-3408'
+UPDATE tickets
+SET phone = '(865) 719-3408'
+WHERE phone LIKE '___ ___ __ __'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____';
+
+-- Update the phone format for '8657193408' to '(865) 719-3408'
+UPDATE tickets
+SET phone = '(865) 719-3408'
+WHERE phone LIKE '__________'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____';
+
+-- Update the phone format for '806.441.7915' to '(865) 719-3408'
+UPDATE tickets
+SET phone = '(865) 719-3408'
+WHERE phone LIKE '___.___.____'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____'
+  AND phone NOT LIKE '(___) ___-____';
+
+
+
+
+3616
+
 
 
 

@@ -100,6 +100,9 @@ Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_ass
 Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
 Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
 Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
+Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
+
+
 
 
 Route::put('transfer_direct_email', [DirectEmailController::class, 'transfer_direct_email']);

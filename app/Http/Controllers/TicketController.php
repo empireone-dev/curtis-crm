@@ -23,6 +23,46 @@ use Illuminate\Support\Facades\Http;
 class TicketController extends Controller
 {
 
+    public function search_lookup_tickets(Request $request)
+    {
+        $query = Ticket::query();
+
+        // Apply filters based on request inputs
+        if ($request->has('ticket_id')) {
+            $query->where('ticket_id', $request->input('ticket_id'));
+        }
+
+        if ($request->has('phone')) {
+            $query->orWhere('phone', $request->input('phone'));
+        }
+
+        if ($request->has('email')) {
+            $query->orWhere('email', $request->input('email'));
+        }
+
+        if ($request->has('serial_number')) {
+            $query->orWhere('serial_number', $request->input('serial_number'));
+        }
+
+        if ($request->has('model')) {
+            $query->orWhere('model', $request->input('model'));
+        }
+
+        if ($request->has('fname')) {
+            $query->orWhere('fname', $request->input('fname'));
+        }
+
+        if ($request->has('lname')) {
+            $query->orWhere('lname', $request->input('lname'));
+        }
+
+        // Fetch the results
+        $tickets = $query->get();
+
+        return response()->json([
+            'result' => $tickets
+        ], 200);
+    }
     public function check_serial_number($serial_number)
     {
         $ticket = Ticket::where('serial_number', $serial_number)->first();
@@ -87,7 +127,7 @@ class TicketController extends Controller
         } else if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'Parts') {
             $this->send_parts_email($request->recipient, $request->subject, $request->body);
         }
-        $move =$ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->call_type . ' move to ' . $request->call_type;
+        $move = $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->call_type . ' move to ' . $request->call_type;
         $ticket->update([
             'user_id' => $this->queueing($request->call_type),
             'call_type' => $request->call_type,
@@ -120,7 +160,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund','repair','receipt','replacement','decision_making','user']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -436,7 +476,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund','repair','receipt','replacement','decision_making','user']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -853,7 +893,7 @@ class TicketController extends Controller
                     'message' => json_encode($data)
                 ]);
             }
-           
+
 
             return response()->json([
                 'result' => $data,
@@ -869,7 +909,7 @@ class TicketController extends Controller
             $this->sendEmailIfNeeded($request, $subject);
             $this->updateTicket($data->id, $subject);
 
-           if ($request->user()) {
+            if ($request->user()) {
                 AgentNote::create([
                     'user_id' => $request->user['id'],
                     'ticket_id' => $data->id,
@@ -882,7 +922,7 @@ class TicketController extends Controller
                     'message' => json_encode($data)
                 ]);
             }
-           
+
 
             $account = $this->createUserAccount($request);
             return response()->json([

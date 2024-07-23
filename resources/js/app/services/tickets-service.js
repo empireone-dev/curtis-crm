@@ -104,6 +104,15 @@ export async function search_tickets_service(data) {
     }
 }
 
+export async function search_lookup_tickets_service(data) {
+    try {
+        const res = await axios.post("/api/search_lookup_tickets", data);
+        return res.data.result;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function get_tickets_service(search) {
     try {
         const res = await axios.get("/api/tickets" + `${search}`);
