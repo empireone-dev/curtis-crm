@@ -28,36 +28,40 @@ class TicketController extends Controller
         $query = Ticket::query();
 
         // Apply filters based on request inputs
-        if ($request->has('ticket_id')) {
+        if (isset($request->ticket_id)) {
             $query->where('ticket_id', $request->input('ticket_id'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('phone')) {
+        if (isset($request->phone)) {
             $query->orWhere('phone', $request->input('phone'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('email')) {
+        if (isset($request->email)) {
             $query->orWhere('email', $request->input('email'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('serial_number')) {
+        if (isset($request->serial_number)) {
             $query->orWhere('serial_number', $request->input('serial_number'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('model')) {
+        if (isset($request->model)) {
             $query->orWhere('model', $request->input('model'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('fname')) {
+        if (isset($request->fname)) {
             $query->orWhere('fname', $request->input('fname'));
+            $tickets = $query->get();
         }
 
-        if ($request->has('lname')) {
+        if (isset($request->lname)) {
             $query->orWhere('lname', $request->input('lname'));
+            $tickets = $query->get();
         }
-
-        // Fetch the results
-        $tickets = $query->get();
 
         return response()->json([
             'result' => $tickets
