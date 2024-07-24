@@ -74,7 +74,6 @@ export default function ContentActivitiesTimelineSection() {
                         );
                         break;
                     case "DECISION MAKING":
-                        console.log("resresres", res);
                         return (
                             <>
                                 <li

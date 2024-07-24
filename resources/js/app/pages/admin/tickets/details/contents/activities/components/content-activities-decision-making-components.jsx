@@ -6,6 +6,7 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
     const result = JSON.parse(data.message);
 
     console.log("datasssss", result);
+    console.log("waaaaa", data);
     return (
         <div>
             <button
@@ -25,11 +26,18 @@ export default function ContentActivitiesDecisionMakingComponents({ data }) {
                     <div className="flex gap-3 items-center justify-between my-3">
                         <div className="font-black">
                             TICKET INFORMATION
-                            <div
-                                className={`text-orange-500 border rounded-md border-orange-500 items-center justify-center flex`}
+                           <div className="flex gap-4 flex-col">
+                           <div
+                                className={`text-orange-500 border rounded-md px-3 border-orange-500 items-center justify-center flex`}
                             >
                                 {data.type}
                             </div>
+                            <div
+                                className={`text-green-500 border rounded-md px-3 border-green-500 items-center justify-center flex`}
+                            >
+                                WARRANTY DECISION ({data?.ticket?.decision_status??''})
+                            </div>
+                           </div>
                         </div>
                     </div>
                     <div className="flex flex-col ">
