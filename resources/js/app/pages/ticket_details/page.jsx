@@ -6,27 +6,27 @@ export default function TicketDetails() {
             <div className="flex flex-col">
                 <div>
                     <div className="flex flex-row">
+                        <div className="w-2/5"></div>
                         <div className="w-full"></div>
-                        <div className="w-full"></div>
-                        <div className="w-full flex items-center justify-center  font-black">
-                            CASE FILE NUMBER
+                        <div className="w-2/5 flex items-end justify-end  font-black">
+                        CASE FILE NUMBER
                         </div>
                     </div>
                 </div>
                 <div>
                     <div className="flex flex-row">
-                        <div className="w-full"></div>
+                        <div className="w-1/3"></div>
                         <div className="w-full flex items-center justify-center text-3xl font-black">
                             Curtis International Ltd
                         </div>
-                        <div className="w-full flex items-center justify-center text-xl font-black border-x-2 border-t-2 border-black ">
-                            CF200624076740
+                        <div className="w-1/3 flex items-center justify-center text-xl font-black border-x-2 border-t-2 border-black ">
+                            <div className="mx-3">CF200624076740</div>
                         </div>
                     </div>
                 </div>
                 <div className="border-x-2 border-t-2 border-black">
                     <div className="flex flex-row">
-                        <div className=" w-full"></div>
+                        <div className="w-1/5"></div>
                         <div className=" w-full flex flex-col items-center justify-center">
                             <div className="font-bold text-lg">
                                 Shipping Request Form
@@ -35,7 +35,7 @@ export default function TicketDetails() {
                                 Warrantee Replacement
                             </div>
                         </div>
-                        <div className=" w-full"></div>
+                        <div className="w-1/5"></div>
                     </div>
                 </div>
                 <div className="border-black border-x-2">
@@ -64,7 +64,7 @@ export default function TicketDetails() {
                 </div>
                 <div className="border-x-2  border-black">
                     <div className="flex flex-row ">
-                        <div className="w-full "></div>
+                        <div className="w-1/5 "></div>
                         <div className=" w-full ">
                             <div className=" flex">
                                 <div className="border-2 border-black w-full mt-3 flex">
@@ -127,7 +127,7 @@ export default function TicketDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full "></div>
+                        <div className="w-1/5 "></div>
                     </div>
                 </div>
                 <div className="border-x-2 border-t-2 border-b-2 border-black">
@@ -142,8 +142,8 @@ export default function TicketDetails() {
                     </div>
                 </div>
                 <div className="border-x-2  border-black">
-                    <div className="flex flex-row ">
-                        <div className="w-full "></div>
+                    <div className="flex flex-row  mb-2">
+                        <div className="w-1/5 "></div>
                         <div className=" w-full ">
                             <div className=" flex">
                                 <div className="border-2 border-black w-full mt-3 flex">
@@ -196,7 +196,7 @@ export default function TicketDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full "></div>
+                        <div className="w-1/5 "></div>
                     </div>
                 </div>
                 <div className="border-x-2 border-t-2 border-b-2 border-black">
@@ -211,8 +211,8 @@ export default function TicketDetails() {
                     </div>
                 </div>
                 <div className="border-x-2  border-black">
-                    <div className="flex flex-row ">
-                        <div className="w-full "></div>
+                    <div className="flex flex-row  mb-2">
+                        <div className="w-1/5 "></div>
                         <div className=" w-full ">
                             <div className=" flex">
                                 <div className="border-2 border-black w-full mt-3 flex">
@@ -244,29 +244,35 @@ export default function TicketDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <div className=" flex">
-                                <div className="border-2 border-black w-full my-1 flex">
-                                    <div className="w-full px-3 font-bold">
-                                        Weight
-                                    </div>
-                                    <div className="w-full px-3 font-bold">
-                                        www
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" flex">
-                                <div className="border-2 border-black w-full my-1 flex">
-                                    <div className="w-full px-3 font-bold">
-                                        Dimensions (LxWxH)
-                                    </div>
-                                    <div className="w-full px-3 font-bold">
-                                        www
-                                    </div>
+                        </div>
+                        <div className="w-1/5 "></div>
+                    </div>
+                </div>
+                <div className="border-x-2 border-t-2 border-b-2 border-black">
+                    <div className="flex flex-row">
+                        <div className="w-full">
+                            <div className="font-bold text-lg">
+                                <div className="px-3">
+                                    REPLACEMENT COMMENTS:
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full "></div>
+                        <div className="w-full"></div>
+                        <div className="w-full"></div>
                     </div>
+                </div>
+                <div className="flex flex-row border-x-2 border-b-2 border-black">
+                    <div className="w-1/5 "></div>
+                    <div className=" w-full ">
+                        <div className=" flex mb-2">
+                            <div className="border-2 border-black w-full mt-3 flex items-center justify-center">
+                                <div className="w-full px-3 font-bold flex items-center justify-center">
+                                    Model Numbersss
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/5 "></div>
                 </div>
             </div>
         </div>
