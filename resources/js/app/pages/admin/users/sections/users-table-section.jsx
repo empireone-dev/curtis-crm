@@ -255,11 +255,14 @@ export default function UsersTableSection() {
             dataIndex: "action",
             render: (_, record) => {
                 return (
+                  <div className="flex gap-3">
                     <Tooltip placement="topLeft" title="View Ticket Details">
                         <Link href={"/administrator/users/" + record.id}>
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
                     </Tooltip>
+                    <UserEditSection data={record}/>
+                  </div>
                 );
             },
         },

@@ -953,14 +953,14 @@ class TicketController extends Controller
     private function createUserAccount($request)
     {
         return User::create([
-            'name' => $request->fname . ' ' . $request->lname,
-            'email' => $request->email,
+            'name' => $request->fname??'' . ' ' . $request->lname??'',
+            'email' => $request->email??'',
             'password' => Hash::make('12345678'),
             'role_id' => '2',
-            'address' => $request->address,
-            'city' => $request->city,
-            'zip_code' => $request->zip_code,
-            'country' => $request->country,
+            'address' => $request->address??'',
+            'city' => $request->city??'',
+            'zip_code' => $request->zip_code??'',
+            'country' => $request->country??'',
         ]);
     }
 

@@ -180,9 +180,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->update($request->all());
-
+        $users = User::where('role_id', '=', 5)->with('role')->get();
         return response()->json([
-            'data' => $this->index()->original['data']
+            'data' => $users
         ], 200);
     }
 }

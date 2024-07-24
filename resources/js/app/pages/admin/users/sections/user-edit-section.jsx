@@ -1,101 +1,122 @@
-import Drawer from '@/app/layouts/components/drawer'
-import { PencilSquareIcon } from '@heroicons/react/24/outline'
-import React, { useEffect, useState } from 'react'
-import { update_users_thunk } from '../redux/users.thunk';
-import store from '@/app/store/store';
+import Drawer from "@/app/layouts/components/drawer";
+import { PencilIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import React, { useEffect, useState } from "react";
+import { update_users_thunk } from "../redux/users.thunk";
+import store from "@/app/store/store";
+import Modal from "antd/es/modal/Modal";
+import { Select } from "antd";
+import Input from "@/app/layouts/components/input";
+import { message } from 'antd';
 
-export default function UserEditSection({data}) {
-    const [id, setId] = useState('');
-    const [newData, setNewData] = useState({})
-    const [open, setOpen] = useState(false)
-    const [tooltipVisible, setTooltipVisible] = useState(false);
-    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+export default function UserEditSection({ data }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [form, setForm] = useState({});
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const handleCancel = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
     useEffect(() => {
-        setNewData(data)
-    }, [data]);
+        setForm(data);
+    }, []);
 
-    useEffect(() => {
-        if (tooltipVisible) {
-            const handleScroll = () => {
-                setTooltipVisible(false);
-            };
-            window.addEventListener('scroll', handleScroll);
+    async function handleOk(params) {
+        const result = await store.dispatch(update_users_thunk(form));
+            setIsModalOpen(false);
+            messageApi.success('Updated Successfully!');
+    }
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
 
-            return () => {
-                window.removeEventListener('scroll', handleScroll);
-            };
+    function formHandler(value, name) {
+        if ((value || value == "") && name) {
+            setForm({
+                ...form,
+                [name]: value,
+            });
         }
-    }, [tooltipVisible]);
+    }
 
-    const handleMouseEnter = (e) => {
-        const rect = e.target.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const tooltipWidth = 80;
-        const tooltipHeight = 20;
-        const tooltipX = rect.left + window.pageXOffset + rect.width + tooltipWidth < window.innerWidth
-            ? rect.right + window.pageXOffset
-            : rect.left + window.pageXOffset - tooltipWidth;
-        const tooltipY = rect.top + scrollTop - tooltipHeight;
-        setTooltipPosition({ x: tooltipX, y: tooltipY });
-        setTooltipVisible(true);
-    };
-
-    const handleMouseLeave = () => {
-        setTooltipVisible(false);
-    };
-
-    const closeModal = () => {
-        setOpen(false);
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        store.dispatch(update_users_thunk(newData))
-        closeModal();
-    };
     return (
-        <div>
-            <button
-                onClick={() => setOpen(true)}
-                type="button" className=" text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center"
-                onMouseEnter={(e) => handleMouseEnter(e)}
-                onMouseLeave={() => handleMouseLeave()}>
-                <PencilSquareIcon className='h-6 text-white' />
-                {tooltipVisible && (
-                <span className="tooltip bg-black text-white text-md rounded-xl p-3 absolute z-50" style={{ top: tooltipPosition.y + window.pageYOffset, left: tooltipPosition.x }}>Edit User</span>
-            )}
+        <>
+            <button onClick={() => showModal()}>
+                <PencilIcon className="h-5 text-green-500" />
             </button>
-            <Drawer
-                open={open}
-                setOpen={setOpen}
-                title="Edit Users"
+            {contextHolder}
+            <Modal
+                okText="Submit"
+                title="Edit Account Information"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
             >
-                <form onSubmit={handleSubmit}>
-                    <div className='mt-4'>
-                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900">Name</label>
-                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            value={newData.name ?? ''}
-                            onChange={(event) => setNewData({
-                                ...newData,
-                                name: event.target.value
-                            })} />
-                    </div>
-                    <div className='mt-4'>
-                        <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-900">Email</label>
-                        <input type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
-                        value={newData.email ?? ''}
-                        onChange={(event) => setNewData({
-                            ...newData,
-                            email: event.target.value
-                        })}/>
-                    </div>
-                    <div className="mb-2 mt-5 flex items-center justify-end gap-x-6">
-                        <button type="button" className="text-sm font-semibold leading-6 text-gray-900 hover:text-slate-400" onClick={closeModal}>Cancel</button>
-                        <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-                    </div>
-                </form>
-            </Drawer>
-        </div>
-
-    )
+                <div className="py-3 flex flex-col gap-4">
+                    <Select
+                        className="border border-gray-500 rounded-md-"
+                        size="large"
+                        placeholder="Select Position"
+                        optionFilterProp="label"
+                        defaultValue={form.agent_type}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                agent_type: e,
+                            })
+                        }
+                        options={[
+                            {
+                                value: null,
+                                label: "Admin",
+                            },
+                            {
+                                value: "CSR",
+                                label: "CSR",
+                            },
+                            {
+                                value: "Warranty",
+                                label: "Warranty Claim",
+                            },
+                            {
+                                value: "Tech",
+                                label: "Tech Support",
+                            },
+                            {
+                                value: "Parts",
+                                label: "Parts",
+                            },
+                        ]}
+                    />
+                    <Input
+                        onChange={formHandler}
+                        name="emp_id"
+                        required={true}
+                        value={form?.emp_id}
+                        label="Employee ID"
+                        type="text"
+                        errorMessage="Employee ID is required"
+                    />
+                    <Input
+                        onChange={formHandler}
+                        name="email"
+                        required={true}
+                        value={form?.email}
+                        label="Email"
+                        type="email"
+                        errorMessage="Email is required"
+                    />
+                    <Input
+                        onChange={formHandler}
+                        name="name"
+                        required={true}
+                        value={form?.name}
+                        label="Fullname"
+                        type="text"
+                        errorMessage="Fullname is required"
+                    />
+                </div>
+            </Modal>
+        </>
+    );
 }
