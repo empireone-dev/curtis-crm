@@ -20,20 +20,22 @@ export default function WebFormFormSection() {
     const { form } = useSelector((state) => state.tickets_create);
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
+    const [warranty, setWarranty] = useState('')
+    const [parts, setParts] = useState('')
 
     const getQueryParam = (paramName) => {
         const searchParams = new URLSearchParams(window.location.search);
         return searchParams.get(paramName);
     };
-    
+
     const call_type = getQueryParam("call_type");
 
-    console.log('window.location',call_type)
-    
-    useEffect(() => {
-        if(call_type == 'CF-Warranty Claim'  || call_type == 'Parts' ){
+    console.log('window.location', call_type)
 
-        }else{
+    useEffect(() => {
+        if (call_type == 'CF-Warranty Claim' || call_type == 'Parts') {
+
+        } else {
             window.location.href = "https://www.curtisint.com/product-support/"
         }
         store.dispatch(get_common_issues_thunk());
@@ -52,9 +54,16 @@ export default function WebFormFormSection() {
         store.dispatch(get_products_thunk());
     }, []);
 
-    
-    const warranty = warranty_initial(form);
-    const parts = parts_initial(form);
+
+    useEffect(() => {
+        async function getData(params) {
+            const w = await warranty_initial(form);
+            const p = await parts_initial(form);
+            setWarranty(w.template_text)
+            setParts(p.template_text)
+        }
+        getData()
+    }, []);
 
     async function submitFormTicket(e) {
         e.preventDefault();
@@ -65,7 +74,7 @@ export default function WebFormFormSection() {
                 created_from: "WEB FORM",
                 status: null,
                 isSendEmail: true,
-                call_type:call_type,
+                call_type: call_type,
                 email:
                     form.isHasEmail == "true" || form.isHasEmail == true
                         ? form.email
@@ -295,7 +304,7 @@ export default function WebFormFormSection() {
                         value={form.address}
                         label="Address"
                         type="text"
-                        // errorMessage='Address is required'
+                    // errorMessage='Address is required'
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">

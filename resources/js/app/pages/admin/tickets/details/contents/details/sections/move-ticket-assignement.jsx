@@ -2,7 +2,7 @@ import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 import { move_ticket_assignment_service } from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
 import { Modal, Select } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function MoveTicketAssignement() {
@@ -11,12 +11,21 @@ export default function MoveTicketAssignement() {
     const { ticket } = useSelector((state) => state.tickets);
     const [callType, setCallType] = useState("");
     const { user } = useSelector((state) => state.app);
+    const [warranty, setWarranty] = useState('')
+    const [parts, setParts] = useState('')
 
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const warranty = warranty_initial(ticket);
-    const parts = parts_initial(ticket);
+    useEffect(() => {
+        async function  getData(params) {
+            const w = await warranty_initial(form);
+            const p = await parts_initial(form);
+            setWarranty(w.template_text)
+            setParts(p.template_text)
+        }
+        getData()
+    }, []);
     
     async function handleOk() {
         setIsLoading(true);

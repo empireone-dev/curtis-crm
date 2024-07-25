@@ -48,6 +48,7 @@ export default function ContentReplacementPartsForm() {
                     status: "PARTS PROCESSED TICKET",
                     activity_status: "PARTS REPLACEMENT SHIPPED",
                 });
+                console.log('result',result)
                 router.visit(routing("files"));
                 // dispatch(setTicket(result.status));
                 // setIsLoading1(false);

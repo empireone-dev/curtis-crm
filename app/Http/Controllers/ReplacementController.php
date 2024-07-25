@@ -13,7 +13,7 @@ class ReplacementController extends Controller
 
     public function parts_replacement_not_shipped(Request $request)
     {
-        $ticket = Ticket::where('id', $request->id)->first();
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
             'status' => $request->status
         ]);
@@ -33,7 +33,7 @@ class ReplacementController extends Controller
     }
     public function parts_replacement_shipped(Request $request)
     {
-        $replacement = Replacement::where('ticket_id', $request->id)->first();
+        $replacement = Replacement::where('ticket_id', $request->ticket_id)->first();
         if ($replacement) {
             $replacement->update([
                 'unit' => $request->unit,
@@ -46,7 +46,7 @@ class ReplacementController extends Controller
             ]);
         } else {
             Replacement::create([
-                'ticket_id' => $request->id,
+                'ticket_id' => $request->ticket_id,
                 'unit' => $request->unit,
                 'ship_date' => $request->ship_date,
                 'model' => $request->item_number,
@@ -56,7 +56,7 @@ class ReplacementController extends Controller
                 'notes' => $request->notes,
             ]);
         }
-        $ticket = Ticket::where('id', $request->id)->first();
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
         $ticket->update([
             'status' => $request->status
         ]);

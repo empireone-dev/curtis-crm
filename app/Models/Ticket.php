@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Ticket extends Model
@@ -69,6 +70,11 @@ class Ticket extends Model
     public function repair(): HasOne
     {
         return $this->hasOne(Repair::class,'ticket_id','id');
+    }
+
+    public function internal(): HasMany
+    {
+        return $this->hasMany(Internal::class,'ticket_id','id');
     }
 
 

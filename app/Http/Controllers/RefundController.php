@@ -23,39 +23,133 @@ class RefundController extends Controller
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt'
         ]);
-    
+
         $file = $request->file('csv_file'); // Retrieve the uploaded file
-    
+
         // Parse CSV data without setting header offset
         $csv = Reader::createFromPath($file->getPathname(), 'r');
-        
+
         $records = $csv->getRecords(); // Get all CSV rows as iterator
-    
+
         $csvData = [];
         $firstRowSkipped = false;
-        foreach ($records as $record) {
-            // Skip the first row
-            if (!$firstRowSkipped) {
-                $firstRowSkipped = true;
-                continue;
+
+
+        if ($request->type == 'REPLACEMENT') {
+            foreach ($records as $record) {
+                if (!$firstRowSkipped) {
+                    $firstRowSkipped = true;
+                    continue;
+                }
+                if (empty(array_filter($record))) {
+                    continue;
+                }
+                if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '' && $record[4] !== '') {
+                    $ticket = Ticket::where('ticket_id', $record[2])->first();
+                    if ($ticket) {
+                        $replacement = Replacement::where('ticket_id', $ticket->id)->first();
+                        // $dm = DecisionMaking::where('ticket_id', $ticket->id)->first();
+
+                        // if ($dm) {
+                        //     $dm->update([
+                        //         'tracking' => $record[1],
+                        //         'item_number' => $record[3],
+                        //         'serial_number' => $record[4],
+                        //     ]);
+                        // } else {
+                        //     DecisionMaking::create([
+                        //         'ticket_id' => $ticket->id,
+                        //         'tracking' => $record[1],
+                        //         'item_number' => $record[3],
+                        //         'serial_number' => $record[4],
+                        //     ]);
+                        // }
+                        if ($replacement) {
+                            $replacement->update([
+                                'ship_date' => $record[0],
+                                'tracking' => $record[1],
+                                'item_number' => $record[3],
+                                'serial_number' => $record[4],
+                            ]);
+                        } else {
+                            Replacement::create([
+                                'ticket_id' => $ticket->id,
+                                'ship_date' => $record[0],
+                                'tracking' => $record[1],
+                                'item_number' => $record[3],
+                                'serial_number' => $record[4],
+                            ]);
+                        }
+                    }
+                    $ticket->update([
+                        'status'=>'PROCESSED TICKET'
+                    ]);
+                    $csvData[] = $record;
+                }
             }
-    
-            // Check if the record is empty or contains only empty strings
-            if (empty(array_filter($record))) {
-                continue; // Skip empty row
+        } else if ($request->type == 'REFUND') {
+
+            foreach ($records as $record) {
+                if (!$firstRowSkipped) {
+                    $firstRowSkipped = true;
+                    continue;
+                }
+                if (empty(array_filter($record))) {
+                    continue;
+                }
+                //Case File
+                //Date Issued
+                //Cheque #
+                //Amount of Refund:
+                if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '') {
+                    $ticket = Ticket::where('ticket_id', $record[0])->first();
+                    if ($ticket) {
+                        $refund = Refund::where('ticket_id', $ticket->id)->first();
+                        $dm = DecisionMaking::where('ticket_id', $ticket->id)->first();
+
+                        if ($dm) {
+                            $dm->update([
+                                'date' => $record[1],
+                                'cheque_no' => $record[2],
+                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                            ]);
+                        } else {
+                            DecisionMaking::create([
+                                'ticket_id' => $ticket->id,
+                                'date' => $record[1],
+                                'cheque_no' => $record[2],
+                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                            ]);
+                        }
+                        if ($refund) {
+                            $refund->update([
+                                'ship_date' => $record[1],
+                                'cheque_no' => $record[2],
+                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                            ]);
+                        } else {
+                            Refund::create([
+                                'ticket_id' => $ticket->id,
+                                'ship_date' => $record[1],
+                                'cheque_no' => $record[2],
+                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                            ]);
+                        }
+                    }
+                    $ticket->update([
+                        'status'=>'PROCESSED TICKET'
+                    ]);
+                    $csvData[] = $record;
+                }
             }
-            // Ticket::where('id', $record[0])->update([
-            //     'phone'=>$record[1]
-            // ]);
-            $csvData[] = $record; // Build array of CSV row data
         }
-    
-        // Process and return data (e.g., save to database, manipulate, etc.)
+
+
         return response()->json([
             'data' => $csvData
         ]);
     }
-    
+
 
 
     public function warranty_checkque_shipped(Request $request)

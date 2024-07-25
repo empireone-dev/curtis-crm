@@ -1,101 +1,142 @@
-export function warranty_initial(ticket) {
-    return `<p><span style="color: rgb(11, 83, 148);">
-     Hi,</span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Good day!
-     </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">This email is regarding your warranty claim at Curtis International Ltd.
-     </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">
-     For us to better serve you and start processing your claim, we require the following information to be uploaded in the portal below.</span></p>
-     <p><br></p><p><span style="color: rgb(34, 34, 34);">Portal Link:&nbsp; 
-     </span>
-     <a href="https://curtis-css.com/" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204);">https://curtis-css.com</a></p>
-     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;${
-         ticket?.email??''
-     }</span></p><p><span style="color: rgb(11, 83, 148);">PW:&nbsp;&nbsp;${12345678}</span></p><p><br></p><p>
-     <span style="color: rgb(11, 83, 148);">Also, kindly include filling out the information below:</span></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">
-     Name:&nbsp;__________________________</strong></p><p><strong style="color: rgb(11, 83, 148);">Address: ________________________ </strong>
-     <em style="color: rgb(255, 0, 0);">*must be a physical address</em></p><p><strong style="color: rgb(11, 83, 148);">City: ____________________________</strong>
-     </p><p><strong style="color: rgb(11, 83, 148);">State/Province:&nbsp;___________________</strong></p>
-     <p><strong style="color: rgb(11, 83, 148);">Zip/Postal code: __________________ </strong><span style="color: rgb(255, 0, 0);">
-     (Please specify if you have a 5 or 9 digits zip codes to avoid delay in processing your claims)</span></p><p><strong style="color: rgb(11, 83, 148);">
-     Phone#:&nbsp;_________________________</strong></p><p><strong style="color: rgb(11, 83, 148);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-     </p><p><span style="color: rgb(11, 83, 148);">An email with warranty instructions will be provided to you as soon as we receive the complete documentation as required above.</span></p><p><br></p><p>
-     <strong style="color: rgb(11, 83, 148);">For your reference, please see the complete overview of our warranty 
-     process attached to this email.</strong></p><p><br></p><p><em style="color: rgb(255, 0, 0);">**Please note that this ticket will be automatically closed if no update within 7 days.**</em></p>
-     <p><em style="color: rgb(255, 0, 0);">
-     **Please ensure that the Case File Number is in the subject line. **</em></p><p><strong style="color: rgb(255, 0, 0);">
-     <em>**Note -Please do not throw/recycle the unit until all the required information has been validated. You will receive a notification to do so when we have already received and verified all the
-      important information. If the unit is disposed of or is no longer with you, we cannot assist you further with your claim.**</em>
-     </strong></p><p><em style="color: rgb(255, 0, 0);">
-     **Note - We are open from 9 AM - 6 PM EST, Mondays to Fridays. Response time would be 48 to 72 business hours.</em></p><p><br></p><p>
-     <span style="color: rgb(11, 83, 148);">Thank you,</span></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Customer Support</strong></p>
-     <p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p>______________________________________________________________________________________________________________________________________________________</p>
-     <p><br></p><p><span style="color: rgb(11, 83, 148);">Salut,
-     </span></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Bonne journée!</span></p><p><br></p>
-     <p><span style="color: rgb(11, 83, 148);">Cet e-mail concerne votre demande de garantie auprès de Curtis International Ltd.</span></p><p><br></p>
-     <p><span style="color: rgb(11, 83, 148);">Pour que nous puissions mieux vous servir et commencer à traiter votre réclamation, nous avons besoin que les informations suivantes soient téléchargées sur 
-     le portail ci-dessous où vous pouvez également suivre l'évolution de votre réclamation.</span></p>
-     <p><span style="color: rgb(34, 34, 34);">Lien portail:&nbsp; </span><a href="https://curtis-css.com/" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204);">https://curtis-css.com</a></p>
-     <p><span style="color: rgb(11, 83, 148);">ID:&nbsp;&nbsp;${
-         ticket?.email??''
-     }</span></p><p><span style="color: rgb(11, 83, 148);">mot de passe:&nbsp;&nbsp;${12345678}</span></p><p><br></p>
-     <p><span style="color: rgb(11, 83, 148);">Veuillez également inclure les informations ci-dessous:</span><span style="color: rgb(255, 0, 0);"> </span></p><p><br></p>
-     <p><strong style="color: rgb(11, 83, 148);">Nom:&nbsp;__________________________</strong></p><p>
-     <strong style="color: rgb(11, 83, 148);">Adresse: _______________________ </strong><em style="color: rgb(255, 0, 0);">*doit être une adresse physique</em></p>
-     <p><strong style="color: rgb(11, 83, 148);">Ville: __________________________</strong></p><p>
-     <strong style="color: rgb(11, 83, 148);">État/Province: __________________</strong></p><p><strong style="color: rgb(11, 83, 148);">
-     Code postal: ___________________</strong><span style="color: rgb(255, 0, 0);">(Veuillez préciser si vous avez un code postal à 5 ​​ou 9 chiffres pour éviter tout retard dans le traitement de vos réclamations)</span></p>
-     <p><strong style="color: rgb(11, 83, 148);">Téléphone#: ___________________</strong></p><p><strong style="color: rgb(11, 83, 148);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></p>
-     <p><span style="color: rgb(11, 83, 148);">Un e-mail avec les instructions de garantie vous sera fourni dès que nous recevrons la documentation complète comme requis ci-dessus.</span></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">
-     Pour votre référence, veuillez consulter l'aperçu complet de notre processus de garantie joint à cet e-mail.</strong></p><p><br></p><p><em style="color: rgb(255, 0, 0);">**Veuillez noter que ce ticket sera 
-     automatiquement fermé s'il n'y a pas de mise à jour dans les 7 jours.**</em></p><p><em style="color: rgb(255, 0, 0);">
-     **Veuillez vous assurer que le numéro de dossier figure dans la ligne d'objet. **</em></p><p><strong style="color: rgb(255, 0, 0);">
-     <em>**Remarque - Veuillez ne pas jeter/recycler l'appareil tant que toutes les informations requises n'ont pas été validées. Vous recevrez une notification
-      pour le faire lorsque nous aurons déjà reçu et vérifié toutes les informations importantes. Si l'unité est éliminée ou n'est plus avec vous, nous ne pouvons 
-      pas vous aider davantage avec votre réclamation.**</em></strong></p><p><em style="color: rgb(255, 0, 0);">**Remarque - Nous sommes ouverts de 9h00 à 18h00 HNE,
-       du lundi au vendredi. Le délai de réponse serait de 48 à 72 heures ouvrables.</em></p><p><br></p><p><span style="color: rgb(11, 83, 148);">Merci,</span></p>
-       <p><br></p><p><strong style="color: rgb(11, 83, 148);">Client de service</strong></p><p><span style="color: rgb(11, 83, 148);">Curtis International Ltd.</span></p><p><br></p><p><br></p>'`;
-}
-export function parts_initial(ticket) {
-    return `<p><span style="color: rgb(0, 71, 178);">Hi,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
-    Thank you for reaching out to us. For us to proceed, we would need the following information. Below are your Login Credentials
-    </span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Portal Link: https://curtis-css.com</span></p><p>
-    <span style="color: rgb(0, 71, 178);">ID:&nbsp;&nbsp; ${
-        ticket?.email??''
-    }</span></p><p><span style="color: rgb(0, 71, 178);">PW:&nbsp;${12345678}</span></p>
-    <p><br></p><p><span style="color: rgb(0, 71, 178);">Note that we only need a sample picture of the part to fully identify what is missing 
-    or needed to resolve the issue.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Also, please kindly include filling out the information
-     below:</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Recipient Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     ________________________</span></p><p><span style="color: rgb(0, 71, 178);">Address:&nbsp;&nbsp;&nbsp;________________________</span>
-     <span style="color: rgb(230, 0, 0);"> *must be a physical address&nbsp;</span><span style="color: rgb(0, 71, 178);">&nbsp;</span></p>
-     <p><span style="color: rgb(0, 71, 178);">City: ________________________</span></p><p><span style="color: rgb(0, 71, 178);">
-     State/Province: ________________________</span></p><p><span style="color: rgb(0, 71, 178);">Zip/Postal Code: ________________________</span>
-     <span style="color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);">(Please specify if you have a 5 or 9 digits zip codes to avoid delay 
-     in processing your claims)</span></p><p><span style="color: rgb(0, 71, 178);">Phone#:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;________________________</span>
-     </p><p><span style="color: rgb(0, 71, 178);">If it’s a Business Address: Company Name</span></p><p><br></p><p><strong style="color: rgb(230, 0, 0);">**
-     Please note that this ticket will be automatically close if no update within 7 days.**</strong></p><p><strong style="color: rgb(230, 0, 0);">**
-     Please ensure that the Case File Number is in the subject line **</strong></p><p><strong style="color: rgb(230, 0, 0);">**Note - We are open from 9 
-     AM - 6 PM EST, Mondays to Fridays. Response time would be 48 to 72 business hours.</strong></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
-     Thank you.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Customer Support</span></p><p><span style="color: rgb(0, 71, 178);">
-     Curtis International Ltd.</span></p><p><br></p><p><u>
-     ______________________________________________________________________________________________________________________________________________________</u>
-     </p><p><br></p><p><span style="color: rgb(0, 71, 178);">Bonjour,</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Ceci concerne votre demande
-      de pièces.</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Pour que nous puissions mieux vous servir, nous avons besoin que des informations
-       vitales soient téléchargées sur le portail où vous pouvez également suivre l'évolution de votre dossier.</span></p><p><span style="color: rgb(0, 71, 178);">
-       Cliquez sur le lien et utilisez les informations d'identification ci-dessous ;</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
-       Lien portail:&nbsp;https://curtis-css.com</span></p><p><span style="color: rgb(0, 71, 178);">IDENTIFIANT:&nbsp; ${
-           ticket?.email??''
-       }</span></p><p>
-       <span style="color: rgb(0, 71, 178);">Mot de passe:&nbsp;&nbsp;${12345678}</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Veuillez également répondre 
-       à cet e-mail en fournissant les informations mises à jour sur les éléments suivants:</span></p><p><br></p><p><span style="color: rgb(0, 71, 178);">
-       Nom du destinataire:&nbsp;________________________</span></p><p><span style="color: rgb(0, 71, 178);">Adrese:&nbsp;________________________</span> 
-       <span style="color: rgb(230, 0, 0);">*doit être une adresse physique</span></p><p><span style="color: rgb(0, 71, 178);">
-       Ville: ________________________</span></p><p><span style="color: rgb(0, 71, 178);">État/Province: ________________________</span></p><p>
-       <span style="color: rgb(0, 71, 178);">Code postal: ____________________</span> <span style="color: rgb(230, 0, 0);">(Veuillez préciser si vous avez un
-        code postal à 5 ​​ou 9 chiffres pour éviter tout retard dans le traitement de vos réclamations)</span></p><p><span style="color: rgb(0, 71, 178);">
-        Téléphone#:&nbsp;________________________</span></p><p><span style="color: rgb(0, 71, 178);">S'il s'agit d'une adresse professionnelle: nom 
-        de l'entreprise</span></p><p><br></p><p><strong style="color: rgb(230, 0, 0);">**Veuillez noter que ce ticket sera automatiquement fermé s'il n'y a 
-        pas de mise à jour dans les 7 jours.**</strong></p><p><strong style="color: rgb(230, 0, 0);">**Veuillez vous assurer que le numéro de dossier figure 
-        dans la ligne d'objet **</strong></p><p><strong style="color: rgb(230, 0, 0);">**Remarque - Nous sommes ouverts de 9h00 à 18h00 HNE, du lundi au vendredi.
-         Le délai de réponse serait de 48 à 72 heures ouvrables.</strong></p><p><br></p><p><span style="color: rgb(0, 71, 178);">Merci,</span></p><p><br></p><p>
-         <span style="color: rgb(0, 71, 178);">Service client</span></p><p><span style="color: rgb(0, 71, 178);">Curtis International Ltd.</span></p><p><br></p>`;
+import { get_email_template_by_id_service } from "../services/email-template-service";
 
+export async function warranty_initial(ticket) {
+    const result = await get_email_template_by_id_service(64);
+    return result.data;
+    // return `<p><strong style="color: rgb(47, 84, 150); background-color: transparent;">Hi,</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">Good day!</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">Thank you for your call.</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">For us to serve you better, we will need the following information.
+    // </strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">1.&nbsp; &nbsp; A clear and readable picture of the bill of sale. 
+    // Please note the bill of sale must show the following:</strong></p><p><strong style="color: rgb(11, 83, 148);">a. Store Name and Address <em>
+    // *except if purchased online</em></strong></p><p><strong style="color: rgb(11, 83, 148);">b. Date of Purchase</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    // c. Item description</strong></p><p><strong style="color: rgb(11, 83, 148);">d. Unit Price</strong></p><p><strong style="color: rgb(11, 83, 148);">e. Total amount paid
+    // </strong></p><p><strong style="color: rgb(255, 0, 0);">If you do not have the bill of sale, you may try contacting the dealer's customer care department for added support.
+    // </strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">2.&nbsp; &nbsp; A clear picture of the front of the unit 
+    // (</strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">for TV's, a full-frontal image with the TV turned on is required and all edges must be visible
+    // </strong><strong style="color: rgb(11, 83, 148); background-color: transparent;">)</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">3.&nbsp; &nbsp; A clear view of the rear of the unit (</strong>
+    //     <strong style="color: rgb(255, 0, 0); background-color: transparent;">All edges must be visible</strong><strong style="color: rgb(11, 83, 148); background-color: transparent;">)&nbsp;&nbsp;</strong>
+    //     </p><p><br></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">
+    //     4.&nbsp; &nbsp; A clear and readable picture of the model # and serial # sticker (</strong>
+    //         <strong style="color: rgb(255, 0, 0); background-color: transparent;">located on the back of the unit</strong>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">)&nbsp;&nbsp;&nbsp;&nbsp;</strong></p><p><br></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">5.&nbsp; &nbsp; A clear picture/video clip showing the defect/issue
+    //         </strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">6.&nbsp; &nbsp; A detailed explanation of the defect/issue
+    //         </strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">Also, kindly include filling out the information below :&nbsp;
+    //         </strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Name: ________________________</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //         Address: ______________________ </strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">*<em>must be physical address&nbsp;</em></strong>
+    //         </p><p><strong style="color: rgb(11, 83, 148);">City: __________________________</strong>
+    //         </p><p><strong style="color: rgb(11, 83, 148);">State/Province: _________________</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //         Zip/Postal Code: ________________</strong></p><p><strong style="color: rgb(11, 83, 148);">Phone #: _______________________</strong></p><p>
+    //         <strong style="color: rgb(34, 34, 34);">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //         An email with warranty instructions will be provided to you as soon as we receive the complete documentation as required above.</strong></p><p><br></p>
+    //         <p><strong style="color: rgb(255, 0, 0);">&nbsp;** Please ensure that the Case File Number is in the subject line **&nbsp;&nbsp;</strong></p><p><br></p><p><br>
+    //         </p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">Thank you.</strong></p><p><br></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Best Regards,</strong></p><p><br></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Customer Support</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Curtis International Ltd.</strong></p><p><br></p><p>
+    //         <span style="color: rgb(0, 71, 178);">_______________________________________________________________________________________________________________</span></p>
+    //         <p><br></p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">Salut,</strong></p><p><br></p><p>
+    //         <strong style="background-color: transparent; color: rgb(11, 83, 148);">Bonne journée!</strong></p><p><br></p><p><br></p><p>
+    //         <strong style="background-color: transparent; color: rgb(11, 83, 148);">Merci pour votre appel.</strong></p><p><br></p><p><br></p><p>
+    //         <strong style="background-color: transparent; color: rgb(11, 83, 148);">Pour que nous puissions mieux vous servir, nous aurons besoin des informations suivantes.</strong>
+    //         </p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">1. Une image claire et lisible de l’acte de vente. Veuillez noter que l'acte de vente doit indiquer les éléments suivants :</strong>
+    //         </p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">a. Nom et adresse du magasin *sauf si acheté en ligne
+    //         </strong></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">b. Date d'achat</strong></p>
+    //         <p><strong style="background-color: transparent; color: rgb(11, 83, 148);">c. Description de l'article</strong></p><p>
+    //         <strong style="background-color: transparent; color: rgb(11, 83, 148);">d. Prix ​​unitaire</strong></p><p>
+    //         <strong style="background-color: transparent; color: rgb(11, 83, 148);">e. Montant total payé</strong></p><p>
+    //         <strong style="background-color: transparent; color: rgb(255, 0, 0);">
+    //         Si vous n'avez pas l'acte de vente, vous pouvez essayer de contacter le service client du concessionnaire pour obtenir une assistance supplémentaire.
+    //         </strong></p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">2. Une image claire de l'avant de l'appareil 
+    //         (</strong><strong style="background-color: transparent; color: rgb(255, 0, 0);">pour les téléviseurs, une image frontale complète avec le téléviseur allumé est requise et 
+    //         tous les bords doivent être visibles</strong><strong style="background-color: transparent; color: rgb(11, 83, 148);">)</strong></p>
+    //         <p><br></p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">3. Une vue dégagée de l'arrière de l'appareil
+    //          (</strong><strong style="background-color: transparent; color: rgb(255, 0, 0);">tous les bords doivent être visibles</strong>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">)&nbsp;&nbsp;</strong></p><p><br></p><p><br></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">4. Une image claire et lisible de l'autocollant numéro de modèle et numéro de série 
+    //          (</strong><strong style="background-color: transparent; color: rgb(255, 0, 0);">situé à l'arrière de l'appareil</strong>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">)&nbsp;&nbsp;&nbsp;&nbsp;</strong></p><p><br></p><p><br></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">5. Une image/un clip vidéo clair montrant le défaut/le problème</strong></p>
+    //          <p><br></p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">6. Une explication détaillée du défaut/problème</strong>
+    //          </p><p><br></p><p><br></p><p><strong style="background-color: transparent; color: rgb(11, 83, 148);">
+    //          Merci également de bien vouloir remplir les informations ci-dessous :&nbsp;</strong></p><p><br></p><p><br></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Nom: ________________________</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Adresse : _____________________ </strong>
+    //          <strong style="background-color: transparent; color: rgb(255, 0, 0);">*doit être une adresse physique&nbsp;</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Ville:&nbsp; ________________________</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">État/Province :&nbsp; ________________</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Zip / code postal:&nbsp; ______________</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Téléphone #:&nbsp; &nbsp; _________________</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">&nbsp;</strong></p><p>
+    //          <strong style="background-color: transparent; color: rgb(11, 83, 148);">Un e-mail contenant les instructions de garantie vous sera fourni dès que nous
+    //           recevrons la documentation complète requise ci-dessus.</strong></p><p><br></p><p><strong style="background-color: transparent; color: rgb(255, 0, 0);">
+    //           &nbsp;** Veuillez vous assurer que le numéro de dossier figure dans la ligne d'objet **&nbsp;&nbsp;</strong></p><p><br></p><p><br></p><p>
+    //           <strong style="background-color: transparent; color: rgb(11, 83, 148);">Merci.</strong></p><p><br></p><p><br></p><p>
+    //           <strong style="background-color: transparent; color: rgb(11, 83, 148);">Cordialement,</strong></p><p><br></p><p><br></p><p>
+    //           <strong style="background-color: transparent; color: rgb(11, 83, 148);">Service client</strong></p><p>
+    //           <strong style="background-color: transparent; color: rgb(11, 83, 148);">Curtis International Ltd.</strong></p>`;
+}
+export async function parts_initial(ticket) {
+    // return `<p><strong style="color: rgb(11, 83, 148); background-color: transparent;">Hi,</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">Thank you for informing us.</strong></p><p><br></p><p>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">For us to assist you better, please provide the following:</strong></p><p><br>
+    // </p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">1. &nbsp; &nbsp; &nbsp; Clear Picture of the&nbsp; Model# 
+    // (</strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">It is located on the back of the unit.</strong>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">)</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">
+    // 2. &nbsp; &nbsp; &nbsp; Clear Picture of the Serial# (</strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">It is located on the back of 
+    // the unit. A sticker is written as S/N.: A****************</strong><strong style="color: rgb(11, 83, 148); background-color: transparent;"> 
+    // (</strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">Starts with letter "A" followed by 16 digits with a barcode.</strong>
+    // <strong style="color: rgb(11, 83, 148); background-color: transparent;">)</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">
+    // 3. &nbsp; &nbsp; &nbsp; Clear copy of your receipt showing the store name, date of purchase, item description and order summary with the total breakdown. (</strong>
+    //     <strong style="color: rgb(255, 0, 0); background-color: transparent;">it is only applicable for newly purchased unit</strong><strong style="color: rgb(11, 83, 148);
+    //      background-color: transparent;">)</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">4. &nbsp; &nbsp; &nbsp; Description of the 
+    //      part that you’re looking for.</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">5. &nbsp; &nbsp; &nbsp; Clear picture of the 
+    //      part/s you need.</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">6. &nbsp; &nbsp; &nbsp; Clear photo of the unit in which 
+    //      the missing/damaged part is located.</strong></p><p><br></p><p><strong style="color: rgb(255, 0, 0); background-color: transparent;">**Note: We only need a sample
+    //       picture of the part to fully identify what is missing or needed to resolve the issue.**</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: 
+    //       transparent;">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">Also, please kindly fill out the information below
+    //        including the City:</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);
+    //         background-color: transparent;">Name: ____________________________</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">
+    //         Address: __________________________ </strong><strong style="color: rgb(255, 0, 0); background-color: transparent;">*<em>must be physical address&nbsp;</em>
+    //         </strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">City:&nbsp; _____________________________</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">State/Province: ____________________</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Zip/Postal code:&nbsp; ___________________</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Phone#:&nbsp; __________________________</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148); background-color: transparent;">
+    //         We will then advise you of our support options that will be available to you.&nbsp;</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">&nbsp;</strong></p><p><strong style="color: rgb(255, 0, 0);">** Please ensure 
+    //         that the Case File Number is in the subject line **&nbsp;&nbsp;</strong></p><p><br></p><p><br></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Thank you.</strong></p><p><br></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Customer Support</strong></p><p>
+    //         <strong style="color: rgb(11, 83, 148); background-color: transparent;">Curtis International Ltd.</strong></p><p><br></p><p>
+    //         <strong style="color: rgb(0, 71, 178);">__________________________________________________________________________________________________________________________
+    //         </strong></p><p><br></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Salut,</strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">
+    //         Merci de nous informer.</strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Afin que nous puissions mieux vous aider, veuillez fournir les
+    //          éléments suivants :</strong></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">1. Image claire du numéro de modèle 
+    //          (</strong><strong style="color: rgb(255, 0, 0);">il est situé à l'arrière de l'appareil.</strong><strong style="color: rgb(11, 83, 148);">)</strong></p>
+    //          <p><strong style="color: rgb(11, 83, 148);">2. Image claire du numéro de série (</strong><strong style="color: rgb(255, 0, 0);">
+    //          il est situé à l'arrière de l'appareil. Un autocollant est écrit comme S/N. : A******************</strong><strong style="color: rgb(11, 83, 148);"> (</strong>
+    //             <strong style="color: rgb(255, 0, 0);">commence par une lettre "A" suivi de 16 chiffres avec un code-barres.</strong><strong style="color: rgb(11, 83, 148);">)
+    //             </strong></p><p><strong style="color: rgb(11, 83, 148);">3. Copie claire de votre reçu indiquant le nom du magasin, la date d'achat, la description de l'article 
+    //             et le récapitulatif de la commande avec le détail total. (</strong><strong style="color: rgb(255, 0, 0);">cela ne s'applique qu'aux unités nouvellement achetées
+    //             </strong><strong style="color: rgb(11, 83, 148);">)</strong></p><p><strong style="color: rgb(11, 83, 148);">4. Description de la pièce que vous recherchez.
+    //             </strong></p><p><strong style="color: rgb(11, 83, 148);">5. Image claire de la ou des pièces dont vous avez besoin.</strong></p><p>
+    //             <strong style="color: rgb(11, 83, 148);">6. Photo claire de l'unité dans laquelle se trouve la pièce manquante/endommagée.</strong></p><p><br></p><p><br></p>
+    //             <p><strong style="color: rgb(255, 0, 0);">**Remarque : Nous n'avons besoin que d'un exemple d'image de la pièce pour identifier pleinement ce qui manque ou 
+    //             ce qui est nécessaire pour résoudre le problème.**</strong></p><p><strong style="color: rgb(11, 83, 148);">&nbsp;</strong></p><p>
+    //             <strong style="color: rgb(11, 83, 148);">Merci également de bien vouloir remplir les informations ci-dessous en incluant la Ville :</strong></p><p>
+    //             <strong style="color: rgb(11, 83, 148);">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);">Nom: ____________________________</strong></p>
+    //             <p><strong style="color: rgb(11, 83, 148);">Adresse : __________________________ </strong><strong style="color: rgb(255, 0, 0);">*
+    //             doit être une adresse physique&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);">Ville:&nbsp; _____________________________</strong>
+    //             </p><p><strong style="color: rgb(11, 83, 148);">État/Province : ____________________</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //             Zip / code postal:&nbsp; ___________________</strong></p><p><strong style="color: rgb(11, 83, 148);">Téléphone#:&nbsp; __________________________
+    //             </strong></p><p><strong style="color: rgb(11, 83, 148);">&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //             Nous vous informerons ensuite des options d'assistance qui s'offrent à vous.&nbsp;</strong></p><p><strong style="color: rgb(11, 83, 148);">
+    //             &nbsp;</strong></p><p><strong style="color: rgb(255, 0, 0);">** Veuillez vous assurer que le numéro de dossier figure dans la ligne d'objet 
+    //             **&nbsp;&nbsp;</strong></p><p><br></p><p><br></p><p><strong style="color: rgb(11, 83, 148);">Merci.</strong></p><p><br></p><p><br></p><p>
+    //             <strong style="color: rgb(11, 83, 148);">Service client</strong></p><p><strong style="color: rgb(11, 83, 148);">Curtis International Ltd.</strong></p>`;
+    const result = await get_email_template_by_id_service(63);
+    return result.data;
 }

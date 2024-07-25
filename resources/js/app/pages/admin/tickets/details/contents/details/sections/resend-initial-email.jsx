@@ -1,16 +1,27 @@
 import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
 import Loading from "@/app/layouts/components/loading";
 import { resend_email_templete_service } from "@/app/services/tickets-service";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 export default function ResendInitialEmail() {
     const [loading, setLoading] = useState(false);
     const { ticket } = useSelector((state) => state.tickets);
     const [messageApi, contextHolder] = message.useMessage();
+    const [warranty, setWarranty] = useState('')
+    const [parts, setParts] = useState('')
 
-    const warranty = warranty_initial(ticket);
-    const parts = parts_initial(ticket);
+
+   useEffect(() => {
+        async function  getData(params) {
+            const w = await warranty_initial(form);
+            const p = await parts_initial(form);
+            setWarranty(w.template_text)
+            setParts(p.template_text)
+        }
+        getData()
+    }, []);
+    
     async function resend_email(params) {
         setLoading(true);
         try {

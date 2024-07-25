@@ -25,6 +25,8 @@ export default function TicketCreateFormSection() {
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => state.app);
     const [messageApi, contextHolder] = message.useMessage();
+    const [warranty, setWarranty] = useState('')
+    const [parts, setParts] = useState('')
 
     // function formHandler(value, name) {
     //     dispatch(
@@ -70,8 +72,15 @@ export default function TicketCreateFormSection() {
         store.dispatch(get_products_thunk());
     }, []);
 
-    const warranty = warranty_initial(form);
-    const parts = parts_initial(form);
+    useEffect(() => {
+        async function  getData(params) {
+            const w = await warranty_initial(form);
+            const p = await parts_initial(form);
+            setWarranty(w.template_text)
+            setParts(p.template_text)
+        }
+        getData()
+    }, []);
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);

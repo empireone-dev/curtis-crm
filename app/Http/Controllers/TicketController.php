@@ -24,7 +24,7 @@ class TicketController extends Controller
 {
 
     public function get_ticket_by_id($id){
-        $tickets = Ticket::where('id',$id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user'])->first();
+        $tickets = Ticket::where('id',$id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user','internal'])->first();
 
         return response()->json([
             'result' =>$tickets
@@ -96,7 +96,7 @@ class TicketController extends Controller
 
     public function send_warranty_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycby6ewiJK00HyUnvUU3ibrWjOlOXEa0A9h9JOCHq0oFTtmVV0oZJE_JhL9DqzqzPSfSj/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbzC4HbxcxX44BQm-bGFeYbUAGy8DyExb-Als9sYN1IOMZuVs2j3Dq9TFiShCTm06MBT/exec';
 
         $params = [
             'recipient' => $recipient,
@@ -115,7 +115,7 @@ class TicketController extends Controller
     }
     public function send_parts_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycby4GpC3Wp4VE3JSTsM6e60ymzb1E44SJUnwND_1Ra3vXzjWxbTZbgtvRu6n54Sj5Obn/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwHxDNcPirzDBeLgiEaqTZN8ZVIxKO1UyDXZ2ErYIlwqY19pHNYUEdg7-C1w3KXyQXO/exec';
         $params = [
             'recipient' => $recipient,
             'subject' => $subject,
