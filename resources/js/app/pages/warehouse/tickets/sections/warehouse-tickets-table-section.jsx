@@ -2,13 +2,15 @@ import React, { useRef, useState } from "react";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { split } from "postcss/lib/list";
 
 export default function WarehouseTicketsTableSection() {
     const { tickets } = useSelector((state) => state.warehouse_tickets);
+    const [current, setCurrent] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
     const search = window.location.search.split("=")[1];
     let ticketData = [];
@@ -283,5 +285,36 @@ export default function WarehouseTicketsTableSection() {
             },
         },
     ];
-    return <Table columns={columns} dataSource={data} />;
+
+
+    const url = window.location.pathname + window.location.search;
+
+    const getQueryParam = (url, paramName) => {
+        const searchParams = new URLSearchParams(url.split("?")[1]);
+        return searchParams.get(paramName);
+    };
+
+    const page = getQueryParam(url, "page");
+    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+
+    const paginationConfig = {
+        current: currentPage,
+        pageSize: pageSize,
+        total: tickets?.last_page * pageSize, // Replace tickets with your actual data source
+        onChange: (currentPage, pageSize) => {
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("page", currentPage);
+            const newUrl =
+                window.location.pathname + "?" + searchParams.toString();
+            console.log("Navigating to:", newUrl);
+            router.visit(newUrl)
+            setCurrent(currentPage);
+            setPageSize(pageSize);
+        },
+    };
+    return  <Table
+    columns={columns}
+    pagination={paginationConfig}
+    dataSource={data}
+/>;
 }
