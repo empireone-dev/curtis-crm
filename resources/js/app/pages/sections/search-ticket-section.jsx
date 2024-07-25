@@ -40,23 +40,23 @@ export default function SearchTicketSection() {
             window.location.href = "/administrator/tickets/create";
         }
     }
-    function formatPhoneNumber(phoneNumber) {
-        // Remove non-numeric characters
-        const cleaned = ("" + phoneNumber).replace(/\D/g, "");
+ 
 
-        // Check if the length is correct (10 digits for US numbers)
-        if (cleaned.length !== 10) {
-            return null; // or handle the error as needed
+    function formatPhoneNumber(value) {
+        const cleaned = ("" + value).replace(/\D/g, "");
+        let numberToFormat = cleaned;
+        if (cleaned.length === 11) {
+            numberToFormat = cleaned.slice(0, -1);
         }
-
-        // Format the number (XXX) XXX-XXXX
-        const match = cleaned.match(/(\d{3})(\d{3})(\d{4})/);
-        if (match) {
-            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        if (numberToFormat.length === 10) {
+            return numberToFormat.replace(
+                /(\d{3})(\d{3})(\d{4})/,
+                "($1) $2-$3"
+            );
         }
-
-        return null; // or handle the error as needed
+        return value; 
     }
+    
     return (
         <div>
             <div>
@@ -100,14 +100,7 @@ export default function SearchTicketSection() {
                             onChange={(e) =>
                                 setSearch({
                                     ...search,
-                                    phone: formatPhoneNumber(
-                                        e
-                                            ?.replace(/ /g, "")
-                                            ?.replace(
-                                                /(\d{3})(\d{3})(\d{4})/,
-                                                "($1) $2-$3"
-                                            )
-                                    ),
+                                    phone: formatPhoneNumber(e),
                                 })
                             }
                             label="Phone"
