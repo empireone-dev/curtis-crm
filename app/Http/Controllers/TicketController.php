@@ -23,6 +23,14 @@ use Illuminate\Support\Facades\Http;
 class TicketController extends Controller
 {
 
+    public function get_ticket_by_id($id){
+        $tickets = Ticket::where('id',$id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user'])->first();
+
+        return response()->json([
+            'result' =>$tickets
+        ], 200);
+    }
+
     public function search_lookup_tickets(Request $request)
     {
         $query = Ticket::query();

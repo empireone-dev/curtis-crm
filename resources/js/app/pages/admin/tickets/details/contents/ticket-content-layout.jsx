@@ -77,8 +77,7 @@ export default function TicketsDetailsLayout({ children }) {
             : []),
         ...(ticket?.isUploading === "true" &&
         (ticket.status === "CA WAREHOUSE" ||
-            ticket.status === "US WAREHOUSE" ||
-            ticket.status === "CLOSED")
+            ticket.status === "US WAREHOUSE" )
             ? [
                   {
                       title: ticket.country + " Warehouse",

@@ -1,6 +1,19 @@
-import React from "react";
+import { get_ticket_by_id_service } from "@/app/services/tickets-service";
+import React, { useEffect, useState } from "react";
 
 export default function TicketDetails() {
+    const id = window.location.pathname.split('/')[3]
+    const [data,setData] = useState({})
+    useEffect(() => {
+        async function get_data(params) {
+            const data = await get_ticket_by_id_service(id)
+            setData(data.result)
+        }
+
+        get_data()
+    }, []);
+
+    console.log('data',data)
     return (
         <div className="p-5">
             <div className="flex flex-col">
@@ -9,7 +22,7 @@ export default function TicketDetails() {
                         <div className="w-2/5"></div>
                         <div className="w-full"></div>
                         <div className="w-2/5 flex items-end justify-end  font-black">
-                        CASE FILE NUMBER
+                            CASE FILE NUMBER
                         </div>
                     </div>
                 </div>
@@ -20,7 +33,7 @@ export default function TicketDetails() {
                             Curtis International Ltd
                         </div>
                         <div className="w-1/3 flex items-center justify-center text-xl font-black border-x-2 border-t-2 border-black ">
-                            <div className="mx-3">CF200624076740</div>
+                            <div className="mx-3">{data.ticket_id??''}</div>
                         </div>
                     </div>
                 </div>
@@ -32,7 +45,7 @@ export default function TicketDetails() {
                                 Shipping Request Form
                             </div>
                             <div className="font-bold text-2xl">
-                                Warrantee Replacement
+                                {data.call_type??''} (Replacement)
                             </div>
                         </div>
                         <div className="w-1/5"></div>
@@ -48,7 +61,7 @@ export default function TicketDetails() {
                             </div>
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
-                            <div className="font-bold text-lg">Jun-20-24</div>
+                            <div className="font-bold text-lg"> {data?.replacement?.ship_date??'N/A'}</div>
                         </div>
                         <div className="border-y-2 border-black w-full"></div>
                     </div>
@@ -72,7 +85,7 @@ export default function TicketDetails() {
                                         Name
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                        {data.fname??''} {data.lname??''}
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +95,7 @@ export default function TicketDetails() {
                                         Address 1
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                        {data.address??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +105,7 @@ export default function TicketDetails() {
                                         City
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.city??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +115,7 @@ export default function TicketDetails() {
                                         State/Prov
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.state??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +125,7 @@ export default function TicketDetails() {
                                         Zip/Postal Code
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.zip_code??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +135,7 @@ export default function TicketDetails() {
                                         Phone Number
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.phone??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +164,7 @@ export default function TicketDetails() {
                                         Model Number
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.model??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +174,7 @@ export default function TicketDetails() {
                                         Description
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data?.unit??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +184,7 @@ export default function TicketDetails() {
                                         Serial Number
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.serial_number??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +194,7 @@ export default function TicketDetails() {
                                         Weight
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data?.decision_making?.cube_weight??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +204,7 @@ export default function TicketDetails() {
                                         Dimensions (LxWxH)
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data?.decision_making?.length??'N/A'}x{data?.decision_making?.width??'N/A'}x{data?.decision_making?.height??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +233,7 @@ export default function TicketDetails() {
                                         Model Number
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data.model??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +243,7 @@ export default function TicketDetails() {
                                         Description
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                    {data?.replacement?.unit??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +253,7 @@ export default function TicketDetails() {
                                         Serial Number
                                     </div>
                                     <div className="w-full px-3 font-bold">
-                                        www
+                                        {data.serial_number??'N/A'}
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +280,7 @@ export default function TicketDetails() {
                         <div className=" flex mb-2">
                             <div className="border-2 border-black w-full mt-3 flex items-center justify-center">
                                 <div className="w-full px-3 font-bold flex items-center justify-center">
-                                    Model Numbersss
+                                {data?.replacement?.notes??'N/A'}
                                 </div>
                             </div>
                         </div>

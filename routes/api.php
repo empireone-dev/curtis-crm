@@ -101,6 +101,7 @@ Route::post('resend_email_templete', [TicketController::class, 'resend_email_tem
 Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
 Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
 Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
+Route::get('get_ticket_by_id/{id}', [TicketController::class, 'get_ticket_by_id']);
 
 
 
