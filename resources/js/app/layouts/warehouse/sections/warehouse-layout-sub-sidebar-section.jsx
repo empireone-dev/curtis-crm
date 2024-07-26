@@ -1,3 +1,4 @@
+import SearchTicketSection from '@/app/pages/sections/search-ticket-section'
 import { Cog8ToothIcon, PowerIcon } from '@heroicons/react/24/outline'
 import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
@@ -41,7 +42,7 @@ export default function WarehouseLayoutSubSidebarSection() {
                         </svg>
                     </button>
 
-                    <button
+                    {/* <button
 
                         className="p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 hover:text-blue-600 hover:bg-blue-100  focus:outline-none focus:bg-blue-100  focus:ring-blue-800"
                     >
@@ -61,7 +62,8 @@ export default function WarehouseLayoutSubSidebarSection() {
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                             />
                         </svg>
-                    </button>
+                    </button> */}
+                         <SearchTicketSection />
                     <Link href='/warehouse/settings' className={`p-2 text-blue-400 transition-colors duration-200 rounded-full bg-blue-50 ${path == 'settings' ? 'bg-blue-500 text-white' : 'hover:bg-blue-100 hover:text-blue-600'}  focus:outline-none focus:bg-blue-100 focus:ring-blue-800`}>
                         <Cog8ToothIcon className=' h-8 ' />
                     </Link>

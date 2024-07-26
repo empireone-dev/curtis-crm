@@ -106,21 +106,28 @@ export default function EditTicketFormSection() {
                 })
             );
         } else if (name == "issue") {
-            dispatch(
-                setForm({
-                    ...form,
-                    issue: `["${JSON.parse(value).name}"]`,
-                })
-            );
+            if (JSON.parse(value).name !== undefined) {
+                const issue= `["${JSON.parse(value).name}"]`
+                dispatch(
+                    setForm({
+                        ...form,
+                        issue: issue,
+                    })
+                );
+            }
         } else {
-            dispatch(
-                setForm({
-                    ...form,
-                    [name]: value,
-                })
-            );
+            if (JSON.parse(value).name) {
+                dispatch(
+                    setForm({
+                        ...form,
+                        [name]: value,
+                    })
+                );
+            }
+
         }
     }
+
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
@@ -146,15 +153,8 @@ export default function EditTicketFormSection() {
         return countries.find((country) => country.value === countryName);
     };
 
-    const { regions } = findCountry(form.country ?? "CA");
-    function formHandlerIssue(params) {
-        dispatch(
-            setForm({
-                ...form,
-                issue: JSON.stringify(params),
-            })
-        );
-    }
+    const { regions } = findCountry(form?.country ?? "CA");
+
 
     return (
         <form
@@ -412,13 +412,13 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
-                            {/* {form?.issue && form.call_type == "Parts" && (
+                            {/* {form?.issue && form?.call_type == "Parts" && (
                                 <SelectData
                                     mode="multiple"
                                     size={"large"}
                                     placeholder="Please select"
                                     defaultValue={
-                                        JSON.parse(form.issue ?? "[]") 
+                                        JSON.parse(form?.issue ?? "[]") 
                                     }
                                     onChange={formHandlerIssue}
                                     style={{
@@ -441,13 +441,13 @@ export default function EditTicketFormSection() {
                                 />
                             )}
 
-                            {form?.issue && form.call_type !== "Parts" && (
+                            {form?.issue && form?.call_type !== "Parts" && (
                                 <SelectData
                                     mode="multiple"
                                     size={"large"}
                                     placeholder="Please select"
                                     defaultValue={
-                                        JSON.parse(form.issue ?? "[]") ?? []
+                                        JSON.parse(form?.issue ?? "[]") ?? []
                                     }
                                     onChange={formHandlerIssue}
                                     style={{
@@ -459,11 +459,10 @@ export default function EditTicketFormSection() {
                                     }))}
                                 />
                             )} */}
-
                             <div className="md:w-full  mb-3 md:mb-0">
-                                {form.call_type == "Parts" ? (
+                                {form?.call_type == "Parts" ? (
                                     <Autocomplete
-                                        defaultValue={form.issue ?? "[]"}
+                                        defaultValue={form?.issue ?? "[]"}
                                         onChange={formHandler}
                                         value={[
                                             {
@@ -482,7 +481,7 @@ export default function EditTicketFormSection() {
                                     />
                                 ) : (
                                     <Autocomplete
-                                        defaultValue={form.issue ?? "[]"}
+                                        defaultValue='["Functional Issue :: USB/SD card slot not working"]'
                                         onChange={formHandler}
                                         value={common_issues.map((res) => ({
                                             id: res.id,
