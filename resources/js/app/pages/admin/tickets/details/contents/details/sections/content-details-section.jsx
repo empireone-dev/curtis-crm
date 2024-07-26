@@ -134,7 +134,7 @@ export default function ContentDetailsSection() {
                             <b>Store Name:</b> {ticket?.receipt?.store ?? "NA"}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            {/* <b>Unit :</b> {ticket?.unit} */}
+                            {/* <b>Unit :</b> {ticket?.unit} */}Brand Name: {ticket?.brand}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
