@@ -41,15 +41,41 @@ export default function WebFormFormSection() {
         store.dispatch(get_common_issues_thunk());
     }, []);
 
-    function formHandler(value, name) {
-        dispatch(
-            setForm({
-                ...form,
-                [name]: value,
-            })
-        );
-    }
+    // function formHandler(value, name) {
+    //     dispatch(
+    //         setForm({
+    //             ...form,
+    //             [name]: value,
+    //         })
+    //     );
+    // }
 
+
+    function formHandler(value, name) {
+        if (name == "phone") {
+            dispatch(
+                setForm({
+                    ...form,
+                    phone: formatPhoneNumber(value),
+                })
+            );
+        } else if (name == "issue") {
+            dispatch(
+                setForm({
+                    ...form,
+                    issue: `["${JSON.parse(value).name}"]`,
+                })
+            );
+        } else {
+            dispatch(
+                setForm({
+                    ...form,
+                    [name]: value,
+                })
+            );
+        }
+
+    }
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);

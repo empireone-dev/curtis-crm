@@ -68,6 +68,13 @@ export default function EditTicketFormSection() {
                     phone: formatPhoneNumber(value),
                 })
             );
+        }else if (name == "issue") {
+            dispatch(
+                setForm({
+                    ...form,
+                    issue: `["${JSON.parse(value).name}"]`,
+                })
+            );
         } else {
             dispatch(
                 setForm({

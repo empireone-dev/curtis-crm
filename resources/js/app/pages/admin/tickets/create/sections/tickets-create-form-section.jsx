@@ -49,6 +49,13 @@ export default function TicketCreateFormSection() {
                     phone: formatPhoneNumber(value),
                 })
             );
+        } else if (name == "issue") {
+            dispatch(
+                setForm({
+                    ...form,
+                    issue: `["${JSON.parse(value).name}"]`,
+                })
+            );
         } else {
             dispatch(
                 setForm({
@@ -57,6 +64,7 @@ export default function TicketCreateFormSection() {
                 })
             );
         }
+
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
@@ -64,7 +72,7 @@ export default function TicketCreateFormSection() {
 
 
     useEffect(() => {
-        async function  getData(params) {
+        async function getData(params) {
             const w = await warranty_initial(form);
             const p = await parts_initial(form);
             setWarranty(w.template_text)
@@ -372,6 +380,31 @@ export default function TicketCreateFormSection() {
                                 },
                             ]}
                         />
+                        // <Select
+                        //     onChange={formHandler}
+                        //     name="issue"
+                        //     required={false}
+                        //     value={form.issue ?? '["Missing Parts"]'}
+                        //     label="Parts Issue"
+                        //     data={[
+                        //         {
+                        //             value: null,
+                        //             name: "",
+                        //         },
+                        //         {
+                        //             value: '["Missing Parts"]',
+                        //             name: "Missing Parts",
+                        //         },
+                        //         {
+                        //             value: '["Damage Parts"]',
+                        //             name: "Damage Parts",
+                        //         },
+                        //         {
+                        //             value: '["Want to buy Parts"]',
+                        //             name: "Want to buy Parts",
+                        //         },
+                        //     ]}
+                        // />
                     ) : (
                         <Autocomplete
                             defaultValue={"[]"}
@@ -381,6 +414,25 @@ export default function TicketCreateFormSection() {
                                 name: res.name,
                             }))}
                         />
+                        // <Select
+                        //     onChange={formHandler}
+                        //     name="issue"
+                        //     required={false}
+                        //     value={form.issue ?? '["Power :: No Power"]'}
+                        //     label="Warranty Issue"
+                        //     data={
+                        //         [
+                        //             {
+                        //                 value: null,
+                        //                 name: "",
+                        //             },
+                        //             ...common_issues.map((res) => ({
+                        //                 value: `["${res.name}"]`,
+                        //                 name: res.name,
+                        //             }))
+                        //         ]
+                        //     }
+                        // />
                     )}
                 </div>
                 <div className=" flex px-3 mb-3 gap-5">

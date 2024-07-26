@@ -86,9 +86,9 @@ export default function EditTicketFormSection() {
                 "($1) $2-$3"
             );
         }
-        return value; 
+        return value;
     }
-    
+
     // function formHandler(value, name) {
     //     dispatch(
     //         setForm({
@@ -103,6 +103,13 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...form,
                     phone: formatPhoneNumber(value),
+                })
+            );
+        } else if (name == "issue") {
+            dispatch(
+                setForm({
+                    ...form,
+                    issue: `["${JSON.parse(value).name}"]`,
                 })
             );
         } else {
@@ -401,7 +408,7 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                                // errorMessage='Address is required'
+                            // errorMessage='Address is required'
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
