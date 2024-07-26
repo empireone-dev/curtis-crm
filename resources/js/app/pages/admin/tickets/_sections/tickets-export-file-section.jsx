@@ -84,7 +84,7 @@ export default function TicketsExportFileSection() {
                         res.receipt?.discount ?? "N/A",
                         res.receipt?.retailers_price ?? "N/A",
                         res.receipt?.total_price ?? "N/A",
-                        res.decision_making?.shipping_cost ?? "0",//price cost
+                        res.decision_making?.cost_of_unit ?? "0",//price cost
                         res.decision_making?.shipping_cost ?? "0",//ship cost
                         res.replacement?.ship_date ?? "N/A",
                         res.replacement?.tracking ?? "N/A",
