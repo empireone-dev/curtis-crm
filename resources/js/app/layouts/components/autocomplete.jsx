@@ -27,8 +27,14 @@ export default function Autocomplete({ value, onChange, defaultValue }) {
                     .replace(/\s+/g, '')
                     .includes(query.toLowerCase().replace(/\s+/g, ''))
             );
+
+
+    const targetName = defaultValue.replace(/^\["/, '') 
+        .replace(/"\]$/, '');
+    const foundObject = value.find(obj => obj.name === targetName);
+
     return (
-        <Combobox value={selectedValue} onChange={setSelectedValue}>
+        <Combobox value={foundObject} onChange={setSelectedValue}>
             <div className="relative mt-1">
                 <div className='peer text-black placeholder-transparent w-full py-1 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500'>
                     <div className="grid grid-flow-row-dense grid-cols-4 ">

@@ -106,25 +106,20 @@ export default function EditTicketFormSection() {
                 })
             );
         } else if (name == "issue") {
-            if (JSON.parse(value).name !== undefined) {
-                const issue= `["${JSON.parse(value).name}"]`
-                dispatch(
-                    setForm({
-                        ...form,
-                        issue: issue,
-                    })
-                );
-            }
+            const issue= `["${JSON.parse(value).name}"]`
+            dispatch(
+                setForm({
+                    ...form,
+                    issue: issue,
+                })
+            );
         } else {
-            if (JSON.parse(value).name) {
-                dispatch(
-                    setForm({
-                        ...form,
-                        [name]: value,
-                    })
-                );
-            }
-
+            dispatch(
+                setForm({
+                    ...form,
+                    [name]: value,
+                })
+            );
         }
     }
 
@@ -481,7 +476,7 @@ export default function EditTicketFormSection() {
                                     />
                                 ) : (
                                     <Autocomplete
-                                        defaultValue='["Functional Issue :: USB/SD card slot not working"]'
+                                        defaultValue={form?.issue ?? "[]"}
                                         onChange={formHandler}
                                         value={common_issues.map((res) => ({
                                             id: res.id,
