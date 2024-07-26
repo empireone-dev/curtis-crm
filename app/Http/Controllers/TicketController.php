@@ -23,11 +23,12 @@ use Illuminate\Support\Facades\Http;
 class TicketController extends Controller
 {
 
-    public function get_ticket_by_id($id){
-        $tickets = Ticket::where('id',$id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user','internal'])->first();
+    public function get_ticket_by_id($id)
+    {
+        $tickets = Ticket::where('id', $id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'internal'])->first();
 
         return response()->json([
-            'result' =>$tickets
+            'result' => $tickets
         ], 200);
     }
 
@@ -407,16 +408,25 @@ class TicketController extends Controller
             'result' => $ticket
         ], 200);
     }
-    public function get_tickets_by_warehouse($country)
+    public function get_tickets_by_warehouse(Request $request, $country)
     {
         // $ticket = Ticket::where([
         //     ['country','=',$country],
         //     ['status','=','WAREHOUSE']
         // ])->get();
-        $ticket = Ticket::where([
-            ['country', '=', $country],
-            ['status', '=', $country == 'CA' ? 'CA WAREHOUSE' : 'US WAREHOUSE']
-        ])->get();
+        if ($request->search) {
+            $ticket = Ticket::where([
+                ['country', '=', $country],
+                ['ticket_id', '=', $request->search],
+                ['status', '=', $country == 'CA' ? 'CA WAREHOUSE' : 'US WAREHOUSE']
+            ])->get();
+        } else {
+            $ticket = Ticket::where([
+                ['country', '=', $country],
+                ['status', '=', $country == 'CA' ? 'CA WAREHOUSE' : 'US WAREHOUSE']
+            ])->get();
+        }
+
 
         return response()->json([
             'result' => $ticket
@@ -505,11 +515,11 @@ class TicketController extends Controller
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
                     } else if ($searchQuery == 'OPEN TECH') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
-                    }else if ($searchQuery == 'WARRANTY CLOSED') {
+                    } else if ($searchQuery == 'WARRANTY CLOSED') {
                         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
-                    }else if ($searchQuery == 'PARTS CLOSED') {
+                    } else if ($searchQuery == 'PARTS CLOSED') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
-                    }else if ($searchQuery == 'TECH CLOSED') {
+                    } else if ($searchQuery == 'TECH CLOSED') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                     } else {
                         $query->orWhere([[$column, '=',  $searchQuery]]);
@@ -967,14 +977,14 @@ class TicketController extends Controller
     private function createUserAccount($request)
     {
         return User::create([
-            'name' => $request->fname??'' . ' ' . $request->lname??'',
-            'email' => $request->email??'',
+            'name' => $request->fname ?? '' . ' ' . $request->lname ?? '',
+            'email' => $request->email ?? '',
             'password' => Hash::make('12345678'),
             'role_id' => '2',
-            'address' => $request->address??'',
-            'city' => $request->city??'',
-            'zip_code' => $request->zip_code??'',
-            'country' => $request->country??'',
+            'address' => $request->address ?? '',
+            'city' => $request->city ?? '',
+            'zip_code' => $request->zip_code ?? '',
+            'country' => $request->country ?? '',
         ]);
     }
 

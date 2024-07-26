@@ -26,7 +26,9 @@ export default function SearchTicketSection() {
     function moveToSearch(value) {
         if (user.role_id == 1) {
             router.visit("/administrator/tickets?search=" + value);
-        } else if (user.role_id == 6) {
+        }else if (user.role_id == 3) {
+            router.visit("/warehouse/tickets?search=" + value);
+        }  else if (user.role_id == 6) {
             router.visit("/curtis/tickets?search=" + value);
         } else {
             router.visit("/agent/tickets?search=" + value);

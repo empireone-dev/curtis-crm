@@ -130,7 +130,7 @@ export async function get_tickets_service(search) {
 }
 
 export async function get_tickets_by_warehouse_service(country) {
-    const res = await axios.post("/api/get_tickets_by_warehouse/" + country);
+    const res = await axios.post("/api/get_tickets_by_warehouse/" + country+window.location.search);
     return res.data.result;
 }
 
