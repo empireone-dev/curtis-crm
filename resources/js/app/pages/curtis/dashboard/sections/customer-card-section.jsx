@@ -78,10 +78,12 @@ export default function CustomerCardsSection({ account }) {
                 />
                 <CurtisCardsComponent
                     title="Repair"
+                    link="REPAIR"
                     count={data.repair}
                     icon={<CheckBadgeIcon className="h-10 text-white" />}
                 />
                 <CurtisCardsComponent
+                    link="PROCESSED TICKET"
                     title="Processed Tickets for Warranty"
                     count={data.warranty_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
@@ -89,7 +91,7 @@ export default function CustomerCardsSection({ account }) {
 
                 <CurtisCardsComponent
                     title="Close Tickets for Warranty"
-                    link="CLOSED"
+                    link="WARRANTY CLOSED"
                     count={data.warranty_closed ?? 0}
                     icon={<XMarkIcon className="h-10 text-white" />}
                 />
@@ -119,6 +121,7 @@ export default function CustomerCardsSection({ account }) {
                     icon={<Cog6ToothIcon className="h-10 text-white" />}
                 />
                 <CurtisCardsComponent
+                    link="PARTS PROCESSED TICKET"
                     title="Processed Tickets For Parts"
                     count={data.parts_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
@@ -131,6 +134,7 @@ export default function CustomerCardsSection({ account }) {
                 />
                 <CurtisCardsComponent
                     title="Closed Tickets For Parts"
+                    link="PARTS CLOSED"
                     count={data.parts_closed}
                     icon={<UserCircleIcon className="h-10 text-white" />}
                 />
@@ -146,7 +150,7 @@ export default function CustomerCardsSection({ account }) {
                 />
                 <CurtisCardsComponent
                     title="Close Ticket for Technical"
-                    link="Close"
+                    link="TECH CLOSED"
                     count={data.tech_closed ?? 0}
                     icon={<WrenchScrewdriverIcon className="h-10 text-white" />}
                 />

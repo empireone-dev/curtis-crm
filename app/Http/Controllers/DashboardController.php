@@ -327,7 +327,7 @@ class DashboardController extends Controller
         ])->count();
 
         $parts_process_ticket = Ticket::where([
-            ['call_type', '=', 'CF-Warranty Claim'],
+            ['call_type', '=', 'Parts'],
             ['status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
 

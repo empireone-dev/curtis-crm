@@ -144,7 +144,7 @@ export default function DashboardCardsSection() {
 
                 <DashboardCardsComponent
                     title="Close Tickets for Warranty"
-                    link="CLOSED"
+                    link="WARRANTY CLOSED"
                     count={data.warranty_closed ?? 0}
                     icon={<XMarkIcon className="h-10 text-white" />}
                 />
@@ -176,6 +176,7 @@ export default function DashboardCardsSection() {
                 <DashboardCardsComponent
                     title="Processed Tickets For Parts"
                     count={data.parts_process_ticket ?? 0}
+                    link="PARTS PROCESSED TICKET"
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
@@ -186,6 +187,7 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Closed Tickets For Parts"
+                    link="PARTS CLOSED"
                     count={data.parts_closed}
                     icon={<UserCircleIcon className="h-10 text-white" />}
                 />
@@ -201,7 +203,7 @@ export default function DashboardCardsSection() {
                 />
                 <DashboardCardsComponent
                     title="Close Ticket for Technical"
-                    link="Close"
+                    link="TECH CLOSED"
                     count={data.tech_closed ?? 0}
                     icon={<WrenchScrewdriverIcon className="h-10 text-white" />}
                 />
