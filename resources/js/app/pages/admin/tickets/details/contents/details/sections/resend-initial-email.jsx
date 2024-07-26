@@ -14,8 +14,8 @@ export default function ResendInitialEmail() {
 
    useEffect(() => {
         async function  getData(params) {
-            const w = await warranty_initial(form);
-            const p = await parts_initial(form);
+            const w = await warranty_initial();
+            const p = await parts_initial();
             setWarranty(w.template_text)
             setParts(p.template_text)
         }
