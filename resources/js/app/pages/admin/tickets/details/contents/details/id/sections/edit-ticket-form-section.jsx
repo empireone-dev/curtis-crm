@@ -58,9 +58,10 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: ticket?.receipt?.store ?? "N/A",
+                    state: ticket?.state ?? "AB",
+                    country: ticket?.country ?? "CA",
                 })
             );
-            console.log("resres", res);
         }
         get_ticket();
     }, []);
@@ -377,6 +378,8 @@ export default function EditTicketFormSection() {
                                 }))}
                             />
                         </div>
+                        {/* {form.country},
+                        {form.state} */}
                         <div className="md:w-1/4 px-3">
                             <Select
                                 onChange={formHandler}
