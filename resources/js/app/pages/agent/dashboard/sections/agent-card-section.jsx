@@ -268,6 +268,7 @@ export default function AgentCardsSection({ account }) {
                 {agent_type(["Parts"]) && (
                     <AgentCardsComponent
                         title="Processed Tickets For Parts"
+                        link="PARTS PROCESSED TICKET"
                         count={data.parts_process_ticket ?? 0}
                         icon={<ClipboardIcon className="h-10 text-white" />}
                     />
@@ -286,6 +287,7 @@ export default function AgentCardsSection({ account }) {
                 {agent_type(["Parts"]) && (
                     <AgentCardsComponent
                         title="Closed Tickets For Parts"
+                        link="CLOSED"
                         count={data.parts_closed}
                         icon={<UserCircleIcon className="h-10 text-white" />}
                     />

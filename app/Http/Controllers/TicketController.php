@@ -789,6 +789,8 @@ class TicketController extends Controller
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CALLBACK']]);
                     } elseif ($searchQuery == 'INTERNALS') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'INTERNALS']]);
+                    }elseif ($searchQuery == 'CLOSED') {
+                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
                     } else {
                         $query->orWhere($column, 'like', '%' . $searchQuery . '%');
                     }
