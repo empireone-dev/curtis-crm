@@ -106,13 +106,15 @@ export default function EditTicketFormSection() {
                 })
             );
         } else if (name == "issue") {
-            const issue= `["${JSON.parse(value).name}"]`
-            dispatch(
-                setForm({
-                    ...form,
-                    issue: issue,
-                })
-            );
+            if (JSON.parse(value).name) {
+                const issue = `["${JSON.parse(value).name}"]`;
+                dispatch(
+                    setForm({
+                        ...form,
+                        issue: issue,
+                    })
+                );
+            }
         } else {
             dispatch(
                 setForm({
@@ -149,7 +151,6 @@ export default function EditTicketFormSection() {
     };
 
     const { regions } = findCountry(form?.country ?? "CA");
-
 
     return (
         <form
@@ -403,7 +404,7 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                            // errorMessage='Address is required'
+                                // errorMessage='Address is required'
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
