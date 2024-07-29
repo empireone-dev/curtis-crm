@@ -234,8 +234,15 @@ class TicketController extends Controller
                     ->first();
 
                 if (isset($activity->user_id)) {
-                    $user = User::find($result->activity->user_id);
-                    $result['validator'] = $user;
+                    $object = json_decode($activity->message);
+                    $user = User::where('id',$result->activity->user_id)->first();
+                    if ($user['agent_type'] == 'Warranty') {
+                        $result['validator'] = $user;
+                    }else{
+                        $user2 = User::where('emp_id',$object->emp_id)->first();
+                        $result['validator'] = $user2;
+                    }
+                   
                 }
             }
         }
