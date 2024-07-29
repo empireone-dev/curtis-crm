@@ -50,7 +50,7 @@ export default function TicketsExportFileSection() {
                     newData = allTickets.map((res) => [
                         moment(res?.receipt?.updated_at).format("L"),
                         res.ticket_id,
-                        res.user?.name ?? "N/A",
+                        res.validator?.name ?? "N/A",
                     ]);
                     newData.sort((a, b) => new Date(a[0]) - new Date(b[0]));
                     data = [

@@ -26,9 +26,9 @@ export default function SearchTicketSection() {
     function moveToSearch(value) {
         if (user.role_id == 1) {
             router.visit("/administrator/tickets?search=" + value);
-        }else if (user.role_id == 3) {
+        } else if (user.role_id == 3) {
             router.visit("/warehouse/tickets?search=" + value);
-        }  else if (user.role_id == 6) {
+        } else if (user.role_id == 6) {
             router.visit("/curtis/tickets?search=" + value);
         } else {
             router.visit("/agent/tickets?search=" + value);
@@ -42,7 +42,6 @@ export default function SearchTicketSection() {
             window.location.href = "/administrator/tickets/create";
         }
     }
- 
 
     function formatPhoneNumber(value) {
         const cleaned = ("" + value).replace(/\D/g, "");
@@ -56,9 +55,9 @@ export default function SearchTicketSection() {
                 "($1) $2-$3"
             );
         }
-        return value; 
+        return value;
     }
-    
+
     return (
         <div>
             <div>
@@ -182,6 +181,14 @@ export default function SearchTicketSection() {
                         >
                             Search
                         </button>
+                        <button
+                        onClick={()=>setSearch({})}
+                            type="button"
+                            className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                        >
+                            Reset
+                        </button>
+
                         <button
                             type="button"
                             // search-autofocus

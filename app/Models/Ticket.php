@@ -94,7 +94,8 @@ class Ticket extends Model
     }
     public function activity(): HasOne
     {
-        return $this->hasOne(Activity::class,'ticket_id','id');
+        return $this->hasOne(Activity::class,'ticket_id','id')
+        ->where('type', '=', 'WARRANTY VALIDATION');
     }
 
 }

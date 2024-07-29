@@ -173,7 +173,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -224,8 +224,21 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
+
         $query->orderBy('created_at', 'desc');
         $data = $query->get();
+        foreach ($data as $result) {
+            if (isset($result->activity->user_id)) {
+                $activity = Activity::where('user_id', '=', $result->activity->user_id)
+                    ->where('type', '=', 'WARRANTY VALIDATION')
+                    ->first();
+
+                if (isset($activity->user_id)) {
+                    $user = User::find($result->activity->user_id);
+                    $result['validator'] = $user;
+                }
+            }
+        }
 
         if ($export) {
             return response()->json([
@@ -789,7 +802,7 @@ class TicketController extends Controller
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CALLBACK']]);
                     } elseif ($searchQuery == 'INTERNALS') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'INTERNALS']]);
-                    }elseif ($searchQuery == 'CLOSED') {
+                    } elseif ($searchQuery == 'CLOSED') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
                     } else {
                         $query->orWhere($column, 'like', '%' . $searchQuery . '%');
