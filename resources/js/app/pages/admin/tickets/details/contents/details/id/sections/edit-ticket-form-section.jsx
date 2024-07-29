@@ -54,7 +54,13 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-            dispatch(setForm(res));
+            dispatch(
+                setForm({
+                    ...res,
+                    store: ticket?.receipt?.store ?? "N/A",
+                })
+            );
+            console.log("resres", res);
         }
         get_ticket();
     }, []);
@@ -135,7 +141,6 @@ export default function EditTicketFormSection() {
             ...form,
             id: ticketid,
             status: ticket.status,
-            store: ticket?.receipt?.store ?? "N/A",
         };
         try {
             await update_tickets_by_user_id(data);
