@@ -172,6 +172,13 @@ export default function UsersTableSection() {
             dataIndex: "agent_type",
             key: "agent_type",
             ...getColumnSearchProps("agent_type"),
+            render: (_, record, i) => {
+                return (
+                    <div color={"red"} key={i}>
+                        {record.agent_type??'Admin'}
+                    </div>
+                );
+            },
         },
         // {
         //     title: "Handled Direct Emails",

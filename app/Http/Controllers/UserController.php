@@ -36,7 +36,9 @@ class UserController extends Controller
     {
         $twoDaysAgo = Carbon::now()->subDays(2)->toDateTimeString();
         $today = Carbon::today()->toDateString();
-        $users = User::where('role_id', '=', $role_id)->with('role')->get();
+        $users = User::where('role_id', '=', $role_id)
+        ->orWhere('role_id', '=', 1)
+        ->with('role')->get();
 
         $days = date("N");
 
@@ -150,7 +152,9 @@ class UserController extends Controller
                 'role_id' =>  $request->agent_type == null || $request->agent_type == 'null' ? 1 : 5,
                 'password' => Hash::make('Business12!@')
             ]);
-            $users = User::where('role_id', '=', 5)->with('role')->get();
+            $users = User::where('role_id', '=', 5)
+            ->orWhere('role_id', '=', 1)
+            ->with('role')->get();
             return response()->json([
                 'status' => $users,
             ], 200);

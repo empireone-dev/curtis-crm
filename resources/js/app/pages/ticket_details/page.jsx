@@ -62,7 +62,7 @@ export default function TicketDetails() {
                                     </div>
                                 ) : (
                                     <div className="font-bold text-2xl">
-                                        Undecided
+                                       {data.call_type ?? ""} (Undecided)
                                     </div>
                                 ))}
                         </div>
