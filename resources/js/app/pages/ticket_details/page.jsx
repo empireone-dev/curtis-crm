@@ -215,7 +215,7 @@ export default function TicketDetails() {
                         <div className="w-1/5 "></div>
                     </div>
                 </div>
-                {data?.internal.length !== 0 && (
+                {data?.internal?.length !== 0 && (
                     <>
                         <div className="border-x-2 border-t-2 border-b-2 border-black">
                             <div className="flex flex-row">
