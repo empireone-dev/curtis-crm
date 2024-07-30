@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 export default function Input({
     name,
     value,
@@ -9,36 +11,38 @@ export default function Input({
     span,
     ids
 }) {
+    const [showPassword, setShowPassword] = useState(false);
+
     function formType() {
-        if (type == "text") {
+        if (type === "text") {
             return value;
-        } else if (type == "number") {
+        } else if (type === "number") {
             return value?.replace(/[^0-9.]/g, "");
-        } else if (type == "phone") {
+        } else if (type === "phone") {
             const phoneNumber = value?.replace(/\D/g, "").substring(0, 10);
             if (phoneNumber?.length === 10) {
                 return phoneNumber?.replace(
                     /(\d{3})(\d{3})(\d{4})/,
                     "($1) $2-$3"
                 );
-                // return phoneNumber;
             } else {
-                // Handle invalid phone number format
                 return phoneNumber;
             }
         } else {
             return value;
         }
     }
-    const id = name + Math.random()
+
+    const id = name + Math.random();
+
     return (
         <div className="w-full">
             <div className="relative">
                 <input
                     required={required}
                     value={formType() ?? ""}
-                    onChange={(e) => onChange(e.target.value, e.target.name,ids)}
-                    type={type == 'date' || type == 'password'? type : 'text'}
+                    onChange={(e) => onChange(e.target.value, e.target.name, ids)}
+                    type={type === 'date' ? type : (type === 'password' && showPassword ? 'text' : type)}
                     id={id}
                     name={name}
                     className="peer pl-8 text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"
@@ -57,18 +61,26 @@ export default function Input({
                 >
                     {label}
                 </label>
+                {type === 'password' && (
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-3 flex items-center text-gray-500 sm:text-lg pr-2"
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                )}
             </div>
-            {errorMessage && value == "" && (
+            {errorMessage && value === "" && (
                 <p className="text-red-500 text-sm mt-1.5 font-light">
                     {errorMessage}
                 </p>
             )}
-            {errorMessage == "These credentials do not match our records." &&
-                value !== "" && (
-                    <p className="text-red-500 text-sm mt-1.5 font-light">
-                        {errorMessage}
-                    </p>
-                )}
+            {errorMessage === "These credentials do not match our records." && value !== "" && (
+                <p className="text-red-500 text-sm mt-1.5 font-light">
+                    {errorMessage}
+                </p>
+            )}
         </div>
     );
 }
