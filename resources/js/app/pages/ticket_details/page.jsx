@@ -7,13 +7,17 @@ export default function TicketDetails() {
     useEffect(() => {
         async function get_data(params) {
             const data = await get_ticket_by_id_service(id);
-            setData(data.result);
+              await setData(data.result);
+            if (data.result) {
+                setTimeout(()=>{
+                    window.print();
+                },[1000])
+            }
         }
 
         get_data();
     }, []);
 
-    console.log("data", data);
     return (
         <div className="p-5">
             <div className="flex flex-col">
