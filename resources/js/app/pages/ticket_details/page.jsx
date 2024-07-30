@@ -8,17 +8,17 @@ export default function TicketDetails() {
     useEffect(() => {
         async function get_data(params) {
             const data = await get_ticket_by_id_service(id);
-              await setData(data.result);
+            await setData(data.result);
             if (data.result) {
-                setTimeout(()=>{
-                    window.print();
-                },[1000])
+                setTimeout(() => {
+                    // window.print();
+                }, [1000]);
             }
         }
 
         get_data();
     }, []);
-console.log('data',data)
+    console.log("data", data);
     return (
         <div className="p-5">
             <div className="flex flex-col">
@@ -66,9 +66,33 @@ console.log('data',data)
                             </div>
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
-                            <div className="font-bold text-lg">
-                                {data?.internal?<>{moment(data?.internal[0]?.created_at).format('LL') ?? ""}</>:data?.refund?.ship_date?? ""}
-                            </div>
+                            {data.call_type == "CF-Warranty Claim" && (
+                                <div className="font-bold text-lg">
+                                    {data?.internal ? (
+                                        <>
+                                            {moment(
+                                                data?.internal[0]?.created_at
+                                            ).format("LL") ?? ""}
+                                        </>
+                                    ) : (
+                                        data?.refund?.ship_date ?? ""
+                                    )}
+                                </div>
+                            )}
+
+                            {data.call_type == "Parts" && (
+                                <div className="font-bold text-lg">
+                                    {data?.replacement ? (
+                                        <>
+                                            {moment(
+                                                data?.replacement?.created_at
+                                            ).format("LL") ?? ""}
+                                        </>
+                                    ) : (
+                                        data?.refund?.ship_date ?? ""
+                                    )}
+                                </div>
+                            )}
                         </div>
                         <div className="border-y-2 border-black w-full"></div>
                     </div>
