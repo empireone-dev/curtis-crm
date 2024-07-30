@@ -39,6 +39,7 @@ export default function Input({
         <div className="w-full">
             <div className="relative">
                 <input
+                    autoComplete="off"
                     required={required}
                     value={formType() ?? ""}
                     onChange={(e) => onChange(e.target.value, e.target.name, ids)}

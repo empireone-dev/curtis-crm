@@ -67,7 +67,7 @@ console.log('data',data)
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
                             <div className="font-bold text-lg">
-                                {data?.internal?<>{moment(data?.internal[0]?.created_at).format('LLL') ?? ""}</>:data?.refund?.ship_date?? ""}
+                                {data?.internal?<>{moment(data?.internal[0]?.created_at).format('LL') ?? ""}</>:data?.refund?.ship_date?? ""}
                             </div>
                         </div>
                         <div className="border-y-2 border-black w-full"></div>
