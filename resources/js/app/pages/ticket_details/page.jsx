@@ -50,7 +50,7 @@ export default function TicketDetails() {
                                 Shipping Request Form
                             </div>
                             <div className="font-bold text-2xl">
-                                {data.call_type ?? ""} (Replacement)
+                                {data.call_type ?? ""} ({data?.decision_status})
                             </div>
                         </div>
                         <div className="w-1/5"></div>
@@ -67,17 +67,29 @@ export default function TicketDetails() {
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
                             {data.call_type == "CF-Warranty Claim" && (
-                                <div className="font-bold text-lg">
-                                    {data?.internal ? (
+                                <>
+                                    {data?.decision_status == "REPLACEMENT" && (
                                         <>
                                             {moment(
-                                                data?.internal[0]?.created_at
+                                                data?.replacement?.ship_date
                                             ).format("LL") ?? ""}
                                         </>
-                                    ) : (
-                                        data?.refund?.ship_date ?? ""
                                     )}
-                                </div>
+                                    {data?.decision_status == "REFUND" && (
+                                        <>
+                                            {moment(
+                                                data?.refund?.ship_date
+                                            ).format("LL") ?? ""}
+                                        </>
+                                    )}
+                                    {data.call_type == "Parts" && (
+                                        <>
+                                            {moment(
+                                                data?.replacement?.ship_date
+                                            ).format("LL") ?? ""}
+                                        </>
+                                    )}
+                                </>
                             )}
 
                             {data.call_type == "Parts" && (
@@ -85,7 +97,7 @@ export default function TicketDetails() {
                                     {data?.replacement ? (
                                         <>
                                             {moment(
-                                                data?.replacement?.created_at
+                                                data?.replacement?.ship_date
                                             ).format("LL") ?? ""}
                                         </>
                                     ) : (
