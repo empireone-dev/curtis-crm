@@ -54,12 +54,17 @@ export default function TicketDetails() {
                                     {data.call_type ?? ""} (REPLACEMENT)
                                 </div>
                             )}
-                               {data.call_type == "CF-Warranty Claim" && (
-                                <div className="font-bold text-2xl">
-                                    {data.call_type ?? ""} (
-                                    {data?.decision_status})
-                                </div>
-                            )}
+                            {data.call_type == "CF-Warranty Claim" &&
+                                (data?.decision_status ? (
+                                    <div className="font-bold text-2xl">
+                                        {data.call_type ?? ""} (
+                                        {data?.decision_status})
+                                    </div>
+                                ) : (
+                                    <div className="font-bold text-2xl">
+                                        Undecided
+                                    </div>
+                                ))}
                         </div>
                         <div className="w-1/5"></div>
                     </div>
@@ -74,7 +79,7 @@ export default function TicketDetails() {
                             </div>
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
-                            {data.call_type == "CF-Warranty Claim" && (
+                            {/* {data.call_type == "CF-Warranty Claim" && (
                                 <>
                                     {data?.decision_status == "REPLACEMENT" && (
                                         <>
@@ -112,7 +117,11 @@ export default function TicketDetails() {
                                         data?.refund?.ship_date ?? "NOT ALREADY SHIPPED"
                                     )}
                                 </div>
-                            )}
+                            )} */}
+
+                            <div className="font-bold text-lg">
+                                {moment(data.created_at).format("LL")}
+                            </div>
                         </div>
                         <div className="border-y-2 border-black w-full"></div>
                     </div>
