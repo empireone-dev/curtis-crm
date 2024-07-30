@@ -17,7 +17,7 @@ export default function TicketDetails() {
 
         get_data();
     }, []);
-
+console.log('data',data)
     return (
         <div className="p-5">
             <div className="flex flex-col">
@@ -66,8 +66,7 @@ export default function TicketDetails() {
                         </div>
                         <div className="border-y-2 items-center justify-center flex border-black w-full">
                             <div className="font-bold text-lg">
-                                {" "}
-                                {data?.replacement?.ship_date ?? "N/A"}
+                                {data?.replacement?<>{data?.replacement?.ship_date ?? ""}</>:data?.refund?.ship_date?? ""}
                             </div>
                         </div>
                         <div className="border-y-2 border-black w-full"></div>
