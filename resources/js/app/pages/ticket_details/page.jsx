@@ -49,9 +49,17 @@ export default function TicketDetails() {
                             <div className="font-bold text-lg">
                                 Shipping Request Form
                             </div>
-                            <div className="font-bold text-2xl">
-                                {data.call_type ?? ""} ({data?.decision_status})
-                            </div>
+                            {data.call_type == "Parts" && (
+                                <div className="font-bold text-2xl">
+                                    {data.call_type ?? ""} (REPLACEMENT)
+                                </div>
+                            )}
+                               {data.call_type == "CF-Warranty Claim" && (
+                                <div className="font-bold text-2xl">
+                                    {data.call_type ?? ""} (
+                                    {data?.decision_status})
+                                </div>
+                            )}
                         </div>
                         <div className="w-1/5"></div>
                     </div>
