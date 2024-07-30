@@ -48,22 +48,6 @@ class RefundController extends Controller
                     $ticket = Ticket::where('ticket_id', $record[2])->first();
                     if ($ticket) {
                         $replacement = Replacement::where('ticket_id', $ticket->id)->first();
-                        // $dm = DecisionMaking::where('ticket_id', $ticket->id)->first();
-
-                        // if ($dm) {
-                        //     $dm->update([
-                        //         'tracking' => $record[1],
-                        //         'item_number' => $record[3],
-                        //         'serial_number' => $record[4],
-                        //     ]);
-                        // } else {
-                        //     DecisionMaking::create([
-                        //         'ticket_id' => $ticket->id,
-                        //         'tracking' => $record[1],
-                        //         'item_number' => $record[3],
-                        //         'serial_number' => $record[4],
-                        //     ]);
-                        // }
                         if ($replacement) {
                             $replacement->update([
                                 'ship_date' => $record[0],
@@ -82,7 +66,7 @@ class RefundController extends Controller
                         }
                     }
                     $ticket->update([
-                        'status'=>'PROCESSED TICKET'
+                        'status' => 'PROCESSED TICKET'
                     ]);
                     $csvData[] = $record;
                 }
@@ -103,6 +87,26 @@ class RefundController extends Controller
                 //Amount of Refund:
                 if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '') {
                     $ticket = Ticket::where('ticket_id', $record[0])->first();
+
+                    $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
+                    $activity = Activity::where([['ticket_id','=',$ticket->id],['type','=','REFUND SHIPPED']])->first();
+
+                    if ($activity) {
+                        $activity->update([
+                            'user_id' => $request->user_id,
+                            'ticket_id' => $ticket->id,
+                            'type' => 'REFUND SHIPPED',
+                            'message' => json_encode(array_merge($ticketArray, ['refund' => $record]))
+                        ]);
+                    } else {
+                        Activity::create([
+                            'user_id' => $request->user_id,
+                            'ticket_id' => $ticket->id,
+                            'type' => 'REFUND SHIPPED',
+                            'message' => json_encode(array_merge($ticketArray, ['refund' => $record]))
+                        ]);
+                    }
+
                     if ($ticket) {
                         $refund = Refund::where('ticket_id', $ticket->id)->first();
                         $dm = DecisionMaking::where('ticket_id', $ticket->id)->first();
@@ -111,33 +115,33 @@ class RefundController extends Controller
                             $dm->update([
                                 'date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                                'cheque_amount' => str_replace('$', '', $record[3]),
                             ]);
                         } else {
                             DecisionMaking::create([
                                 'ticket_id' => $ticket->id,
                                 'date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                                'cheque_amount' => str_replace('$', '', $record[3]),
                             ]);
                         }
                         if ($refund) {
                             $refund->update([
                                 'ship_date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                                'cheque_amount' => str_replace('$', '', $record[3]),
                             ]);
                         } else {
                             Refund::create([
                                 'ticket_id' => $ticket->id,
                                 'ship_date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' =>str_replace('$', '', $record[3]),
+                                'cheque_amount' => str_replace('$', '', $record[3]),
                             ]);
                         }
                     }
                     $ticket->update([
-                        'status'=>'PROCESSED TICKET'
+                        'status' => 'PROCESSED TICKET'
                     ]);
                     $csvData[] = $record;
                 }
@@ -154,10 +158,8 @@ class RefundController extends Controller
 
     public function warranty_checkque_shipped(Request $request)
     {
-        $ticket = Ticket::where('id', $request->ticket_id)->first();
-        $ticket->update([
-            'status' => $request->status
-        ]);
+        $ticket = Ticket::where('id', '=', $request->ticket_id)->first();
+        $ticket->update(['status' => $request->status]);
         $decision = DecisionMaking::where('ticket_id', $request->ticket_id)->first();
         $refund = Refund::where('ticket_id', $request->ticket_id)->first();
         if ($refund) {

@@ -3,10 +3,12 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Upload } from "antd";
 import { upload_csv_file_service } from "@/app/services/refund-service";
 import { Radio } from 'antd';
+import { useSelector } from "react-redux";
 
 export default function TicketsImportFileSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [type, setType] = useState('REPLACEMENT')
+    const { user } = useSelector((state) => state.app)
 
 
     const props = {
@@ -27,6 +29,7 @@ export default function TicketsImportFileSection() {
             const fd = new FormData();
             fd.append("csv_file", info.file.originFileObj);
             fd.append("type", type);
+            fd.append('user_id',user.id);
             await upload_csv_file_service(fd);
             if (info.file.status === "done") {
                 message.success(`${info.file.name} Updated Successfully!`);

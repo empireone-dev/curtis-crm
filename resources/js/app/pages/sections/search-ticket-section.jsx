@@ -1,5 +1,6 @@
 import Input from "@/app/layouts/components/input";
 import Modal from "@/app/layouts/components/modal";
+import { setSearch } from "@/app/redux/app-slice";
 import {
     get_tickets_service,
     search_lookup_tickets_service,
@@ -8,13 +9,13 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
 import { router } from "@inertiajs/react";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchTicketSection() {
     const [open, setOpen] = useState(false);
-    const [search, setSearch] = useState({});
+    const dispatch = useDispatch()
     const [data, setData] = useState([]);
-    const { user } = useSelector((state) => state.app);
+    const { user,search } = useSelector((state) => state.app);
     const [random, setRandom] = useState(null);
     async function search_ticket(e) {
         e.preventDefault();
@@ -84,10 +85,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     ticket_id: e,
-                                })
+                                }))
                             }
                             label="Case File #"
                             value={search?.ticket_id ?? ""}
@@ -99,10 +100,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="phone"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     phone: formatPhoneNumber(e),
-                                })
+                                }))
                             }
                             label="Phone"
                             value={search?.phone ?? ""}
@@ -111,10 +112,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     email: e,
-                                })
+                                }))
                             }
                             label="Email"
                             value={search?.email ?? ""}
@@ -125,10 +126,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     serial_number: e,
-                                })
+                                }))
                             }
                             label="Serial #"
                             value={search?.serial_number ?? ""}
@@ -137,10 +138,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     item_number: e,
-                                })
+                                }))
                             }
                             label="Model"
                             value={search?.item_number ?? ""}
@@ -151,10 +152,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     fname: e,
-                                })
+                                }))
                             }
                             label="First Name"
                             value={search?.fname ?? ""}
@@ -163,10 +164,10 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                setSearch({
+                                dispatch(setSearch({
                                     ...search,
                                     lname: e,
-                                })
+                                }))
                             }
                             label="Last Name"
                             value={search?.lname ?? ""}
@@ -182,7 +183,7 @@ export default function SearchTicketSection() {
                             Search
                         </button>
                         <button
-                        onClick={()=>setSearch({})}
+                        onClick={()=>dispatch(setSearch({}))}
                             type="button"
                             className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                         >

@@ -7,7 +7,8 @@ export const appSlice = createSlice({
   initialState: {
     isModalOpen: false,
     user:{},
-    hash:hash
+    hash:hash,
+    search:{}
   },
   reducers: {
     setIsModalOpen: (state, action) => {
@@ -19,12 +20,16 @@ export const appSlice = createSlice({
     setHash: (state, action) => {
       state.hash = action.payload
     },
+    setSearch: (state, action) => {
+      state.search = action.payload
+    },
   },
 })
 export const { 
   setIsModalOpen,
   setUser,
-  setHash
+  setHash,
+  setSearch
  } = appSlice.actions
 
 export default appSlice.reducer

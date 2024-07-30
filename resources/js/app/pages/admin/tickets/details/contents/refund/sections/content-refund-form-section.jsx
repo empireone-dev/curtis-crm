@@ -43,6 +43,7 @@ export default function ContentRefundFormSection() {
             try {
                 const result = await patch_warranty_checkque_shipped_service({
                     ...form,
+                    ticket_id:ticket.id,
                     account: user,
                     status: "PROCESSED TICKET",
                 });

@@ -33,55 +33,65 @@ export default function ContentActivitiesRefundComponents({ data }) {
                     </div>
                 </div>
                 <div class="flex h-full items-center justify-center bg-red-400 w-full">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <tbody>
-                                <tr class="bg-white border-b">
-                                    <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                    >
-                                        Cheque #:
-                                    </th>
-                                    <td class="px-6 py-4">
-                                    {result?.refund?.cheque_no ?? 0}
-                                    </td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                    >
-                                        Cheque Amount:
-                                    </th>
-                                    <td class="px-6 py-4">
-                                    ${result?.refund?.cheque_amount ?? 0}.00
-                                    </td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                    >
-                                        Mail Date:
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {result?.refund?.ship_date ?? ""}
-                                    </td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                    >
-                                        Notes:
-                                    </th>
-                                    <td class="px-6 py-4">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                        <tbody>
+                            <tr class="bg-white border-b">
+                                <th
+                                    scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                >
+                                    Cheque #:
+                                </th>
+                                <td class="px-6 py-4">
+                                    {result?.refund?.cheque_no ?? ""}
+                                    {result.refund[2] ?? ""}
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <th
+                                    scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                >
+                                    Cheque Amount:
+                                </th>
+                                <td class="px-6 py-4">
+                                    {result?.refund?.cheque_amount ? (
+                                        <>
+                                            $
+                                            {result?.refund?.cheque_amount ??
+                                                ""}
+                                        </>
+                                    ) : (
+                                        result.refund[3] ?? ""
+                                    )}
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <th
+                                    scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                >
+                                    Mail Date:
+                                </th>
+                                <td class="px-6 py-4">
+                                    {result?.refund?.ship_date ?? ""}
+                                    {result.refund[1] ?? ""}
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <th
+                                    scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                >
+                                    Notes:
+                                </th>
+                                <td class="px-6 py-4">
                                     {result?.refund?.notes ?? ""}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </Modal>
         </div>
     );
