@@ -54,6 +54,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     <td class="px-6 py-4">
                                         {" "}
                                         {result?.replacement?.ship_date ?? ""}
+                                        {result?.replacement[0] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">
@@ -66,6 +67,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     <td class="px-6 py-4">
                                         {" "}
                                         {result?.replacement?.unit ?? ""}
+                                        {result?.replacement[7] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">
@@ -77,6 +79,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     </th>
                                     <td class="px-6 py-4">
                                         {result?.replacement?.brand ?? ""}
+                                        {result?.replacement[6] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">
@@ -88,6 +91,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     </th>
                                     <td class="px-6 py-4">
                                         {result?.replacement?.model ?? ""}
+                                        {result?.replacement[3] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">
@@ -100,6 +104,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     <td class="px-6 py-4">
                                         {result?.replacement?.serial_number ??
                                             ""}
+                                            {result?.replacement[4] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">
@@ -111,6 +116,7 @@ export default function ContentActivitiesReplacementComponents({ data }) {
                                     </th>
                                     <td class="px-6 py-4">
                                         {result?.replacement?.tracking ?? ""}
+                                        {result?.replacement[1] ?? ""}
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b">

@@ -46,22 +46,46 @@ class RefundController extends Controller
                 }
                 if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '' && $record[4] !== '') {
                     $ticket = Ticket::where('ticket_id', $record[2])->first();
+
+                    $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
+                    $activity = Activity::where([['ticket_id','=',$ticket->id],['type','=','REPLACEMENT SHIPPED']])->first();
+
+                    if ($activity) {
+                        $activity->update([
+                            'user_id' => $request->user_id,
+                            'ticket_id' => $ticket->id,
+                            'type' => 'REPLACEMENT SHIPPED',
+                            'message' => json_encode(array_merge($ticketArray, ['replacement' => $record]))
+                        ]);
+                    } else {
+                        Activity::create([
+                            'user_id' => $request->user_id,
+                            'ticket_id' => $ticket->id,
+                            'type' => 'REPLACEMENT SHIPPED',
+                            'message' => json_encode(array_merge($ticketArray, ['replacement' => $record]))
+                        ]);
+                    }
+
                     if ($ticket) {
                         $replacement = Replacement::where('ticket_id', $ticket->id)->first();
                         if ($replacement) {
                             $replacement->update([
                                 'ship_date' => $record[0],
                                 'tracking' => $record[1],
-                                'item_number' => $record[3],
+                                'model' => $record[3],
                                 'serial_number' => $record[4],
+                                'brand' => $record[6],
+                                'unit' => $record[7],
                             ]);
                         } else {
                             Replacement::create([
                                 'ticket_id' => $ticket->id,
                                 'ship_date' => $record[0],
                                 'tracking' => $record[1],
-                                'item_number' => $record[3],
+                                'model' => $record[3],
                                 'serial_number' => $record[4],
+                                'brand' => $record[6],
+                                'unit' => $record[7],
                             ]);
                         }
                     }
