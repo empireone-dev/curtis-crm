@@ -54,7 +54,7 @@ export default function TicketDetails() {
                                     {data.call_type ?? ""} (REPLACEMENT)
                                 </div>
                             )}
-                            {data.call_type == "CF-Warranty Claim" && (
+                               {data.call_type == "CF-Warranty Claim" && (
                                 <div className="font-bold text-2xl">
                                     {data.call_type ?? ""} (
                                     {data?.decision_status})
@@ -92,16 +92,9 @@ export default function TicketDetails() {
                                     )}
                                     {data.call_type == "Parts" && (
                                         <>
-                                            {data?.replacement?.ship_date ? (
-                                                <>
-                                                    {moment(
-                                                        data?.replacement
-                                                            ?.ship_date
-                                                    ).format("LL") ?? ""}
-                                                </>
-                                            ) : (
-                                                "NOT ALREADY SHIPPED"
-                                            )}
+                                            {moment(
+                                                data?.replacement?.ship_date
+                                            ).format("LL") ?? ""}
                                         </>
                                     )}
                                 </>
@@ -116,7 +109,7 @@ export default function TicketDetails() {
                                             ).format("LL") ?? ""}
                                         </>
                                     ) : (
-                                        data?.refund?.ship_date ?? ""
+                                        data?.refund?.ship_date ?? "NOT ALREADY SHIPPED"
                                     )}
                                 </div>
                             )}
