@@ -58,7 +58,7 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: ticket?.receipt?.store ?? "N/A",
-                    state: form?.country == 'CA'?'AB':'AL',
+                    state: ticket?.state ?? form?.country == 'CA' ? 'AB' : 'AL',
                     country: ticket?.country ?? "CA",
                 })
             );
@@ -411,7 +411,7 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                                // errorMessage='Address is required'
+                            // errorMessage='Address is required'
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
