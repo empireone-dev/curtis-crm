@@ -11,7 +11,7 @@ export default function TicketDetails() {
             await setData(data.result);
             if (data.result) {
                 setTimeout(() => {
-                    // window.print();
+                    window.print();
                 }, [1000]);
             }
         }

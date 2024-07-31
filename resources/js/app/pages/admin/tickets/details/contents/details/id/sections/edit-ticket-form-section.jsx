@@ -58,14 +58,13 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: ticket?.receipt?.store ?? "N/A",
-                    state: ticket?.state ?? "AB",
+                    state: form?.country == 'CA'?'AB':'AL',
                     country: ticket?.country ?? "CA",
                 })
             );
         }
         get_ticket();
     }, []);
-
     useEffect(() => {
         async function get_ticket(params) {
             setLoad(true);
