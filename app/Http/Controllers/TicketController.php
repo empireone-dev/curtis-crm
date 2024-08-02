@@ -686,64 +686,59 @@ class TicketController extends Controller
             ['ticket_id', '<>', null],
             ['email', '<>', null],
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['cases_status', '=', 'hide'],
         ])
             ->orWhere([
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['email', '<>', null],
                 ['call_type', '=', 'Tech'],
-                ['cases_status', '=', 'hide'],
             ])
             ->orderBy('id', 'desc')->get();
 
         $data = $tickets->pluck('ticket_id')->toArray();
-        $array = range(1, count($data));
+        // $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($data);
+        // $response = Http::timeout(120)->get($scriptUrl);
+        // $responseData = $response->json();
+        // $collection = collect($responseData);
+        // $unique = $collection->unique('subject')->sortBy('date')->values()->all();
+        // foreach ($unique as $key => $value) {
 
-        $first100 = array_slice($array, 0, 100);
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($first100);
-        $response = Http::get($scriptUrl);
-        $responseData = $response->json();
-        $collection = collect($responseData);
-        $unique = $collection->unique('subject')->sortBy('date')->values()->all();
-        foreach ($unique as $key => $value) {
+        //     $string = $value['subject'];
+        //     preg_match('/\b(\S{14})\b/', $string, $matches);
+        //     $resultss = $matches[1] ?? null;
 
-            $string = $value['subject'];
-            preg_match('/\b(\S{14})\b/', $string, $matches);
-            $resultss = $matches[1] ?? null;
+        //     if ($value['count'] == 1) {
+        //         if ($value['isReply']) {
+        //             Ticket::where('ticket_id', $resultss)->update([
+        //                 'cases_status' => 'handled',
+        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+        //                 'is_reply' => 'true'
+        //             ]);
+        //         } else {
 
-            if ($value['count'] == 1) {
-                if ($value['isReply']) {
-                    Ticket::where('ticket_id', $resultss)->update([
-                        'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true'
-                    ]);
-                } else {
+        //             Ticket::where('ticket_id', $resultss)->update([
+        //                 'cases_status' => 'hide',
+        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+        //                 'is_reply' => null
+        //             ]);
+        //         }
+        //     } else {
+        //         if ($value['isReply']) {
+        //             Ticket::where('ticket_id', $resultss)->update([
+        //                 'cases_status' => 'handled',
+        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+        //                 'is_reply' => 'true'
+        //             ]);
+        //         } else {
 
-                    Ticket::where('ticket_id', $resultss)->update([
-                        'cases_status' => 'hide',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        'is_reply' => null
-                    ]);
-                }
-            } else {
-                if ($value['isReply']) {
-                    Ticket::where('ticket_id', $resultss)->update([
-                        'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true'
-                    ]);
-                } else {
-
-                    Ticket::where('ticket_id', $resultss)->update([
-                        'cases_status' => 'hide',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        'is_reply' => null
-                    ]);
-                }
-            }
-        }
+        //             Ticket::where('ticket_id', $resultss)->update([
+        //                 'cases_status' => 'hide',
+        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+        //                 'is_reply' => null
+        //             ]);
+        //         }
+        //     }
+        // }
         return response()->json([
             'count' => count($data),
             'result' =>  $data,
