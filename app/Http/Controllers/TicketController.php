@@ -678,18 +678,31 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function show_open_cases(Request $request){
+    public function show_open_cases(Request $request)
+    {
+
         $tickets = Ticket::where([
             ['status', '<>', 'CLOSED'],
             ['ticket_id', '<>', null],
             ['email', '<>', null],
-            ['cases_status', 'IN', ['CF-Warranty Claim', 'Tech']],
-            ['call_type', 'IN', ['CF-Warranty Claim', 'Tech']],
-        ])->orderBy('id', 'desc')->get();
-        
+            ['call_type', '=', 'CF-Warranty Claim'],
+            ['cases_status', '=', 'hide'],
+        ])
+            ->orWhere([
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['email', '<>', null],
+                ['call_type', '=', 'Tech'],
+                ['cases_status', '=', 'hide'],
+            ])
+            ->orderBy('id', 'desc')->get();
+
         $data = $tickets->pluck('ticket_id')->toArray();
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($data);
-        $response = Http::timeout(120)->get($scriptUrl);
+        $array = range(1, count($data));
+
+        $first100 = array_slice($array, 0, 100);
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($first100);
+        $response = Http::get($scriptUrl);
         $responseData = $response->json();
         $collection = collect($responseData);
         $unique = $collection->unique('subject')->sortBy('date')->values()->all();
@@ -732,7 +745,7 @@ class TicketController extends Controller
             }
         }
         return response()->json([
-            'count'=>count($data),
+            'count' => count($data),
             'result' =>  $data,
         ], 200);
     }

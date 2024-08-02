@@ -64,7 +64,7 @@ export default function ContentDetailsSection() {
     };
 
     function print_pdf() {
-        window.open('/print/ticket_details/'+ticket?.id, '_blank');
+        window.open("/print/ticket_details/" + ticket?.id, "_blank");
     }
     return (
         <div className="m-5 py-5">
@@ -74,9 +74,12 @@ export default function ContentDetailsSection() {
                         <h3 className="text-base font-semibold leading-7 text-gray-900">
                             Ticket Details
                         </h3>
-                        <button 
-                        onClick={print_pdf}
-                        className="p-2 bg-green-500 hover:bg-green-600 rounded-md text-white">Print PDF</button>
+                        <button
+                            onClick={print_pdf}
+                            className="p-2 bg-green-500 hover:bg-green-600 rounded-md text-white"
+                        >
+                            Print PDF
+                        </button>
                     </div>
 
                     <div className="flex gap-5">
@@ -112,7 +115,7 @@ export default function ContentDetailsSection() {
             </div>
             <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Case File Number :</b> {ticket?.ticket_id}
                         </dt>
@@ -139,7 +142,8 @@ export default function ContentDetailsSection() {
                             <b>Store Name:</b> {ticket?.receipt?.store ?? "NA"}
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
-                            {/* <b>Unit :</b> {ticket?.unit} */}Brand Name: {ticket?.brand}
+                            {/* <b>Unit :</b> {ticket?.unit} */}Brand Name:{" "}
+                            {ticket?.brand}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -161,19 +165,11 @@ export default function ContentDetailsSection() {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900 flex">
                             <b>Issue :</b>{" "}
-                            {ticket?.issue &&
-                                JSON.parse(ticket?.issue).map((item, j) => {
-                                    return (
-                                        <div
-                                            key={j}
-                                            className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-blue-100 bg-blue-700 border border-blue-700"
-                                        >
-                                            <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                                {item}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                            <div className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-blue-100 bg-blue-700 border border-blue-700">
+                                <div className="text-xs font-normal leading-none max-w-full flex-initial">
+                                    {ticket?.issue}
+                                </div>
+                            </div>
                         </dt>
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Resolution :</b> {ticket?.call_type}
