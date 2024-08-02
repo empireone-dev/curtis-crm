@@ -254,9 +254,7 @@ export default function SearchTicketSection() {
                                         {res.call_type}
                                     </td>
                                     <td className="p-3 px-5">
-                                        {JSON.parse(res.issue).map((res, i) => (
-                                            <div key={i}>{res}</div>
-                                        ))}
+                                        {res.issue}
                                     </td>
                                     <td className="p-3 px-5">
                                         <button
