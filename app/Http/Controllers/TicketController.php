@@ -712,7 +712,7 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     $collection = collect($responseData);
-                    $unique = $collection->unique('subject')->sortBy('date')->values()->all();
+                    $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
                     foreach ($unique as $key => $value) {
                         if (count($value) == 1) {
                             if ($value['isReply']) {
@@ -762,7 +762,8 @@ class TicketController extends Controller
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount2,
-                        'result' =>  $dataPaginator2
+                        'result' =>  $dataPaginator2,
+                        'result2'=>$unique
                     ], 200);
                 }
             } else if ($call_type == 'Parts') {
@@ -772,7 +773,7 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     $collection = collect($responseData);
-                    $unique = $collection->unique('subject')->sortBy('date')->values()->all();
+                    $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
                     foreach ($unique as $key => $value) {
 
                         if (count($value) == 1) {
