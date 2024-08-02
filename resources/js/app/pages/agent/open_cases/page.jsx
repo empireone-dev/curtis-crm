@@ -227,30 +227,35 @@ export default function AgentOpenCasesEMail({ auth }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tickets?.result && tickets?.result?.map((res, i) => {
+                                {tickets?.result?.data && tickets?.result?.data?.map((res, i) => {
                                     return (
                                         <tr class="bg-white border-b">
                                             <td class="px-6 py-3">
-                                                {moment(res.date).format("LLL")}
+                                                {moment(res.email_date).format("LLL")}
                                             </td>
                                             <td class="px-6 py-3">
-                                                {/* {moment(res.date)
+                                                {/* {moment(res.email_date)
                                                     .add(2, "days")
                                                     .format("LLL")} */}
-                                                {addDaysSkippingWeekends(moment(res.date))}
+                                                {addDaysSkippingWeekends(moment(res.email_date))}
                                             </td>
                                             <th
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {`${(res.subject.replace(/^WARRANTY CLAIM #/, ""))}`.replace(/Re: /, "")}
+                                                {/* {`${(res.subject.replace(/^WARRANTY CLAIM #/, ""))}`.replace(/Re: /, "")} */}
+                                                {res.email}
                                             </th>
                                             <td class="px-6 py-3"> {res.email}</td>
                                             <td class="px-6 py-3">
                                                 <button
                                                     onClick={() =>
+                                                        // window.open(
+                                                        //     `/agent/customer_details/${`${(res.subject.replace(/^WARRANTY CLAIM #/, ""))}`.replace(/Re: /, "")}`,
+                                                        //     "_blank"
+                                                        // )
                                                         window.open(
-                                                            `/agent/customer_details/${`${(res.subject.replace(/^WARRANTY CLAIM #/, ""))}`.replace(/Re: /, "")}`,
+                                                            `/agent/customer_details/${`${(res.ticket_id)}`}`,
                                                             "_blank"
                                                         )
                                                     }

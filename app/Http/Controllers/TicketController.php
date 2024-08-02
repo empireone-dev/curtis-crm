@@ -748,10 +748,20 @@ class TicketController extends Controller
                     }
 
 
+                    $dataQuery2 = Ticket::where([
+                        ['user_id', '=', $request->user_id],
+                        ['status', '<>', 'CLOSED'],
+                        ['ticket_id', '<>', null],
+                        ['call_type', '=', $call_type],
+                        ['cases_status', '<>', 'hide'],
+                    ])->orderBy('email_date', 'desc');
+                    $dataQueryCount2 = $dataQuery2->count();
+
+                    $dataPaginator2 = $dataQuery2->paginate($perPage);
                     return response()->json([
                         'data_count' => count($data),
-                        'ticket_count' => $dataQueryCount,
-                        'result' => $unique
+                        'ticket_count' => $dataQueryCount2,
+                        'result' =>  $dataPaginator2
                     ], 200);
                 }
             } else if ($call_type == 'Parts') {
