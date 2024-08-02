@@ -245,7 +245,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                         <Table
                             pagination={false}
                             columns={columns}
-                            dataSource={tickets?.result.data ?? []}
+                            dataSource={tickets?.result ?? []}
                         />
                     </div>
                 )}

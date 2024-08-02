@@ -700,7 +700,7 @@ class TicketController extends Controller
         // $response = Http::timeout(120)->get($scriptUrl);
         // $responseData = $response->json();
         // $collection = collect($responseData);
-        // $unique = $collection->unique('subject')->sortBy('date')->values()->all();
+        // $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
         // foreach ($unique as $key => $value) {
 
         //     $string = $value['subject'];
@@ -781,7 +781,6 @@ class TicketController extends Controller
                     $collection = collect($responseData);
                     $unique = $collection->unique('subject')->sortBy('date')->values()->all();
                     foreach ($unique as $key => $value) {
-
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);
                         $resultss = $matches[1] ?? null;
@@ -819,21 +818,21 @@ class TicketController extends Controller
                     }
 
 
-                    $dataQuery2 = Ticket::where([
-                        ['user_id', '=', $request->user_id],
-                        ['status', '<>', 'CLOSED'],
-                        ['ticket_id', '<>', null],
-                        ['call_type', '=', $call_type],
-                        ['cases_status', '<>', 'hide'],
-                        ['is_reply', '<>', null],
-                    ])->orderBy('email_date', 'desc');
-                    $dataQueryCount2 = $dataQuery2->count();
+                    // $dataQuery2 = Ticket::where([
+                    //     ['user_id', '=', $request->user_id],
+                    //     ['status', '<>', 'CLOSED'],
+                    //     ['ticket_id', '<>', null],
+                    //     ['call_type', '=', $call_type],
+                    //     ['cases_status', '<>', 'hide'],
+                    //     ['is_reply', '<>', null],
+                    // ])->orderBy('email_date', 'desc');
+                    // $dataQueryCount2 = $dataQuery2->count();
 
-                    $dataPaginator2 = $dataQuery2->paginate($perPage);
+                    // $dataPaginator2 = $dataQuery2->paginate($perPage);
                     return response()->json([
                         'data_count' => count($data),
-                        'ticket_count' => $dataQueryCount2,
-                        'result' =>  $dataPaginator2,
+                        'ticket_count' => $dataQueryCount,
+                        'result' =>  $unique,
                         'result2' => $unique
                     ], 200);
                 }
@@ -881,22 +880,22 @@ class TicketController extends Controller
                         }
                     }
 
-                    $dataQuery2 = Ticket::where([
-                        ['user_id', '=', $request->user_id],
-                        ['status', '<>', 'CLOSED'],
-                        ['ticket_id', '<>', null],
-                        ['call_type', '=', $call_type],
-                        ['cases_status', '<>', 'hide'],
-                        ['is_reply', '<>', null],
-                    ])->orderBy('email_date', 'desc');
-                    $dataQueryCount2 = $dataQuery2->count();
+                    // $dataQuery2 = Ticket::where([
+                    //     ['user_id', '=', $request->user_id],
+                    //     ['status', '<>', 'CLOSED'],
+                    //     ['ticket_id', '<>', null],
+                    //     ['call_type', '=', $call_type],
+                    //     ['cases_status', '<>', 'hide'],
+                    //     ['is_reply', '<>', null],
+                    // ])->orderBy('email_date', 'desc');
+                    // $dataQueryCount2 = $dataQuery2->count();
 
-                    $dataPaginator2 = $dataQuery2->paginate($perPage);
+                    // $dataPaginator2 = $dataQuery2->paginate($perPage);
 
                     return response()->json([
                         'data_count' => count($data),
-                        'ticket_count' => $dataQueryCount2,
-                        'result' => $dataPaginator2,
+                        'ticket_count' => $dataQueryCount,
+                        'result' => $unique,
                         'result2' => $unique
                     ], 200);
                 }
