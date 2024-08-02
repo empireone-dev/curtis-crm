@@ -34,9 +34,7 @@ export default function AgentOpenCasesEMail({ auth }) {
         fetch_date();
     }, []);
    
-    console.log('resres',Object.entries(tickets.result).map(res=>({
-        ...res[1]
-    })))
+   
     function addDaysSkippingWeekends(date) {
         let dueDate = moment(date);
         let dayOfWeek = dueDate.day();
