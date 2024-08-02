@@ -244,7 +244,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
                                                 {/* {`${(res.subject.replace(/^WARRANTY CLAIM #/, ""))}`.replace(/Re: /, "")} */}
-                                                {res.email}
+                                                {res.ticket_id}
                                             </th>
                                             <td class="px-6 py-3"> {res.email}</td>
                                             <td class="px-6 py-3">
