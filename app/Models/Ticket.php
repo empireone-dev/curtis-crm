@@ -48,7 +48,8 @@ class Ticket extends Model
         'move_status',
         'purchase_date',
         'email_date',
-        'validator_id'
+        'validator_id',
+        'is_reply'
     ];
 
     

@@ -240,6 +240,7 @@ export default function CustomerTicketsTableSection() {
                                 ? "OPEN"
                                 : record.status}
                         </Tag>
+                        {record.is_reply && <Tag color="purple">Customer has responded on {moment(record.email_date).format('LLL')}</Tag>}
                     </>
                 );
             },
@@ -336,12 +337,12 @@ export default function CustomerTicketsTableSection() {
             const newUrl =
                 window.location.pathname + "?" + searchParams.toString();
             console.log("Navigating to:", newUrl);
-            router.visit(newUrl)
+            router.visit(newUrl);
             setCurrent(currentPage);
             setPageSize(pageSize);
         },
     };
-    
+
     return (
         <Table
             pagination={paginationConfig}

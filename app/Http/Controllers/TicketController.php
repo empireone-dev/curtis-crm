@@ -718,26 +718,30 @@ class TicketController extends Controller
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                     'cases_status' => 'handled',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>'true'
                                 ]);
                             } else {
 
                                 Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                     'cases_status' => 'hide',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>null
                                 ]);
                             }
                         } else {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                     'cases_status' => 'handled',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>'true'
                                 ]);
                             } else {
 
                                 Ticket::where('ticket_id', str_replace('WARRANTY CLAIM #', '', $value['subject']))->update([
                                     'cases_status' => 'hide',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>null
                                 ]);
                             }
                         }
@@ -764,24 +768,28 @@ class TicketController extends Controller
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', $value['subject'])->update([
                                     'cases_status' => 'handled',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>'true'
                                 ]);
                             } else {
                                 Ticket::where('ticket_id', $value['subject'])->update([
                                     'cases_status' => 'hide',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>null
                                 ]);
                             }
                         } else {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', $value['subject'])->update([
                                     'cases_status' => 'handled',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>'true'
                                 ]);
                             } else {
                                 Ticket::where('ticket_id', $value['subject'])->update([
                                     'cases_status' => 'hide',
-                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')
+                                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                                    'is_reply' =>null
                                 ]);
                             }
                         }
@@ -800,18 +808,6 @@ class TicketController extends Controller
     }
     public function show(Request $request, $id)
     {
-        // $perPage = 10;
-        // if ($request->search) {
-        //     // Use pagination with search query
-        //     $data = Ticket::where([['status', '=', $request->search], ['user_id', '=', $id]])
-        //         ->paginate($perPage);
-        // } else {
-        //     $data = Ticket::where('user_id', '=', $id)
-        //         ->paginate($perPage);
-        // }
-        // return response()->json([
-        //     'result' => $data,
-        // ], 200);
         $searchQuery = $request->input('search');
 
         // Get all column names of the table
@@ -876,7 +872,7 @@ class TicketController extends Controller
             $query->orWhere('created_from', $request->status);
         }
 
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('is_reply', 'desc');
         $data = $query->paginate(10);
 
         return response()->json([
