@@ -12,7 +12,6 @@ export default function CustomerTicketsTableSection() {
     const [pageSize, setPageSize] = useState(10);
     const [current, setCurrent] = useState(1);
 
-    console.log("ticketssss", tickets);
     const search = window.location.search.split("=")[1];
     let ticketData = [];
 
@@ -211,7 +210,8 @@ export default function CustomerTicketsTableSection() {
             render: (_, record, i) => {
                 return (
                     <Tag color={"blue"} key={i}>
-                        {JSON.parse(record.issue)}
+                        {/* {JSON.parse(record?.issue)} */}
+                        {record?.issue}
                     </Tag>
                 );
             },
