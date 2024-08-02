@@ -574,7 +574,7 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('is_reply', 'desc');
         $data = $query->paginate(10);
 
         return response()->json([
