@@ -34,7 +34,9 @@ export default function AgentOpenCasesEMail({ auth }) {
         fetch_date();
     }, []);
    
-    console.log('resres',tickets)
+    console.log('resres',Object.entries(tickets.result).map(res=>({
+        ...res[1]
+    })))
     function addDaysSkippingWeekends(date) {
         let dueDate = moment(date);
         let dayOfWeek = dueDate.day();
@@ -203,15 +205,31 @@ export default function AgentOpenCasesEMail({ auth }) {
         },
         {
             title: "Case File",
-            dataIndex: "ticket_id",
-            key: "ticket_id",
-            ...getColumnSearchProps("ticket_id"),
+            dataIndex: "subject",
+            key: "subject",
+            ...getColumnSearchProps("subject"),
+            // render: (_, record, i) => (
+            //     addDaysSkippingWeekends(moment(record.email_date))
+            // ),
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
             ...getColumnSearchProps("email"),
+        },
+        {
+            title: "Is Reply",
+            dataIndex: "is_reply",
+            key: "is_reply",
+            ...getColumnSearchProps("is_reply"),
+              render: (_, record, i) => {
+                if(record.isReply){
+                    return <Tag color="red">Email Reply</Tag>
+                }else{
+                    // <Tag color="red">red</Tag>
+                }
+              },
         },
         {
             title: "Action",
@@ -245,7 +263,9 @@ export default function AgentOpenCasesEMail({ auth }) {
                         <Table
                             pagination={false}
                             columns={columns}
-                            dataSource={tickets?.result ?? []}
+                            dataSource={Object.entries(tickets.result).map(res=>({
+                                ...res[1]
+                            })) ?? []}
                         />
                     </div>
                 )}

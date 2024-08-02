@@ -780,10 +780,11 @@ class TicketController extends Controller
                     $responseData = $response->json();
                     $collection = collect($responseData);
                     $unique = $collection->unique('subject')->sortBy('date')->values()->all();
-                    foreach ($unique as $key => $value) {
+                    foreach ($unique as  &$value) {
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);
                         $resultss = $matches[1] ?? null;
+                        $value['subject'] = $resultss;
                         if ($value['count'] == 1) {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', $resultss)->update([
@@ -832,8 +833,8 @@ class TicketController extends Controller
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' =>  $unique,
-                        'result2' => $unique
+                        'result' =>  collect($unique)->unique('subject'),
+                        'result2' => collect($unique)->unique('subject')
                     ], 200);
                 }
             } else if ($call_type == 'Parts') {
@@ -845,10 +846,11 @@ class TicketController extends Controller
                     $collection = collect($responseData);
                     $unique = $collection->unique('subject')->sortBy('date')->values()->all();
 
-                    foreach ($unique as $key => $value) {
+                    foreach ($unique as  &$value) {
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);
                         $resultsss = $matches[1] ?? null;
+                        $value['subject'] = $resultsss;
                         if ($value['count'] == 1) {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', '=', $resultsss)->update([
@@ -895,8 +897,8 @@ class TicketController extends Controller
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' => $unique,
-                        'result2' => $unique
+                        'result' => collect($unique)->unique('subject'),
+                        'result2' => collect($unique)->unique('subject')
                     ], 200);
                 }
             }
