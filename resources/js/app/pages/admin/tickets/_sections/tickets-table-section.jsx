@@ -185,7 +185,7 @@ export default function TicketTableSection() {
             render: (_, record, i) => {
                 return (
                     <Tag color={"blue"} key={i}>
-                        {JSON.parse(record.issue)}
+                      {record.issue}
                     </Tag>
                 );
             },
