@@ -699,6 +699,27 @@ class TicketController extends Controller
             'result' =>$responseData,
         ], 200);
     }
+    public function get_email_replies_parts()
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwtrx6YKdaT93NX7Zq8mdmZJ3Gh59Nev60WMrXqz57xYncY4D168eSTTVWAPgu0lsNa/exec';
+
+        $response = Http::get($scriptUrl);
+        $responseData = $response->json();
+        foreach ($responseData as $value) {
+            $ticket=Ticket::where('ticket_id', $value['ticket_id'])->first();
+            if ($ticket) {
+                $ticket->update([
+                    'cases_status' => 'handled',
+                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                    'is_reply' => 'true'
+                ]);
+            }
+          
+        }
+        return response()->json([
+            'result' =>$responseData,
+        ], 200);
+    }
     public function cases(Request $request)
     {
         // Number of results per page
@@ -719,7 +740,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
-                // ['cases_status', '<>', 'hide'],
+                ['cases_status', '<>', 'hide'],
             ])->orderBy('id', 'desc');
 
             $dataQueryCount = $dataQuery->count();

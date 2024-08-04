@@ -103,6 +103,7 @@ Route::get('check_serial_number/{serial_number}', [TicketController::class, 'che
 Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
 Route::get('get_ticket_by_id/{id}', [TicketController::class, 'get_ticket_by_id']);
 Route::get('get_email_replies', [TicketController::class, 'get_email_replies']);
+Route::get('get_email_replies_parts', [TicketController::class, 'get_email_replies_parts']);
 
 
 
