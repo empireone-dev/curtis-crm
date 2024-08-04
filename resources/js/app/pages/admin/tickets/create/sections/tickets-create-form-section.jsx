@@ -25,8 +25,8 @@ export default function TicketCreateFormSection() {
     const { common_issues } = useSelector((state) => state.common_issues);
     const [loading, setLoading] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
-    const [warranty, setWarranty] = useState('')
-    const [parts, setParts] = useState('')
+    const [warranty, setWarranty] = useState("");
+    const [parts, setParts] = useState("");
     function formatPhoneNumber(value) {
         const cleaned = ("" + value).replace(/\D/g, "");
         let numberToFormat = cleaned;
@@ -56,6 +56,14 @@ export default function TicketCreateFormSection() {
                     issue: `["${JSON.parse(value).name}"]`,
                 })
             );
+        } else if (name == "country") {
+            dispatch(
+                setForm({
+                    ...form,
+                    country: value,
+                    state: value?.country == 'CA' ? 'AB' : 'AL',
+                })
+            );
         } else {
             dispatch(
                 setForm({
@@ -64,21 +72,20 @@ export default function TicketCreateFormSection() {
                 })
             );
         }
-
     }
+
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
-
 
     useEffect(() => {
         async function getData(params) {
             const w = await warranty_initial(form);
             const p = await parts_initial(form);
-            setWarranty(w.template_text)
-            setParts(p.template_text)
+            setWarranty(w.template_text);
+            setParts(p.template_text);
         }
-        getData()
+        getData();
     }, []);
 
     async function submitFormTicket(e) {
@@ -140,7 +147,7 @@ export default function TicketCreateFormSection() {
                         value={form.fname}
                         label="First Name"
                         type="text"
-                    // errorMessage="First Name is required"
+                        // errorMessage="First Name is required"
                     />
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -151,7 +158,7 @@ export default function TicketCreateFormSection() {
                         value={form.lname}
                         label="Last Name"
                         type="text"
-                    // errorMessage="Last Name is required"
+                        // errorMessage="Last Name is required"
                     />
                 </div>
             </div>
@@ -188,7 +195,7 @@ export default function TicketCreateFormSection() {
                                     value={form.email}
                                     label="Email"
                                     type="email"
-                                // errorMessage="Email is required"
+                                    // errorMessage="Email is required"
                                 />
                             )}
                         </div>
@@ -202,7 +209,7 @@ export default function TicketCreateFormSection() {
                         value={form.phone}
                         label="Phone Number"
                         type="phone"
-                    // errorMessage="Phone Number is required"
+                        // errorMessage="Phone Number is required"
                     />
                 </div>
             </div>
@@ -220,7 +227,7 @@ export default function TicketCreateFormSection() {
                         value={form.item_number}
                         label="Item Number"
                         type="text"
-                    // errorMessage="Item Number is required"
+                        // errorMessage="Item Number is required"
                     />
                 </div>
 
@@ -232,7 +239,7 @@ export default function TicketCreateFormSection() {
                         value={form.unit}
                         label="Item Unit"
                         type="text"
-                    // errorMessage="Item Unit is required"
+                        // errorMessage="Item Unit is required"
                     />
                 </div>
             </div>
@@ -246,7 +253,7 @@ export default function TicketCreateFormSection() {
                         value={form.brand}
                         label="Brand"
                         type="text"
-                    // errorMessage="Brand is required"
+                        // errorMessage="Brand is required"
                     />
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -257,7 +264,7 @@ export default function TicketCreateFormSection() {
                         value={form.class}
                         label="Item Class"
                         type="text"
-                    // errorMessage="Item Class is required"
+                        // errorMessage="Item Class is required"
                     />
                 </div>
             </div>
@@ -270,7 +277,7 @@ export default function TicketCreateFormSection() {
                         value={form.serial_number}
                         label="Serial Number"
                         type="text"
-                    // errorMessage="Serial Number is required"
+                        // errorMessage="Serial Number is required"
                     />
                 </div>
 
@@ -293,7 +300,7 @@ export default function TicketCreateFormSection() {
                         value={form.purchase_date}
                         label="Purchase Date"
                         type="date"
-                    // errorMessage="Purchase Date is required"
+                        // errorMessage="Purchase Date is required"
                     />
                 </div>
             </div>
@@ -307,7 +314,7 @@ export default function TicketCreateFormSection() {
                         value={form.zip_code}
                         label="Zip Code / Postal Code"
                         type="text"
-                    // errorMessage="Zip Code is required"
+                        // errorMessage="Zip Code is required"
                     />
                 </div>
 
@@ -344,7 +351,7 @@ export default function TicketCreateFormSection() {
                         value={form.city}
                         label="City"
                         type="text"
-                    // errorMessage="City is required"
+                        // errorMessage="City is required"
                     />
                 </div>
             </div>
@@ -357,7 +364,7 @@ export default function TicketCreateFormSection() {
                         value={form.address}
                         label="Address"
                         type="text"
-                    // errorMessage='Address is required'
+                        // errorMessage='Address is required'
                     />
                 </div>
                 <div className="my-5 px-3 mb-3">
@@ -380,6 +387,7 @@ export default function TicketCreateFormSection() {
                                 },
                             ]}
                         />
+                    ) : (
                         // <Select
                         //     onChange={formHandler}
                         //     name="issue"
@@ -405,7 +413,6 @@ export default function TicketCreateFormSection() {
                         //         },
                         //     ]}
                         // />
-                    ) : (
                         <Autocomplete
                             defaultValue={"[]"}
                             onChange={formHandler}
@@ -444,7 +451,7 @@ export default function TicketCreateFormSection() {
                             value={form.remarks}
                             label="Remarks"
                             type="text"
-                        // errorMessage="Remarks is required"
+                            // errorMessage="Remarks is required"
                         />
                     </div>
                     <div className="basis-1/4 flex items-center justify-center">

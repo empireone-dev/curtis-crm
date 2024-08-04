@@ -65,6 +65,14 @@ export default function TicketCreateFormSection() {
                     issue: `["${JSON.parse(value).name}"]`,
                 })
             );
+        }else if (name == "country") {
+            dispatch(
+                setForm({
+                    ...form,
+                    country:value,
+                    state: value == 'CA' ? 'AB' : 'AL',
+                })
+            );
         } else {
             dispatch(
                 setForm({
