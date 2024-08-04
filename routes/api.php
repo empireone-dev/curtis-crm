@@ -102,7 +102,7 @@ Route::post('create_ticket_close', [TicketController::class, 'create_ticket_clos
 Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
 Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
 Route::get('get_ticket_by_id/{id}', [TicketController::class, 'get_ticket_by_id']);
-Route::get('show_open_cases', [TicketController::class, 'show_open_cases']);
+Route::get('get_email_replies', [TicketController::class, 'get_email_replies']);
 
 
 

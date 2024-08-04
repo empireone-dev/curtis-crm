@@ -678,70 +678,21 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function show_open_cases(Request $request)
+    public function get_email_replies()
     {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbzQXUY1Io__zr9MIt50Pg9LyQJr_Dkb0t6ovBQm20k4eghDQ3Rr6W9dDNqxX6oW2LsR/exec';
 
-        $tickets = Ticket::where([
-            ['status', '<>', 'CLOSED'],
-            ['ticket_id', '<>', null],
-            ['email', '<>', null],
-            ['call_type', '=', 'CF-Warranty Claim'],
-        ])
-            ->orWhere([
-                ['status', '<>', 'CLOSED'],
-                ['ticket_id', '<>', null],
-                ['email', '<>', null],
-                ['call_type', '=', 'Tech'],
-            ])
-            ->orderBy('id', 'desc')->get();
-
-        $data = $tickets->pluck('ticket_id')->toArray();
-        // $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($data);
-        // $response = Http::timeout(120)->get($scriptUrl);
-        // $responseData = $response->json();
-        // $collection = collect($responseData);
-        // $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
-        // foreach ($unique as $key => $value) {
-
-        //     $string = $value['subject'];
-        //     preg_match('/\b(\S{14})\b/', $string, $matches);
-        //     $resultss = $matches[1] ?? null;
-
-        //     if ($value['count'] == 1) {
-        //         if ($value['isReply']) {
-        //             Ticket::where('ticket_id', $resultss)->update([
-        //                 'cases_status' => 'handled',
-        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-        //                 'is_reply' => 'true'
-        //             ]);
-        //         } else {
-
-        //             Ticket::where('ticket_id', $resultss)->update([
-        //                 'cases_status' => 'hide',
-        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-        //                 'is_reply' => null
-        //             ]);
-        //         }
-        //     } else {
-        //         if ($value['isReply']) {
-        //             Ticket::where('ticket_id', $resultss)->update([
-        //                 'cases_status' => 'handled',
-        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-        //                 'is_reply' => 'true'
-        //             ]);
-        //         } else {
-
-        //             Ticket::where('ticket_id', $resultss)->update([
-        //                 'cases_status' => 'hide',
-        //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-        //                 'is_reply' => null
-        //             ]);
-        //         }
-        //     }
-        // }
+        $response = Http::get($scriptUrl);
+        $responseData = $response->json();
+        foreach ($responseData as $value) {
+            Ticket::where('ticket_id', $value['ticket_id'])->update([
+                'cases_status' => 'handled',
+                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                'is_reply' => 'true'
+            ]);
+        }
         return response()->json([
-            'count' => count($data),
-            'result' =>  $data,
+            'result' =>$responseData,
         ], 200);
     }
     public function cases(Request $request)
