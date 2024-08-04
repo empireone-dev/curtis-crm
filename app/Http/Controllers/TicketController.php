@@ -685,11 +685,15 @@ class TicketController extends Controller
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
-            Ticket::where('ticket_id', $value['ticket_id'])->update([
-                'cases_status' => 'handled',
-                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                'is_reply' => 'true'
-            ]);
+            $ticket=Ticket::where('ticket_id', $value['ticket_id'])->first();
+            if ($ticket) {
+                $ticket->update([
+                    'cases_status' => 'handled',
+                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                    'is_reply' => 'true'
+                ]);
+            }
+          
         }
         return response()->json([
             'result' =>$responseData,
