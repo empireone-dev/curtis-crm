@@ -7,6 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Input from '@/app/layouts/components/input';
+import { get_email_replies_parts, get_email_replies_service } from '@/app/services/tickets-service';
 
 export default function LoginPage({ status, canResetPassword }) {
     const { url } = usePage()
@@ -16,6 +17,24 @@ export default function LoginPage({ status, canResetPassword }) {
         password: '',
         remember: false,
     });
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            get_email_replies_service()
+        }, 600000);
+    
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
+      }, []);
+
+      useEffect(() => {
+        const intervalId = setInterval(() => {
+            get_email_replies_parts()
+        }, 600000);
+    
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
+      }, []);
 
     useEffect(() => {
         return () => {

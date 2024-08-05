@@ -1,5 +1,22 @@
 import axios from "axios";
 
+export async function get_email_replies_service() {
+    try {
+        const res = await axios.get("/api/get_email_replies");
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+export async function get_email_replies_parts() {
+    try {
+        const res = await axios.get("/api/get_email_replies_parts");
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function get_ticket_by_id_service(id) {
     try {
         const res = await axios.get("/api/get_ticket_by_id/"+id);
