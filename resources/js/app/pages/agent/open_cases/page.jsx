@@ -227,8 +227,9 @@ export default function AgentOpenCasesEMail({ auth }) {
             key: "is_reply",
             // ...getColumnSearchProps("is_reply"),
               render: (_, record, i) => {
+                console.log('resz',record)
                 if(record.isReply){
-                    return <Tag color="red">Email Reply</Tag>
+                    return <Tag color="red">Email Reply{`${record.isReply}`}</Tag>
                 }else{
                     // <Tag color="red">red</Tag>
                 }

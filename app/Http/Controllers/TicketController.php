@@ -740,9 +740,11 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
+                ['is_reply', '<>',null],
                 // ['cases_status', '<>', 'hide'],
-            ])->orderBy('is_reply', 'desc');
-
+            ])->orderBy('email_date', 'desc')->orderBy('is_reply', 'desc');
+            
+            
             $dataQueryCount = $dataQuery->count();
 
             $dataPaginator = $dataQuery->paginate($perPage);

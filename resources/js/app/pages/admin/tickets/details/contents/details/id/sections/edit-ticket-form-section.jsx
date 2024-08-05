@@ -64,6 +64,7 @@ export default function EditTicketFormSection() {
             );
         }
         get_ticket();
+
     }, []);
     useEffect(() => {
         async function get_ticket(params) {
@@ -121,6 +122,14 @@ export default function EditTicketFormSection() {
                     })
                 );
             }
+        }else if (name == "country") {
+            dispatch(
+                setForm({
+                    ...form,
+                    country:value,
+                    state: value == 'CA' ? 'AB' : 'AL',
+                })
+            );
         } else {
             dispatch(
                 setForm({
