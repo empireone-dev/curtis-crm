@@ -238,7 +238,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                 <button
                     onClick={() =>
                         window.open(
-                            `/agent/customer_details/${`${record.ticket_id}`}`,
+                            `/agent/customer_details/${`${record?.subject}`}`,
                             "_blank"
                         )
                     }
