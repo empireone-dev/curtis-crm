@@ -187,7 +187,7 @@ export default function AgentOpenCasesEMail({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record.date).format("LLL")}</>;
+                return <>{moment(record.email_date).format("LLL")}</>;
             },
         },
         {
@@ -197,22 +197,22 @@ export default function AgentOpenCasesEMail({ auth }) {
             width: "20%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) =>
-                addDaysSkippingWeekends(moment(record.date)),
+                addDaysSkippingWeekends(moment(record.email_date)),
         },
         {
             title: "Case File",
-            dataIndex: "subject",
-            key: "subject",
-            ...getColumnSearchProps("subject"),
-            // render: (_, record, i) => (
-            //     addDaysSkippingWeekends(moment(record.date))
-            // ),
+            dataIndex: "ticket_id",
+            key: "ticket_id",
+            ...getColumnSearchProps("ticket_id"),
+            render: (_, record, i) => {
+                return record.ticket_id;
+            },
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            // ...getColumnSearchProps("email"),
+            ...getColumnSearchProps("email"),
         },
         {
             title: "Is Reply",
@@ -220,11 +220,8 @@ export default function AgentOpenCasesEMail({ auth }) {
             key: "is_reply",
             // ...getColumnSearchProps("is_reply"),
             render: (_, record, i) => {
-                console.log("resz", record);
                 if (record.isReply) {
-                    return (
-                        <Tag color="red">Email Reply</Tag>
-                    );
+                    return <Tag color="red">Email Reply</Tag>;
                 } else {
                     // <Tag color="red">red</Tag>
                 }
@@ -239,7 +236,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                 <button
                     onClick={() =>
                         window.open(
-                            `/agent/customer_details/${`${record?.subject}`}`,
+                            `/agent/customer_details/${`${record.ticket_id}`}`,
                             "_blank"
                         )
                     }
@@ -260,18 +257,19 @@ export default function AgentOpenCasesEMail({ auth }) {
                 ) : (
                     <div>
                         <Table
-                            pagination={false}
+                            pagination={true}
                             columns={columns}
-                            dataSource={
-                                Object.entries(tickets.result).map((res) => ({
-                                    ...res[1],
-                                })) ?? []
-                            }
+                            // dataSource={
+                            //     Object.entries(tickets.result).map((res) => ({
+                            //         ...res[1],
+                            //     })) ?? []
+                            // }
+                            dataSource={tickets.result ?? []}
                         />
                     </div>
                 )}
                 <div className="flex items-center justify-end">
-                    <AgentOpenCasesPaginationSection />
+                    {/* <AgentOpenCasesPaginationSection /> */}
                 </div>
             </div>
         </AgentLayout>
