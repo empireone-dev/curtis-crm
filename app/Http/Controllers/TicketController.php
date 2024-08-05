@@ -740,7 +740,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
-                ['cases_status', '<>', 'hide'],
+                // ['cases_status', '<>', 'hide'],
             ])->orderBy('id', 'desc');
 
             $dataQueryCount = $dataQuery->count();
