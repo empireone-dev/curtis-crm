@@ -757,7 +757,7 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     $collection = collect($responseData);
-                    $unique = $collection->orderBy('date')->values()->all();
+                    $unique = $collection->sortByDesc('date')->values()->all();
                     foreach ($unique as  &$value) {
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);

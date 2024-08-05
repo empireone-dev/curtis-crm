@@ -190,7 +190,7 @@ export default function AgentOpenCasesEMail({ auth }) {
             render: (_, record, i) => {
                 console.log('record',record)
                 return <>
-                {record.date}
+                
                 {moment(record.date).format("LLL")}
                 </>
             }
