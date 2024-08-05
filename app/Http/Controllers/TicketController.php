@@ -812,7 +812,7 @@ class TicketController extends Controller
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' =>  $unique,
+                        'result' =>  collect($unique)->unique('subject'),
                         'result2' => collect($unique)->unique('subject')
                     ], 200);
                 }

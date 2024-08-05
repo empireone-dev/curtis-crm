@@ -33,8 +33,7 @@ export default function AgentOpenCasesEMail({ auth }) {
         }
         fetch_date();
     }, []);
-   
-   
+
     function addDaysSkippingWeekends(date) {
         let dueDate = moment(date);
         let dayOfWeek = dueDate.day();
@@ -188,14 +187,8 @@ export default function AgentOpenCasesEMail({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                console.log('record',record)
-                return <>
-                
-                {moment(record.date).format("LLL")}
-                </>
-            }
-                
-         
+                return <>{moment(record.date).format("LLL")}</>;
+            },
         },
         {
             title: "Due On",
@@ -203,9 +196,8 @@ export default function AgentOpenCasesEMail({ auth }) {
             key: "date",
             width: "20%",
             // ...getColumnSearchProps("date"),
-            render: (_, record, i) => (
-                addDaysSkippingWeekends(moment(record.date))
-            ),
+            render: (_, record, i) =>
+                addDaysSkippingWeekends(moment(record.date)),
         },
         {
             title: "Case File",
@@ -227,14 +219,16 @@ export default function AgentOpenCasesEMail({ auth }) {
             dataIndex: "is_reply",
             key: "is_reply",
             // ...getColumnSearchProps("is_reply"),
-              render: (_, record, i) => {
-                console.log('resz',record)
-                if(record.isReply){
-                    return <Tag color="red">Email Reply{`${record.isReply}`}</Tag>
-                }else{
+            render: (_, record, i) => {
+                console.log("resz", record);
+                if (record.isReply) {
+                    return (
+                        <Tag color="red">Email Reply{`${record.isReply}`}</Tag>
+                    );
+                } else {
                     // <Tag color="red">red</Tag>
                 }
-              },
+            },
         },
         {
             title: "Action",
@@ -268,9 +262,11 @@ export default function AgentOpenCasesEMail({ auth }) {
                         <Table
                             pagination={false}
                             columns={columns}
-                            dataSource={Object.entries(tickets.result).map(res=>({
-                                ...res[1]
-                            })) ?? []}
+                            dataSource={
+                                Object.entries(tickets.result).map((res) => ({
+                                    ...res[1],
+                                })) ?? []
+                            }
                         />
                     </div>
                 )}
