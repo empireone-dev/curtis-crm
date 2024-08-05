@@ -183,22 +183,27 @@ export default function AgentOpenCasesEMail({ auth }) {
     const columns = [
         {
             title: "Added On",
-            dataIndex: "email_date",
-            key: "email_date",
+            dataIndex: "date",
+            key: "date",
             width: "30%",
-            ...getColumnSearchProps("email_date"),
-            render: (_, record, i) => (
-                moment(record.email_date).format("LLL")
-            ),
+            // ...getColumnSearchProps("date"),
+            render: (_, record, i) => {
+                console.log('record',record)
+                return <>
+                {moment(record.date).format("LLL")}
+                </>
+            }
+                
+         
         },
         {
             title: "Due On",
-            dataIndex: "email_date",
-            key: "email_date",
+            dataIndex: "date",
+            key: "date",
             width: "20%",
-            ...getColumnSearchProps("email_date"),
+            // ...getColumnSearchProps("date"),
             render: (_, record, i) => (
-                addDaysSkippingWeekends(moment(record.email_date))
+                addDaysSkippingWeekends(moment(record.date))
             ),
         },
         {
@@ -207,20 +212,20 @@ export default function AgentOpenCasesEMail({ auth }) {
             key: "subject",
             ...getColumnSearchProps("subject"),
             // render: (_, record, i) => (
-            //     addDaysSkippingWeekends(moment(record.email_date))
+            //     addDaysSkippingWeekends(moment(record.date))
             // ),
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            ...getColumnSearchProps("email"),
+            // ...getColumnSearchProps("email"),
         },
         {
             title: "Is Reply",
             dataIndex: "is_reply",
             key: "is_reply",
-            ...getColumnSearchProps("is_reply"),
+            // ...getColumnSearchProps("is_reply"),
               render: (_, record, i) => {
                 if(record.isReply){
                     return <Tag color="red">Email Reply</Tag>
@@ -233,7 +238,7 @@ export default function AgentOpenCasesEMail({ auth }) {
             title: "Action",
             dataIndex: "action",
             key: "action",
-            ...getColumnSearchProps("action"),
+            // ...getColumnSearchProps("action"),
             render: (_, record, i) => (
                 <button
                     onClick={() =>
