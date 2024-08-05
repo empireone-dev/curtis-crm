@@ -574,7 +574,9 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
-        $query->orderBy('is_reply', 'desc');
+        $query->orderBy('is_reply', 'desc')
+            ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
+            ->orderBy('status', 'asc');
         $data = $query->paginate(10);
 
         return response()->json([
@@ -685,7 +687,7 @@ class TicketController extends Controller
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
-            $ticket=Ticket::where('ticket_id', $value['ticket_id'])->first();
+            $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
                 $ticket->update([
                     'cases_status' => 'handled',
@@ -693,10 +695,9 @@ class TicketController extends Controller
                     'is_reply' => 'true'
                 ]);
             }
-          
         }
         return response()->json([
-            'result' =>$responseData,
+            'result' => $responseData,
         ], 200);
     }
     public function get_email_replies_parts()
@@ -706,7 +707,7 @@ class TicketController extends Controller
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
-            $ticket=Ticket::where('ticket_id', $value['ticket_id'])->first();
+            $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
                 $ticket->update([
                     'cases_status' => 'handled',
@@ -714,10 +715,9 @@ class TicketController extends Controller
                     'is_reply' => 'true'
                 ]);
             }
-          
         }
         return response()->json([
-            'result' =>$responseData,
+            'result' => $responseData,
         ], 200);
     }
     public function cases(Request $request)
@@ -742,9 +742,11 @@ class TicketController extends Controller
                 ['call_type', '=', $call_type],
                 // ['is_reply', '<>',null],
                 // ['cases_status', '<>', 'hide'],
-            ])->orderBy('email_date', 'desc')->orderBy('is_reply', 'desc');
-            
-            
+            ])
+            ->orderBy('email_date', 'desc')
+            ->orderBy('is_reply', 'desc');
+
+
             $dataQueryCount = $dataQuery->count();
 
             $dataPaginator = $dataQuery->paginate($perPage);
@@ -763,7 +765,7 @@ class TicketController extends Controller
                         preg_match('/\b(\S{14})\b/', $string, $matches);
                         $resultss = $matches[1] ?? null;
                         $value['subject'] = $resultss;
-                        
+
                         if ($value['count'] == 1) {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', $resultss)->update([
@@ -787,7 +789,7 @@ class TicketController extends Controller
                                     'is_reply' => 'true'
                                 ]);
                             } else {
-                                $value['isReply'] =$value['isReply'];
+                                $value['isReply'] = $value['isReply'];
                                 Ticket::where('ticket_id', $resultss)->update([
                                     'cases_status' => 'hide',
                                     'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
@@ -949,7 +951,9 @@ class TicketController extends Controller
             $query->orWhere('created_from', $request->status);
         }
 
-        $query->orderBy('is_reply', 'desc');
+        $query->orderBy('is_reply', 'desc')
+            ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
+            ->orderBy('status', 'asc');
         $data = $query->paginate(10);
 
         return response()->json([
