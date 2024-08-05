@@ -575,6 +575,7 @@ class TicketController extends Controller
         }
 
         $query->orderBy('is_reply', 'desc')
+            ->orderBy('email_date', 'asc')
             ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
             ->orderBy('status', 'asc');
         $data = $query->paginate(10);
@@ -743,8 +744,8 @@ class TicketController extends Controller
                 // ['is_reply', '<>',null],
                 // ['cases_status', '<>', 'hide'],
             ])
-            ->orderBy('email_date', 'desc')
-            ->orderBy('is_reply', 'desc');
+                ->orderBy('email_date', 'desc')
+                ->orderBy('is_reply', 'desc');
 
 
             $dataQueryCount = $dataQuery->count();
@@ -952,6 +953,7 @@ class TicketController extends Controller
         }
 
         $query->orderBy('is_reply', 'desc')
+            ->orderBy('email_date', 'asc')
             ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
             ->orderBy('status', 'asc');
         $data = $query->paginate(10);
