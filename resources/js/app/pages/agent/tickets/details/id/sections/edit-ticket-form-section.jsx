@@ -41,7 +41,7 @@ export default function EditTicketFormSection() {
                     ...res,
                     isHasEmail: "true",
                     store: ticket?.receipt?.store ?? "N/A",
-                    state: ticket?.state ?? form?.country == 'CA' ? 'AB' : 'AL',
+                    state: form?.country == 'CA' ? 'AB' : 'AL',
                     country: ticket?.country ?? "CA",
                 })
             );

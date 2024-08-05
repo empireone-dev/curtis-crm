@@ -58,7 +58,7 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: ticket?.receipt?.store ?? "N/A",
-                    state: ticket?.state ?? form?.country == 'CA' ? 'AB' : 'AL',
+                    state: form?.country == 'CA' ? 'AB' : 'AL',
                     country: ticket?.country ?? "CA",
                 })
             );
