@@ -223,7 +223,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                 console.log("resz", record);
                 if (record.isReply) {
                     return (
-                        <Tag color="red">Email Reply{`${record.isReply}`}</Tag>
+                        <Tag color="red">Email Reply</Tag>
                     );
                 } else {
                     // <Tag color="red">red</Tag>

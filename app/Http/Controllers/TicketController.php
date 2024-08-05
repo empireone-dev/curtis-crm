@@ -740,7 +740,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
-                ['is_reply', '<>',null],
+                // ['is_reply', '<>',null],
                 // ['cases_status', '<>', 'hide'],
             ])->orderBy('email_date', 'desc')->orderBy('is_reply', 'desc');
             
@@ -757,7 +757,7 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     $collection = collect($responseData);
-                    $unique = $collection->sortByDesc('date')->values()->all();
+                    $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
                     foreach ($unique as  &$value) {
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);
