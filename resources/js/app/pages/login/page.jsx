@@ -21,7 +21,7 @@ export default function LoginPage({ status, canResetPassword }) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             get_email_replies_service()
-        }, 900000);
+        }, 1200000);
     
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
@@ -30,7 +30,7 @@ export default function LoginPage({ status, canResetPassword }) {
       useEffect(() => {
         const intervalId = setInterval(() => {
             get_email_replies_parts()
-        }, 900000);
+        }, 1200000);
     
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);

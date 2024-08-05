@@ -220,10 +220,10 @@ export default function AgentOpenCasesEMail({ auth }) {
             key: "is_reply",
             // ...getColumnSearchProps("is_reply"),
             render: (_, record, i) => {
-                if (record.isReply) {
+                if (record.is_reply) {
                     return <Tag color="red">Email Reply</Tag>;
                 } else {
-                    // <Tag color="red">red</Tag>
+                    <Tag color="red">red</Tag>
                 }
             },
         },
