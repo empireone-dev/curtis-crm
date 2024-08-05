@@ -36,15 +36,15 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-            dispatch(
-                setForm({
-                    ...res,
-                    isHasEmail: "true",
-                    store: ticket?.receipt?.store ?? "N/A",
-                    state: form?.country == 'CA' ? 'AB' : 'AL',
-                    country: ticket?.country ?? "CA",
-                })
-            );
+                dispatch(
+                    setForm({
+                        ...res,
+                        isHasEmail: "true",
+                        store: res?.receipt?.store ?? "N/A",
+                        state: res?.state ?? "AB",
+                        country: res?.country ?? "CA",
+                    })
+                );
         }
         get_ticket();
     }, []);
@@ -102,12 +102,12 @@ export default function EditTicketFormSection() {
                     })
                 );
             }
-        }else if (name == "country") {
+        } else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    country:value,
-                    state: value == 'CA' ? 'AB' : 'AL',
+                    country: value,
+                    state: value == "CA" ? "AB" : "AL",
                 })
             );
         } else {
@@ -121,10 +121,9 @@ export default function EditTicketFormSection() {
     }
     useEffect(() => {
         store.dispatch(get_products_thunk());
-  
     }, []);
-    console.log('form',form)
-    
+    console.log("form", form);
+
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);

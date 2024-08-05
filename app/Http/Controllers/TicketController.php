@@ -757,12 +757,13 @@ class TicketController extends Controller
                     $response = Http::get($scriptUrl);
                     $responseData = $response->json();
                     $collection = collect($responseData);
-                    $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
+                    $unique = $collection->orderBy('date')->values()->all();
                     foreach ($unique as  &$value) {
                         $string = $value['subject'];
                         preg_match('/\b(\S{14})\b/', $string, $matches);
                         $resultss = $matches[1] ?? null;
                         $value['subject'] = $resultss;
+                        
                         if ($value['count'] == 1) {
                             if ($value['isReply']) {
                                 Ticket::where('ticket_id', $resultss)->update([
@@ -786,7 +787,7 @@ class TicketController extends Controller
                                     'is_reply' => 'true'
                                 ]);
                             } else {
-
+                                $value['isReply'] =$value['isReply'];
                                 Ticket::where('ticket_id', $resultss)->update([
                                     'cases_status' => 'hide',
                                     'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
@@ -811,7 +812,7 @@ class TicketController extends Controller
                     return response()->json([
                         'data_count' => count($data),
                         'ticket_count' => $dataQueryCount,
-                        'result' =>  collect($unique)->unique('subject'),
+                        'result' =>  $unique,
                         'result2' => collect($unique)->unique('subject')
                     ], 200);
                 }

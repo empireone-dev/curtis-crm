@@ -57,14 +57,16 @@ export default function EditTicketFormSection() {
             dispatch(
                 setForm({
                     ...res,
-                    store: ticket?.receipt?.store ?? "N/A",
-                    state: form?.country == 'CA' ? 'AB' : 'AL',
-                    country: ticket?.country ?? "CA",
+                    store: res?.receipt?.store ?? "N/A",
+                    state: res?.state ?? 'AB',
+                    country: res?.country ?? "CA",
                 })
             );
         }
-        get_ticket();
-
+        if(ticket){
+            alert(ticket?.state)
+            get_ticket();
+        }
     }, []);
     useEffect(() => {
         async function get_ticket(params) {
