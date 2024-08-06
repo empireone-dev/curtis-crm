@@ -50,10 +50,11 @@ export default function TicketCreateFormSection() {
                 })
             );
         } else if (name == "issue") {
+            const issue = `["${value.name}"]`;
             dispatch(
                 setForm({
                     ...form,
-                    issue: `["${JSON.parse(value).name}"]`,
+                issue: issue,
                 })
             );
         } else if (name == "country") {

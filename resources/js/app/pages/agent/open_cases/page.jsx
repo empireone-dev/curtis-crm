@@ -182,8 +182,8 @@ export default function AgentOpenCasesEMail({ auth }) {
     const columns = [
         {
             title: "Added On",
-            dataIndex: "date",
-            key: "date",
+            dataIndex: "email_date",
+            key: "email_date",
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
@@ -192,10 +192,10 @@ export default function AgentOpenCasesEMail({ auth }) {
         },
         {
             title: "Due On",
-            dataIndex: "date",
-            key: "date",
+            dataIndex: "email_date",
+            key: "email_date",
             width: "20%",
-            // ...getColumnSearchProps("date"),
+            ...getColumnSearchProps("email_date"),
             render: (_, record, i) =>
                 addDaysSkippingWeekends(moment(record.email_date)),
         },

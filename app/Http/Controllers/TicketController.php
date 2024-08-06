@@ -1042,7 +1042,7 @@ class TicketController extends Controller
         $validation = $this->getValidation($request->call_type);
 
         if ((!$user && $request->isHasEmail === true) || (!$user && $request->isHasEmail === 'true')) {
-            $account = $this->createUserAccount($request);
+            // $account = $this->createUserAccount($request);
             $data = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $data->id);
 
@@ -1067,7 +1067,8 @@ class TicketController extends Controller
             return response()->json([
                 'result' => $data,
                 array_merge($request->all(), [
-                    'user_id' => $account->id,
+                    // 'user_id' => $account->id,
+                    'user_id' => 0,
                 ]),
                 'ticket_id' => $subject,
             ], 200);
@@ -1093,7 +1094,7 @@ class TicketController extends Controller
             }
 
 
-            $account = $this->createUserAccount($request);
+            // $account = $this->createUserAccount($request);
             return response()->json([
                 'result' => $data,
                 'ticket_id' => $subject,

@@ -53,7 +53,8 @@ class UserController extends Controller
         }else{
             $addDays = '2';
         }
-        $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
+        // $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
+        $today = Carbon::today();
         if ($role_id == 5) {
             foreach ($users as $user) {
 
@@ -69,13 +70,14 @@ class UserController extends Controller
                 ->count();
 
                 $cases_due_today = Ticket::where([
+                    ['ticket_id', '<>', null],
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
-                    ['cases_status', '=', 'handled'],
                     ['cases_status', '<>', 'hide'],
-                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
+                    ['is_reply', '=', 'true'],
+                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
                 ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) = ?', [$addDays, $today])
+                ->whereDate(DB::raw('DATE_ADD(email_date, INTERVAL '.$addDays.' DAY)'), '=', $today)
                 ->count();
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
@@ -124,14 +126,7 @@ class UserController extends Controller
 
         return response()->json([
             'data' => $users,
-            'sample' =>Ticket::where([
-                ['user_id', '=', $users[1]['id']],
-                ['status', '<>', 'CLOSED'],
-                ['ticket_id', '<>', null],
-                ['cases_status', '<>', 'hide'],
-                ['call_type', '=', $users[1]['agent_type'] == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                // ['email_date', '<=', $twoDaysAgo]
-            ])->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [$addDays, $today])->get()
+            'sample' => $today
         ], 200);
     }
 
