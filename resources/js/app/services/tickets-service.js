@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function get_tickets_warehouse_service(country) {
+    try {
+        const res = await axios.get("/api/get_tickets_warehouse/"+country);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function get_email_replies_service() {
     try {
         const res = await axios.get("/api/get_email_replies");

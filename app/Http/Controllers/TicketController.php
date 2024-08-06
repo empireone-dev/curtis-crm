@@ -23,6 +23,24 @@ use Illuminate\Support\Facades\Http;
 class TicketController extends Controller
 {
 
+    public function get_tickets_warehouse($country)
+    {
+        // Define the warehouse status based on the country
+        $status = ($country == 'CA') ? 'CA WAREHOUSE' : (($country == 'US') ? 'US WAREHOUSE' : null);
+    
+        if ($status) {
+            $query = Ticket::where([['status', '=', $status], ['country', '=', $country]])
+                ->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
+            $data = $query->get();
+        } else {
+            $data = [];
+        }
+    
+        return response()->json([
+            'data' => $data,
+        ], 200);
+    }
+    
     public function get_ticket_by_id($id)
     {
         $tickets = Ticket::where('id', $id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'internal'])->first();

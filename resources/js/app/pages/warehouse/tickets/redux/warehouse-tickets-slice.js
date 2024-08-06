@@ -6,6 +6,7 @@ export const wareHouseTicketsSlice = createSlice({
     tickets: [],
     ticket:{},
     filesData:[],
+    exports:[]
   },
   reducers: {
     setTickets: (state, action) => {
@@ -17,11 +18,16 @@ export const wareHouseTicketsSlice = createSlice({
     setTicket: (state, action) => {
       state.ticket = action.payload
     },
+    setExports: (state, action) => {
+      state.exports = action.payload
+    },
   },
 })
 export const { 
   setTickets,
   setFilesData,
-  setTicket } = wareHouseTicketsSlice.actions
+  setTicket,
+  setExports,
+ } = wareHouseTicketsSlice.actions
 
 export default wareHouseTicketsSlice.reducer

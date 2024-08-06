@@ -1,4 +1,4 @@
-import { get_tickets_by_asc_service, get_tickets_by_warehouse_service, update_explanation_service } from "@/app/services/tickets-service";
+import { get_tickets_by_asc_service, get_tickets_by_warehouse_service, get_tickets_warehouse_service, update_explanation_service } from "@/app/services/tickets-service";
 import { wareHouseTicketsSlice, setFilesData } from "./warehouse-tickets-slice";
 import {
     delete_upload_picture_videos,
@@ -6,6 +6,13 @@ import {
     upload_picture_videos,
 } from "@/app/services/files-service";
 
+
+export function get_tickets_warehouse_thunk(country) {
+    return async function (dispatch, getState) {
+        const result = await get_tickets_warehouse_service(country);
+        return result;
+    };
+}
 export function get_tickets_by_warehouse_thunk(country) {
     return async function (dispatch, getState) {
         const result = await get_tickets_by_warehouse_service(country);
