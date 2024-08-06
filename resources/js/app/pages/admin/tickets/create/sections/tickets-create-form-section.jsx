@@ -61,7 +61,7 @@ export default function TicketCreateFormSection() {
                 setForm({
                     ...form,
                     country: value,
-                    state: value == 'CA' ? 'AB' : 'AL',
+                    state: '',
                 })
             );
         } else {

@@ -8,13 +8,13 @@ export default function Autocomplete({ value, onChange, defaultValue }) {
 
     useEffect(() => {
         if (selectedValue !== null) {
-            onChange(JSON.stringify(selectedValue), 'issue');
+            onChange(selectedValue, 'issue');
         }
     }, [selectedValue]);
 
     useEffect(() => {
         if (defaultValue) {
-            setSelectedValue(JSON.parse(defaultValue));
+            setSelectedValue(defaultValue);
         }
     }, [defaultValue]);
 

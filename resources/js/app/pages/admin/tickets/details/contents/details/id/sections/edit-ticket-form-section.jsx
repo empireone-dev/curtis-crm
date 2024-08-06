@@ -114,8 +114,8 @@ export default function EditTicketFormSection() {
                 })
             );
         } else if (name == "issue") {
-            if (JSON.parse(value).name) {
-                const issue = `["${JSON.parse(value).name}"]`;
+            if (value.name) {
+                const issue = `["${value.name}"]`;
                 dispatch(
                     setForm({
                         ...form,

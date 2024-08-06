@@ -59,18 +59,21 @@ export default function TicketCreateFormSection() {
                 })
             );
         } else if (name == "issue") {
-            dispatch(
-                setForm({
-                    ...form,
-                    issue: `["${JSON.parse(value).name}"]`,
-                })
-            );
+            if (value.name) {
+                const issue = `["${value.name}"]`;
+                dispatch(
+                    setForm({
+                        ...form,
+                        issue: issue,
+                    })
+                );
+            }
         }else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
                     country:value,
-                    state: value == 'CA' ? 'AB' : 'AL',
+                    state: '',
                 })
             );
         } else {
