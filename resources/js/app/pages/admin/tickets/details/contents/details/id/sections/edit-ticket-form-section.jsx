@@ -64,7 +64,6 @@ export default function EditTicketFormSection() {
             );
         }
         if(ticket){
-            alert(ticket?.state)
             get_ticket();
         }
     }, []);
@@ -129,7 +128,7 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...form,
                     country:value,
-                    state: value == 'CA' ? 'AB' : 'AL',
+                    state: '',
                 })
             );
         } else {

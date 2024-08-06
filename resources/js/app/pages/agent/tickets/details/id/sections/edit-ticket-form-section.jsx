@@ -107,7 +107,7 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...form,
                     country: value,
-                    state: value == "CA" ? "AB" : "AL",
+                    state: '',
                 })
             );
         } else {
