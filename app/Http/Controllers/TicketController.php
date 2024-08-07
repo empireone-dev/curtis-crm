@@ -909,6 +909,7 @@ class TicketController extends Controller
         }
 
 
+        $user =User::where('id',$id)->first();
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -959,8 +960,14 @@ class TicketController extends Controller
         if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
             $query->orWhere('created_from', $request->status);
         }
-        $user =User::where('id',$id)->first();
         if ($user->role_id == 5) {
+            if ($searchQuery == 'CLOSED') {
+                $query->where('status','=', 'CLOSED');
+            }else{
+                if (!isset($searchQuery)) {
+                    $query->where('status','<>', 'CLOSED');
+                }
+            }
             $query->orderBy('created_at', 'desc');
             $data = $query->get();
         }else{

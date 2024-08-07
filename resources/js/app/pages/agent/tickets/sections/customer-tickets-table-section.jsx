@@ -17,7 +17,7 @@ export default function CustomerTicketsTableSection() {
 
     if (search == "CLOSED") {
         function searchBy(status) {
-            return tickets?.data?.filter((obj) => obj.status == status);
+            return tickets?.filter((obj) => obj.status == status);
         }
         ticketData = searchBy(search);
     } else if (search == "PROCESSED") {
@@ -39,7 +39,6 @@ export default function CustomerTicketsTableSection() {
     } else {
         ticketData = tickets;
     }
-
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
