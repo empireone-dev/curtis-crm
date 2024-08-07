@@ -37,20 +37,20 @@ class UserController extends Controller
         $twoDaysAgo = Carbon::now()->subDays(2)->toDateTimeString();
         $today = Carbon::today()->toDateString();
         $users = User::where('role_id', '=', $role_id)
-        ->orWhere('role_id', '=', 1)
-        ->with('role')->get();
+            ->orWhere('role_id', '=', 1)
+            ->with('role')->get();
 
         $days = date("N");
 
         if ($days == '4') {
             $addDays = '4';
-        }else if($days == '5'){
+        } else if ($days == '5') {
             $addDays = '4';
-        }else if($days == '6'){
+        } else if ($days == '6') {
             $addDays = '3';
-        }else if($days == '7'){
+        } else if ($days == '7') {
             $addDays = '2';
-        }else{
+        } else {
             $addDays = '2';
         }
         $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
@@ -62,21 +62,59 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                    // ['email_date', '<=', $twoDaysAgo]
-                ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [$addDays, $today])
-                ->count();
+                    ['is_reply', '=', 'true'],
+                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                ])->get();
 
+                foreach ($overdue_cases as &$value) {
+                    $emailDate = Carbon::parse($value->email_date);
+                    $dayOfWeek = $emailDate->dayOfWeekIso;
+                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                        $addDay = 4;
+                    } elseif ($dayOfWeek == 6) {
+                        $addDay = 3;
+                    } elseif ($dayOfWeek == 7) {
+                        $addDay = 2;
+                    } else {
+                        $addDay = 2;
+                    }
+                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+                }
+                $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
+                    return $ticket->email_date < $today;
+                })->count();
+                //End over due 
+
+                //start due today
                 $cases_due_today = Ticket::where([
                     ['user_id', '=', $user->id],
                     ['status', '<>', 'CLOSED'],
-                    ['cases_status', '=', 'handled'],
+                    ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    ['call_type', '=', $user->agent_type == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                ])
-                ->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) = ?', [$addDays, $today])
-                ->count();
+                    ['is_reply', '=', 'true'],
+                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                ])->get();
+
+                foreach ($cases_due_today as &$value) {
+                    $emailDate = Carbon::parse($value->email_date);
+                    $dayOfWeek = $emailDate->dayOfWeekIso;
+
+                    // Determine the number of days to add
+                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                        $addDay = 4;
+                    } elseif ($dayOfWeek == 6) {
+                        $addDay = 3;
+                    } elseif ($dayOfWeek == 7) {
+                        $addDay = 2;
+                    } else {
+                        $addDay = 2;
+                    }
+                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+                }
+                $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
+                    return $ticket->email_date === $today;
+                })->count();
+                //End due today
 
                 $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
                     ->whereRaw('DATE_ADD(updated_at, INTERVAL 4 DAY) <= ?', [$today])
@@ -122,16 +160,10 @@ class UserController extends Controller
             }
         }
 
+
+
         return response()->json([
             'data' => $users,
-            'sample' =>Ticket::where([
-                ['user_id', '=', $users[1]['id']],
-                ['status', '<>', 'CLOSED'],
-                ['ticket_id', '<>', null],
-                ['cases_status', '<>', 'hide'],
-                ['call_type', '=', $users[1]['agent_type'] == 'Warranty'?'CF-Warranty Claim':'Parts'],
-                // ['email_date', '<=', $twoDaysAgo]
-            ])->whereRaw('DATE_ADD(email_date, INTERVAL ? DAY) < ?', [$addDays, $today])->get()
         ], 200);
     }
 
@@ -153,8 +185,8 @@ class UserController extends Controller
                 'password' => Hash::make('Business12!@')
             ]);
             $users = User::where('role_id', '=', 5)
-            ->orWhere('role_id', '=', 1)
-            ->with('role')->get();
+                ->orWhere('role_id', '=', 1)
+                ->with('role')->get();
             return response()->json([
                 'status' => $users,
             ], 200);
