@@ -960,16 +960,17 @@ class TicketController extends Controller
             $query->orWhere('created_from', $request->status);
         }
         $user =User::where('id',$id)->first();
-        if ($user->agent_type == 'Tech') {
+        if ($user->role_id == 5) {
             $query->orderBy('created_at', 'desc');
+            $data = $query->get();
         }else{
             $query->orderBy('is_reply', 'desc')
             ->orderBy('email_date', 'asc')
             ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
             ->orderBy('status', 'asc');
+            $data = $query->paginate(10);
         }
       
-        $data = $query->paginate(10);
 
         return response()->json([
             'result' => $data ?? [],

@@ -22,7 +22,7 @@ export default function CustomerTicketsTableSection() {
         ticketData = searchBy(search);
     } else if (search == "PROCESSED") {
         function searchBy() {
-            return tickets.data.filter(
+            return tickets.filter(
                 (obj) =>
                     obj.status != "PARTS VALIDATION" &&
                     obj.status != "WARRANTY VALIDATION" &&
@@ -33,11 +33,11 @@ export default function CustomerTicketsTableSection() {
         ticketData = searchBy();
     } else if (search == "PENDING") {
         function searchBy() {
-            return tickets.data.filter((obj) => obj.isUploading == "false");
+            return tickets.filter((obj) => obj.isUploading == "false");
         }
         ticketData = searchBy();
     } else {
-        ticketData = tickets.data;
+        ticketData = tickets;
     }
 
     const [searchText, setSearchText] = useState("");
@@ -266,10 +266,11 @@ export default function CustomerTicketsTableSection() {
         },
         {
             title: "Created At",
-            dataIndex: "status",
-            key: "status",
+            dataIndex: "created_at",
+            key: "created_at",
+            ...getColumnSearchProps("created_at"),
             render: (_, record, i) => {
-                return <div>{moment(record.created_at).format("LLL")}</div>;
+                return <div>{moment(record.created_at).format('YYYY-MM-DD')}</div>;
             },
         },
         {
@@ -345,7 +346,8 @@ export default function CustomerTicketsTableSection() {
 
     return (
         <Table
-            pagination={paginationConfig}
+            // pagination={paginationConfig}
+            pagination={true}
             columns={columns}
             dataSource={data}
         />
