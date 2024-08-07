@@ -17,12 +17,12 @@ export default function CustomerTicketsTableSection() {
 
     if (search == "CLOSED") {
         function searchBy(status) {
-            return tickets?.filter((obj) => obj.status == status);
+            return tickets?.data?.filter((obj) => obj.status == status);
         }
         ticketData = searchBy(search);
     } else if (search == "PROCESSED") {
         function searchBy() {
-            return tickets.filter(
+            return tickets.data.filter(
                 (obj) =>
                     obj.status != "PARTS VALIDATION" &&
                     obj.status != "WARRANTY VALIDATION" &&
@@ -33,12 +33,13 @@ export default function CustomerTicketsTableSection() {
         ticketData = searchBy();
     } else if (search == "PENDING") {
         function searchBy() {
-            return tickets.filter((obj) => obj.isUploading == "false");
+            return tickets.data.filter((obj) => obj.isUploading == "false");
         }
         ticketData = searchBy();
     } else {
-        ticketData = tickets;
+        ticketData = tickets.data;
     }
+
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
@@ -174,13 +175,13 @@ export default function CustomerTicketsTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            // ...getColumnSearchProps("ticket_id"),
+            ...getColumnSearchProps("ticket_id"),
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            // ...getColumnSearchProps("fullname"),
+            ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
                 return (
                     <div color={"red"} key={i}>
@@ -193,19 +194,19 @@ export default function CustomerTicketsTableSection() {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            // ...getColumnSearchProps("email"),
+            ...getColumnSearchProps("email"),
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            // ...getColumnSearchProps("call_type"),
+            ...getColumnSearchProps("call_type"),
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            // ...getColumnSearchProps("issue"),
+            ...getColumnSearchProps("issue"),
             render: (_, record, i) => {
                 return (
                     <Tag color={"blue"} key={i}>
@@ -219,7 +220,7 @@ export default function CustomerTicketsTableSection() {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            // ...getColumnSearchProps("status"),
+            ...getColumnSearchProps("status"),
             render: (_, record, i) => {
                 const color =
                     record.status == "CLOSED"
@@ -249,7 +250,7 @@ export default function CustomerTicketsTableSection() {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            // ...getColumnSearchProps("isUploading"),
+            ...getColumnSearchProps("isUploading"),
             render: (_, record, i) => {
                 const color = record.isUploading == "true" ? "green" : "red";
                 return (
@@ -265,11 +266,10 @@ export default function CustomerTicketsTableSection() {
         },
         {
             title: "Created At",
-            dataIndex: "created_at",
-            key: "created_at",
-            ...getColumnSearchProps("created_at"),
+            dataIndex: "status",
+            key: "status",
             render: (_, record, i) => {
-                return <div>{moment(record.created_at).format('YYYY-MM-DD')}</div>;
+                return <div>{moment(record.created_at).format("LLL")}</div>;
             },
         },
         {
@@ -345,8 +345,7 @@ export default function CustomerTicketsTableSection() {
 
     return (
         <Table
-            // pagination={paginationConfig}
-            pagination={true}
+            pagination={paginationConfig}
             columns={columns}
             dataSource={data}
         />

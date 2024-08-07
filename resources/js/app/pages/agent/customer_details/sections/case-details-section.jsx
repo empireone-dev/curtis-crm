@@ -24,9 +24,9 @@ export default function CaseDetailsSection() {
             <div class="text-gray-600 mb-2">
                 <p class="font-medium text-lg">Case Details</p>
             </div>
-            <h1>
+            {/* <h1>
                 <b>Currently assigned to:</b> Regine
-            </h1>
+            </h1> */}
             <div class="md:col-span-5 mt-3">
                 <label>Reassigned to</label>
                 <select

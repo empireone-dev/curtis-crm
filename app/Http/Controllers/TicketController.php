@@ -967,6 +967,7 @@ class TicketController extends Controller
                 if (!isset($searchQuery)) {
                     $query->where('status','<>', 'CLOSED');
                 }
+                // $query->where('status','=', 'CLOSED');
             }
             $query->orderBy('created_at', 'desc');
             $data = $query->get();
