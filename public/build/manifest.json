@@ -332,8 +332,8 @@
       "_index-DYM8TcfK.js"
     ]
   },
-  "_administrator-layout-CEP21m_L.js": {
-    "file": "assets/administrator-layout-CEP21m_L.js",
+  "_administrator-layout-CFIofLVu.js": {
+    "file": "assets/administrator-layout-CFIofLVu.js",
     "name": "administrator-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -353,8 +353,8 @@
       "_UserCircleIcon-xZS2KP3j.js"
     ]
   },
-  "_agent-layout-DB-eVuxO.js": {
-    "file": "assets/agent-layout-DB-eVuxO.js",
+  "_agent-layout-MheXTm__.js": {
+    "file": "assets/agent-layout-MheXTm__.js",
     "name": "agent-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -372,8 +372,8 @@
       "_Overflow-B71UGVjr.js"
     ]
   },
-  "_asc-layout-Dtt116ix.js": {
-    "file": "assets/asc-layout-Dtt116ix.js",
+  "_asc-layout-Bpf2QIdk.js": {
+    "file": "assets/asc-layout-Bpf2QIdk.js",
     "name": "asc-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -450,8 +450,8 @@
     "file": "assets/country-BaLaBcQH.js",
     "name": "country"
   },
-  "_curtis-layout-BKZc9BLz.js": {
-    "file": "assets/curtis-layout-BKZc9BLz.js",
+  "_curtis-layout-CAwi337F.js": {
+    "file": "assets/curtis-layout-CAwi337F.js",
     "name": "curtis-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -464,8 +464,8 @@
       "_TicketIcon-DtMfR0cT.js"
     ]
   },
-  "_customer-layout-CF4KKXRv.js": {
-    "file": "assets/customer-layout-CF4KKXRv.js",
+  "_customer-layout-OO2TWtQ_.js": {
+    "file": "assets/customer-layout-OO2TWtQ_.js",
     "name": "customer-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -562,8 +562,8 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx"
     ]
   },
-  "_image-view-B-SoD2CS.js": {
-    "file": "assets/image-view-B-SoD2CS.js",
+  "_image-view-D7tOFtBK.js": {
+    "file": "assets/image-view-D7tOFtBK.js",
     "name": "image-view",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -954,8 +954,8 @@
       "_product-search-CjdPs_Lo.js"
     ]
   },
-  "_tickets-create-search-product-section-KxquopWR.js": {
-    "file": "assets/tickets-create-search-product-section-KxquopWR.js",
+  "_tickets-create-search-product-section-BymAvJxC.js": {
+    "file": "assets/tickets-create-search-product-section-BymAvJxC.js",
     "name": "tickets-create-search-product-section",
     "isDynamicEntry": true,
     "imports": [
@@ -1055,8 +1055,8 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx"
     ]
   },
-  "_warehouse-export-tickets-D5rhvJSe.js": {
-    "file": "assets/warehouse-export-tickets-D5rhvJSe.js",
+  "_warehouse-export-tickets-N2-AmnBf.js": {
+    "file": "assets/warehouse-export-tickets-N2-AmnBf.js",
     "name": "warehouse-export-tickets",
     "isDynamicEntry": true,
     "imports": [
@@ -1068,8 +1068,8 @@
       "_button-N2zNdCUr.js"
     ]
   },
-  "_warehouse-layout-CtikpuaQ.js": {
-    "file": "assets/warehouse-layout-CtikpuaQ.js",
+  "_warehouse-layout-BBWn4nwf.js": {
+    "file": "assets/warehouse-layout-BBWn4nwf.js",
     "name": "warehouse-layout",
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
@@ -1112,7 +1112,7 @@
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-Dxj-tSWb.js",
+    "file": "assets/app-CWpUGgYi.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -1302,7 +1302,7 @@
       "resources/js/app/pages/agent/closed_cases/sections/agent-handled-cases-list-section.jsx",
       "resources/js/app/pages/agent/create/page.jsx",
       "resources/js/app/pages/agent/create/sections/tickets-create-form-section.jsx",
-      "_tickets-create-search-product-section-KxquopWR.js",
+      "_tickets-create-search-product-section-BymAvJxC.js",
       "resources/js/app/pages/agent/customer_details/page.jsx",
       "resources/js/app/pages/agent/customer_details/sections/case-details-section.jsx",
       "resources/js/app/pages/agent/customer_details/sections/case-logs-section.jsx",
@@ -1350,6 +1350,7 @@
       "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-update-explanation.jsx",
       "resources/js/app/pages/agent/tickets/details/sections/tickets-details-form-section.jsx",
       "resources/js/app/pages/agent/tickets/page.jsx",
+      "resources/js/app/pages/agent/tickets/sections/csr-ticket-table.jsx",
       "resources/js/app/pages/agent/tickets/sections/customer-tickets-table-section.jsx",
       "resources/js/app/pages/asc/dashboard/components/asc-card-component.jsx",
       "resources/js/app/pages/asc/dashboard/page.jsx",
@@ -1410,7 +1411,7 @@
       "resources/js/app/pages/warehouse/settings/sections/settings-profile-update-section.jsx",
       "resources/js/app/pages/warehouse/tickets/details/page.jsx",
       "resources/js/app/pages/warehouse/tickets/page.jsx",
-      "_warehouse-export-tickets-D5rhvJSe.js",
+      "_warehouse-export-tickets-N2-AmnBf.js",
       "resources/js/app/pages/warehouse/tickets/sections/warehouse-tickets-table-section.jsx",
       "resources/js/app/pages/web_form/page.jsx",
       "resources/js/app/pages/web_form/sections/web-form-section.jsx"
@@ -1500,13 +1501,13 @@
     ]
   },
   "resources/js/app/pages/admin/asc/page.jsx": {
-    "file": "assets/page-akVvPA1c.js",
+    "file": "assets/page-DHGrLttC.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/asc/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app.jsx",
       "_product-search-CjdPs_Lo.js",
       "resources/js/app/pages/admin/asc/sections/asc-table-section.jsx",
@@ -1546,7 +1547,7 @@
     ]
   },
   "resources/js/app/pages/admin/asc/sections/asc-table-header-section.jsx": {
-    "file": "assets/asc-table-header-section-RQTe8N5b.js",
+    "file": "assets/asc-table-header-section-DHf4oCEx.js",
     "name": "asc-table-header-section",
     "src": "resources/js/app/pages/admin/asc/sections/asc-table-header-section.jsx",
     "isDynamicEntry": true,
@@ -1557,7 +1558,7 @@
     ]
   },
   "resources/js/app/pages/admin/asc/sections/asc-table-section.jsx": {
-    "file": "assets/asc-table-section-CrOrA-Wq.js",
+    "file": "assets/asc-table-section-Bo7Y-gmu.js",
     "name": "asc-table-section",
     "src": "resources/js/app/pages/admin/asc/sections/asc-table-section.jsx",
     "isDynamicEntry": true,
@@ -1569,13 +1570,13 @@
     ]
   },
   "resources/js/app/pages/admin/brands/page.jsx": {
-    "file": "assets/page-BLrOYG3M.js",
+    "file": "assets/page-XYFb9IE2.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/brands/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/brands/sections/brand-table-section.jsx",
       "_brands-thunk-ChZ2OlI0.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -1622,7 +1623,7 @@
     ]
   },
   "resources/js/app/pages/admin/brands/sections/brand-add-section.jsx": {
-    "file": "assets/brand-add-section-CMWPX9iY.js",
+    "file": "assets/brand-add-section-QizFvg7O.js",
     "name": "brand-add-section",
     "src": "resources/js/app/pages/admin/brands/sections/brand-add-section.jsx",
     "isDynamicEntry": true,
@@ -1670,7 +1671,7 @@
     ]
   },
   "resources/js/app/pages/admin/brands/sections/brand-table-section.jsx": {
-    "file": "assets/brand-table-section-CUSrCTRW.js",
+    "file": "assets/brand-table-section-Bgm4L_63.js",
     "name": "brand-table-section",
     "src": "resources/js/app/pages/admin/brands/sections/brand-table-section.jsx",
     "isDynamicEntry": true,
@@ -1693,13 +1694,13 @@
     ]
   },
   "resources/js/app/pages/admin/bup/page.jsx": {
-    "file": "assets/page-a8h0i4uQ.js",
+    "file": "assets/page-4Fi38viU.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/bup/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -1745,13 +1746,13 @@
     ]
   },
   "resources/js/app/pages/admin/common_issues/page.jsx": {
-    "file": "assets/page-DAXEQPLO.js",
+    "file": "assets/page-CcvB_k71.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/common_issues/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "_common-issues-thunk-BtAMR5MZ.js",
       "resources/js/app/pages/admin/common_issues/sections/common-issues-table-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -1798,7 +1799,7 @@
     ]
   },
   "resources/js/app/pages/admin/common_issues/sections/common-issue-add-section.jsx": {
-    "file": "assets/common-issue-add-section-BwVAnPye.js",
+    "file": "assets/common-issue-add-section-CSgdbulk.js",
     "name": "common-issue-add-section",
     "src": "resources/js/app/pages/admin/common_issues/sections/common-issue-add-section.jsx",
     "isDynamicEntry": true,
@@ -1846,7 +1847,7 @@
     ]
   },
   "resources/js/app/pages/admin/common_issues/sections/common-issues-table-section.jsx": {
-    "file": "assets/common-issues-table-section-DObPJanb.js",
+    "file": "assets/common-issues-table-section-CzZa-_oP.js",
     "name": "common-issues-table-section",
     "src": "resources/js/app/pages/admin/common_issues/sections/common-issues-table-section.jsx",
     "isDynamicEntry": true,
@@ -1878,13 +1879,13 @@
     ]
   },
   "resources/js/app/pages/admin/dashboard/page.jsx": {
-    "file": "assets/page-DRPF7U0v.js",
+    "file": "assets/page-BU7jB9sH.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/dashboard/sections/dashboard-cards-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
@@ -1962,13 +1963,13 @@
     ]
   },
   "resources/js/app/pages/admin/email_template/create/page.jsx": {
-    "file": "assets/page-Di5vpwPl.js",
+    "file": "assets/page-DeOHLPVS.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/email_template/create/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "_wysiwyg-DIE_6w7x.js",
       "_email-template-service-BOET0lzu.js",
       "_input-DD50QKfS.js",
@@ -2017,13 +2018,13 @@
     ]
   },
   "resources/js/app/pages/admin/email_template/id/page.jsx": {
-    "file": "assets/page-BredmhiT.js",
+    "file": "assets/page-FpLkZPhf.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/email_template/id/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/email_template/id/sections/edit-email-template-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
@@ -2081,13 +2082,13 @@
     ]
   },
   "resources/js/app/pages/admin/email_template/page.jsx": {
-    "file": "assets/page-BohI9XNP.js",
+    "file": "assets/page-By0CY3rG.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/email_template/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/email_template/sections/email-template-table-section.jsx",
       "_email-template-thunk-BZEfak6D.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -2157,7 +2158,7 @@
     ]
   },
   "resources/js/app/pages/admin/email_template/sections/email-template-table-section.jsx": {
-    "file": "assets/email-template-table-section-DCUlWATJ.js",
+    "file": "assets/email-template-table-section-D7W_DWbp.js",
     "name": "email-template-table-section",
     "src": "resources/js/app/pages/admin/email_template/sections/email-template-table-section.jsx",
     "isDynamicEntry": true,
@@ -2177,13 +2178,13 @@
     ]
   },
   "resources/js/app/pages/admin/htt/page.jsx": {
-    "file": "assets/page-BGH1hZro.js",
+    "file": "assets/page-DZ5KqCBR.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/htt/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -2220,14 +2221,14 @@
     ]
   },
   "resources/js/app/pages/admin/item_types/page.jsx": {
-    "file": "assets/page-DydBMC0k.js",
+    "file": "assets/page-Dlgf48mN.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/item_types/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_item-types-thunk-CuOtfuLm.js",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/item_types/sections/item-types-table-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
@@ -2273,7 +2274,7 @@
     ]
   },
   "resources/js/app/pages/admin/item_types/sections/item-type-add-section.jsx": {
-    "file": "assets/item-type-add-section-C8RjO7E5.js",
+    "file": "assets/item-type-add-section-DNYKViPT.js",
     "name": "item-type-add-section",
     "src": "resources/js/app/pages/admin/item_types/sections/item-type-add-section.jsx",
     "isDynamicEntry": true,
@@ -2321,7 +2322,7 @@
     ]
   },
   "resources/js/app/pages/admin/item_types/sections/item-types-table-section.jsx": {
-    "file": "assets/item-types-table-section-Ck4j3e7G.js",
+    "file": "assets/item-types-table-section-1rIG7YFy.js",
     "name": "item-types-table-section",
     "src": "resources/js/app/pages/admin/item_types/sections/item-types-table-section.jsx",
     "isDynamicEntry": true,
@@ -2367,13 +2368,13 @@
     ]
   },
   "resources/js/app/pages/admin/permissions/page.jsx": {
-    "file": "assets/page-DADyi1SL.js",
+    "file": "assets/page-X8O6h46G.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/permissions/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/permissions/sections/permission-table-section.jsx",
       "_permissions-thunk-DLeq7umk.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -2420,7 +2421,7 @@
     ]
   },
   "resources/js/app/pages/admin/permissions/sections/permission-add-section.jsx": {
-    "file": "assets/permission-add-section-DFxcmHRL.js",
+    "file": "assets/permission-add-section-BC4SCcjx.js",
     "name": "permission-add-section",
     "src": "resources/js/app/pages/admin/permissions/sections/permission-add-section.jsx",
     "isDynamicEntry": true,
@@ -2468,7 +2469,7 @@
     ]
   },
   "resources/js/app/pages/admin/permissions/sections/permission-table-section.jsx": {
-    "file": "assets/permission-table-section-D1pxBSkk.js",
+    "file": "assets/permission-table-section-3fStKa8Y.js",
     "name": "permission-table-section",
     "src": "resources/js/app/pages/admin/permissions/sections/permission-table-section.jsx",
     "isDynamicEntry": true,
@@ -2491,13 +2492,13 @@
     ]
   },
   "resources/js/app/pages/admin/productivity/page.jsx": {
-    "file": "assets/page-M-n-Me0r.js",
+    "file": "assets/page-DSELeKIb.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/productivity/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/productivity/sections/productivity-table-section.jsx",
       "_users.thunk-DKhYHkH3.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -2552,7 +2553,7 @@
     ]
   },
   "resources/js/app/pages/admin/productivity/sections/productivity-date-section.jsx": {
-    "file": "assets/productivity-date-section-rIwb5V8h.js",
+    "file": "assets/productivity-date-section-u_iuCUk_.js",
     "name": "productivity-date-section",
     "src": "resources/js/app/pages/admin/productivity/sections/productivity-date-section.jsx",
     "isDynamicEntry": true,
@@ -2579,7 +2580,7 @@
     ]
   },
   "resources/js/app/pages/admin/productivity/sections/productivity-search-section.jsx": {
-    "file": "assets/productivity-search-section-BD5FnOhn.js",
+    "file": "assets/productivity-search-section-BErolMbX.js",
     "name": "productivity-search-section",
     "src": "resources/js/app/pages/admin/productivity/sections/productivity-search-section.jsx",
     "isDynamicEntry": true,
@@ -2592,7 +2593,7 @@
     ]
   },
   "resources/js/app/pages/admin/productivity/sections/productivity-table-section.jsx": {
-    "file": "assets/productivity-table-section-DMEsocVx.js",
+    "file": "assets/productivity-table-section-zAwFyJrN.js",
     "name": "productivity-table-section",
     "src": "resources/js/app/pages/admin/productivity/sections/productivity-table-section.jsx",
     "isDynamicEntry": true,
@@ -2638,7 +2639,7 @@
     ]
   },
   "resources/js/app/pages/admin/productivity/sections/productivity-total-handled-cases.jsx": {
-    "file": "assets/productivity-total-handled-cases-Dk3w-Qgl.js",
+    "file": "assets/productivity-total-handled-cases-D-KK989w.js",
     "name": "productivity-total-handled-cases",
     "src": "resources/js/app/pages/admin/productivity/sections/productivity-total-handled-cases.jsx",
     "isDynamicEntry": true,
@@ -2649,13 +2650,13 @@
     ]
   },
   "resources/js/app/pages/admin/products/page.jsx": {
-    "file": "assets/page-B96ew7_q.js",
+    "file": "assets/page-DFxb1ul_.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/products/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -2692,13 +2693,13 @@
     ]
   },
   "resources/js/app/pages/admin/roles/page.jsx": {
-    "file": "assets/page-C4vObE-Y.js",
+    "file": "assets/page-CdVIDrXu.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/roles/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "_roles-thunk-CwPxxrtb.js",
       "resources/js/app/pages/admin/roles/sections/role-table-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -2745,7 +2746,7 @@
     ]
   },
   "resources/js/app/pages/admin/roles/sections/role-add-section.jsx": {
-    "file": "assets/role-add-section-Bz1BCISZ.js",
+    "file": "assets/role-add-section-BXMIbZDj.js",
     "name": "role-add-section",
     "src": "resources/js/app/pages/admin/roles/sections/role-add-section.jsx",
     "isDynamicEntry": true,
@@ -2793,7 +2794,7 @@
     ]
   },
   "resources/js/app/pages/admin/roles/sections/role-table-section.jsx": {
-    "file": "assets/role-table-section-BFRHXwSm.js",
+    "file": "assets/role-table-section-DDZ4tPKs.js",
     "name": "role-table-section",
     "src": "resources/js/app/pages/admin/roles/sections/role-table-section.jsx",
     "isDynamicEntry": true,
@@ -2816,13 +2817,13 @@
     ]
   },
   "resources/js/app/pages/admin/settings/page.jsx": {
-    "file": "assets/page-BZwVlxsg.js",
+    "file": "assets/page-FfMLwOAo.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/settings/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/settings/sections/settings-profile-update-section.jsx",
       "resources/js/app/pages/admin/settings/sections/settings-password-update-section.jsx",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -2893,7 +2894,7 @@
     ]
   },
   "resources/js/app/pages/admin/ticket_form/page.jsx": {
-    "file": "assets/page-DbSdE3hY.js",
+    "file": "assets/page-CaPNKco4.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/ticket_form/page.jsx",
     "isDynamicEntry": true,
@@ -2916,7 +2917,7 @@
     ]
   },
   "resources/js/app/pages/admin/ticket_form/sections/ticket-form-search-product-section.jsx": {
-    "file": "assets/ticket-form-search-product-section-DxWpYfG3.js",
+    "file": "assets/ticket-form-search-product-section-BJInDLgk.js",
     "name": "ticket-form-search-product-section",
     "src": "resources/js/app/pages/admin/ticket_form/sections/ticket-form-search-product-section.jsx",
     "isDynamicEntry": true,
@@ -2932,7 +2933,7 @@
     ]
   },
   "resources/js/app/pages/admin/ticket_form/sections/ticket-form-section.jsx": {
-    "file": "assets/ticket-form-section-BV7O_aIQ.js",
+    "file": "assets/ticket-form-section-tZjodsYt.js",
     "name": "ticket-form-section",
     "src": "resources/js/app/pages/admin/ticket_form/sections/ticket-form-section.jsx",
     "isDynamicEntry": true,
@@ -2954,7 +2955,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/ticket-filter-section.jsx": {
-    "file": "assets/ticket-filter-section-Clhv_HCG.js",
+    "file": "assets/ticket-filter-section-Cc2nd0iC.js",
     "name": "ticket-filter-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/ticket-filter-section.jsx",
     "isDynamicEntry": true,
@@ -2986,7 +2987,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/tickets-export-file-section.jsx": {
-    "file": "assets/tickets-export-file-section-DkAAxTRS.js",
+    "file": "assets/tickets-export-file-section-Bx6o6Pm7.js",
     "name": "tickets-export-file-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/tickets-export-file-section.jsx",
     "isDynamicEntry": true,
@@ -3006,7 +3007,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/tickets-import-file-section.jsx": {
-    "file": "assets/tickets-import-file-section-3K9jgM3J.js",
+    "file": "assets/tickets-import-file-section-Bn3lEVqO.js",
     "name": "tickets-import-file-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/tickets-import-file-section.jsx",
     "isDynamicEntry": true,
@@ -3044,7 +3045,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/tickets-paginate-section.jsx": {
-    "file": "assets/tickets-paginate-section-DC8PJMxf.js",
+    "file": "assets/tickets-paginate-section-BOVPBWeW.js",
     "name": "tickets-paginate-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/tickets-paginate-section.jsx",
     "isDynamicEntry": true,
@@ -3055,7 +3056,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/tickets-search-section.jsx": {
-    "file": "assets/tickets-search-section-C1sl2EuX.js",
+    "file": "assets/tickets-search-section-CoyPH4oM.js",
     "name": "tickets-search-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/tickets-search-section.jsx",
     "isDynamicEntry": true,
@@ -3078,7 +3079,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/_sections/tickets-table-section.jsx": {
-    "file": "assets/tickets-table-section-BR3ial5p.js",
+    "file": "assets/tickets-table-section-D8hV6qm-.js",
     "name": "tickets-table-section",
     "src": "resources/js/app/pages/admin/tickets/_sections/tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -3121,13 +3122,13 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/create/page.jsx": {
-    "file": "assets/page-rmG5t2zT.js",
+    "file": "assets/page-DYPuV_fM.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/create/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/tickets/create/sections/tickets-create-form-section.jsx",
       "_common-issues-thunk-BtAMR5MZ.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -3184,7 +3185,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/create/sections/ticket-close-section.jsx": {
-    "file": "assets/ticket-close-section-B10lvmU4.js",
+    "file": "assets/ticket-close-section-CN5eIeFH.js",
     "name": "ticket-close-section",
     "src": "resources/js/app/pages/admin/tickets/create/sections/ticket-close-section.jsx",
     "isDynamicEntry": true,
@@ -3202,7 +3203,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/create/sections/tickets-create-form-section.jsx": {
-    "file": "assets/tickets-create-form-section-C6STHyB6.js",
+    "file": "assets/tickets-create-form-section-O6mblfPv.js",
     "name": "tickets-create-form-section",
     "src": "resources/js/app/pages/admin/tickets/create/sections/tickets-create-form-section.jsx",
     "isDynamicEntry": true,
@@ -3240,7 +3241,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/create/sections/tickets-create-search-product-section.jsx": {
-    "file": "assets/tickets-create-search-product-section-B2Zlkhkv.js",
+    "file": "assets/tickets-create-search-product-section-Cy1ThV5k.js",
     "name": "tickets-create-search-product-section",
     "src": "resources/js/app/pages/admin/tickets/create/sections/tickets-create-search-product-section.jsx",
     "isDynamicEntry": true,
@@ -3256,7 +3257,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx": {
-    "file": "assets/tickets-details-move-assign-components-CPOhiiYc.js",
+    "file": "assets/tickets-details-move-assign-components-DQr3dydf.js",
     "name": "tickets-details-move-assign-components",
     "src": "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
     "isDynamicEntry": true,
@@ -3472,7 +3473,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/activities/sections/content-activities-timeline-section.jsx": {
-    "file": "assets/content-activities-timeline-section-BUFeiDQj.js",
+    "file": "assets/content-activities-timeline-section-DUeCevzR.js",
     "name": "content-activities-timeline-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/activities/sections/content-activities-timeline-section.jsx",
     "isDynamicEntry": true,
@@ -3533,7 +3534,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/availability/sections/availability-section.jsx": {
-    "file": "assets/availability-section-CuY7mGLP.js",
+    "file": "assets/availability-section-Bq0vOq2o.js",
     "name": "availability-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/availability/sections/availability-section.jsx",
     "isDynamicEntry": true,
@@ -3552,74 +3553,16 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/call_back/page.jsx": {
-    "file": "assets/page-CnTE1a_c.js",
+    "file": "assets/page-Dddymo_9.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/call_back/page.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
-      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/call_back/sections/call-back-form-section.jsx",
-      "_tickets-thunk-B2bUIcjj.js",
-      "_administrator-layout-CEP21m_L.js",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_curtis-layout-BKZc9BLz.js",
-      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_textarea-Cayz4gNL.js",
-      "_email-template-service-BOET0lzu.js",
-      "resources/js/app.jsx",
-      "_index-DYM8TcfK.js",
-      "_loading-BQ3UzEsz.js",
-      "_routing-BzgBYGmF.js",
-      "_QueueListIcon-DT1x8vWP.js",
-      "_tickets-service-CkLH7Spu.js",
-      "_internals-service-B9kSbxh_.js",
-      "resources/js/app/pages/sections/search-ticket-section.jsx",
-      "_input-DD50QKfS.js",
-      "_modal-DSsD-sxN.js",
-      "_transition-8SstyYmI.js",
-      "_dialog-Bl_QWYcZ.js",
-      "_user-service-4Z-FBYA4.js",
-      "_index-BKii6ke-.js",
-      "_asyncToGenerator-BcfSbg8Z.js",
-      "_compact-item-BAW5xiWx.js",
-      "_index-DlyXbUxk.js",
-      "_RightOutlined-DouamT1I.js",
-      "_index-C4QAArOu.js",
-      "_KeyCode-DNlgD2sM.js",
-      "_useZIndex-DLsQrGnX.js",
-      "_index-CcHIY6N-.js",
-      "_ContextIsolator-DkS6tMeV.js",
-      "_motion-4S5rSXvC.js",
-      "_roundedArrow-YoMvkauD.js",
-      "_button-N2zNdCUr.js",
-      "_render-BS0NmNht.js",
-      "_zoom-DSxnsLhx.js",
-      "_PurePanel-Bx7ULege.js",
-      "_Overflow-B71UGVjr.js",
-      "_index-DX3UUZI7.js",
-      "_HomeIcon-BpDk_8CA.js",
-      "_UserGroupIcon-CA25hjAD.js",
-      "_InboxArrowDownIcon-COb-ap2i.js",
-      "_TicketIcon-DtMfR0cT.js",
-      "_WrenchScrewdriverIcon-yEL-xAUT.js",
-      "_UserCircleIcon-xZS2KP3j.js",
-      "_Cog8ToothIcon-CJckfNq4.js",
-      "_layout-sidebar-list-component-CZly-gfn.js",
-      "_EnvelopeIcon-CX43r_Lt.js",
-      "_customer-tickets-thunk-DBBMfTU6.js",
-      "_files-service-in3ciA8f.js",
-      "_skeleton-BYsp7tTL.js",
-      "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
-      "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
-      "_InboxStackIcon-DlmqfT7Y.js",
-      "_CheckBadgeIcon-kLeElPcy.js",
-      "_ArrowsRightLeftIcon-ClPTjA5U.js"
+      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/call_back/sections/call-back-form-section.jsx": {
-    "file": "assets/call-back-form-section-nw12t_T-.js",
+    "file": "assets/call-back-form-section-DGlDvkdV.js",
     "name": "call-back-form-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/call_back/sections/call-back-form-section.jsx",
     "isDynamicEntry": true,
@@ -3635,7 +3578,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/decision_making/page.jsx": {
-    "file": "assets/page-C4deOTG6.js",
+    "file": "assets/page-YtMmqRw7.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/decision_making/page.jsx",
     "isEntry": true,
@@ -3646,7 +3589,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/decision-making-section.jsx": {
-    "file": "assets/decision-making-section-BeuGfuxM.js",
+    "file": "assets/decision-making-section-BGX7SPDd.js",
     "name": "decision-making-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/decision-making-section.jsx",
     "isDynamicEntry": true,
@@ -3674,7 +3617,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/refund-section.jsx": {
-    "file": "assets/refund-section-Bjby6Twi.js",
+    "file": "assets/refund-section-BYSgIVg6.js",
     "name": "refund-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/refund-section.jsx",
     "isDynamicEntry": true,
@@ -3695,7 +3638,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/repair-section.jsx": {
-    "file": "assets/repair-section-BrbDQGVH.js",
+    "file": "assets/repair-section-DxVaNVuK.js",
     "name": "repair-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/repair-section.jsx",
     "isDynamicEntry": true,
@@ -3710,7 +3653,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/replacement-section.jsx": {
-    "file": "assets/replacement-section-F4Yi_cXO.js",
+    "file": "assets/replacement-section-B3S_eAfD.js",
     "name": "replacement-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/decision_making/sections/replacement-section.jsx",
     "isDynamicEntry": true,
@@ -3730,13 +3673,13 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/id/page.jsx": {
-    "file": "assets/page-ODNRwUje.js",
+    "file": "assets/page-CGlJyELy.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/id/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/edit-ticket-form-section.jsx",
       "_common-issues-thunk-BtAMR5MZ.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -3789,7 +3732,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/edit-ticket-form-section.jsx": {
-    "file": "assets/edit-ticket-form-section-CdwMAVVy.js",
+    "file": "assets/edit-ticket-form-section-LDjNTIzU.js",
     "name": "edit-ticket-form-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/edit-ticket-form-section.jsx",
     "isDynamicEntry": true,
@@ -3819,7 +3762,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/reason-to-close.jsx": {
-    "file": "assets/reason-to-close-DppgWXQc.js",
+    "file": "assets/reason-to-close-DopGnmdY.js",
     "name": "reason-to-close",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/id/sections/reason-to-close.jsx",
     "isDynamicEntry": true,
@@ -3848,7 +3791,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/sections/content-details-section.jsx": {
-    "file": "assets/content-details-section-BS7folLP.js",
+    "file": "assets/content-details-section-BWOe9TcY.js",
     "name": "content-details-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/sections/content-details-section.jsx",
     "isDynamicEntry": true,
@@ -3897,7 +3840,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/sections/move-ticket-assignement.jsx": {
-    "file": "assets/move-ticket-assignement-C8qMJfck.js",
+    "file": "assets/move-ticket-assignement-BlGswNBX.js",
     "name": "move-ticket-assignement",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/sections/move-ticket-assignement.jsx",
     "isDynamicEntry": true,
@@ -3932,7 +3875,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/details/sections/resend-initial-email.jsx": {
-    "file": "assets/resend-initial-email-CtCp2l7C.js",
+    "file": "assets/resend-initial-email-B16MApGB.js",
     "name": "resend-initial-email",
     "src": "resources/js/app/pages/admin/tickets/details/contents/details/sections/resend-initial-email.jsx",
     "isDynamicEntry": true,
@@ -3954,7 +3897,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/components/details-contents-file-components-file.jsx": {
-    "file": "assets/details-contents-file-components-file-Dwyrx8r2.js",
+    "file": "assets/details-contents-file-components-file-gyPO6siB.js",
     "name": "details-contents-file-components-file",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/components/details-contents-file-components-file.jsx",
     "isDynamicEntry": true,
@@ -3992,7 +3935,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/page.jsx": {
-    "file": "assets/page-CRRi6fQR.js",
+    "file": "assets/page-CzbZClfo.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/page.jsx",
     "isDynamicEntry": true,
@@ -4000,11 +3943,11 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/files/sections/warranty-files-section.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_administrator-layout-CEP21m_L.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_curtis-layout-BKZc9BLz.js",
+      "_administrator-layout-CFIofLVu.js",
+      "_agent-layout-MheXTm__.js",
+      "_warehouse-layout-BBWn4nwf.js",
+      "_asc-layout-Bpf2QIdk.js",
+      "_curtis-layout-CAwi337F.js",
       "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-update-explanation.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-bill-of-sale-section.jsx",
       "resources/js/app.jsx",
@@ -4081,7 +4024,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-bill-of-sale-section.jsx": {
-    "file": "assets/customer-tickets-bill-of-sale-section-RcHSqGad.js",
+    "file": "assets/customer-tickets-bill-of-sale-section-CNjoE2hf.js",
     "name": "customer-tickets-bill-of-sale-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-bill-of-sale-section.jsx",
     "isDynamicEntry": true,
@@ -4120,7 +4063,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-clear-model.jsx": {
-    "file": "assets/customer-tickets-clear-model-j_4Q501t.js",
+    "file": "assets/customer-tickets-clear-model-BYo8YX6Y.js",
     "name": "customer-tickets-clear-model",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-clear-model.jsx",
     "isDynamicEntry": true,
@@ -4159,7 +4102,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-defect-issue-section.jsx": {
-    "file": "assets/customer-tickets-defect-issue-section-CmVYmCGS.js",
+    "file": "assets/customer-tickets-defect-issue-section-D1ylVeII.js",
     "name": "customer-tickets-defect-issue-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-defect-issue-section.jsx",
     "isDynamicEntry": true,
@@ -4198,7 +4141,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-destroy.jsx": {
-    "file": "assets/customer-tickets-destroy-BnQRAqEI.js",
+    "file": "assets/customer-tickets-destroy-DMqw7rQg.js",
     "name": "customer-tickets-destroy",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-destroy.jsx",
     "isDynamicEntry": true,
@@ -4237,7 +4180,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-front-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-front-of-the-unit-section-DAn3PcYO.js",
+    "file": "assets/customer-tickets-front-of-the-unit-section-B4ZaxgHd.js",
     "name": "customer-tickets-front-of-the-unit-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-front-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -4276,7 +4219,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-parts-model.jsx": {
-    "file": "assets/customer-tickets-parts-model-DVeV6cFy.js",
+    "file": "assets/customer-tickets-parts-model-IbF-klTP.js",
     "name": "customer-tickets-parts-model",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-parts-model.jsx",
     "isDynamicEntry": true,
@@ -4315,7 +4258,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-readable-serial-section.jsx": {
-    "file": "assets/customer-tickets-readable-serial-section-BC_uXaPy.js",
+    "file": "assets/customer-tickets-readable-serial-section-CiQNjbPa.js",
     "name": "customer-tickets-readable-serial-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-readable-serial-section.jsx",
     "isDynamicEntry": true,
@@ -4354,7 +4297,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-rear-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-rear-of-the-unit-section-CoAF4Pow.js",
+    "file": "assets/customer-tickets-rear-of-the-unit-section-DUjvEnrt.js",
     "name": "customer-tickets-rear-of-the-unit-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-rear-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -4393,7 +4336,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-receipt-model.jsx": {
-    "file": "assets/customer-tickets-receipt-model-KGed09fD.js",
+    "file": "assets/customer-tickets-receipt-model-BwtVC3Xn.js",
     "name": "customer-tickets-receipt-model",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-receipt-model.jsx",
     "isDynamicEntry": true,
@@ -4432,7 +4375,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-serial-model.jsx": {
-    "file": "assets/customer-tickets-serial-model-Bh6uFdqB.js",
+    "file": "assets/customer-tickets-serial-model-Du12dV1E.js",
     "name": "customer-tickets-serial-model",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/customer-tickets-serial-model.jsx",
     "isDynamicEntry": true,
@@ -4471,7 +4414,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/files/sections/warranty-files-section.jsx": {
-    "file": "assets/warranty-files-section-D_ja4uCr.js",
+    "file": "assets/warranty-files-section-B2yXcL5A.js",
     "name": "warranty-files-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/files/sections/warranty-files-section.jsx",
     "isDynamicEntry": true,
@@ -4525,7 +4468,7 @@
     "isEntry": true
   },
   "resources/js/app/pages/admin/tickets/details/contents/internals/sections/internals-availability-section.jsx": {
-    "file": "assets/internals-availability-section-Cu5sMtDe.js",
+    "file": "assets/internals-availability-section-q-srQIxj.js",
     "name": "internals-availability-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/internals/sections/internals-availability-section.jsx",
     "isDynamicEntry": true,
@@ -4552,7 +4495,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/notes/sections/content-notes-comment-section.jsx": {
-    "file": "assets/content-notes-comment-section-Cpbpo8rH.js",
+    "file": "assets/content-notes-comment-section-C-XYBlCn.js",
     "name": "content-notes-comment-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/notes/sections/content-notes-comment-section.jsx",
     "isDynamicEntry": true,
@@ -4577,77 +4520,18 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/parts_validation/page.jsx": {
-    "file": "assets/page-oPrAaCGB.js",
+    "file": "assets/page-C4deOTG6.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/parts_validation/page.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-form-section.jsx",
-      "_email-template-thunk-BZEfak6D.js",
-      "_administrator-layout-CEP21m_L.js",
-      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_curtis-layout-BKZc9BLz.js",
-      "_select-Dyd-kMeh.js",
-      "_input-DD50QKfS.js",
-      "_wysiwyg-DIE_6w7x.js",
       "resources/js/app/pages/admin/tickets/details/contents/availability/page.jsx",
-      "_index-DYM8TcfK.js",
-      "resources/js/app.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-button-section.jsx",
-      "_loading-BQ3UzEsz.js",
-      "_email-template-service-BOET0lzu.js",
-      "_routing-BzgBYGmF.js",
-      "resources/js/app/pages/sections/search-ticket-section.jsx",
-      "_modal-DSsD-sxN.js",
-      "_transition-8SstyYmI.js",
-      "_dialog-Bl_QWYcZ.js",
-      "_tickets-service-CkLH7Spu.js",
-      "_user-service-4Z-FBYA4.js",
-      "_index-BKii6ke-.js",
-      "_asyncToGenerator-BcfSbg8Z.js",
-      "_compact-item-BAW5xiWx.js",
-      "_index-DlyXbUxk.js",
-      "_RightOutlined-DouamT1I.js",
-      "_index-C4QAArOu.js",
-      "_KeyCode-DNlgD2sM.js",
-      "_useZIndex-DLsQrGnX.js",
-      "_index-CcHIY6N-.js",
-      "_ContextIsolator-DkS6tMeV.js",
-      "_motion-4S5rSXvC.js",
-      "_roundedArrow-YoMvkauD.js",
-      "_button-N2zNdCUr.js",
-      "_render-BS0NmNht.js",
-      "_zoom-DSxnsLhx.js",
-      "_PurePanel-Bx7ULege.js",
-      "_Overflow-B71UGVjr.js",
-      "_index-DX3UUZI7.js",
-      "_HomeIcon-BpDk_8CA.js",
-      "_UserGroupIcon-CA25hjAD.js",
-      "_InboxArrowDownIcon-COb-ap2i.js",
-      "_TicketIcon-DtMfR0cT.js",
-      "_WrenchScrewdriverIcon-yEL-xAUT.js",
-      "_UserCircleIcon-xZS2KP3j.js",
-      "_customer-tickets-thunk-DBBMfTU6.js",
-      "_files-service-in3ciA8f.js",
-      "_skeleton-BYsp7tTL.js",
-      "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
-      "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
-      "_tickets-thunk-B2bUIcjj.js",
-      "_internals-service-B9kSbxh_.js",
-      "_InboxStackIcon-DlmqfT7Y.js",
-      "_CheckBadgeIcon-kLeElPcy.js",
-      "_ArrowsRightLeftIcon-ClPTjA5U.js",
-      "_Cog8ToothIcon-CJckfNq4.js",
-      "_layout-sidebar-list-component-CZly-gfn.js",
-      "_EnvelopeIcon-CX43r_Lt.js"
+      "_index-DYM8TcfK.js"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-button-section.jsx": {
-    "file": "assets/validation-button-section-CKtxsnCJ.js",
+    "file": "assets/validation-button-section-5xsJBlz8.js",
     "name": "validation-button-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-button-section.jsx",
     "isDynamicEntry": true,
@@ -4661,7 +4545,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-form-section.jsx": {
-    "file": "assets/validation-form-section-DlQqhiV3.js",
+    "file": "assets/validation-form-section-DUzpzSzI.js",
     "name": "validation-form-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/parts_validation/sections/validation-form-section.jsx",
     "isDynamicEntry": true,
@@ -4680,27 +4564,52 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/refund/page.jsx": {
-    "file": "assets/page-Be2dBO0W.js",
+    "file": "assets/page-DJFrP5OJ.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/refund/page.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
+      "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx"
+    ]
+  },
+  "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx": {
+    "file": "assets/content-refund-form-section-CGvQ1HkV.js",
+    "name": "content-refund-form-section",
+    "src": "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx",
-      "_administrator-layout-CEP21m_L.js",
-      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_curtis-layout-BKZc9BLz.js",
       "_input-DD50QKfS.js",
       "_textarea-Cayz4gNL.js",
       "resources/js/app.jsx",
-      "_index-DYM8TcfK.js",
       "_refund-service-CksbL9mh.js",
       "_loading-BQ3UzEsz.js",
       "_routing-BzgBYGmF.js",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
+      "_index-DYM8TcfK.js"
+    ]
+  },
+  "resources/js/app/pages/admin/tickets/details/contents/repair/page.jsx": {
+    "file": "assets/page-DyYro1Jn.js",
+    "name": "page",
+    "src": "resources/js/app/pages/admin/tickets/details/contents/repair/page.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
+      "resources/js/app/pages/admin/tickets/details/contents/repair/sections/content-repair-form-section.jsx",
+      "_administrator-layout-CFIofLVu.js",
+      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
+      "_warehouse-layout-BBWn4nwf.js",
+      "_asc-layout-Bpf2QIdk.js",
+      "_agent-layout-MheXTm__.js",
+      "_curtis-layout-CAwi337F.js",
+      "_input-DD50QKfS.js",
+      "_textarea-Cayz4gNL.js",
+      "resources/js/app.jsx",
+      "_index-DYM8TcfK.js",
+      "_loading-BQ3UzEsz.js",
+      "_routing-BzgBYGmF.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_modal-DSsD-sxN.js",
       "_transition-8SstyYmI.js",
@@ -4746,34 +4655,8 @@
       "_EnvelopeIcon-CX43r_Lt.js"
     ]
   },
-  "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx": {
-    "file": "assets/content-refund-form-section-Ch88n1nF.js",
-    "name": "content-refund-form-section",
-    "src": "resources/js/app/pages/admin/tickets/details/contents/refund/sections/content-refund-form-section.jsx",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_input-DD50QKfS.js",
-      "_textarea-Cayz4gNL.js",
-      "resources/js/app.jsx",
-      "_refund-service-CksbL9mh.js",
-      "_loading-BQ3UzEsz.js",
-      "_routing-BzgBYGmF.js",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
-      "_index-DYM8TcfK.js"
-    ]
-  },
-  "resources/js/app/pages/admin/tickets/details/contents/repair/page.jsx": {
-    "file": "assets/page-Dddymo_9.js",
-    "name": "page",
-    "src": "resources/js/app/pages/admin/tickets/details/contents/repair/page.jsx",
-    "isEntry": true,
-    "imports": [
-      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx"
-    ]
-  },
   "resources/js/app/pages/admin/tickets/details/contents/repair/sections/content-repair-form-section.jsx": {
-    "file": "assets/content-repair-form-section-BFCxCK3i.js",
+    "file": "assets/content-repair-form-section-BoBkmLm8.js",
     "name": "content-repair-form-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/repair/sections/content-repair-form-section.jsx",
     "isDynamicEntry": true,
@@ -4788,17 +4671,74 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/page.jsx": {
-    "file": "assets/page-Bxe1qIe8.js",
+    "file": "assets/page-PyHGzjVr.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/page.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx"
+      "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/sections/content-replacement-form.jsx",
+      "_tickets-thunk-B2bUIcjj.js",
+      "_administrator-layout-CFIofLVu.js",
+      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
+      "_warehouse-layout-BBWn4nwf.js",
+      "_asc-layout-Bpf2QIdk.js",
+      "_agent-layout-MheXTm__.js",
+      "_curtis-layout-CAwi337F.js",
+      "_textarea-Cayz4gNL.js",
+      "resources/js/app.jsx",
+      "_index-DYM8TcfK.js",
+      "_input-DD50QKfS.js",
+      "_loading-BQ3UzEsz.js",
+      "_replacement-service-CUrN_spP.js",
+      "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
+      "_routing-BzgBYGmF.js",
+      "_tickets-service-CkLH7Spu.js",
+      "_internals-service-B9kSbxh_.js",
+      "resources/js/app/pages/sections/search-ticket-section.jsx",
+      "_modal-DSsD-sxN.js",
+      "_transition-8SstyYmI.js",
+      "_dialog-Bl_QWYcZ.js",
+      "_user-service-4Z-FBYA4.js",
+      "_index-BKii6ke-.js",
+      "_asyncToGenerator-BcfSbg8Z.js",
+      "_compact-item-BAW5xiWx.js",
+      "_index-DlyXbUxk.js",
+      "_RightOutlined-DouamT1I.js",
+      "_index-C4QAArOu.js",
+      "_KeyCode-DNlgD2sM.js",
+      "_useZIndex-DLsQrGnX.js",
+      "_index-CcHIY6N-.js",
+      "_ContextIsolator-DkS6tMeV.js",
+      "_motion-4S5rSXvC.js",
+      "_roundedArrow-YoMvkauD.js",
+      "_button-N2zNdCUr.js",
+      "_render-BS0NmNht.js",
+      "_zoom-DSxnsLhx.js",
+      "_PurePanel-Bx7ULege.js",
+      "_Overflow-B71UGVjr.js",
+      "_index-DX3UUZI7.js",
+      "_HomeIcon-BpDk_8CA.js",
+      "_UserGroupIcon-CA25hjAD.js",
+      "_InboxArrowDownIcon-COb-ap2i.js",
+      "_TicketIcon-DtMfR0cT.js",
+      "_WrenchScrewdriverIcon-yEL-xAUT.js",
+      "_UserCircleIcon-xZS2KP3j.js",
+      "_customer-tickets-thunk-DBBMfTU6.js",
+      "_files-service-in3ciA8f.js",
+      "_skeleton-BYsp7tTL.js",
+      "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
+      "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
+      "_InboxStackIcon-DlmqfT7Y.js",
+      "_CheckBadgeIcon-kLeElPcy.js",
+      "_ArrowsRightLeftIcon-ClPTjA5U.js",
+      "_Cog8ToothIcon-CJckfNq4.js",
+      "_layout-sidebar-list-component-CZly-gfn.js",
+      "_EnvelopeIcon-CX43r_Lt.js"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/sections/content-replacement-form.jsx": {
-    "file": "assets/content-replacement-form-DzFD0AsP.js",
+    "file": "assets/content-replacement-form-Dn8rEu1y.js",
     "name": "content-replacement-form",
     "src": "resources/js/app/pages/admin/tickets/details/contents/replacement_parts/sections/content-replacement-form.jsx",
     "isDynamicEntry": true,
@@ -4815,7 +4755,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/page.jsx": {
-    "file": "assets/page-BmWDfx-6.js",
+    "file": "assets/page-BaGAzmrX.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/page.jsx",
     "isDynamicEntry": true,
@@ -4823,12 +4763,12 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/sections/content-replacement-warranty-form.jsx",
       "_tickets-thunk-B2bUIcjj.js",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_curtis-layout-BKZc9BLz.js",
+      "_warehouse-layout-BBWn4nwf.js",
+      "_asc-layout-Bpf2QIdk.js",
+      "_agent-layout-MheXTm__.js",
+      "_curtis-layout-CAwi337F.js",
       "_textarea-Cayz4gNL.js",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
@@ -4882,7 +4822,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/sections/content-replacement-warranty-form.jsx": {
-    "file": "assets/content-replacement-warranty-form-CpsTmKSZ.js",
+    "file": "assets/content-replacement-warranty-form-bY_Gt1iu.js",
     "name": "content-replacement-warranty-form",
     "src": "resources/js/app/pages/admin/tickets/details/contents/replacement_warranty/sections/content-replacement-warranty-form.jsx",
     "isDynamicEntry": true,
@@ -4902,7 +4842,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/status/page.jsx": {
-    "file": "assets/page-BXklhonP.js",
+    "file": "assets/page-BSA2ZBJR.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/status/page.jsx",
     "isEntry": true,
@@ -4911,7 +4851,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/status/sections/ticket-status-form-section.jsx": {
-    "file": "assets/ticket-status-form-section-BtozIBUv.js",
+    "file": "assets/ticket-status-form-section-BA4AvZOV.js",
     "name": "ticket-status-form-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/status/sections/ticket-status-form-section.jsx",
     "isDynamicEntry": true,
@@ -4928,7 +4868,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx": {
-    "file": "assets/ticket-content-layout-Bu-zrH41.js",
+    "file": "assets/ticket-content-layout-BR_HjU1E.js",
     "name": "ticket-content-layout",
     "src": "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
     "isDynamicEntry": true,
@@ -4954,71 +4894,16 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/warehouse/page.jsx": {
-    "file": "assets/page-DamYkach.js",
+    "file": "assets/page-C4G7tewP.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/warehouse/page.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
-      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "resources/js/app/pages/admin/tickets/details/contents/warehouse/sections/warehouse-received-button.jsx",
-      "_administrator-layout-CEP21m_L.js",
-      "resources/js/app/pages/admin/tickets/details/contents/ticket-content-layout.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
-      "_asc-layout-Dtt116ix.js",
-      "_agent-layout-DB-eVuxO.js",
-      "_curtis-layout-BKZc9BLz.js",
-      "_loading-BQ3UzEsz.js",
-      "resources/js/app.jsx",
-      "_index-DYM8TcfK.js",
-      "_tickets-thunk-B2bUIcjj.js",
-      "_tickets-service-CkLH7Spu.js",
-      "_internals-service-B9kSbxh_.js",
-      "_routing-BzgBYGmF.js",
-      "resources/js/app/pages/sections/search-ticket-section.jsx",
-      "_input-DD50QKfS.js",
-      "_modal-DSsD-sxN.js",
-      "_transition-8SstyYmI.js",
-      "_dialog-Bl_QWYcZ.js",
-      "_user-service-4Z-FBYA4.js",
-      "_index-BKii6ke-.js",
-      "_asyncToGenerator-BcfSbg8Z.js",
-      "_compact-item-BAW5xiWx.js",
-      "_index-DlyXbUxk.js",
-      "_RightOutlined-DouamT1I.js",
-      "_index-C4QAArOu.js",
-      "_KeyCode-DNlgD2sM.js",
-      "_useZIndex-DLsQrGnX.js",
-      "_index-CcHIY6N-.js",
-      "_ContextIsolator-DkS6tMeV.js",
-      "_motion-4S5rSXvC.js",
-      "_roundedArrow-YoMvkauD.js",
-      "_button-N2zNdCUr.js",
-      "_render-BS0NmNht.js",
-      "_zoom-DSxnsLhx.js",
-      "_PurePanel-Bx7ULege.js",
-      "_Overflow-B71UGVjr.js",
-      "_index-DX3UUZI7.js",
-      "_HomeIcon-BpDk_8CA.js",
-      "_UserGroupIcon-CA25hjAD.js",
-      "_InboxArrowDownIcon-COb-ap2i.js",
-      "_TicketIcon-DtMfR0cT.js",
-      "_WrenchScrewdriverIcon-yEL-xAUT.js",
-      "_UserCircleIcon-xZS2KP3j.js",
-      "_customer-tickets-thunk-DBBMfTU6.js",
-      "_files-service-in3ciA8f.js",
-      "_skeleton-BYsp7tTL.js",
-      "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
-      "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
-      "_InboxStackIcon-DlmqfT7Y.js",
-      "_CheckBadgeIcon-kLeElPcy.js",
-      "_ArrowsRightLeftIcon-ClPTjA5U.js",
-      "_Cog8ToothIcon-CJckfNq4.js",
-      "_layout-sidebar-list-component-CZly-gfn.js",
-      "_EnvelopeIcon-CX43r_Lt.js"
+      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx"
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/warehouse/sections/warehouse-received-button.jsx": {
-    "file": "assets/warehouse-received-button-AUBISMFQ.js",
+    "file": "assets/warehouse-received-button-CpwAah0-.js",
     "name": "warehouse-received-button",
     "src": "resources/js/app/pages/admin/tickets/details/contents/warehouse/sections/warehouse-received-button.jsx",
     "isDynamicEntry": true,
@@ -5034,7 +4919,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/warranty_validation/page.jsx": {
-    "file": "assets/page-tLWgD--c.js",
+    "file": "assets/page-BXklhonP.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/details/contents/warranty_validation/page.jsx",
     "isEntry": true,
@@ -5043,7 +4928,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/contents/warranty_validation/sections/warraty-validation-section.jsx": {
-    "file": "assets/warraty-validation-section-BK5_t_Do.js",
+    "file": "assets/warraty-validation-section-CpiOI0vL.js",
     "name": "warraty-validation-section",
     "src": "resources/js/app/pages/admin/tickets/details/contents/warranty_validation/sections/warraty-validation-section.jsx",
     "isDynamicEntry": true,
@@ -5060,7 +4945,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx": {
-    "file": "assets/tickets-details-move-assign-section_-BcAPggvy.js",
+    "file": "assets/tickets-details-move-assign-section_-BXK-xK87.js",
     "name": "tickets-details-move-assign-section_",
     "src": "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
     "isDynamicEntry": true,
@@ -5081,7 +4966,7 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx": {
-    "file": "assets/tickets-details-tab-section-l9piKOVG.js",
+    "file": "assets/tickets-details-tab-section-BF5t8BYH.js",
     "name": "tickets-details-tab-section",
     "src": "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx",
     "isDynamicEntry": true,
@@ -5102,13 +4987,13 @@
     ]
   },
   "resources/js/app/pages/admin/tickets/page.jsx": {
-    "file": "assets/page-Cu4w1nPn.js",
+    "file": "assets/page-C0iIO3Bb.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/tickets/_sections/tickets-table-section.jsx",
       "_tickets-thunk-B2bUIcjj.js",
       "resources/js/app.jsx",
@@ -5171,14 +5056,14 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/assigned_cases/page.jsx": {
-    "file": "assets/page-D40iVJVU.js",
+    "file": "assets/page-C-qVv8jx.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/assigned_cases/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/users/cases/layout.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5224,7 +5109,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/closed_cases/page.jsx": {
-    "file": "assets/page-aOsUo2rJ.js",
+    "file": "assets/page-CUgFcgzp.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/closed_cases/page.jsx",
     "isDynamicEntry": true,
@@ -5236,7 +5121,7 @@
       "resources/js/app/pages/admin/users/cases/closed_cases/sections/handled-cases-list-section.jsx",
       "_Collapse-B5YwFvcj.js",
       "_index-BncJorS9.js",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5292,13 +5177,13 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/customer_details/page.jsx": {
-    "file": "assets/page-DE7LcvM1.js",
+    "file": "assets/page-CnFbNGUt.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/customer_details/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/users/cases/customer_details/sections/customer-details-section.jsx",
       "resources/js/app/pages/admin/users/cases/customer_details/sections/record-details-section.jsx",
       "resources/js/app/pages/admin/users/cases/customer_details/sections/case-logs-section.jsx",
@@ -5344,7 +5229,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/customer_details/sections/case-details-section.jsx": {
-    "file": "assets/case-details-section-KKY2Cy3p.js",
+    "file": "assets/case-details-section-mYqMulDm.js",
     "name": "case-details-section",
     "src": "resources/js/app/pages/admin/users/cases/customer_details/sections/case-details-section.jsx",
     "isDynamicEntry": true,
@@ -5359,7 +5244,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/customer_details/sections/case-logs-section.jsx": {
-    "file": "assets/case-logs-section-SIt9mWnA.js",
+    "file": "assets/case-logs-section-vbFoMh3L.js",
     "name": "case-logs-section",
     "src": "resources/js/app/pages/admin/users/cases/customer_details/sections/case-logs-section.jsx",
     "isDynamicEntry": true,
@@ -5380,7 +5265,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/customer_details/sections/log-case-section.jsx": {
-    "file": "assets/log-case-section-DiSpckMo.js",
+    "file": "assets/log-case-section-CcRizaSW.js",
     "name": "log-case-section",
     "src": "resources/js/app/pages/admin/users/cases/customer_details/sections/log-case-section.jsx",
     "isDynamicEntry": true,
@@ -5405,7 +5290,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/direct_emails/page.jsx": {
-    "file": "assets/page-BRia1Lif.js",
+    "file": "assets/page-BLXOXK7D.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/direct_emails/page.jsx",
     "isDynamicEntry": true,
@@ -5416,7 +5301,7 @@
       "resources/js/app.jsx",
       "resources/js/app/pages/admin/users/cases/direct_emails/sections/direct-emails-list-section.jsx",
       "_Collapse-B5YwFvcj.js",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5471,7 +5356,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/handled/page.jsx": {
-    "file": "assets/page-Mfcit1r5.js",
+    "file": "assets/page-DP8llL46.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/handled/page.jsx",
     "isDynamicEntry": true,
@@ -5483,7 +5368,7 @@
       "resources/js/app/pages/admin/users/cases/handled/sections/handled-cases-list-section.jsx",
       "_Collapse-B5YwFvcj.js",
       "_index-BncJorS9.js",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5539,13 +5424,13 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/layout.jsx": {
-    "file": "assets/layout-D4tPD_Uq.js",
+    "file": "assets/layout-CTeHRHD7.js",
     "name": "layout",
     "src": "resources/js/app/pages/admin/users/cases/layout.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "_skeleton-BYsp7tTL.js",
       "_tickets-service-CkLH7Spu.js",
       "resources/js/app.jsx",
@@ -5591,7 +5476,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/open_cases/page.jsx": {
-    "file": "assets/page-B1xxFNuV.js",
+    "file": "assets/page-zzkp2WNl.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/open_cases/page.jsx",
     "isDynamicEntry": true,
@@ -5600,7 +5485,7 @@
       "resources/js/app/pages/admin/users/cases/layout.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
       "resources/js/app.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5655,14 +5540,14 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/remaining_cases/page.jsx": {
-    "file": "assets/page-C86Mn0Js.js",
+    "file": "assets/page-OQ3xkbg8.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/cases/remaining_cases/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/users/cases/layout.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
       "_input-DD50QKfS.js",
       "_modal-DSsD-sxN.js",
@@ -5708,7 +5593,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/cases/sections/users-cases-pagination-section.jsx": {
-    "file": "assets/users-cases-pagination-section-Dxh-BD1E.js",
+    "file": "assets/users-cases-pagination-section-muIyLibM.js",
     "name": "users-cases-pagination-section",
     "src": "resources/js/app/pages/admin/users/cases/sections/users-cases-pagination-section.jsx",
     "isDynamicEntry": true,
@@ -5735,13 +5620,13 @@
     ]
   },
   "resources/js/app/pages/admin/users/page.jsx": {
-    "file": "assets/page-Djz6UVhL.js",
+    "file": "assets/page-DJOa-zHK.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/users/sections/users-table-section.jsx",
       "_users.thunk-DKhYHkH3.js",
       "resources/js/app/pages/sections/search-ticket-section.jsx",
@@ -5860,7 +5745,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/sections/users-create-section.jsx": {
-    "file": "assets/users-create-section-DUiyhF04.js",
+    "file": "assets/users-create-section-3BVScOfz.js",
     "name": "users-create-section",
     "src": "resources/js/app/pages/admin/users/sections/users-create-section.jsx",
     "isDynamicEntry": true,
@@ -5894,7 +5779,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/sections/users-table-section.jsx": {
-    "file": "assets/users-table-section-my9UZzKA.js",
+    "file": "assets/users-table-section-TIt4ItOu.js",
     "name": "users-table-section",
     "src": "resources/js/app/pages/admin/users/sections/users-table-section.jsx",
     "isDynamicEntry": true,
@@ -5946,13 +5831,13 @@
     ]
   },
   "resources/js/app/pages/admin/users/tickets/page.jsx": {
-    "file": "assets/page-7TjkvOgq.js",
+    "file": "assets/page-BIuzE7Sb.js",
     "name": "page",
     "src": "resources/js/app/pages/admin/users/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_administrator-layout-CEP21m_L.js",
+      "_administrator-layout-CFIofLVu.js",
       "resources/js/app/pages/admin/users/tickets/sections/user-ticket-table-section.jsx",
       "_customer-tickets-thunk-DBBMfTU6.js",
       "_users.thunk-DKhYHkH3.js",
@@ -6011,7 +5896,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/tickets/sections/user-ticket-table-section.jsx": {
-    "file": "assets/user-ticket-table-section-ClxZLLPx.js",
+    "file": "assets/user-ticket-table-section-BicTtCoC.js",
     "name": "user-ticket-table-section",
     "src": "resources/js/app/pages/admin/users/tickets/sections/user-ticket-table-section.jsx",
     "isDynamicEntry": true,
@@ -6064,7 +5949,7 @@
     ]
   },
   "resources/js/app/pages/admin/users/tickets/sections/user-ticket-transfer-section.jsx": {
-    "file": "assets/user-ticket-transfer-section--_4QK6Qx.js",
+    "file": "assets/user-ticket-transfer-section-BjKIqShO.js",
     "name": "user-ticket-transfer-section",
     "src": "resources/js/app/pages/admin/users/tickets/sections/user-ticket-transfer-section.jsx",
     "isDynamicEntry": true,
@@ -6084,7 +5969,7 @@
     ]
   },
   "resources/js/app/pages/agent/closed_cases/page.jsx": {
-    "file": "assets/page-ClBaWs5Y.js",
+    "file": "assets/page-3xdkf5HZ.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/closed_cases/page.jsx",
     "isDynamicEntry": true,
@@ -6092,7 +5977,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
       "resources/js/app.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_skeleton-BYsp7tTL.js",
@@ -6136,7 +6021,7 @@
     ]
   },
   "resources/js/app/pages/agent/closed_cases/sections/agent-close-cases-pagination-section.jsx": {
-    "file": "assets/agent-close-cases-pagination-section-D3YK_t-q.js",
+    "file": "assets/agent-close-cases-pagination-section-Dkca7KdE.js",
     "name": "agent-close-cases-pagination-section",
     "src": "resources/js/app/pages/agent/closed_cases/sections/agent-close-cases-pagination-section.jsx",
     "isDynamicEntry": true,
@@ -6173,20 +6058,20 @@
     ]
   },
   "resources/js/app/pages/agent/create/page.jsx": {
-    "file": "assets/page-CZ9ojIq5.js",
+    "file": "assets/page-Czg6Em_U.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/create/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/agent/create/sections/tickets-create-form-section.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_common-issues-thunk-BtAMR5MZ.js",
       "_input-DD50QKfS.js",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
       "_select-Dyd-kMeh.js",
-      "_tickets-create-search-product-section-KxquopWR.js",
+      "_tickets-create-search-product-section-BymAvJxC.js",
       "_modal-DSsD-sxN.js",
       "_transition-8SstyYmI.js",
       "_dialog-Bl_QWYcZ.js",
@@ -6233,7 +6118,7 @@
     ]
   },
   "resources/js/app/pages/agent/create/sections/tickets-create-form-section.jsx": {
-    "file": "assets/tickets-create-form-section-BQmDqohS.js",
+    "file": "assets/tickets-create-form-section-DSgwblKk.js",
     "name": "tickets-create-form-section",
     "src": "resources/js/app/pages/agent/create/sections/tickets-create-form-section.jsx",
     "isDynamicEntry": true,
@@ -6242,7 +6127,7 @@
       "_input-DD50QKfS.js",
       "resources/js/app.jsx",
       "_select-Dyd-kMeh.js",
-      "_tickets-create-search-product-section-KxquopWR.js",
+      "_tickets-create-search-product-section-BymAvJxC.js",
       "_textarea-Cayz4gNL.js",
       "_ticket-form-thunk-cfOJdY83.js",
       "_country-BaLaBcQH.js",
@@ -6270,7 +6155,7 @@
     ]
   },
   "resources/js/app/pages/agent/customer_details/page.jsx": {
-    "file": "assets/page-BHWtmheQ.js",
+    "file": "assets/page-Cwaz-J4H.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/customer_details/page.jsx",
     "isDynamicEntry": true,
@@ -6284,7 +6169,7 @@
       "_tickets-service-CkLH7Spu.js",
       "_cases-log-service-D585qHBK.js",
       "resources/js/app.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_users.thunk-DKhYHkH3.js",
       "_ArrowLeftOutlined-DSpBhbvj.js",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
@@ -6323,7 +6208,7 @@
     ]
   },
   "resources/js/app/pages/agent/customer_details/sections/case-details-section.jsx": {
-    "file": "assets/case-details-section-DfrSBeQW.js",
+    "file": "assets/case-details-section-BIgpQlE2.js",
     "name": "case-details-section",
     "src": "resources/js/app/pages/agent/customer_details/sections/case-details-section.jsx",
     "isDynamicEntry": true,
@@ -6339,7 +6224,7 @@
     ]
   },
   "resources/js/app/pages/agent/customer_details/sections/case-logs-section.jsx": {
-    "file": "assets/case-logs-section-D1aQv3vp.js",
+    "file": "assets/case-logs-section-DfU-imDL.js",
     "name": "case-logs-section",
     "src": "resources/js/app/pages/agent/customer_details/sections/case-logs-section.jsx",
     "isDynamicEntry": true,
@@ -6360,7 +6245,7 @@
     ]
   },
   "resources/js/app/pages/agent/customer_details/sections/log-case-section.jsx": {
-    "file": "assets/log-case-section-2ISyVpwE.js",
+    "file": "assets/log-case-section-CMrRkTVf.js",
     "name": "log-case-section",
     "src": "resources/js/app/pages/agent/customer_details/sections/log-case-section.jsx",
     "isDynamicEntry": true,
@@ -6399,13 +6284,13 @@
     ]
   },
   "resources/js/app/pages/agent/dashboard/page.jsx": {
-    "file": "assets/page-BI6vu37D.js",
+    "file": "assets/page-DMESQrAZ.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "resources/js/app/pages/agent/dashboard/sections/agent-card-section.jsx",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
@@ -6450,7 +6335,7 @@
     ]
   },
   "resources/js/app/pages/agent/dashboard/sections/agent-card-section.jsx": {
-    "file": "assets/agent-card-section-CwwUwx_q.js",
+    "file": "assets/agent-card-section-CwvNedWW.js",
     "name": "agent-card-section",
     "src": "resources/js/app/pages/agent/dashboard/sections/agent-card-section.jsx",
     "isDynamicEntry": true,
@@ -6472,13 +6357,13 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/id/page.jsx": {
-    "file": "assets/page-DMokusLu.js",
+    "file": "assets/page-D0Zy90KK.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/direct_emails/id/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "resources/js/app/pages/agent/direct_emails/id/sections/customer-details-section.jsx",
       "resources/js/app/pages/agent/direct_emails/id/sections/case-logs-section.jsx",
       "resources/js/app/pages/agent/direct_emails/id/sections/log-case-section.jsx",
@@ -6521,7 +6406,7 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/id/sections/case-details-section.jsx": {
-    "file": "assets/case-details-section-8lPfxUxs.js",
+    "file": "assets/case-details-section-DQfLi9PY.js",
     "name": "case-details-section",
     "src": "resources/js/app/pages/agent/direct_emails/id/sections/case-details-section.jsx",
     "isDynamicEntry": true,
@@ -6536,7 +6421,7 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/id/sections/case-logs-section.jsx": {
-    "file": "assets/case-logs-section-BSZto_gW.js",
+    "file": "assets/case-logs-section-ZBtUq0Yq.js",
     "name": "case-logs-section",
     "src": "resources/js/app/pages/agent/direct_emails/id/sections/case-logs-section.jsx",
     "isDynamicEntry": true,
@@ -6557,7 +6442,7 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/id/sections/log-case-section.jsx": {
-    "file": "assets/log-case-section-B7U6MiXK.js",
+    "file": "assets/log-case-section-BHEceQaK.js",
     "name": "log-case-section",
     "src": "resources/js/app/pages/agent/direct_emails/id/sections/log-case-section.jsx",
     "isDynamicEntry": true,
@@ -6582,7 +6467,7 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/id/sections/transfer-direct-email.jsx": {
-    "file": "assets/transfer-direct-email-DyISqEzx.js",
+    "file": "assets/transfer-direct-email-D-1URwkf.js",
     "name": "transfer-direct-email",
     "src": "resources/js/app/pages/agent/direct_emails/id/sections/transfer-direct-email.jsx",
     "isDynamicEntry": true,
@@ -6597,13 +6482,13 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/page.jsx": {
-    "file": "assets/page-CVhGtDgv.js",
+    "file": "assets/page-BMXSxqSL.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/direct_emails/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "resources/js/app/pages/agent/direct_emails/sections/agent-direct-emails-table-section.jsx",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
@@ -6652,7 +6537,7 @@
     ]
   },
   "resources/js/app/pages/agent/direct_emails/sections/agent-direct-emails-table-section.jsx": {
-    "file": "assets/agent-direct-emails-table-section-0_xCEY9R.js",
+    "file": "assets/agent-direct-emails-table-section-BUbkmQ87.js",
     "name": "agent-direct-emails-table-section",
     "src": "resources/js/app/pages/agent/direct_emails/sections/agent-direct-emails-table-section.jsx",
     "isDynamicEntry": true,
@@ -6694,7 +6579,7 @@
     ]
   },
   "resources/js/app/pages/agent/handled/page.jsx": {
-    "file": "assets/page-CD5Fmd8g.js",
+    "file": "assets/page-CQ0_3K8B.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/handled/page.jsx",
     "isDynamicEntry": true,
@@ -6702,7 +6587,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
       "resources/js/app.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_skeleton-BYsp7tTL.js",
@@ -6756,7 +6641,7 @@
     ]
   },
   "resources/js/app/pages/agent/handled/sections/agent-handled-cases-pagination-section.jsx": {
-    "file": "assets/agent-handled-cases-pagination-section-Cr5p7th5.js",
+    "file": "assets/agent-handled-cases-pagination-section-CiSPub4v.js",
     "name": "agent-handled-cases-pagination-section",
     "src": "resources/js/app/pages/agent/handled/sections/agent-handled-cases-pagination-section.jsx",
     "isDynamicEntry": true,
@@ -6783,7 +6668,7 @@
     ]
   },
   "resources/js/app/pages/agent/open_cases/page.jsx": {
-    "file": "assets/page-ByWvMcUi.js",
+    "file": "assets/page-DCmV0Kg1.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/open_cases/page.jsx",
     "isDynamicEntry": true,
@@ -6793,7 +6678,7 @@
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_skeleton-BYsp7tTL.js",
       "_main-qW1nALFO.js",
       "_Table-nI12vE8d.js",
@@ -6851,7 +6736,7 @@
     ]
   },
   "resources/js/app/pages/agent/open_cases/sections/agent-open-cases-pagination-section.jsx": {
-    "file": "assets/agent-open-cases-pagination-section-BCnd69td.js",
+    "file": "assets/agent-open-cases-pagination-section-B3TJD3bV.js",
     "name": "agent-open-cases-pagination-section",
     "src": "resources/js/app/pages/agent/open_cases/sections/agent-open-cases-pagination-section.jsx",
     "isDynamicEntry": true,
@@ -6878,7 +6763,7 @@
     ]
   },
   "resources/js/app/pages/agent/productivity/page.jsx": {
-    "file": "assets/page-B44yDEAo.js",
+    "file": "assets/page-CkgKh8vh.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/productivity/page.jsx",
     "isDynamicEntry": true,
@@ -6886,7 +6771,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/agent/productivity/sections/productivity-table-section.jsx",
       "_users.thunk-DKhYHkH3.js",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_main-qW1nALFO.js",
       "resources/js/app/pages/agent/productivity/sections/productivity-search-section.jsx",
       "resources/js/app.jsx",
@@ -6937,7 +6822,7 @@
     ]
   },
   "resources/js/app/pages/agent/productivity/sections/productivity-date-section.jsx": {
-    "file": "assets/productivity-date-section-DybkhfCC.js",
+    "file": "assets/productivity-date-section-8IZpHe-N.js",
     "name": "productivity-date-section",
     "src": "resources/js/app/pages/agent/productivity/sections/productivity-date-section.jsx",
     "isDynamicEntry": true,
@@ -6964,7 +6849,7 @@
     ]
   },
   "resources/js/app/pages/agent/productivity/sections/productivity-search-section.jsx": {
-    "file": "assets/productivity-search-section-C-xkx_3w.js",
+    "file": "assets/productivity-search-section-Z6eVJUbb.js",
     "name": "productivity-search-section",
     "src": "resources/js/app/pages/agent/productivity/sections/productivity-search-section.jsx",
     "isDynamicEntry": true,
@@ -6977,7 +6862,7 @@
     ]
   },
   "resources/js/app/pages/agent/productivity/sections/productivity-table-section.jsx": {
-    "file": "assets/productivity-table-section-BeYFeriR.js",
+    "file": "assets/productivity-table-section-DMxY7Rt4.js",
     "name": "productivity-table-section",
     "src": "resources/js/app/pages/agent/productivity/sections/productivity-table-section.jsx",
     "isDynamicEntry": true,
@@ -7023,7 +6908,7 @@
     ]
   },
   "resources/js/app/pages/agent/productivity/sections/productivity-total-handled-cases.jsx": {
-    "file": "assets/productivity-total-handled-cases-BXKrQCGd.js",
+    "file": "assets/productivity-total-handled-cases-DEFZW3nj.js",
     "name": "productivity-total-handled-cases",
     "src": "resources/js/app/pages/agent/productivity/sections/productivity-total-handled-cases.jsx",
     "isDynamicEntry": true,
@@ -7034,7 +6919,7 @@
     ]
   },
   "resources/js/app/pages/agent/settings/page.jsx": {
-    "file": "assets/page-DHt3IjOP.js",
+    "file": "assets/page-xbelCSiz.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/settings/page.jsx",
     "isDynamicEntry": true,
@@ -7042,7 +6927,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/agent/settings/sections/settings-profile-update-section.jsx",
       "resources/js/app/pages/agent/settings/sections/settings-password-update-section.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_InputError-B5U6UTZ3.js",
       "_InputLabel-CQUR0sQ4.js",
       "_PrimaryButton-8Rx-3ggC.js",
@@ -7109,7 +6994,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/id/page.jsx": {
-    "file": "assets/page-CT1Z_ZXp.js",
+    "file": "assets/page-DPbfCgDW.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/tickets/details/id/page.jsx",
     "isDynamicEntry": true,
@@ -7117,7 +7002,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/agent/tickets/details/id/sections/edit-ticket-form-section.jsx",
       "_common-issues-thunk-BtAMR5MZ.js",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_input-DD50QKfS.js",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
@@ -7166,7 +7051,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/id/sections/edit-ticket-form-section.jsx": {
-    "file": "assets/edit-ticket-form-section-Cb6sZ5aF.js",
+    "file": "assets/edit-ticket-form-section-Bz5b6F1D.js",
     "name": "edit-ticket-form-section",
     "src": "resources/js/app/pages/agent/tickets/details/id/sections/edit-ticket-form-section.jsx",
     "isDynamicEntry": true,
@@ -7196,7 +7081,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/page.jsx": {
-    "file": "assets/page-3YwL_HgJ.js",
+    "file": "assets/page-z3nS2N_o.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/tickets/details/page.jsx",
     "isDynamicEntry": true,
@@ -7204,7 +7089,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "resources/js/app/pages/admin/tickets/details/components/tickets-details-move-assign-components.jsx",
       "_tickets-thunk-B2bUIcjj.js",
       "_tickets-service-CkLH7Spu.js",
@@ -7250,7 +7135,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx": {
-    "file": "assets/customer-tickets-bill-of-sale-section-Bqt6Rw9W.js",
+    "file": "assets/customer-tickets-bill-of-sale-section-BIfTPHSI.js",
     "name": "customer-tickets-bill-of-sale-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx",
     "isDynamicEntry": true,
@@ -7258,7 +7143,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_tickets-service-CkLH7Spu.js",
@@ -7270,7 +7155,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-clear-model.jsx": {
-    "file": "assets/customer-tickets-clear-model-1CfPJlka.js",
+    "file": "assets/customer-tickets-clear-model-Cw41anKS.js",
     "name": "customer-tickets-clear-model",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-clear-model.jsx",
     "isDynamicEntry": true,
@@ -7278,7 +7163,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_tickets-service-CkLH7Spu.js",
@@ -7290,7 +7175,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-defect-issue-section.jsx": {
-    "file": "assets/customer-tickets-defect-issue-section-CSHLsdhE.js",
+    "file": "assets/customer-tickets-defect-issue-section-DlIGUnEz.js",
     "name": "customer-tickets-defect-issue-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-defect-issue-section.jsx",
     "isDynamicEntry": true,
@@ -7298,7 +7183,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
@@ -7310,7 +7195,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-front-of-the-unit-section-D44bmWce.js",
+    "file": "assets/customer-tickets-front-of-the-unit-section-J7ZIxig-.js",
     "name": "customer-tickets-front-of-the-unit-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -7319,7 +7204,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_files-service-in3ciA8f.js",
@@ -7330,7 +7215,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-parts-model.jsx": {
-    "file": "assets/customer-tickets-parts-model-B6_5LUw3.js",
+    "file": "assets/customer-tickets-parts-model-Wt0bgVAc.js",
     "name": "customer-tickets-parts-model",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-parts-model.jsx",
     "isDynamicEntry": true,
@@ -7338,7 +7223,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
@@ -7350,7 +7235,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-readable-serial-section.jsx": {
-    "file": "assets/customer-tickets-readable-serial-section-DtJ7t213.js",
+    "file": "assets/customer-tickets-readable-serial-section-DqhK74rb.js",
     "name": "customer-tickets-readable-serial-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-readable-serial-section.jsx",
     "isDynamicEntry": true,
@@ -7359,7 +7244,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_files-service-in3ciA8f.js",
@@ -7370,7 +7255,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-rear-of-the-unit-section-45JLO4mg.js",
+    "file": "assets/customer-tickets-rear-of-the-unit-section-BRNHlRot.js",
     "name": "customer-tickets-rear-of-the-unit-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -7379,7 +7264,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_files-service-in3ciA8f.js",
@@ -7390,7 +7275,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-receipt-model.jsx": {
-    "file": "assets/customer-tickets-receipt-model-BozhPjpm.js",
+    "file": "assets/customer-tickets-receipt-model-DkJWg4C7.js",
     "name": "customer-tickets-receipt-model",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-receipt-model.jsx",
     "isDynamicEntry": true,
@@ -7399,7 +7284,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_files-service-in3ciA8f.js",
@@ -7410,7 +7295,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-serial-model.jsx": {
-    "file": "assets/customer-tickets-serial-model-DTJH9dmS.js",
+    "file": "assets/customer-tickets-serial-model-DvQvUUp0.js",
     "name": "customer-tickets-serial-model",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-serial-model.jsx",
     "isDynamicEntry": true,
@@ -7419,7 +7304,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_customer-tickets-slice-BhZjmvDt.js",
       "_files-service-in3ciA8f.js",
@@ -7430,7 +7315,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-update-explanation.jsx": {
-    "file": "assets/customer-tickets-update-explanation-BwC_e5ra.js",
+    "file": "assets/customer-tickets-update-explanation-B9VGjQ9j.js",
     "name": "customer-tickets-update-explanation",
     "src": "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-update-explanation.jsx",
     "isDynamicEntry": true,
@@ -7453,7 +7338,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/details/sections/tickets-details-form-section.jsx": {
-    "file": "assets/tickets-details-form-section-BNjmpniN.js",
+    "file": "assets/tickets-details-form-section-BLA3sA5w.js",
     "name": "tickets-details-form-section",
     "src": "resources/js/app/pages/agent/tickets/details/sections/tickets-details-form-section.jsx",
     "isDynamicEntry": true,
@@ -7473,7 +7358,7 @@
       "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-receipt-model.jsx",
       "resources/js/app/pages/agent/tickets/details/sections/customer-tickets-serial-model.jsx",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_TrashIcon-Cq8xUcat.js",
       "_transition-8SstyYmI.js",
       "_dialog-Bl_QWYcZ.js",
@@ -7491,7 +7376,7 @@
     ]
   },
   "resources/js/app/pages/agent/tickets/page.jsx": {
-    "file": "assets/page-CZ8DUIDS.js",
+    "file": "assets/page-AbE9Y_Pm.js",
     "name": "page",
     "src": "resources/js/app/pages/agent/tickets/page.jsx",
     "isDynamicEntry": true,
@@ -7499,8 +7384,9 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/agent/tickets/sections/customer-tickets-table-section.jsx",
       "_customer-tickets-thunk-KcBOTYW2.js",
-      "_agent-layout-DB-eVuxO.js",
+      "_agent-layout-MheXTm__.js",
       "_tickets-thunk-B2bUIcjj.js",
+      "resources/js/app/pages/agent/tickets/sections/csr-ticket-table.jsx",
       "_main-qW1nALFO.js",
       "resources/js/app.jsx",
       "_index-DYM8TcfK.js",
@@ -7553,8 +7439,52 @@
       "_internals-service-B9kSbxh_.js"
     ]
   },
+  "resources/js/app/pages/agent/tickets/sections/csr-ticket-table.jsx": {
+    "file": "assets/csr-ticket-table-B3W9h8DH.js",
+    "name": "csr-ticket-table",
+    "src": "resources/js/app/pages/agent/tickets/sections/csr-ticket-table.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
+      "_main-qW1nALFO.js",
+      "resources/js/app.jsx",
+      "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
+      "_list-DhL-EaBS.js",
+      "_Table-nI12vE8d.js",
+      "_index-BncJorS9.js",
+      "_index-CcHIY6N-.js",
+      "_index-DX3UUZI7.js",
+      "_button-N2zNdCUr.js",
+      "_useIcons-BpeEQjTf.js",
+      "_EyeOutlined-DU4AkV_f.js",
+      "_index-DYM8TcfK.js",
+      "_asyncToGenerator-BcfSbg8Z.js",
+      "_index-C4QAArOu.js",
+      "_compact-item-BAW5xiWx.js",
+      "_pickAttrs-CytUKMFb.js",
+      "_addEventListener-DfoNCfBT.js",
+      "_index-BeEmOpEG.js",
+      "_KeyCode-DNlgD2sM.js",
+      "_Overflow-B71UGVjr.js",
+      "_useZIndex-DLsQrGnX.js",
+      "_motion-4S5rSXvC.js",
+      "_PurePanel-Bx7ULege.js",
+      "_useLocale-B3iS6PRM.js",
+      "_index-lfz5rgdR.js",
+      "_index-DlyXbUxk.js",
+      "_RightOutlined-DouamT1I.js",
+      "_ContextIsolator-DkS6tMeV.js",
+      "_zoom-DSxnsLhx.js",
+      "_roundedArrow-YoMvkauD.js",
+      "_Pagination-Dvu9rcLX.js",
+      "_useForceUpdate-DPpXG2eu.js",
+      "_index-BViF2emH.js",
+      "_useClosable-B0aWgX52.js",
+      "_render-BS0NmNht.js"
+    ]
+  },
   "resources/js/app/pages/agent/tickets/sections/customer-tickets-table-section.jsx": {
-    "file": "assets/customer-tickets-table-section-CPtjrKhh.js",
+    "file": "assets/customer-tickets-table-section-Ds1M_XbX.js",
     "name": "customer-tickets-table-section",
     "src": "resources/js/app/pages/agent/tickets/sections/customer-tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -7607,13 +7537,13 @@
     ]
   },
   "resources/js/app/pages/asc/dashboard/page.jsx": {
-    "file": "assets/page-CKQntMDt.js",
+    "file": "assets/page-Bu4yJZUV.js",
     "name": "page",
     "src": "resources/js/app/pages/asc/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_asc-layout-Dtt116ix.js",
+      "_asc-layout-Bpf2QIdk.js",
       "resources/js/app/pages/asc/dashboard/sections/asc-card-section.jsx",
       "_Cog8ToothIcon-CJckfNq4.js",
       "_layout-sidebar-list-component-CZly-gfn.js",
@@ -7638,13 +7568,13 @@
     ]
   },
   "resources/js/app/pages/asc/settings/page.jsx": {
-    "file": "assets/page-CtnTYAzq.js",
+    "file": "assets/page-DQDAf1s6.js",
     "name": "page",
     "src": "resources/js/app/pages/asc/settings/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_asc-layout-Dtt116ix.js",
+      "_asc-layout-Bpf2QIdk.js",
       "resources/js/app/pages/asc/settings/sections/settings-password-update-section.jsx",
       "resources/js/app/pages/asc/settings/sections/settings-profile-update-section.jsx",
       "_Cog8ToothIcon-CJckfNq4.js",
@@ -7690,13 +7620,13 @@
     ]
   },
   "resources/js/app/pages/asc/tickets/details/page.jsx": {
-    "file": "assets/page-Cszcc-2B.js",
+    "file": "assets/page-B0eiuQUU.js",
     "name": "page",
     "src": "resources/js/app/pages/asc/tickets/details/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_asc-layout-Dtt116ix.js",
+      "_asc-layout-Bpf2QIdk.js",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx",
       "_Cog8ToothIcon-CJckfNq4.js",
       "_layout-sidebar-list-component-CZly-gfn.js",
@@ -7717,13 +7647,13 @@
     ]
   },
   "resources/js/app/pages/asc/tickets/page.jsx": {
-    "file": "assets/page-D33cQ9bT.js",
+    "file": "assets/page-fZ0cC0AO.js",
     "name": "page",
     "src": "resources/js/app/pages/asc/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_asc-layout-Dtt116ix.js",
+      "_asc-layout-Bpf2QIdk.js",
       "resources/js/app/pages/asc/tickets/sections/asc-tickets-table-section.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_Cog8ToothIcon-CJckfNq4.js",
@@ -7769,7 +7699,7 @@
     ]
   },
   "resources/js/app/pages/asc/tickets/sections/asc-tickets-table-section.jsx": {
-    "file": "assets/asc-tickets-table-section-Do5AEhku.js",
+    "file": "assets/asc-tickets-table-section-Deov7MFD.js",
     "name": "asc-tickets-table-section",
     "src": "resources/js/app/pages/asc/tickets/sections/asc-tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -7822,14 +7752,14 @@
     ]
   },
   "resources/js/app/pages/curtis/dashboard/page.jsx": {
-    "file": "assets/page-Cmdr5Y2d.js",
+    "file": "assets/page-ChdOd906.js",
     "name": "page",
     "src": "resources/js/app/pages/curtis/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/curtis/dashboard/sections/customer-card-section.jsx",
-      "_curtis-layout-BKZc9BLz.js",
+      "_curtis-layout-CAwi337F.js",
       "resources/js/app/pages/curtis/dashboard/components/curtis-cards-component.jsx",
       "_dashboard-service-Dzru9z46.js",
       "_TagIcon-BrBsQhr7.js",
@@ -7879,13 +7809,13 @@
     ]
   },
   "resources/js/app/pages/curtis/settings/page.jsx": {
-    "file": "assets/page-CWpnGPMM.js",
+    "file": "assets/page-B5xxZppg.js",
     "name": "page",
     "src": "resources/js/app/pages/curtis/settings/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_curtis-layout-BKZc9BLz.js",
+      "_curtis-layout-CAwi337F.js",
       "resources/js/app/pages/curtis/settings/sections/settings-profile-update-section.jsx",
       "resources/js/app/pages/curtis/settings/sections/settings-password-update-section.jsx",
       "resources/js/app.jsx",
@@ -7936,13 +7866,13 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/page.jsx": {
-    "file": "assets/page-DtvOOvBG.js",
+    "file": "assets/page-vwTX_anF.js",
     "name": "page",
     "src": "resources/js/app/pages/curtis/tickets/details/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_customer-layout-CF4KKXRv.js",
+      "_customer-layout-OO2TWtQ_.js",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx",
       "_layout-sidebar-list-component-CZly-gfn.js",
@@ -7965,7 +7895,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx": {
-    "file": "assets/customer-tickets-bill-of-sale-section-ClPbokTr.js",
+    "file": "assets/customer-tickets-bill-of-sale-section-B_oOYeHh.js",
     "name": "customer-tickets-bill-of-sale-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx",
     "isDynamicEntry": true,
@@ -7973,7 +7903,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_customer-tickets-thunk-CHbljh4h.js",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
@@ -7984,7 +7914,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-clear-model.jsx": {
-    "file": "assets/customer-tickets-clear-model-CenL7Zeo.js",
+    "file": "assets/customer-tickets-clear-model-5FVGPdtE.js",
     "name": "customer-tickets-clear-model",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-clear-model.jsx",
     "isDynamicEntry": true,
@@ -7992,7 +7922,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_customer-tickets-thunk-CHbljh4h.js",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
@@ -8003,7 +7933,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-defect-issue-section.jsx": {
-    "file": "assets/customer-tickets-defect-issue-section-DSeQrQXZ.js",
+    "file": "assets/customer-tickets-defect-issue-section-vC8Hn4zH.js",
     "name": "customer-tickets-defect-issue-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-defect-issue-section.jsx",
     "isDynamicEntry": true,
@@ -8011,7 +7941,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
@@ -8022,7 +7952,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-front-of-the-unit-section-BLlgCCT-.js",
+    "file": "assets/customer-tickets-front-of-the-unit-section-CtW4zkUA.js",
     "name": "customer-tickets-front-of-the-unit-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -8031,7 +7961,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
       "_index-DYM8TcfK.js",
@@ -8041,7 +7971,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-parts-model.jsx": {
-    "file": "assets/customer-tickets-parts-model-Ca7VQwRM.js",
+    "file": "assets/customer-tickets-parts-model-f1H5kx17.js",
     "name": "customer-tickets-parts-model",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-parts-model.jsx",
     "isDynamicEntry": true,
@@ -8049,7 +7979,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "resources/js/app.jsx",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
@@ -8060,7 +7990,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-readable-serial-section.jsx": {
-    "file": "assets/customer-tickets-readable-serial-section-DXXrTRKh.js",
+    "file": "assets/customer-tickets-readable-serial-section-CNsCiOcV.js",
     "name": "customer-tickets-readable-serial-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-readable-serial-section.jsx",
     "isDynamicEntry": true,
@@ -8069,7 +7999,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
       "_index-DYM8TcfK.js",
@@ -8079,7 +8009,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-rear-of-the-unit-section-Cd0S3VKT.js",
+    "file": "assets/customer-tickets-rear-of-the-unit-section-C1dSKAR6.js",
     "name": "customer-tickets-rear-of-the-unit-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -8088,7 +8018,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
       "_index-DYM8TcfK.js",
@@ -8098,7 +8028,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-receipt-model.jsx": {
-    "file": "assets/customer-tickets-receipt-model-C4Ayu3mR.js",
+    "file": "assets/customer-tickets-receipt-model-Cvkvmybs.js",
     "name": "customer-tickets-receipt-model",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-receipt-model.jsx",
     "isDynamicEntry": true,
@@ -8107,7 +8037,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
       "_index-DYM8TcfK.js",
@@ -8117,7 +8047,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-serial-model.jsx": {
-    "file": "assets/customer-tickets-serial-model-CFStak2n.js",
+    "file": "assets/customer-tickets-serial-model-DOHwI7V1.js",
     "name": "customer-tickets-serial-model",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-serial-model.jsx",
     "isDynamicEntry": true,
@@ -8126,7 +8056,7 @@
       "_loading-BQ3UzEsz.js",
       "_customer-tickets-thunk-CHbljh4h.js",
       "resources/js/app.jsx",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_tickets-service-CkLH7Spu.js",
       "_files-service-in3ciA8f.js",
       "_index-DYM8TcfK.js",
@@ -8136,7 +8066,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-update-explanation.jsx": {
-    "file": "assets/customer-tickets-update-explanation-LlcQMnK7.js",
+    "file": "assets/customer-tickets-update-explanation-Bm8poP_7.js",
     "name": "customer-tickets-update-explanation",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-update-explanation.jsx",
     "isDynamicEntry": true,
@@ -8151,7 +8081,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/details/sections/tickets-details-form-section.jsx": {
-    "file": "assets/tickets-details-form-section-BQwypLFD.js",
+    "file": "assets/tickets-details-form-section-o_StbV5G.js",
     "name": "tickets-details-form-section",
     "src": "resources/js/app/pages/curtis/tickets/details/sections/tickets-details-form-section.jsx",
     "isDynamicEntry": true,
@@ -8170,7 +8100,7 @@
       "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-receipt-model.jsx",
       "resources/js/app/pages/curtis/tickets/details/sections/customer-tickets-serial-model.jsx",
       "_loading-BQ3UzEsz.js",
-      "_image-view-B-SoD2CS.js",
+      "_image-view-D7tOFtBK.js",
       "_TrashIcon-Cq8xUcat.js",
       "_transition-8SstyYmI.js",
       "_dialog-Bl_QWYcZ.js",
@@ -8181,13 +8111,13 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/page.jsx": {
-    "file": "assets/page-BVd7kebp.js",
+    "file": "assets/page-DVt46gs_.js",
     "name": "page",
     "src": "resources/js/app/pages/curtis/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_curtis-layout-BKZc9BLz.js",
+      "_curtis-layout-CAwi337F.js",
       "resources/js/app/pages/curtis/tickets/sections/customer-tickets-table-section.jsx",
       "resources/js/app.jsx",
       "_tickets-thunk-B2bUIcjj.js",
@@ -8254,7 +8184,7 @@
     ]
   },
   "resources/js/app/pages/curtis/tickets/sections/customer-tickets-table-section.jsx": {
-    "file": "assets/customer-tickets-table-section-VFULvPVY.js",
+    "file": "assets/customer-tickets-table-section-Comypv8I.js",
     "name": "customer-tickets-table-section",
     "src": "resources/js/app/pages/curtis/tickets/sections/customer-tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -8306,13 +8236,13 @@
     ]
   },
   "resources/js/app/pages/customer/dashboard/page.jsx": {
-    "file": "assets/page-CMDI_pNJ.js",
+    "file": "assets/page-BzgO7w9y.js",
     "name": "page",
     "src": "resources/js/app/pages/customer/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_customer-layout-CF4KKXRv.js",
+      "_customer-layout-OO2TWtQ_.js",
       "resources/js/app/pages/customer/dashboard/sections/customer-card-section.jsx",
       "_layout-sidebar-list-component-CZly-gfn.js",
       "_TicketIcon-DtMfR0cT.js",
@@ -8337,13 +8267,13 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/page.jsx": {
-    "file": "assets/page-DGGRRjt7.js",
+    "file": "assets/page-Ckop_pzO.js",
     "name": "page",
     "src": "resources/js/app/pages/customer/tickets/details/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_customer-layout-CF4KKXRv.js",
+      "_customer-layout-OO2TWtQ_.js",
       "resources/js/app/pages/customer/tickets/details/sections/tickets-details-form-section.jsx",
       "_layout-sidebar-list-component-CZly-gfn.js",
       "_TicketIcon-DtMfR0cT.js",
@@ -8391,7 +8321,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx": {
-    "file": "assets/customer-tickets-bill-of-sale-section-HwjimVKL.js",
+    "file": "assets/customer-tickets-bill-of-sale-section-DN4JnGwW.js",
     "name": "customer-tickets-bill-of-sale-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-bill-of-sale-section.jsx",
     "isDynamicEntry": true,
@@ -8430,7 +8360,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-clear-model.jsx": {
-    "file": "assets/customer-tickets-clear-model-DXS2d8rP.js",
+    "file": "assets/customer-tickets-clear-model-Bvs_ADc5.js",
     "name": "customer-tickets-clear-model",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-clear-model.jsx",
     "isDynamicEntry": true,
@@ -8469,7 +8399,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-defect-issue-section.jsx": {
-    "file": "assets/customer-tickets-defect-issue-section-3eByEGvT.js",
+    "file": "assets/customer-tickets-defect-issue-section-mdplHgQa.js",
     "name": "customer-tickets-defect-issue-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-defect-issue-section.jsx",
     "isDynamicEntry": true,
@@ -8508,7 +8438,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-front-of-the-unit-section-BLly2e33.js",
+    "file": "assets/customer-tickets-front-of-the-unit-section-DtBfNMbR.js",
     "name": "customer-tickets-front-of-the-unit-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-front-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -8547,7 +8477,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-parts-model.jsx": {
-    "file": "assets/customer-tickets-parts-model-8gKiSLvC.js",
+    "file": "assets/customer-tickets-parts-model-B-TE35ML.js",
     "name": "customer-tickets-parts-model",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-parts-model.jsx",
     "isDynamicEntry": true,
@@ -8586,7 +8516,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-readable-serial-section.jsx": {
-    "file": "assets/customer-tickets-readable-serial-section-TbI0MCst.js",
+    "file": "assets/customer-tickets-readable-serial-section-D0XpBVT1.js",
     "name": "customer-tickets-readable-serial-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-readable-serial-section.jsx",
     "isDynamicEntry": true,
@@ -8625,7 +8555,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx": {
-    "file": "assets/customer-tickets-rear-of-the-unit-section-DfClnDQB.js",
+    "file": "assets/customer-tickets-rear-of-the-unit-section-AR-lPeAU.js",
     "name": "customer-tickets-rear-of-the-unit-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-rear-of-the-unit-section.jsx",
     "isDynamicEntry": true,
@@ -8664,7 +8594,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-receipt-model.jsx": {
-    "file": "assets/customer-tickets-receipt-model-BjXW8F7o.js",
+    "file": "assets/customer-tickets-receipt-model-BstzIcDt.js",
     "name": "customer-tickets-receipt-model",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-receipt-model.jsx",
     "isDynamicEntry": true,
@@ -8703,7 +8633,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-serial-model.jsx": {
-    "file": "assets/customer-tickets-serial-model-C_3s619d.js",
+    "file": "assets/customer-tickets-serial-model-5Fk1Dytw.js",
     "name": "customer-tickets-serial-model",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-serial-model.jsx",
     "isDynamicEntry": true,
@@ -8742,7 +8672,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-update-explanation.jsx": {
-    "file": "assets/customer-tickets-update-explanation-CIEkspQ9.js",
+    "file": "assets/customer-tickets-update-explanation-CiK4pluI.js",
     "name": "customer-tickets-update-explanation",
     "src": "resources/js/app/pages/customer/tickets/details/sections/customer-tickets-update-explanation.jsx",
     "isDynamicEntry": true,
@@ -8757,7 +8687,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/details/sections/tickets-details-form-section.jsx": {
-    "file": "assets/tickets-details-form-section-ejVTnIBh.js",
+    "file": "assets/tickets-details-form-section-BRls8Ny7.js",
     "name": "tickets-details-form-section",
     "src": "resources/js/app/pages/customer/tickets/details/sections/tickets-details-form-section.jsx",
     "isDynamicEntry": true,
@@ -8806,13 +8736,13 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/page.jsx": {
-    "file": "assets/page-ny0rSZcj.js",
+    "file": "assets/page-g4lRxSge.js",
     "name": "page",
     "src": "resources/js/app/pages/customer/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_customer-layout-CF4KKXRv.js",
+      "_customer-layout-OO2TWtQ_.js",
       "resources/js/app/pages/customer/tickets/sections/customer-tickets-table-section.jsx",
       "_customer-tickets-thunk-KcBOTYW2.js",
       "_layout-sidebar-list-component-CZly-gfn.js",
@@ -8859,7 +8789,7 @@
     ]
   },
   "resources/js/app/pages/customer/tickets/sections/customer-tickets-table-section.jsx": {
-    "file": "assets/customer-tickets-table-section-AVxvzbaV.js",
+    "file": "assets/customer-tickets-table-section-CH4Jgy13.js",
     "name": "customer-tickets-table-section",
     "src": "resources/js/app/pages/customer/tickets/sections/customer-tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -8933,7 +8863,7 @@
     ]
   },
   "resources/js/app/pages/sections/search-ticket-section.jsx": {
-    "file": "assets/search-ticket-section-BKp8esxj.js",
+    "file": "assets/search-ticket-section-DZvALEQO.js",
     "name": "search-ticket-section",
     "src": "resources/js/app/pages/sections/search-ticket-section.jsx",
     "isDynamicEntry": true,
@@ -8969,13 +8899,13 @@
     ]
   },
   "resources/js/app/pages/warehouse/dashboard/page.jsx": {
-    "file": "assets/page-k4V9oYD_.js",
+    "file": "assets/page-Bx3sJ0x4.js",
     "name": "page",
     "src": "resources/js/app/pages/warehouse/dashboard/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
+      "_warehouse-layout-BBWn4nwf.js",
       "resources/js/app/pages/warehouse/dashboard/sections/warehouse-card-section.jsx",
       "_user-service-4Z-FBYA4.js",
       "resources/js/app.jsx",
@@ -9022,7 +8952,7 @@
     ]
   },
   "resources/js/app/pages/warehouse/settings/page.jsx": {
-    "file": "assets/page-DPBZ0ejH.js",
+    "file": "assets/page-ByPlITOG.js",
     "name": "page",
     "src": "resources/js/app/pages/warehouse/settings/page.jsx",
     "isDynamicEntry": true,
@@ -9030,7 +8960,7 @@
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
       "resources/js/app/pages/warehouse/settings/sections/settings-profile-update-section.jsx",
       "resources/js/app/pages/warehouse/settings/sections/settings-password-update-section.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
+      "_warehouse-layout-BBWn4nwf.js",
       "_InputError-B5U6UTZ3.js",
       "_InputLabel-CQUR0sQ4.js",
       "_PrimaryButton-8Rx-3ggC.js",
@@ -9095,13 +9025,13 @@
     ]
   },
   "resources/js/app/pages/warehouse/tickets/details/page.jsx": {
-    "file": "assets/page-D2rcVqsm.js",
+    "file": "assets/page-DJuf-zg8.js",
     "name": "page",
     "src": "resources/js/app/pages/warehouse/tickets/details/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
+      "_warehouse-layout-BBWn4nwf.js",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-move-assign-section,.jsx",
       "resources/js/app/pages/admin/tickets/details/sections/tickets-details-tab-section.jsx",
       "_user-service-4Z-FBYA4.js",
@@ -9147,15 +9077,15 @@
     ]
   },
   "resources/js/app/pages/warehouse/tickets/page.jsx": {
-    "file": "assets/page-IRnL2XYm.js",
+    "file": "assets/page-B6Xa8TT_.js",
     "name": "page",
     "src": "resources/js/app/pages/warehouse/tickets/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app/pages/admin/tickets/details/contents/internals/page.jsx",
-      "_warehouse-layout-CtikpuaQ.js",
+      "_warehouse-layout-BBWn4nwf.js",
       "resources/js/app/pages/warehouse/tickets/sections/warehouse-tickets-table-section.jsx",
-      "_warehouse-export-tickets-D5rhvJSe.js",
+      "_warehouse-export-tickets-N2-AmnBf.js",
       "resources/js/app/pages/admin/tickets/details/contents/activities/page.jsx",
       "_user-service-4Z-FBYA4.js",
       "resources/js/app.jsx",
@@ -9205,7 +9135,7 @@
     ]
   },
   "resources/js/app/pages/warehouse/tickets/sections/warehouse-tickets-table-section.jsx": {
-    "file": "assets/warehouse-tickets-table-section-B7-mGX0B.js",
+    "file": "assets/warehouse-tickets-table-section-Dn_HQHl4.js",
     "name": "warehouse-tickets-table-section",
     "src": "resources/js/app/pages/warehouse/tickets/sections/warehouse-tickets-table-section.jsx",
     "isDynamicEntry": true,
@@ -9249,7 +9179,7 @@
     ]
   },
   "resources/js/app/pages/web_form/page.jsx": {
-    "file": "assets/page-ByNZwclF.js",
+    "file": "assets/page-BH8IRekd.js",
     "name": "page",
     "src": "resources/js/app/pages/web_form/page.jsx",
     "isDynamicEntry": true,
@@ -9279,7 +9209,7 @@
     ]
   },
   "resources/js/app/pages/web_form/sections/web-form-section.jsx": {
-    "file": "assets/web-form-section-CGHJnvfo.js",
+    "file": "assets/web-form-section-CjoakuLs.js",
     "name": "web-form-section",
     "src": "resources/js/app/pages/web_form/sections/web-form-section.jsx",
     "isDynamicEntry": true,

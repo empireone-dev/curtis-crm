@@ -5,6 +5,7 @@ import { get_tickets_by_user_id_thunk } from "./redux/customer-tickets-thunk";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import { router } from "@inertiajs/react";
 import { get_tickets_thunk } from "../../admin/tickets/_redux/tickets-thunk";
+import CSRTicketsTableSection from "./sections/csr-ticket-table";
 
 export default function AgentTicketsPage({ auth }) {
     const account = auth.user;
@@ -39,7 +40,8 @@ export default function AgentTicketsPage({ auth }) {
                 </div>
                
             </div>
-            <CustomerTicketsTableSection />
+            {account.agent_type == 'CSR' && <CSRTicketsTableSection />}
+            {account.agent_type !== 'CSR' &&  <CustomerTicketsTableSection />}
         </AgentLayout>
     );
 }
