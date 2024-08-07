@@ -959,11 +959,16 @@ class TicketController extends Controller
         if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
             $query->orWhere('created_from', $request->status);
         }
-
-        $query->orderBy('is_reply', 'desc')
+        $user =User::where('id',$id)->first();
+        if ($user->agent_type == 'Tech') {
+            $query->orderBy('created_at', 'desc');
+        }else{
+            $query->orderBy('is_reply', 'desc')
             ->orderBy('email_date', 'asc')
             ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
             ->orderBy('status', 'asc');
+        }
+      
         $data = $query->paginate(10);
 
         return response()->json([
