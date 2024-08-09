@@ -22,6 +22,8 @@ class RedirectBasedOnRole
                 return redirect('/asc/dashboard');
             } else if ($account->role_id == 5) {
                 return redirect('/agent/dashboard');
+            }else if ($account->role_id == 6) {
+                return redirect('/curtis/dashboard');
             }
         }
 
