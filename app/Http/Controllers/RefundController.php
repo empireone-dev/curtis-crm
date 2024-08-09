@@ -192,7 +192,7 @@ class RefundController extends Controller
                 'discount' => $request->discount,
                 'after_discount' => $request->after_discount,
                 'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
+                'cheque_amount' =>  preg_replace('/[\$,]/', '', $request->cheque_amount),
                 'cost_refund' => $request->cost_refund,
                 'notes' => $request->notes,
                 'ship_date' => $request->ship_date,
@@ -204,7 +204,7 @@ class RefundController extends Controller
                 'discount' => $request->discount,
                 'after_discount' => $request->after_discount,
                 'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
+                'cheque_amount' =>  preg_replace('/[\$,]/', '', $request->cheque_amount),
                 'cost_refund' => $request->cost_refund,
                 'notes' => $request->notes,
                 'ship_date' => $request->ship_date,
@@ -216,7 +216,7 @@ class RefundController extends Controller
                 'discount' => $request->discount,
                 'after_discount' => $request->after_discount,
                 'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
+                'cheque_amount' =>  preg_replace('/[\$,]/', '', $request->cheque_amount),
                 'cost_refund' => $request->cost_refund,
             ]);
         } else {
@@ -226,7 +226,7 @@ class RefundController extends Controller
                 'discount' => $request->discount,
                 'after_discount' => $request->after_discount,
                 'cheque_no' => $request->cheque_no,
-                'cheque_amount' => $request->cheque_amount,
+                'cheque_amount' =>  preg_replace('/[\$,]/', '', $request->cheque_amount),
                 'cost_refund' => $request->cost_refund,
             ]);
         }

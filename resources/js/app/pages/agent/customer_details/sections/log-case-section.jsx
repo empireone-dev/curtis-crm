@@ -29,6 +29,7 @@ export default function LogCaseSection({ datas, account }) {
         dispatch(set_cases_log(res.data));
         setLoading(false);
     }
+    console.log('datas',datas)
     return (
         <div>
             {contextHolder}
@@ -290,6 +291,7 @@ export default function LogCaseSection({ datas, account }) {
                    Submit
                 </button> */}
                 <Button
+                    disabled={datas.is_reply == null?true:false}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"
