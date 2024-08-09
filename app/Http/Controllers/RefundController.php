@@ -29,7 +29,7 @@ class RefundController extends Controller
         // Parse CSV data without setting header offset
         $csv = Reader::createFromPath($file->getPathname(), 'r');
 
-        $records = $csv->getRecords(); // Get all CSV rows as iterator
+        $records = $csv->getRecords()??[]; // Get all CSV rows as iterator
 
         $csvData = [];
         $firstRowSkipped = false;
@@ -109,12 +109,12 @@ class RefundController extends Controller
                 //Date Issued
                 //Cheque #
                 //Amount of Refund:
+                
                 if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '') {
                     $ticket = Ticket::where('ticket_id', $record[0])->first();
 
                     $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
                     $activity = Activity::where([['ticket_id','=',$ticket->id],['type','=','REFUND SHIPPED']])->first();
-
                     if ($activity) {
                         $activity->update([
                             'user_id' => $request->user_id,
@@ -139,28 +139,28 @@ class RefundController extends Controller
                             $dm->update([
                                 'date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' => str_replace('$', '', $record[3]),
+                                'cheque_amount' =>  preg_replace('/[\$,]/', '', $record[3]),
                             ]);
                         } else {
                             DecisionMaking::create([
                                 'ticket_id' => $ticket->id,
                                 'date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' => str_replace('$', '', $record[3]),
+                                'cheque_amount' =>  preg_replace('/[\$,]/', '', $record[3]),
                             ]);
                         }
                         if ($refund) {
                             $refund->update([
                                 'ship_date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' => str_replace('$', '', $record[3]),
+                                'cheque_amount' =>  preg_replace('/[\$,]/', '', $record[3]),
                             ]);
                         } else {
                             Refund::create([
                                 'ticket_id' => $ticket->id,
                                 'ship_date' => $record[1],
                                 'cheque_no' => $record[2],
-                                'cheque_amount' => str_replace('$', '', $record[3]),
+                                'cheque_amount' =>  preg_replace('/[\$,]/', '', $record[3]),
                             ]);
                         }
                     }
@@ -174,7 +174,7 @@ class RefundController extends Controller
 
 
         return response()->json([
-            'data' => $csvData
+            'data' => $csvData,
         ]);
     }
 
