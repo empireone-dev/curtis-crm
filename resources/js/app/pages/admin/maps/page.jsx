@@ -15,28 +15,26 @@ export default function MapsPage() {
       const res = await get_user_by_role_service(4)
       const ticketData = await get_tickets_by_ticket_id(url.split('/')[3])
       setTicket(ticketData)
-      setAsc(res.data)
+      setAsc(res?.data)
       setLoading(false)
     }
     get_user_role()
   }, []);
   
-
   return (
     <div>
       {
         asc.length !== 0 && !loading && <GoogleMapComponent
           ascs={asc.map((res, i) => ({
-            id: res.id,
-            lng: parseFloat(res.longitude),
-            lat: parseFloat(res.latitude),
-            name: res.name,
+            id: res?.id,
+            lng: parseFloat(res?.longitude),
+            lat: parseFloat(res?.latitude),
+            name: res?.name,
             ...res
           }))}
           ticket={ticket}
         />
       }
-
     </div>
   )
 }

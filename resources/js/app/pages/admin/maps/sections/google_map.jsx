@@ -35,6 +35,7 @@ function GoogleMapComponent({ ascs, ticket }) {
             const response = await fetch(url);
             const data = await response.json();
 
+            console.log('data',data)
             if (data.results.length > 0) {
                 const location = data.results[0].geometry.location;
                 return { latitude: location.lat, longitude: location.lng };
