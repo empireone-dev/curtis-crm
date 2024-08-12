@@ -176,7 +176,7 @@ export default function TicketsDetailsLayout({ children }) {
                     <TicketsDetailsMoveAssignSection />
                 )}
                 <div className=" px-8 text-3xl font-black text-red-600">
-               Case File : {ticket.ticket_id}
+               Case File : {ticket.ticket_id??'N/A'}
                 </div>
                 <div className="w-full px-8">
                     <div
