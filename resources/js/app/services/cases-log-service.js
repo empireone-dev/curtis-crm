@@ -9,3 +9,8 @@ export async function get_caseslog_by_ticket_id_service(id){
     const res = await axios.get('/api/caseslog/'+id)
     return res.data
 }
+
+export async function get_caseslog_by_ticket_id_direct_email_service(id){
+    const res = await axios.get('/api/get_caseslog_by_ticket_id_direct_email/'+id)
+    return res.data
+}

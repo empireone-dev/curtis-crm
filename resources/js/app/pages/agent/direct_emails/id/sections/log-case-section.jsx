@@ -1,11 +1,14 @@
 import { create_caseslog_service } from "@/app/services/cases-log-service";
-import { Button } from "antd";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Button,message } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
+import { get_direct_email_by_id_service } from "@/app/services/direct-email-service";
 
 export default function AgentLogCaseSection({ ticket_id, account }) {
     const [data, setData] = useState({});
+    const [messageApi, contextHolder] = message.useMessage();
+    const { cases_logs } = useSelector((state) => state.users);
 
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -17,12 +20,30 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
             user_id: account.id,
             log_from: "direct_emails",
         });
-        setData({});
+        const ress=await get_direct_email_by_id_service()
+        setData({
+            isHide:ress.result.isHide
+        });
         dispatch(set_cases_log(res.data));
+        messageApi.open({
+            type: "success",
+            content: "Submitted Successfully",
+        });
         setLoading(false);
     }
+    useEffect(()=>{
+        async function getData(params) {
+                const res=await get_direct_email_by_id_service()
+                setData({
+                    ...data,
+                    isHide:res.result.isHide
+                })
+        }
+        getData()
+    },[])
     return (
         <div>
+            {contextHolder}
             <div class="text-gray-600 mb-4 mt-3">
                 <p class="font-medium text-lg">Log Case</p>
 
@@ -199,6 +220,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
                    Submit
                 </button> */}
                 <Button
+                    disabled={data.isHide == 'true'}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"

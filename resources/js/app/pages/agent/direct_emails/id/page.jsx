@@ -9,7 +9,7 @@ import AgentLogCaseSection from "./sections/log-case-section";
 // import AgentCaseDetailsSection from "./sections/case-details-section";
 import { get_tickets_by_ticket_id } from "@/app/services/tickets-service";
 import { useDispatch } from "react-redux";
-import { get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
+import { get_caseslog_by_ticket_id_direct_email_service, get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
 import TransferDirectEmails from "./sections/transfer-direct-email";
 import store from "@/app/store/store";
@@ -26,7 +26,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
     useEffect(() => {
         async function fetch_data(params) {
             // const ress = await get_tickets_by_ticket_id(window.location.pathname.split('/')[3]);
-            const res = await get_caseslog_by_ticket_id_service(
+            const res = await get_caseslog_by_ticket_id_direct_email_service(
                 window.location.pathname.split("/")[3]
             );
             dispatch(set_cases_log(res.data));

@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class CasesLogController extends Controller
 {
+    public function get_caseslog_by_ticket_id_direct_email($id){
+        $logs = CasesLog::where([['ticket_id','=',$id],['log_from','=','direct_emails']])->with('user')->orderBy('id', 'desc')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $logs
+        ], 200);
+    }
     public function show($id)
     {
         $ticket = Ticket::where('ticket_id', $id)->first();

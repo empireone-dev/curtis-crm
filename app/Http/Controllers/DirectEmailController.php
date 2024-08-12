@@ -17,4 +17,10 @@ class DirectEmailController extends Controller
             'result' => $ticket
         ], 200);
     }
+    public function show($id){
+        $ticket = DirectEmail::where('id', $id)->first();
+        return response()->json([
+            'result' => $ticket
+        ], 200);
+    }
 }

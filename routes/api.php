@@ -57,6 +57,7 @@ Route::resource('refund', RefundController::class);
 Route::post('/warranty_checkque_shipped', [RefundController::class, 'warranty_checkque_shipped']);
 Route::post('/upload_csv_file', [RefundController::class, 'upload_csv_file']);
 
+
 Route::resource('repair', RepairController::class);
 Route::put('/unrepair/{ticketid}', [RepairController::class, 'unrepair']);
 
@@ -110,6 +111,7 @@ Route::get('get_tickets_warehouse/{country}', [TicketController::class, 'get_tic
 
 
 Route::put('transfer_direct_email', [DirectEmailController::class, 'transfer_direct_email']);
+Route::resource('direct_email', DirectEmailController::class);
 
 
 
@@ -126,7 +128,7 @@ Route::post('/upload_photo_status', [FileController::class, 'upload_photo_status
 
 
 Route::resource('caseslog', CasesLogController::class);
-
+Route::get('/get_caseslog_by_ticket_id_direct_email/{id}', [CasesLogController::class, 'get_caseslog_by_ticket_id_direct_email']);
 
 Route::get('/administrator_dashboard', [DashboardController::class, 'administrator_dashboard']);
 Route::get('/customer_dashboard/{userid}', [DashboardController::class, 'customer_dashboard']);
