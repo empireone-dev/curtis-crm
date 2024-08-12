@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { router } from "@inertiajs/react";
 
-export default function ProductivityTableSection() {
+export default function ProductivityTableSection({loading}) {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -235,7 +235,9 @@ export default function ProductivityTableSection() {
                     <ProductivityDateSection data={datas} setData={setDatas} />
                     <ProductivitySearchSection />
                 </div>
-                <Table columns={columns} dataSource={data} />
+                <Table 
+                loading={loading}
+                columns={columns} dataSource={data} />
             </div>
         </div>
     );

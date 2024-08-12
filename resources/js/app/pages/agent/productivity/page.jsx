@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductivityTableSection from './sections/productivity-table-section'
 import ProductivityTotalHandledCases from './sections/productivity-total-handled-cases'
 import store from '@/app/store/store';
@@ -8,9 +8,15 @@ import AgentLayout from '@/app/layouts/agent/agent-layout';
 
 export default function ProductivityPage({auth}) {
 
+  const [loading, setLoading] = useState(true);
   const account = auth.user;
   useEffect(() => {
-    store.dispatch(get_users_thunk(5))
+    async function loadingState(params) {
+     await setLoading(true)
+     await store.dispatch(get_users_thunk(5))
+     await setLoading(false)
+    }
+    loadingState()
   }, []);
   return (
     <AgentLayout  account={account}>
@@ -20,7 +26,7 @@ export default function ProductivityPage({auth}) {
         </h2>
       </div>
       {/* <ProductivityTotalHandledCases/> */}
-      <ProductivityTableSection />
+      <ProductivityTableSection loading={loading}/>
     </AgentLayout>
   )
 }
