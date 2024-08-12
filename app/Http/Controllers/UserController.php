@@ -120,7 +120,7 @@ class UserController extends Controller
                 //     ->whereRaw('DATE_ADD(updated_at, INTERVAL 4 DAY) <= ?', [$today])
                 //     ->count();
 
-                $overdue_direct_emails =DirectEmail::where('user_id', $user->id)->get();
+                $overdue_direct_emails =DirectEmail::where([['user_id','=',$user->id],['isHide', '<>', 'true']])->get();
                 foreach ($overdue_direct_emails as &$value) {
                     $emailDate = Carbon::parse($value->email_date);
                     $dayOfWeek = $emailDate->dayOfWeekIso;
@@ -144,7 +144,7 @@ class UserController extends Controller
                 //     ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
                 //     ->count();
 
-                $direct_emails_due_today =DirectEmail::where('user_id', $user->id)->get();
+                $direct_emails_due_today =DirectEmail::where([['user_id','=',$user->id],['isHide', '<>', 'true']])->get();
                 foreach ($direct_emails_due_today as &$value) {
                     $emailDate = Carbon::parse($value->email_date);
                     $dayOfWeek = $emailDate->dayOfWeekIso;
