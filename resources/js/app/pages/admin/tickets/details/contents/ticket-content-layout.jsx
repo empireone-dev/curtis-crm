@@ -175,6 +175,9 @@ export default function TicketsDetailsLayout({ children }) {
                 {user.agent_type !== "CSR" && (
                     <TicketsDetailsMoveAssignSection />
                 )}
+                <div className=" px-8 text-3xl font-black text-red-600">
+               Case File : {ticket.ticket_id}
+                </div>
                 <div className="w-full px-8">
                     <div
                         className={`py-3 text-3xl font-black flex gap-3 ${
