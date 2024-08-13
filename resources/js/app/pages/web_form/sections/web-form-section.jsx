@@ -49,6 +49,21 @@ export default function WebFormFormSection() {
     //     );
     // }
 
+    function formatPhoneNumber(value) {
+        const cleaned = ("" + value).replace(/\D/g, "");
+        let numberToFormat = cleaned;
+        if (cleaned.length === 11) {
+            numberToFormat = cleaned.slice(0, -1);
+        }
+        if (numberToFormat.length === 10) {
+            return numberToFormat.replace(
+                /(\d{3})(\d{3})(\d{4})/,
+                "($1) $2-$3"
+            );
+        }
+        return value;
+    }
+
     function formHandler(value, name) {
         if (name == "phone") {
             dispatch(
@@ -58,18 +73,21 @@ export default function WebFormFormSection() {
                 })
             );
         } else if (name == "issue") {
+            if (value.name) {
+                const issue = `["${value.name}"]`;
+                dispatch(
+                    setForm({
+                        ...form,
+                        issue: issue,
+                    })
+                );
+            }
+        }else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    issue: `["${JSON.parse(value).name}"]`,
-                })
-            );
-        } else if (name == "country") {
-            dispatch(
-                setForm({
-                    ...form,
-                    country: value,
-                    state: value == 'CA' ? 'AB' : 'AL',
+                    country:value,
+                    state: '',
                 })
             );
         } else {
@@ -80,7 +98,9 @@ export default function WebFormFormSection() {
                 })
             );
         }
+       
     }
+
     useEffect(() => {
         store.dispatch(get_products_thunk());
     }, []);
@@ -173,14 +193,14 @@ export default function WebFormFormSection() {
                     </div>
                 </div>
                 <div className="md:w-1/2 px-3">
-                    <Input
+                <Input
                         onChange={formHandler}
                         name="phone"
                         required={true}
-                        value={form.phone}
+                        value={form?.phone}
                         label="Phone Number"
                         type="phone"
-                        errorMessage="Phone Number is required"
+                        errorMessage='Phone Number is required'
                     />
                 </div>
             </div>
