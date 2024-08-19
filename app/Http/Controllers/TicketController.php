@@ -702,7 +702,7 @@ class TicketController extends Controller
 
     public function get_email_replies()
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbzQXUY1Io__zr9MIt50Pg9LyQJr_Dkb0t6ovBQm20k4eghDQ3Rr6W9dDNqxX6oW2LsR/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyKdXAqyj9XWSksiamUAH-yyzT1HCCMiS4O9nldax9Jwwb-xW2lLaS7ifPsbobQ2MPL/exec';
 
         $response = Http::get($scriptUrl);
         $responseData = $response->json();

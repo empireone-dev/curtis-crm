@@ -27,9 +27,10 @@ export default function LogCaseSection({ datas, account }) {
             content: "Submitted Successfully",
         });
         dispatch(set_cases_log(res.data));
-        setLoading(false);
+        setTimeout(()=>{
+            setLoading(false);
+        },1000)
     }
-    console.log('datas',datas)
     return (
         <div>
             {contextHolder}

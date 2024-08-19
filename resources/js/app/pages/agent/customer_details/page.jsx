@@ -8,7 +8,7 @@ import CaseDetailsSection from "./sections/case-details-section";
 import { get_tickets_by_ticket_details_id} from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
 import { get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { set_cases_log } from "../../admin/users/redux/users-slice";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import store from "@/app/store/store";
@@ -17,6 +17,7 @@ import { get_users_thunk } from "../../admin/users/redux/users.thunk";
 export default function UserCasesCustomerDetailsPage({ auth }) {
     const [data, setData] = useState({});
     const dispatch = useDispatch();
+    const { cases_logs } = useSelector((state) => state.users);
     const account = auth.user;
 
     useEffect(() => {
@@ -31,7 +32,7 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
             setData(ress);
         }
         fetch_data();
-    }, []);
+    }, [cases_logs.length]);
     useEffect(() => {
         store.dispatch(get_users_thunk(5));
     }, []);
