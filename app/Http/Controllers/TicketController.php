@@ -27,7 +27,7 @@ class TicketController extends Controller
     {
         // Define the warehouse status based on the country
         $status = ($country == 'CA') ? 'CA WAREHOUSE' : (($country == 'US') ? 'US WAREHOUSE' : null);
-    
+
         if ($status) {
             $query = Ticket::where([['status', '=', $status], ['country', '=', $country]])
                 ->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
@@ -35,12 +35,12 @@ class TicketController extends Controller
         } else {
             $data = [];
         }
-    
+
         return response()->json([
             'data' => $data,
         ], 200);
     }
-    
+
     public function get_ticket_by_id($id)
     {
         $tickets = Ticket::where('id', $id)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'internal'])->first();
@@ -746,6 +746,8 @@ class TicketController extends Controller
         $perPage = 10;
         $data = [];
         $user = User::where('id', $request->user_id)->first();
+        $today = Carbon::today()->toDateString();
+
         if ($user->agent_type == 'Warranty') {
             $call_type = 'CF-Warranty Claim';
         } elseif ($user->agent_type == 'Parts') {
@@ -774,125 +776,72 @@ class TicketController extends Controller
                 'ticket_count' => $dataQueryCount,
                 'result' =>  $dataQuery,
             ], 200);
-            // if ($call_type == 'CF-Warranty Claim' || $call_type == 'Tech') {
-            //     if (count($data) !== 0) {
-            //         $scriptUrl = 'https://script.google.com/macros/s/AKfycbyxV1kDKDZXuMDRoTYqkf7EamUN_Rj_4RvUPJqzSfSrcS0Xv-ea3A5A19g-gTKmXYL0/exec?data=' . json_encode($data);
+        } else  if ($request->cases == 'over_due') {
+            $overdue_cases = Ticket::where([
+                ['user_id', '=', $user->id],
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['cases_status', '<>', 'hide'],
+                ['is_reply', '=', 'true'],
+                ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+            ])->get();
 
-            //         $response = Http::get($scriptUrl);
-            //         $responseData = $response->json();
-            //         $collection = collect($responseData);
-            //         $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
-            //         foreach ($unique as  &$value) {
-            //             $string = $value['subject'];
-            //             preg_match('/\b(\S{14})\b/', $string, $matches);
-            //             $resultss = $matches[1] ?? null;
-            //             $value['subject'] = $resultss;
+            foreach ($overdue_cases as &$value) {
+                $emailDate = Carbon::parse($value->email_date);
+                $dayOfWeek = $emailDate->dayOfWeekIso;
+                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                    $addDay = 4;
+                } elseif ($dayOfWeek == 6) {
+                    $addDay = 3;
+                } elseif ($dayOfWeek == 7) {
+                    $addDay = 2;
+                } else {
+                    $addDay = 2;
+                }
+                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            }
+            $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
+                return $ticket->email_date < $today;
+            });
+            return response()->json([
+                'data_count' => count($overdue_cases),
+                'ticket_count' => 100,
+                'result' =>  $overdue_cases,
+            ], 200);
+        } else  if ($request->cases == 'due_today') {
+            $cases_due_today = Ticket::where([
+                ['user_id', '=', $user->id],
+                ['status', '<>', 'CLOSED'],
+                ['ticket_id', '<>', null],
+                ['cases_status', '<>', 'hide'],
+                ['is_reply', '=', 'true'],
+                ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+            ])->get();
 
-            //             if ($value['count'] == 1) {
-            //                 if ($value['isReply']) {
-            //                     Ticket::where('ticket_id', $resultss)->update([
-            //                         'cases_status' => 'handled',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => 'true'
-            //                     ]);
-            //                 } else {
+            foreach ($cases_due_today as &$value) {
+                $emailDate = Carbon::parse($value->email_date);
+                $dayOfWeek = $emailDate->dayOfWeekIso;
 
-            //                     Ticket::where('ticket_id', $resultss)->update([
-            //                         'cases_status' => 'hide',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => null
-            //                     ]);
-            //                 }
-            //             } else {
-            //                 if ($value['isReply']) {
-            //                     Ticket::where('ticket_id', $resultss)->update([
-            //                         'cases_status' => 'handled',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => 'true'
-            //                     ]);
-            //                 } else {
-            //                     $value['isReply'] = $value['isReply'];
-            //                     Ticket::where('ticket_id', $resultss)->update([
-            //                         'cases_status' => 'hide',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => null
-            //                     ]);
-            //                 }
-            //             }
-            //         }
-
-            //         return response()->json([
-            //             'data_count' => count($data),
-            //             'ticket_count' => $dataQueryCount,
-            //             'result' =>  collect($unique)->unique('subject'),
-            //             'result2' => collect($unique)->unique('subject')
-            //         ], 200);
-            //     }
-            // } else if ($call_type == 'Parts') {
-            //     if (count($data) !== 0) {
-            //         $scriptUrl = 'https://script.google.com/macros/s/AKfycbz8vMpjNzyVNL6p9eMcqJ-XAwmf058RC_KhIzcOxI0rw6ryp2-ivoUPK3xdPIyZe6Tb/exec?data=' . json_encode($data);
-
-            //         $response = Http::get($scriptUrl);
-            //         $responseData = $response->json();
-            //         $collection = collect($responseData);
-            //         $unique = $collection->unique('subject')->sortByDesc('date')->values()->all();
-
-            //         foreach ($unique as  &$value) {
-            //             $string = $value['subject'];
-            //             preg_match('/\b(\S{14})\b/', $string, $matches);
-            //             $resultsss = $matches[1] ?? null;
-            //             $value['subject'] = $resultsss;
-            //             if ($value['count'] == 1) {
-            //                 if ($value['isReply']) {
-            //                     Ticket::where('ticket_id', '=', $resultsss)->update([
-            //                         'cases_status' => 'handled',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => 'true'
-            //                     ]);
-            //                 } else {
-            //                     Ticket::where('ticket_id', '=', $resultsss)->update([
-            //                         'cases_status' => 'hide',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => null
-            //                     ]);
-            //                 }
-            //             } else {
-            //                 if ($value['isReply']) {
-            //                     Ticket::where('ticket_id', '=', $resultsss)->update([
-            //                         'cases_status' => 'handled',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => 'true'
-            //                     ]);
-            //                 } else {
-            //                     Ticket::where('ticket_id', '=', $resultsss)->update([
-            //                         'cases_status' => 'hide',
-            //                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            //                         'is_reply' => null
-            //                     ]);
-            //                 }
-            //             }
-            //         }
-
-            //         // $dataQuery2 = Ticket::where([
-            //         //     ['user_id', '=', $request->user_id],
-            //         //     ['status', '<>', 'CLOSED'],
-            //         //     ['ticket_id', '<>', null],
-            //         //     ['call_type', '=', $call_type],
-            //         //     ['cases_status', '<>', 'hide'],
-            //         //     ['is_reply', '<>', null],
-            //         // ])->orderBy('email_date', 'desc');
-            //         // $dataQueryCount2 = $dataQuery2->count();
-
-            //         // $dataPaginator2 = $dataQuery2->paginate($perPage);
-
-            //         return response()->json([
-            //             'data_count' => count($data),
-            //             'ticket_count' => $dataQueryCount,
-            //             'result' => collect($unique)->unique('subject'),
-            //             'result2' => collect($unique)->unique('subject')
-            //         ], 200);
-            //     }
-            // }
+                // Determine the number of days to add
+                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                    $addDay = 4;
+                } elseif ($dayOfWeek == 6) {
+                    $addDay = 3;
+                } elseif ($dayOfWeek == 7) {
+                    $addDay = 2;
+                } else {
+                    $addDay = 2;
+                }
+                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            }
+            $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
+                return $ticket->email_date === $today;
+            });
+            return response()->json([
+                'data_count' => count($cases_due_today),
+                'ticket_count' => 100,
+                'result' =>  $cases_due_today,
+            ], 200);
         }
     }
     public function show(Request $request, $id)
@@ -910,7 +859,7 @@ class TicketController extends Controller
         }
 
 
-        $user =User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -963,16 +912,16 @@ class TicketController extends Controller
         }
         if ($user->role_id == 5) {
             if ($searchQuery == 'CLOSED') {
-                $query->where('status','=', 'CLOSED');
-            }else{
+                $query->where('status', '=', 'CLOSED');
+            } else {
                 if (!isset($searchQuery)) {
-                    $query->where('status','<>', 'CLOSED');
+                    $query->where('status', '<>', 'CLOSED');
                 }
                 // $query->where('status','=', 'CLOSED');
             }
             $query->orderBy('updated_at', 'desc');
             $data = $query->get();
-        }else{
+        } else {
             // $query->orderBy('is_reply', 'desc')
             // ->orderBy('email_date', 'asc')
             // ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
@@ -980,7 +929,7 @@ class TicketController extends Controller
             $query->orderBy('updated_at', 'desc');
             $data = $query->paginate(10);
         }
-      
+
 
         return response()->json([
             'result' => $data ?? [],

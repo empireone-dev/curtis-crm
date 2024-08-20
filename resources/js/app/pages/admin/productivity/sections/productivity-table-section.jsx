@@ -9,6 +9,7 @@ import Highlighter from "react-highlight-words";
 import ProductivitySearchSection from "./productivity-search-section";
 import ProductivityDateSection from "./productivity-date-section";
 import { useSelector } from "react-redux";
+import { Link } from "@inertiajs/react";
 
 export default function ProductivityTableSection() {
     const { users } = useSelector((state) => state.users);
@@ -139,6 +140,7 @@ export default function ProductivityTableSection() {
 
     const data = users.map((res, i) => 
         res.agent_type === 'Warranty' || res.agent_type === 'Parts'? {
+            id:res.id,
             agent: res.name,
             position: res.agent_type,
             overdue_cases: res.overdue_cases,
@@ -170,12 +172,27 @@ export default function ProductivityTableSection() {
             dataIndex: "overdue_cases",
             key: "overdue_cases",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                console.log('record',record)
+                return (
+                    <Link href={`/administrator/productivity/${record.id}?page=1&search=over_due`} className="underline" key={i}>
+                        {record.overdue_cases} 
+                    </Link>
+                );
+            },
         },
         {
             title: "Cases Due Today",
             dataIndex: "cases_due_today",
             key: "cases_due_today",
-            // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                console.log('record',record)
+                return (
+                    <Link href={`/administrator/productivity/${record.id}?page=1&search=due_today`} className="underline" key={i}>
+                        {record.cases_due_today} 
+                    </Link>
+                );
+            },
         },
         {
             title: "Overdue Direct Emails",

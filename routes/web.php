@@ -247,7 +247,13 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/productivity/page');
     })->name('productivity');
 
+    Route::get('/productivity/{id}', function () {
+        return Inertia::render('admin/productivity/id/page');
+    });
 
+    Route::get('/productivity/customer_details/{ticket_id}', function () {
+        return Inertia::render('admin/productivity/id/customer_details/page');
+    });
 
     Route::get('/asc', function () {
         return Inertia::render('admin/asc/page');
