@@ -34,18 +34,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if(Auth::user()->role_id == 1){
+        if (Auth::user()->role_id == 1) {
             return redirect()->intended(RouteServiceProvider::ADMIN);
-        }else if(Auth::user()->role_id == 2){
-            return redirect()->intended(RouteServiceProvider::CUSTOMER); 
-        }else if(Auth::user()->role_id == 3){
-            return redirect()->intended(RouteServiceProvider::WAREHOUSE); 
-        }else if(Auth::user()->role_id == 4){
-            return redirect()->intended(RouteServiceProvider::ASC); 
-        }else if(Auth::user()->role_id == 5){
-            return redirect()->intended(RouteServiceProvider::AGENT); 
-        }else if(Auth::user()->role_id == 6){
-            return redirect()->intended(RouteServiceProvider::CURTIS); 
+        } else if (Auth::user()->role_id == 2) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->intended(RouteServiceProvider::LOGIN);
+        } else if (Auth::user()->role_id == 3) {
+            return redirect()->intended(RouteServiceProvider::WAREHOUSE);
+        } else if (Auth::user()->role_id == 4) {
+            return redirect()->intended(RouteServiceProvider::ASC);
+        } else if (Auth::user()->role_id == 5) {
+            return redirect()->intended(RouteServiceProvider::AGENT);
+        } else if (Auth::user()->role_id == 6) {
+            return redirect()->intended(RouteServiceProvider::CURTIS);
         }
     }
 

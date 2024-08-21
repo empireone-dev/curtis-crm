@@ -24,6 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public const AGENT = '/agent/dashboard';
     public const ASC = '/asc/dashboard';
     public const CURTIS = '/curtis/dashboard';
+    public const LOGIN = '/?status=error';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
