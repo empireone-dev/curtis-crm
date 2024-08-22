@@ -195,7 +195,7 @@ export default function ProductRegistrationForm() {
                         name="state"
                         required={true}
                         value={form?.state}
-                        label="State"
+                        label="State / Province / Region"
                         // errorMessage='State is required'
                         data={regions}
                     />
