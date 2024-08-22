@@ -235,6 +235,8 @@ export default function ProductRegistrationForm() {
                         type="text"
                         // errorMessage='Address is required'
                     />
+                    Entire Picture of the Receipt that shows Date of Purchase, Name of Store,<br />
+                    Unit Description, Unit Price, Order Summary with Total Breakdown:
                     <Upload
                         fileList={form?.fileList ?? []}
                         listType="picture"
