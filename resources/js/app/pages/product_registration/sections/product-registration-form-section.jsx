@@ -241,7 +241,7 @@ export default function ProductRegistrationForm() {
                         {...props}
                     >
                         <Button icon={<UploadOutlined />}>
-                            Click to Upload
+                        Click to upload receipt/bill of sale.
                         </Button>
                     </Upload>
                     <button
