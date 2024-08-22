@@ -16,6 +16,7 @@ use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\InternalController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductRegistrationController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RepairController;
@@ -48,6 +49,8 @@ Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_ra
 
 
 Route::resource('replacement', ReplacementController::class);
+Route::resource('product_registration', ProductRegistrationController::class);
+
 Route::post('/parts_replacement_shipped', [ReplacementController::class, 'parts_replacement_shipped']);
 Route::post('/parts_replacement_not_shipped', [ReplacementController::class, 'parts_replacement_not_shipped']);
 
