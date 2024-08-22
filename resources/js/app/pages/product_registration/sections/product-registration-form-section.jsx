@@ -72,19 +72,25 @@ export default function ProductRegistrationForm() {
         fd.append("address1", form.address1);
         fd.append("address2", form.address2);
         fd.append("fname", form.fname);
-        form.fileList.forEach((file) => {
-            if (file.name !== "uploaded" && file.status === "done") {
-                fd.append("files[]", file.originFileObj);
+        if (form.fileList && form.fileList.length !== 0) {
+            form.fileList.forEach((file) => {
+                if (file.name !== "uploaded" && file.status === "done") {
+                    fd.append("files[]", file.originFileObj);
+                }
+            });
+            try {
+                await product_registration_service(fd);
+                message.success(`Product Registration Successfully!`);
+                setForm({});
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
             }
-        });
-        try {
-            await product_registration_service(fd);
-            message.success(`Product Registration Successfully!`);
-            setForm({});
-            setLoading(false);
-        } catch (error) {
+        }else{
+            message.error(`Please attach your receipt.`);
             setLoading(false);
         }
+        
     }
 
     const findCountry = (countryName) => {
