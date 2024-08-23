@@ -40,15 +40,17 @@ export default function ProductRegistrationTableSection() {
                 }}
                 onKeyDown={(e) => e.stopPropagation()}
             >
+            
                 <Input
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
                     onChange={(e) => {
+                        console.log('dataIndex',e.target.value)
                         if (dataIndex == "phone") {
-                            if (e.target.value.length <= 10) {
+                            if (e.target.value?.replace(/\D/g, '').length <= 10) {
                                 setSelectedKeys(
-                                    e.target.value ? [e.target.value.replace(
+                                    e.target.value ? [e.target.value?.replace(/\D/g, '').replace(
                                         /(\d{3})(\d{3})(\d{4})/,
                                         "($1) $2-$3"
                                     )] : []
