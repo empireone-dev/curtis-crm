@@ -15,9 +15,10 @@ export default function ProductRegistrationTableSection() {
     const [pageSize, setPageSize] = useState(10);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
+        // confirm();
+        // setSearchText(selectedKeys[0]);
+        // setSearchedColumn(dataIndex);
+        router.visit(`/administrator/product_registration?${dataIndex}=`+selectedKeys)
     };
     const handleReset = (clearFilters) => {
         clearFilters();
@@ -153,67 +154,62 @@ export default function ProductRegistrationTableSection() {
             // ...getColumnSearchProps("ticket_id"),
         },
         {
-            title: "Fullname",
-            dataIndex: "name",
-            key: "name",
-            // ...getColumnSearchProps("name"),
-            render: (_, record, i) => {
-                return (
-                    <div color={"red"} key={i}>
-                        {record.fname} {record.lname}
-                    </div>
-                );
-            },
+            title: "First Name",
+            dataIndex: "fname",
+            key: "fname",
+            ...getColumnSearchProps("fname"),
+        },
+        {
+            title: "Last Name",
+            dataIndex: "lname",
+            key: "lname",
+            ...getColumnSearchProps("lname"),
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            // ...getColumnSearchProps("email"),
+            ...getColumnSearchProps("email"),
         },
         {
             title: "Phone",
             dataIndex: "phone",
             key: "phone",
-            // ...getColumnSearchProps("email"),
+            ...getColumnSearchProps("email"),
         },
         {
             title: "Serial #",
             dataIndex: "serial",
             key: "serial",
-            render: (_, record, i) => {
-                return <div>{record.serial}</div>;
-            },
+            ...getColumnSearchProps("serial"),
         },
         {
-            title: "model",
+            title: "Model",
             dataIndex: "model",
             key: "model",
-            render: (_, record, i) => {
-                return <div>{record.model}</div>;
-            },
+            ...getColumnSearchProps("model"),
         },
-        {
-            title: "Action",
-            dataIndex: "action",
-            render: (_, record) => {
-                function route_link(data) {
-                    return (
-                        <Link
-                            href={
-                                "/administrator/product_registration/" + record.id}
-                        >
-                            <EyeOutlined className="text-lg text-blue-500" />
-                        </Link>
-                    );
-                }
-                return (
-                    <Tooltip placement="topLeft" title="View Ticket Details">
-                        {route_link(record)}
-                    </Tooltip>
-                );
-            },
-        },
+        // {
+        //     title: "Action",
+        //     dataIndex: "action",
+        //     render: (_, record) => {
+        //         function route_link(data) {
+        //             return (
+        //                 <Link
+        //                     href={
+        //                         "/administrator/product_registration/" + record.id}
+        //                 >
+        //                     <EyeOutlined className="text-lg text-blue-500" />
+        //                 </Link>
+        //             );
+        //         }
+        //         return (
+        //             <Tooltip placement="topLeft" title="View Ticket Details">
+        //                 {route_link(record)}
+        //             </Tooltip>
+        //         );
+        //     },
+        // },
     ];
 
     const url = window.location.pathname + window.location.search;

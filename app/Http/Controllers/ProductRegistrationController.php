@@ -14,73 +14,44 @@ class ProductRegistrationController extends Controller
 {
     public function index(Request $request)
     {
-        $searchQuery = $request->input('search');
+        $fname = $request->input('fname');
+        $lname = $request->input('lname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $serial = $request->input('serial');
+        $model = $request->input('model');
 
         // Get all column names of the table
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
         $query = ProductRegistration::query()->with(['prf']);
-        if ($searchQuery) {
-            // Dynamically add where conditions for each column
-            $query->where(function ($query) use ($columns, $searchQuery) {
-                // foreach ($columns as $column) {
-                //     if ($searchQuery == 'WARRANTY VALIDATION') {
-                //         $query->orWhere($column, '=',  $searchQuery);
-                //     } else if ($searchQuery == 'OPEN WARRANTY') {
-                //         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
-                //     } else if ($searchQuery == 'REFUND') {
-                //         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REFUND']]);
-                //     } else if ($searchQuery == 'REPLACEMENT') {
-                //         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REPLACEMENT']]);
-                //     } else if ($searchQuery == 'OPEN PARTS') {
-                //         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
-                //     } else if ($searchQuery == 'OPEN TECH') {
-                //         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
-                //     } else if ($searchQuery == 'WARRANTY CLOSED') {
-                //         $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
-                //     } else if ($searchQuery == 'PARTS CLOSED') {
-                //         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
-                //     } else if ($searchQuery == 'TECH CLOSED') {
-                //         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
-                //     } else {
-                //         $query->orWhere([[$column, '=',  $searchQuery]]);
-                //     }
-                // }
-                $query->orWhere('id', '=', $searchQuery);
-                $query->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
+        if ($fname) {
+            $query->where(function ($query) use ($columns, $fname) {
+                $query->where('fname', '=', $fname);
+            });
+        }else if ($lname) {
+            $query->where(function ($query) use ($columns, $lname) {
+                $query->where('lname', '=', $lname);
+            });
+        }else if ($email) {
+            $query->where(function ($query) use ($columns, $email) {
+                $query->where('email', '=', $email);
+            });
+        }else if ($phone) {
+            $query->where(function ($query) use ($columns, $phone) {
+                $query->where('phone', '=', $phone);
+            });
+        }else if ($serial) {
+            $query->where(function ($query) use ($columns, $serial) {
+                $query->where('serial', '=', $serial);
+            });
+        }else if ($model) {
+            $query->where(function ($query) use ($columns, $model) {
+                $query->where('model', '=', $model);
             });
         }
-
-        if ($request->start && $request->end) {
-            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
-            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-            $query->whereBetween('created_at', [$startTime, $endTime]);
-        }
-
-        // Add item_number condition if provided
-        // if ($request->model && ($request->model != 'null' && $request->model != 'undefined')) {
-        //     $models = explode(',', $request->model);
-        //     $query->whereIn('item_number', $models);
-        // }
-        // if ($request->call_type  && ($request->call_type != 'null' && $request->call_type != 'undefined')) {
-        //     $query->where('call_type', '=', $request->call_type);
-        // }
-        // if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
-        //     $query->where('status', '=', $request->status);
-        // }
-
-        // if ($request->status == 'WEB FORM') {
-        //     $query->orWhere('created_from', '=', $request->status);
-        // }
-        // if ($request->status == 'AGENT FORM') {
-        //     $query->orWhere('created_from', '=', $request->status);
-        // }
-
-        // $query->orderBy('is_reply', 'desc')
-        //     ->orderBy('email_date', 'asc')
-        //     ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
-        //     ->orderBy('status', 'asc');
+        // $query->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
         $query->orderBy('updated_at', 'desc');
         $data = $query->paginate(10);
 

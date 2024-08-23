@@ -14,7 +14,7 @@ export async function get_product_registration_service(search) {
 
 export async function get_product_registration_by_id_service() {
   try {
-      const res = await axios.get("/api/product_registration/"+window.location.pathname.split('/')[3]);
+      const res = await axios.get("/api/product_registration/"+window.location.pathname.split('/')[3]+window.location.search);
       return res.data.result;
   } catch (error) {
       return [];
