@@ -19,6 +19,7 @@ import {
     InboxArrowDownIcon,
     KeyIcon,
     PowerIcon,
+    RectangleStackIcon,
     TicketIcon,
     UserCircleIcon,
     UserGroupIcon,
@@ -57,22 +58,22 @@ const AdministratorLayout = ({ children }) => {
                 router.visit("/administrator/dashboard");
             },
         },
-        {
-            key: "2",
-            icon: <KeyIcon className="h-6" />,
-            label: "Permissions",
-            onClick: () => {
-                router.visit("/administrator/permissions");
-            },
-        },
-        {
-            key: "3",
-            icon: <UserIcon className="h-6" />,
-            label: "Roles",
-            onClick: () => {
-                router.visit("/administrator/roles");
-            },
-        },
+        // {
+        //     key: "2",
+        //     icon: <KeyIcon className="h-6" />,
+        //     label: "Permissions",
+        //     onClick: () => {
+        //         router.visit("/administrator/permissions");
+        //     },
+        // },
+        // {
+        //     key: "3",
+        //     icon: <UserIcon className="h-6" />,
+        //     label: "Roles",
+        //     onClick: () => {
+        //         router.visit("/administrator/roles");
+        //     },
+        // },
         {
             key: "4",
             icon: <UserGroupIcon className="h-6" />,
@@ -121,6 +122,14 @@ const AdministratorLayout = ({ children }) => {
                 router.visit("/administrator/productivity");
             },
         },
+        {
+            key: "10",
+            icon: <RectangleStackIcon className="h-6" />,
+            label: "Products",
+            onClick: () => {
+                router.visit("/administrator/product_registration");
+            },
+        },
     ];
 
     let active = "0";
@@ -142,8 +151,9 @@ const AdministratorLayout = ({ children }) => {
         active = "8";
     } else if (path == "productivity") {
         active = "9";
+    } else if (path == "product_registration") {
+        active = "10";
     }
-
     const items = [
         {
             label: (

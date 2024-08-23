@@ -65,11 +65,11 @@ Route::get('/customer/web_form', function () {
 
 Route::get('/product_registration', function () {
     return Inertia::render('product_registration/page');
-})->name('web_form');
+});
 
 Route::get('/print/ticket_details/{id}', function () {
     return Inertia::render('ticket_details/page');
-})->name('web_form');
+});
 
 
 Route::get('/logout', function () {
@@ -161,7 +161,12 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/create/page');
         })->name('tickets.creates');
     });
-
+    Route::get('/product_registration', function () {
+        return Inertia::render('admin/product_registration/page');
+    });
+    Route::get('/product_registration/{id}', function () {
+        return Inertia::render('admin/product_registration/id/page');
+    });
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');
     })->name('dashboard');

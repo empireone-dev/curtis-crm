@@ -19,6 +19,7 @@ import ticketsCreateSlice from '../pages/admin/tickets/create/redux/tickets-crea
 import customerTicketsSlice from '../pages/customer/tickets/redux/customer-tickets-slice';
 import wareHouseTicketsSlice from '../pages/warehouse/tickets/redux/warehouse-tickets-slice';
 import ascTicketsSlice from '../pages/asc/tickets/redux/asc-tickets-slice';
+import productRegistrationSlice  from '../pages/admin/product_registration/redux/product-registration-slice';
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -39,7 +40,8 @@ const store = configureStore({
         tickets_create:ticketsCreateSlice,
         customer_tickets:customerTicketsSlice,
         warehouse_tickets:wareHouseTicketsSlice,
-        asc_tickets:ascTicketsSlice
+        asc_tickets:ascTicketsSlice,
+        product_registration:productRegistrationSlice
     },
 });
 

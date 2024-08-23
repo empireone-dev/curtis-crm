@@ -1,0 +1,1 @@
+import{d as a}from"./page-BhzpOonX.js";async function i(t){return(await a.post("/api/upload_photo_status",t)).data}async function r(t){return(await a.post("/api/files",t)).data}async function n(t){return(await a.get("/api/files/"+t)).data}async function u(t,s){return(await a.delete("/api/files/"+t)).data}export{i as a,u as d,n as g,r as u};

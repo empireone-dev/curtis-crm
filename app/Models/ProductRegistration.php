@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductRegistration extends Model
 {
@@ -22,4 +23,10 @@ class ProductRegistration extends Model
         'state',
         'zipcode',
     ];
+
+    public function prf(): HasMany
+    {
+        return $this->hasMany(ProductRegistrationFile::class,'pr_id','id');
+    }
+
 }
