@@ -402,7 +402,9 @@ export default function WebFormFormSection() {
                     </div>
                 </div>
                 <div className="flex gap-4 items-center justify-center">
-                    <button className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600">
+                    <button 
+                    disabled={loading}
+                    className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600">
                         {loading ? (
                             <div className="py-1.5">
                                 <Loading />
