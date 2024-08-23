@@ -189,27 +189,27 @@ export default function ProductRegistrationTableSection() {
             key: "model",
             ...getColumnSearchProps("model"),
         },
-        // {
-        //     title: "Action",
-        //     dataIndex: "action",
-        //     render: (_, record) => {
-        //         function route_link(data) {
-        //             return (
-        //                 <Link
-        //                     href={
-        //                         "/administrator/product_registration/" + record.id}
-        //                 >
-        //                     <EyeOutlined className="text-lg text-blue-500" />
-        //                 </Link>
-        //             );
-        //         }
-        //         return (
-        //             <Tooltip placement="topLeft" title="View Ticket Details">
-        //                 {route_link(record)}
-        //             </Tooltip>
-        //         );
-        //     },
-        // },
+        {
+            title: "Action",
+            dataIndex: "action",
+            render: (_, record) => {
+                function route_link(data) {
+                    return (
+                        <Link
+                            href={
+                                "/administrator/product_registration/" + record.id}
+                        >
+                            <EyeOutlined className="text-lg text-blue-500" />
+                        </Link>
+                    );
+                }
+                return (
+                    <Tooltip placement="topLeft" title="View Ticket Details">
+                        {route_link(record)}
+                    </Tooltip>
+                );
+            },
+        },
     ];
 
     const url = window.location.pathname + window.location.search;
