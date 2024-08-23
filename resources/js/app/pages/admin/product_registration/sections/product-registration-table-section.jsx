@@ -18,7 +18,9 @@ export default function ProductRegistrationTableSection() {
         // confirm();
         // setSearchText(selectedKeys[0]);
         // setSearchedColumn(dataIndex);
-        router.visit(`/administrator/product_registration?${dataIndex}=`+selectedKeys)
+        router.visit(
+            `/administrator/product_registration?${dataIndex}=` + selectedKeys
+        );
     };
     const handleReset = (clearFilters) => {
         clearFilters();
@@ -42,9 +44,22 @@ export default function ProductRegistrationTableSection() {
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) =>
-                        setSelectedKeys(e.target.value ? [e.target.value] : [])
-                    }
+                    onChange={(e) => {
+                        if (dataIndex == "phone") {
+                            if (e.target.value.length <= 10) {
+                                setSelectedKeys(
+                                    e.target.value ? [e.target.value.replace(
+                                        /(\d{3})(\d{3})(\d{4})/,
+                                        "($1) $2-$3"
+                                    )] : []
+                                );
+                            }
+                        } else if (dataIndex != "phone") {
+                            setSelectedKeys(
+                                e.target.value ? [e.target.value] : []
+                            );
+                        }
+                    }}
                     onPressEnter={() =>
                         handleSearch(selectedKeys, confirm, dataIndex)
                     }
@@ -175,7 +190,7 @@ export default function ProductRegistrationTableSection() {
             title: "Phone",
             dataIndex: "phone",
             key: "phone",
-            ...getColumnSearchProps("email"),
+            ...getColumnSearchProps("phone"),
         },
         {
             title: "Serial #",
@@ -197,7 +212,9 @@ export default function ProductRegistrationTableSection() {
                     return (
                         <Link
                             href={
-                                "/administrator/product_registration/" + record.id}
+                                "/administrator/product_registration/" +
+                                record.id
+                            }
                         >
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
