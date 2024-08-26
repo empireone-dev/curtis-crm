@@ -481,6 +481,13 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/dashboard/page');
     })->name('agent.dashboard');
 
+    Route::get('/product_registration', function () {
+        return Inertia::render('agent/product_registration/page');
+    });
+
+    Route::get('/product_registration/{id}', function () {
+        return Inertia::render('agent/product_registration/id/page');
+    });
     Route::get('tickets/details/{ticket_id}/edit', function () {
         return Inertia::render('agent/tickets/details/id/page');
     })->name('tickets.details.edit');
@@ -612,6 +619,7 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
     // Route::get('/tickets/{id}', function () {
     //     return Inertia::render('curtis/tickets/details/page');
     // })->name('curtis.tickets.details');
+    
 
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {

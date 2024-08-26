@@ -12,6 +12,7 @@ import {
     InboxArrowDownIcon,
     KeyIcon,
     PowerIcon,
+    RectangleStackIcon,
     TicketIcon,
     UserCircleIcon,
     UserGroupIcon,
@@ -92,7 +93,14 @@ export default function AgentLayout({ children, account }) {
             onClick: () => {
                 router.visit("/agent/productivity?page=1");
             },
-        },
+        },{
+            key: "6",
+            icon: <RectangleStackIcon className="h-6" />,
+            label: "Product Registration",
+            onClick: () => {
+                router.visit("/agent/product_registration");
+            },
+        }
     ];
     let active = "0";
     if (path == "dashboard") {
@@ -105,8 +113,9 @@ export default function AgentLayout({ children, account }) {
         active = "4";
     } else if (path == "productivity") {
         active = "5";
+    }else if (path == "product_registration") {
+        active = "6";
     }
-
     const items = [
         {
             label: (
