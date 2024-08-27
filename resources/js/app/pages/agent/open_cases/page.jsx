@@ -53,7 +53,7 @@ export default function AgentOpenCasesEMail({ auth }) {
         } else {
             dueDate = dueDate.add(2, "days");
         }
-        return dueDate.format("LLL");
+        return dueDate.format("LL");
     }
 
     const [searchText, setSearchText] = useState("");
@@ -187,7 +187,7 @@ export default function AgentOpenCasesEMail({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record.email_date).format("LLL")}</>;
+                return <>{moment(record.email_date).format("LL")}</>;
             },
         },
         {
@@ -264,7 +264,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={tickets.result ?? []}
+                            dataSource={Object.entries(tickets.result).map(res=>res[1]).sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ?? []}
                         />
                     </div>
                 )}
