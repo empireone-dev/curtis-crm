@@ -134,13 +134,7 @@ export default function ContentActivitiesCreatedTicketComponents({ data }) {
 
                         <div className="flex gap-2">
                             Issue:
-                            {JSON.parse(data?.ticket?.issue).map((res, i) => {
-                                return (
-                                    <div key={i} className="font-bold">
-                                        {res ?? ""}
-                                    </div>
-                                );
-                            })}
+                            {data?.ticket?.issue}
                         </div>
 
                         <div className="flex flex-col">
