@@ -17,6 +17,9 @@ export default function CallBackFormSection() {
     const [isLoading1, setIsLoading1] = useState(false)
     const [isLoading2, setIsLoading2] = useState(false)
 
+    useEffect(()=>{
+        setNotes(ticket?.callback_notes??'')
+    },[])
 
     async function buttonHandler(value) {
         if (value == 'ORDER PLACED') {
