@@ -176,6 +176,16 @@ export default function CSRTicketsTableSection() {
             dataIndex: "ticket_id",
             key: "ticket_id",
             ...getColumnSearchProps("ticket_id"),
+            render: (_, record, i) => {
+                return (
+                    <div className="flex gap-1" key={i}>
+                        {record.pr && (
+                            <CheckBadgeIcon className="h-6  text-green-600" />
+                        )}
+                        {record.ticket_id}
+                    </div>
+                );
+            },
         },
         {
             title: "Fullname",
@@ -240,7 +250,12 @@ export default function CSRTicketsTableSection() {
                                 ? "OPEN"
                                 : record.status}
                         </Tag>
-                        {record.is_reply && <Tag color="purple">Customer has responded on {moment(record.email_date).format('LLL')}</Tag>}
+                        {record.is_reply && (
+                            <Tag color="purple">
+                                Customer has responded on{" "}
+                                {moment(record.email_date).format("LLL")}
+                            </Tag>
+                        )}
                     </>
                 );
             },

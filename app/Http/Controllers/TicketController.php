@@ -596,8 +596,8 @@ class TicketController extends Controller
         //     ->orderBy('email_date', 'asc')
         //     ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
         //     ->orderBy('status', 'asc');
-        $query->orderBy('updated_at', 'desc');
-        $data = $query->paginate(10);
+        $query->with('pr')->orderBy('updated_at', 'desc');
+        $data = $query->with('pr')->paginate(10);
 
         return response()->json([
             'data' => $data ?? [],
@@ -1002,14 +1002,14 @@ class TicketController extends Controller
                 }
                 // $query->where('status','=', 'CLOSED');
             }
-            $query->orderBy('updated_at', 'desc');
+            $query->with('pr')->orderBy('updated_at', 'desc');
             $data = $query->get();
         } else {
             // $query->orderBy('is_reply', 'desc')
             // ->orderBy('email_date', 'asc')
             // ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
             // ->orderBy('status', 'asc');
-            $query->orderBy('updated_at', 'desc');
+            $query->with('pr')->orderBy('updated_at', 'desc');
             $data = $query->paginate(10);
         }
 

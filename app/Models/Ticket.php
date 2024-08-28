@@ -58,6 +58,11 @@ class Ticket extends Model
         return $this->hasOne(User::class,'id','user_id');
     }
 
+    public function pr(): HasOne
+    {
+        return $this->hasOne(ProductRegistration::class,'serial','serial_number');
+    }
+
     public function validator(): HasOne
     {
         return $this->hasOne(User::class,'id','validator_id');

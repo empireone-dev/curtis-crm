@@ -5,6 +5,7 @@ import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export default function TicketTableSection() {
     const { tickets } = useSelector((state) => state.tickets);
@@ -151,6 +152,16 @@ export default function TicketTableSection() {
             dataIndex: "ticket_id",
             key: "ticket_id",
             // ...getColumnSearchProps("ticket_id"),
+            render: (_, record, i) => {
+                return (
+                    <div className="flex gap-1" key={i}>
+                        {record.pr && (
+                            <CheckBadgeIcon className="h-6  text-green-600" />
+                        )}
+                        {record.ticket_id}
+                    </div>
+                );
+            },
         },
         {
             title: "Fullname",
@@ -185,7 +196,7 @@ export default function TicketTableSection() {
             render: (_, record, i) => {
                 return (
                     <Tag color={"blue"} key={i}>
-                      {record.issue}
+                        {record.issue}
                     </Tag>
                 );
             },
@@ -215,7 +226,12 @@ export default function TicketTableSection() {
                                 ? "OPEN"
                                 : record.status}
                         </Tag>
-                        {record.is_reply && <Tag color="purple">Customer has responded on {moment(record.email_date).format('LLL')}</Tag>}
+                        {record.is_reply && (
+                            <Tag color="purple">
+                                Customer has responded on{" "}
+                                {moment(record.email_date).format("LLL")}
+                            </Tag>
+                        )}
                     </>
                 );
             },
@@ -287,7 +303,6 @@ export default function TicketTableSection() {
         },
     ];
 
-
     const url = window.location.pathname + window.location.search;
 
     const getQueryParam = (url, paramName) => {
@@ -310,7 +325,7 @@ export default function TicketTableSection() {
 
             // Example of what to do with the new URL (replace with your logic)
             console.log("Navigating to:", newUrl);
-            router.visit(newUrl)
+            router.visit(newUrl);
             // Example of setting state with currentPage and pageSize
             setCurrent(currentPage);
             setPageSize(pageSize);
