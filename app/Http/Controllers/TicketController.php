@@ -749,7 +749,7 @@ class TicketController extends Controller
     //     ], 200);
     // }
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwoOxgrnC0siE7sFm2-c9h16Vko8HchnQm6TEen2vo0zEEjRejUC8l-v9zUVeKydRtg/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxob6vQdgkIdYj8jPlG2yAOCytLxTeS6AhQLO0lEJbrabk-GpTODq3-yhgNJexjfLIR/exec';
 
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
