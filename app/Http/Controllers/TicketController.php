@@ -763,7 +763,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hide'],
-                ['is_reply', '=', 'true'],
+                // ['is_reply', '=', 'true'],
             ])
                 ->orderBy('email_date', 'asc');
 
@@ -782,7 +782,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
-                ['is_reply', '=', 'true'],
+                // ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
 
@@ -814,7 +814,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
-                ['is_reply', '=', 'true'],
+                // ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
 
