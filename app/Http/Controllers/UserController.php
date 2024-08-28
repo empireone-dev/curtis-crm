@@ -62,7 +62,7 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    // ['is_reply', '=', 'true'],
+                    ['is_reply', '=', 'true'],
                     ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
                 ])->get();
 
@@ -91,7 +91,7 @@ class UserController extends Controller
                     ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
-                    // ['is_reply', '=', 'true'],
+                    ['is_reply', '=', 'true'],
                     ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
                 ])->get();
 

@@ -215,7 +215,7 @@ export default function TicketTableSection() {
                                 ? "OPEN"
                                 : record.status}
                         </Tag>
-                        {record.cases_status == 'handled' && <Tag color="purple">Customer has responded on {moment(record.email_date).format('LLL')}</Tag>}
+                        {record.is_reply && <Tag color="purple">Customer has responded on {moment(record.email_date).format('LLL')}</Tag>}
                     </>
                 );
             },

@@ -699,27 +699,83 @@ class TicketController extends Controller
             'result' => $direct,
         ], 200);
     }
-
-    public function get_email_replies()
+    public function sample()
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyKdXAqyj9XWSksiamUAH-yyzT1HCCMiS4O9nldax9Jwwb-xW2lLaS7ifPsbobQ2MPL/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwoOxgrnC0siE7sFm2-c9h16Vko8HchnQm6TEen2vo0zEEjRejUC8l-v9zUVeKydRtg/exec';
 
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
-                $ticket->update([
-                    'cases_status' => 'handled',
-                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    'is_reply' => 'true'
-                ]);
+                if ($value['email'] == 'support2@curtiscs.com') {
+                    $ticket->update([
+                        'cases_status' => 'hidden',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => null
+                    ]);
+                } else {
+                    $ticket->update([
+                        'cases_status' => 'handled',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => 'true'
+                    ]);
+                }
             }
         }
         return response()->json([
             'result' => $responseData,
         ], 200);
     }
+
+    public function get_email_replies()
+    // {
+    //     $scriptUrl = 'https://script.google.com/macros/s/AKfycbyKdXAqyj9XWSksiamUAH-yyzT1HCCMiS4O9nldax9Jwwb-xW2lLaS7ifPsbobQ2MPL/exec';
+
+    //     $response = Http::get($scriptUrl);
+    //     $responseData = $response->json();
+    //     foreach ($responseData as $value) {
+    //         $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
+    //         if ($ticket) {
+    //             $ticket->update([
+    //                 'cases_status' => 'handled',
+    //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+    //                 'is_reply' => 'true'
+    //             ]);
+    //         }
+    //     }
+    //     return response()->json([
+    //         'result' => $responseData,
+    //     ], 200);
+    // }
+    {
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwoOxgrnC0siE7sFm2-c9h16Vko8HchnQm6TEen2vo0zEEjRejUC8l-v9zUVeKydRtg/exec';
+
+        $response = Http::get($scriptUrl);
+        $responseData = $response->json();
+        foreach ($responseData as $value) {
+            $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
+            if ($ticket) {
+                if ($value['email'] == 'support2@curtiscs.com') {
+                    $ticket->update([
+                        'cases_status' => 'hidden',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => null
+                    ]);
+                } else {
+                    $ticket->update([
+                        'cases_status' => 'handled',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => 'true'
+                    ]);
+                }
+            }
+        }
+        return response()->json([
+            'result' => $responseData,
+        ], 200);
+    }
+
     public function get_email_replies_parts()
     {
         $scriptUrl = 'https://script.google.com/macros/s/AKfycbwtrx6YKdaT93NX7Zq8mdmZJ3Gh59Nev60WMrXqz57xYncY4D168eSTTVWAPgu0lsNa/exec';
@@ -763,7 +819,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hide'],
-                // ['is_reply', '=', 'true'],
+                ['is_reply', '=', 'true'],
             ])
                 ->orderBy('email_date', 'asc');
 
@@ -782,7 +838,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
-                // ['is_reply', '=', 'true'],
+                ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
 
@@ -814,7 +870,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hide'],
-                // ['is_reply', '=', 'true'],
+                ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
 
