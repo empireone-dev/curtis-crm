@@ -777,19 +777,46 @@ class TicketController extends Controller
     }
 
     public function get_email_replies_parts()
+    // {
+    //     $scriptUrl = 'https://script.google.com/macros/s/AKfycbwtrx6YKdaT93NX7Zq8mdmZJ3Gh59Nev60WMrXqz57xYncY4D168eSTTVWAPgu0lsNa/exec';
+
+    //     $response = Http::get($scriptUrl);
+    //     $responseData = $response->json();
+    //     foreach ($responseData as $value) {
+    //         $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
+    //         if ($ticket) {
+    //             $ticket->update([
+    //                 'cases_status' => 'handled',
+    //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+    //                 'is_reply' => 'true'
+    //             ]);
+    //         }
+    //     }
+    //     return response()->json([
+    //         'result' => $responseData,
+    //     ], 200);
+    // }
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbwtrx6YKdaT93NX7Zq8mdmZJ3Gh59Nev60WMrXqz57xYncY4D168eSTTVWAPgu0lsNa/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyJfgd2C_FjuibQGtV82kZBcn5Eh952SEReHBlN8RBMrEZGMcBBdv1GCP71GzpQiGc/exec';
 
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
-                $ticket->update([
-                    'cases_status' => 'handled',
-                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    'is_reply' => 'true'
-                ]);
+                if ($value['email'] == 'support2@curtiscs.com') {
+                    $ticket->update([
+                        'cases_status' => 'hidden',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => null
+                    ]);
+                } else {
+                    $ticket->update([
+                        'cases_status' => 'handled',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => 'true'
+                    ]);
+                }
             }
         }
         return response()->json([
