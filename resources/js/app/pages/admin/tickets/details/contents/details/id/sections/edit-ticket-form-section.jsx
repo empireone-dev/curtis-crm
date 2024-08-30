@@ -22,7 +22,6 @@ import Skeleton from "@/app/layouts/components/skeleton";
 import { Select as SelectData } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
 import axios from "axios";
-import { get_cities_service } from "@/app/services/google-map-service";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 export default function EditTicketFormSection() {
@@ -41,11 +40,6 @@ export default function EditTicketFormSection() {
     const { url } = usePage();
     const [load, setLoad] = useState(false);
 
-    const findCountry = (countryName) => {
-        return countries.find((country) => country.value === countryName);
-    };
-
-    const { regions } = findCountry(form?.country ?? "CA");
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -67,26 +61,48 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: res?.receipt?.store ?? "N/A",
-                    state: res?.state ?? "AB",
+                    state: res?.state ?? 'AB',
                     country: res?.country ?? "CA",
                 })
             );
         }
-        if (ticket) {
+        if(ticket){
             get_ticket();
         }
     }, []);
-
+    
     useEffect(() => {
-        const { country, state } = ticket;
-
+        const { country, state, zip_code } = ticket;
+    
         const getAddress = async () => {
-            const res = await get_cities_service();
-            console.log("resss", res);
+            if (country && state && zip_code) {
+                try {
+                    console.log('Fetching address suggestions with:', { country, state, zip_code });
+    
+                    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=CO&types=(cities)&components=country:us&key=AIzaSyDaV8ZAZSCsml9di5U6ouSQHQ_mj9jq5Jo`;
+                    console.log('Request URL:', url);
+                    const res = await axios.get(url);
+    
+                    const data = await res.json();
+                    console.log('API Response:', data);
+    
+                    if (data.error_message) {
+                        console.error('API Error:', data.error_message);
+                    } else {
+                        console.log('City suggestions:', data.predictions);
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                }
+            } else {
+                console.log('Missing required fields:', { country, state, zip_code });
+            }
         };
-
+    
         getAddress();
     }, [ticket]);
+    
+    
 
     useEffect(() => {
         async function get_ticket(params) {
@@ -126,9 +142,6 @@ export default function EditTicketFormSection() {
     //         })
     //     );
     // }
-
-    const cityValue = regions.find((res) => res.value == form.state);
-
     function formHandler(value, name) {
         if (name == "phone") {
             dispatch(
@@ -147,19 +160,12 @@ export default function EditTicketFormSection() {
                     })
                 );
             }
-        } else if (name == "country") {
+        }else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    country: value,
-                    state: "",
-                })
-            );
-        } else if (name == "state") {
-            dispatch(
-                setForm({
-                    ...form,
-                    [name]: value,
+                    country:value,
+                    state: '',
                 })
             );
         } else {
@@ -191,6 +197,12 @@ export default function EditTicketFormSection() {
             setLoading(false);
         }
     }
+
+    const findCountry = (countryName) => {
+        return countries.find((country) => country.value === countryName);
+    };
+
+    const { regions } = findCountry(form?.country ?? "CA");
 
     return (
         <form
@@ -426,7 +438,7 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                         <div className="md:w-1/4 px-3">
-                            {/* <Input
+                            <Input
                                 onChange={formHandler}
                                 name="city"
                                 required={false}
@@ -434,21 +446,6 @@ export default function EditTicketFormSection() {
                                 label="City"
                                 type="text"
                                 errorMessage="City is required"
-                            /> */}
-                            <Select
-                                onChange={formHandler}
-                                name="city"
-                                required={false}
-                                value={form?.city}
-                                label="City"
-                                errorMessage="City is required"
-                                data={[
-                                    { value: "", name: "" },
-                                    ...(cityValue?.cities?.map((res) => ({
-                                        value: res,
-                                        name: res,
-                                    })) || []),
-                                ]}
                             />
                         </div>
                     </div>
@@ -461,7 +458,7 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                                // errorMessage='Address is required'
+                            // errorMessage='Address is required'
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">

@@ -148,4 +148,4 @@ Route::middleware('auth:sanctum')->resource('flights', FlightController::class);
 
 
 
-Route::get('/get_cities', [GoogleMap::class, 'get_cities']);
+Route::post('/get_cities', [GoogleMap::class, 'get_cities']);

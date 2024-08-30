@@ -1,4 +1,4 @@
-export async function get_cities_service(){
-  const res = await axios.get('/api/get_cities')
+export async function get_cities_service(data){
+  const res = await axios.post('/api/get_cities',data)
   return res.data
 }
