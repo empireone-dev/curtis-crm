@@ -567,7 +567,7 @@ class TicketController extends Controller
             });
         }
 
-        if ($request->start && $request->end) {
+        if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
             $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
             $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
             $query->whereBetween('created_at', [$startTime, $endTime]);

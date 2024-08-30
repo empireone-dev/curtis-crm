@@ -12,6 +12,7 @@ use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\GoogleMap;
 use App\Http\Controllers\GoogleSheetsController;
 use App\Http\Controllers\InternalController;
 use App\Http\Controllers\ItemTypeController;
@@ -144,3 +145,7 @@ Route::get('/agent_dashboard/{userid}', [DashboardController::class, 'agent_dash
 
 
 Route::middleware('auth:sanctum')->resource('flights', FlightController::class);
+
+
+
+Route::get('/get_cities', [GoogleMap::class, 'get_cities']);

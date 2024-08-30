@@ -20,25 +20,31 @@ export default function TicketFilterSection() {
     const start = queryParams.get("start");
     const end = queryParams.get("end");
     const status = queryParams.get("status");
-
     const [data, setData] = useState({
         call_type: callType ?? null,
-        start: start ?? moment().subtract(30, 'days').format("YYYY-MM-DD"),
-        end: end ?? moment().format("YYYY-MM-DD"),
+        start: start == "null" ? null : start ?? null,
+        end: end == "null" ? null : start ?? null,
         model: model?.split(",") ?? null,
         status: status ?? null,
     });
 
     const handleChangeData = (value) => {
-        const start = value[0].format("YYYY-MM-DD");
-        const end = value[1].format("YYYY-MM-DD");
-        setData({
-            ...data,
-            start: start,
-            end: end,
-        });
+        if (value) {
+            const start = value[0]?.format("YYYY-MM-DD");
+            const end = value[1]?.format("YYYY-MM-DD");
+            setData({
+                ...data,
+                start: start,
+                end: end,
+            });
+        } else {
+            setData({
+                ...data,
+                start: null,
+                end: null,
+            });
+        }
     };
-
     function handleChangeModel(value) {
         setData({
             ...data,
@@ -127,6 +133,7 @@ export default function TicketFilterSection() {
     const newProducts = products?.slice(2).map((res) => ({
         value: res[1],
     }));
+    console.log("data", data);
     async function search_tickets() {
         setLoading(true);
         try {
@@ -154,10 +161,14 @@ export default function TicketFilterSection() {
         <div className="flex gap-4 w-full">
             <div className="w-full">
                 <RangePicker
-                    defaultValue={[
-                        dayjs(data.start, dateFormat),
-                        dayjs(data.end, dateFormat),
-                    ]}
+                    defaultValue={
+                        data.start && data.end
+                            ? [
+                                  dayjs(data.start, dateFormat),
+                                  dayjs(data.end, dateFormat),
+                              ]
+                            : undefined
+                    }
                     onChange={handleChangeData}
                     size="large"
                 />

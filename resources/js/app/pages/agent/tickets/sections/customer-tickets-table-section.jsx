@@ -175,12 +175,14 @@ export default function CustomerTicketsTableSection() {
             dataIndex: "ticket_id",
             key: "ticket_id",
             render: (_, record, i) => {
-                <div className="flex gap-1" key={i}>
-                    {record.pr && (
-                        <CheckBadgeIcon className="h-6  text-green-600" />
-                    )}
-                    {record.ticket_id}
-                </div>;
+                return (
+                    <div className="flex gap-1" key={i}>
+                        {record.pr && (
+                            <CheckBadgeIcon className="h-6  text-green-600" />
+                        )}
+                        {record.ticket_id}
+                    </div>
+                );
             },
         },
         {

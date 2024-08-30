@@ -21,23 +21,23 @@ export default function LoginPage({ status, canResetPassword }) {
         remember: false,
     });
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            get_email_replies_service();
-        }, 900000);
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         get_email_replies_service();
+    //     }, 900000);
 
-        // Clean up the interval on component unmount
-        return () => clearInterval(intervalId);
-    }, []);
+    //     // Clean up the interval on component unmount
+    //     return () => clearInterval(intervalId);
+    // }, []);
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            get_email_replies_parts();
-        }, 900000);
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         get_email_replies_parts();
+    //     }, 900000);
 
-        // Clean up the interval on component unmount
-        return () => clearInterval(intervalId);
-    }, []);
+    //     // Clean up the interval on component unmount
+    //     return () => clearInterval(intervalId);
+    // }, []);
 
     useEffect(() => {
         return () => {

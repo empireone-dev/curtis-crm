@@ -182,7 +182,7 @@ export default function CSRTicketsTableSection() {
                         {record.pr && (
                             <CheckBadgeIcon className="h-6  text-green-600" />
                         )}
-                        {record.ticket_id}
+                        {record.ticket_id}ss
                     </div>
                 );
             },

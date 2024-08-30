@@ -21,6 +21,10 @@ import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
 import { Select as SelectData } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
+import axios from "axios";
+import { get_cities_service } from "@/app/services/google-map-service";
+
+const API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
     // const [form, setForm] = useState({
@@ -36,7 +40,13 @@ export default function EditTicketFormSection() {
     const [storeData, setStoreData] = useState([]);
     const { url } = usePage();
     const [load, setLoad] = useState(false);
+    const [cities, setCities] = useState([]);
 
+    const findCountry = (countryName) => {
+        return countries.find((country) => country.value === countryName);
+    };
+
+    const { regions } = findCountry(form?.country ?? "CA");
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -58,15 +68,27 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: res?.receipt?.store ?? "N/A",
-                    state: res?.state ?? 'AB',
+                    state: res?.state ?? "AB",
                     country: res?.country ?? "CA",
                 })
             );
         }
-        if(ticket){
+        if (ticket) {
             get_ticket();
         }
     }, []);
+
+    useEffect(() => {
+        const { country, state } = ticket;
+
+        const getAddress = async () => {
+            const res = await get_cities_service();
+            console.log("resss", res);
+        };
+
+        getAddress();
+    }, [ticket]);
+
     useEffect(() => {
         async function get_ticket(params) {
             setLoad(true);
@@ -105,6 +127,9 @@ export default function EditTicketFormSection() {
     //         })
     //     );
     // }
+
+    const cityValue = regions.find((res) => res.value == form.state);
+
     function formHandler(value, name) {
         if (name == "phone") {
             dispatch(
@@ -123,12 +148,19 @@ export default function EditTicketFormSection() {
                     })
                 );
             }
-        }else if (name == "country") {
+        } else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    country:value,
-                    state: '',
+                    country: value,
+                    state: "",
+                })
+            );
+        } else if (name == "state") {
+            dispatch(
+                setForm({
+                    ...form,
+                    [name]: value,
                 })
             );
         } else {
@@ -160,12 +192,6 @@ export default function EditTicketFormSection() {
             setLoading(false);
         }
     }
-
-    const findCountry = (countryName) => {
-        return countries.find((country) => country.value === countryName);
-    };
-
-    const { regions } = findCountry(form?.country ?? "CA");
 
     return (
         <form
@@ -401,7 +427,7 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                         <div className="md:w-1/4 px-3">
-                            <Input
+                            {/* <Input
                                 onChange={formHandler}
                                 name="city"
                                 required={false}
@@ -409,7 +435,24 @@ export default function EditTicketFormSection() {
                                 label="City"
                                 type="text"
                                 errorMessage="City is required"
-                            />
+                            /> */}
+                            {form?.state && (
+                                <Select
+                                    onChange={formHandler}
+                                    name="city"
+                                    required={false}
+                                    value={form?.city}
+                                    label="City"
+                                    errorMessage="City is required"
+                                    data={[
+                                        { value: "", name: "" },
+                                        ...cityValue?.cities?.map((res) => ({
+                                            value: res,
+                                            name: res,
+                                        })),
+                                    ]}
+                                />
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 mb-3">
@@ -421,7 +464,7 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                            // errorMessage='Address is required'
+                                // errorMessage='Address is required'
                             />
                         </div>
                         <div className="md:w-full px-3 mb-3">
