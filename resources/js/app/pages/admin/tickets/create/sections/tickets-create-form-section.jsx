@@ -27,6 +27,13 @@ export default function TicketCreateFormSection() {
     const [messageApi, contextHolder] = message.useMessage();
     const [warranty, setWarranty] = useState("");
     const [parts, setParts] = useState("");
+    const findCountry = (countryName) => {
+        return countries.find((country) => country.value === countryName);
+    };
+
+    const { regions } = findCountry(form.country ?? "");
+    const cityValue = regions.find((res) => res.value == form.state);
+
     function formatPhoneNumber(value) {
         const cleaned = ("" + value).replace(/\D/g, "");
         let numberToFormat = cleaned;
@@ -54,7 +61,7 @@ export default function TicketCreateFormSection() {
             dispatch(
                 setForm({
                     ...form,
-                issue: issue,
+                    issue: issue,
                 })
             );
         } else if (name == "country") {
@@ -62,7 +69,7 @@ export default function TicketCreateFormSection() {
                 setForm({
                     ...form,
                     country: value,
-                    state: '',
+                    state: "",
                 })
             );
         } else {
@@ -124,11 +131,6 @@ export default function TicketCreateFormSection() {
             setLoading(false);
         }
     }
-    const findCountry = (countryName) => {
-        return countries.find((country) => country.value === countryName);
-    };
-
-    const { regions } = findCountry(form.country ?? "");
 
     return (
         <form
@@ -345,14 +347,20 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
                 <div className="md:w-1/4 px-3">
-                    <Input
+                    <Select
                         onChange={formHandler}
                         name="city"
                         required={false}
-                        value={form.city}
+                        value={form?.city}
                         label="City"
-                        type="text"
-                        // errorMessage="City is required"
+                        errorMessage="City is required"
+                        data={[
+                            { value: "", name: "" },
+                            ...(cityValue?.cities?.map((res) => ({
+                                value: res,
+                                name: res,
+                            })) || []),
+                        ]}
                     />
                 </div>
             </div>

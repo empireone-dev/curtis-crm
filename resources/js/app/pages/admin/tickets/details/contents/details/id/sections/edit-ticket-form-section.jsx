@@ -40,7 +40,6 @@ export default function EditTicketFormSection() {
     const [storeData, setStoreData] = useState([]);
     const { url } = usePage();
     const [load, setLoad] = useState(false);
-    const [cities, setCities] = useState([]);
 
     const findCountry = (countryName) => {
         return countries.find((country) => country.value === countryName);
@@ -436,23 +435,21 @@ export default function EditTicketFormSection() {
                                 type="text"
                                 errorMessage="City is required"
                             /> */}
-                            {form?.state && (
-                                <Select
-                                    onChange={formHandler}
-                                    name="city"
-                                    required={false}
-                                    value={form?.city}
-                                    label="City"
-                                    errorMessage="City is required"
-                                    data={[
-                                        { value: "", name: "" },
-                                        ...cityValue?.cities?.map((res) => ({
-                                            value: res,
-                                            name: res,
-                                        })),
-                                    ]}
-                                />
-                            )}
+                            <Select
+                                onChange={formHandler}
+                                name="city"
+                                required={false}
+                                value={form?.city}
+                                label="City"
+                                errorMessage="City is required"
+                                data={[
+                                    { value: "", name: "" },
+                                    ...(cityValue?.cities?.map((res) => ({
+                                        value: res,
+                                        name: res,
+                                    })) || []),
+                                ]}
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 mb-3">

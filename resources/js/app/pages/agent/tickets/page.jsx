@@ -40,6 +40,7 @@ export default function AgentTicketsPage({ auth }) {
                 </div>
                
             </div>
+            {account.agent_type == 'CSR' && <CSRTicketsTableSection />}
             {account.agent_type !== 'CSR' &&  <CustomerTicketsTableSection />}
         </AgentLayout>
     );
