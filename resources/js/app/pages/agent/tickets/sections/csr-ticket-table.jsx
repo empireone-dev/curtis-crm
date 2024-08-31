@@ -6,6 +6,7 @@ import { Link, router } from "@inertiajs/react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { split } from "postcss/lib/list";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export default function CSRTicketsTableSection() {
     const { tickets } = useSelector((state) => state.tickets);
