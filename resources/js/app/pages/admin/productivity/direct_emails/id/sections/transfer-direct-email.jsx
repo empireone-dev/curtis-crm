@@ -8,7 +8,7 @@ export default function TransferDirectEmails() {
     const { users } = useSelector((state) => state.users);
     const { user } = useSelector((state) => state.app);
     const [data, setData] = useState({});
-    const id = window.location.pathname.split("/")[3];
+    const id = window.location.pathname.split("/")[5];
     const [loading, setLoading] = useState(false);
     async function re_assign(params) {
         setLoading(true);

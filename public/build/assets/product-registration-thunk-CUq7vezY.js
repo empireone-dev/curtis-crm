@@ -1,0 +1,1 @@
+import{g as o,a as n}from"./product-registration-service-CTVmTK9W.js";import{p as e}from"./page-BhzpOonX.js";function c(){return async function(t,i){const r=await o();t(e.actions.setProducts(r))}}function _(){return async function(t,i){const r=await n();t(e.actions.setProduct(r))}}export{c as a,_ as g};

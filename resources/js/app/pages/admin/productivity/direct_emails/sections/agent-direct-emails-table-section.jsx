@@ -156,7 +156,10 @@ export default function AgentDirectEmailsTableSection({ account }) {
             ),
     });
 
-    const data = dataTable.map((res, i) => ({
+    const newDataTable = Object.entries(dataTable).map((res) => ({
+        ...res[1],
+    }))
+    const data = newDataTable.map((res, i) => ({
         key: i,
         email: res.email,
         date: moment(res.email_date).format("LLL"),

@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function get_user_by_id($id){
+        $users = User::where('id', '=', $id)->first();
+        return response()->json([
+            'data' => $users
+        ], 200);
+    }
     public function get_user_by_role($role_id)
     {
         $users = User::where('role_id', '=', $role_id)->get();

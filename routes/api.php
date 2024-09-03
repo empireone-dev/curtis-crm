@@ -71,6 +71,7 @@ Route::resource('receipt', ReceiptController::class);
 
 Route::resource('users', UserController::class);
 Route::get('/get_user_by_role/{role_id}', [UserController::class, 'get_user_by_role']);
+Route::get('/get_user_by_id/{id}', [UserController::class, 'get_user_by_id']);
 
 Route::resource('permissions', PermissionController::class);
 Route::resource('internals', InternalController::class);

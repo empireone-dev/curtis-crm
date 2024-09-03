@@ -3,9 +3,9 @@ import { Button,message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
-import { get_direct_email_by_id_service } from "@/app/services/direct-email-service";
+import { get_direct_email_by_id_service, get_direct_email_by_id_service2 } from "@/app/services/direct-email-service";
 
-export default function AgentLogCaseSection({ ticket_id, account }) {
+export default function AgentLogCaseSection({ ticket_id, account,account2 }) {
     const [data, setData] = useState({});
     const [messageApi, contextHolder] = message.useMessage();
     const { cases_logs } = useSelector((state) => state.users);
@@ -17,10 +17,10 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
         const res = await create_caseslog_service({
             ...data,
             ticket_id: ticket_id,
-            user_id: account.id,
+            user_id: account2.id,
             log_from: "direct_emails",
         });
-        const ress=await get_direct_email_by_id_service()
+      const ress=await get_direct_email_by_id_service2()
         setData({
             isHide:ress.result.isHide
         });
@@ -33,7 +33,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
     }
     useEffect(()=>{
         async function getData(params) {
-                const res=await get_direct_email_by_id_service()
+                const res=await get_direct_email_by_id_service2()
                 setData({
                     ...data,
                     isHide:res.result.isHide

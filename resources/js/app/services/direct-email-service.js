@@ -7,3 +7,8 @@ export async function get_direct_email_by_id_service(data){
     const res = await axios.get('/api/direct_email/'+window.location.pathname.split('/')[3])
     return res.data
 }
+
+export async function get_direct_email_by_id_service2(data){
+    const res = await axios.get('/api/direct_email/'+window.location.pathname.split('/')[5])
+    return res.data
+}

@@ -1,0 +1,1 @@
+async function e(a){return(await axios.put("/api/transfer_direct_email",a)).data}async function i(a){return(await axios.get("/api/direct_email/"+window.location.pathname.split("/")[3])).data}async function r(a){return(await axios.get("/api/direct_email/"+window.location.pathname.split("/")[5])).data}export{i as a,r as g,e as t};

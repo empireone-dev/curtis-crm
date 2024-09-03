@@ -1,5 +1,9 @@
 import axios from "axios";
 
+export async function get_user_by_id_service(id){
+    const res = await axios.get('/api/get_user_by_id/'+id)
+    return res.data
+}
 export async function get_user_service(){
     const res = await axios.get('/api/user')
     return res.data
