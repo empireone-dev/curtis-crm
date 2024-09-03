@@ -260,6 +260,10 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
         return Inertia::render('admin/productivity/id/page');
     });
 
+    Route::get('/productivity/direct_emails/{id}', function () {
+        return Inertia::render('admin/productivity/direct_emails/page');
+    });
+
     Route::get('/productivity/customer_details/{ticket_id}', function () {
         return Inertia::render('admin/productivity/id/customer_details/page');
     });

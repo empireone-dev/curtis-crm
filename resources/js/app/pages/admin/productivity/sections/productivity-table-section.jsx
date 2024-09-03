@@ -138,21 +138,26 @@ export default function ProductivityTableSection() {
             ),
     });
 
-    const data = users.map((res, i) => 
-        res.agent_type === 'Warranty' || res.agent_type === 'Parts'? {
-            id:res.id,
-            agent: res.name,
-            position: res.agent_type,
-            overdue_cases: res.overdue_cases,
-            cases_due_today: res.cases_due_today,
-            overdue_direct_emails:res.overdue_direct_emails,
-            direct_emails_due_today: res.direct_emails_due_today,
-            handled_cases: res.handled_cases,
-            handled_direct_emails: res.handled_direct_emails,
-            total: parseInt(res.handled_cases) + parseInt(res.handled_direct_emails),
-        } : null
-    ).filter(item => item !== null);
-    
+    const data = users
+        .map((res, i) =>
+            res.agent_type === "Warranty" || res.agent_type === "Parts"
+                ? {
+                      id: res.id,
+                      agent: res.name,
+                      position: res.agent_type,
+                      overdue_cases: res.overdue_cases,
+                      cases_due_today: res.cases_due_today,
+                      overdue_direct_emails: res.overdue_direct_emails,
+                      direct_emails_due_today: res.direct_emails_due_today,
+                      handled_cases: res.handled_cases,
+                      handled_direct_emails: res.handled_direct_emails,
+                      total:
+                          parseInt(res.handled_cases) +
+                          parseInt(res.handled_direct_emails),
+                  }
+                : null
+        )
+        .filter((item) => item !== null);
 
     const columns = [
         {
@@ -173,10 +178,13 @@ export default function ProductivityTableSection() {
             key: "overdue_cases",
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
-                console.log('record',record)
                 return (
-                    <Link href={`/administrator/productivity/${record.id}?page=1&search=over_due`} className="underline" key={i}>
-                        {record.overdue_cases} 
+                    <Link
+                        href={`/administrator/productivity/${record.id}?page=1&search=over_due`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.overdue_cases}
                     </Link>
                 );
             },
@@ -186,10 +194,13 @@ export default function ProductivityTableSection() {
             dataIndex: "cases_due_today",
             key: "cases_due_today",
             render: (_, record, i) => {
-                console.log('record',record)
                 return (
-                    <Link href={`/administrator/productivity/${record.id}?page=1&search=due_today`} className="underline" key={i}>
-                        {record.cases_due_today} 
+                    <Link
+                        href={`/administrator/productivity/${record.id}?page=1&search=due_today`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.cases_due_today}
                     </Link>
                 );
             },
@@ -199,13 +210,35 @@ export default function ProductivityTableSection() {
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=over_due`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.overdue_direct_emails}
+                    </Link>
+                );
+            },
         },
-      
+
         {
             title: "Direct Emails Due Today",
             dataIndex: "direct_emails_due_today",
             key: "direct_emails_due_today",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=due_today`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.direct_emails_due_today}
+                    </Link>
+                );
+            },
         },
         {
             title: "Handled Cases",
