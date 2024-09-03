@@ -218,15 +218,15 @@ export default function AgentDirectEmailsTableSection({ account }) {
             },
         },
     ];
-    const paginationConfig = {
-        showSizeChanger: false,
-        current: parseInt(window.location.search.split("=")[1] ?? 1),
-        pageSize: pageSize,
-        total: total,
-        onChange: (page, pageSize) => {
-            router.visit(window.location.pathname + `?page=${page}`);
-        },
-    };
+    // const paginationConfig = {
+    //     showSizeChanger: false,
+    //     current: parseInt(window.location.search.split("=")[1] ?? 1),
+    //     pageSize: pageSize,
+    //     total: total,
+    //     onChange: (page, pageSize) => {
+    //         router.visit(window.location.pathname + `?page=${page}`);
+    //     },
+    // };
     return (
         <div>
             <div className="p-3 rounded-md">
@@ -236,7 +236,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
                 </div>
                 <Table
                     loading={loading}
-                    pagination={paginationConfig}
+                    // pagination={paginationConfig}
                     columns={columns}
                     dataSource={data}
                 />
