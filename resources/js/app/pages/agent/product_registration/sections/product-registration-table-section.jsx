@@ -5,6 +5,7 @@ import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export default function ProductRegistrationTableSection() {
     const { products } = useSelector((state) => state.product_registration);
@@ -199,6 +200,16 @@ export default function ProductRegistrationTableSection() {
             dataIndex: "serial",
             key: "serial",
             ...getColumnSearchProps("serial"),
+            render: (_, record, i) => {
+                return (
+                    <div className="flex gap-1" key={i}>
+                        {record.ticket && (
+                            <CheckBadgeIcon className="h-6  text-green-600" />
+                        )}
+                        {record.serial}
+                    </div>
+                );
+            },
         },
         {
             title: "Model",

@@ -25,7 +25,7 @@ class ProductRegistrationController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = ProductRegistration::query()->with(['prf']);
+        $query = ProductRegistration::query()->with(['prf','ticket']);
         if ($fname) {
             $query->where(function ($query) use ($columns, $fname) {
                 $query->where('fname', '=', $fname);

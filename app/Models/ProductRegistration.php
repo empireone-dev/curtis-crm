@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ProductRegistration extends Model
 {
@@ -27,6 +28,10 @@ class ProductRegistration extends Model
     public function prf(): HasMany
     {
         return $this->hasMany(ProductRegistrationFile::class,'pr_id','id');
+    }
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class,'serial_number','serial');
     }
 
 }
