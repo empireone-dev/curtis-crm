@@ -72,25 +72,29 @@ export default function ProductRegistrationForm() {
         fd.append("address1", form.address1);
         fd.append("address2", form.address2);
         fd.append("fname", form.fname);
+
         if (form.fileList && form.fileList.length !== 0) {
-            form.fileList.forEach((file) => {
-                if (file.name !== "uploaded" && file.status === "done") {
-                    fd.append("files[]", file.originFileObj);
+            if (form.serial == 16) {
+                form.fileList.forEach((file) => {
+                    if (file.name !== "uploaded" && file.status === "done") {
+                        fd.append("files[]", file.originFileObj);
+                    }
+                });
+                try {
+                    await product_registration_service(fd);
+                    message.success(`Product Registration Successfully!`);
+                    setForm({});
+                    setLoading(false);
+                } catch (error) {
+                    setLoading(false);
                 }
-            });
-            try {
-                await product_registration_service(fd);
-                message.success(`Product Registration Successfully!`);
-                setForm({});
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
+            } else {
+                message.error(`Serial # must have 16 digits and start with the letter "A"`);
             }
-        }else{
+        } else {
             message.error(`Please attach your receipt.`);
             setLoading(false);
         }
-        
     }
 
     const findCountry = (countryName) => {
@@ -147,7 +151,6 @@ export default function ProductRegistrationForm() {
                             errorMessage="Last Name is required"
                         />
                     </div>
-
                     <Input
                         required={true}
                         onChange={formHandler}
@@ -175,27 +178,31 @@ export default function ProductRegistrationForm() {
                         type="text"
                         errorMessage="Model is required"
                     />
-                    <Input
-                        required={true}
-                        onChange={formHandler}
-                        name="serial"
-                        value={form.serial}
-                        label="Serial"
-                        type="text"
-                        errorMessage="Serial is required"
-                    />
-                    <Select
-                        onChange={formHandler}
-                        name="country"
-                        required={true}
-                        value={form?.country}
-                        label="Country"
-                        // errorMessage='Country is required'
-                        data={countries.map((res) => ({
-                            name: res.name,
-                            value: res.value,
-                        }))}
-                    />
+                    <div className="mt-2">
+                        <Input
+                            required={true}
+                            onChange={formHandler}
+                            name="serial"
+                            value={form.serial}
+                            label="Serial # (starts with letter A and 16 digits)"
+                            type="text"
+                            errorMessage="Serial is required"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <Select
+                            onChange={formHandler}
+                            name="country"
+                            required={true}
+                            value={form?.country}
+                            label="Country"
+                            // errorMessage='Country is required'
+                            data={countries.map((res) => ({
+                                name: res.name,
+                                value: res.value,
+                            }))}
+                        />
+                    </div>
                     <Select
                         onChange={formHandler}
                         name="state"
@@ -241,15 +248,23 @@ export default function ProductRegistrationForm() {
                         type="text"
                         // errorMessage='Address is required'
                     />
-                    Entire Picture of the Receipt that shows Date of Purchase, Name of Store,<br />
-                    Unit Description, Unit Price, Order Summary with Total Breakdown:
+                    Entire Picture of the Receipt that shows Date of Purchase,
+                    Name of Store,
+                    <br />
+                    Unit Description, Unit Price, Order Summary with Total
+                    Breakdown:
+                    <br />
+                    <div className="text-red-500">
+                        NOTE: It must be clear and readable. Not valid if
+                        required information is incomplete.
+                    </div>
                     <Upload
                         fileList={form?.fileList ?? []}
                         listType="picture"
                         {...props}
                     >
                         <Button icon={<UploadOutlined />}>
-                        Click to upload receipt/bill of sale.
+                            Click to upload receipt/bill of sale.
                         </Button>
                     </Upload>
                     <button

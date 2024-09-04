@@ -114,13 +114,7 @@ export default function ContentActivitiesInternalsComponents({ data }) {
 
                     <div className="flex gap-2 my-2">
                         Issue:
-                        {JSON.parse(result.issue).map((res) => {
-                            return (
-                                <div className="font-bold border border-violet-500 px-2 rounded-md mx-2">
-                                    {res}
-                                </div>
-                            );
-                        })}
+                        {result.issue}
                     </div>
                     <div className="flex flex-col">
                         Notes:
