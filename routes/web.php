@@ -633,7 +633,13 @@ Route::middleware('auth:sanctum', 'role:6')->prefix('curtis')->group(function ()
     // Route::get('/tickets/{id}', function () {
     //     return Inertia::render('curtis/tickets/details/page');
     // })->name('curtis.tickets.details');
-    
+    Route::get('/product_registration', function () {
+        return Inertia::render('curtis/product_registration/page');
+    })->name('curtis.product_registration');
+
+    Route::get('/product_registration/{id}', function () {
+        return Inertia::render('curtis/product_registration/id/page');
+    });
 
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
