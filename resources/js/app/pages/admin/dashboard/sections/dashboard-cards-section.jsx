@@ -119,13 +119,13 @@ export default function DashboardCardsSection() {
                 <DashboardCardsComponent
                     title="Repair Success"
                     link="REPAIR SUCCESS"
-                    count={data.repair_success?? 0}
+                    count={data.repair_success ?? 0}
                     icon={<CheckBadgeIcon className="h-10 text-white" />}
                 />
                 <DashboardCardsComponent
                     title="Repair Unsuccessful"
                     link="REPAIR UNSUCCESSFUL"
-                    count={data.repair_unsuccessful?? 0}
+                    count={data.repair_unsuccessful ?? 0}
                     icon={<CheckBadgeIcon className="h-10 text-white" />}
                 />
 
@@ -244,15 +244,22 @@ export default function DashboardCardsSection() {
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <DashboardCardsComponent
                     title="RMA Request"
-                    count="100"
+                    count={data.rma_request ?? 0}
+                    link="RMA REQUEST"
                     icon={<ArrowsRightLeftIcon className="h-10 text-white" />}
                 />
-
                 <DashboardCardsComponent
+                    title="RMA ISSUED"
+                    count={data.rma_issued ?? 0}
+                    link="RMA ISSUED"
+                    icon={<IdentificationIcon className="h-10 text-white" />}
+                />
+
+                {/* <DashboardCardsComponent
                     title="Incomplete Information"
                     count="100"
                     icon={<IdentificationIcon className="h-10 text-white" />}
-                />
+                /> */}
 
                 <DashboardCardsComponent
                     title="Direct Emails"

@@ -115,16 +115,20 @@ export default function DecisionMakingSection() {
         if (data.instruction) {
             setIsLoading1(true);
             const response = await store_decision_making_service(data);
-            if (
-                data.instruction == "CA Warehouse" ||
-                data.instruction == "US Warehouse"
-            ) {
-                router.visit(routing("warehouse"));
-            } else if (data.instruction == "ASC") {
-                router.visit(routing("repair"));
-            } else if (data.instruction == "Home") {
-                router.visit(routing("files"));
-            }
+
+                if (
+                    data.instruction == "CA Warehouse" ||
+                    data.instruction == "US Warehouse"
+                ) {
+                    router.visit(routing("warehouse"));
+                } else if (data.instruction == "ASC") {
+                    router.visit(routing("repair"));
+                } else if (data.instruction == "Home") {
+                    router.visit(routing("files"));
+                }else if (data.instruction == "RMA Request") {
+                    router.visit(routing("rma_request"));
+                }
+
             //  else {
             //     router.visit(routing("refund"));
             // }
@@ -476,6 +480,10 @@ export default function DecisionMakingSection() {
                                                 value: "ASC",
                                                 name: "Refer to ASC",
                                             },
+                                            {
+                                                value: "RMA Request",
+                                                name: "RMA Request",
+                                            },
                                         ]}
                                     />
 
@@ -575,6 +583,33 @@ export default function DecisionMakingSection() {
                                                 class="ms-2 text-xl font-medium text-gray-900"
                                             >
                                                 Repair
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center ">
+                                            <input
+                                                checked={
+                                                    data.ticket_type ==
+                                                    "RMA REQUEST"
+                                                }
+                                                id="default-radio-1"
+                                                onChange={(e) =>
+                                                    setData({
+                                                        ...data,
+                                                        ticket_type:
+                                                            e.target.value,
+                                                    })
+                                                }
+                                                type="radio"
+                                                value="RMA REQUEST"
+                                                name="ticket_type"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                            />
+                                            <label
+                                                htmlFor="default-radio-1"
+                                                class="ms-2 text-xl font-medium text-gray-900"
+                                            >
+                                                RMA Request
                                             </label>
                                         </div>
                                     </div>

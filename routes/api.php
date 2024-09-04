@@ -112,6 +112,7 @@ Route::get('get_email_replies', [TicketController::class, 'get_email_replies']);
 Route::get('get_email_replies_parts', [TicketController::class, 'get_email_replies_parts']);
 Route::get('sample', [TicketController::class, 'sample']);
 Route::get('get_tickets_warehouse/{country}', [TicketController::class, 'get_tickets_warehouse']);
+Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request']);
 
 
 

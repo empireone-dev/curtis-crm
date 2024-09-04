@@ -32,7 +32,7 @@ class DecisionMakingController extends Controller
         return $body;
     }
 
-    
+
 
     public function store(Request $request)
     {
@@ -70,7 +70,9 @@ class DecisionMakingController extends Controller
             $instruction = 'REPAIR';
         } else if ($request->instruction == "Home") {
             $instruction = 'WAITING FOR PHOTOS';
-        } 
+        } else if ($request->instruction == "RMA Request") {
+            $instruction = 'RMA REQUEST';
+        }
         // else {
         //     $instruction = 'REFUND';
         // }

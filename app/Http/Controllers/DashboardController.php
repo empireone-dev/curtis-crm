@@ -171,6 +171,9 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
         ])->count();
 
+        
+        $rma_request = Ticket::where('status', '=', 'RMA REQUEST')->count();
+
         return response()->json([
             'repair_unsuccessful' => $repair_unsuccessful,
             'repair_success' => $repair_success,
@@ -200,6 +203,7 @@ class DashboardController extends Controller
             'web_form' => $web_form,
             'warranty_process_ticket' => $warranty_process_ticket,
             'parts_process_ticket' => $parts_process_ticket,
+            'rma_request'=>$rma_request
         ], 200);
     }
     public function asc_dashboard($id)
@@ -345,6 +349,11 @@ class DashboardController extends Controller
             ['call_type', '=', 'Parts'],
             ['status', '=', 'CLOSED']
         ])->count();
+
+        $rma_issued = Ticket::where([
+            ['status', '=', 'RMA ISSUED']
+        ])->count();
+
         $repair_unsuccessful = Ticket::where('status', '=', 'REPAIR UNSUCCESSFUL')->count();
         $repair_success = Ticket::where('status', '=', 'REPAIR SUCCESS')->count();
 
@@ -352,6 +361,7 @@ class DashboardController extends Controller
 
         $check_availability = Ticket::where('status', '=', 'INTERNALS')->count();
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
+        $rma_request = Ticket::where('status', '=', 'RMA REQUEST')->count();
 
         return response()->json([
             'repair_unsuccessful' => $repair_unsuccessful,
@@ -382,6 +392,8 @@ class DashboardController extends Controller
             'web_form' => $web_form,
             'warranty_process_ticket' => $warranty_process_ticket,
             'parts_process_ticket' => $parts_process_ticket,
+            'rma_request'=>$rma_request,
+            'rma_issued'=>$rma_issued
         ], 200);
     }
 

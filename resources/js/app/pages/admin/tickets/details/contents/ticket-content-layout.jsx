@@ -76,8 +76,7 @@ export default function TicketsDetailsLayout({ children }) {
               ]
             : []),
         ...(ticket?.isUploading === "true" &&
-        (ticket.status === "CA WAREHOUSE" ||
-            ticket.status === "US WAREHOUSE" )
+        (ticket.status === "CA WAREHOUSE" || ticket.status === "US WAREHOUSE")
             ? [
                   {
                       title: ticket.country + " Warehouse",
@@ -90,6 +89,14 @@ export default function TicketsDetailsLayout({ children }) {
                   {
                       title: "Repair",
                       hash: "repair",
+                  },
+              ]
+            : []),
+        ...(ticket?.isUploading === "true" && ticket.status === "RMA REQUEST"
+            ? [
+                  {
+                      title: "RMA Upload",
+                      hash: "rma_request",
                   },
               ]
             : []),
@@ -176,7 +183,7 @@ export default function TicketsDetailsLayout({ children }) {
                     <TicketsDetailsMoveAssignSection />
                 )}
                 <div className=" px-8 text-3xl font-black text-red-600">
-               Case File : {ticket.ticket_id??'N/A'}
+                    Case File : {ticket.ticket_id ?? "N/A"}
                 </div>
                 <div className="w-full px-8">
                     <div

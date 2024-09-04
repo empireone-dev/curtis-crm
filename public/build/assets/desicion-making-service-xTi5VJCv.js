@@ -1,0 +1,1 @@
+async function i(a){return(await axios.post("/api/decision_making",a)).data}async function e(a){return(await axios.get("/api/decision_making/"+a)).data}async function t(a){return(await axios.post("/api/upload_rma_request",a)).data}export{e as g,i as s,t as u};

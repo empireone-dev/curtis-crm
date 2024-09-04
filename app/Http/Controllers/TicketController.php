@@ -8,6 +8,7 @@ use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
 use App\Models\EmailTemplate;
 use App\Models\ExportFile;
+use App\Models\File;
 use App\Models\Receipt;
 use App\Models\Replacement;
 use App\Models\Ticket;
@@ -19,9 +20,43 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
+
+    public function upload_rma_request(Request $request)
+    {
+        // Find the ticket by ID
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
+
+        $ticket->update([
+            'status' => 'RMA ISSUED'
+        ]);
+        $path = null;
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
+            File::create([
+                'ticket_id' => $request->ticket_id,
+                'url' => $url,
+                'type' => 'rma_upload',
+            ]);
+        }
+
+        // Create an activity record
+        Activity::create([
+            'user_id' => $request->user_id,
+            'ticket_id' => $request->ticket_id,
+            'type' => 'RMA ISSUED',
+            'message' => json_encode([
+                'path' => $path,
+                'request_data' => $request->all()
+            ])
+        ]);
+
+        return 'success';
+    }
 
     public function get_tickets_warehouse($country)
     {
