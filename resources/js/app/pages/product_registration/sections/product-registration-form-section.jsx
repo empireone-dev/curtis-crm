@@ -199,7 +199,7 @@ export default function ProductRegistrationForm() {
                         type="text"
                         errorMessage="Model is required"
                     />
-                    {formattedSerial == "Invalid serial number format!" && (
+                    {form?.serial && formattedSerial == "Invalid serial number format!" && (
                         <div className="text-red-500">{formattedSerial}</div>
                     )}
                     {formattedSerial !== "Invalid serial number format!" && (
