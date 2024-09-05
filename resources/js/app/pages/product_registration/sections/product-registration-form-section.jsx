@@ -55,6 +55,17 @@ export default function ProductRegistrationForm() {
         }
     }
 
+    function formatSerialNumber(serial) {
+        const regex = /^A\d{16}$/;
+        if (!regex.test(serial)) {
+            return "Invalid serial number format!";
+        }
+        return serial;
+    }
+
+    const serial = form.serial;
+    const formattedSerial = formatSerialNumber(serial);
+
     async function submitFormTicket(e) {
         setLoading(true);
         e.preventDefault();
@@ -74,22 +85,32 @@ export default function ProductRegistrationForm() {
         fd.append("fname", form.fname);
 
         if (form.fileList && form.fileList.length !== 0) {
-            if (form.serial == 17) {
-                form.fileList.forEach((file) => {
-                    if (file.name !== "uploaded" && file.status === "done") {
-                        fd.append("files[]", file.originFileObj);
+            if (form.serial.length == 17) {
+                if (formattedSerial !== "Invalid serial number format!") {
+                    form.fileList.forEach((file) => {
+                        if (
+                            file.name !== "uploaded" &&
+                            file.status === "done"
+                        ) {
+                            fd.append("files[]", file.originFileObj);
+                        }
+                    });
+                    try {
+                        await product_registration_service(fd);
+                        message.success(`Product Registration Successfully!`);
+                        setForm({});
+                        setLoading(false);
+                    } catch (error) {
+                        setLoading(false);
                     }
-                });
-                try {
-                    await product_registration_service(fd);
-                    message.success(`Product Registration Successfully!`);
-                    setForm({});
-                    setLoading(false);
-                } catch (error) {
+                } else {
+                    message.error(`Invalid serial number format!`);
                     setLoading(false);
                 }
             } else {
-                message.error(`Serial # must have 17 digits and start with the letter "A"`);
+                message.error(
+                    `Serial # must have 16 digits and start with the capital letter "A"`
+                );
             }
         } else {
             message.error(`Please attach your receipt.`);
@@ -178,13 +199,19 @@ export default function ProductRegistrationForm() {
                         type="text"
                         errorMessage="Model is required"
                     />
+                    {formattedSerial == "Invalid serial number format!" && (
+                        <div className="text-red-500">{formattedSerial}</div>
+                    )}
+                    {formattedSerial !== "Invalid serial number format!" && (
+                        <div className="text-green-500">Correct Format!</div>
+                    )}
                     <div className="mt-2">
                         <Input
                             required={true}
                             onChange={formHandler}
                             name="serial"
                             value={form.serial}
-                            label="Serial # (starts with letter A and 16 digits)"
+                            label="Serial # (starts with capital letter A and 16 digits number)"
                             type="text"
                             errorMessage="Serial is required"
                         />
