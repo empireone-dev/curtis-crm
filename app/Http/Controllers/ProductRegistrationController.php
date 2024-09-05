@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductRegistrationController extends Controller
 {
+    public function get_product_registration($serial)
+    {
+        $pr = ProductRegistration::where('serial', $serial)->first();
+        return response()->json([
+            'data' => $pr ?? [],
+        ], 200);
+    }
     public function index(Request $request)
     {
         $fname = $request->input('fname');
@@ -25,28 +32,28 @@ class ProductRegistrationController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = ProductRegistration::query()->with(['prf','ticket']);
+        $query = ProductRegistration::query()->with(['prf', 'ticket']);
         if ($fname) {
             $query->where(function ($query) use ($columns, $fname) {
                 $query->where('fname', '=', $fname);
             });
-        }else if ($lname) {
+        } else if ($lname) {
             $query->where(function ($query) use ($columns, $lname) {
                 $query->where('lname', '=', $lname);
             });
-        }else if ($email) {
+        } else if ($email) {
             $query->where(function ($query) use ($columns, $email) {
                 $query->where('email', '=', $email);
             });
-        }else if ($phone) {
+        } else if ($phone) {
             $query->where(function ($query) use ($columns, $phone) {
                 $query->where('phone', '=', $phone);
             });
-        }else if ($serial) {
+        } else if ($serial) {
             $query->where(function ($query) use ($columns, $serial) {
                 $query->where('serial', '=', $serial);
             });
-        }else if ($model) {
+        } else if ($model) {
             $query->where(function ($query) use ($columns, $model) {
                 $query->where('model', '=', $model);
             });
@@ -60,8 +67,9 @@ class ProductRegistrationController extends Controller
         ], 200);
     }
 
-    public function show($id){
-        $pr = ProductRegistration::where('id',$id)->with('prf')->first();
+    public function show($id)
+    {
+        $pr = ProductRegistration::where('id', $id)->with('prf')->first();
         return response()->json([
             'result' => $pr ?? [],
         ], 200);

@@ -74,7 +74,7 @@ export default function ProductRegistrationForm() {
         fd.append("fname", form.fname);
 
         if (form.fileList && form.fileList.length !== 0) {
-            if (form.serial == 16) {
+            if (form.serial == 17) {
                 form.fileList.forEach((file) => {
                     if (file.name !== "uploaded" && file.status === "done") {
                         fd.append("files[]", file.originFileObj);
@@ -89,7 +89,7 @@ export default function ProductRegistrationForm() {
                     setLoading(false);
                 }
             } else {
-                message.error(`Serial # must have 16 digits and start with the letter "A"`);
+                message.error(`Serial # must have 17 digits and start with the letter "A"`);
             }
         } else {
             message.error(`Please attach your receipt.`);

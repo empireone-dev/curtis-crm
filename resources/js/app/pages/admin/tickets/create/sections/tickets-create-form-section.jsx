@@ -18,6 +18,7 @@ import ReasonToClose from "../../details/contents/details/id/sections/reason-to-
 import TicketCloseSection from "./ticket-close-section";
 import { check_serial_number_service } from "@/app/services/tickets-service";
 import { message } from "antd";
+import { get_product_registration_by_serial_service } from "@/app/services/product-registration-service";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
@@ -27,6 +28,8 @@ export default function TicketCreateFormSection() {
     const [messageApi, contextHolder] = message.useMessage();
     const [warranty, setWarranty] = useState("");
     const [parts, setParts] = useState("");
+    const [loading1, setLoading1] = useState(false);
+
     function formatPhoneNumber(value) {
         const cleaned = ("" + value).replace(/\D/g, "");
         let numberToFormat = cleaned;
@@ -41,7 +44,7 @@ export default function TicketCreateFormSection() {
         }
         return value;
     }
-    function formHandler(value, name) {
+    async function formHandler(value, name) {
         if (name == "phone") {
             dispatch(
                 setForm({
@@ -54,7 +57,7 @@ export default function TicketCreateFormSection() {
             dispatch(
                 setForm({
                     ...form,
-                issue: issue,
+                    issue: issue,
                 })
             );
         } else if (name == "country") {
@@ -62,9 +65,45 @@ export default function TicketCreateFormSection() {
                 setForm({
                     ...form,
                     country: value,
-                    state: '',
+                    state: "",
                 })
             );
+        } else if (name == "serial_number") {
+            if (value.length == 17) {
+                setLoading1(true);
+                try {
+                    const res =
+                        await get_product_registration_by_serial_service(value);
+                    if (res.length !== 0) {
+                        dispatch(
+                            setForm({
+                                ...form,
+                                ...res,
+                                serial_number: res.serial,
+                                address: res.address1,
+                            })
+                        );
+                        setLoading1(false);
+                    } else {
+                        dispatch(
+                            setForm({
+                                ...form,
+                                [name]: value,
+                            })
+                        );
+                        setLoading1(false);
+                    }
+                } catch (error) {
+                    setLoading1(false);
+                }
+            } else {
+                dispatch(
+                    setForm({
+                        ...form,
+                        [name]: value,
+                    })
+                );
+            }
         } else {
             dispatch(
                 setForm({
@@ -276,7 +315,7 @@ export default function TicketCreateFormSection() {
                         name="serial_number"
                         required={false}
                         value={form.serial_number}
-                        label="Serial Number"
+                        label={loading1 ? "Loading ..." : "Serial Number"}
                         type="text"
                         // errorMessage="Serial Number is required"
                     />
