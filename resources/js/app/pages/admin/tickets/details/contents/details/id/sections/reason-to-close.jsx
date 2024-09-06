@@ -35,7 +35,6 @@ export default function ReasonToClose({ data }) {
     function formHandler(value) {
         setReason(value);
     }
-    console.log("data.name", data.remarks);
     function click_close(e) {
         e.preventDefault();
         if ((window.location.pathname.split("/")[5] ?? "") == "details") {
