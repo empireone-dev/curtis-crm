@@ -190,7 +190,7 @@ export default function WarratyValidationSection() {
                         type="text"
                         errorMessage="Validation Notes is required"
                     />
-                    {form.refurbished == "true" && (
+                    {form.refurbished == "false" && (
                         <div className="flex flex-col bg-blue-700 text-white p-3 rounded-md gap-4">
                             <div className="text-2xl font-bold">
                                 Mark this Ticket Valid
@@ -215,7 +215,7 @@ export default function WarratyValidationSection() {
                     )}
                 </form>
 
-                {form.refurbished == "false" && (
+                {form.refurbished == "true" && (
                     <div className="flex flex-col bg-red-600 text-white p-3 rounded-md gap-4">
                         <div className="text-2xl font-bold">
                             Mark this Ticket In-Valid
