@@ -28,13 +28,13 @@ export default function DecisionMakingSection() {
     const { email_templates } = useSelector((state) => state.email_templates);
     const [messageApi, contextHolder] = message.useMessage();
 
-    useEffect(()=>{
+    useEffect(() => {
         setData({
             ...data,
-            cost_refund:data.retailers_price,
-            after_discount:data.retailers_price
-        })
-    },[data.retailers_price])
+            cost_refund: data.retailers_price,
+            after_discount: data.retailers_price,
+        });
+    }, [data.retailers_price]);
     useEffect(() => {
         async function get_decision_making(params) {
             const result = await get_specific_item_service(ticket);
@@ -119,22 +119,28 @@ export default function DecisionMakingSection() {
 
     async function submit_form(e) {
         e.preventDefault();
-        if (data.instruction) {
+        if (
+            data.after_discount == undefined ||
+            data.after_discount == "" ||
+            data.after_discount == "0"
+        ) {
+            message.error("Price after discount is required!");
+        } else if (data.instruction) {
             setIsLoading1(true);
             const response = await store_decision_making_service(data);
 
-                if (
-                    data.instruction == "CA Warehouse" ||
-                    data.instruction == "US Warehouse"
-                ) {
-                    router.visit(routing("warehouse"));
-                } else if (data.instruction == "ASC") {
-                    router.visit(routing("repair"));
-                } else if (data.instruction == "Home") {
-                    router.visit(routing("files"));
-                }else if (data.instruction == "RMA Request") {
-                    router.visit(routing("rma_request"));
-                }
+            if (
+                data.instruction == "CA Warehouse" ||
+                data.instruction == "US Warehouse"
+            ) {
+                router.visit(routing("warehouse"));
+            } else if (data.instruction == "ASC") {
+                router.visit(routing("repair"));
+            } else if (data.instruction == "Home") {
+                router.visit(routing("files"));
+            } else if (data.instruction == "RMA Request") {
+                router.visit(routing("rma_request"));
+            }
 
             //  else {
             //     router.visit(routing("refund"));
@@ -275,7 +281,9 @@ export default function DecisionMakingSection() {
                                         span="$"
                                         name="after_discount"
                                         required={false}
-                                        value={String(data.after_discount ?? "0")}
+                                        value={String(
+                                            data.after_discount ?? "0"
+                                        )}
                                         label="Price After Discount"
                                         type="number"
                                         errorMessage="Price After Discount is required"
