@@ -41,20 +41,27 @@ export default function ProductRegistrationTableSection() {
                 }}
                 onKeyDown={(e) => e.stopPropagation()}
             >
-            
                 <Input
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
                     onChange={(e) => {
-                        console.log('dataIndex',e.target.value)
+                        console.log("dataIndex", e.target.value);
                         if (dataIndex == "phone") {
-                            if (e.target.value?.replace(/\D/g, '').length <= 10) {
+                            if (
+                                e.target.value?.replace(/\D/g, "").length <= 10
+                            ) {
                                 setSelectedKeys(
-                                    e.target.value ? [e.target.value?.replace(/\D/g, '').replace(
-                                        /(\d{3})(\d{3})(\d{4})/,
-                                        "($1) $2-$3"
-                                    )] : []
+                                    e.target.value
+                                        ? [
+                                              e.target.value
+                                                  ?.replace(/\D/g, "")
+                                                  .replace(
+                                                      /(\d{3})(\d{3})(\d{4})/,
+                                                      "($1) $2-$3"
+                                                  ),
+                                          ]
+                                        : []
                                 );
                             }
                         } else if (dataIndex != "phone") {
@@ -218,16 +225,22 @@ export default function ProductRegistrationTableSection() {
             ...getColumnSearchProps("model"),
         },
         {
+            title: "Created At",
+            dataIndex: "created_at",
+            key: "created_at",
+            // ...getColumnSearchProps("created_at"),
+            render: (_, record) => {
+                return <div>{moment(record.created_at).format("LL")}</div>;
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
                 function route_link(data) {
                     return (
                         <Link
-                            href={
-                                "/curtis/product_registration/" +
-                                record.id
-                            }
+                            href={"/curtis/product_registration/" + record.id}
                         >
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>

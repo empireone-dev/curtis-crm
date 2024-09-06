@@ -218,6 +218,19 @@ export default function ProductRegistrationTableSection() {
             ...getColumnSearchProps("model"),
         },
         {
+            title: "Created At",
+            dataIndex: "created_at",
+            key: "created_at",
+            // ...getColumnSearchProps("created_at"),
+            render: (_, record) => {
+                return (
+                    <div>
+                       {moment(record.created_at).format('LL')}
+                    </div>
+                );
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
