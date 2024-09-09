@@ -31,10 +31,10 @@ export default function DecisionMakingSection() {
     useEffect(() => {
         setData({
             ...data,
-            cost_refund: data.retailers_price,
-            after_discount: data.retailers_price,
+            cost_refund:  data.retailers_price - data.discount,
+            after_discount: data.retailers_price - data.discount,
         });
-    }, [data.retailers_price]);
+    }, [data.retailers_price,data.discount]);
     useEffect(() => {
         async function get_decision_making(params) {
             const result = await get_specific_item_service(ticket);
@@ -116,7 +116,7 @@ export default function DecisionMakingSection() {
             template_text: findTemplates.template_text,
         });
     }
-
+    // cost_refund
     async function submit_form(e) {
         e.preventDefault();
         if (
@@ -125,6 +125,13 @@ export default function DecisionMakingSection() {
             data.after_discount == "0"
         ) {
             message.error("Price after discount is required!");
+        }
+        if (
+            data.cost_refund == undefined ||
+            data.cost_refund == "" ||
+            data.cost_refund == "0"
+        ) {
+            message.error("Estimated Cost of Refund is required!");
         } else if (data.instruction) {
             setIsLoading1(true);
             const response = await store_decision_making_service(data);
