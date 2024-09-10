@@ -76,30 +76,42 @@ class ProductRegistrationController extends Controller
     }
     public function store(Request $request)
     {
-        $pr = ProductRegistration::create([
-            'address1' => $request->address1,
-            'address2' => $request->address2,
-            'city' => $request->city,
-            'country' => $request->country,
-            'email' => $request->email,
-            'fname' => $request->fname,
-            'lname' => $request->lname,
-            'model' => $request->model,
-            'phone' => $request->phone,
-            'serial' => $request->serial,
-            'state' => $request->state,
-            'zipcode' => $request->zipcode
-        ]);
+        $prod = ProductRegistration::where('serial', $request->serial)->first();
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $uploadedFile) {
-                $path = $uploadedFile->store(date("Y"), 's3');
-                $url = Storage::disk('s3')->url($path);
-                ProductRegistrationFile::create([
-                    'pr_id' => $pr->id,
-                    'url' => $url,
-                ]);
+        if (!$prod) {
+            $pr = ProductRegistration::create([
+                'address1' => $request->address1,
+                'address2' => $request->address2,
+                'city' => $request->city,
+                'country' => $request->country,
+                'email' => $request->email,
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'model' => $request->model,
+                'phone' => $request->phone,
+                'serial' => $request->serial,
+                'state' => $request->state,
+                'zipcode' => $request->zipcode
+            ]);
+
+
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $uploadedFile) {
+                    $path = $uploadedFile->store(date("Y"), 's3');
+                    $url = Storage::disk('s3')->url($path);
+                    ProductRegistrationFile::create([
+                        'pr_id' => $pr->id,
+                        'url' => $url,
+                    ]);
+                }
             }
+            return response()->json([
+                'result' => 'success',
+            ], 200);
+        } else {
+            return response()->json([
+                'result' => 'exist',
+            ], 200);
         }
     }
 }

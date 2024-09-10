@@ -31,10 +31,10 @@ export default function DecisionMakingSection() {
     useEffect(() => {
         setData({
             ...data,
-            cost_refund:  data.retailers_price - data.discount,
+            cost_refund: data.retailers_price - data.discount,
             after_discount: data.retailers_price - data.discount,
         });
-    }, [data.retailers_price,data.discount]);
+    }, [data.retailers_price, data.discount]);
     useEffect(() => {
         async function get_decision_making(params) {
             const result = await get_specific_item_service(ticket);
@@ -284,6 +284,7 @@ export default function DecisionMakingSection() {
                                     />
 
                                     <Input
+                                        readOnly={true}
                                         onChange={formHandler}
                                         span="$"
                                         name="after_discount"
@@ -294,7 +295,6 @@ export default function DecisionMakingSection() {
                                         label="Price After Discount"
                                         type="number"
                                         errorMessage="Price After Discount is required"
-                                        readOnly
                                     />
                                     <Input
                                         onChange={formHandler}

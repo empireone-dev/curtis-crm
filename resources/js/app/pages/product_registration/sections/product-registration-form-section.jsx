@@ -47,6 +47,13 @@ export default function ProductRegistrationForm() {
                 country: value,
                 state: "",
             });
+        } else if (name == "serial") {
+            if (value.length <= 17) {
+                setForm({
+                    ...form,
+                    [name]: value,
+                });
+            }
         } else {
             setForm({
                 ...form,
@@ -96,10 +103,18 @@ export default function ProductRegistrationForm() {
                         }
                     });
                     try {
-                        await product_registration_service(fd);
-                        message.success(`Product Registration Successfully!`);
-                        setForm({});
-                        setLoading(false);
+                        const res = await product_registration_service(fd);
+                        console.log("res", res);
+                        if (res.result == "exist") {
+                            message.warning(`Serial number is already exist!`);
+                            setLoading(false);
+                        } else {
+                            message.success(
+                                `Product Registration Successfully!`
+                            );
+                            setForm({});
+                            setLoading(false);
+                        }
                     } catch (error) {
                         setLoading(false);
                     }
@@ -199,9 +214,12 @@ export default function ProductRegistrationForm() {
                         type="text"
                         errorMessage="Model is required"
                     />
-                    {form?.serial && formattedSerial == "Invalid serial number format!" && (
-                        <div className="text-red-500">{formattedSerial}</div>
-                    )}
+                    {form?.serial &&
+                        formattedSerial == "Invalid serial number format!" && (
+                            <div className="text-red-500">
+                                {formattedSerial}
+                            </div>
+                        )}
                     {formattedSerial !== "Invalid serial number format!" && (
                         <div className="text-green-500">Correct Format!</div>
                     )}

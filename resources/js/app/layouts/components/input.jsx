@@ -9,7 +9,8 @@ export default function Input({
     onChange,
     required,
     span,
-    ids
+    ids,
+    readOnly
 }) {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -39,6 +40,7 @@ export default function Input({
         <div className="w-full">
             <div className="relative">
                 <input
+                readOnly={readOnly??false}
                     autoComplete="off"
                     required={required}
                     value={formType() ?? ""}
