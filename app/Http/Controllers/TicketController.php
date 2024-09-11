@@ -925,16 +925,26 @@ class TicketController extends Controller
         $data = [];
         $user = User::where('id', $request->user_id)->first();
         $today = Carbon::today()->toDateString();
-
-        if ($user->agent_type == 'Warranty') {
-            $call_type = 'CF-Warranty Claim';
-        } elseif ($user->agent_type == 'Parts') {
-            $call_type = 'Parts';
-        } else {
-            $call_type = 'Tech';
+        $call_type = '';
+        if ($request->cases !== 'case_file') {
+            if ($user->agent_type == 'Warranty') {
+                $call_type = 'CF-Warranty Claim';
+            } elseif ($user->agent_type == 'Parts') {
+                $call_type = 'Parts';
+            } else {
+                $call_type = 'Tech';
+            }
         }
 
-        if ($request->cases == 'open_cases') {
+        if ($request->cases == 'case_file') {
+            $search = Ticket::where('ticket_id', '=', $request->where)->get();
+
+            return response()->json([
+                'data_count' => count($search),
+                'ticket_count' => 100,
+                'result' =>  $search,
+            ], 200);
+        } else if ($request->cases == 'open_cases') {
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
                 ['status', '<>', 'CLOSED'],

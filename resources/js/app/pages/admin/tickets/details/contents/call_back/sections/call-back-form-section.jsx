@@ -64,7 +64,7 @@ export default function CallBackFormSection() {
                         <i aria-hidden="true" className="v-icon notranslate v-icon--left mdi mdi-list-status theme--light"></i>
                     </div>
                     <p>Parts Validation Notes:<Notes:div className='text-red-500'> {ticket.validation_notes}</Notes:div></p>
-                    <p>Internal Notes:<Notes:div className='text-red-500'> {ticket.internal_notes}</Notes:div></p>
+                    {/* <p>Internal Notes:<Notes:div className='text-red-500'> {ticket.internal_notes}</Notes:div></p> */}
                     <div className="flex gap-3 w-full">
                         <table className="min-w-full divide-y divide-gray-200 ">
                             <thead className="">
