@@ -23,12 +23,10 @@ export default function ProductivityDateSection() {
     const handleChangeData = (value) => {
         const start = value[0].format("YYYY-MM-DD");
         const end = value[1].format("YYYY-MM-DD");
-        setData({
-            ...data,
-            start: start,
-            end: end,
-        });
+      
+        router.visit(window.location.pathname+`?start=${start}&end=${end}`)
     };
+    
     const newProducts = products?.slice(2).map((res) => ({
         value: res[1],
     }));
