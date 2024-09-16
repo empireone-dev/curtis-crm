@@ -14,6 +14,8 @@ export default function TicketTableSection() {
     const searchInput = useRef(null);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -334,11 +336,36 @@ export default function TicketTableSection() {
             // router.visit(newUrl);
         },
     };
+
+    const onSelectChange = (newSelectedRowKeys) => {
+        console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+
+    const hasSelected = selectedRowKeys.length > 0;
+
     return (
-        <Table
-            columns={columns}
-            pagination={paginationConfig}
-            dataSource={data}
-        />
+        <>
+            {hasSelected && (
+                <Button
+                    type="primary"
+                    // onClick={start}
+                    disabled={!hasSelected}
+                    loading={loading}
+                >
+                    Export Case Files
+                </Button>
+            )}
+            <Table
+                rowSelection={rowSelection}
+                columns={columns}
+                pagination={paginationConfig}
+                dataSource={data}
+            />
+        </>
     );
 }

@@ -106,7 +106,7 @@ export default function ProductRegistrationForm() {
                         const res = await product_registration_service(fd);
                         console.log("res", res);
                         if (res.result == "exist") {
-                            message.warning(`Serial number is already exist!`);
+                            message.warning(`Serial number already existed!`);
                             setLoading(false);
                         } else {
                             message.success(

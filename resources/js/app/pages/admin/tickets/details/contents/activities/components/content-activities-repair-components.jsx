@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export default function ContentActivitiesRepairComponents({ data }) {
     const [open, setOpen] = useState(false);
     const result = JSON.parse(data.message);
-    console.log("result", result.repair.repair_cost);
+    
     return (
         <div>
             <button
