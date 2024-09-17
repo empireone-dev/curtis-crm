@@ -1000,7 +1000,10 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'case_file') {
-            $search = Ticket::where('ticket_id', '=', $request->where)->get();
+            $search = Ticket::where([
+                ['ticket_id', '=', $request->where],
+                ['cases_status', '<>', 'hidden']
+            ])->get();
 
             return response()->json([
                 'data_count' => count($search),
@@ -1013,7 +1016,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
-                ['cases_status', '<>', 'hide'],
+                ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
             ])
                 ->orderBy('email_date', 'asc');
@@ -1032,7 +1035,7 @@ class TicketController extends Controller
                 ['user_id', '=', $user->id],
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
-                ['cases_status', '<>', 'hide'],
+                ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
@@ -1064,7 +1067,7 @@ class TicketController extends Controller
                 ['user_id', '=', $user->id],
                 ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
-                ['cases_status', '<>', 'hide'],
+                ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->get();
