@@ -844,7 +844,10 @@ class TicketController extends Controller
     //     ], 200);
     // }
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbxob6vQdgkIdYj8jPlG2yAOCytLxTeS6AhQLO0lEJbrabk-GpTODq3-yhgNJexjfLIR/exec';
+        //old - this is from app script in customer responded
+        // $scriptUrl = 'https://script.google.com/macros/s/AKfycbxob6vQdgkIdYj8jPlG2yAOCytLxTeS6AhQLO0lEJbrabk-GpTODq3-yhgNJexjfLIR/exec';
+        //new - this is from app script in trial
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyUurF8B2D8PMMrCFGshRq5ICuwQUl2fmxzwW6jwc7gAtgT_Nr6iVY94-p-6uTV23Zq/exec';
 
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
@@ -862,6 +865,35 @@ class TicketController extends Controller
                         'cases_status' => 'handled',
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                         'is_reply' => 'true'
+                    ]);
+                }
+            } else {
+                $users = User::where('role_id', 5)
+                    ->where('agent_type', '=', "Parts")
+                    ->get();
+                $userWithSmallestCount = null;
+                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+                foreach ($users as $user) {
+                    $count = DirectEmail::where('user_id', $user->id)->count();
+
+                    if ($count < $smallestCount) {
+                        $smallestCount = $count;
+                        $userWithSmallestCount = $user;
+                    }
+                }
+                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                if ($de) {
+                    $de->update([
+                        'isHide' => $value['isReply'] == "true" ? "false" : "true"
+                    ]);
+                } else {
+                    DirectEmail::create([
+                        'email' => $value['email'],
+                        'threadId' => $value['threadId'],
+                        'user_id' => $userWithSmallestCount->id,
+                        'count' => $value['count'] ?? 0,
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
@@ -892,14 +924,16 @@ class TicketController extends Controller
     //     ], 200);
     // }
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbyJfgd2C_FjuibQGtV82kZBcn5Eh952SEReHBlN8RBMrEZGMcBBdv1GCP71GzpQiGc/exec';
-
+        //old - this is from app script in customer responded
+        // $scriptUrl = 'https://script.google.com/macros/s/AKfycbyJfgd2C_FjuibQGtV82kZBcn5Eh952SEReHBlN8RBMrEZGMcBBdv1GCP71GzpQiGc/exec';
+        //new - this is from app script in trial
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbz87cvRQEunpbXVC9Ii7nfmCRnaTsowKRt8mjneaaBTxVFpEOrX0tqnoeb_YKaKAbHk/exec';
         $response = Http::get($scriptUrl);
         $responseData = $response->json();
         foreach ($responseData as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
-                if ($value['email'] == 'support2@curtiscs.com') {
+                if ($value['email'] == 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'hidden',
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
@@ -910,6 +944,35 @@ class TicketController extends Controller
                         'cases_status' => 'handled',
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                         'is_reply' => 'true'
+                    ]);
+                }
+            } else {
+                $users = User::where('role_id', 5)
+                    ->where('agent_type', '=', "Parts")
+                    ->get();
+                $userWithSmallestCount = null;
+                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+                foreach ($users as $user) {
+                    $count = DirectEmail::where('user_id', $user->id)->count();
+
+                    if ($count < $smallestCount) {
+                        $smallestCount = $count;
+                        $userWithSmallestCount = $user;
+                    }
+                }
+                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                if ($de) {
+                    $de->update([
+                        'isHide' => $value['isReply'] == "true" ? "false" : "true"
+                    ]);
+                } else {
+                    DirectEmail::create([
+                        'email' => $value['email'],
+                        'threadId' => $value['threadId'],
+                        'user_id' => $userWithSmallestCount->id,
+                        'count' => $value['count'] ?? 0,
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
