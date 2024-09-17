@@ -857,13 +857,13 @@ class TicketController extends Controller
                 if ($value['email'] == 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'hidden',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::parse()->format('Y-m-d H:i:s'),
                         'is_reply' => null
                     ]);
                 } else {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::parse()->format('Y-m-d H:i:s'),
                         'is_reply' => 'true'
                     ]);
                 }
