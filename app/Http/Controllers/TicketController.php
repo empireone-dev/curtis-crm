@@ -243,6 +243,12 @@ class TicketController extends Controller
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
                     } else if ($searchQuery == 'OPEN TECH') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
+                    } else if ($searchQuery == 'WARRANTY CLOSED') {
+                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
+                    } else if ($searchQuery == 'PARTS CLOSED') {
+                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
+                    } else if ($searchQuery == 'TECH CLOSED') {
+                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                     } else {
                         $query->orWhere([[$column, '=',  $searchQuery]]);
                     }

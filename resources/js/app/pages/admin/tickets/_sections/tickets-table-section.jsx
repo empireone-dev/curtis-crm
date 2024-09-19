@@ -4,19 +4,20 @@ import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import TicketsSelectedExportSection from "./tickets-selected-export-section";
+import { setSelectedRowKeys } from "../_redux/tickets-slice";
 
 export default function TicketTableSection() {
-    const { tickets } = useSelector((state) => state.tickets);
+    const { tickets,selectedRowKeys } = useSelector((state) => state.tickets);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [loading, setLoading] = useState(false);
-
+    // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const dispatch = useDispatch()
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -338,8 +339,8 @@ export default function TicketTableSection() {
     };
 
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
+        // console.log('newSelectedRowKeys',newSelectedRowKeys)
+        dispatch(setSelectedRowKeys(newSelectedRowKeys));
     };
     const rowSelection = {
         selectedRowKeys,
@@ -347,19 +348,9 @@ export default function TicketTableSection() {
     };
 
     const hasSelected = selectedRowKeys.length > 0;
-
     return (
         <>
-            {hasSelected && (
-                <Button
-                    type="primary"
-                    // onClick={start}
-                    disabled={!hasSelected}
-                    loading={loading}
-                >
-                    Export Case Files
-                </Button>
-            )}
+            {hasSelected && <TicketsSelectedExportSection selected={selectedRowKeys}/>}
             <Table
                 rowSelection={rowSelection}
                 columns={columns}

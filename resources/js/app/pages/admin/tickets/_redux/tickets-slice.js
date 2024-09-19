@@ -18,6 +18,7 @@ export const ticketsSlice = createSlice({
         repair: {},
         internals: [],
         asc: [],
+        selectedRowKeys: [],
     },
     reducers: {
         setTickets: (state, action) => {
@@ -56,6 +57,11 @@ export const ticketsSlice = createSlice({
         setAsc: (state, action) => {
             state.asc = action.payload;
         },
+        setSelectedRowKeys: (state, action) => {
+            state.selectedRowKeys = [
+                ...new Set([...state.selectedRowKeys, ...action.payload]),
+            ];
+        },
     },
 });
 export const {
@@ -70,7 +76,8 @@ export const {
     setRepair,
     setReplacement,
     setInternals,
-    setAsc
+    setAsc,
+    setSelectedRowKeys,
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

@@ -29,7 +29,10 @@ export default function TicketsExportFileSection() {
         if (!phone) return "N/A";
         const cleaned = phone.replace(/[^\d]/g, "");
         if (cleaned.length !== 10) return "N/A";
-        const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        const formatted = cleaned.replace(
+            /(\d{3})(\d{3})(\d{4})/,
+            "($1) $2-$3"
+        );
         return formatted;
     };
     async function export_ticket() {
@@ -64,7 +67,7 @@ export default function TicketsExportFileSection() {
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
                         res.lname ?? "N/A",
-                        formatPhone(res.phone),                        
+                        formatPhone(res.phone),
                         res.email ?? "N/A",
                         res.serial_number ?? "N/A",
                         res.item_number ?? "N/A",
@@ -84,8 +87,8 @@ export default function TicketsExportFileSection() {
                         res.receipt?.discount ?? "N/A",
                         res.decision_making?.after_discount ?? "N/A",
                         res.receipt?.retailers_price ?? "N/A",
-                        res.decision_making?.cost_of_unit ?? "0",//price cost
-                        res.decision_making?.shipping_cost ?? "0",//ship cost
+                        res.decision_making?.cost_of_unit ?? "0", //price cost
+                        res.decision_making?.shipping_cost ?? "0", //ship cost
                         res.replacement?.ship_date ?? "N/A",
                         res.replacement?.tracking ?? "N/A",
                         res.refund?.ship_date ?? "N/A",
