@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, Radio, Select } from "antd";
 import { useSelector } from "react-redux";
 import { verify_tickets_service } from "@/app/services/tickets-service";
-import { current } from "@reduxjs/toolkit";
+import * as XLSX from "xlsx";
 import moment from "moment";
 
 export default function TicketsSelectedExportSection({ selected }) {
@@ -11,6 +11,7 @@ export default function TicketsSelectedExportSection({ selected }) {
     const { tickets } = useSelector((state) => state.tickets);
     const [value, setValue] = useState("all");
     const [selectedColumn, setSelectedColumn] = useState([]);
+
     const columns = [
         { id: 0, name: "Date Created" },
         { id: 1, name: "Date Last Updated" },
@@ -71,6 +72,7 @@ export default function TicketsSelectedExportSection({ selected }) {
     const handleOk = async () => {
         // setIsModalOpen(false);
         setLoading(true);
+        console.log(window.location.search)
         const exist = await verify_tickets_service(window.location.search);
 
         async function get_status(params) {
@@ -85,7 +87,10 @@ export default function TicketsSelectedExportSection({ selected }) {
 
         async function get_column(params) {
             if (value == "all") {
-                return columns;
+                // return columns;
+                return columns.filter((item) =>
+                    selectedColumn.includes(item.id)
+                );
             } else if (value == "uncheck") {
                 return columns.filter(
                     (item) => !selectedColumn.includes(item.id)
@@ -215,7 +220,7 @@ export default function TicketsSelectedExportSection({ selected }) {
             },
             29: {
                 id: 29,
-                name: res.refund?.ship_date  ?? "N/A",
+                name: res.refund?.ship_date ?? "N/A",
             },
             30: {
                 id: 30,
@@ -223,11 +228,11 @@ export default function TicketsSelectedExportSection({ selected }) {
             },
             31: {
                 id: 31,
-                name: res.refund?.cheque_amount?? "N/A",
+                name: res.refund?.cheque_amount ?? "N/A",
             },
             32: {
                 id: 32,
-                name:(res.country == "CA" ? "CAD" : "USD") ?? "N/A",
+                name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
             },
             33: {
                 id: 33,
@@ -236,11 +241,49 @@ export default function TicketsSelectedExportSection({ selected }) {
         }));
 
         const new_column = (await get_column()).sort((a, b) => a.id - b.id);
+        
         const new_data = result.map((item) =>
             selectedColumn.map((res) => item[res]).sort((a, b) => a.id - b.id)
         );
-        console.log('new_column',new_column)
-        console.log('new_data',new_data)
+        const export_data = [
+            new_column.map((res) => res.name),
+            ...new_data.map((res) => res.map((res) => res.name)),
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(export_data);
+        console.log("new_column", new_column);
+        console.log("new_data", new_data);
+        console.log("export_data", export_data);
+
+        // Define the style for the header row
+        const headerStyle = {
+            font: { bold: true, color: { rgb: "FFFFFF" } }, // White font color
+            fill: { fgColor: { rgb: "2F75B5" } }, // Blue background color
+        };
+
+        // Apply the style to each cell in the first row (header row)
+        for (let col = 0; col < export_data[0].length; col++) {
+            const cell = XLSX.utils.encode_cell({ r: 0, c: col });
+            if (!ws[cell]) ws[cell] = {}; // Ensure the cell object exists
+            ws[cell].s = headerStyle;
+        }
+
+        // Calculate the column widths
+        const colWidths = export_data[0].map((_, colIndex) => {
+            return Math.max(
+                ...export_data.map((row) => {
+                    const value = row[colIndex] ? row[colIndex].toString() : "";
+                    return value.length;
+                })
+            );
+        });
+
+        ws["!cols"] = colWidths.map((width) => ({ wch: width + 2 })); // Adding a little extra padding
+
+        const wb = XLSX.utils.book_new();
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
         setLoading(false);
     };
     const handleCancel = () => {

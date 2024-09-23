@@ -140,7 +140,7 @@ export default function TicketFilterSection() {
             router.visit(
                 window.location.pathname +
                     "?page=1&" +
-                    "&start=" +
+                    "start=" +
                     data.start +
                     "&end=" +
                     data.end +

@@ -58,9 +58,7 @@ export const ticketsSlice = createSlice({
             state.asc = action.payload;
         },
         setSelectedRowKeys: (state, action) => {
-            state.selectedRowKeys = [
-                ...new Set([...state.selectedRowKeys, ...action.payload]),
-            ];
+            state.selectedRowKeys = action.payload;
         },
     },
 });
