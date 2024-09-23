@@ -177,7 +177,7 @@ export default function TicketTableSection() {
             {data && (
                 <>
                     <Table
-                    isStatus={isStatus}
+                        isStatus={isStatus}
                         columns={columns}
                         data={data}
                         dataChecked={selectedRowKeys}

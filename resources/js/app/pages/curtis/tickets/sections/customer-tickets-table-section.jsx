@@ -1,275 +1,156 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
+import { Button, Input, Pagination, Space, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import TicketsSelectedExportSection from "./tickets-selected-export-section";
+import store from "@/app/store/store";
+import Table from "@/app/_components/table";
 
 export default function CustomerTicketsTableSection() {
-    const { tickets } = useSelector((state) => state.tickets);
-    const [searchText, setSearchText] = useState("");
-    const [searchedColumn, setSearchedColumn] = useState("");
-    const searchInput = useRef(null);
-    const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
 
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
-    };
-    const handleReset = (clearFilters) => {
-        clearFilters();
-        setSearchText("");
-    };
-    
-    const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            close,
-        }) => (
-            <div
-                style={{
-                    padding: 8,
-                }}
-                onKeyDown={(e) => e.stopPropagation()}
-            >
-                <Input
-                    ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
-                    value={selectedKeys[0]}
-                    onChange={(e) =>
-                        setSelectedKeys(e.target.value ? [e.target.value] : [])
-                    }
-                    onPressEnter={() =>
-                        handleSearch(selectedKeys, confirm, dataIndex)
-                    }
-                    style={{
-                        marginBottom: 8,
-                        display: "block",
-                    }}
-                />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() =>
-                            handleSearch(selectedKeys, confirm, dataIndex)
-                        }
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() =>
-                            clearFilters && handleReset(clearFilters)
-                        }
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Reset
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({
-                                closeDropdown: false,
-                            });
-                            setSearchText(selectedKeys[0]);
-                            setSearchedColumn(dataIndex);
-                        }}
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            close();
-                        }}
-                    >
-                        close
-                    </Button>
-                </Space>
-            </div>
-        ),
-        filterIcon: (filtered) => (
-            <SearchOutlined
-                style={{
-                    color: filtered ? "#1677ff" : undefined,
-                }}
-            />
-        ),
-        onFilter: (value, record) =>
-            record[dataIndex]
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        onFilterDropdownOpenChange: (visible) => {
-            if (visible) {
-                setTimeout(() => searchInput.current?.select(), 100);
-            }
-        },
-        render: (text) =>
-            searchedColumn === dataIndex ? (
-                <Highlighter
-                    highlightStyle={{
-                        backgroundColor: "#ffc069",
-                        padding: 0,
-                    }}
-                    searchWords={[searchText]}
-                    autoEscape
-                    textToHighlight={text ? text.toString() : ""}
-                />
-            ) : (
-                text
-            ),
-    });
-
-    // const datas = {
-    //     ...tickets,
-    //     ...tickets.map(res => res.id),
-    // }
-    // console.log('datas', datas)
-    const data = tickets?.data?.map((res, i) => ({
+    const data = tickets?.data?.map((res) => ({
         ...res,
         key: res.id,
+        ticket_id: (() => {
+            function route_link(data) {
+                if (data.call_type == "TS-Tech Support") {
+                    return (
+                        <Link
+                            className="underline"
+                            href={
+                                "/curtis/tickets/details/" +
+                                res.id +
+                                "/status"
+                            }
+                        >
+                            {res.pr && (
+                                <CheckBadgeIcon className="h-6 text-green-600" />
+                            )}
+                            {res.ticket_id}
+                        </Link>
+                    );
+                } else {
+                    return (
+                        <Link
+                            className="underline"
+                            href={
+                                "/curtis/tickets/details/" +
+                                res.id +
+                                "/files"
+                            }
+                        >
+                            {res.pr && (
+                                <CheckBadgeIcon className="h-6 text-green-600" />
+                            )}
+                            {res.ticket_id}
+                        </Link>
+                    );
+                }
+            }
+            return (
+                <Tooltip placement="topLeft" title="View Ticket Details">
+                    {route_link(res)}
+                </Tooltip>
+            );
+        })(),
+        fullname: (
+            <div>
+                {res.fname} {res.lname}
+            </div>
+        ),
+        issue: <Tag color={"blue"}>{res.issue}</Tag>,
+        status: (() => {
+            const color =
+                res.status === "CLOSED"
+                    ? "red"
+                    : res.status === "PARTS VALIDATION" ||
+                      res.status === "WARRANTY VALIDATION" ||
+                      res.status === "TECH VALIDATION" ||
+                      res.status == null
+                    ? "orange"
+                    : "green";
+
+            return (
+                <>
+                    <Tag color={color}>
+                        {res.status === "PARTS VALIDATION" ||
+                        res.status === "WARRANTY VALIDATION" ||
+                        res.status === "TECH VALIDATION" ||
+                        res.status == null
+                            ? "OPEN"
+                            : res.status}
+                    </Tag>
+                    {res.is_reply && (
+                        <Tag color="purple">
+                            Customer has responded on{" "}
+                            {moment(res.email_date).format("LL")}
+                        </Tag>
+                    )}
+                </>
+            );
+        })(), // Call the function immediately to return the JSX
+        isUploading: (() => {
+            const color = res.isUploading == "true" ? "green" : "red";
+
+            return (
+                <>
+                    <Tag color={color} key={res.id}>
+                        {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
+                    </Tag>
+                </>
+            );
+        })(),
+        created_at: <div>{moment(res.created_at).format("LL")}</div>,
     }));
-    // console.log('ticket.map(res => res.id)',tickets.map(res => res.id))
+
     const columns = [
         {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            // ...getColumnSearchProps("ticket_id"),
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            // ...getColumnSearchProps("fullname"),
-            render: (_, record, i) => {
-                return (
-                    <div color={"red"} key={i}>
-                        {record.fname} {record.lname}
-                    </div>
-                );
-            },
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            // ...getColumnSearchProps("email"),
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            // ...getColumnSearchProps("call_type"),
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            // ...getColumnSearchProps("issue"),
-            render: (_, record, i) => {
-                return (
-                    <Tag color={"blue"} key={i}>
-                        {JSON.parse(record.issue)}
-                    </Tag>
-                );
-            },
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            // ...getColumnSearchProps("status"),
-            render: (_, record, i) => {
-                const color =
-                    record.status == "CLOSED"
-                        ? "red"
-                        : record.status == "PARTS VALIDATION" ||
-                          record.status == "WARRANTY VALIDATION" ||
-                          record.status == "TECH VALIDATION"
-                        ? "orange"
-                        : "green";
-                return (
-                    <>
-                        <Tag color={color} key={i}>
-                            {(record.status == "PARTS VALIDATION" ||
-                                record.status == "WARRANTY VALIDATION" ||
-                                record.status == "TECH VALIDATION") &&
-                            record.isUploading == "false"
-                                ? "OPEN"
-                                : record.status}
-                        </Tag>
-                    </>
-                );
-            },
         },
 
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            // ...getColumnSearchProps("isUploading"),
-            render: (_, record, i) => {
-                const color = record.isUploading == "true" ? "green" : "red";
-                return (
-                    <>
-                        <Tag color={color} key={i}>
-                            {record.isUploading == "true"
-                                ? "UPLOADED"
-                                : "PENDING"}
-                        </Tag>
-                    </>
-                );
-            },
         },
         {
             title: "Created At",
-            dataIndex: "status",
-            key: "status",
-            render: (_, record, i) => {
-                return <div>{moment(record.created_at).format("LLL")}</div>;
-            },
-        },
-        {
-            title: "action",
-            dataIndex: "action",
-            render: (_, record) => {
-                return (
-                    <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Link
-                            href={
-                                "/curtis/tickets/details/" +
-                                record.id +
-                                "/files"
-                            }
-                        >
-                            <EyeOutlined className="text-lg text-blue-500" />
-                        </Link>
-                    </Tooltip>
-                );
-            },
+            dataIndex: "created_at",
+            key: "created_at",
         },
     ];
-    // const handleTableChange = (pagination) => {
-    //     setCurrent(pagination.current);
-    //     setPageSize(pagination.pageSize);
-    // };
 
     const url = window.location.pathname + window.location.search;
 
@@ -281,33 +162,37 @@ export default function CustomerTicketsTableSection() {
     const page = getQueryParam(url, "page");
     const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
 
-    const paginationConfig = {
-        current: currentPage,
-        pageSize: pageSize,
-        total: tickets?.last_page * pageSize, // Replace tickets with your actual data source
-        onChange: (currentPage, pageSize) => {
-            const searchParams = new URLSearchParams(window.location.search);
-            searchParams.set("page", currentPage);
-            const newUrl =
-                window.location.pathname + "?" + searchParams.toString();
-
-            // Example of what to do with the new URL (replace with your logic)
-            console.log("Navigating to:", newUrl);
-            router.visit(newUrl)
-            // Example of setting state with currentPage and pageSize
-            setCurrent(currentPage);
-            setPageSize(pageSize);
-
-            // Example of navigation using router (replace with your logic)
-            // router.visit(newUrl);
-        },
+    const onChangePaginate = (page) => {
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("page", page);
+        const newUrl = window.location.pathname + "?" + searchParams.toString();
+        router.visit(newUrl);
     };
 
+    const isStatus = getQueryParam(url, "status");
+    console.log('isStatus',isStatus)
     return (
-        <Table
-            columns={columns}
-            pagination={paginationConfig}
-            dataSource={data}
-        />
+        <>
+          {isStatus && <TicketsSelectedExportSection selected={selectedRowKeys} />}  
+            {data && (
+                <>
+                    <Table
+                        isStatus={isStatus}
+                        columns={columns}
+                        data={data}
+                        dataChecked={selectedRowKeys}
+                        isCheckbox={true}
+                    />
+                    <div className="py-4 bg-white w-full flex items-center justify-end">
+                        <Pagination
+                            onChange={onChangePaginate}
+                            defaultCurrent={currentPage}
+                            total={tickets.total}
+                            showSizeChanger={false}
+                        />
+                    </div>
+                </>
+            )}
+        </>
     );
 }
