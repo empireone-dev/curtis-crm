@@ -5,7 +5,7 @@ import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, CheckBadgeIcon } from "@heroicons/react/24/outline";
 import TicketsSelectedExportSection from "./tickets-selected-export-section";
 import store from "@/app/store/store";
 import Table from "@/app/_components/table";
@@ -28,10 +28,15 @@ export default function TicketTableSection() {
                                 "/status"
                             }
                         >
-                            {res.pr && (
-                                <CheckBadgeIcon className="h-6 text-green-600" />
-                            )}
-                            {res.ticket_id}
+                           <div className="flex gap-3">
+                                {res.pr && (
+                                    <CheckBadgeIcon className="h-6 text-green-600" />
+                                )}
+                                {res.isExported && (
+                                    <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                )}
+                                {res.ticket_id}
+                            </div>
                         </Link>
                     );
                 } else {
@@ -44,10 +49,15 @@ export default function TicketTableSection() {
                                 "/files"
                             }
                         >
-                            {res.pr && (
-                                <CheckBadgeIcon className="h-6 text-green-600" />
-                            )}
-                            {res.ticket_id}
+                            <div className="flex gap-3">
+                                {res.pr && (
+                                    <CheckBadgeIcon className="h-6 text-green-600" />
+                                )}
+                                {res.isExported && (
+                                    <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                )}
+                                {res.ticket_id}
+                            </div>
                         </Link>
                     );
                 }
@@ -170,10 +180,12 @@ export default function TicketTableSection() {
     };
 
     const isStatus = getQueryParam(url, "status");
-    console.log('isStatus',isStatus)
+    console.log("isStatus", isStatus);
     return (
         <>
-          {isStatus && <TicketsSelectedExportSection selected={selectedRowKeys} />}  
+            {isStatus && (
+                <TicketsSelectedExportSection selected={selectedRowKeys} />
+            )}
             {data && (
                 <>
                     <Table

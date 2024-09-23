@@ -25,6 +25,13 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function ticket_export_status(Request $request){
+        foreach ($request->data as $key => $value) {
+            Ticket::where('id',$value)->update([
+             'isExported'=>'true'
+            ]);
+         }
+    }
     public function upload_rma_request(Request $request)
     {
         // Find the ticket by ID

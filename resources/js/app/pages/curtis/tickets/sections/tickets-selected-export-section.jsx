@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Radio, Select } from "antd";
 import { useSelector } from "react-redux";
-import { verify_tickets_service } from "@/app/services/tickets-service";
+import {
+    update_ticket_export_status_service,
+    verify_tickets_service,
+} from "@/app/services/tickets-service";
 import * as XLSX from "xlsx";
 import moment from "moment";
+import store from "@/app/store/store";
+import { get_tickets_thunk } from "@/app/pages/admin/tickets/_redux/tickets-thunk";
 
 export default function TicketsSelectedExportSection({ selected }) {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { tickets } = useSelector((state) => state.tickets);
+    const { selectedRowKeys } = useSelector((state) => state.tickets);
     const [value, setValue] = useState("all");
     const [selectedColumn, setSelectedColumn] = useState([]);
 
@@ -284,6 +289,15 @@ export default function TicketsSelectedExportSection({ selected }) {
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
         XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
+        const updated_export =  (await get_status()).map(res=>res.id)
+        update_ticket_export_status_service(updated_export);
+        if (window.location.hash == "") {
+            store.dispatch(get_tickets_thunk(window.location.search));
+        } else {
+            store.dispatch(
+                get_tickets_thunk("?search=" + window.location.hash.slice(1))
+            );
+        }
         setLoading(false);
     };
     const handleCancel = () => {

@@ -1,0 +1,1 @@
+import{a as i,d as l}from"./email-template-service-DFMiCgS-.js";import{f as m,g as n}from"./page-ch7AsIzP.js";function o(){return async function(e,t){const a=(await i()).data;e(m(a))}}function _(e){return async function(t,a){const s=await l(e);t(n.actions.setEmailTemplates(s.data))}}export{_ as d,o as g};

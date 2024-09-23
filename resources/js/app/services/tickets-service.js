@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export async function update_ticket_export_status_service(data) {
+    try {
+        const res = await axios.put("/api/ticket_export_status",{
+            data:data
+        });
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function get_tickets_warehouse_service(country) {
     try {
         const res = await axios.get("/api/get_tickets_warehouse/"+country);
