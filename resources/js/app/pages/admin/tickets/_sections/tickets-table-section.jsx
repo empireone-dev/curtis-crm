@@ -173,8 +173,7 @@ export default function TicketTableSection() {
     console.log('isStatus',isStatus)
     return (
         <>
-          {/* {isStatus && <TicketsSelectedExportSection selected={selectedRowKeys} />}   */}
-          <TicketsSelectedExportSection selected={selectedRowKeys} />
+          {isStatus && <TicketsSelectedExportSection selected={selectedRowKeys} />}  
             {data && (
                 <>
                     <Table
