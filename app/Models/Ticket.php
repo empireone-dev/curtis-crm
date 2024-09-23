@@ -52,7 +52,11 @@ class Ticket extends Model
         'is_reply'
     ];
 
-    
+    public function direct_emails(): HasOne
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class,'id','user_id');

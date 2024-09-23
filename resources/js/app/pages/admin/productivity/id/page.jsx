@@ -192,6 +192,16 @@ export default function ProductivityIDPage({ auth }) {
     });
     const columns = [
         {
+            title: "Assigned to",
+            dataIndex: "direct_emails",
+            key: "direct_emails",
+            width: "30%",
+            // ...getColumnSearchProps("date"),
+            render: (_, record, i) => {
+                return <>{record?.direct_emails?.name}</>;
+            },
+        },
+        {
             title: "Added On",
             dataIndex: "email_date",
             key: "email_date",

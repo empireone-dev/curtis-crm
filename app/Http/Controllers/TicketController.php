@@ -25,12 +25,13 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
-    public function ticket_export_status(Request $request){
+    public function ticket_export_status(Request $request)
+    {
         foreach ($request->data as $key => $value) {
-            Ticket::where('id',$value)->update([
-             'isExported'=>'true'
+            Ticket::where('id', $value)->update([
+                'isExported' => 'true'
             ]);
-         }
+        }
     }
     public function upload_rma_request(Request $request)
     {
@@ -1013,10 +1014,19 @@ class TicketController extends Controller
         }
 
         if ($request->cases == 'case_file') {
-            $search = Ticket::where([
-                ['ticket_id', '=', $request->where],
-                ['cases_status', '<>', 'hidden']
-            ])->get();
+            $search = [];
+            if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
+                $search = Ticket::where([
+                    ['email', '=', $request->where],
+                    ['cases_status', '<>', 'hidden']
+                ])->with(['direct_emails'])->get();
+            } else {
+                $search = Ticket::where([
+                    ['ticket_id', '=', $request->where],
+                    ['cases_status', '<>', 'hidden']
+                ])->with(['direct_emails'])->get();
+            }
+
 
             return response()->json([
                 'data_count' => count($search),
@@ -1031,7 +1041,7 @@ class TicketController extends Controller
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-            ])
+            ])->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
 
@@ -1051,7 +1061,7 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-            ])->get();
+            ])->with(['direct_emails'])->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1083,7 +1093,7 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-            ])->get();
+            ])->with(['direct_emails'])->get();
 
             foreach ($cases_due_today as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
