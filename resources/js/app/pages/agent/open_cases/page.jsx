@@ -55,6 +55,7 @@ export default function AgentOpenCasesEMail({ auth }) {
         }
         return dueDate.format("LL");
     }
+    
 
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
