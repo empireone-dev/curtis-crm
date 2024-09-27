@@ -1036,7 +1036,6 @@ class TicketController extends Controller
         } else if ($request->cases == 'open_cases') {
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
-                ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hidden'],
@@ -1056,7 +1055,6 @@ class TicketController extends Controller
         } else  if ($request->cases == 'over_due') {
             $overdue_cases = Ticket::where([
                 ['user_id', '=', $user->id],
-                ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
@@ -1088,7 +1086,6 @@ class TicketController extends Controller
         } else  if ($request->cases == 'due_today') {
             $cases_due_today = Ticket::where([
                 ['user_id', '=', $user->id],
-                ['status', '<>', 'CLOSED'],
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
