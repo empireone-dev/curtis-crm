@@ -234,7 +234,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity','validate']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {

@@ -46,7 +46,7 @@ export default function TicketsExportFileSection() {
             async function export_files() {
                 const allTickets = exist.data;
                 setLoading(false);
-
+                console.log('allTickets',allTickets)
                 let newData = [];
                 let data = [];
                 if (searchQuery == "RESOURCE") {
@@ -99,7 +99,7 @@ export default function TicketsExportFileSection() {
                         "No",//
                         (res.isUploading == "true" ? "YES" : "NO") ?? "NO",//
                         res.status ?? "N/A",//
-                        moment(res.updated_at).format("L"),// //7
+                        moment(res.validate.created_at).format("L"),// //7
                     ]);
 
                     data = [
