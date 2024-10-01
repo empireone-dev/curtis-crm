@@ -91,20 +91,23 @@ export default function TicketsSelectedExportSection({ selected }) {
         }
 
         async function get_column(params) {
-            if (value == "all") {
-                // return columns;
-                return columns.filter((item) =>
-                    selectedColumn.includes(item.id)
-                );
-            } else if (value == "uncheck") {
-                return columns.filter(
-                    (item) => !selectedColumn.includes(item.id)
-                );
-            } else if (value == "checked") {
-                return columns.filter((item) =>
-                    selectedColumn.includes(item.id)
-                );
-            }
+            // if (value == "all") {
+            //     // return columns;
+            //     return columns.filter((item) =>
+            //         selectedColumn.includes(item.id)
+            //     );
+            // } else if (value == "uncheck") {
+            //     return columns.filter(
+            //         (item) => !selectedColumn.includes(item.id)
+            //     );
+            // } else if (value == "checked") {
+            //     return columns.filter((item) =>
+            //         selectedColumn.includes(item.id)
+            //     );
+            // }
+            return columns.filter((item) =>
+                selectedColumn.includes(item.id)
+            );
         }
         const result = (await get_status()).map((res) => ({
             0: {

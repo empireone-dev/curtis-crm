@@ -7,6 +7,7 @@ import moment from "moment";
 import store from "@/app/store/store";
 import { get_tickets_thunk } from "../_redux/tickets-thunk";
 
+
 export default function TicketsSelectedExportSection({ selected }) {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +72,7 @@ export default function TicketsSelectedExportSection({ selected }) {
     const showModal = () => {
         setIsModalOpen(true);
     };
+    console.log('selected',selected)
     const handleOk = async () => {
         // setIsModalOpen(false);
         setLoading(true);
@@ -88,20 +90,23 @@ export default function TicketsSelectedExportSection({ selected }) {
         }
 
         async function get_column(params) {
-            if (value == "all") {
-                // return columns;
-                return columns.filter((item) =>
-                    selectedColumn.includes(item.id)
-                );
-            } else if (value == "uncheck") {
-                return columns.filter(
-                    (item) => !selectedColumn.includes(item.id)
-                );
-            } else if (value == "checked") {
-                return columns.filter((item) =>
-                    selectedColumn.includes(item.id)
-                );
-            }
+            // if (value == "all") {
+            //     // return columns;
+            //     return columns.filter((item) =>
+            //         selectedColumn.includes(item.id)
+            //     );
+            // } else if (value == "uncheck") {
+            //     return columns.filter(
+            //         (item) => !selectedColumn.includes(item.id)
+            //     );
+            // } else if (value == "checked") {
+            //     return columns.filter((item) =>
+            //         selectedColumn.includes(item.id)
+            //     );
+            // }
+            return columns.filter((item) =>
+                selectedColumn.includes(item.id)
+            );
         }
         const result = (await get_status()).map((res) => ({
             0: {
