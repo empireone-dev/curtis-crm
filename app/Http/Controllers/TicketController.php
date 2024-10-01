@@ -1027,10 +1027,25 @@ class TicketController extends Controller
                 ])->with(['direct_emails'])->get();
             }
 
+            foreach ($search as &$value) {
+                $emailDate = Carbon::parse($value->email_date);
+                $dayOfWeek = $emailDate->dayOfWeekIso;
+                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                    $addDay = 4;
+                } elseif ($dayOfWeek == 6) {
+                    $addDay = 3;
+                } elseif ($dayOfWeek == 7) {
+                    $addDay = 2;
+                } else {
+                    $addDay = 2;
+                }
+                $value->true_email_date = $value->email_date;
+                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            }
 
             return response()->json([
                 'data_count' => count($search),
-                'ticket_count' => 100,
+                'ticket_count' => 10990,
                 'result' =>  $search,
             ], 200);
         } else if ($request->cases == 'open_cases') {
