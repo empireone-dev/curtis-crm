@@ -1,55 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Radio, Select } from "antd";
 import { useSelector } from "react-redux";
-import { update_ticket_export_status_service, verify_tickets_service } from "@/app/services/tickets-service";
+import {
+    update_ticket_export_status_service,
+    verify_tickets_service,
+} from "@/app/services/tickets-service";
 import * as XLSX from "xlsx";
 import moment from "moment";
 import store from "@/app/store/store";
 import { get_tickets_thunk } from "../_redux/tickets-thunk";
 
-
 export default function TicketsSelectedExportSection({ selected }) {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { tickets,selectedRowKeys } = useSelector((state) => state.tickets);
+    const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
     const [value, setValue] = useState("all");
     const [selectedColumn, setSelectedColumn] = useState([]);
 
     const columns = [
-        { id: 0, name: "Date Created" },
-        { id: 1, name: "Date Last Updated" },
-        { id: 2, name: "Ticket #" },
-        { id: 3, name: "First Name" },
-        { id: 4, name: "Last Name" },
-        { id: 5, name: "Phone" },
-        { id: 6, name: "Email" },
-        { id: 7, name: "Serial #" },
-        { id: 8, name: "Model #" },
-        { id: 9, name: "Unit" },
-        { id: 10, name: "Item Class" },
-        { id: 11, name: "Brand" },
-        { id: 12, name: "Resolution" },
-        { id: 13, name: "Purchase Date" },
+        // { id: 0, name: "Date Created" },
+        // { id: 1, name: "Date Last Updated" },
+        // { id: 2, name: "Ticket #" },
+        // { id: 3, name: "First Name" },
+        // { id: 4, name: "Last Name" },
+        // { id: 5, name: "Phone" },
+        // { id: 6, name: "Email" },
+        // { id: 7, name: "Serial #" },
+        // { id: 8, name: "Model #" },
+        // { id: 9, name: "Unit" },
+        // { id: 10, name: "Item Class" },
+        // { id: 11, name: "Brand" },
+        // { id: 12, name: "Resolution" },
+        // { id: 13, name: "Purchase Date" },
+        // { id: 14, name: "Zipcode" },
+        // { id: 15, name: "Country" },
+        // { id: 16, name: "State" },
+        // { id: 17, name: "City" },
+        // { id: 18, name: "Address" },
+        // { id: 19, name: "Issue" },
+        // { id: 20, name: "Ticket Status" },
+        // { id: 21, name: "Reason" },
+        // { id: 22, name: "Discount" },
+        // { id: 23, name: "Price After Discount" },
+        // { id: 24, name: "Purchase Price" },
+        // { id: 25, name: "Cost Price" },
+        // { id: 26, name: "Shipping Cost" },
+        // { id: 27, name: "Replacement Ship Date" },
+        // { id: 28, name: "Tracking #" },
+        // { id: 29, name: "Cheque Ship Date" },
+        // { id: 30, name: "Cheque #" },
+        // { id: 31, name: "Cheque Amount" },
+        // { id: 32, name: "Cheque Currency" },
+        // { id: 33, name: "Retail Store" },
+        { id: 0, name: "Date Last Updated" },
+        { id: 1, name: "Ticket #" },
+        { id: 2, name: "Ticket Status" },
+        { id: 3, name: "Model #" },
+        { id: 4, name: "Item Class" },
+        { id: 5, name: "Price After Discount" },
+        { id: 6, name: "Cheque Currency" },
+        { id: 7, name: "Cost Price" },
+        { id: 8, name: "Shipping Cost" },
+        { id: 9, name: "First Name" },
+        { id: 10, name: "Last Name" },
+        { id: 11, name: "Address" },
+        { id: 12, name: "City" },
+        { id: 13, name: "State" },
         { id: 14, name: "Zipcode" },
-        { id: 15, name: "Country" },
-        { id: 16, name: "State" },
-        { id: 17, name: "City" },
-        { id: 18, name: "Address" },
-        { id: 19, name: "Issue" },
-        { id: 20, name: "Ticket Status" },
-        { id: 21, name: "Reason" },
-        { id: 22, name: "Discount" },
-        { id: 23, name: "Price After Discount" },
-        { id: 24, name: "Purchase Price" },
-        { id: 25, name: "Cost Price" },
-        { id: 26, name: "Shipping Cost" },
-        { id: 27, name: "Replacement Ship Date" },
-        { id: 28, name: "Tracking #" },
-        { id: 29, name: "Cheque Ship Date" },
-        { id: 30, name: "Cheque #" },
-        { id: 31, name: "Cheque Amount" },
-        { id: 32, name: "Cheque Currency" },
-        { id: 33, name: "Retail Store" },
+        { id: 15, name: "Phone" },
+        { id: 16, name: "Email" },
+        { id: 17, name: "Serial #" },
+        { id: 18, name: "Retail Store" },
+        { id: 19, name: "Purchase Date" },
     ];
 
     // const options = [];
@@ -72,11 +94,11 @@ export default function TicketsSelectedExportSection({ selected }) {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    console.log('selected',selected)
+    console.log("selected", selected);
     const handleOk = async () => {
         // setIsModalOpen(false);
         setLoading(true);
-        console.log(window.location.search)
+        console.log(window.location.search);
         const exist = await verify_tickets_service(window.location.search);
 
         async function get_status(params) {
@@ -104,66 +126,339 @@ export default function TicketsSelectedExportSection({ selected }) {
             //         selectedColumn.includes(item.id)
             //     );
             // }
-            return columns.filter((item) =>
-                selectedColumn.includes(item.id)
-            );
+            return columns.filter((item) => selectedColumn.includes(item.id));
         }
+        // const result = (await get_status()).map((res) => ({
+        //     0: {
+        //         id: 0,
+        //         name: moment(res.created_at).format("L"),
+        //     },
+        //     1: {
+        //         id: 1,
+        //         name: moment(res.updated_at).format("L"),
+        //     },
+        //     2: {
+        //         id: 2,
+        //         name: res?.ticket_id ?? "N/A",
+        //     },
+        //     3: {
+        //         id: 3,
+        //         name: res?.fname ?? "N/A",
+        //     },
+        //     4: {
+        //         id: 4,
+        //         name: res?.lname ?? "N/A",
+        //     },
+        //     5: {
+        //         id: 5,
+        //         name: res?.phone ?? "N/A",
+        //     },
+        //     6: {
+        //         id: 6,
+        //         name: res?.email ?? "N/A",
+        //     },
+        //     7: {
+        //         id: 7,
+        //         name: res?.serial_number ?? "N/A",
+        //     },
+        //     8: {
+        //         id: 8,
+        //         name: res?.item_number ?? "N/A",
+        //     },
+        //     9: {
+        //         id: 9,
+        //         name: res?.unit ?? "N/A",
+        //     },
+        //     10: {
+        //         id: 10,
+        //         name: res?.class ?? "N/A",
+        //     },
+        //     11: {
+        //         id: 11,
+        //         name: res?.brand ?? "N/A",
+        //     },
+        //     12: {
+        //         id: 12,
+        //         name: res?.call_type ?? "N/A",
+        //     },
+        //     13: {
+        //         id: 13,
+        //         name: res?.purchase_date ?? "N/A",
+        //     },
+        //     14: {
+        //         id: 14,
+        //         name: res?.zip_code ?? "N/A",
+        //     },
+        //     15: {
+        //         id: 15,
+        //         name: res?.country ?? "N/A",
+        //     },
+        //     16: {
+        //         id: 16,
+        //         name: res?.state ?? "N/A",
+        //     },
+        //     17: {
+        //         id: 17,
+        //         name: res?.city ?? "N/A",
+        //     },
+        //     18: {
+        //         id: 18,
+        //         name: res?.address ?? "N/A",
+        //     },
+        //     19: {
+        //         id: 19,
+        //         name: res?.issue ?? "N/A",
+        //     },
+        //     20: {
+        //         id: 20,
+        //         name: res?.status ?? "N/A",
+        //     },
+        //     21: {
+        //         id: 21,
+        //         name: res?.reason_to_close ?? "N/A",
+        //     },
+        //     22: {
+        //         id: 22,
+        //         name: res.receipt?.discount ?? "N/A",
+        //     },
+        //     23: {
+        //         id: 23,
+        //         name: res.decision_making?.after_discount ?? "N/A",
+        //     },
+        //     24: {
+        //         id: 24,
+        //         name: res.receipt?.retailers_price ?? "N/A",
+        //     },
+        //     25: {
+        //         id: 25,
+        //         name: res.decision_making?.cost_of_unit ?? "N/A",
+        //     },
+        //     26: {
+        //         id: 26,
+        //         name: res.decision_making?.shipping_cost ?? "N/A",
+        //     },
+        //     27: {
+        //         id: 27,
+        //         name: res.replacement?.ship_date ?? "N/A",
+        //     },
+        //     28: {
+        //         id: 28,
+        //         name: res.replacement?.tracking ?? "N/A",
+        //     },
+        //     29: {
+        //         id: 29,
+        //         name: res.refund?.ship_date ?? "N/A",
+        //     },
+        //     30: {
+        //         id: 30,
+        //         name: res.refund?.cheque_no ?? "N/A",
+        //     },
+        //     31: {
+        //         id: 31,
+        //         name: res.refund?.cheque_amount ?? "N/A",
+        //     },
+        //     32: {
+        //         id: 32,
+        //         name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
+        //     },
+        //     33: {
+        //         id: 33,
+        //         name: res.receipt?.store ?? "N/A",
+        //     },
+        // }));
+
         const result = (await get_status()).map((res) => ({
+            // 0: {
+            //     id: 0,
+            //     name: moment(res.created_at).format("L"),
+            // },
+            // 1: {
+            //     id: 1,
+            //     name: moment(res.updated_at).format("L"),
+            // },
+            // 2: {
+            //     id: 2,
+            //     name: res?.ticket_id ?? "N/A",
+            // },
+            // 3: {
+            //     id: 3,
+            //     name: res?.fname ?? "N/A",
+            // },
+            // 4: {
+            //     id: 4,
+            //     name: res?.lname ?? "N/A",
+            // },
+            // 5: {
+            //     id: 5,
+            //     name: res?.phone ?? "N/A",
+            // },
+            // 6: {
+            //     id: 6,
+            //     name: res?.email ?? "N/A",
+            // },
+            // 7: {
+            //     id: 7,
+            //     name: res?.serial_number ?? "N/A",
+            // },
+            // 8: {
+            //     id: 8,
+            //     name: res?.item_number ?? "N/A",
+            // },
+            // 9: {
+            //     id: 9,
+            //     name: res?.unit ?? "N/A",
+            // },
+            // 10: {
+            //     id: 10,
+            //     name: res?.class ?? "N/A",
+            // },
+            // 11: {
+            //     id: 11,
+            //     name: res?.brand ?? "N/A",
+            // },
+            // 12: {
+            //     id: 12,
+            //     name: res?.call_type ?? "N/A",
+            // },
+            // 13: {
+            //     id: 13,
+            //     name: res?.purchase_date ?? "N/A",
+            // },
+            // 14: {
+            //     id: 14,
+            //     name: res?.zip_code ?? "N/A",
+            // },
+            // 15: {
+            //     id: 15,
+            //     name: res?.country ?? "N/A",
+            // },
+            // 16: {
+            //     id: 16,
+            //     name: res?.state ?? "N/A",
+            // },
+            // 17: {
+            //     id: 17,
+            //     name: res?.city ?? "N/A",
+            // },
+            // 18: {
+            //     id: 18,
+            //     name: res?.address ?? "N/A",
+            // },
+            // 19: {
+            //     id: 19,
+            //     name: res?.issue ?? "N/A",
+            // },
+            // 20: {
+            //     id: 20,
+            //     name: res?.status ?? "N/A",
+            // },
+            // 21: {
+            //     id: 21,
+            //     name: res?.reason_to_close ?? "N/A",
+            // },
+            // 22: {
+            //     id: 22,
+            //     name: res.receipt?.discount ?? "N/A",
+            // },
+            // 23: {
+            //     id: 23,
+            //     name: res.decision_making?.after_discount ?? "N/A",
+            // },
+            // 24: {
+            //     id: 24,
+            //     name: res.receipt?.retailers_price ?? "N/A",
+            // },
+            // 25: {
+            //     id: 25,
+            //     name: res.decision_making?.cost_of_unit ?? "N/A",
+            // },
+            // 26: {
+            //     id: 26,
+            //     name: res.decision_making?.shipping_cost ?? "N/A",
+            // },
+            // 27: {
+            //     id: 27,
+            //     name: res.replacement?.ship_date ?? "N/A",
+            // },
+            // 28: {
+            //     id: 28,
+            //     name: res.replacement?.tracking ?? "N/A",
+            // },
+            // 29: {
+            //     id: 29,
+            //     name: res.refund?.ship_date ?? "N/A",
+            // },
+            // 30: {
+            //     id: 30,
+            //     name: res.refund?.cheque_no ?? "N/A",
+            // },
+            // 31: {
+            //     id: 31,
+            //     name: res.refund?.cheque_amount ?? "N/A",
+            // },
+            // 32: {
+            //     id: 32,
+            //     name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
+            // },
+            // 33: {
+            //     id: 33,
+            //     name: res.receipt?.store ?? "N/A",
+            // },
             0: {
                 id: 0,
-                name: moment(res.created_at).format("L"),
+                name: moment(res?.validate?.created_at).format("L"),
             },
             1: {
                 id: 1,
-                name: moment(res.updated_at).format("L"),
+                name: res?.ticket_id ?? "N/A",
             },
             2: {
                 id: 2,
-                name: res?.ticket_id ?? "N/A",
+                name: res?.status ?? "N/A",
             },
             3: {
                 id: 3,
-                name: res?.fname ?? "N/A",
+                name: res?.item_number ?? "N/A",
             },
             4: {
                 id: 4,
-                name: res?.lname ?? "N/A",
+                name: res?.class ?? "N/A",
             },
             5: {
                 id: 5,
-                name: res?.phone ?? "N/A",
+                name: res.decision_making?.after_discount ?? "N/A",
             },
             6: {
                 id: 6,
-                name: res?.email ?? "N/A",
+                name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
             },
             7: {
                 id: 7,
-                name: res?.serial_number ?? "N/A",
+                name: res.decision_making?.cost_of_unit ?? "N/A",
             },
             8: {
                 id: 8,
-                name: res?.item_number ?? "N/A",
+                name: res.decision_making?.shipping_cost ?? "N/A",
             },
             9: {
                 id: 9,
-                name: res?.unit ?? "N/A",
+                name: res?.fname ?? "N/A",
             },
             10: {
                 id: 10,
-                name: res?.class ?? "N/A",
+                name: res?.lname ?? "N/A",
             },
             11: {
                 id: 11,
-                name: res?.brand ?? "N/A",
+                name: res?.address ?? "N/A",
             },
             12: {
                 id: 12,
-                name: res?.call_type ?? "N/A",
+                name: res?.city ?? "N/A",
             },
             13: {
                 id: 13,
-                name: res?.purchase_date ?? "N/A",
+                name: res?.state ?? "N/A",
             },
             14: {
                 id: 14,
@@ -171,84 +466,28 @@ export default function TicketsSelectedExportSection({ selected }) {
             },
             15: {
                 id: 15,
-                name: res?.country ?? "N/A",
+                name: res?.phone ?? "N/A",
             },
             16: {
                 id: 16,
-                name: res?.state ?? "N/A",
+                name: res?.email ?? "N/A",
             },
             17: {
                 id: 17,
-                name: res?.city ?? "N/A",
+                name: res?.serial_number ?? "N/A",
             },
             18: {
                 id: 18,
-                name: res?.address ?? "N/A",
+                name: res.receipt?.store ?? "N/A",
             },
             19: {
                 id: 19,
-                name: res?.issue ?? "N/A",
-            },
-            20: {
-                id: 20,
-                name: res?.status ?? "N/A",
-            },
-            21: {
-                id: 21,
-                name: res?.reason_to_close ?? "N/A",
-            },
-            22: {
-                id: 22,
-                name: res.receipt?.discount ?? "N/A",
-            },
-            23: {
-                id: 23,
-                name: res.decision_making?.after_discount ?? "N/A",
-            },
-            24: {
-                id: 24,
-                name: res.receipt?.retailers_price ?? "N/A",
-            },
-            25: {
-                id: 25,
-                name: res.decision_making?.cost_of_unit ?? "N/A",
-            },
-            26: {
-                id: 26,
-                name: res.decision_making?.shipping_cost ?? "N/A",
-            },
-            27: {
-                id: 27,
-                name: res.replacement?.ship_date ?? "N/A",
-            },
-            28: {
-                id: 28,
-                name: res.replacement?.tracking ?? "N/A",
-            },
-            29: {
-                id: 29,
-                name: res.refund?.ship_date ?? "N/A",
-            },
-            30: {
-                id: 30,
-                name: res.refund?.cheque_no ?? "N/A",
-            },
-            31: {
-                id: 31,
-                name: res.refund?.cheque_amount ?? "N/A",
-            },
-            32: {
-                id: 32,
-                name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
-            },
-            33: {
-                id: 33,
-                name: res.receipt?.store ?? "N/A",
+                name: res?.purchase_date ?? "N/A",
             },
         }));
 
         const new_column = (await get_column()).sort((a, b) => a.id - b.id);
-        
+
         const new_data = result.map((item) =>
             selectedColumn.map((res) => item[res]).sort((a, b) => a.id - b.id)
         );
@@ -291,7 +530,7 @@ export default function TicketsSelectedExportSection({ selected }) {
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
         XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
-        const updated_export =  (await get_status()).map(res=>res.id)
+        const updated_export = (await get_status()).map((res) => res.id);
         update_ticket_export_status_service(updated_export);
         if (window.location.hash == "") {
             store.dispatch(get_tickets_thunk(window.location.search));
