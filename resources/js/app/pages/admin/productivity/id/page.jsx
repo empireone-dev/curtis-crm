@@ -208,7 +208,7 @@ export default function ProductivityIDPage({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record.email_date).format("LL")}</>;
+                return <>{moment(record.true_email_date).format("LL")}</>;
             },
         },
         {
@@ -218,7 +218,7 @@ export default function ProductivityIDPage({ auth }) {
             width: "20%",
             ...getColumnSearchProps("email_date"),
             render: (_, record, i) =>
-                addDaysSkippingWeekends(moment(record.email_date)),
+                addDaysSkippingWeekends(moment(record.true_email_date)),
         },
         {
             title: "Case File",
