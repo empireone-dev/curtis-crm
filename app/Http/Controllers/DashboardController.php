@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $open_parts = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'false'],
+            // ['isUploading', '=', 'false'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
 
@@ -242,7 +242,7 @@ class DashboardController extends Controller
 
         $open_parts = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['isUploading', '=', 'false'],
+            // ['isUploading', '=', 'false'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
 
