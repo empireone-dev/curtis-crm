@@ -65,7 +65,6 @@ class UserController extends Controller
 
                 $overdue_cases = Ticket::where([
                     ['user_id', '=', $user->id],
-                    ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['is_reply', '=', 'true'],
@@ -94,7 +93,6 @@ class UserController extends Controller
                 //start due today
                 $cases_due_today = Ticket::where([
                     ['user_id', '=', $user->id],
-                    ['status', '<>', 'CLOSED'],
                     ['ticket_id', '<>', null],
                     ['cases_status', '<>', 'hide'],
                     ['is_reply', '=', 'true'],
@@ -178,7 +176,10 @@ class UserController extends Controller
                     ['log_from', '=', 'handled']
                 ]);
 
-                if ($request->start && $request->end) {
+                if ($request->start == $request->end) {
+                    $today = Carbon::parse($request->start)->toDateString();
+                    $handled_cases->whereDate('created_at', $today);
+                } else if ($request->start && $request->end) {
                     $handled_cases->whereBetween('created_at', [$request->start, $request->end]);
                 } else {
                     $today = Carbon::today()->toDateString();
@@ -190,7 +191,10 @@ class UserController extends Controller
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
                 ]);
-                if ($request->start && $request->end) {
+                if ($request->start == $request->end) {
+                    $today = Carbon::parse($request->start)->toDateString();
+                    $handled_direct_emails->whereDate('created_at', $today);
+                } else if ($request->start && $request->end) {
                     $handled_direct_emails->whereBetween('created_at', [$request->start, $request->end]);
                 } else {
                     $today = Carbon::today()->toDateString();
