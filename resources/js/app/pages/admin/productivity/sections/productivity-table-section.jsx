@@ -10,6 +10,7 @@ import ProductivitySearchSection from "./productivity-search-section";
 import ProductivityDateSection from "./productivity-date-section";
 import { useSelector } from "react-redux";
 import { Link } from "@inertiajs/react";
+import ProductivityDirectEmailSection from "./productivity-direct-email-section";
 
 export default function ProductivityTableSection() {
     const { users } = useSelector((state) => state.users);
@@ -263,9 +264,10 @@ export default function ProductivityTableSection() {
     return (
         <div>
             <div className="p-3 rounded-md">
-                <div className="flex">
+                <div className="flex gap-5">
                     <ProductivityDateSection />
                     <ProductivitySearchSection />
+                    <ProductivityDirectEmailSection />
                 </div>
                 <Table columns={columns} dataSource={data} />
             </div>

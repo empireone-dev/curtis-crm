@@ -166,8 +166,15 @@ export default function AgentDirectEmailsTableSection({ account }) {
         due_date: moment(res.email_date).add(2, "days").format("LLL"),
         link: res.threadId,
         id: res.id,
+        assigned: res?.user?.name??'N/A',
     }));
     const columns = [
+        {
+            title: "Assigned to",
+            dataIndex: "assigned",
+            key: "assigned",
+            // ...getColumnSearchProps('app_name'),
+        },
         {
             title: "Email",
             dataIndex: "email",

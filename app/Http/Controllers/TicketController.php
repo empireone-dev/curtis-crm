@@ -749,7 +749,7 @@ class TicketController extends Controller
             $overdue_cases = DirectEmail::where([
                 ['user_id', '=', $request->user_id],
                 ['isHide', '=', 'false'],
-            ])->get();
+            ])->with('user')->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -777,7 +777,7 @@ class TicketController extends Controller
             $cases_due_today = DirectEmail::where([
                 ['user_id', '=', $request->user_id],
                 ['isHide', '=', 'false'],
-            ])->get();
+            ])->with('user')->get();
 
             foreach ($cases_due_today as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -802,10 +802,18 @@ class TicketController extends Controller
                 'result' =>  $cases_due_today,
             ], 200);
         } else {
-            $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->paginate(10);
-            return response()->json([
-                'result' => $direct,
-            ], 200);
+            if ($request->user_id != 0) {
+                $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->with('user')->paginate(10);
+                return response()->json([
+                    'result' => $direct,
+                ], 200);
+            }else{
+                $direct = DirectEmail::where('email', 'LIKE', "%{$request->where}%")->with('user')->get();
+                return response()->json([
+                    'result' => $direct,
+                ], 200);
+            }
+          
         }
     }
     public function sample()
