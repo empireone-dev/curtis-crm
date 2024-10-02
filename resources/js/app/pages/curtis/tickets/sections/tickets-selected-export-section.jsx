@@ -266,7 +266,7 @@ export default function TicketsSelectedExportSection({ selected }) {
             // },
             0: {
                 id: 0,
-                name: moment(res.validate.created_at).format("L"),
+                name:res?.validate?.created_at?'N/A':moment(res?.validate?.created_at).format("L") ,
             },
             1: {
                 id: 1,
@@ -346,19 +346,26 @@ export default function TicketsSelectedExportSection({ selected }) {
             },
         }));
 
-        const new_column = (await get_column()).sort((a, b) => a.id - b.id);
-
+        const new_column = await get_column();
         const new_data = result.map((item) =>
-            selectedColumn.map((res) => item[res]).sort((a, b) => a.id - b.id)
+            selectedColumn.map((res) => item[res])
         );
+        const sortedColumn = selectedColumn.map((colId) =>
+            new_column.find((item) => item.id === colId)
+        );
+        // const sortedData = selectedColumn.map(colId => new_data.find(item => item.id === colId));
+        const sortedData = new_data.map((itemArray) =>
+            selectedColumn.map((res) =>
+                itemArray.find((dataItem) => dataItem.id === res)
+            )
+        );
+
         const export_data = [
-            new_column.map((res) => res.name),
-            ...new_data.map((res) => res.map((res) => res.name)),
+            sortedColumn.map((res) => res.name),
+            ...sortedData.map((res) => res.map((res) => res.name)),
         ];
+        console.log('new_data',new_data)
         const ws = XLSX.utils.aoa_to_sheet(export_data);
-        console.log("new_column", new_column);
-        console.log("new_data", new_data);
-        console.log("export_data", export_data);
 
         // Define the style for the header row
         const headerStyle = {
