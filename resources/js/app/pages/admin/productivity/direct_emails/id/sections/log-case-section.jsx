@@ -41,6 +41,7 @@ export default function AgentLogCaseSection({ ticket_id, account,account2 }) {
         }
         getData()
     },[])
+    console.log('account',account)
     return (
         <div>
             {contextHolder}
