@@ -94,7 +94,7 @@ export default function AgentLogCaseSection({ ticket_id, account,account2 }) {
                         <option selected disabled>
                             Select
                         </option>
-                        {account.agent_type == "Warranty" && (
+                        {account?.agent_type == "Warranty" && (
                             <>
                                 <option value="Pending-Incomplete Details">
                                     Pending-Incomplete Details
@@ -139,7 +139,7 @@ export default function AgentLogCaseSection({ ticket_id, account,account2 }) {
                             </>
                         )}
                         
-                        {account.agent_type == "Parts" && (
+                        {account?.agent_type == "Parts" && (
                             <>
                                 <option value="Pending - Incomplete Information">
                                     Pending - Incomplete Information

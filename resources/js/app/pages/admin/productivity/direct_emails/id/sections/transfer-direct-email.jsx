@@ -43,7 +43,7 @@ export default function TransferDirectEmails() {
                         Select
                     </option>
                     {users.map((res, i) => {
-                        if (res.agent_type === user.agent_type) {
+                        if (res?.agent_type === user?.agent_type) {
                             return (
                                 <option key={res.id} value={res.id}>
                                     {res.name}
