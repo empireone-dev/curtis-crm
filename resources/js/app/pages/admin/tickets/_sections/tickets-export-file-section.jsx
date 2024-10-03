@@ -35,6 +35,7 @@ export default function TicketsExportFileSection() {
         );
         return formatted;
     };
+    
     async function export_ticket() {
         setLoading(true);
         try {
@@ -99,7 +100,7 @@ export default function TicketsExportFileSection() {
                         "No",//
                         (res.isUploading == "true" ? "YES" : "NO") ?? "NO",//
                         res.status ?? "N/A",//
-                        moment(res.validate.created_at).format("L"),// //7
+                        res?.validate?.created_at?'N/A':moment(res?.validate?.created_at).format("L") ,// //7
                     ]);
 
                     data = [
