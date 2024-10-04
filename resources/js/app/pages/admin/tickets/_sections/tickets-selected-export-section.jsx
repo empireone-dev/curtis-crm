@@ -392,7 +392,7 @@ export default function TicketsSelectedExportSection({ selected }) {
             // },
             0: {
                 id: 0,
-                name:res?.validate?.created_at?'N/A':moment(res?.validate?.created_at).format("L") ,
+                name:res?.validate?.created_at?moment(res?.validate?.created_at).format("L"):'N/A' ,
             },
             1: {
                 id: 1,

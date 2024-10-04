@@ -100,7 +100,7 @@ export default function TicketsExportFileSection() {
                         "No",//
                         (res.isUploading == "true" ? "YES" : "NO") ?? "NO",//
                         res.status ?? "N/A",//
-                        res?.validate?.created_at?'N/A':moment(res?.validate?.created_at).format("L") ,// //7
+                        res?.validate?.created_at?moment(res?.validate?.created_at).format("L"): 'N/A',// //7
                     ]);
 
                     data = [
