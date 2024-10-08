@@ -9,6 +9,7 @@ import { ArrowDownTrayIcon, CheckBadgeIcon } from "@heroicons/react/24/outline";
 import TicketsSelectedExportSection from "./tickets-selected-export-section";
 import store from "@/app/store/store";
 import Table from "@/app/_components/table";
+import MoveTicketSection from "./move-ticket-section";
 
 export default function CustomerTicketsTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
@@ -91,12 +92,12 @@ export default function CustomerTicketsTableSection() {
                             ? "OPEN"
                             : res.status}
                     </Tag>
-                    {res.is_reply && (
+                    {/* {res.is_reply && (
                         <Tag color="purple">
                             Customer has responded on{" "}
                             {moment(res.email_date).format("LL")}
                         </Tag>
-                    )}
+                    )} */}
                 </>
             );
         })(), // Call the function immediately to return the JSX
@@ -112,6 +113,7 @@ export default function CustomerTicketsTableSection() {
             );
         })(),
         created_at: <div>{moment(res.created_at).format("LL")}</div>,
+        move_ticket: <div><MoveTicketSection data={res}/></div>,
     }));
 
     const columns = [
@@ -119,6 +121,11 @@ export default function CustomerTicketsTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
+        },
+        {
+            title: "Move Ticket",
+            dataIndex: "move_ticket",
+            key: "move_ticket",
         },
         {
             title: "Fullname",
@@ -156,6 +163,7 @@ export default function CustomerTicketsTableSection() {
             dataIndex: "created_at",
             key: "created_at",
         },
+        
     ];
 
     const url = window.location.pathname + window.location.search;

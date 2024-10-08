@@ -25,6 +25,15 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function change_isExport(Request $request){
+        $ticket = Ticket::find($request->id);
+        $ticket->update([
+            'isExported' => $request->status,
+        ]);
+        return response()->json([
+            'result' => 'success',
+        ], 200);
+    }
     public function ticket_export_status(Request $request)
     {
         foreach ($request->data as $key => $value) {
@@ -266,6 +275,11 @@ class TicketController extends Controller
             });
         }
 
+        if ($request->export == 'checked') {
+            $query->orWhere('isExported', '=','true');
+        }else if ($request->export == 'uncheck') {
+            $query->orWhere('isExported', '=', null);
+        }
         if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
             $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
             $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
@@ -290,6 +304,8 @@ class TicketController extends Controller
         if ($request->status == 'AGENT FORM') {
             $query->orWhere('created_from', '=', $request->status);
         }
+
+    
 
 
         $query->orderBy('created_at', 'desc');

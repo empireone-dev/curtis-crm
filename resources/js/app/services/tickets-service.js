@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function change_isExport_service(data) {
+    try {
+        const res = await axios.post("/api/change_isExport",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function update_ticket_export_status_service(data) {
     try {
         const res = await axios.put("/api/ticket_export_status",{

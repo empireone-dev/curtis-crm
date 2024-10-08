@@ -102,13 +102,7 @@ export default function TicketsSelectedExportSection({ selected }) {
         const exist = await verify_tickets_service(window.location.search);
 
         async function get_status(params) {
-            if (value == "all") {
-                return exist.data;
-            } else if (value == "uncheck") {
-                return exist.data.filter((item) => !selected.includes(item.id));
-            } else if (value == "checked") {
-                return exist.data.filter((item) => selected.includes(item.id));
-            }
+            return exist.data;
         }
 
         async function get_column(params) {

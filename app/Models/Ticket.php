@@ -49,7 +49,8 @@ class Ticket extends Model
         'purchase_date',
         'email_date',
         'validator_id',
-        'is_reply'
+        'is_reply',
+        'isExported'
     ];
 
     public function direct_emails(): HasOne

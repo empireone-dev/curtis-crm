@@ -98,33 +98,21 @@ export default function TicketsSelectedExportSection({ selected }) {
         // setIsModalOpen(false);
         setLoading(true);
         console.log(window.location.search);
-        const exist = await verify_tickets_service(window.location.search);
+        const exist = await verify_tickets_service(window.location.search+'&export='+value);
 
         async function get_status(params) {
-            if (value == "all") {
-                return exist.data;
-            } else if (value == "uncheck") {
-                return exist.data.filter((item) => !selected.includes(item.id));
-            } else if (value == "checked") {
-                return exist.data.filter((item) => selected.includes(item.id));
-            }
+            // if (value == "all") {
+            //     return exist.data;
+            // } else if (value == "uncheck") {
+            //     return exist.data.filter((item) => res.isExported != 'true');
+            // } else if (value == "checked") {
+            //     return exist.data.filter((item) => res.isExported == 'true');
+            // }
+            return exist.data;
         }
 
+        console.log('exist.data',get_status())
         async function get_column(params) {
-            // if (value == "all") {
-            //     // return columns;
-            //     return columns.filter((item) =>
-            //         selectedColumn.includes(item.id)
-            //     );
-            // } else if (value == "uncheck") {
-            //     return columns.filter(
-            //         (item) => !selectedColumn.includes(item.id)
-            //     );
-            // } else if (value == "checked") {
-            //     return columns.filter((item) =>
-            //         selectedColumn.includes(item.id)
-            //     );
-            // }
             return columns.filter((item) => selectedColumn.includes(item.id));
         }
         const result = (await get_status()).map((res) => ({
@@ -364,7 +352,7 @@ export default function TicketsSelectedExportSection({ selected }) {
             sortedColumn.map((res) => res.name),
             ...sortedData.map((res) => res.map((res) => res.name)),
         ];
-        console.log('new_data',new_data)
+        console.log('export_data',export_data)
         const ws = XLSX.utils.aoa_to_sheet(export_data);
 
         // Define the style for the header row

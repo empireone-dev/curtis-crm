@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedRowKeys } from "../pages/admin/tickets/_redux/tickets-slice";
+import { change_isExport_service } from "../services/tickets-service";
+import CheckBoxFunction from "./checkbox-function";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -18,6 +20,7 @@ export default function Table({
     const [checked, setChecked] = useState(false);
     const [indeterminate, setIndeterminate] = useState(false);
     const dispatch = useDispatch();
+    
     // PROPERTIES
     // setDataChecked = useState
     // dataChecked = useState
@@ -43,6 +46,8 @@ export default function Table({
         setChecked(!checked && !indeterminate);
         setIndeterminate(false);
     }
+
+  
     return (
         <div className="flow-root w-full shadow-2xl">
             <div className="overflow-x-auto">
@@ -78,74 +83,51 @@ export default function Table({
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-white">
-                                {data.map((row, rowIndex) => (
-                                    <tr
-                                        key={rowIndex}
-                                        className={
-                                            dataChecked.includes(row.id)
-                                                ? "bg-gray-50"
-                                                : undefined
-                                        }
-                                    >
-                                        {isCheckbox && (
-                                            <td className="relative px-7 sm:w-12 sm:px-6">
-                                                {dataChecked.includes(
-                                                    row.id
-                                                ) && (
-                                                    <div className="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" />
-                                                )}
+                                {data.map((row, rowIndex) => {
+                                    console.log("rowrow", row);
+                                    return (
+                                        <tr
+                                            key={rowIndex}
+                                            className={
+                                                dataChecked.includes(row.id)
+                                                    ? "bg-gray-50"
+                                                    : undefined
+                                            }
+                                        >
+                                            {isCheckbox && (
+                                                <td className="relative px-7 sm:w-12 sm:px-6">
+                                                    {/* {dataChecked.includes(
+                                                        row.id
+                                                    ) && (
+                                                        <div className="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" />
+                                                    )} */}
 
-                                                {isStatus && (
-                                                    <input
-                                                        type="checkbox"
-                                                        className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                                        value={row.id}
-                                                        checked={dataChecked.includes(
-                                                            row.id
-                                                        )}
-                                                        onChange={(e) =>
-                                                            dispatch(
-                                                                setSelectedRowKeys(
-                                                                    e.target
-                                                                        .checked
-                                                                        ? [
-                                                                              ...dataChecked,
-                                                                              row.id,
-                                                                          ]
-                                                                        : dataChecked.filter(
-                                                                              (
-                                                                                  p
-                                                                              ) =>
-                                                                                  p !==
-                                                                                  row.id
-                                                                          )
-                                                                )
-                                                            )
-                                                        }
-                                                    />
-                                                )}
-                                            </td>
-                                        )}
-
-                                        {columns.map((column) => {
-                                            return (
-                                                <td
-                                                    key={column.key}
-                                                    className={classNames(
-                                                        "whitespace-nowrap py-4 pr-3 text-sm font-medium",
-                                                        dataChecked.includes(
-                                                            row
-                                                        )
-                                                            ? "text-indigo-600"
-                                                            : "text-gray-900"
+                                                    {isStatus && (
+                                                      <CheckBoxFunction row={row}/>
                                                     )}
-                                                >
-                                                    {row[column.key]}
                                                 </td>
-                                            );
-                                        })}
-                                    </tr>
-                                ))}
+                                            )}
+
+                                            {columns.map((column) => {
+                                                return (
+                                                    <td
+                                                        key={column.key}
+                                                        className={classNames(
+                                                            "whitespace-nowrap py-4 pr-3 text-sm font-medium",
+                                                            dataChecked.includes(
+                                                                row
+                                                            )
+                                                                ? "text-indigo-600"
+                                                                : "text-gray-900"
+                                                        )}
+                                                    >
+                                                        {row[column.key]}
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>

@@ -115,6 +115,7 @@ Route::get('sample', [TicketController::class, 'sample']);
 Route::get('get_tickets_warehouse/{country}', [TicketController::class, 'get_tickets_warehouse']);
 Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request']);
 Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
+Route::post('change_isExport', [TicketController::class, 'change_isExport']);
 
 
 
