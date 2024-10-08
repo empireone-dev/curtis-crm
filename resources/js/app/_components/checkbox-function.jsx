@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { change_isExport_service } from "../services/tickets-service";
 import { useSelector } from "react-redux";
 
 export default function CheckBoxFunction({ row }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [isCheck, setIsCheck] = useState(row?.isExported ? true : false);
+    const [isCheck, setIsCheck] = useState(false);
     const { user } = useSelector((store) => store.app);
     console.log("user", user);
+    useEffect(()=>{
+      setIsCheck(row?.isExported ? true : false)
+    },[row?.isExported])
     async function handled_check(e, id) {
         const status = e.target.checked;
         setIsLoading(true);
