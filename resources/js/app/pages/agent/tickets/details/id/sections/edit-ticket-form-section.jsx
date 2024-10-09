@@ -36,15 +36,15 @@ export default function EditTicketFormSection() {
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
-                dispatch(
-                    setForm({
-                        ...res,
-                        isHasEmail: "true",
-                        store: res?.receipt?.store ?? "N/A",
-                        state: res?.state ?? "AB",
-                        country: res?.country ?? "CA",
-                    })
-                );
+            dispatch(
+                setForm({
+                    ...res,
+                    isHasEmail: "true",
+                    store: res?.receipt?.store ?? "N/A",
+                    state: res?.state ?? "AB",
+                    country: res?.country ?? "CA",
+                })
+            );
         }
         get_ticket();
     }, []);
@@ -107,7 +107,7 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...form,
                     country: value,
-                    state: '',
+                    state: "",
                 })
             );
         } else {
@@ -411,6 +411,17 @@ export default function EditTicketFormSection() {
                                 required={false}
                                 value={form.address}
                                 label="Address"
+                                type="text"
+                                // errorMessage='Address is required'
+                            />
+                        </div>
+                        <div className="md:w-full px-3 mb-3 md:mb-0">
+                            <Input
+                                onChange={formHandler}
+                                name="address2"
+                                required={false}
+                                value={form?.address2}
+                                label="Mailing Address"
                                 type="text"
                                 // errorMessage='Address is required'
                             />

@@ -11,8 +11,8 @@
 
   Thank you for your patience.
 
-  Best Regards,
-  Customer Support
+  Best Regards,<br>
+  Customer Support<br>
   Curtis International Ltd.
 
   <br><br>
