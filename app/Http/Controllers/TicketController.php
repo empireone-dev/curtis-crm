@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ShippedProcess;
 use App\Models\Activity;
 use App\Models\AgentNote;
 use App\Models\DecisionMaking;
@@ -20,12 +21,14 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
 
-    public function change_isExport(Request $request){
+    public function change_isExport(Request $request)
+    {
         $ticket = Ticket::find($request->id);
         $ticket->update([
             'isExported' => $request->status,
@@ -243,7 +246,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity','validate']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity', 'validate']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -276,8 +279,8 @@ class TicketController extends Controller
         }
 
         if ($request->export == 'checked') {
-            $query->orWhere('isExported', '=','true');
-        }else if ($request->export == 'uncheck') {
+            $query->orWhere('isExported', '=', 'true');
+        } else if ($request->export == 'uncheck') {
             $query->orWhere('isExported', '=', null);
         }
         if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
@@ -305,7 +308,7 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
-    
+
 
 
         $query->orderBy('created_at', 'desc');
@@ -328,6 +331,24 @@ class TicketController extends Controller
                 }
             }
         }
+
+        if ($request->export == 'checked' || $request->export == 'uncheck') {
+            if ($request->status == 'REPLACEMENT' || $request->status == 'REFUND' || $searchQuery == 'REPLACEMENT' || $searchQuery == 'REFUND') {
+                foreach ($data as $key => $value) {
+                    $emailData = [
+                        'ticket_id' => $value->ticket_id,
+                        'fname' => $value->fname,
+                        'lname' => $value->lname,
+                        'email' => $value->email, // Customer's email
+                        'issue' => $value->issue,
+                        'explanation' => $value->explanation,
+                        'user_name' => $value->user->name, // Ticket handler's name
+                    ];
+                    Mail::to($value['email'])->send(new ShippedProcess($emailData));
+                }
+            }
+        }
+
 
         if ($export) {
             return response()->json([
@@ -823,13 +844,12 @@ class TicketController extends Controller
                 return response()->json([
                     'result' => $direct,
                 ], 200);
-            }else{
+            } else {
                 $direct = DirectEmail::where('email', 'LIKE', "%{$request->where}%")->with('user')->get();
                 return response()->json([
                     'result' => $direct,
                 ], 200);
             }
-          
         }
     }
     public function sample()

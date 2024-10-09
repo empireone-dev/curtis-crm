@@ -61,48 +61,54 @@ export default function EditTicketFormSection() {
                 setForm({
                     ...res,
                     store: res?.receipt?.store ?? "N/A",
-                    state: res?.state ?? 'AB',
+                    state: res?.state ?? "AB",
                     country: res?.country ?? "CA",
                 })
             );
         }
-        if(ticket){
+        if (ticket) {
             get_ticket();
         }
     }, []);
-    
+
     useEffect(() => {
         const { country, state, zip_code } = ticket;
-    
+
         const getAddress = async () => {
             if (country && state && zip_code) {
                 try {
-                    console.log('Fetching address suggestions with:', { country, state, zip_code });
-    
+                    console.log("Fetching address suggestions with:", {
+                        country,
+                        state,
+                        zip_code,
+                    });
+
                     const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=CO&types=(cities)&components=country:us&key=AIzaSyDaV8ZAZSCsml9di5U6ouSQHQ_mj9jq5Jo`;
-                    console.log('Request URL:', url);
+                    console.log("Request URL:", url);
                     const res = await axios.get(url);
-    
+
                     const data = await res.json();
-                    console.log('API Response:', data);
-    
+                    console.log("API Response:", data);
+
                     if (data.error_message) {
-                        console.error('API Error:', data.error_message);
+                        console.error("API Error:", data.error_message);
                     } else {
-                        console.log('City suggestions:', data.predictions);
+                        console.log("City suggestions:", data.predictions);
                     }
                 } catch (error) {
-                    console.error('Fetch error:', error);
+                    console.error("Fetch error:", error);
                 }
             } else {
-                console.log('Missing required fields:', { country, state, zip_code });
+                console.log("Missing required fields:", {
+                    country,
+                    state,
+                    zip_code,
+                });
             }
         };
-    
+
         getAddress();
     }, [ticket]);
-    
-    
 
     useEffect(() => {
         async function get_ticket(params) {
@@ -160,12 +166,12 @@ export default function EditTicketFormSection() {
                     })
                 );
             }
-        }else if (name == "country") {
+        } else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    country:value,
-                    state: '',
+                    country: value,
+                    state: "",
                 })
             );
         } else {
@@ -458,9 +464,21 @@ export default function EditTicketFormSection() {
                                 value={form?.address}
                                 label="Address"
                                 type="text"
-                            // errorMessage='Address is required'
+                                // errorMessage='Address is required'
                             />
                         </div>
+                        <div className="md:w-full px-3 mb-3">
+                            <Input
+                                onChange={formHandler}
+                                name="address2"
+                                required={false}
+                                value={form?.address2}
+                                label="Mailing Address"
+                                type="text"
+                                // errorMessage='Address is required'
+                            />
+                        </div>
+
                         <div className="md:w-full px-3 mb-3">
                             {/* {form?.issue && form?.call_type == "Parts" && (
                                 <SelectData

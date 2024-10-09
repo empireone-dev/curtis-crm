@@ -187,19 +187,24 @@ export default function ContentDetailsSection() {
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Address :</b> {ticket?.address}
                         </dt>
+
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>State :</b> {ticket?.state}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <b>City :</b> {ticket?.city}
+                            <b>Mailing Address :</b> {ticket?.address2}
                         </dt>
+
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Authorized Service Center:</b> N/A
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">
+                            <b>City :</b> {ticket?.city}
+                        </dt>
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Remarks :</b> {ticket?.remarks}
                         </dt>

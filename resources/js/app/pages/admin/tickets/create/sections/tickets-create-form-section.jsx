@@ -407,6 +407,17 @@ export default function TicketCreateFormSection() {
                         // errorMessage='Address is required'
                     />
                 </div>
+                <div className=" px-3 mb-3">
+                    <Input
+                        onChange={formHandler}
+                        name="address2"
+                        required={false}
+                        value={form?.address2}
+                        label="Mailing Address"
+                        type="text"
+                        // errorMessage='Address is required'
+                    />
+                </div>
                 <div className="my-5 px-3 mb-3">
                     {form.call_type == "Parts" ? (
                         <Autocomplete

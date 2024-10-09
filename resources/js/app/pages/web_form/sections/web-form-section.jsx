@@ -82,12 +82,12 @@ export default function WebFormFormSection() {
                     })
                 );
             }
-        }else if (name == "country") {
+        } else if (name == "country") {
             dispatch(
                 setForm({
                     ...form,
-                    country:value,
-                    state: '',
+                    country: value,
+                    state: "",
                 })
             );
         } else {
@@ -98,7 +98,6 @@ export default function WebFormFormSection() {
                 })
             );
         }
-       
     }
 
     useEffect(() => {
@@ -193,14 +192,14 @@ export default function WebFormFormSection() {
                     </div>
                 </div>
                 <div className="md:w-1/2 px-3">
-                <Input
+                    <Input
                         onChange={formHandler}
                         name="phone"
                         required={true}
                         value={form?.phone}
                         label="Phone Number"
                         type="phone"
-                        errorMessage='Phone Number is required'
+                        errorMessage="Phone Number is required"
                     />
                 </div>
             </div>
@@ -358,6 +357,18 @@ export default function WebFormFormSection() {
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
+                    <Input
+                        onChange={formHandler}
+                        name="address2"
+                        required={false}
+                        value={form?.address2}
+                        label="Mailing Address"
+                        type="text"
+                        // errorMessage='Address is required'
+                    />
+                </div>
+
+                <div className="md:w-full px-3 mb-3 md:mb-0">
                     {form.call_type == "Parts" ? (
                         <Autocomplete
                             defaultValue={form.issue ?? "[]"}
@@ -402,9 +413,10 @@ export default function WebFormFormSection() {
                     </div>
                 </div>
                 <div className="flex gap-4 items-center justify-center">
-                    <button 
-                    disabled={loading}
-                    className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600">
+                    <button
+                        disabled={loading}
+                        className="p-3 flex items-center justify-center w-36 bg-blue-500 text-white rounded-sm hover:to-blue-600"
+                    >
                         {loading ? (
                             <div className="py-1.5">
                                 <Loading />

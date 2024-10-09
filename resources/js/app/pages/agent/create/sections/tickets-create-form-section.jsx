@@ -418,6 +418,17 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
+                    <Input
+                        onChange={formHandler}
+                        name="address2"
+                        required={false}
+                        value={form?.address2}
+                        label="Mailing Address"
+                        type="text"
+                        // errorMessage='Address is required'
+                    />
+                </div>
+                <div className="md:w-full px-3 mb-3 md:mb-0">
                     {form?.call_type == "Parts" ? (
                         <Autocomplete
                             defaultValue={"[]"}

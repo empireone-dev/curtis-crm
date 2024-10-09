@@ -8,12 +8,13 @@ export default function CurtisCardsComponent({ title, count, icon,link }) {
             {icon}
         </div>
         <div className="p-4 text-right">
-            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">{title.length > 23 ? title.slice(0, 23) + '...' : title}
+            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1"> {title.length > 30 ? title.slice(0, 23) + "..." : title}
 </p>
             <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{count}</h4>
         </div>
         <div className="border-t border-blue-gray-50 p-4">
             <Link
+            
             href={'/curtis/tickets?page=1&status='+link}
             className="block antialiased font-sans text-base text-red-600 leading-relaxed font-black text-blue-gray-600">
                 Click to visit
