@@ -72,6 +72,7 @@ export default function TicketsSelectedExportSection({ selected }) {
         { id: 17, name: "Serial #" },
         { id: 18, name: "Retail Store" },
         { id: 19, name: "Purchase Date" },
+        { id: 20, name: "Validated Date" },
     ];
 
     // const options = [];
@@ -247,224 +248,102 @@ export default function TicketsSelectedExportSection({ selected }) {
         //     },
         // }));
 
-        const result = (await get_status()).map((res) => ({
-            // 0: {
-            //     id: 0,
-            //     name: moment(res.created_at).format("L"),
-            // },
-            // 1: {
-            //     id: 1,
-            //     name: moment(res.updated_at).format("L"),
-            // },
-            // 2: {
-            //     id: 2,
-            //     name: res?.ticket_id ?? "N/A",
-            // },
-            // 3: {
-            //     id: 3,
-            //     name: res?.fname ?? "N/A",
-            // },
-            // 4: {
-            //     id: 4,
-            //     name: res?.lname ?? "N/A",
-            // },
-            // 5: {
-            //     id: 5,
-            //     name: res?.phone ?? "N/A",
-            // },
-            // 6: {
-            //     id: 6,
-            //     name: res?.email ?? "N/A",
-            // },
-            // 7: {
-            //     id: 7,
-            //     name: res?.serial_number ?? "N/A",
-            // },
-            // 8: {
-            //     id: 8,
-            //     name: res?.item_number ?? "N/A",
-            // },
-            // 9: {
-            //     id: 9,
-            //     name: res?.unit ?? "N/A",
-            // },
-            // 10: {
-            //     id: 10,
-            //     name: res?.class ?? "N/A",
-            // },
-            // 11: {
-            //     id: 11,
-            //     name: res?.brand ?? "N/A",
-            // },
-            // 12: {
-            //     id: 12,
-            //     name: res?.call_type ?? "N/A",
-            // },
-            // 13: {
-            //     id: 13,
-            //     name: res?.purchase_date ?? "N/A",
-            // },
-            // 14: {
-            //     id: 14,
-            //     name: res?.zip_code ?? "N/A",
-            // },
-            // 15: {
-            //     id: 15,
-            //     name: res?.country ?? "N/A",
-            // },
-            // 16: {
-            //     id: 16,
-            //     name: res?.state ?? "N/A",
-            // },
-            // 17: {
-            //     id: 17,
-            //     name: res?.city ?? "N/A",
-            // },
-            // 18: {
-            //     id: 18,
-            //     name: res?.address ?? "N/A",
-            // },
-            // 19: {
-            //     id: 19,
-            //     name: res?.issue ?? "N/A",
-            // },
-            // 20: {
-            //     id: 20,
-            //     name: res?.status ?? "N/A",
-            // },
-            // 21: {
-            //     id: 21,
-            //     name: res?.reason_to_close ?? "N/A",
-            // },
-            // 22: {
-            //     id: 22,
-            //     name: res.receipt?.discount ?? "N/A",
-            // },
-            // 23: {
-            //     id: 23,
-            //     name: res.decision_making?.after_discount ?? "N/A",
-            // },
-            // 24: {
-            //     id: 24,
-            //     name: res.receipt?.retailers_price ?? "N/A",
-            // },
-            // 25: {
-            //     id: 25,
-            //     name: res.decision_making?.cost_of_unit ?? "N/A",
-            // },
-            // 26: {
-            //     id: 26,
-            //     name: res.decision_making?.shipping_cost ?? "N/A",
-            // },
-            // 27: {
-            //     id: 27,
-            //     name: res.replacement?.ship_date ?? "N/A",
-            // },
-            // 28: {
-            //     id: 28,
-            //     name: res.replacement?.tracking ?? "N/A",
-            // },
-            // 29: {
-            //     id: 29,
-            //     name: res.refund?.ship_date ?? "N/A",
-            // },
-            // 30: {
-            //     id: 30,
-            //     name: res.refund?.cheque_no ?? "N/A",
-            // },
-            // 31: {
-            //     id: 31,
-            //     name: res.refund?.cheque_amount ?? "N/A",
-            // },
-            // 32: {
-            //     id: 32,
-            //     name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
-            // },
-            // 33: {
-            //     id: 33,
-            //     name: res.receipt?.store ?? "N/A",
-            // },
-            0: {
-                id: 0,
-                name:res?.validate?.created_at?moment(res?.validate?.created_at).format("L"):'N/A' ,
-            },
-            1: {
-                id: 1,
-                name: res?.ticket_id ?? "N/A",
-            },
-            2: {
-                id: 2,
-                name: res?.status ?? "N/A",
-            },
-            3: {
-                id: 3,
-                name: res?.item_number ?? "N/A",
-            },
-            4: {
-                id: 4,
-                name: res?.class ?? "N/A",
-            },
-            5: {
-                id: 5,
-                name: res.decision_making?.after_discount ?? "N/A",
-            },
-            6: {
-                id: 6,
-                name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
-            },
-            7: {
-                id: 7,
-                name: res.decision_making?.cost_of_unit ?? "N/A",
-            },
-            8: {
-                id: 8,
-                name: res.decision_making?.shipping_cost ?? "N/A",
-            },
-            9: {
-                id: 9,
-                name: res?.fname ?? "N/A",
-            },
-            10: {
-                id: 10,
-                name: res?.lname ?? "N/A",
-            },
-            11: {
-                id: 11,
-                name: res?.address ?? "N/A",
-            },
-            12: {
-                id: 12,
-                name: res?.city ?? "N/A",
-            },
-            13: {
-                id: 13,
-                name: res?.state ?? "N/A",
-            },
-            14: {
-                id: 14,
-                name: res?.zip_code ?? "N/A",
-            },
-            15: {
-                id: 15,
-                name: res?.phone ?? "N/A",
-            },
-            16: {
-                id: 16,
-                name: res?.email ?? "N/A",
-            },
-            17: {
-                id: 17,
-                name: res?.serial_number ?? "N/A",
-            },
-            18: {
-                id: 18,
-                name: res.receipt?.store ?? "N/A",
-            },
-            19: {
-                id: 19,
-                name: res?.purchase_date ?? "N/A",
-            },
-        }));
+        const result = (await get_status()).map((res) => {
+            const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
+            // console.log('combinedLogs',combinedLogs)
+            const latestCreatedAt = combinedLogs.reduce((latest, log) => {
+                return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
+            }, combinedLogs[0]?.created_at);
+
+            return {
+                0: {
+                    id: 0,
+                    name:moment(latestCreatedAt).format("L"),
+                },
+                1: {
+                    id: 1,
+                    name: res?.ticket_id ?? "N/A",
+                },
+                2: {
+                    id: 2,
+                    name: res?.status ?? "N/A",
+                },
+                3: {
+                    id: 3,
+                    name: res?.item_number ?? "N/A",
+                },
+                4: {
+                    id: 4,
+                    name: res?.class ?? "N/A",
+                },
+                5: {
+                    id: 5,
+                    name: res.decision_making?.after_discount ?? "N/A",
+                },
+                6: {
+                    id: 6,
+                    name: (res.country == "CA" ? "CAD" : "USD") ?? "N/A",
+                },
+                7: {
+                    id: 7,
+                    name: res.decision_making?.cost_of_unit ?? "N/A",
+                },
+                8: {
+                    id: 8,
+                    name: res.decision_making?.shipping_cost ?? "N/A",
+                },
+                9: {
+                    id: 9,
+                    name: res?.fname ?? "N/A",
+                },
+                10: {
+                    id: 10,
+                    name: res?.lname ?? "N/A",
+                },
+                11: {
+                    id: 11,
+                    name: res?.address ?? "N/A",
+                },
+                12: {
+                    id: 12,
+                    name: res?.city ?? "N/A",
+                },
+                13: {
+                    id: 13,
+                    name: res?.state ?? "N/A",
+                },
+                14: {
+                    id: 14,
+                    name: res?.zip_code ?? "N/A",
+                },
+                15: {
+                    id: 15,
+                    name: res?.phone ?? "N/A",
+                },
+                16: {
+                    id: 16,
+                    name: res?.email ?? "N/A",
+                },
+                17: {
+                    id: 17,
+                    name: res?.serial_number ?? "N/A",
+                },
+                18: {
+                    id: 18,
+                    name: res.receipt?.store ?? "N/A",
+                },
+                19: {
+                    id: 19,
+                    name: res?.purchase_date ?? "N/A",
+                },
+                20: {
+                    id: 0,
+                    name: res?.validate?.created_at
+                        ? moment(res?.validate?.created_at).format("L")
+                        : "N/A",
+                },
+            };
+        });
 
         const new_column = await get_column();
         const new_data = result.map((item) =>
@@ -519,7 +398,7 @@ export default function TicketsSelectedExportSection({ selected }) {
 
         XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
         const updated_export = (await get_status()).map((res) => res.id);
-        update_ticket_export_status_service(updated_export);
+        update_ticket_export_status_service(updated_export, value);
         if (window.location.hash == "") {
             store.dispatch(get_tickets_thunk(window.location.search));
         } else {

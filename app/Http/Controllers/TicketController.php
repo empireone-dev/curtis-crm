@@ -27,6 +27,18 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function change_check_all(Request $request)
+    {
+        foreach ($request->all as $key => $value) {
+            $ticket = Ticket::find($value);
+            $ticket->update([
+                'isExported' => $request->isCheck ? 'true' : null,
+            ]);
+        }
+        return response()->json([
+            'result' => 'success',
+        ], 200);
+    }
     public function change_isExport(Request $request)
     {
         $ticket = Ticket::find($request->id);
@@ -39,10 +51,12 @@ class TicketController extends Controller
     }
     public function ticket_export_status(Request $request)
     {
-        foreach ($request->data as $key => $value) {
-            Ticket::where('id', $value)->update([
-                'isExported' => 'true'
-            ]);
+        if ($request->type != 'uncheck') {
+            foreach ($request->data as $key => $value) {
+                Ticket::where('id', $value)->update([
+                    'isExported' => 'true'
+                ]);
+            }
         }
     }
     public function upload_rma_request(Request $request)
@@ -246,7 +260,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity', 'validate']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity', 'validate', 'agent_notes', 'cases_logs']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {

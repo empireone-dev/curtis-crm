@@ -103,6 +103,14 @@ class Ticket extends Model
     {
         return $this->hasOne(DecisionMaking::class,'ticket_id','id');
     }
+    public function agent_notes(): HasMany
+    {
+        return $this->hasMany(AgentNote::class,'ticket_id','id');
+    }
+    public function cases_logs(): HasMany
+    {
+        return $this->hasMany(CasesLog::class,'ticket_id','id');
+    }
     public function activity(): HasOne
     {
         return $this->hasOne(Activity::class,'ticket_id','id')

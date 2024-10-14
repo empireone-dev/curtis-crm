@@ -8,10 +8,21 @@ export async function change_isExport_service(data) {
         return [];
     }
 }
-export async function update_ticket_export_status_service(data) {
+
+export async function change_check_all_service(data) {
+    try {
+        const res = await axios.post("/api/change_check_all",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function update_ticket_export_status_service(data,type) {
     try {
         const res = await axios.put("/api/ticket_export_status",{
-            data:data
+            data:data,
+            type:type
         });
         return res.data;
     } catch (error) {
