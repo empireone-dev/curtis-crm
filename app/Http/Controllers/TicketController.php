@@ -325,8 +325,30 @@ class TicketController extends Controller
 
 
 
-        $query->orderBy('created_at', 'desc');
+        // $query->orderBy('created_at', 'desc');
+
+        if (!$request->checked && !$request->ticket_id && !$request->fullname) {
+            $query = $query->with('pr')
+                ->orderBy('updated_at', 'desc');
+        }
+
+        if ($request->checked === 'asc' || $request->checked === 'desc') {
+            if ($request->checked === 'asc') {
+                // Sort with TRUE values first, then ascending order
+                $query->orderByRaw('isExported IS NULL ASC, isExported ASC');
+            } else {
+                // Sort with TRUE values last, then descending order
+                $query->orderByRaw('isExported IS NULL DESC, isExported DESC');
+            }
+        } else if ($request->ticket_id === 'asc' || $request->ticket_id === 'desc') {
+            $query->orderBy('id', $request->ticket_id);
+        } else if ($request->fullname === 'asc' || $request->fullname === 'desc') {
+            $query->orderBy('fname', $request->fullname);
+        }
+
         $data = $query->get();
+
+
         foreach ($data as $result) {
             if (isset($result->activity->user_id)) {
                 $activity = Activity::where('user_id', '=', $result->activity->user_id)
@@ -696,9 +718,33 @@ class TicketController extends Controller
         //     ->orderBy('email_date', 'asc')
         //     ->orderByRaw("CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END ASC")
         //     ->orderBy('status', 'asc');
-        $query->with('pr')->orderBy('updated_at', 'desc');
-        $data = $query->with('pr')->paginate(10);
+        // $query->with('pr')
+        //     ->orderBy('updated_at', 'desc');
 
+
+        if (!$request->checked && !$request->ticket_id && !$request->fullname) {
+            $query = $query->with('pr')
+                ->orderBy('updated_at', 'desc');
+        }
+
+        if ($request->checked === 'asc' || $request->checked === 'desc') {
+            if ($request->checked === 'asc') {
+                // Sort with TRUE values first, then ascending order
+                $query->orderByRaw('isExported IS NULL ASC, isExported ASC');
+            } else {
+                // Sort with TRUE values last, then descending order
+                $query->orderByRaw('isExported IS NULL DESC, isExported DESC');
+            }
+        } else if ($request->ticket_id === 'asc' || $request->ticket_id === 'desc') {
+            $query->orderBy('id', $request->ticket_id);
+        } else if ($request->fullname === 'asc' || $request->fullname === 'desc') {
+            $query->orderBy('fname', $request->fullname);
+        }
+
+        // After sorting, apply pagination
+        $data = $query->paginate(10);
+
+        // Return the response as JSON
         return response()->json([
             'data' => $data ?? [],
         ], 200);

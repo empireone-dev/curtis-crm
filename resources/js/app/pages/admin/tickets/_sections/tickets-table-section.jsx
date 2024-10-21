@@ -9,6 +9,7 @@ import { ArrowDownTrayIcon, CheckBadgeIcon } from "@heroicons/react/24/outline";
 import TicketsSelectedExportSection from "./tickets-selected-export-section";
 import store from "@/app/store/store";
 import Table from "@/app/_components/table";
+import TicketSortSection from "./ticket-sort-section";
 
 export default function TicketTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
@@ -28,7 +29,7 @@ export default function TicketTableSection() {
                                 "/status"
                             }
                         >
-                           <div className="flex gap-3">
+                            <div className="flex gap-3">
                                 {res.pr && (
                                     <CheckBadgeIcon className="h-6 text-green-600" />
                                 )}
@@ -188,6 +189,9 @@ export default function TicketTableSection() {
             )}
             {data && (
                 <>
+                    <div className="py-3">
+                        <TicketSortSection />
+                    </div>
                     <Table
                         isStatus={isStatus}
                         columns={columns}

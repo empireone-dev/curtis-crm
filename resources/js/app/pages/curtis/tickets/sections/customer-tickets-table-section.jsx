@@ -10,6 +10,7 @@ import TicketsSelectedExportSection from "./tickets-selected-export-section";
 import store from "@/app/store/store";
 import Table from "@/app/_components/table";
 import MoveTicketSection from "./move-ticket-section";
+import TicketSortSection from "@/app/pages/admin/tickets/_sections/ticket-sort-section";
 
 export default function CustomerTicketsTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
@@ -113,7 +114,11 @@ export default function CustomerTicketsTableSection() {
             );
         })(),
         created_at: <div>{moment(res.created_at).format("LL")}</div>,
-        move_ticket: <div><MoveTicketSection data={res}/></div>,
+        move_ticket: (
+            <div>
+                <MoveTicketSection data={res} />
+            </div>
+        ),
     }));
 
     const columns = [
@@ -163,7 +168,6 @@ export default function CustomerTicketsTableSection() {
             dataIndex: "created_at",
             key: "created_at",
         },
-        
     ];
 
     const url = window.location.pathname + window.location.search;
@@ -190,6 +194,9 @@ export default function CustomerTicketsTableSection() {
             {isStatus && (
                 <TicketsSelectedExportSection selected={selectedRowKeys} />
             )}
+            <div className="py-3">
+                <TicketSortSection />
+            </div>
             {data && (
                 <>
                     <Table
