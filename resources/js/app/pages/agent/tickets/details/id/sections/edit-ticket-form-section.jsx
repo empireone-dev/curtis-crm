@@ -12,6 +12,7 @@ import { router } from "@inertiajs/react";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
 import {
+    check_serial_number_service,
     get_tickets_by_ticket_id,
     update_tickets_by_user_id,
 } from "@/app/services/tickets-service";
@@ -21,6 +22,7 @@ import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-s
 import ReasonToClose from "@/app/pages/admin/tickets/details/contents/details/id/sections/reason-to-close";
 import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
+import { message } from "antd";
 
 export default function EditTicketFormSection() {
     const dispatch = useDispatch();
@@ -32,7 +34,7 @@ export default function EditTicketFormSection() {
     const ticketid = window.location.pathname.split("/")[4];
     const [storeData, setStoreData] = useState([]);
     const [load, setLoad] = useState(false);
-
+    const [messageApi, contextHolder] = message.useMessage();
     useEffect(() => {
         async function get_ticket(params) {
             const res = await get_tickets_by_ticket_id(ticketid);
@@ -126,17 +128,27 @@ export default function EditTicketFormSection() {
 
     async function submitFormTicket(e) {
         e.preventDefault();
-        setLoading(true);
-        const data = {
-            ...form,
-            id: ticketid,
-            status: ticket.status,
-        };
-        try {
-            await update_tickets_by_user_id(data);
-            setLoading(false);
-            router.visit(`/agent/tickets/details/${ticketid}/details`);
-        } catch (error) {
+        const checked = await check_serial_number_service(form.serial_number);
+        console.log('checked.result',checked.result)
+        if (!checked.result  || checked.result.email == form.email) {
+            setLoading(true);
+            const data = {
+                ...form,
+                id: ticketid,
+                status: ticket.status,
+            };
+            try {
+                await update_tickets_by_user_id(data);
+                setLoading(false);
+                router.visit(`/agent/tickets/details/${ticketid}/details`);
+            } catch (error) {
+                setLoading(false);
+            }
+        } else {
+            messageApi.open({
+                type: "error",
+                content: "Serial number is already exist!",
+            });
             setLoading(false);
         }
     }
@@ -173,6 +185,7 @@ export default function EditTicketFormSection() {
                     <div className="flex items-center justify-center font-black text-3xl my-6">
                         EDIT Ticket Form
                     </div>
+                    {contextHolder}
                     <div className=" md:flex mb-3">
                         <div className="md:w-1/2 px-3 mb-3 md:mb-0">
                             <Input

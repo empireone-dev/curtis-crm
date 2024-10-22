@@ -20,6 +20,7 @@ import { check_serial_number_service } from "@/app/services/tickets-service";
 import { message } from "antd";
 import { get_product_registration_by_serial_service } from "@/app/services/product-registration-service";
 export default function TicketCreateFormSection() {
+    
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
     const { user } = useSelector((state) => state.app);

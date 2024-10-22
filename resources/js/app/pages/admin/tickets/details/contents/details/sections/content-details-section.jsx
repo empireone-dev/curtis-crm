@@ -42,9 +42,21 @@ export default function ContentDetailsSection() {
         if (confirm("Are you sure you want to open the ticket?")) {
             setIsLoading(true);
             try {
-                await store.dispatch(
-                    update_tickets_status_thunk(ticket?.id, "OPEN")
-                );
+                if (ticket?.call_type == "CF-Warranty Claim") {
+                    await store.dispatch(
+                        update_tickets_status_thunk(
+                            ticket?.id,
+                            "WARRANTY VALIDATION"
+                        )
+                    );
+                } else if (ticket?.call_type == "Parts") {
+                    await store.dispatch(
+                        update_tickets_status_thunk(
+                            ticket?.id,
+                            "PARTS VALIDATION"
+                        )
+                    );
+                }
                 setIsLoading(false);
                 router.visit(routing("details"));
             } catch (error) {

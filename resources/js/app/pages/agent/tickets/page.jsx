@@ -38,7 +38,6 @@ export default function AgentTicketsPage({ auth }) {
                         CREATE TICKET
                     </button>
                 </div>
-               
             </div>
             {account.agent_type == 'CSR' && <CSRTicketsTableSection />}
             {account.agent_type !== 'CSR' &&  <CustomerTicketsTableSection />}
