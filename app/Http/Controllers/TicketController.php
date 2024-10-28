@@ -748,9 +748,11 @@ class TicketController extends Controller
                 });
             }
         } else {
-            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
-            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-            $query->whereBetween('created_at', [$startTime, $endTime]);
+            if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereBetween('created_at', [$startTime, $endTime]);
+            }
         }
 
         // Add item_number condition if provided
