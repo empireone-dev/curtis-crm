@@ -224,12 +224,13 @@ export default function ProductRegistrationForm() {
                         <div className="text-green-500">Correct Format!</div>
                     )}
                     <div className="mt-2">
+                    Serial # (starts with capital letter A and 16 digits number)
                         <Input
                             required={true}
                             onChange={formHandler}
                             name="serial"
                             value={form.serial}
-                            label="Serial # (starts with capital letter A and 16 digits number)"
+                            label=""
                             type="text"
                             errorMessage="Serial is required"
                         />

@@ -525,32 +525,37 @@ export default function DecisionMakingSection() {
                                     )}
 
                                     <div className="flex gap-5 my-12">
-                                        <div class="flex items-center">
-                                            <input
-                                                checked={
-                                                    data.ticket_type ==
-                                                    "REPLACEMENT"
-                                                }
-                                                id="default-radio-2"
-                                                onChange={(e) =>
-                                                    setData({
-                                                        ...data,
-                                                        ticket_type:
-                                                            e.target.value,
-                                                    })
-                                                }
-                                                type="radio"
-                                                value="REPLACEMENT"
-                                                name="ticket_type"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                            />
-                                            <label
-                                                htmlFor="default-radio-2"
-                                                class="ms-2 text-xl font-medium text-gray-900"
-                                            >
-                                                Replacement
-                                            </label>
-                                        </div>
+                                        {data.state !== "HI" &&
+                                            data.state !== "PR" &&
+                                            data.state !== "AK" && (
+                                                <div class="flex items-center">
+                                                    <input
+                                                        checked={
+                                                            data.ticket_type ==
+                                                            "REPLACEMENT"
+                                                        }
+                                                        id="default-radio-2"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                ticket_type:
+                                                                    e.target
+                                                                        .value,
+                                                            })
+                                                        }
+                                                        type="radio"
+                                                        value="REPLACEMENT"
+                                                        name="ticket_type"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                    />
+                                                    <label
+                                                        htmlFor="default-radio-2"
+                                                        class="ms-2 text-xl font-medium text-gray-900"
+                                                    >
+                                                        Replacement
+                                                    </label>
+                                                </div>
+                                            )}
 
                                         <div class="flex items-center">
                                             <input

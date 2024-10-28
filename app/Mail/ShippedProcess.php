@@ -25,7 +25,7 @@ class ShippedProcess extends Mailable
     public function build()
     {
         return $this->from('support2@curtiscs.com', 'DO NOT REPLY')
-        ->subject($this->data['ticket_id'].' - A - DO NOT REPLY')
+        ->subject($this->data['ticket_id'].' - DO NOT REPLY')
         ->markdown('mail.shipped')
         ->with($this->data);
     }

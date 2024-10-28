@@ -13,111 +13,134 @@ import TicketSortSection from "./ticket-sort-section";
 
 export default function TicketTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
+    const queryParams = new URLSearchParams(window.location.search);
+    const date_status = queryParams.get("date_status");
 
-    const data = tickets?.data?.map((res) => ({
-        ...res,
-        key: res.id,
-        ticket_id: (() => {
-            function route_link(data) {
-                if (data.call_type == "TS-Tech Support") {
-                    return (
-                        <Link
-                            className="underline"
-                            href={
-                                "/administrator/tickets/details/" +
-                                res.id +
-                                "/status"
-                            }
-                        >
-                            <div className="flex gap-3">
-                                {res.pr && (
-                                    <CheckBadgeIcon className="h-6 text-green-600" />
-                                )}
-                                {res.isExported && (
-                                    <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                )}
-                                {res.ticket_id}
-                            </div>
-                        </Link>
-                    );
-                } else {
-                    return (
-                        <Link
-                            className="underline"
-                            href={
-                                "/administrator/tickets/details/" +
-                                res.id +
-                                "/files"
-                            }
-                        >
-                            <div className="flex gap-3">
-                                {res.pr && (
-                                    <CheckBadgeIcon className="h-6 text-green-600" />
-                                )}
-                                {res.isExported && (
-                                    <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                )}
-                                {res.ticket_id}
-                            </div>
-                        </Link>
-                    );
+    const data = tickets?.data?.map((res) => {
+        let filterDate = "";
+        if (date_status == "Date Created") {
+            filterDate = moment(res.created_at).format("LL");
+        } else if (date_status == "Validation Date") {
+            filterDate = moment(res.receipt.created_at).format("LL");
+        } else if (date_status == "Last Updated") {
+            const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
+            const latestCreatedAt = combinedLogs.reduce((latest, log) => {
+                return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
+            }, combinedLogs[0]?.created_at);
+
+            filterDate = moment(latestCreatedAt).format("LL");
+        } else {
+            filterDate = moment(res.created_at).format("LL");
+        }
+        return {
+            ...res,
+            key: res.id,
+            ticket_id: (() => {
+                function route_link(data) {
+                    if (data.call_type == "TS-Tech Support") {
+                        return (
+                            <Link
+                                className="underline"
+                                href={
+                                    "/administrator/tickets/details/" +
+                                    res.id +
+                                    "/status"
+                                }
+                            >
+                                <div className="flex gap-3">
+                                    {res.pr && (
+                                        <CheckBadgeIcon className="h-6 text-green-600" />
+                                    )}
+                                    {res.isExported && (
+                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                    )}
+                                    {res.ticket_id
+                                        ? res.ticket_id
+                                        : "Show More"}
+                                </div>
+                            </Link>
+                        );
+                    } else {
+                        return (
+                            <Link
+                                className="underline"
+                                href={
+                                    "/administrator/tickets/details/" +
+                                    res.id +
+                                    "/files"
+                                }
+                            >
+                                <div className="flex gap-3">
+                                    {res.pr && (
+                                        <CheckBadgeIcon className="h-6 text-green-600" />
+                                    )}
+                                    {res.isExported && (
+                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                    )}
+                                    {res.ticket_id
+                                        ? res.ticket_id
+                                        : "Show More"}
+                                </div>
+                            </Link>
+                        );
+                    }
                 }
-            }
-            return (
-                <Tooltip placement="topLeft" title="View Ticket Details">
-                    {route_link(res)}
-                </Tooltip>
-            );
-        })(),
-        fullname: (
-            <div>
-                {res.fname} {res.lname}
-            </div>
-        ),
-        issue: <Tag color={"blue"}>{res.issue}</Tag>,
-        status: (() => {
-            const color =
-                res.status === "CLOSED"
-                    ? "red"
-                    : res.status === "PARTS VALIDATION" ||
-                      res.status === "WARRANTY VALIDATION" ||
-                      res.status === "TECH VALIDATION" ||
-                      res.status == null
-                    ? "orange"
-                    : "green";
+                return (
+                    <Tooltip placement="topLeft" title="View Ticket Details">
+                        {route_link(res)}
+                    </Tooltip>
+                );
+            })(),
+            fullname: (
+                <div>
+                    {res.fname} {res.lname}
+                </div>
+            ),
+            issue: <Tag color={"blue"}>{res.issue}</Tag>,
+            status: (() => {
+                const color =
+                    res.status === "CLOSED"
+                        ? "red"
+                        : res.status === "PARTS VALIDATION" ||
+                          res.status === "WARRANTY VALIDATION" ||
+                          res.status === "TECH VALIDATION" ||
+                          res.status == null
+                        ? "orange"
+                        : "green";
 
-            return (
-                <>
-                    <Tag color={color}>
-                        {res.status === "PARTS VALIDATION" ||
-                        res.status === "WARRANTY VALIDATION" ||
-                        res.status === "TECH VALIDATION" ||
-                        res.status == null
-                            ? "OPEN"
-                            : res.status}
-                    </Tag>
-                    {res.is_reply && (
-                        <Tag color="purple">
-                            Customer has responded on{" "}
-                            {moment(res.email_date).format("LL")}
+                return (
+                    <>
+                        <Tag color={color}>
+                            {res.status === "PARTS VALIDATION" ||
+                            res.status === "WARRANTY VALIDATION" ||
+                            res.status === "TECH VALIDATION" ||
+                            res.status == null
+                                ? "OPEN"
+                                : res.status}
                         </Tag>
-                    )}
-                </>
-            );
-        })(), // Call the function immediately to return the JSX
-        isUploading: (() => {
-            const color = res.isUploading == "true" ? "green" : "red";
+                        {res.is_reply && (
+                            <Tag color="purple">
+                                Customer has responded on{" "}
+                                {moment(res.email_date).format("LL")}
+                            </Tag>
+                        )}
+                    </>
+                );
+            })(), // Call the function immediately to return the JSX
+            isUploading: (() => {
+                const color = res.isUploading == "true" ? "green" : "red";
 
-            return (
-                <>
-                    <Tag color={color} key={res.id}>
-                        {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
-                    </Tag>
-                </>
-            );
-        })(),
-        created_at: <div>{moment(res.created_at).format("LL")}</div>,
-    }));
+                return (
+                    <>
+                        <Tag color={color} key={res.id}>
+                            {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
+                        </Tag>
+                    </>
+                );
+            })(),
+            created_at: <div>{filterDate}</div>,
+        };
+    });
 
     const columns = [
         {
@@ -157,7 +180,7 @@ export default function TicketTableSection() {
             key: "isUploading",
         },
         {
-            title: "Created At",
+            title: date_status ?? "Created At",
             dataIndex: "created_at",
             key: "created_at",
         },

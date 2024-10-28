@@ -297,10 +297,43 @@ class TicketController extends Controller
         } else if ($request->export == 'uncheck') {
             $query->orWhere('isExported', '=', null);
         }
-        if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
-            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
-            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-            $query->whereBetween('created_at', [$startTime, $endTime]);
+        // if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
+        //     $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+        //     $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+        //     $query->whereBetween('created_at', [$startTime, $endTime]);
+        // }
+
+        if ($request->date_status == 'Date Created') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereBetween('created_at', [$startTime, $endTime]);
+            }
+        } else if ($request->date_status == 'Validation Date') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereHas('receipt', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+            }
+        } else if ($request->date_status == 'Last Updated') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereHas('agent_notes', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+                $query->whereHas('cases_logs', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+            }
+        } else {
+            if (($request->start && $request->end) && ($request->start != 'null' && $request->end != 'null')) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereBetween('created_at', [$startTime, $endTime]);
+            }
         }
 
         // Add item_number condition if provided
@@ -657,7 +690,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'agent_notes', 'cases_logs']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -689,7 +722,32 @@ class TicketController extends Controller
             });
         }
 
-        if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+        if ($request->date_status == 'Date Created') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereBetween('created_at', [$startTime, $endTime]);
+            }
+        } else if ($request->date_status == 'Validation Date') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereHas('receipt', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+            }
+        } else if ($request->date_status == 'Last Updated') {
+            if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
+                $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+                $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+                $query->whereHas('agent_notes', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+                $query->whereHas('cases_logs', function ($q) use ($startTime, $endTime) {
+                    $q->whereBetween('created_at', [$startTime, $endTime]);
+                });
+            }
+        } else {
             $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
             $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
             $query->whereBetween('created_at', [$startTime, $endTime]);
@@ -987,7 +1045,7 @@ class TicketController extends Controller
                 }
             } else {
                 $users = User::where('role_id', 5)
-                    ->where('agent_type', '=', "Parts")
+                    ->where('agent_type', '=', "Warranty")
                     ->get();
                 $userWithSmallestCount = null;
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value

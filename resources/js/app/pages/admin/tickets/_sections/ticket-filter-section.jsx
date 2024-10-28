@@ -7,10 +7,9 @@ import moment from "moment";
 import { setTickets } from "../_redux/tickets-slice";
 import store from "@/app/store/store";
 import { router } from "@inertiajs/react";
-import dayjs from "dayjs";
+import TicketDateFilter from "./ticket-date-filter";
 
 export default function TicketFilterSection() {
-    const { RangePicker } = DatePicker;
     const { products } = useSelector((state) => state.ticket_form);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -20,12 +19,14 @@ export default function TicketFilterSection() {
     const start = queryParams.get("start");
     const end = queryParams.get("end");
     const status = queryParams.get("status");
+    const date_status = queryParams.get("date_status");
     const [data, setData] = useState({
         call_type: callType ?? null,
         start: start == "null" ? null : start ?? null,
-        end: end == "null" ? null : start ?? null,
+        end: end == "null" ? null : end ?? null,
         model: model?.split(",") ?? null,
         status: status ?? null,
+        date_status: date_status ?? null,
     });
 
     const handleChangeData = (value) => {
@@ -149,29 +150,20 @@ export default function TicketFilterSection() {
                     "&model=" +
                     data.model +
                     "&status=" +
-                    data.status
+                    data.status +
+                    "&date_status=" +
+                    data.date_status
             );
             setLoading(false);
         } catch (error) {
             setLoading(false);
         }
     }
-    const dateFormat = "YYYY/MM/DD";
+
     return (
         <div className="flex gap-4 w-full">
             <div className="w-full">
-                <RangePicker
-                    defaultValue={
-                        data.start && data.end
-                            ? [
-                                  dayjs(data.start, dateFormat),
-                                  dayjs(data.end, dateFormat),
-                              ]
-                            : undefined
-                    }
-                    onChange={handleChangeData}
-                    size="large"
-                />
+                <TicketDateFilter data={data} setData={setData} />
             </div>
 
             <div className="w-full">
