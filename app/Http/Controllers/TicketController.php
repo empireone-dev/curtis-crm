@@ -313,7 +313,7 @@ class TicketController extends Controller
             if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
                 $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
                 $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-                $query->whereHas('receipt', function ($q) use ($startTime, $endTime) {
+                $query->whereHas('validate', function ($q) use ($startTime, $endTime) {
                     $q->whereBetween('created_at', [$startTime, $endTime]);
                 });
             }
@@ -732,7 +732,7 @@ class TicketController extends Controller
             if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
                 $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
                 $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-                $query->whereHas('receipt', function ($q) use ($startTime, $endTime) {
+                $query->whereHas('validate', function ($q) use ($startTime, $endTime) {
                     $q->whereBetween('created_at', [$startTime, $endTime]);
                 });
             }
