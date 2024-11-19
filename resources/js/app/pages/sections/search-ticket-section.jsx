@@ -259,7 +259,7 @@ export default function SearchTicketSection() {
                                     <td className="p-3 px-5">
                                         <button
                                             onClick={() =>
-                                                moveToSearch(res.ticket_id)
+                                                moveToSearch(res.id)
                                             }
                                         >
                                             <ArrowTopRightOnSquareIcon className="h-6 text-blue-600" />

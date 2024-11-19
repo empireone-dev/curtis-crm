@@ -68,7 +68,8 @@ export default function TicketsExportFileSection() {
                         const latestCreatedAt = combinedLogs.reduce((latest, log) => {
                             return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
                         }, combinedLogs[0]?.created_at);
-                        
+                        console.log('resss',res)
+                        const validation_date = res
                         return [
                             moment(res.created_at).format("L"),//0
                             moment(latestCreatedAt).format("L"),//1

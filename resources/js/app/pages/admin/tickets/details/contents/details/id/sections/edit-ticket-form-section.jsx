@@ -193,7 +193,7 @@ export default function EditTicketFormSection() {
         e.preventDefault();
         setLoading(true);
         const checked = await check_serial_number_service(form.serial_number);
-        if (!checked.result || checked.result.email == form.email) {
+        if (!checked.result || checked.result.ticket_id == form.ticket_id) {
             const data = {
                 ...form,
                 id: ticketid,
@@ -202,21 +202,21 @@ export default function EditTicketFormSection() {
             try {
                 await update_tickets_by_user_id(data);
                 setLoading(false);
-                router.visit(`/administrator/tickets/details/${ticketid}/details`);
+                router.visit(
+                    `/administrator/tickets/details/${ticketid}/details`
+                );
             } catch (error) {
                 setLoading(false);
             }
-        }else{
+        } else {
             messageApi.open({
                 type: "error",
                 content: "Serial number is already exist!",
             });
             setLoading(false);
         }
-      
     }
 
-    
     const findCountry = (countryName) => {
         return countries.find((country) => country.value === countryName);
     };

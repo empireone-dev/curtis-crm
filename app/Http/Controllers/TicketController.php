@@ -27,6 +27,16 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function escalated(Request $request)
+    {
+        Ticket::where('id', $request->id)->update([
+            'isEscalated' => 'true'
+        ]);
+        return response()->json([
+            'result' => 'success',
+        ], 200);
+    }
+
     public function change_check_all(Request $request)
     {
         foreach ($request->all as $key => $value) {
@@ -690,7 +700,7 @@ class TicketController extends Controller
         $columns = Schema::getColumnListing('tickets');
 
         // Start the query builder
-        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'agent_notes', 'cases_logs','validate']);
+        $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'agent_notes', 'cases_logs', 'validate']);
         if ($searchQuery) {
             // Dynamically add where conditions for each column
             $query->where(function ($query) use ($columns, $searchQuery) {
@@ -1082,25 +1092,7 @@ class TicketController extends Controller
     }
 
     public function get_email_replies_parts()
-    // {
-    //     $scriptUrl = 'https://script.google.com/macros/s/AKfycbwtrx6YKdaT93NX7Zq8mdmZJ3Gh59Nev60WMrXqz57xYncY4D168eSTTVWAPgu0lsNa/exec';
 
-    //     $response = Http::get($scriptUrl);
-    //     $responseData = $response->json();
-    //     foreach ($responseData as $value) {
-    //         $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
-    //         if ($ticket) {
-    //             $ticket->update([
-    //                 'cases_status' => 'handled',
-    //                 'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-    //                 'is_reply' => 'true'
-    //             ]);
-    //         }
-    //     }
-    //     return response()->json([
-    //         'result' => $responseData,
-    //     ], 200);
-    // }
     {
         //old - this is from app script in customer responded
         // $scriptUrl = 'https://script.google.com/macros/s/AKfycbyJfgd2C_FjuibQGtV82kZBcn5Eh952SEReHBlN8RBMrEZGMcBBdv1GCP71GzpQiGc/exec';

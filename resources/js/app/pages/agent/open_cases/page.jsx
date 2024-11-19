@@ -55,7 +55,6 @@ export default function AgentOpenCasesEMail({ auth }) {
         }
         return dueDate.format("LL");
     }
-    
 
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -224,7 +223,18 @@ export default function AgentOpenCasesEMail({ auth }) {
                 if (record.is_reply) {
                     return <Tag color="red">Email Reply</Tag>;
                 } else {
-                    <Tag color="red">red</Tag>
+                    <Tag color="red">red</Tag>;
+                }
+            },
+        },
+        {
+            title: "Iscalated",
+            dataIndex: "isEscalated",
+            key: "isEscalated",
+            // ...getColumnSearchProps("isEscalated"),
+            render: (_, record, i) => {
+                if (record.isEscalated) {
+                    return <Tag color="green">Escalated</Tag>;
                 }
             },
         },
@@ -265,7 +275,15 @@ export default function AgentOpenCasesEMail({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={Object.entries(tickets.result).map(res=>res[1]).sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ?? []}
+                            dataSource={
+                                Object.entries(tickets.result)
+                                    .map((res) => res[1])
+                                    .sort(
+                                        (a, b) =>
+                                            new Date(a.email_date) -
+                                            new Date(b.email_date)
+                                    ) ?? []
+                            }
                         />
                     </div>
                 )}

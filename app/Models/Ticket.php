@@ -50,76 +50,78 @@ class Ticket extends Model
         'email_date',
         'validator_id',
         'is_reply',
-        'isExported'
+        'isExported',
+        'isEscalated'
     ];
 
     public function direct_emails(): HasOne
     {
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function user(): HasOne
     {
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function pr(): HasOne
     {
-        return $this->hasOne(ProductRegistration::class,'serial','serial_number');
+        return $this->hasOne(ProductRegistration::class, 'serial', 'serial_number');
     }
 
     public function validator(): HasOne
     {
-        return $this->hasOne(User::class,'id','validator_id');
+        return $this->hasOne(User::class, 'id', 'validator_id');
     }
 
     public function refund(): HasOne
     {
-        return $this->hasOne(Refund::class,'ticket_id','id');
+        return $this->hasOne(Refund::class, 'ticket_id', 'id');
     }
 
     public function repair(): HasOne
     {
-        return $this->hasOne(Repair::class,'ticket_id','id');
+        return $this->hasOne(Repair::class, 'ticket_id', 'id');
     }
 
     public function internal(): HasMany
     {
-        return $this->hasMany(Internal::class,'ticket_id','id');
+        return $this->hasMany(Internal::class, 'ticket_id', 'id');
     }
 
 
     public function receipt(): HasOne
     {
-        return $this->hasOne(Receipt::class,'ticket_id','id');
+        return $this->hasOne(Receipt::class, 'ticket_id', 'id');
     }
 
     public function replacement(): HasOne
     {
-        return $this->hasOne(Replacement::class,'ticket_id','id');
+        return $this->hasOne(Replacement::class, 'ticket_id', 'id');
     }
 
     public function decision_making(): HasOne
     {
-        return $this->hasOne(DecisionMaking::class,'ticket_id','id');
+        return $this->hasOne(DecisionMaking::class, 'ticket_id', 'id');
     }
     public function agent_notes(): HasMany
     {
-        return $this->hasMany(AgentNote::class,'ticket_id','id');
+        return $this->hasMany(AgentNote::class, 'ticket_id', 'id');
     }
     public function cases_logs(): HasMany
     {
-        return $this->hasMany(CasesLog::class,'ticket_id','id');
+        return $this->hasMany(CasesLog::class, 'ticket_id', 'id');
     }
     public function activity(): HasOne
     {
-        return $this->hasOne(Activity::class,'ticket_id','id')
-        ->where('type', '=', 'WARRANTY VALIDATION');
+        return $this->hasOne(Activity::class, 'ticket_id', 'id')
+            ->where('type', '=', 'WARRANTY VALIDATION')
+            ->orderBy('created_at', 'desc');
     }
     public function validate(): HasOne
     {
-        return $this->hasOne(Activity::class,'ticket_id','id')
-        ->where('type', '=', 'ASSIGNED TO');
+        return $this->hasOne(Activity::class, 'ticket_id', 'id')
+            ->where('type', '=', 'ASSIGNED TO')
+            ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
     }
-
 }

@@ -1,5 +1,14 @@
 import axios from "axios";
 
+export async function escalated_service(data) {
+    try {
+        const res = await axios.post("/api/escalated",data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function change_isExport_service(data) {
     try {
         const res = await axios.post("/api/change_isExport",data);

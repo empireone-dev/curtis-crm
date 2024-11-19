@@ -10,6 +10,7 @@ import routing from "../../../components/routing";
 import MoveTicketAssignement from "./move-ticket-assignement";
 import ResendInitialEmail from "./resend-initial-email";
 import moment from "moment";
+import EscalatedSection from "./escalated-section";
 
 export default function ContentDetailsSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -95,6 +96,7 @@ export default function ContentDetailsSection() {
                     </div>
 
                     <div className="flex gap-5">
+                        <div>{user.role_id == 1 && <EscalatedSection data={ticket}/>}</div>
                         {ticket?.email && <ResendInitialEmail />}
                         <MoveTicketAssignement />
                         <button

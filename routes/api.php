@@ -89,6 +89,7 @@ Route::resource('notes', AgentNoteController::class);
 Route::resource('tickets', TicketController::class);
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
 Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
+Route::post('escalated', [TicketController::class, 'escalated']);
 Route::get('queueing', [TicketController::class, 'queueing']);
 Route::put('close_ticket/{ticket_id}', [TicketController::class, 'close_ticket']);
 Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ticket']);
