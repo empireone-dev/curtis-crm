@@ -260,8 +260,8 @@ export default function AgentOpenCasesEMail({ auth }) {
     ];
     // console.log('tickets.result',)
     const valuesData =
-        Object.entries(tickets.result)
-            .map((res) => res[1])
+        Object.entries(tickets?.result ?? [])
+            ?.map((res) => res[1])
             .sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ??
         [];
     const values = valuesData.sort((a, b) => {
