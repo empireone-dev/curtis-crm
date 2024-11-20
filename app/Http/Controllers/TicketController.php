@@ -724,7 +724,6 @@ class TicketController extends Controller
                     } else if ($searchQuery == 'TECH CLOSED') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                     } else {
-                        // $query->orWhere([[$column, '=',  $searchQuery]]);
                         if (strlen($searchQuery) < 13) {
                             $query->orWhere('id', '=' ,$searchQuery);
                         }else{
