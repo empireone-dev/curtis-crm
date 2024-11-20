@@ -258,6 +258,28 @@ export default function AgentOpenCasesEMail({ auth }) {
             ),
         },
     ];
+    // console.log('tickets.result',)
+    const valuesData =
+        Object.entries(tickets.result)
+            .map((res) => res[1])
+            .sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ??
+        [];
+    const values = valuesData.sort((a, b) => {
+        // Convert the `isEscalated` field to a comparable value
+        const priority = {
+            Escalated: 2, // Highest priority
+            true: 1, // Non-escaped "true" value
+            false: 0, // Non-escaped "false" value
+            null: 0, // Default value for null
+            undefined: 0, // Default value for undefined
+        };
+
+        const aPriority = priority[a.isEscalated] || 0; // Default to 0 if not found
+        const bPriority = priority[b.isEscalated] || 0;
+
+        return bPriority - aPriority;
+    });
+
     return (
         <AgentLayout account={account}>
             <div className="p-3 flex gap-5 flex-col justify-between w-full h-full">
@@ -275,15 +297,7 @@ export default function AgentOpenCasesEMail({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={
-                                Object.entries(tickets.result)
-                                    .map((res) => res[1])
-                                    .sort(
-                                        (a, b) =>
-                                            new Date(a.email_date) -
-                                            new Date(b.email_date)
-                                    ) ?? []
-                            }
+                            dataSource={values}
                         />
                     </div>
                 )}
