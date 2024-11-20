@@ -724,9 +724,9 @@ class TicketController extends Controller
                     } else if ($searchQuery == 'TECH CLOSED') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                     } else {
-                        if (strlen($searchQuery) < 13) {
-                            $query->orWhere('id', '=' ,$searchQuery);
-                        }else{
+                        if (strlen($searchQuery) < 13 && is_numeric($searchQuery)) {
+                            $query->orWhere('id', '=', $searchQuery);
+                        } else {
                             $query->orWhere([[$column, '=',  $searchQuery]]);
                         }
                     }
@@ -1330,12 +1330,11 @@ class TicketController extends Controller
                     } elseif ($searchQuery == 'CLOSED') {
                         $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
                     } else {
-                        if (strlen($searchQuery) < 13) {
-                            $query->orWhere('id', '=' ,$searchQuery);
-                        }else{
+                        if (strlen($searchQuery) < 13 && is_numeric($searchQuery)) {
+                            $query->orWhere('id', '=', $searchQuery);
+                        } else {
                             $query->orWhere($column, 'like', '%' . $searchQuery . '%');
                         }
-                        
                     }
                 }
                 $query->orWhere('ticket_id', $searchQuery)
