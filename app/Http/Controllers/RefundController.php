@@ -29,7 +29,7 @@ class RefundController extends Controller
         // Parse CSV data without setting header offset
         $csv = Reader::createFromPath($file->getPathname(), 'r');
 
-        $records = $csv->getRecords()??[]; // Get all CSV rows as iterator
+        $records = $csv->getRecords() ?? []; // Get all CSV rows as iterator
 
         $csvData = [];
         $firstRowSkipped = false;
@@ -48,7 +48,7 @@ class RefundController extends Controller
                     $ticket = Ticket::where('ticket_id', $record[2])->first();
 
                     $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
-                    $activity = Activity::where([['ticket_id','=',$ticket->id],['type','=','REPLACEMENT SHIPPED']])->first();
+                    $activity = Activity::where([['ticket_id', '=', $ticket->id], ['type', '=', 'REPLACEMENT SHIPPED']])->first();
 
                     if ($activity) {
                         $activity->update([
@@ -90,7 +90,8 @@ class RefundController extends Controller
                         }
                     }
                     $ticket->update([
-                        'status' => 'PROCESSED TICKET'
+                        'status' => 'PROCESSED TICKET',
+                        'where_status' => 'PROCESSED TICKET',
                     ]);
                     $csvData[] = $record;
                 }
@@ -109,12 +110,12 @@ class RefundController extends Controller
                 //Date Issued
                 //Cheque #
                 //Amount of Refund:
-                
+
                 if ($record[0] !== '' && $record[1] !== '' && $record[2] !== '' && $record[3] !== '') {
                     $ticket = Ticket::where('ticket_id', $record[0])->first();
 
                     $ticketArray = $ticket instanceof Ticket ? $ticket->toArray() : [];
-                    $activity = Activity::where([['ticket_id','=',$ticket->id],['type','=','REFUND SHIPPED']])->first();
+                    $activity = Activity::where([['ticket_id', '=', $ticket->id], ['type', '=', 'REFUND SHIPPED']])->first();
                     if ($activity) {
                         $activity->update([
                             'user_id' => $request->user_id,
@@ -165,6 +166,7 @@ class RefundController extends Controller
                         }
                     }
                     $ticket->update([
+                        'where_status' => 'PROCESSED TICKET',
                         'status' => 'PROCESSED TICKET'
                     ]);
                     $csvData[] = $record;

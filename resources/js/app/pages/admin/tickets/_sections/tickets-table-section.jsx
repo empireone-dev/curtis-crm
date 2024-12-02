@@ -147,42 +147,50 @@ export default function TicketTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
+            isSort:true
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
+            isSort:true
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
+            isSort:false
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
+            isSort:false
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
+            isSort:false
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
+            isSort:false
         },
 
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
+            isSort:false
         },
         {
             title: date_status ?? "Created At",
             dataIndex: "created_at",
             key: "created_at",
+            isSort:false
         },
     ];
 

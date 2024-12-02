@@ -8,6 +8,7 @@ import {
 import CheckBoxFunction from "./checkbox-function";
 import store from "../store/store";
 import { get_tickets_thunk } from "../pages/admin/tickets/_redux/tickets-thunk";
+import { router } from "@inertiajs/react";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -25,23 +26,7 @@ export default function Table({
     const [checked, setChecked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { user } = useSelector((store) => store.app);
-    // const [indeterminate, setIndeterminate] = useState(false);
-    // const dispatch = useDispatch();
 
-    // PROPERTIES
-    // setDataChecked = useState
-    // dataChecked = useState
-    // columns=[]
-    // data=[]
-    // isCheckbox=boolean
-
-    // useLayoutEffect(() => {
-    //     const isIndeterminate =
-    //         dataChecked.length > 0 && dataChecked.length < data.length;
-    //     setChecked(dataChecked.length === data.length);
-    //     setIndeterminate(isIndeterminate);
-    //     checkbox.current.indeterminate = isIndeterminate;
-    // }, [dataChecked]);
 
     async function toggleAll(e) {
         setIsLoading(true);
@@ -68,6 +53,90 @@ export default function Table({
         setChecked(checkedValue.length == 10);
     }, []);
 
+
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const callType = queryParams.get("call_type");
+    const model = queryParams.get("model");
+    const start = queryParams.get("start");
+    const end = queryParams.get("end");
+    const status = queryParams.get("status");
+    const fullname = queryParams.get("fullname");
+    const checkeds = queryParams.get("checked");
+    const ticket_id = queryParams.get("ticket_id");
+
+    const search_data = {
+        call_type: callType ?? null,
+        start: start == "null" ? null : start ?? null,
+        end: end == "null" ? null : start ?? null,
+        model: model?.split(",") ?? null,
+        status: status ?? null,
+        fullname: fullname ?? null,
+        checked: checkeds ?? null,
+        ticket_id: ticket_id ?? null,
+    };
+
+    function sort_data1(value) {
+        router.visit(
+            window.location.pathname +
+            "?page=1&" +
+            "start=" +
+            search_data.start +
+            "&end=" +
+            search_data.end +
+            "&call_type=" +
+            search_data.call_type +
+            "&model=" +
+            search_data.model +
+            "&status=" +
+            search_data.status +
+            value
+        );
+    }
+    function sort_data2(value) {
+        router.visit(
+            window.location.pathname +
+            "?page=1&" +
+            "start=" +
+            search_data.start +
+            "&end=" +
+            search_data.end +
+            "&call_type=" +
+            search_data.call_type +
+            "&model=" +
+            search_data.model +
+            "&status=" +
+            search_data.status +
+            value
+        );
+    }
+    function sort_data3(value) {
+        router.visit(
+            window.location.pathname +
+            "?page=1&" +
+            "start=" +
+            search_data.start +
+            "&end=" +
+            search_data.end +
+            "&call_type=" +
+            search_data.call_type +
+            "&model=" +
+            search_data.model +
+            "&status=" +
+            search_data.status +
+            value
+        );
+    }
+    function sort_data(value) {
+        if (value == 'check') {
+            sort_data1(`&checked=${search_data.checked == 'asc' ? 'desc' : 'asc'}`)
+        } else if (value == 'ticket_id') {
+            sort_data2(`&ticket_id=${search_data.ticket_id == 'asc' ? 'desc' : 'asc'}`)
+        } else if (value == 'fullname') {
+            sort_data3(`&fullname=${search_data.fullname == 'asc' ? 'desc' : 'asc'}`)
+
+        }
+    }
     return (
         <div className="flow-root w-full shadow-2xl">
             <div className="overflow-x-auto">
@@ -121,6 +190,13 @@ export default function Table({
                                                     <div className="pl-3">
                                                         All
                                                     </div>
+                                                    <button
+                                                        onClick={() => sort_data('check')}
+                                                    >
+                                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                             )}
                                         </th>
@@ -132,7 +208,19 @@ export default function Table({
                                             scope="col"
                                             className="min-w-[8rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
                                         >
-                                            {column.title}
+                                            <span class="flex items-center">
+
+                                                {column.title}
+                                                {
+                                                    column.isSort && <button
+                                                        onClick={() => sort_data(column.key)}
+                                                    >
+                                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                                        </svg>
+                                                    </button>
+                                                }
+                                            </span>
                                         </th>
                                     ))}
                                 </tr>

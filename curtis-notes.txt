@@ -1,31 +1,50 @@
-support2@curtiscs.com
-CSupport2023!@
-how to upload sql file using mysql console in wamp server?
-ChatGPT said:
-ChatGPT
-To upload an SQL file using the MySQL console in WAMP server, follow these steps:
+PARTS VALIDATION
+INTERNALS
+PARTS REPLACEMENT
+PARTS REPLACEMENT SHIPPED  = REFUND SHIPPED
+PARTS REPLACEMENT NOT SHIPPED
+AVAILABILITY
 
-1. Locate Your SQL File
-Ensure the SQL file you want to upload is saved on your computer and accessible. For example, let's say your file is named mydata.sql and is stored in C:\sql_files.
 
-2. Open the MySQL Console in WAMP
-Start your WAMP server.
-Left-click the WAMP icon in the system tray.
-Navigate to MySQL > MySQL Console.
-3. Log In to MySQL
-When the console opens, you’ll be prompted to enter your MySQL root password. If you didn’t set a password, simply press Enter.
+mysql -u root -p curtis < "C:\Users\Manager-PC\Downloads\Curtis_live2024.sql"
 
-4. Select the Database
-Choose the database where you want to upload the SQL file:
 
-sql
-Copy code
-USE your_database_name;
-Replace your_database_name with the actual name of your database.
 
-5. Upload the SQL File
-Use the following command to upload the SQL file:
 
-sql
-Copy code
-SOURCE path\to\your\sqlfile.sql;
+add incomplete information provided in files.
+http://127.0.0.1:8000/agent/tickets/4#files or  http://127.0.0.1:8000/administrator/tickets/4#files
+
+
+public_html/service/public
+public_html/nv.curtiscss.com/public 
+
+User Roles
+1. Admin
+2. customer
+3. warehouse
+4. asc
+5. agent
+6. curtis
+
+Need to empty
+
+
+Admin
+scitdept@empireonegroup.com
+$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
+
+US Warehouse
+uswarehouse@gmail.com
+$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
+
+CA Warehouse
+cawarehouse@gmail.com
+$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
+
+
+
+
+
+
+
+

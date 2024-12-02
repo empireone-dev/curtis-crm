@@ -126,47 +126,56 @@ export default function CustomerTicketsTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
+            isSort:true
         },
         {
             title: "Move Ticket",
             dataIndex: "move_ticket",
             key: "move_ticket",
+            isSort:false
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
+            isSort:true
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
+            isSort:false
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
+            isSort:false
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
+            isSort:false
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
+            isSort:false
         },
 
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
+            isSort:false
         },
         {
             title: "Created At",
             dataIndex: "created_at",
             key: "created_at",
+            isSort:false
         },
     ];
 
@@ -194,9 +203,6 @@ export default function CustomerTicketsTableSection() {
             {isStatus && (
                 <TicketsSelectedExportSection selected={selectedRowKeys} />
             )}
-            <div className="py-3">
-                <TicketSortSection />
-            </div>
             {data && (
                 <>
                     <Table

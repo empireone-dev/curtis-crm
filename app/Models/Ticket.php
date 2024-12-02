@@ -51,7 +51,8 @@ class Ticket extends Model
         'validator_id',
         'is_reply',
         'isExported',
-        'isEscalated'
+        'isEscalated',
+        'where_status'
     ];
 
     public function direct_emails(): HasOne

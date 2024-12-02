@@ -736,6 +736,13 @@ class TicketController extends Controller
             });
         }
 
+        if ($request->status == 'PROCESSED TICKET') {
+            $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['where_status', '=', 'PROCESSED TICKET']]);
+        }
+        if ($request->status == 'PARTS PROCESSED TICKET') {
+            $query->orWhere([['call_type', '=', 'Parts'], ['where_status', '=', 'PARTS PROCESSED TICKET']]);
+        }
+
         if ($request->date_status == 'Date Created') {
             if ($request->start != 'null' && $request->end != 'null' && $request->start && $request->end) {
                 $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
@@ -778,7 +785,9 @@ class TicketController extends Controller
             $query->where('call_type', '=', $request->call_type);
         }
         if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
-            $query->where('status', '=', $request->status);
+            if ($request->status != 'PARTS PROCESSED TICKET' && $request->status != 'PROCESSED TICKET') {
+                $query->where('status', '=', $request->status);
+            }
         }
 
         if ($request->status == 'WEB FORM') {
@@ -786,6 +795,12 @@ class TicketController extends Controller
         }
         if ($request->status == 'AGENT FORM') {
             $query->orWhere('created_from', '=', $request->status);
+        }
+        if ($request->status == 'WARRANTY CLOSED') {
+            $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
+        }
+        if ($request->status == 'PARTS CLOSED') {
+            $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
         }
 
         // $query->orderBy('is_reply', 'desc')

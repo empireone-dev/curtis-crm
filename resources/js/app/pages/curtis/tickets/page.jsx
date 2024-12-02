@@ -8,6 +8,7 @@ import TicketFilterSection from "../../admin/tickets/_sections/ticket-filter-sec
 import { get_products_thunk } from "../../admin/ticket_form/redux/ticket-form-thunk";
 import TicketsExportFileSection from "../../admin/tickets/_sections/tickets-export-file-section";
 import TicketsImportFileSection from "../../admin/tickets/_sections/tickets-import-file-section";
+import TicketsSearchSection from "../../admin/tickets/_sections/tickets-search-section";
 
 export default function CustomerTicketsPage({ auth }) {
     const account = auth.user;
@@ -32,7 +33,8 @@ export default function CustomerTicketsPage({ auth }) {
                     <TicketsImportFileSection />
                     <TicketsExportFileSection />
                 </div>
-                <div className="my-3 flex ">
+                <div className="my-3 flex gap-3">
+                    <TicketsSearchSection />
                     <TicketFilterSection />
                 </div>
                 <CustomerTicketsTableSection />

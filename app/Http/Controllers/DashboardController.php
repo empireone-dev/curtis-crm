@@ -47,7 +47,7 @@ class DashboardController extends Controller
 
         $warranty_process_ticket = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['status', '=', 'PROCESSED TICKET'],
+            ['where_status', '=', 'PROCESSED TICKET'],
             ['user_id', '=', $userid],
         ])->count();
 
@@ -66,7 +66,7 @@ class DashboardController extends Controller
         $parts_process_ticket = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            ['status', '=', 'PARTS PROCESSED TICKET']
+            ['where_status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
 
 
@@ -171,7 +171,7 @@ class DashboardController extends Controller
             ['user_id', '=', $userid],
         ])->count();
 
-        
+
         $rma_request = Ticket::where('status', '=', 'RMA REQUEST')->count();
 
         return response()->json([
@@ -203,7 +203,7 @@ class DashboardController extends Controller
             'web_form' => $web_form,
             'warranty_process_ticket' => $warranty_process_ticket,
             'parts_process_ticket' => $parts_process_ticket,
-            'rma_request'=>$rma_request
+            'rma_request' => $rma_request
         ], 200);
     }
     public function asc_dashboard($id)
@@ -327,12 +327,12 @@ class DashboardController extends Controller
 
         $warranty_process_ticket = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['status', '=', 'PROCESSED TICKET'],
+            ['where_status', '=', 'PROCESSED TICKET'],
         ])->count();
 
         $parts_process_ticket = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['status', '=', 'PARTS PROCESSED TICKET'],
+            ['where_status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
 
         $warehouse_ca = Ticket::where([
@@ -392,8 +392,8 @@ class DashboardController extends Controller
             'web_form' => $web_form,
             'warranty_process_ticket' => $warranty_process_ticket,
             'parts_process_ticket' => $parts_process_ticket,
-            'rma_request'=>$rma_request,
-            'rma_issued'=>$rma_issued
+            'rma_request' => $rma_request,
+            'rma_issued' => $rma_issued
         ], 200);
     }
 
