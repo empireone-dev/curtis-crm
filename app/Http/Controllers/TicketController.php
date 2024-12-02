@@ -738,9 +738,11 @@ class TicketController extends Controller
 
         if ($request->status == 'PROCESSED TICKET') {
             $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['where_status', '=', 'PROCESSED TICKET']]);
+            $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'PROCESSED TICKET']]);
         }
         if ($request->status == 'PARTS PROCESSED TICKET') {
             $query->orWhere([['call_type', '=', 'Parts'], ['where_status', '=', 'PARTS PROCESSED TICKET']]);
+            $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS PROCESSED TICKET']]);
         }
 
         if ($request->date_status == 'Date Created') {
