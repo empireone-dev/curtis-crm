@@ -361,7 +361,7 @@ export default function TicketsSelectedExportSection({ selected }) {
 
         const export_data = [
             sortedColumn.map((res) => res.name),
-            ...sortedData.map((res) => res.map((res) => res.name)),
+            ...sortedData.map((res) => res.map((res) => res?.name)),
         ];
         const ws = XLSX.utils.aoa_to_sheet(export_data);
 
@@ -397,8 +397,8 @@ export default function TicketsSelectedExportSection({ selected }) {
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
         XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
-        const updated_export = (await get_status()).map((res) => res.id);
-        update_ticket_export_status_service(updated_export, value);
+        // const updated_export = (await get_status())?.map((res) => res.id);
+        // update_ticket_export_status_service(updated_export, value);
         if (window.location.hash == "") {
             store.dispatch(get_tickets_thunk(window.location.search));
         } else {
