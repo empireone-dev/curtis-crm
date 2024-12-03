@@ -100,7 +100,7 @@ export default function TicketsSelectedExportSection({ selected }) {
         // setIsModalOpen(false);
         setLoading(true);
         console.log(window.location.search);
-        const exist = await verify_tickets_service(window.location.search);
+        const exist = await verify_tickets_service(window.location.search+'&export='+value);
 
         async function get_status(params) {
             return exist.data;
@@ -248,7 +248,7 @@ export default function TicketsSelectedExportSection({ selected }) {
         //     },
         // }));
 
-        const result = (await get_status()).map((res) => {
+        const result = (await get_status())?.map((res) => {
             const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
             // console.log('combinedLogs',combinedLogs)
             const latestCreatedAt = combinedLogs.reduce((latest, log) => {
