@@ -355,7 +355,9 @@ class TicketController extends Controller
             $query->where('call_type', '=', $request->call_type);
         }
         if ($request->status  && ($request->status != 'null' && $request->status != 'undefined')) {
-            $query->where('status', '=', $request->status);
+            if ($request->status != 'PARTS PROCESSED TICKET' && $request->status != 'PROCESSED TICKET') {
+                $query->where('status', '=', $request->status);
+            }
         }
 
         if ($request->status == 'WEB FORM') {
@@ -365,9 +367,7 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
-
-
-
+     
         // $query->orderBy('created_at', 'desc');
 
         if (!$request->checked && !$request->ticket_id && !$request->fullname) {
@@ -423,7 +423,7 @@ class TicketController extends Controller
                         'explanation' => $value->explanation,
                         'user_name' => $value->user->name, // Ticket handler's name
                     ];
-                    Mail::to($value['email'])->send(new ShippedProcess($emailData));
+                    // Mail::to($value['email'])->send(new ShippedProcess($emailData));
                 }
             }
         }

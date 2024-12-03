@@ -117,7 +117,7 @@ export default function TicketsSelectedExportSection({ selected }) {
             async function get_column(params) {
                 return columns.filter((item) => selectedColumn.includes(item.id));
             }
-            const result = (await get_status()).map((res) => {
+            const result = (await get_status())?.map((res) => {
                 const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
                 // console.log('combinedLogs',combinedLogs)
                 const latestCreatedAt = combinedLogs.reduce((latest, log) => {
@@ -230,7 +230,7 @@ export default function TicketsSelectedExportSection({ selected }) {
     
             const export_data = [
                 sortedColumn.map((res) => res.name),
-                ...sortedData.map((res) => res.map((res) => res.name)),
+                ...sortedData.map((res) => res.map((res) => res?.name)),
             ];
             console.log('export_data',export_data)
             const ws = XLSX.utils.aoa_to_sheet(export_data);

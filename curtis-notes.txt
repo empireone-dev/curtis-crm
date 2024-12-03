@@ -9,6 +9,13 @@ AVAILABILITY
 mysql -u root -p curtis < "C:\Users\Manager-PC\Downloads\Curtis_live2024.sql"
 
 
+UPDATE `tickets`
+SET `where_status` = 'PROCESSED TICKET'
+WHERE `status` = 'PROCESSED TICKET' AND `call_type` = 'CF-Warranty Claim';
+
+UPDATE `tickets`
+SET `where_status` = 'PARTS PROCESSED TICKET'
+WHERE `status` = 'PARTS PROCESSED TICKET' AND `call_type` = 'Parts';
 
 
 add incomplete information provided in files.
