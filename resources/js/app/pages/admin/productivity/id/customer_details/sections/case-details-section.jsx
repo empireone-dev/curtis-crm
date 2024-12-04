@@ -5,20 +5,25 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function CaseDetailsSection() {
-    const { users } = useSelector((state) => state.users);
+    const { users, customer_details_logs } = useSelector((state) => state.users);
     const { user } = useSelector((state) => state.app);
     const [data, setData] = useState({});
     const ticket_id = window.location.pathname.split("/")[3];
+
     const [loading, setLoading] = useState(false);
     async function re_assign(params) {
         setLoading(true);
         const newData = {
             ...data,
             ticket_id: ticket_id,
+            transfer_from: user.id,
+            transfer_to: data.user_id,
+            message: '',
         };
         await transfer_ticket_cases_service(newData);
         router.visit("/agent/open_cases?page=1");
     }
+    console.log('users', customer_details_logs)
     return (
         <div>
             <div class="text-gray-600 mb-2">
@@ -43,7 +48,7 @@ export default function CaseDetailsSection() {
                         Select
                     </option>
                     {users.map((res, i) => {
-                        if (res.agent_type === user.agent_type) {
+                        if (res.id !== user.id && res.agent_type === 'Warranty' && res.role_id != 1) {
                             return (
                                 <option key={res.id} value={res.id}>
                                     {res.name}
@@ -52,6 +57,17 @@ export default function CaseDetailsSection() {
                         }
                         return null; // Ensure there's a return value in all branches
                     })}
+                    {users.map((res, i) => {
+                        if (res.id !== user.id && res.agent_type === 'Parts' && res.role_id != 1) {
+                            return (
+                                <option key={res.id} value={res.id}>
+                                    {res.name}
+                                </option>
+                            );
+                        }
+                        return null; // Ensure there's a return value in all branches
+                    })}
+
                 </select>
             </div>
             <Button
