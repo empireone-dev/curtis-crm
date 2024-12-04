@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ShippedProcess;
 use App\Models\Activity;
 use App\Models\AgentNote;
+use App\Models\CustomerDetailsLog;
 use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
 use App\Models\EmailTemplate;
@@ -367,7 +368,7 @@ class TicketController extends Controller
             $query->orWhere('created_from', '=', $request->status);
         }
 
-     
+
         // $query->orderBy('created_at', 'desc');
 
         if (!$request->checked && !$request->ticket_id && !$request->fullname) {
@@ -443,9 +444,15 @@ class TicketController extends Controller
     }
     public function transfer_ticket_cases(Request $request)
     {
-        $ticket = Ticket::where('id', $request->ticket_id);
+        $ticket = Ticket::where('ticket_id', $request->ticket_id);
         $ticket->update([
             'user_id' => $request->user_id
+        ]);
+
+        CustomerDetailsLog::create([
+            'ticket_id' => $request->ticket_id,
+            'transfer_from' => $request->transfer_from,
+            'transfer_to' => $request->transfer_to,
         ]);
     }
     public function forward_ticket(Request $request)

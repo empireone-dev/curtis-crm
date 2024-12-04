@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CasesLog;
+use App\Models\CustomerDetailsLog;
 use App\Models\DirectEmail;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -20,9 +21,11 @@ class CasesLogController extends Controller
     {
         $ticket = Ticket::where('ticket_id', $id)->first();
         $logs = CasesLog::where('ticket_id', $ticket->id)->with('user')->orderBy('id', 'desc')->get();
+        $customer_logs = CustomerDetailsLog::where('ticket_id', $id)->with(['transfer_from', 'transfer_to'])->get();
         return response()->json([
             'status' => 'success',
-            'data' => $logs
+            'data' => $logs,
+            'customer_logs' => $customer_logs,
         ], 200);
     }
     public function store(Request $request)

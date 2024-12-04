@@ -10,10 +10,14 @@ export default function CaseDetailsSection() {
     const [data, setData] = useState({});
     const ticket_id = window.location.pathname.split("/")[3];
     const [loading, setLoading] = useState(false);
+
     async function re_assign(params) {
         setLoading(true);
         const newData = {
             ...data,
+            transfer_from: user.id,
+            transfer_to: data.user_id,
+            message: '',
             ticket_id: ticket_id,
         };
         await transfer_ticket_cases_service(newData);
@@ -43,7 +47,7 @@ export default function CaseDetailsSection() {
                         Select
                     </option>
                     {users.map((res, i) => {
-                        if (res.agent_type === user.agent_type) {
+                        if (res.id !== user.id && res.agent_type === user.agent_type) {
                             return (
                                 <option key={res.id} value={res.id}>
                                     {res.name}

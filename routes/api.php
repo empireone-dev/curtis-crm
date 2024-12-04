@@ -25,6 +25,7 @@ use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\CustomerDetailsLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_ra
 
 Route::resource('replacement', ReplacementController::class);
 Route::resource('product_registration', ProductRegistrationController::class);
+Route::resource('customer_details_logs', CustomerDetailsLog::class);
+
 Route::get('/get_product_registration/{serial}', [ProductRegistrationController::class, 'get_product_registration']);
 
 Route::post('/parts_replacement_shipped', [ReplacementController::class, 'parts_replacement_shipped']);
@@ -118,6 +121,8 @@ Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request'
 Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
 Route::post('change_isExport', [TicketController::class, 'change_isExport']);
 Route::post('change_check_all', [TicketController::class, 'change_check_all']);
+
+
 
 
 

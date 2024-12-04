@@ -1,0 +1,1 @@
+import{G as r}from"./page-D61j4Mpd.js";import{N as m}from"./motion-D_MmBoqk.js";import{N as s}from"./compact-item-sRF0SFaB.js";const f=o=>{const{space:l,form:n,children:t}=o;if(t==null)return null;let e=t;return n&&(e=r.createElement(m,{override:!0,status:!0},e)),l&&(e=r.createElement(s,null,e)),e};export{f as C};

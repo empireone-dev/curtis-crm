@@ -9,7 +9,7 @@ import { get_tickets_by_ticket_details_id} from "@/app/services/tickets-service"
 import { router } from "@inertiajs/react";
 import { get_caseslog_by_ticket_id_service } from "@/app/services/cases-log-service";
 import { useDispatch, useSelector } from "react-redux";
-import { set_cases_log } from "../../admin/users/redux/users-slice";
+import { set_cases_log, setCustomerDetailsLogs } from "../../admin/users/redux/users-slice";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import store from "@/app/store/store";
 import { get_users_thunk } from "../../admin/users/redux/users.thunk";
@@ -29,6 +29,9 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
                 window.location.pathname.split("/")[3]
             );
             dispatch(set_cases_log(res.data));
+            console.log('resres',res.customer_logs)
+            dispatch(setCustomerDetailsLogs(res.customer_logs));
+            // setCustomerDetailsLogs
             setData(ress);
         }
         fetch_data();
