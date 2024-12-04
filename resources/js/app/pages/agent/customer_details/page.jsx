@@ -29,7 +29,6 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
                 window.location.pathname.split("/")[3]
             );
             dispatch(set_cases_log(res.data));
-            console.log('resres',res.customer_logs)
             dispatch(setCustomerDetailsLogs(res.customer_logs));
             // setCustomerDetailsLogs
             setData(ress);

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import store from "@/app/store/store";
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
 import { get_users_thunk } from "../../../users/redux/users.thunk";
-import { set_cases_log } from "../../../users/redux/users-slice";
+import { set_cases_log, setCustomerDetailsLogs } from "../../../users/redux/users-slice";
 
 export default function UserCasesCustomerDetailsPage({ auth }) {
     const [data, setData] = useState({});
@@ -29,6 +29,7 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
                 window.location.pathname.split("/")[4]
             );
             dispatch(set_cases_log(res.data));
+            dispatch(setCustomerDetailsLogs(res.customer_logs));
             setData(ress);
         }
         fetch_data();
