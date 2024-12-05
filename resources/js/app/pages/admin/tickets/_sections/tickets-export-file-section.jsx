@@ -102,7 +102,7 @@ export default function TicketsExportFileSection() {
                             res.replacement?.tracking ?? "N/A",//28
                             res.refund?.ship_date ?? "N/A",//29
                             res.refund?.cheque_no ?? "N/A",// //30
-                            res.refund?.cheque_amount ?? "N/A",// 31
+                            res.refund?.cheque_amount ?? "0",// 31
                             (res.country == "CA" ? "CAD" : "USD") ?? "N/A",// 32
                             res.receipt?.store ?? "N/A",//33
                             "No",//

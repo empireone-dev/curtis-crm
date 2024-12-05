@@ -147,7 +147,7 @@ export default function TicketsSelectedExportSection({ selected }) {
                     },
                     5: {
                         id: 5,
-                        name: res.decision_making?.after_discount ?? "N/A",
+                        name: res.decision_making?.after_discount ?? "0",
                     },
                     6: {
                         id: 6,
@@ -155,11 +155,11 @@ export default function TicketsSelectedExportSection({ selected }) {
                     },
                     7: {
                         id: 7,
-                        name: res.decision_making?.cost_of_unit ?? "N/A",
+                        name: res.decision_making?.cost_of_unit ?? "0",
                     },
                     8: {
                         id: 8,
-                        name: res.decision_making?.shipping_cost ?? "N/A",
+                        name: res.decision_making?.shipping_cost ?? "0",
                     },
                     9: {
                         id: 9,
