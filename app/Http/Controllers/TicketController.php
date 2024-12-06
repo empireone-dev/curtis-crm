@@ -261,6 +261,33 @@ class TicketController extends Controller
             'export_name' => $request->search
         ]);
     }
+    public function export_ticket_files(Request $request)
+    {
+        $query = Ticket::where('status', '=', $request->status)->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity', 'validate', 'agent_notes', 'cases_logs'])->get();
+        $data = $query;
+        // foreach ($data as $result) {
+        //     if (isset($result->activity->user_id)) {
+        //         $activity = Activity::where('user_id', '=', $result->activity->user_id)
+        //             ->where('type', '=', 'WARRANTY VALIDATION')
+        //             ->first();
+
+        //         if (isset($activity->user_id)) {
+        //             $object = json_decode($activity->message);
+        //             $user = User::where('id', $result->activity->user_id)->first();
+        //             if ($user['agent_type'] == 'Warranty') {
+        //                 $result['validator'] = $user;
+        //             } else {
+        //                 $user2 = User::where('emp_id', $object->emp_id)->first();
+        //                 $result['validator'] = $user2;
+        //             }
+        //         }
+        //     }
+        // }
+        return response()->json([
+            'data' => $data ?? [],
+            'result' => 'exist'
+        ], 200);
+    }
     public function verify_tickets(Request $request)
     {
         $export = ExportFile::where('export_name', $request->searchData)->first();
@@ -295,7 +322,12 @@ class TicketController extends Controller
                     } else if ($searchQuery == 'TECH CLOSED') {
                         $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                     } else {
-                        $query->orWhere([[$column, '=',  $searchQuery]]);
+                        // $query->orWhere([[$column, '=',  $searchQuery]]);
+                        if (strlen($searchQuery) < 13 && is_numeric($searchQuery)) {
+                            $query->orWhere('id', '=', $searchQuery);
+                        } else {
+                            $query->orWhere([[$column, '=',  $searchQuery]]);
+                        }
                     }
                 }
                 $query->orWhere('ticket_id', '=', $searchQuery);
@@ -412,22 +444,22 @@ class TicketController extends Controller
             }
         }
 
-        if ($request->export == 'checked' || $request->export == 'uncheck') {
-            if ($request->status == 'REPLACEMENT' || $request->status == 'REFUND' || $searchQuery == 'REPLACEMENT' || $searchQuery == 'REFUND') {
-                foreach ($data as $key => $value) {
-                    $emailData = [
-                        'ticket_id' => $value->ticket_id,
-                        'fname' => $value->fname,
-                        'lname' => $value->lname,
-                        'email' => $value->email, // Customer's email
-                        'issue' => $value->issue,
-                        'explanation' => $value->explanation,
-                        'user_name' => $value->user->name, // Ticket handler's name
-                    ];
-                    // Mail::to($value['email'])->send(new ShippedProcess($emailData));
-                }
-            }
-        }
+        // if ($request->export == 'checked' || $request->export == 'uncheck') {
+        //     if ($request->status == 'REPLACEMENT' || $request->status == 'REFUND' || $searchQuery == 'REPLACEMENT' || $searchQuery == 'REFUND') {
+        //         foreach ($data as $key => $value) {
+        //             $emailData = [
+        //                 'ticket_id' => $value->ticket_id,
+        //                 'fname' => $value->fname,
+        //                 'lname' => $value->lname,
+        //                 'email' => $value->email, // Customer's email
+        //                 'issue' => $value->issue,
+        //                 'explanation' => $value->explanation,
+        //                 'user_name' => $value->user->name, // Ticket handler's name
+        //             ];
+        //             // Mail::to($value['email'])->send(new ShippedProcess($emailData));
+        //         }
+        //     }
+        // }
 
 
         if ($export) {

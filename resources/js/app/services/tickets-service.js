@@ -127,6 +127,15 @@ export async function verify_tickets_service(data) {
     }
 }
 
+export async function export_ticket_files(data) {
+    try {
+        const res = await axios.get(`/api/export_ticket_files${data}`);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function transfer_ticket_cases_service(data) {
     try {
         const res = await axios.put("/api/transfer_ticket_cases", data);

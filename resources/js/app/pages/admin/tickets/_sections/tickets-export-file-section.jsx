@@ -8,6 +8,7 @@ import { FileDoneOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import {
     create_verify_tickets_service,
+    export_ticket_files,
     get_tickets_service,
     verify_tickets_service,
 } from "@/app/services/tickets-service";
@@ -39,10 +40,10 @@ export default function TicketsExportFileSection() {
     async function export_ticket() {
         setLoading(true);
         try {
-            const res = await store.dispatch(
-                get_tickets_thunk(window.location.search)
-            );
-            const exist = await verify_tickets_service(window.location.search);
+            // const res = await store.dispatch(
+            //     get_tickets_thunk(window.location.search)
+            // );
+            const exist = await export_ticket_files(window.location.search);
 
             async function export_files() {
                 const allTickets = exist.data;
@@ -193,19 +194,22 @@ export default function TicketsExportFileSection() {
                 XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
             }
             if (exist.result == "unexist") {
-                export_files();
-                create_verify_tickets_service(window.location.search);
+                await export_files();
+                setLoading(false);
+                // create_verify_tickets_service(window.location.search);
             } else {
-                if (
-                    window.confirm(
-                        "The File is already downloaded. Press ok to continue to download"
-                    )
-                ) {
-                    export_files();
-                    setLoading(false);
-                } else {
-                    setLoading(false);
-                }
+                // if (
+                //     window.confirm(
+                //         "The File is already downloaded. Press ok to continue to download"
+                //     )
+                // ) {
+                //     export_files();
+                //     setLoading(false);
+                // } else {
+                //     setLoading(false);
+                // }
+               await export_files();
+                setLoading(false);
             }
         } catch (error) {
             setLoading(false);

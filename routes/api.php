@@ -107,6 +107,8 @@ Route::get('save_direct_emails_parts', [TicketController::class, 'save_direct_em
 Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_cases']);
 Route::post('create_verify_tickets', [TicketController::class, 'create_verify_tickets']);
 Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
+Route::get('export_ticket_files', [TicketController::class, 'export_ticket_files']);
+
 Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
 Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
 Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
