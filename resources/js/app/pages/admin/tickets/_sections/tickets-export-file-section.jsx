@@ -19,6 +19,7 @@ export default function TicketsExportFileSection() {
     const { tickets } = useSelector((state) => state.tickets);
     const queryParams = new URLSearchParams(window.location.search);
     const searchQuery = queryParams.get("search");
+    const statusQuery = queryParams.get("status");
 
     async function fetchTickets(page) {
         try {
@@ -36,7 +37,7 @@ export default function TicketsExportFileSection() {
         );
         return formatted;
     };
-    
+
     async function export_ticket() {
         setLoading(true);
         try {
@@ -48,7 +49,7 @@ export default function TicketsExportFileSection() {
             async function export_files() {
                 const allTickets = exist.data;
                 setLoading(false);
-                console.log('allTickets',allTickets)
+                console.log("allTickets", allTickets);
                 let newData = [];
                 let data = [];
                 if (searchQuery == "RESOURCE") {
@@ -64,53 +65,65 @@ export default function TicketsExportFileSection() {
                     ];
                 } else {
                     newData = allTickets.map((res) => {
-                        const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
+                        const combinedLogs = [
+                            ...res?.agent_notes,
+                            ...res?.cases_logs,
+                        ];
                         // console.log('combinedLogs',combinedLogs)
-                        const latestCreatedAt = combinedLogs.reduce((latest, log) => {
-                            return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
-                        }, combinedLogs[0]?.created_at);
-                        console.log('resss',res)
-                        const validation_date = res
+                        const latestCreatedAt = combinedLogs.reduce(
+                            (latest, log) => {
+                                return moment(log.created_at).isAfter(
+                                    moment(latest)
+                                )
+                                    ? log.created_at
+                                    : latest;
+                            },
+                            combinedLogs[0]?.created_at
+                        );
+                        console.log("resss", res);
+                        const validation_date = res;
                         return [
-                            moment(res.created_at).format("L"),//0
-                            moment(latestCreatedAt).format("L"),//1
-                            res.ticket_id ?? "N/A",//2
-                            res.fname ?? "N/A",//3
-                            res.lname ?? "N/A",//4
-                            formatPhone(res.phone),//5
-                            res.email ?? "N/A",//6  
-                            res.serial_number ?? "N/A",//7
-                            res.item_number ?? "N/A",//8
-                            res.unit ?? "N/A",//9
-                            res.class ?? "N/A",// //10
-                            res.brand ?? "N/A",//11
-                            res.call_type ?? "N/A",//12
-                            res.purchase_date ?? "N/A",//13
-                            res.zip_code ?? "N/A",//14
-                            res.country ?? "N/A",//15
-                            res.state ?? "N/A",//16
-                            res.city ?? "N/A",//17
-                            res.address ?? "N/A",//18
-                            res.issue ?? "N/A",//19
-                            res.status ?? "N/A",// //20
-                            res.reason_to_close ?? "N/A",//21
-                            res.receipt?.discount ?? "N/A",//22
-                            res.decision_making?.after_discount ?? "N/A",//23
-                            res.receipt?.retailers_price ?? "N/A",//24
-                            res.decision_making?.cost_of_unit ?? "0",// //price cost 25
-                            res.decision_making?.shipping_cost ?? "0",// //ship cost 26
-                            res.replacement?.ship_date ?? "N/A",//27
-                            res.replacement?.tracking ?? "N/A",//28
-                            res.refund?.ship_date ?? "N/A",//29
-                            res.refund?.cheque_no ?? "N/A",// //30
-                            res.refund?.cheque_amount ?? "0",// 31
-                            (res.country == "CA" ? "CAD" : "USD") ?? "N/A",// 32
-                            res.receipt?.store ?? "N/A",//33
-                            "No",//
-                            (res.isUploading == "true" ? "YES" : "NO") ?? "NO",//
-                            res.status ?? "N/A",//
-                            res?.validate?.created_at?moment(res?.validate?.created_at).format("L"): 'N/A',// //7
-                        ]
+                            moment(res.created_at).format("L"), //0
+                            moment(latestCreatedAt).format("L"), //1
+                            res.ticket_id ?? "N/A", //2
+                            res.fname ?? "N/A", //3
+                            res.lname ?? "N/A", //4
+                            formatPhone(res.phone), //5
+                            res.email ?? "N/A", //6
+                            res.serial_number ?? "N/A", //7
+                            res.item_number ?? "N/A", //8
+                            res.unit ?? "N/A", //9
+                            res.class ?? "N/A", // //10
+                            res.brand ?? "N/A", //11
+                            res.call_type ?? "N/A", //12
+                            res.purchase_date ?? "N/A", //13
+                            res.zip_code ?? "N/A", //14
+                            res.country ?? "N/A", //15
+                            res.state ?? "N/A", //16
+                            res.city ?? "N/A", //17
+                            res.address ?? "N/A", //18
+                            res.issue ?? "N/A", //19
+                            res.status ?? "N/A", // //20
+                            res.reason_to_close ?? "N/A", //21
+                            res.receipt?.discount ?? "N/A", //22
+                            res.decision_making?.after_discount ?? "N/A", //23
+                            res.receipt?.retailers_price ?? "N/A", //24
+                            res.decision_making?.cost_of_unit ?? "0", // //price cost 25
+                            res.decision_making?.shipping_cost ?? "0", // //ship cost 26
+                            res.replacement?.ship_date ?? "N/A", //27
+                            res.replacement?.tracking ?? "N/A", //28
+                            res.refund?.ship_date ?? "N/A", //29
+                            res.refund?.cheque_no ?? "N/A", // //30
+                            res.refund?.cheque_amount ?? "0", // 31
+                            (res.country == "CA" ? "CAD" : "USD") ?? "N/A", // 32
+                            res.receipt?.store ?? "N/A", //33
+                            "No", //
+                            (res.isUploading == "true" ? "YES" : "NO") ?? "NO", //
+                            res.status ?? "N/A", //
+                            res?.validate?.created_at
+                                ? moment(res?.validate?.created_at).format("L")
+                                : "N/A", // //7
+                        ];
                     });
 
                     data = [
@@ -157,7 +170,7 @@ export default function TicketsExportFileSection() {
                         ...newData,
                     ];
                 }
-                console.log('export_data',data)
+                console.log("export_data", data);
                 const ws = XLSX.utils.aoa_to_sheet(data);
 
                 // Define the style for the header row
@@ -208,7 +221,7 @@ export default function TicketsExportFileSection() {
                 // } else {
                 //     setLoading(false);
                 // }
-               await export_files();
+                await export_files();
                 setLoading(false);
             }
         } catch (error) {
@@ -217,14 +230,18 @@ export default function TicketsExportFileSection() {
     }
 
     return (
-        <Button
-            loading={loading}
-            onClick={export_ticket}
-            type="primary"
-            size="large"
-            icon={<FileDoneOutlined />}
-        >
-            Export File
-        </Button>
+        <>
+            {statusQuery && (
+                <Button
+                    loading={loading}
+                    onClick={export_ticket}
+                    type="primary"
+                    size="large"
+                    icon={<FileDoneOutlined />}
+                >
+                    Export File
+                </Button>
+            )}
+        </>
     );
 }

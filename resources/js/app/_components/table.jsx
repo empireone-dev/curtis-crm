@@ -27,7 +27,6 @@ export default function Table({
     const [isLoading, setIsLoading] = useState(false);
     const { user } = useSelector((store) => store.app);
 
-
     async function toggleAll(e) {
         setIsLoading(true);
         const all = data.map((res) => res.id);
@@ -53,8 +52,6 @@ export default function Table({
         setChecked(checkedValue.length == 10);
     }, []);
 
-
-
     const queryParams = new URLSearchParams(window.location.search);
     const callType = queryParams.get("call_type");
     const model = queryParams.get("model");
@@ -64,77 +61,90 @@ export default function Table({
     const fullname = queryParams.get("fullname");
     const checkeds = queryParams.get("checked");
     const ticket_id = queryParams.get("ticket_id");
+    const date_status = queryParams.get("date_status");
 
     const search_data = {
         call_type: callType ?? null,
         start: start == "null" ? null : start ?? null,
-        end: end == "null" ? null : start ?? null,
+        end: end == "null" ? null : end ?? null,
         model: model?.split(",") ?? null,
         status: status ?? null,
         fullname: fullname ?? null,
         checked: checkeds ?? null,
         ticket_id: ticket_id ?? null,
+        date_status: date_status ?? null,
     };
 
     function sort_data1(value) {
         router.visit(
             window.location.pathname +
-            "?page=1&" +
-            "start=" +
-            search_data.start +
-            "&end=" +
-            search_data.end +
-            "&call_type=" +
-            search_data.call_type +
-            "&model=" +
-            search_data.model +
-            "&status=" +
-            search_data.status +
-            value
+                "?page=1&" +
+                "start=" +
+                search_data.start +
+                "&end=" +
+                search_data.end +
+                "&call_type=" +
+                search_data.call_type +
+                "&model=" +
+                search_data.model +
+                "&status=" +
+                search_data.status +
+                value +
+                "&date_status=" +
+                search_data.date_status
         );
     }
     function sort_data2(value) {
         router.visit(
             window.location.pathname +
-            "?page=1&" +
-            "start=" +
-            search_data.start +
-            "&end=" +
-            search_data.end +
-            "&call_type=" +
-            search_data.call_type +
-            "&model=" +
-            search_data.model +
-            "&status=" +
-            search_data.status +
-            value
+                "?page=1&" +
+                "start=" +
+                search_data.start +
+                "&end=" +
+                search_data.end +
+                "&call_type=" +
+                search_data.call_type +
+                "&model=" +
+                search_data.model +
+                "&status=" +
+                search_data.status +
+                value+
+                "&date_status=" +
+                search_data.date_status
         );
     }
     function sort_data3(value) {
         router.visit(
             window.location.pathname +
-            "?page=1&" +
-            "start=" +
-            search_data.start +
-            "&end=" +
-            search_data.end +
-            "&call_type=" +
-            search_data.call_type +
-            "&model=" +
-            search_data.model +
-            "&status=" +
-            search_data.status +
-            value
+                "?page=1&" +
+                "start=" +
+                search_data.start +
+                "&end=" +
+                search_data.end +
+                "&call_type=" +
+                search_data.call_type +
+                "&model=" +
+                search_data.model +
+                "&status=" +
+                search_data.status +
+                value+
+                "&date_status=" +
+                search_data.date_status
         );
     }
     function sort_data(value) {
-        if (value == 'check') {
-            sort_data1(`&checked=${search_data.checked == 'asc' ? 'desc' : 'asc'}`)
-        } else if (value == 'ticket_id') {
-            sort_data2(`&ticket_id=${search_data.ticket_id == 'asc' ? 'desc' : 'asc'}`)
-        } else if (value == 'fullname') {
-            sort_data3(`&fullname=${search_data.fullname == 'asc' ? 'desc' : 'asc'}`)
-
+        if (value == "check") {
+            sort_data1(
+                `&checked=${search_data.checked == "asc" ? "desc" : "asc"}`
+            );
+        } else if (value == "ticket_id") {
+            sort_data2(
+                `&ticket_id=${search_data.ticket_id == "asc" ? "desc" : "asc"}`
+            );
+        } else if (value == "fullname") {
+            sort_data3(
+                `&fullname=${search_data.fullname == "asc" ? "desc" : "asc"}`
+            );
         }
     }
     return (
@@ -191,10 +201,26 @@ export default function Table({
                                                         All
                                                     </div>
                                                     <button
-                                                        onClick={() => sort_data('check')}
+                                                        onClick={() =>
+                                                            sort_data("check")
+                                                        }
                                                     >
-                                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                                        <svg
+                                                            class="w-4 h-4 ms-1"
+                                                            aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="m8 15 4 4 4-4m0-6-4-4-4 4"
+                                                            />
                                                         </svg>
                                                     </button>
                                                 </div>
@@ -209,17 +235,34 @@ export default function Table({
                                             className="min-w-[8rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
                                         >
                                             <span class="flex items-center">
-
                                                 {column.title}
-                                                {
-                                                    column.isSort && <button
-                                                        onClick={() => sort_data(column.key)}
+                                                {column.isSort && (
+                                                    <button
+                                                        onClick={() =>
+                                                            sort_data(
+                                                                column.key
+                                                            )
+                                                        }
                                                     >
-                                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                                        <svg
+                                                            class="w-4 h-4 ms-1"
+                                                            aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="m8 15 4 4 4-4m0-6-4-4-4 4"
+                                                            />
                                                         </svg>
                                                     </button>
-                                                }
+                                                )}
                                             </span>
                                         </th>
                                     ))}

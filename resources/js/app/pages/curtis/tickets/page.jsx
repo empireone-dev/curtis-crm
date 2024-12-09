@@ -14,14 +14,15 @@ export default function CustomerTicketsPage({ auth }) {
     const account = auth.user;
     const { search } = useSelector((state) => state.tickets);
     useEffect(() => {
-        if (window.location.hash == "") {
-            store.dispatch(get_tickets_thunk(window.location.search));
-        } else {
-            store.dispatch(
-                get_tickets_thunk("?search=" + window.location.hash.slice(1))
-            );
-        }
-    }, [search.page ?? ""]);
+        // if (window.location.hash == "") {
+        //     store.dispatch(get_tickets_thunk(window.location.search));
+        // } else {
+        //     store.dispatch(
+        //         get_tickets_thunk("?search=" + window.location.hash.slice(1))
+        //     );
+        // }
+        store.dispatch(get_tickets_thunk(window.location.search));
+    }, []);
 
     useEffect(() => {
         store.dispatch(get_products_thunk());
