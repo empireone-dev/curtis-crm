@@ -442,24 +442,24 @@ class TicketController extends Controller
         $data = $query->get();
 
 
-        foreach ($data as $result) {
-            if (isset($result->activity->user_id)) {
-                $activity = Activity::where('user_id', '=', $result->activity->user_id)
-                    ->where('type', '=', 'WARRANTY VALIDATION')
-                    ->first();
+        // foreach ($data as $result) {
+        //     if (isset($result->activity->user_id)) {
+        //         $activity = Activity::where('user_id', '=', $result->activity->user_id)
+        //             ->where('type', '=', 'WARRANTY VALIDATION')
+        //             ->first();
 
-                if (isset($activity->user_id)) {
-                    $object = json_decode($activity->message);
-                    $user = User::where('id', $result->activity->user_id)->first();
-                    if ($user['agent_type'] == 'Warranty') {
-                        $result['validator'] = $user;
-                    } else {
-                        $user2 = User::where('emp_id', $object->emp_id)->first();
-                        $result['validator'] = $user2;
-                    }
-                }
-            }
-        }
+        //         if (isset($activity->user_id)) {
+        //             $object = json_decode($activity->message);
+        //             $user = User::where('id', $result->activity->user_id)->first();
+        //             if ($user['agent_type'] == 'Warranty') {
+        //                 $result['validator'] = $user;
+        //             } else {
+        //                 $user2 = User::where('emp_id', $object->emp_id)->first();
+        //                 $result['validator'] = $user2;
+        //             }
+        //         }
+        //     }
+        // }
 
         // if ($request->export == 'checked' || $request->export == 'uncheck') {
         //     if ($request->status == 'REPLACEMENT' || $request->status == 'REFUND' || $searchQuery == 'REPLACEMENT' || $searchQuery == 'REFUND') {
