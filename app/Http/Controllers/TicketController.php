@@ -288,7 +288,7 @@ class TicketController extends Controller
                 $query->orWhere('created_from', '=', $request->status);
             } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
-            }else{
+            } else {
                 $query->where('status', '=', $request->status);
             }
         }
@@ -368,44 +368,6 @@ class TicketController extends Controller
 
         // Start the query builder
         $query = Ticket::query()->with(['refund', 'repair', 'receipt', 'replacement', 'decision_making', 'user', 'activity', 'validate', 'agent_notes', 'cases_logs']);
-        if ($searchQuery) {
-            // Dynamically add where conditions for each column
-            $query->where(function ($query) use ($columns, $searchQuery) {
-                foreach ($columns as $column) {
-                    if ($searchQuery == 'WARRANTY VALIDATION') {
-                        $query->orWhere($column, '=',  $searchQuery);
-                    } else if ($searchQuery == 'OPEN WARRANTY') {
-                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'WARRANTY VALIDATION']]);
-                    } else if ($searchQuery == 'REFUND') {
-                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REFUND']]);
-                    } else if ($searchQuery == 'REPLACEMENT') {
-                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'REPLACEMENT']]);
-                    } else if ($searchQuery == 'OPEN PARTS') {
-                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'PARTS VALIDATION']]);
-                    } else if ($searchQuery == 'OPEN TECH') {
-                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'TECH VALIDATION']]);
-                    } else if ($searchQuery == 'WARRANTY CLOSED') {
-                        $query->orWhere([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
-                    } else if ($searchQuery == 'PARTS CLOSED') {
-                        $query->orWhere([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
-                    } else if ($searchQuery == 'TECH CLOSED') {
-                        $query->orWhere([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
-                    } else {
-                        // $query->orWhere([[$column, '=',  $searchQuery]]);
-                        if (strlen($searchQuery) < 13 && is_numeric($searchQuery)) {
-                            $query->orWhere('id', '=', $searchQuery);
-                        } else {
-                            $query->orWhere([[$column, '=',  $searchQuery]]);
-                        }
-                    }
-                }
-                $query->orWhere('ticket_id', '=', $searchQuery);
-                $query->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
-            });
-        }
-
-    
-
         if ($request->status == 'WARRANTY CLOSED') {
             $query->where('status', '=', 'CLOSED');
             $query->where('call_type', '=', 'CF-Warranty Claim');
@@ -417,17 +379,13 @@ class TicketController extends Controller
                 $query->orWhere('created_from', '=', $request->status);
             } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
-            }else{
+            } else {
                 $query->where('status', '=', $request->status);
             }
         }
 
         // Filter by export status
-        if ($request->export === 'checked') {
-            $query->orWhere('isExported', '=', 'true');
-        } elseif ($request->export === 'uncheck') {
-            $query->orWhereNull('isExported');
-        }
+    
 
         // Sorting by export status
         if (in_array($request->checked, ['asc', 'desc'])) {
@@ -476,9 +434,49 @@ class TicketController extends Controller
                 $query->whereBetween('created_at', [$startTime, $endTime]);
             }
         }
-
-        // Execute query
+        if ($request->export === 'checked') {
+            $query->where('isExported', '=', 'true');
+        }if ($request->export === 'uncheck') {
+            $query->whereNull('isExported');
+        }
         $data = $query->get();
+
+
+        foreach ($data as $result) {
+            if (isset($result->activity->user_id)) {
+                $activity = Activity::where('user_id', '=', $result->activity->user_id)
+                    ->where('type', '=', 'WARRANTY VALIDATION')
+                    ->first();
+
+                if (isset($activity->user_id)) {
+                    $object = json_decode($activity->message);
+                    $user = User::where('id', $result->activity->user_id)->first();
+                    if ($user['agent_type'] == 'Warranty') {
+                        $result['validator'] = $user;
+                    } else {
+                        $user2 = User::where('emp_id', $object->emp_id)->first();
+                        $result['validator'] = $user2;
+                    }
+                }
+            }
+        }
+
+        // if ($request->export == 'checked' || $request->export == 'uncheck') {
+        //     if ($request->status == 'REPLACEMENT' || $request->status == 'REFUND' || $searchQuery == 'REPLACEMENT' || $searchQuery == 'REFUND') {
+        //         foreach ($data as $key => $value) {
+        //             $emailData = [
+        //                 'ticket_id' => $value->ticket_id,
+        //                 'fname' => $value->fname,
+        //                 'lname' => $value->lname,
+        //                 'email' => $value->email, // Customer's email
+        //                 'issue' => $value->issue,
+        //                 'explanation' => $value->explanation,
+        //                 'user_name' => $value->user->name, // Ticket handler's name
+        //             ];
+        //             // Mail::to($value['email'])->send(new ShippedProcess($emailData));
+        //         }
+        //     }
+        // }
 
 
         if ($export) {
@@ -790,17 +788,17 @@ class TicketController extends Controller
         }
 
         // Status filters
-        // if ($status && $status !== 'null' && $status !== 'undefined') {
-        //     $query->where(function ($q) use ($status) {
-        //         if ($status === 'WARRANTY CLOSED') {
-        //             $q->where([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
-        //         } elseif ($status === 'PARTS CLOSED') {
-        //             $q->where([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
-        //         } elseif (!in_array($status, ['PROCESSED TICKET', 'PARTS PROCESSED TICKET'])) {
-        //             $q->where('status', $status);
-        //         }
-        //     });
-        // }
+        if ($status && $status !== 'null' && $status !== 'undefined') {
+            $query->where(function ($q) use ($status) {
+                if ($status === 'WARRANTY CLOSED') {
+                    $q->where([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
+                } elseif ($status === 'PARTS CLOSED') {
+                    $q->where([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
+                } elseif (!in_array($status, ['PROCESSED TICKET', 'PARTS PROCESSED TICKET'])) {
+                    $q->where('status', $status);
+                }
+            });
+        }
 
         if ($request->status == 'WARRANTY CLOSED') {
             $query->where('status', '=', 'CLOSED');
@@ -813,7 +811,7 @@ class TicketController extends Controller
                 $query->orWhere('created_from', '=', $request->status);
             } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
-            }else{
+            } else {
                 $query->where('status', '=', $request->status);
             }
         }

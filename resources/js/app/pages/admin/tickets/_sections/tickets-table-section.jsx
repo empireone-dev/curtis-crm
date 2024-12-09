@@ -220,9 +220,9 @@ export default function TicketTableSection() {
             )}
             {data && (
                 <>
-                    <div className="py-3">
+                    {/* <div className="py-3">
                         <TicketSortSection />
-                    </div>
+                    </div> */}
                     <Table
                         isStatus={isStatus}
                         columns={columns}

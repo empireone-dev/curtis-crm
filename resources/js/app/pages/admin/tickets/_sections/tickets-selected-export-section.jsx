@@ -337,7 +337,7 @@ export default function TicketsSelectedExportSection({ selected }) {
                     name: res?.purchase_date ?? "N/A",
                 },
                 20: {
-                    id: 0,
+                    id: 20,
                     name: res?.validate?.created_at
                         ? moment(res?.validate?.created_at).format("L")
                         : "N/A",
