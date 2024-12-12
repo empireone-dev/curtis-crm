@@ -778,12 +778,11 @@ class TicketController extends Controller
         // Dynamic search
         if ($searchQuery) {
             $query->where(function ($q) use ($searchQuery) {
-                $q->where('ticket_id', 'LIKE', "%{$searchQuery}%")
-                    ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
-
-                if (is_numeric($searchQuery) && strlen($searchQuery) < 13) {
-                    $q->orWhere('id', $searchQuery);
-                }
+                // $q->where('ticket_id', 'LIKE', "%{$searchQuery}%")
+                //     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
+                $q->where('id', '=', $searchQuery)
+                ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
+                $q->orWhere('ticket_id', $searchQuery);
             });
         }
 
