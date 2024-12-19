@@ -23,6 +23,7 @@ import Skeleton from "@/app/layouts/components/skeleton";
 import { message, Select as SelectData } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
 import axios from "axios";
+import SearchAddressSection from "./search-address-section";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 export default function EditTicketFormSection() {
@@ -416,15 +417,26 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                     </div>
-
+                    <div  className=" px-3 ">
+                        <SearchAddressSection data={form}/>
+                    </div>
                     <div className=" md:flex mb-3">
-                        <div className="md:w-1/4 px-3 mb-3">
+                        <div className="flex gap-3 md:w-1/4 px-3 mb-3">
+                        <Input
+                                onChange={formHandler}
+                                name="street"
+                                required={false}
+                                value={form?.street}
+                                label="Street"
+                                type="text"
+                                errorMessage=""
+                            />
                             <Input
                                 onChange={formHandler}
                                 name="zip_code"
                                 required={false}
                                 value={form?.zip_code}
-                                label="Zip Code / Postal Code"
+                                label="Zip/Postal Code"
                                 type="text"
                                 errorMessage="Zip Code is required"
                             />

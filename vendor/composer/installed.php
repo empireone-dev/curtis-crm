@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c4ce62beb0c14662e8b4b00b6165b27307761a5a',
+        'reference' => 'ed40ef9ff43bc21b4fa1d460a5f35b37891dc030',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -481,7 +481,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c4ce62beb0c14662e8b4b00b6165b27307761a5a',
+            'reference' => 'ed40ef9ff43bc21b4fa1d460a5f35b37891dc030',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1177,6 +1177,15 @@
             'install_path' => __DIR__ . '/../sebastian/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'smartystreets/phpsdk' => array(
+            'pretty_version' => '5.2.1',
+            'version' => '5.2.1.0',
+            'reference' => '2edfd8c9609c6f92cd78864e5ea6223ebdb668f4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../smartystreets/phpsdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'spatie/backtrace' => array(
             'pretty_version' => '1.5.3',
