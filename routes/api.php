@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/address_lookup', [AddressLookupController::class, 'address_lookup']);
 
+
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 Route::post('/get_specific_item/{gid}', [GoogleSheetsController::class, 'get_specific_item']);
 

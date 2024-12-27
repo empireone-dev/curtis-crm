@@ -11,19 +11,26 @@ export default function SearchAddressSection({ data }) {
     const [address, setAddress] = useState([]);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    console.log('datadata',data)
     useEffect(() => {
         if (open) {
             async function search_address(params) {
                 setLoading(true);
                 try {
                     const resp = await address_lookup_service({
-                        street: data?.street ?? "",
-                        zip_code: data?.zip_code ?? "",
+                        q: `${data?.address}` + ` ${data?.zip_code}`
                     });
-                    setAddress(resp.results);
+                    setAddress(resp?.items?.map(res=>({
+                        zip_code:res.address.postalCode,
+                        country:res.address.countryName == 'United States'?'US':'CA',
+                        state:res.address.stateCode,
+                        city:res.address.city,
+                        address:res.address.label,
+                     })));
                     setLoading(false);
                 } catch (error) {
-                    setLoading(false);
+                    setOpen(false);
+                    message.error("Location not found!");
                 }
             }
             search_address();
@@ -31,22 +38,24 @@ export default function SearchAddressSection({ data }) {
     }, [open]);
 
     function change_address(value) {
+      
         dispatch(
             setForm({
                 ...data,
-                country: value.country_abbr,
-                state: value.state_abbr,
-                address: value.street,
-                zip_code: value.zipcode,
+                country: value.country,
+                state: value.state,
+                address: value.address,
+                zip_code: value.zip_code,
                 city: value.city,
             })
         );
+        setOpen(false);
     }
 
     function open_modal(params) {
-        if (!data.street) {
-            message.error("Street is required");
-        }else if (!data.zip_code) {
+        if (!data.address) {
+            message.error("Address is required");
+        } else if (!data.zip_code) {
             message.error("Zipcode is required");
         } else {
             setOpen(true);
@@ -92,12 +101,6 @@ export default function SearchAddressSection({ data }) {
                                     scope="col"
                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                 >
-                                    Street
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                >
                                     Address
                                 </th>
                                 <th
@@ -109,10 +112,17 @@ export default function SearchAddressSection({ data }) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            {address.map((res, i) => (
+                            {address?.length == 0 && (
+                                <tr>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                        Address Not found!
+                                    </td>
+                                </tr>
+                            )}
+                            {address?.map((res, i) => (
                                 <tr key={i}>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                        {res.zipcode}
+                                        {res.zip_code}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {res.country}
@@ -123,9 +133,7 @@ export default function SearchAddressSection({ data }) {
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {res.city}
                                     </td>
-                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {res.street}
-                                    </td>
+                                   
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {res.address}
                                     </td>

@@ -74,44 +74,44 @@ export default function EditTicketFormSection() {
         }
     }, []);
 
-    useEffect(() => {
-        const { country, state, zip_code } = ticket;
+    // useEffect(() => {
+    //     const { country, state, zip_code } = ticket;
 
-        const getAddress = async () => {
-            if (country && state && zip_code) {
-                try {
-                    console.log("Fetching address suggestions with:", {
-                        country,
-                        state,
-                        zip_code,
-                    });
+    //     const getAddress = async () => {
+    //         if (country && state && zip_code) {
+    //             try {
+    //                 console.log("Fetching address suggestions with:", {
+    //                     country,
+    //                     state,
+    //                     zip_code,
+    //                 });
 
-                    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=CO&types=(cities)&components=country:us&key=AIzaSyDaV8ZAZSCsml9di5U6ouSQHQ_mj9jq5Jo`;
-                    console.log("Request URL:", url);
-                    const res = await axios.get(url);
+    //                 const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=CO&types=(cities)&components=country:us&key=AIzaSyDaV8ZAZSCsml9di5U6ouSQHQ_mj9jq5Jo`;
+    //                 console.log("Request URL:", url);
+    //                 const res = await axios.get(url);
 
-                    const data = await res.json();
-                    console.log("API Response:", data);
+    //                 const data = await res.json();
+    //                 console.log("API Response:", data);
 
-                    if (data.error_message) {
-                        console.error("API Error:", data.error_message);
-                    } else {
-                        console.log("City suggestions:", data.predictions);
-                    }
-                } catch (error) {
-                    console.error("Fetch error:", error);
-                }
-            } else {
-                console.log("Missing required fields:", {
-                    country,
-                    state,
-                    zip_code,
-                });
-            }
-        };
+    //                 if (data.error_message) {
+    //                     console.error("API Error:", data.error_message);
+    //                 } else {
+    //                     console.log("City suggestions:", data.predictions);
+    //                 }
+    //             } catch (error) {
+    //                 console.error("Fetch error:", error);
+    //             }
+    //         } else {
+    //             console.log("Missing required fields:", {
+    //                 country,
+    //                 state,
+    //                 zip_code,
+    //             });
+    //         }
+    //     };
 
-        getAddress();
-    }, [ticket]);
+    //     getAddress();
+    // }, [ticket]);
 
     useEffect(() => {
         async function get_ticket(params) {
@@ -417,12 +417,12 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                     </div>
-                    <div  className=" px-3 ">
-                        <SearchAddressSection data={form}/>
+                    <div className=" px-3 ">
+                        <SearchAddressSection data={form} />
                     </div>
                     <div className=" md:flex mb-3">
                         <div className="flex gap-3 md:w-1/4 px-3 mb-3">
-                        <Input
+                            {/* <Input
                                 onChange={formHandler}
                                 name="street"
                                 required={false}
@@ -430,7 +430,7 @@ export default function EditTicketFormSection() {
                                 label="Street"
                                 type="text"
                                 errorMessage=""
-                            />
+                            /> */}
                             <Input
                                 onChange={formHandler}
                                 name="zip_code"
