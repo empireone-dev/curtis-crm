@@ -26,6 +26,7 @@ use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UspsController;
 use App\Models\CustomerDetailsLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,8 +47,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/usps/zipcode-lookup', [UspsController::class, 'zipCodeLookup']);
 Route::post('/address_lookup', [AddressLookupController::class, 'address_lookup']);
-
+Route::post('/validate-address', [USPSController::class, 'validateAddress']);
 
 Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 Route::post('/get_specific_item/{gid}', [GoogleSheetsController::class, 'get_specific_item']);
