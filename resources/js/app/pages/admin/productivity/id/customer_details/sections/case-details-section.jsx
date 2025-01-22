@@ -28,7 +28,6 @@ export default function CaseDetailsSection({datas}) {
         }
       
     }
-    console.log('users', datas.receipt.user_id)
     return (
         <div>
             <div class="text-gray-600 mb-2">
