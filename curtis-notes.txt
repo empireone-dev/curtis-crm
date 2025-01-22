@@ -12,8 +12,8 @@ PARTS REPLACEMENT SHIPPED  = REFUND SHIPPED
 PARTS REPLACEMENT NOT SHIPPED
 AVAILABILITY
 
-
-mysql -u root -p curtis < "C:\Users\Manager-PC\Downloads\Curtis_live2024.sql"
+offline =source C:\\Users\\marlo\\Downloads\\Curtis_live2024.sql;
+online = mysql -u root -p curtis < "C:\Users\marlo\Downloads\Curtis_live2024.sql"
 
 
 UPDATE `tickets`

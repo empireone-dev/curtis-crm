@@ -67,7 +67,9 @@ export default function UserCasesCustomerDetailsPage({ auth }) {
                                     account={auth.user}
                                     datas={data}
                                 />
-                                <CaseDetailsSection />
+                                <CaseDetailsSection
+                                  datas={data}
+                                />
                             </div>
                         </div>
                     </div>

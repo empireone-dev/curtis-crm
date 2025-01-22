@@ -4,11 +4,11 @@ import { Button } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function CaseDetailsSection() {
+export default function CaseDetailsSection({datas}) {
     const { users, customer_details_logs } = useSelector((state) => state.users);
     const { user } = useSelector((state) => state.app);
     const [data, setData] = useState({});
-    const ticket_id = window.location.pathname.split("/")[3];
+    const ticket_id = window.location.pathname.split("/")[4];
 
     const [loading, setLoading] = useState(false);
     async function re_assign(params) {
@@ -21,9 +21,14 @@ export default function CaseDetailsSection() {
             message: '',
         };
         await transfer_ticket_cases_service(newData);
-        router.visit("/agent/open_cases?page=1");
+        if (datas?.receipt?.user_id) {
+            router.visit(`/administrator/productivity/${datas.receipt.user_id}?page=1&search=over_due`);
+        }else{
+            router.visit('/administrator/productivity')
+        }
+      
     }
-    console.log('users', customer_details_logs)
+    console.log('users', datas.receipt.user_id)
     return (
         <div>
             <div class="text-gray-600 mb-2">
