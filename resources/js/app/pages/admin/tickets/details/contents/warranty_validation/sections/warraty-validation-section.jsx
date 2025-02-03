@@ -66,13 +66,13 @@ export default function WarratyValidationSection() {
         if (!form.store) {
             message.error("Store Name is required!");
         }
-        if (!form.retailers_price || form.retailers_price == "0") {
+        else if (!form.retailers_price || form.retailers_price == "0") {
             message.error("Retailers is required!");
         }
-        if (!form.total_price || form.total_price == "0") {
+        else if (!form.total_price || form.total_price == "0") {
             message.error("Total Price is required!");
         }
-        if (!form.notes) {
+        else if (!form.notes) {
             message.error("Notes is required!");
         } else {
             setIsLoading1(true);
@@ -92,15 +92,28 @@ export default function WarratyValidationSection() {
     }
 
     async function markInValidHandler() {
-        setIsLoading1(true);
-        try {
-            await close_ticket_service(ticket, form.reason, {
-                ...ticket,
-                ...user,
-            });
-            router.visit(routing("files"));
-        } catch (error) {
-            setIsLoading1(false);
+      
+        if (!form.store) {
+            message.error("Store Name is required!");
+        }else if (!form.retailers_price || form.retailers_price == "0") {
+            message.error("Retailers is required!");
+        }
+        else if (!form.total_price || form.total_price == "0") {
+            message.error("Total Price is required!");
+        }
+        else if (!form.notes) {
+            message.error("Notes is required!");
+        } else {
+            setIsLoading1(true);
+            try {
+                await close_ticket_service(ticket, form.reason, {
+                    ...ticket,
+                    ...user,
+                });
+                router.visit(routing("files"));
+            } catch (error) {
+                setIsLoading1(false);
+            }
         }
     }
 

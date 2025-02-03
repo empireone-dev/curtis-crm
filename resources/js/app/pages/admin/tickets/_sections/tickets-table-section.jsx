@@ -21,7 +21,7 @@ export default function TicketTableSection() {
         if (date_status == "Date Created") {
             filterDate = moment(res.created_at).format("LL");
         } else if (date_status == "Validation Date") {
-            filterDate = moment(res.validate.created_at).format("LL");
+            filterDate = moment(res?.validate?.created_at).format("LL");
         } else if (date_status == "Last Updated") {
             const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
             const latestCreatedAt = combinedLogs.reduce((latest, log) => {
