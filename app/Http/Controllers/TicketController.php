@@ -385,7 +385,7 @@ class TicketController extends Controller
         }
 
         // Filter by export status
-    
+
 
         // Sorting by export status
         if (in_array($request->checked, ['asc', 'desc'])) {
@@ -436,7 +436,8 @@ class TicketController extends Controller
         }
         if ($request->export === 'checked') {
             $query->where('isExported', '=', 'true');
-        }if ($request->export === 'uncheck') {
+        }
+        if ($request->export === 'uncheck') {
             $query->whereNull('isExported');
         }
         $data = $query->get();
@@ -781,7 +782,7 @@ class TicketController extends Controller
                 // $q->where('ticket_id', 'LIKE', "%{$searchQuery}%")
                 //     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
                 $q->where('id', '=', $searchQuery)
-                ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
+                    ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
                 $q->orWhere('ticket_id', $searchQuery);
             });
         }
@@ -1470,7 +1471,7 @@ class TicketController extends Controller
 
     public function queueing($call_type)
     {
-        $type = '';
+        $type = 'Warranty';
         switch ($call_type) {
             case 'Parts':
                 $type = 'Parts';
@@ -1482,11 +1483,13 @@ class TicketController extends Controller
                 $type = 'Tech';
                 break;
             default:
-                // Handle default case if needed
+                $type = 'Warranty';
         }
 
-        $users = User::where('role_id', 5)
-            ->where('agent_type', 'like', "%$type%")
+        $users = User::where([
+            ['role_id', '=', 5],
+            ['agent_type', '=', $type]
+        ])
             ->get();
         $userWithSmallestCount = null;
         $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
