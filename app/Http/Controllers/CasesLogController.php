@@ -35,6 +35,7 @@ class CasesLogController extends Controller
         Ticket::where('id',$request->ticket_id)->update([
             'is_reply'=>null
         ]);
+        
         $direct = DirectEmail::where('id', $request->ticket_id)->first();
         if ($direct) {
             $direct->update([

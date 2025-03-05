@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AddressLookupController;
 use App\Http\Controllers\AgentNoteController;
+use App\Http\Controllers\AppScriptController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CasesLogController;
 use App\Http\Controllers\CommonIssueController;
@@ -130,6 +131,10 @@ Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request'
 Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
 Route::post('change_isExport', [TicketController::class, 'change_isExport']);
 Route::post('change_check_all', [TicketController::class, 'change_check_all']);
+
+
+Route::get('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
+Route::get('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
 
 
 
