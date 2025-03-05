@@ -25,7 +25,7 @@ class AppScriptController extends Controller
         foreach ($datas as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
-                if ($value['from'] == 'support2@curtiscs.com') {
+                if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
