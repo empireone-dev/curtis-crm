@@ -133,8 +133,8 @@ Route::post('change_isExport', [TicketController::class, 'change_isExport']);
 Route::post('change_check_all', [TicketController::class, 'change_check_all']);
 
 
-Route::get('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
-Route::get('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
+Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
+Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
 
 
 
