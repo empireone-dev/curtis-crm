@@ -13,7 +13,6 @@ class AppScriptController extends Controller
     public function get_warranty_unread_email(Request $request)
     {
 
-       
         foreach ($request->all() as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
@@ -62,16 +61,8 @@ class AppScriptController extends Controller
 
     public function get_parts_unread_email(Request $request)
     {
-        $datas = $request->validate([
-            '*.ticket_id' => 'required',
-            '*.from' => 'required',
-            '*.to' => 'required',
-            '*.date' => 'required',
-            '*.threadId' => 'required',
-            '*.count' => 'required',
-        ]);
-
-        foreach ($datas as $value) {
+       
+        foreach ($request->all() as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
