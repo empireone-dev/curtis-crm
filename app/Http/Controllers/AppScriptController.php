@@ -13,6 +13,7 @@ class AppScriptController extends Controller
     public function get_warranty_unread_email(Request $request)
     {
 
+       
         foreach ($request->all() as $value) {
             $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
             if ($ticket) {
@@ -56,7 +57,7 @@ class AppScriptController extends Controller
             }
         }
 
-        return response()->json(['message' => $request->all()], 200);
+        return response()->json(['message' => 'Emails processed successfully'], 200);
     }
 
     public function get_parts_unread_email(Request $request)
