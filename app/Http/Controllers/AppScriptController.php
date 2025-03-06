@@ -14,12 +14,12 @@ class AppScriptController extends Controller
     {
 
         $datas = $request->validate([
-            'ticket_id' => 'required',
-            'from' => 'required',
-            'to' => 'required',
-            'date' => 'required',
-            'threadId' => 'required',
-            'count' => 'required',
+            '*.ticket_id' => 'required',
+            '*.from' => 'required',
+            '*.to' => 'required',
+            '*.date' => 'required',
+            '*.threadId' => 'required',
+            '*.count' => 'required',
         ]);
 
         foreach ($datas as $value) {
