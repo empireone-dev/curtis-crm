@@ -85,7 +85,8 @@ class AppScriptController extends Controller
                         'is_reply' => 'true'
                     ]);
                 }
-            } else {
+            } 
+            if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Parts"]
