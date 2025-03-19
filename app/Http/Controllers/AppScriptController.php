@@ -19,7 +19,7 @@ class AppScriptController extends Controller
         preg_match_all($regex, $sentence, $matches);
 
         // Return the matched sequences (if any)
-        return $matches[0] ?? [];
+        return $matches[0] ?? '';
     }
 
     public function get_warranty_unread_email(Request $request)
@@ -27,7 +27,7 @@ class AppScriptController extends Controller
 
         foreach ($request->all() as $value) {
 
-            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
+            $ticket = Ticket::where('ticket_id', '=', $this->find14CharSequences($value['ticket_id']))->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
@@ -41,12 +41,12 @@ class AppScriptController extends Controller
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
                 ])->get();
-                
+
                 // Get user with the smallest DirectEmail count
                 $userWithSmallestCount = $users->sortBy(fn($user) => DirectEmail::where('user_id', $user->id)->count())->first();
-                
+
                 $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                
+
                 if ($de) {
                     $de->update(['isHide' => true]);
                 } else {
@@ -63,7 +63,6 @@ class AppScriptController extends Controller
                         // Log::warning('No available users found for DirectEmail assignment.');
                     }
                 }
-                
             }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
