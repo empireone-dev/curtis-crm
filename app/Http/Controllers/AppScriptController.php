@@ -59,11 +59,11 @@ class AppScriptController extends Controller
                     ]);
                 } else {
                     DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
+                        'email' => $value['from']??'',
+                        'threadId' => $value['threadId']??'',
+                        'user_id' => $userWithSmallestCount->id??'',
                         'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s')??'',
                     ]);
                 }
             }
