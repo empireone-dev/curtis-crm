@@ -36,15 +36,16 @@ class AppScriptController extends Controller
                         'is_reply' => 'true'
                     ]);
                 }
-            } else {
+            }
+            if (!$ticket) {
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
                 ])->get();
-                
+
                 // Get user with the smallest DirectEmail count
                 $userWithSmallestCount = $users->sortBy(fn($user) => DirectEmail::where('user_id', $user->id)->count())->first();
-                
+
                 // $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
                 DirectEmail::create([
                     'email' => $value['from'],
@@ -69,7 +70,7 @@ class AppScriptController extends Controller
                 //         // Log::warning('No available users found for DirectEmail assignment.');
                 //     }
                 // }
-                
+
             }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
