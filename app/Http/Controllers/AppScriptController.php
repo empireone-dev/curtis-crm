@@ -10,11 +10,24 @@ use Illuminate\Http\Request;
 
 class AppScriptController extends Controller
 {
+    public function find14CharSequences($sentence)
+    {
+        // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
+        $regex = '/\b(CF|PS|TS)\w{12}\b/';
+
+        // Perform the match and return the results
+        preg_match_all($regex, $sentence, $matches);
+
+        // Return the matched sequences (if any)
+        return $matches[0] ?? [];
+    }
+
     public function get_warranty_unread_email(Request $request)
     {
 
         foreach ($request->all() as $value) {
-            $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
+
+            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
@@ -55,17 +68,16 @@ class AppScriptController extends Controller
                 }
             }
         }
-
         return response()->json(['message' => 'Emails processed successfully'], 200);
     }
 
     public function get_parts_unread_email(Request $request)
     {
-       
+
         foreach ($request->all() as $value) {
-            $ticket = Ticket::where('ticket_id', $value['ticket_id'])->first();
+            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
             if ($ticket) {
-                if ($value['from'] != 'support2@curtiscs.com') {
+                if ($value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
