@@ -25,17 +25,9 @@ class AppScriptController extends Controller
     public function get_warranty_unread_email(Request $request)
     {
 
-        
         foreach ($request->all() as $value) {
 
             $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
-            DirectEmail::create([
-                'email' => $value['from'],
-                'threadId' => $value['threadId'],
-                'user_id' => 0,
-                'count' => $value['count'] ?? 0,
-                'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-            ]);
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
