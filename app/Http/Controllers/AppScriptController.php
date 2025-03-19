@@ -56,10 +56,8 @@ class AppScriptController extends Controller
                             'user_id' => $userWithSmallestCount->id,
                             'count' => $value['count'] ?? 0,
                             'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                            'isHide' => 'false'
                         ]);
-                    } else {
-                        // Handle the case where no suitable user is found
-                        // Log::warning('No available users found for DirectEmail assignment.');
                     }
                 }
             }
@@ -108,6 +106,7 @@ class AppScriptController extends Controller
                         'user_id' => $userWithSmallestCount->id,
                         'count' => $value['count'] ?? 0,
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'isHide' => 'false'
                     ]);
                 }
             }
