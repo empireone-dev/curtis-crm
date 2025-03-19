@@ -41,31 +41,29 @@ class AppScriptController extends Controller
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
                 ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
-
-                foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
-
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
+                
+                // Get user with the smallest DirectEmail count
+                $userWithSmallestCount = $users->sortBy(fn($user) => DirectEmail::where('user_id', $user->id)->count())->first();
+                
+                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                
+                if ($de) {
+                    $de->update(['isHide' => true]);
+                } else {
+                    if ($userWithSmallestCount) { // Ensure a user is found
+                        DirectEmail::create([
+                            'email' => $value['from'],
+                            'threadId' => $value['threadId'],
+                            'user_id' => $userWithSmallestCount->id,
+                            'count' => $value['count'] ?? 0,
+                            'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        ]);
+                    } else {
+                        // Handle the case where no suitable user is found
+                        // Log::warning('No available users found for DirectEmail assignment.');
                     }
                 }
-                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                if ($de) {
-                    $de->update([
-                        'isHide' => 'true'
-                    ]);
-                } else {
-                    DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    ]);
-                }
+                
             }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
