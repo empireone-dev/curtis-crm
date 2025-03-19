@@ -26,37 +26,7 @@ class AppScriptController extends Controller
     {
 
         foreach ($request->all() as $key => $value) {
-
             $ticket = Ticket::where('ticket_id', '=', $this->find14CharSequences($value['ticket_id']))->first();
-
-            if ($key == 2) {
-                $users = User::where([
-                    ['role_id', '=', 5],
-                    ['agent_type', '=', "Warranty"]
-                ])->get();
-
-                // Get user with the smallest DirectEmail count
-                $userWithSmallestCount = $users->sortBy(fn($user) => DirectEmail::where('user_id', $user->id)->count())->first();
-
-                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-
-                if ($de) {
-                    $de->update(['isHide' => true]);
-                } else {
-                    if ($userWithSmallestCount) { // Ensure a user is found
-                        DirectEmail::create([
-                            'email' => $value['from'],
-                            'threadId' => $value['threadId'],
-                            'user_id' => $userWithSmallestCount->id,
-                            'count' => $value['count'] ?? 0,
-                            'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        ]);
-                    } else {
-                        // Handle the case where no suitable user is found
-                        // Log::warning('No available users found for DirectEmail assignment.');
-                    }
-                }
-            }
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
