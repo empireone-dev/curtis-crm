@@ -1,62 +1,100 @@
-What are the purposes and needs of Google Analytics in Lead Docket?
-What are the features of the CRM you currently use?
-What features are lacking in the CRM you use?
+Sign Up
+-- 1st page--
+First name
+last name'
+-- 2nd page--
+birthdate
+gender
+mobile number
+email
+
+-- 3rd page--
+username
+password
+confirm password
+OR
+SIGNUP with Google 
 
 
-PARTS VALIDATION
-INTERNALS
-PARTS REPLACEMENT
-PARTS REPLACEMENT SHIPPED  = REFUND SHIPPED
-PARTS REPLACEMENT NOT SHIPPED
-AVAILABILITY
+Complete Profile
+-- 1st page --
+first name
+middle name
+last name
+age
+gender
+contact #
+email
 
-offline =source C:\\Users\\marlo\\Downloads\\Curtis_live2024.sql;
-online = mysql -u root -p curtis < "C:\Users\marlo\Downloads\Curtis_live2024.sql"
+-- 2nd page --
+region
+province
+city
+barangay
+address
 
+-- 3rd page --
+username 
+password 
+confirm password
 
-UPDATE `tickets`
-SET `where_status` = 'PROCESSED TICKET'
-WHERE `status` = 'PROCESSED TICKET' AND `call_type` = 'CF-Warranty Claim';
+Applicant Portal   --sidebar
+- Job Posting 
+    - Validation Need to complete the profile in order to apply Job
+    - Add button to apply
+- Application status
+    - Tracking Application status
+    - on Review for interview for final interview failed.
+- Profile
+     guide https://empireone-hris.com/online_application
+    - add budge for employee and applicant.
+    - progress bar for completion of profile
+    - complete profile details
+    - Emergency Contact Information
+    - add Government ID Information
+    - personal information
+    - file upload for resume
+    - Bio
+    - profile
+    - working experience
+    - skills
+- Assessments
+   - vocabulary exam
+   - ratings for english level
+   - add test
 
-UPDATE `tickets`
-SET `where_status` = 'PARTS PROCESSED TICKET'
-WHERE `status` = 'PARTS PROCESSED TICKET' AND `call_type` = 'Parts';
-
-
-add incomplete information provided in files.
-http://127.0.0.1:8000/agent/tickets/4#files or  http://127.0.0.1:8000/administrator/tickets/4#files
-
-
-public_html/service/public
-public_html/nv.curtiscss.com/public 
-
-User Roles
-1. Admin
-2. customer
-3. warehouse
-4. asc
-5. agent
-6. curtis
-
-Need to empty
-
-
-Admin
-scitdept@empireonegroup.com
-$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
-
-US Warehouse
-uswarehouse@gmail.com
-$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
-
-CA Warehouse
-cawarehouse@gmail.com
-$2y$12$HeF1QCHk6AdOthx5O/XUM.61iyAZHI1ECEq.ff7YqSNgR.cmQ0zKa
-
+Employee Portal
 
 
+- Home Page --sidebar
+    - Memo
+    - Announcement
+    - Events
 
+- Engagement Page --sidebar
+    - Profile
+    - Task
+    - Rewards
+    - Contest
+    - Videos
+- Finance Page --sidebar
+    - Apply Loan
+    - Loan Status
+- Accounting Page --sidebar
+    Kasocious same features.
+- ticketing Page --sidebar
 
+    - Create tickets
+    - My ticket
 
+- HMO Page --sidebar
+    - Apply Reimbursement
+    - status of Reimbursement
+    - requirments
+    
 
+- IR Page
+   - Google Form Link
 
+- Suggestions  Page
+    Text area rate
