@@ -37,7 +37,7 @@ class AppScriptController extends Controller
                     ]);
                 }
             }
-            if (!$ticket) {
+            if ($ticket) {
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
