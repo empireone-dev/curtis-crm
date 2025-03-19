@@ -36,7 +36,8 @@ class AppScriptController extends Controller
                         'is_reply' => 'true'
                     ]);
                 }
-            } else {
+            }
+            if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
@@ -52,27 +53,20 @@ class AppScriptController extends Controller
                         $userWithSmallestCount = $user;
                     }
                 }
-                DirectEmail::create([
-                    'email' => $value['from'],
-                    'threadId' => $value['threadId'],
-                    'user_id' => $userWithSmallestCount->id,
-                    'count' => $value['count'] ?? 0,
-                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                ]);
-                // $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                // if ($de) {
-                //     $de->update([
-                //         'isHide' => 'true'
-                //     ]);
-                // } else {
-                //     DirectEmail::create([
-                //         'email' => $value['from'],
-                //         'threadId' => $value['threadId'],
-                //         'user_id' => $userWithSmallestCount->id,
-                //         'count' => $value['count'] ?? 0,
-                //         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                //     ]);
-                // }
+                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                if ($de) {
+                    $de->update([
+                        'isHide' => 'true'
+                    ]);
+                } else {
+                    DirectEmail::create([
+                        'email' => $value['from'],
+                        'threadId' => $value['threadId'],
+                        'user_id' => $userWithSmallestCount->id,
+                        'count' => $value['count'] ?? 0,
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                    ]);
+                }
             }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
