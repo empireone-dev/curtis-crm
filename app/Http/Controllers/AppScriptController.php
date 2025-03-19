@@ -37,43 +37,42 @@ class AppScriptController extends Controller
                     ]);
                 }
             } else {
-                $users = User::where([
-                    ['role_id', '=', 5],
-                    ['agent_type', '=', "Warranty"]
-                ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+                // $users = User::where([
+                //     ['role_id', '=', 5],
+                //     ['agent_type', '=', "Warranty"]
+                // ])->get();
+                // $userWithSmallestCount = null;
+                // $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
-                foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
+                // foreach ($users as $user) {
+                //     $count = DirectEmail::where('user_id', $user->id)->count();
 
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
-                    }
-                }
-                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                if ($de) {
-                    $de->update([
-                        'isHide' => 'true'
-                    ]);
-
-                    DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    ]);
-                } else {
-                    DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    ]);
-                }
+                //     if ($count < $smallestCount) {
+                //         $smallestCount = $count;
+                //         $userWithSmallestCount = $user;
+                //     }
+                // }
+                // $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                // if ($de) {
+                //     $de->update([
+                //         'isHide' => 'true'
+                //     ]);
+                // } else {
+                //     DirectEmail::create([
+                //         'email' => $value['from'],
+                //         'threadId' => $value['threadId'],
+                //         'user_id' => $userWithSmallestCount->id,
+                //         'count' => $value['count'] ?? 0,
+                //         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                //     ]);
+                // }
+                DirectEmail::create([
+                    'email' => $value['from'],
+                    'threadId' => $value['threadId'],
+                    'user_id' => 0,
+                    'count' => $value['count'] ?? 0,
+                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                ]);
             }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
