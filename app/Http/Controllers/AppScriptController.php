@@ -19,7 +19,7 @@ class AppScriptController extends Controller
         preg_match_all($regex, $sentence, $matches);
 
         // Return the matched sequences (if any)
-        return $matches[0] ?? '';
+        return $matches[0] ?? 'no ticketing ID detect!';
     }
 
     public function get_warranty_unread_email(Request $request)
