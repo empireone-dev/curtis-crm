@@ -56,7 +56,7 @@ class AppScriptController extends Controller
                 $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
                 if ($de) {
                     $de->update([
-                        'isHide' => 'true'
+                        'isHide' => 'false'
                     ]);
                 } else {
                     DirectEmail::create([
@@ -105,7 +105,7 @@ class AppScriptController extends Controller
                 $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
                 if ($de) {
                     $de->update([
-                        'isHide' => 'true'
+                        'isHide' => 'false'
                     ]);
                 } else {
                     DirectEmail::create([
