@@ -362,6 +362,7 @@ class DashboardController extends Controller
         $check_availability = Ticket::where('status', '=', 'INTERNALS')->count();
         $updates_curtis = Ticket::where('status', '=', 'AVAILABILITY')->count();
         $rma_request = Ticket::where('status', '=', 'RMA REQUEST')->count();
+        $asc = Ticket::where('status', '=', 'REPAIR')->count();
 
         return response()->json([
             'repair_unsuccessful' => $repair_unsuccessful,
@@ -393,7 +394,8 @@ class DashboardController extends Controller
             'warranty_process_ticket' => $warranty_process_ticket,
             'parts_process_ticket' => $parts_process_ticket,
             'rma_request' => $rma_request,
-            'rma_issued' => $rma_issued
+            'rma_issued' => $rma_issued,
+            'asc' => $asc
         ], 200);
     }
 

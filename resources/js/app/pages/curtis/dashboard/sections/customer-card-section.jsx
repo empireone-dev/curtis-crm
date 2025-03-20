@@ -189,7 +189,7 @@ export default function CustomerCardsSection({ account }) {
 
             <div className="text-3xl font-black my-8">Others</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-                <CurtisCardsComponent
+                {/* <CurtisCardsComponent
                     title="RMA Request"
                     count="100"
                     icon={<ArrowsRightLeftIcon className="h-10 text-white" />}
@@ -205,11 +205,12 @@ export default function CustomerCardsSection({ account }) {
                     title="Direct Emails"
                     count="100"
                     icon={<EnvelopeIcon className="h-10 text-white" />}
-                />
+                /> */}
 
                 <CurtisCardsComponent
-                    title="ASC Completed"
-                    count="100"
+                    title="Authorized Service Center"
+                    count={data.asc ?? 0}
+                    link="REPAIR"
                     icon={<DocumentCheckIcon className="h-10 text-white" />}
                 />
             </div>
