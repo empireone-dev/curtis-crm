@@ -46,7 +46,10 @@ class AppScriptController extends Controller
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
                 foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
+                    $count = DirectEmail::where([
+                        ['user_id', '=', $user->id],
+                        ['isHide', '=', 'false'],
+                    ])->count();
 
                     if ($count < $smallestCount) {
                         $smallestCount = $count;
@@ -85,7 +88,7 @@ class AppScriptController extends Controller
                         'is_reply' => 'true'
                     ]);
                 }
-            } 
+            }
             if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
@@ -95,7 +98,10 @@ class AppScriptController extends Controller
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
                 foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
+                    $count = DirectEmail::where([
+                        ['user_id', '=', $user->id],
+                        ['isHide', '=', 'false'],
+                    ])->count();
 
                     if ($count < $smallestCount) {
                         $smallestCount = $count;
