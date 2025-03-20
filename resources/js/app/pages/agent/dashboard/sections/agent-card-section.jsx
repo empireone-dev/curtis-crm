@@ -80,7 +80,7 @@ export default function AgentCardsSection({ account }) {
                             <AgentCardsComponent
                                 title="Repair Success"
                                 link="REPAIR SUCCESS"
-                                count={data.repair_success?? 0}
+                                count={data.repair_success ?? 0}
                                 icon={
                                     <CheckBadgeIcon className="h-10 text-white" />
                                 }
@@ -88,7 +88,7 @@ export default function AgentCardsSection({ account }) {
                             <AgentCardsComponent
                                 title="Repair Unsuccessful"
                                 link="REPAIR UNSUCCESSFUL"
-                                count={data.repair_unsuccessful?? 0}
+                                count={data.repair_unsuccessful ?? 0}
                                 icon={
                                     <CheckBadgeIcon className="h-10 text-white" />
                                 }
@@ -376,17 +376,45 @@ export default function AgentCardsSection({ account }) {
                 )}
 
                 {agent_type(["Warranty"]) && (
-                    <AgentCardsComponent
-                        title="Direct Emails"
-                        count="100"
-                        icon={<EnvelopeIcon className="h-10 text-white" />}
-                    />
+                    // <AgentCardsComponent
+                    //     title="Direct Emails"
+                    //     count="100"
+                    //     icon={<EnvelopeIcon className="h-10 text-white" />}
+                    // />
+                    <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <EnvelopeIcon className="h-10 text-white" />
+                        </div>
+                        <div className="p-4 text-right">
+                            <p className="font-black antialiased font-sans text-sm leading-normal text-blue-gray-600 line-clamp-1">
+                                Direct Emails
+                            </p>
+                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                {data.direct_email ?? 0}
+                            </h4>
+                        </div>
+                        <div className="border-t border-blue-gray-50 p-4">
+                            {/* <Link
+                                                href={"/administrator/tickets?page=1&status="}
+                                                className="block antialiased font-sans text-base text-red-600 leading-relaxed font-black text-blue-gray-600"
+                                            >
+                                                Click to visit
+                                            </Link> */}
+                        </div>
+                    </div>
                 )}
 
                 {agent_type(["Warranty"]) && (
+                    // <AgentCardsComponent
+                    //     title="ASC Completed"
+                    //     count="100"
+                    //     icon={<DocumentCheckIcon className="h-10 text-white" />}
+                    // />
+
                     <AgentCardsComponent
-                        title="ASC Completed"
-                        count="100"
+                        title="Authorized Service Center"
+                        count={data.asc ?? 0}
+                        link="REPAIR"
                         icon={<DocumentCheckIcon className="h-10 text-white" />}
                     />
                 )}

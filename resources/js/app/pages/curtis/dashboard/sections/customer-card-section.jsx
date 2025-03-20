@@ -213,6 +213,12 @@ export default function CustomerCardsSection({ account }) {
                     link="REPAIR"
                     icon={<DocumentCheckIcon className="h-10 text-white" />}
                 />
+                <CurtisCardsComponent
+                    title="Repair Unsuccessful"
+                    link="REPAIR UNSUCCESSFUL"
+                    count={data.repair_unsuccessful ?? 0}
+                    icon={<CheckBadgeIcon className="h-10 text-white" />}
+                />
             </div>
         </div>
     );
