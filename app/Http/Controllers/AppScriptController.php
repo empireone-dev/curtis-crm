@@ -42,18 +42,23 @@ class AppScriptController extends Controller
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"]
                 ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
-                foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
-
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
-                    }
+                if ($users->isEmpty()) {
+                    // Handle case where no eligible users are found
+                    return;
                 }
+
+                // Get counts for all users in one query
+                $userCounts = DirectEmail::selectRaw('user_id, COUNT(*) as total')
+                    ->whereIn('user_id', $users->pluck('id'))
+                    ->groupBy('user_id')
+                    ->pluck('total', 'user_id');
+
+                // Find user with the smallest count
+                $userWithSmallestCount = $users->sortBy(fn($user) => $userCounts[$user->id] ?? 0)->first();
+
                 $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+
                 if ($de) {
                     $de->update([
                         'isHide' => 'false'
@@ -85,24 +90,29 @@ class AppScriptController extends Controller
                         'is_reply' => 'true'
                     ]);
                 }
-            } 
+            }
             if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Parts"]
                 ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
-                foreach ($users as $user) {
-                    $count = DirectEmail::where('user_id', $user->id)->count();
-
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
-                    }
+                if ($users->isEmpty()) {
+                    // Handle case where no eligible users are found
+                    return;
                 }
+
+                // Get counts for all users in one query
+                $userCounts = DirectEmail::selectRaw('user_id, COUNT(*) as total')
+                    ->whereIn('user_id', $users->pluck('id'))
+                    ->groupBy('user_id')
+                    ->pluck('total', 'user_id');
+
+                // Find user with the smallest count
+                $userWithSmallestCount = $users->sortBy(fn($user) => $userCounts[$user->id] ?? 0)->first();
+
                 $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+
                 if ($de) {
                     $de->update([
                         'isHide' => 'false'
