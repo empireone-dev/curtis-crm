@@ -33,7 +33,7 @@ export default function CaseLogsSection() {
                     {customer_details_logs.map((res, i) => {
                         return (
                             <div className="my-3">
-                                {res.transfer_from.name} Transferred {res.ticket_id} to {res.transfer_to.name} on {moment(res.created_at).format('LLLL')}
+                                {res?.transfer_from?.name} Transferred {res?.ticket_id} to {res?.transfer_to?.name} on {moment(res.created_at).format('LLLL')}
                                 {/* <p>{res.user.name}</p>
                                 <p>
                                     Logged the case as {res.case_status}<br />
