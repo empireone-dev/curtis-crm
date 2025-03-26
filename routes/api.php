@@ -23,6 +23,7 @@ use App\Http\Controllers\ProductRegistrationController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RepairController;
+use App\Http\Controllers\RepairInformationController;
 use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
@@ -139,8 +140,6 @@ Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_un
 
 
 
-
-
 Route::put('transfer_direct_email', [DirectEmailController::class, 'transfer_direct_email']);
 Route::resource('direct_email', DirectEmailController::class);
 
@@ -150,6 +149,11 @@ Route::put('/update_explanation/{gid}', [TicketController::class, 'update_explan
 Route::put('/update_tickets_status/{gid}', [TicketController::class, 'update_tickets_status']);
 Route::get('/get_tickets_by_ticket_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_id']);
 Route::get('/get_tickets_by_ticket_details_id/{ticket_id}', [TicketController::class, 'get_tickets_by_ticket_details_id']);
+Route::post('/accept_acknowledge', [TicketController::class, 'accept_acknowledge']);
+Route::post('/received_item', [TicketController::class, 'received_item']);
+
+
+Route::resource('repair_information', RepairInformationController::class);
 
 Route::resource('brands', BrandController::class);
 Route::resource('item_types', ItemTypeController::class);

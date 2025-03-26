@@ -1,5 +1,25 @@
 import axios from "axios";
 
+
+
+export async function accept_acknowledge_service(data) {
+    try {
+        const res = await axios.post("/api/accept_acknowledge", data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function received_item_service(data) {
+    try {
+        const res = await axios.post("/api/received_item", data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
 export async function escalated_service(data) {
     try {
         const res = await axios.post("/api/escalated",data);

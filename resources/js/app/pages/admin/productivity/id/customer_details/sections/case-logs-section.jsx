@@ -14,12 +14,12 @@ export default function CaseLogsSection() {
                     {cases_logs.map((res, i) => {
                         return (
                             <div className="my-3">
-                                <p>{res.user.name}</p>
+                                <p>{res?.user?.name}</p>
                                 <p>
-                                    Logged the case as {res.case_status}<br />
-                                    On {moment(res.created_at).format('LLL')}
+                                    Logged the case as {res?.case_status}<br />
+                                    On {moment(res?.created_at).format('LLL')}
                                 </p>
-                                <p>Remarks: {res.remarks}</p>
+                                <p>Remarks: {res?.remarks}</p>
                             </div>
                         );
                     })}
@@ -31,13 +31,13 @@ export default function CaseLogsSection() {
                     {customer_details_logs.map((res, i) => {
                         return (
                             <div className="my-3">
-                                {res.transfer_from.name} Transferred {res.ticket_id} to {res.transfer_to.name} on {moment(res.created_at).format('LLLL')}
-                                {/* <p>{res.user.name}</p>
+                                {res?.transfer_from?.name} Transferred {res?.ticket_id} to {res?.transfer_to?.name} on {moment(res?.created_at).format('LLLL')}
+                                {/* <p>{res?.user?.name}</p>
                                 <p>
-                                    Logged the case as {res.case_status}<br />
-                                    On {moment(res.created_at).format('LLL')}
+                                    Logged the case as {res?.case_status}<br />
+                                    On {moment(res?.created_at).format('LLL')}
                                 </p>
-                                <p>Remarks: {res.remarks}</p> */}
+                                <p>Remarks: {res?.remarks}</p> */}
                             </div>
                         );
                     })}

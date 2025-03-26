@@ -28,6 +28,30 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function accept_acknowledge(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->id)->first();
+        if ($ticket) {
+            $ticket->update([
+                'asc_status' => 'acknowledged'
+            ]);
+        }
+        return response()->json([
+            'result' => 'success',
+        ], 200);
+    }
+    public function received_item(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->id)->first();
+        if ($ticket) {
+            $ticket->update([
+                'received_at' => $request->received_at
+            ]);
+        }
+        return response()->json([
+            'result' => 'success',
+        ], 200);
+    }
     public function escalated(Request $request)
     {
         Ticket::where('id', $request->id)->update([
@@ -702,7 +726,7 @@ class TicketController extends Controller
 
     public function get_tickets_by_ticket_details_id($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair'])->first();
+        $ticket = Ticket::where('ticket_id', $ticket_id)->with(['decision_making', 'replacement', 'receipt', 'refund', 'repair', 'dealer'])->first();
         $asc = DecisionMaking::where('id', $ticket->decision_making_id)->with(['user'])->first();
         return response()->json([
             'result' => array_merge($ticket->toArray(), ['asc' => $asc ? $asc->toArray() : null]),

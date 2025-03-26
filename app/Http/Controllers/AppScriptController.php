@@ -65,7 +65,7 @@ class AppScriptController extends Controller
                     DirectEmail::create([
                         'email' => $value['from'],
                         'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
+                        'user_id' => $userWithSmallestCount->id??58,
                         'count' => $value['count'] ?? 0,
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);
@@ -117,7 +117,7 @@ class AppScriptController extends Controller
                     DirectEmail::create([
                         'email' => $value['from'],
                         'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id,
+                        'user_id' => $userWithSmallestCount->id??60,
                         'count' => $value['count'] ?? 0,
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);

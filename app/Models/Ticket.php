@@ -52,9 +52,16 @@ class Ticket extends Model
         'is_reply',
         'isExported',
         'isEscalated',
-        'where_status'
+        'where_status',
+        'received_at',
+        'asc_status'
     ];
 
+
+    public function dealer(): HasOne
+    {
+        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1','invoices1']);
+    }
     public function direct_emails(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');

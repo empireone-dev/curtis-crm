@@ -242,7 +242,8 @@ export default function ASCTicketsTableSection() {
             render: (_, record) => {
                 return (
                     <Tooltip placement="topLeft" title="View Ticket Details">
-                        <Link href={"/asc/tickets/details/" + record.id+'/files'}>
+                      
+                        <Link href={"/asc/tickets/" + record.ticket_id}>
                             <EyeOutlined className="text-lg text-blue-500" />
                         </Link>
                     </Tooltip>
