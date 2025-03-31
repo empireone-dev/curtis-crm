@@ -25,14 +25,14 @@ export default function UploadFilesSection({ form, setForm }) {
     //     },
     // ];
 
-    const attachments =form?.dealer?.attachments1.map((res,i)=>({
+    const attachments =form?.dealer?.attachments1?.map((res,i)=>({
         uid: i,
         name: res.file,
         url: res.file,
         status: "done",
     }))
 
-    const invoices =form?.dealer?.invoices1.map((res,i)=>({
+    const invoices =form?.dealer?.invoices1?.map((res,i)=>({
         uid: i,
         name: res.file,
         url: res.file,
@@ -49,7 +49,7 @@ export default function UploadFilesSection({ form, setForm }) {
     }
 
     function upload_attachment(e) {
-        const filePromises = e.fileList.map((element) => {
+        const filePromises = e.fileList?.map((element) => {
             const file = element.originFileObj;
             return fileToBase64(file);
         });
@@ -70,7 +70,7 @@ export default function UploadFilesSection({ form, setForm }) {
     }
 
     function upload_invoice(e) {
-        const filePromises = e.fileList.map((element) => {
+        const filePromises = e.fileList?.map((element) => {
             const file = element.originFileObj;
             return fileToBase64(file);
         });

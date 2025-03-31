@@ -67,6 +67,10 @@ class Ticket extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function repair_information(): HasOne
+    {
+        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1','invoices1']);
+    }
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');

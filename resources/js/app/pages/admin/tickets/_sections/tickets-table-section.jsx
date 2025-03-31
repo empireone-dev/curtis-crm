@@ -10,6 +10,7 @@ import TicketsSelectedExportSection from "./tickets-selected-export-section";
 import store from "@/app/store/store";
 import Table from "@/app/_components/table";
 import TicketSortSection from "./ticket-sort-section";
+import ShowAttachmentSection from "./show-attachment-section";
 
 export default function TicketTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
@@ -25,7 +26,9 @@ export default function TicketTableSection() {
         } else if (date_status == "Last Updated") {
             const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
             const latestCreatedAt = combinedLogs.reduce((latest, log) => {
-                return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
+                return moment(log.created_at).isAfter(moment(latest))
+                    ? log.created_at
+                    : latest;
             }, combinedLogs[0]?.created_at);
 
             filterDate = moment(latestCreatedAt).format("LL");
@@ -109,7 +112,11 @@ export default function TicketTableSection() {
                         : "green";
 
                 return (
-                    <>
+                    <div className="flex gap-2">
+                       {(res.status == "REPAIR SUCCESS" ||
+                            res.status == "REPAIR UNSUCCESSFUL") && res.repair_information && (
+                            <ShowAttachmentSection data={res} />
+                        )}
                         <Tag color={color}>
                             {res.status === "PARTS VALIDATION" ||
                             res.status === "WARRANTY VALIDATION" ||
@@ -118,13 +125,14 @@ export default function TicketTableSection() {
                                 ? "OPEN"
                                 : res.status}
                         </Tag>
+                     
                         {res.is_reply && (
                             <Tag color="purple">
                                 Customer has responded on{" "}
                                 {moment(res.email_date).format("LL")}
                             </Tag>
                         )}
-                    </>
+                    </div>
                 );
             })(), // Call the function immediately to return the JSX
             isUploading: (() => {
@@ -147,50 +155,50 @@ export default function TicketTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            isSort:true
+            isSort: true,
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            isSort:true
+            isSort: true,
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            isSort:false
+            isSort: false,
         },
 
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            isSort:false
+            isSort: false,
         },
         {
             title: date_status ?? "Created At",
             dataIndex: "created_at",
             key: "created_at",
-            isSort:false
+            isSort: false,
         },
     ];
 

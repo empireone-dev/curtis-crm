@@ -11,6 +11,7 @@ import store from "@/app/store/store";
 import Table from "@/app/_components/table";
 import MoveTicketSection from "./move-ticket-section";
 import TicketSortSection from "@/app/pages/admin/tickets/_sections/ticket-sort-section";
+import ShowAttachmentSection from "@/app/pages/admin/tickets/_sections/show-attachment-section";
 
 export default function CustomerTicketsTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
@@ -41,22 +42,31 @@ export default function CustomerTicketsTableSection() {
                     );
                 } else {
                     return (
-                        <Link
-                            className="underline"
-                            href={
-                                "/curtis/tickets/details/" + res.id + "/files"
-                            }
-                        >
-                            <div className="flex gap-3">
-                                {res.pr && (
-                                    <CheckBadgeIcon className="h-6 text-green-600" />
+                        <div className="flex gap-2">
+                            {(res.status == "REPAIR SUCCESS" ||
+                                res.status == "REPAIR UNSUCCESSFUL") &&
+                                res.repair_information && (
+                                    <ShowAttachmentSection data={res} />
                                 )}
-                                {res.isExported && (
-                                    <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                )}
-                                {res.ticket_id}
-                            </div>
-                        </Link>
+                            <Link
+                                className="underline"
+                                href={
+                                    "/curtis/tickets/details/" +
+                                    res.id +
+                                    "/files"
+                                }
+                            >
+                                <div className="flex gap-3">
+                                    {res.pr && (
+                                        <CheckBadgeIcon className="h-6 text-green-600" />
+                                    )}
+                                    {res.isExported && (
+                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                    )}
+                                    {res.ticket_id}
+                                </div>
+                            </Link>
+                        </div>
                     );
                 }
             }
@@ -85,14 +95,16 @@ export default function CustomerTicketsTableSection() {
 
             return (
                 <>
-                    <Tag color={color}>
-                        {res.status === "PARTS VALIDATION" ||
-                        res.status === "WARRANTY VALIDATION" ||
-                        res.status === "TECH VALIDATION" ||
-                        res.status == null
-                            ? "OPEN"
-                            : res.status}
-                    </Tag>
+                    <div className="flex gap-2">
+                        <Tag color={color}>
+                            {res.status === "PARTS VALIDATION" ||
+                            res.status === "WARRANTY VALIDATION" ||
+                            res.status === "TECH VALIDATION" ||
+                            res.status == null
+                                ? "OPEN"
+                                : res.status}
+                        </Tag>
+                    </div>
                     {/* {res.is_reply && (
                         <Tag color="purple">
                             Customer has responded on{" "}
@@ -126,56 +138,56 @@ export default function CustomerTicketsTableSection() {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            isSort:true
+            isSort: true,
         },
         {
             title: "Move Ticket",
             dataIndex: "move_ticket",
             key: "move_ticket",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            isSort:true
+            isSort: true,
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            isSort:false
+            isSort: false,
         },
 
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            isSort:false
+            isSort: false,
         },
         {
             title: "Created At",
             dataIndex: "created_at",
             key: "created_at",
-            isSort:false
+            isSort: false,
         },
     ];
 

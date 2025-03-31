@@ -15,10 +15,34 @@ export default function DealerFormSection({ form, setForm }) {
     }
 
     const labour_details = [
-        { label: "wada", value: "wada" },
-        { label: "aaaa", value: "aaaa" },
+        {
+            label: "In Home Appliance Repair (Electro Experts Only)",
+            value: "In Home Appliance Repair (Electro Experts Only)",
+        },
+        {
+            label: 'LCD/LED TV 60" - 69", in home repair',
+            value: 'LCD/LED TV 60" - 69", in home repair',
+        },
+        {
+            label: "LED 6549 Resistor Modification +$25 ron",
+            value: "LED 6549 Resistor Modification +$25 ron",
+        },
+        {
+            label: "LED 6049 or greater Backlight jumper repair +$50",
+            value: "LED 6049 or greater Backlight jumper repair +$50",
+        },
+        {
+            label: 'LCD/LED TV (70" & above) new',
+            value: 'LCD/LED TV (70" & above) new',
+        },
+        { label: 'LCD/LED TV (51" - 69°)', value: 'LCD/LED TV (51" - 69°)' },
+        { label: 'LCD/LED TV (41" - 50")', value: 'LCD/LED TV (41" - 50")' },
+        { label: 'LCD/LED TV (30" - 40*)', value: 'LCD/LED TV (30" - 40*)' },
+        { label: 'LCD/LED TV (up to 29")', value: 'LCD/LED TV (up to 29")' },
+        { label: "Microwave Oven", value: "Microwave Oven" },
     ];
-    console.log("labour_details", labour_details);
+
+    
     return (
         <div>
             <div className="flex flex-col gap-3 mt-10">
@@ -82,7 +106,7 @@ export default function DealerFormSection({ form, setForm }) {
                         onChange={formHandler}
                         name="minor_labour_details"
                         required={true}
-                        value={form?.dealer?.major_labour_details ?? ""}
+                        value={form?.dealer?.minor_labour_details ?? ""}
                         label="Minor Labour Details"
                         // errorMessage='Country is required'
                         options={labour_details.map((res) => ({

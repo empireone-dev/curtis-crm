@@ -649,8 +649,8 @@ class TicketController extends Controller
     }
     public function get_tickets_by_asc(Request $request, $status)
     {
-        if ($status !== 'undefined') {
-            $result = Ticket::where([['asc_id', '=', $request->id], ['status', '=',  'REPAIR']])->get();
+        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR' ) {
+            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=',   $status]])->get();
             return response()->json([
                 'result' =>  $result
             ], 200);
@@ -797,7 +797,8 @@ class TicketController extends Controller
             'user',
             'agent_notes',
             'cases_logs',
-            'validate'
+            'validate',
+            'repair_information'
         ]);
 
         // Dynamic search
