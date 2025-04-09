@@ -141,7 +141,7 @@ export default function ProductivityTableSection() {
 
     const data = users
         .map((res, i) =>
-            res.agent_type === "Warranty" || res.agent_type === "Parts"
+            res.agent_type === "Warranty" || res.agent_type === "Parts" || res.agent_type === "Admin"
                 ? {
                       id: res.id,
                       agent: res.name,
