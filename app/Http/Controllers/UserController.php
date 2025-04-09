@@ -42,9 +42,7 @@ class UserController extends Controller
     {
         $twoDaysAgo = Carbon::now()->subDays(2)->toDateTimeString();
         $today = Carbon::today()->toDateString();
-        $users = User::where('role_id', '=', $role_id)
-            ->orWhere('role_id', '=', 1)
-            ->with('role')->get();
+        $users = User::get()->with('role');
 
         $days = date("N");
 
