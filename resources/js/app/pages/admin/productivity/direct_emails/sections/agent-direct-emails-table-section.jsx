@@ -158,7 +158,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
 
     const newDataTable = Object.entries(dataTable).map((res) => ({
         ...res[1],
-    }))
+    }));
     const data = newDataTable.map((res, i) => ({
         key: i,
         email: res.email,
@@ -166,8 +166,9 @@ export default function AgentDirectEmailsTableSection({ account }) {
         due_date: moment(res.email_date).add(2, "days").format("LLL"),
         link: res.threadId,
         id: res.id,
-        assigned: res?.user?.name??'N/A',
+        assigned: res?.user?.name ?? "N/A",
     }));
+    console.log("datadata", data);
     const columns = [
         {
             title: "Assigned to",
@@ -211,15 +212,14 @@ export default function AgentDirectEmailsTableSection({ account }) {
             key: "overdue_direct_emails",
             render: (_, record) => {
                 const str = record?.email;
-                const emailRegex = /<([^>]+)>/;
-                const match = str?.match(emailRegex);
-
+                const match = str.match(/<([^>]+)>/);
+                const email = match ? match[1] : str.trim();
                 return (
                     <a
                         target="_blank"
                         href={`${window.location.pathname}/${
                             record?.id
-                        }?email= ${match ? match[1] : ""}`}
+                        }?email= ${email ?? ""}`}
                         className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3"
                     >
                         VIEW

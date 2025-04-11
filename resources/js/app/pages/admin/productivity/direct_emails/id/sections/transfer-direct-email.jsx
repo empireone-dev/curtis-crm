@@ -3,6 +3,7 @@ import { router } from "@inertiajs/react";
 import { Button } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 export default function TransferDirectEmails() {
     const { users } = useSelector((state) => state.users);
@@ -17,7 +18,13 @@ export default function TransferDirectEmails() {
             id: id,
         };
         await transfer_direct_email_service(newData)
-        router.visit("/agent/direct_emails?page=1");
+        // router.visit("/agent/direct_emails?page=1");
+        Swal.fire({
+            icon: "success",
+            title:  "Direct Email Successfully Transferred",
+            showConfirmButton: false,
+            timer: 1500
+          });
     }
     return (
         <div>
