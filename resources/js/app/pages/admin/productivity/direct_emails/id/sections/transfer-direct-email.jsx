@@ -17,22 +17,26 @@ export default function TransferDirectEmails() {
             ...data,
             id: id,
         };
-        await transfer_direct_email_service(newData)
+        await transfer_direct_email_service(newData);
         // router.visit("/agent/direct_emails?page=1");
-        Swal.fire({
+        await Swal.fire({
             icon: "success",
-            title:  "Direct Email Successfully Transferred",
+            title: "Direct Email Successfully Transferred",
             showConfirmButton: false,
-            timer: 1500
-          });
+            timer: 1500,
+        });
+        setLoading(false);
+        location.reload();
     }
+
+    console.log("users", users);
     return (
         <div>
             <div class="text-gray-600 mb-2">
                 <p class="font-medium text-lg">Case Details</p>
             </div>
             <h1>
-                <b>Currently assigned to:</b> Regine
+                {/* <b>Currently assigned to:</b> Regine */}
             </h1>
             <div class="md:col-span-5 mt-3">
                 <label>Reassigned to</label>
@@ -50,14 +54,17 @@ export default function TransferDirectEmails() {
                         Select
                     </option>
                     {users.map((res, i) => {
-                        if (res?.agent_type === user?.agent_type) {
+                        if (
+                            res?.agent_type === "Warranty" ||
+                            res?.agent_type === "Parts"
+                        ) {
                             return (
                                 <option key={res.id} value={res.id}>
                                     {res.name}
                                 </option>
                             );
                         }
-                        return null; // Ensure there's a return value in all branches
+                        return null;
                     })}
                 </select>
             </div>

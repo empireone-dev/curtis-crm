@@ -15,7 +15,7 @@ import {
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
 import TransferDirectEmails from "./sections/transfer-direct-email";
 import store from "@/app/store/store";
-import { get_users_thunk } from "@/app/pages/admin/users/redux/users.thunk";
+import { get_user_by_role_thunk, get_users_thunk } from "@/app/pages/admin/users/redux/users.thunk";
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
 import { get_user_by_id_service } from "@/app/services/user-service";
 
@@ -41,7 +41,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
     }, []);
     useEffect(() => {
         setLoading(true);
-        store.dispatch(get_users_thunk(5));
+        store.dispatch(get_user_by_role_thunk(5));
         async function get_user(params) {
             const res = await get_user_by_id_service(
                 window.location.pathname.split("/")[4]
