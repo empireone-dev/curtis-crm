@@ -16,7 +16,7 @@ class EmailTemplateController extends Controller
 {
     public function send_parts_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbx9LsPiFQTvydnoCEmDPAMUTyQSEmdOHYxrSS507QZbiIAYrNWOLTogRWAUcX8BTx3x/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbze5yYdt7mLGwTkiFPT1iynVNX5dG5bAPhCeU7OOSu1NKGXWkvbOpwuM09kspZAVVW7/exec';
         $params = [
             'recipient' => $recipient,
             'subject' => $subject,
