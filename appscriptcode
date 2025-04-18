@@ -1,0 +1,78 @@
+// send email
+
+function doPost(e) {
+  var recipient = e.parameter.recipient;
+  var subject = e.parameter.subject;
+  var body = e.parameter.body;
+
+  if (recipient && subject && body) {
+    MailApp.sendEmail({
+      to: recipient,
+      subject: subject,
+      htmlBody: body  // 👈 this makes it render as HTML
+    });
+    return ContentService.createTextOutput("Email sent!");
+  } else {
+    return ContentService.createTextOutput("Missing parameters.");
+  }
+}
+
+
+
+// fetch email for warranty and parts
+
+function checkNewEmails() {
+    var threads = GmailApp.search("is:unread", 0, 10); // Get up to 10 unread emails
+    let data = [];
+    if (threads.length > 0) {
+      threads.forEach(thread => {
+        var messages = thread.getMessages();
+        messages.forEach(message => {
+          if (!message.isUnread()) return;
+          var fromEmail = message.getFrom();
+          var toEmail = message.getTo();
+  
+          // Extract email addresses without '<' and '>'
+          var subject = message.getSubject().replace(/^Re:\s*/i, "");
+          var from = fromEmail.match(/<([^>]*)>/);
+          var to = toEmail.match(/<([^>]*)>/);
+          var date = message.getDate();
+          from = from ? from[1] : fromEmail;  // If the match fails, return the whole 'from' field
+          to = to ? to[1] : toEmail;
+  
+          const result = {
+            ticket_id: find14CharSequences(subject)[0]??'direct_email',
+            from: from,
+            to: to,
+            date: date,
+            threadId: message.getId(),
+            count: parseInt(messages.length)
+          };
+          data.push(result);
+        });
+      });
+      // Logger.log(data);
+  
+      if (data.length > 0) {
+        var url = "https://curtis-css.com/api/get_warranty_unread_email";
+        var options = {
+          method: "post",
+          contentType: "application/json",
+          payload: JSON.stringify(data),
+          muteHttpExceptions: true
+        };
+        UrlFetchApp.fetch(url, options);
+      } else {
+        Logger.log("No new email data to send.");
+      }
+      Logger.log(data);
+    } else {
+      Logger.log("No new emails.");
+    }
+  }
+  
+  function find14CharSequences(sentence) {
+      const regex = /\b(CF|PS|TS)\w{12}\b/g; // Matches sequences that start with CF or PS and have 14 total characters
+      return sentence.match(regex) || [];
+  }
+  
