@@ -14,7 +14,7 @@ class DecisionMakingController extends Controller
 {
     public function send_warranty_email($recipient, $subject, $body)
     {
-        $scriptUrl = 'https://script.google.com/macros/s/AKfycbzC4HbxcxX44BQm-bGFeYbUAGy8DyExb-Als9sYN1IOMZuVs2j3Dq9TFiShCTm06MBT/exec';
+        $scriptUrl = 'https://script.google.com/macros/s/AKfycbx6QS2voE5bDVKn0QRSzqdVlRU9mwubNYRyW0LHzY74PCDCn9szOpapoPzgM06GPqc/exec';
 
         $params = [
             'recipient' => $recipient,
