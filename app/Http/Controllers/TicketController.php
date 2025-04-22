@@ -1513,7 +1513,8 @@ class TicketController extends Controller
 
         $users = User::where([
             ['role_id', '=', 5],
-            ['agent_type', '=', $type]
+            ['agent_type', '=', $type],
+            ['remember_token', '<>', 'Admin'],
         ])
             ->get();
         $userWithSmallestCount = null;
