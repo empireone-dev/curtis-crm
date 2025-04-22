@@ -40,7 +40,8 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
-                    ['agent_type', '=', "Warranty"]
+                    ['agent_type', '=', "Warranty"],
+                    ['remember_token', '<>', 'Admin'],
                 ])->get();
                 $userWithSmallestCount = null;
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
@@ -92,7 +93,8 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] == 'direct_email') {
                 $users = User::where([
                     ['role_id', '=', 5],
-                    ['agent_type', '=', "Parts"]
+                    ['agent_type', '=', "Parts"],
+                    ['remember_token', '<>', 'Admin'],
                 ])->get();
                 $userWithSmallestCount = null;
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
