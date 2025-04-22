@@ -41,7 +41,7 @@ class AppScriptController extends Controller
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Warranty"],
-                    ['remember_token', '<>', 'Admin'],
+                    ['remember_token', '=', null],
                 ])->get();
                 $userWithSmallestCount = null;
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
@@ -94,7 +94,7 @@ class AppScriptController extends Controller
                 $users = User::where([
                     ['role_id', '=', 5],
                     ['agent_type', '=', "Parts"],
-                    ['remember_token', '<>', 'Admin'],
+                    ['remember_token', '=', null],
                 ])->get();
                 $userWithSmallestCount = null;
                 $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
