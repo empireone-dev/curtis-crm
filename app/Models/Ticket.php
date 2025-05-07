@@ -134,6 +134,19 @@ class Ticket extends Model
     {
         return $this->hasOne(Activity::class, 'ticket_id', 'id')
             ->where('type', '=', 'ASSIGNED TO')
+            ->orderBy('created_at', 'asc'); // Adjust the column to your desired ordering field
+    }
+    public function refund_shipped(): HasOne
+    {
+        return $this->hasOne(Activity::class, 'ticket_id', 'id')
+            ->where('type', '=', 'REFUND SHIPPED')
             ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
     }
+    public function replacement_shipped(): HasOne
+    {
+        return $this->hasOne(Activity::class, 'ticket_id', 'id')
+            ->where('type', '=', 'REPLACEMENT SHIPPED')
+            ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
+    }
+    
 }

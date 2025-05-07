@@ -123,6 +123,15 @@ export default function TicketsExportFileSection() {
                             res?.validate?.created_at
                                 ? moment(res?.validate?.created_at).format("L")
                                 : "N/A", // //7
+                            res?.decision_status == "REPLACEMENT"
+                                ? moment(
+                                      res?.replacement_shipped?.created_at
+                                  ).format("L")
+                                : res?.decision_status == "REFUND"
+                                ? moment(
+                                      res?.refund_shipped?.created_at
+                                  ).format("L")
+                                : "N/A",
                         ];
                     });
 
@@ -166,6 +175,7 @@ export default function TicketsExportFileSection() {
                             "Is Downloaded",
                             "Warranty Decision",
                             "Validation Date",
+                            "Date Processed",
                         ],
                         ...newData,
                     ];

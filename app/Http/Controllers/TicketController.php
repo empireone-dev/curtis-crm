@@ -298,7 +298,9 @@ class TicketController extends Controller
                 'activity',
                 'validate',
                 'agent_notes',
-                'cases_logs'
+                'cases_logs',
+                'refund_shipped',
+                'replacement_shipped'
             ]);
 
         if ($request->status == 'WARRANTY CLOSED') {
