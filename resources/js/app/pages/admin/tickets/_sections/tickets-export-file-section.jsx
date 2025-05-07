@@ -241,7 +241,7 @@ export default function TicketsExportFileSection() {
 
     return (
         <>
-            {statusQuery && (
+            {(statusQuery|| searchQuery) &&(
                 <Button
                     loading={loading}
                     onClick={export_ticket}

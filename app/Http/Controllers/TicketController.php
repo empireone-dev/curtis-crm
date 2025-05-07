@@ -302,7 +302,9 @@ class TicketController extends Controller
                 'refund_shipped',
                 'replacement_shipped'
             ]);
-
+        if ($request->search) {
+            $query->where('ticket_id', $request->search);
+        }
         if ($request->status == 'WARRANTY CLOSED') {
             $query->where('status', '=', 'CLOSED');
             $query->where('call_type', '=', 'CF-Warranty Claim');
@@ -651,7 +653,7 @@ class TicketController extends Controller
     }
     public function get_tickets_by_asc(Request $request, $status)
     {
-        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR' ) {
+        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR') {
             $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=',   $status]])->get();
             return response()->json([
                 'result' =>  $result

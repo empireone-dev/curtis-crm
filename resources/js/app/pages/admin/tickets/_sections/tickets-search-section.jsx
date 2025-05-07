@@ -15,7 +15,7 @@ export default function TicketsSearchSection() {
         e.preventDefault()
         setLoading(true)
         try {
-            await store.dispatch(get_tickets_thunk(`?search=${search.id}`))
+            router.visit(`?search=${search.id}`)
             setLoading(false)
         } catch (error) {
             setLoading(false)
