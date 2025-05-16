@@ -156,6 +156,21 @@ export default function ASCTicketsTableSection() {
                 );
             },
         },
+         {
+            title: "Assigned",
+            dataIndex: "fullname",
+            key: "fullname",
+            ...getColumnSearchProps("fullname"),
+            render: (_, record, i) => {
+
+                console.log('recordrecord',record)
+                return (
+                    <div color={"red"} key={i}>
+                        {record?.asc?.name}
+                    </div>
+                );
+            },
+        },
         {
             title: "Email",
             dataIndex: "email",

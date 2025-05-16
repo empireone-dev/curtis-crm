@@ -674,7 +674,7 @@ class TicketController extends Controller
         } else {
             $query->whereIn('decision_status', ['REPAIR', 'REPAIRED', 'NOT REPAIRED', 'REPAIR UNSUCCESSFUL']);
         }
-        $result = $query->get();
+        $result = $query->with(['asc'])->get();
 
         return response()->json([
             'result' => $result
