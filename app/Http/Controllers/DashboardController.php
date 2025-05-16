@@ -226,7 +226,7 @@ class DashboardController extends Controller
         // Count tickets for all these users
         $assigned = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIR')->count();
         $repaired = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIRED')->count();
-        $notrepaired = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'NOT REPAIRED')->count();
+        $notrepaired = Ticket::whereIn('asc_id', $userIds)->whereIn('decision_status', ['NOT REPAIRED','REPAIR UNSUCCESSFUL'])->count();
     
         return response()->json([
             'assigned' => $assigned,

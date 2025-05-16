@@ -665,10 +665,10 @@ class TicketController extends Controller
         // Build the ticket query
         $query = Ticket::whereIn('asc_id', $users);
 
-        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR') {
+        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR' || $status == 'REPAIR UNSUCCESSFUL') {
             $query->where('decision_status', $status);
         } else {
-            $query->whereIn('decision_status', ['REPAIR', 'REPAIRED', 'NOT REPAIRED']);
+            $query->whereIn('decision_status', ['REPAIR', 'REPAIRED', 'NOT REPAIRED','REPAIR UNSUCCESSFUL']);
         }
         $result = $query->get();
 
