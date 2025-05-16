@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DecisionMaking;
 use App\Models\DirectEmail;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -213,17 +214,27 @@ class DashboardController extends Controller
     }
     public function asc_dashboard($id)
     {
-
-        $assigned = Ticket::where([['asc_id', '=', $id], ['decision_status', '=', 'REPAIR']])->count();
-        $repaired = Ticket::where([['asc_id', '=', $id], ['decision_status', '=', 'REPAIRED']])->count();
-        $notrepaired = Ticket::where([['asc_id', '=', $id], ['decision_status', '=', 'NOT REPAIRED']])->count();
-
+        // Get the email of the user with the given ID
+        $check = User::where('id', $id)->first();
+        if (!$check) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    
+        // Find all user IDs with the same email
+        $userIds = User::where('email', $check->email)->pluck('id');
+    
+        // Count tickets for all these users
+        $assigned = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIR')->count();
+        $repaired = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIRED')->count();
+        $notrepaired = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'NOT REPAIRED')->count();
+    
         return response()->json([
             'assigned' => $assigned,
             'repaired' => $repaired,
             'notrepaired' => $notrepaired,
         ], 200);
     }
+    
 
     public function warehouse_dashboard($country)
     {

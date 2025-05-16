@@ -653,20 +653,30 @@ class TicketController extends Controller
     }
     public function get_tickets_by_asc(Request $request, $status)
     {
-        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR') {
-            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=',   $status]])->get();
-            return response()->json([
-                'result' =>  $result
-            ], 200);
-        } else {
-            $result = Ticket::where([['asc_id', '=', $request->id], ['decision_status', '=', 'REPAIR']])
-                ->orWhere([['asc_id', '=', $request->id], ['decision_status', '=', 'REPAIRED']])
-                ->orWhere([['asc_id', '=', $request->id], ['decision_status', '=', 'NOT REPAIRED']])->get();
-            return response()->json([
-                'result' => $result
-            ], 200);
+        // Get the email of the user with the given ID
+        $check = User::where('id', $request->id)->first();
+        if (!$check) {
+            return response()->json(['error' => 'User not found'], 404);
         }
+
+        // Find all users with the same email
+        $users = User::where('email', $check->email)->pluck('id');
+
+        // Build the ticket query
+        $query = Ticket::whereIn('asc_id', $users);
+
+        if ($status == 'REPAIRED' || $status == 'NOT REPAIRED' || $status == 'REPAIR') {
+            $query->where('decision_status', $status);
+        } else {
+            $query->whereIn('decision_status', ['REPAIR', 'REPAIRED', 'NOT REPAIRED']);
+        }
+        $result = $query->get();
+
+        return response()->json([
+            'result' => $result
+        ], 200);
     }
+
     public function update(Request $request, $id)
     {
 
