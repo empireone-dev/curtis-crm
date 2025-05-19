@@ -96,7 +96,10 @@ Route::post('callback', [EmailTemplateController::class, 'callback']);
 
 Route::resource('role', RoleController::class);
 Route::resource('activities', ActivityController::class);
+Route::get('export_by_the_warehouse', [ActivityController::class, 'export_by_the_warehouse']);
 Route::resource('notes', AgentNoteController::class);
+
+
 
 Route::resource('tickets', TicketController::class);
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);

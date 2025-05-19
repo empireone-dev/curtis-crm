@@ -1,1 +1,0 @@
-import{d as a}from"./page-DYpLzGDn.js";async function c(e){return(await a.post("/api/caseslog",e)).data}async function i(e){return(await a.get("/api/caseslog/"+e)).data}async function r(e){return(await a.get("/api/get_caseslog_by_ticket_id_direct_email/"+e)).data}export{i as a,c,r as g};

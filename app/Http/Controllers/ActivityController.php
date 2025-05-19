@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
 
+
+    public function export_by_the_warehouse(){
+        $activities =Activity::where('type','WAREHOUSE RECEIVED')->with(['ticket'])->get();
+          return response()->json($activities, 200);
+    }
     public static function create_activity($user_id, $ticket_id, $message, $type)
     {
         $activity = Activity::where([['user_id', '=', $user_id], ['user_id', '=', $ticket_id], ['type', '=', 'upload']])->first();

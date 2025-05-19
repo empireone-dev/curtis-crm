@@ -1,0 +1,69 @@
+import { export_by_the_warehouse_service } from "@/app/services/activities-service";
+import { Button } from "antd";
+import React, { useState } from "react";
+
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import moment from "moment";
+
+export default function ExportByTheWarehouse() {
+    const [loading, setLoading] = useState(false);
+    // const [data, setData] = useState([]);
+    async function function_export_by_the_warehouse(params) {
+        try {
+            setLoading(true);
+            const res = await export_by_the_warehouse_service();
+            console.log("res", res);
+            await handleExport(res);
+            setData(res);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+
+    const handleExport = (result) => {
+
+        const data = result.map(res=>({
+            "CREATED AT":moment(res.ticket.created_at).format('LLL'),
+            "UPDATED AT":moment(res.ticket.updated_at).format('LLL'),
+            "CASE FILE":res.ticket.ticket_id,
+            "FULLNAME":`${res.ticket.fname} ${res.ticket.lname}`,
+            "MODEL":res.ticket.item_number,
+            "ITEM CLASS":res.ticket.class,
+            "BRAND":res.ticket.brand,
+            "COUNTRY":res.ticket.country,
+            "STATE":res.ticket.state,
+            "CITY":res.ticket.city,
+            "ISSUE":res.ticket.issue,
+        }))
+        console.log('datadata',data)
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+        const blob = new Blob([excelBuffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+
+        saveAs(blob, "WAREHOUSE Data" + moment().format("LLL"));
+    };
+
+    return (
+        <div className="p-3">
+            <Button
+                loading={loading}
+                onClick={function_export_by_the_warehouse}
+                color="default"
+                variant="solid"
+            >
+                EXPORT RECEIVED BY THE WAREHOUSE
+            </Button>
+        </div>
+    );
+}
