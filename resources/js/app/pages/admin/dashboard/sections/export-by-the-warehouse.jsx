@@ -23,35 +23,61 @@ export default function ExportByTheWarehouse() {
     }
 
     const handleExport = (result) => {
+        const data = result.map((res) => ({
+            "CREATED AT": moment(res.ticket.created_at).format("LLL"),
+            "UPDATED AT": moment(res.ticket.updated_at).format("LLL"),
+            "CASE FILE": res.ticket.ticket_id,
+            FULLNAME: `${res.ticket.fname} ${res.ticket.lname}`,
+            MODEL: res.ticket.item_number,
+            "ITEM CLASS": res.ticket.class,
+            BRAND: res.ticket.brand,
+            COUNTRY: res.ticket.country,
+            STATE: res.ticket.state,
+            CITY: res.ticket.city,
+            ISSUE: res.ticket.issue,
+            "REPLACEMENT SHIP DATE": res.replacement?.ship_date,
+            "CHEQUE SHIP DATE": res.refund?.ship_date,
+            "EMAIL ADDRESS": res.ticket.email,
+            "VALIDATION DATE": res?.validate?.created_at
+                ? moment(res?.validate?.created_at).format("LLL")
+                : "N/A",
+            "DATE PROCESSED":
+                res?.ticket?.decision_status === "REPLACEMENT"
+                    ? moment(res?.replacement_shipped?.created_at).format("L")
+                    : res?.ticket?.decision_status === "REFUND"
+                    ? moment(res?.refund_shipped?.created_at).format("L")
+                    : "N/A",
+        }));
 
-        const data = result.map(res=>({
-            "CREATED AT":moment(res.ticket.created_at).format('LLL'),
-            "UPDATED AT":moment(res.ticket.updated_at).format('LLL'),
-            "CASE FILE":res.ticket.ticket_id,
-            "FULLNAME":`${res.ticket.fname} ${res.ticket.lname}`,
-            "MODEL":res.ticket.item_number,
-            "ITEM CLASS":res.ticket.class,
-            "BRAND":res.ticket.brand,
-            "COUNTRY":res.ticket.country,
-            "STATE":res.ticket.state,
-            "CITY":res.ticket.city,
-            "ISSUE":res.ticket.issue,
-        }))
-        console.log('datadata',data)
+        console.log("datadata", data);
         const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
 
+        // Auto-fit column widths
+        const columnWidths = Object.keys(data[0]).map((key) => {
+            const maxLength = Math.max(
+                key.length,
+                ...data.map((row) =>
+                    row[key] ? row[key].toString().length : 0
+                )
+            );
+            return { wch: maxLength + 2 }; // add padding
+        });
+
+        worksheet["!cols"] = columnWidths;
+
+        const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
         const excelBuffer = XLSX.write(workbook, {
             bookType: "xlsx",
             type: "array",
         });
+
         const blob = new Blob([excelBuffer], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
 
-        saveAs(blob, "WAREHOUSE Data" + moment().format("LLL"));
+        saveAs(blob, "WAREHOUSE Data " + moment().format("LLL"));
     };
 
     return (
