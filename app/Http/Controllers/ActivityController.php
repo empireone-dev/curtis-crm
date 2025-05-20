@@ -12,7 +12,8 @@ class ActivityController extends Controller
 
     public function export_by_the_warehouse()
     {
-        $activities = Activity::where('type', 'WAREHOUSE RECEIVED')->with(['refund_shipped', 'ticket', 'replacement', 'refund', 'validate', 'replacement_shipped'])->get();
+        
+        $activities = Activity::where('type', 'WAREHOUSE RECEIVED')->with(['decision','refund_shipped', 'ticket', 'replacement', 'refund', 'validate', 'replacement_shipped'])->get();
         return response()->json($activities, 200);
     }
     public static function create_activity($user_id, $ticket_id, $message, $type)

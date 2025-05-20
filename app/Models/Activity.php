@@ -29,6 +29,12 @@ class Activity extends Model
             ->where('type', '=', 'REPLACEMENT SHIPPED')
             ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
     }
+     public function decision(): HasOne
+    {
+        return $this->hasOne(Activity::class, 'ticket_id', 'ticket_id')
+            ->where('type', '=', 'DECISION MAKING')
+            ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
+    }
     public function validate(): HasOne
     {
         return $this->hasOne(Activity::class, 'ticket_id', 'ticket_id')

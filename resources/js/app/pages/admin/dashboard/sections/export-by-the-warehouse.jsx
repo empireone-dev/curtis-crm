@@ -47,6 +47,7 @@ export default function ExportByTheWarehouse() {
                     : res?.ticket?.decision_status === "REFUND"
                     ? moment(res?.refund_shipped?.created_at).format("L")
                     : "N/A",
+            "DECISION MAKING DATE": moment(res?.decision?.created_at).format("L"),
         }));
 
         console.log("datadata", data);
