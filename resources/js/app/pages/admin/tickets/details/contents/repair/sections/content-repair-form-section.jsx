@@ -10,6 +10,9 @@ import {
 } from "@/app/services/repair-service";
 import Loading from "@/app/layouts/components/loading";
 import routing from "../../../components/routing";
+import { Button, message, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { upload_attachment_service } from "@/app/services/files-service";
 
 export default function ContentRepairFormection() {
     const [form, setForm] = useState({});
@@ -24,7 +27,7 @@ export default function ContentRepairFormection() {
             ...ticket.decision_making,
             repair_cost: ticket?.repair?.repair_cost ?? ticket.repair_cost,
             notes: ticket?.repair?.notes ?? ticket.notes,
-            asc_data:ticket.asc
+            asc_data: ticket.asc,
         });
     }, []);
     function formHandler(value, name) {
@@ -59,6 +62,15 @@ export default function ContentRepairFormection() {
         }
     }
 
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+
     async function submit_not_repaired_asc(params) {
         if (confirm("Are you sure you want to mark as unrepair the ticket?")) {
             setIsLoading2(true);
@@ -67,8 +79,8 @@ export default function ContentRepairFormection() {
                     ...form,
                     account: user,
                     status: "REPAIR UNSUCCESSFUL",
-                }
-                const result = await unrepair_service(form.ticket_id,newData);
+                };
+                const result = await unrepair_service(form.ticket_id, newData);
                 console.log("result", result);
                 setIsLoading2(false);
                 router.visit(routing("decision"));
@@ -77,6 +89,46 @@ export default function ContentRepairFormection() {
             }
         }
     }
+    let isUploading = false;
+
+    async function upload_attachment(e) {
+        if (isUploading) return;
+        isUploading = true;
+
+        try {
+            const filePromises = e.fileList?.map((element) => {
+                const file = element.originFileObj;
+                return fileToBase64(file);
+            });
+
+            const base64Strings = await Promise.all(filePromises);
+
+            const response = await upload_attachment_service({
+                attachments: base64Strings,
+                ticket_id: ticket.ticket_id,
+            });
+
+            if (response?.status == 200) {
+                message.success("Uploaded attachment");
+                console.log("base64Strings", base64Strings);
+            } else {
+                message.error("Upload failed. Please try again.");
+            }
+        } catch (error) {
+            // console.error("Error during file upload:", error);
+            // message.error("An error occurred while uploading attachments.");
+        } finally {
+            isUploading = false;
+        }
+    }
+
+    console.log("ticketticket", ticket?.repair_files);
+    const invoices = ticket?.repair_files?.map((res, i) => ({
+        uid: i,
+        name: res.file,
+        url: res.file,
+        status: "done",
+    }));
     return (
         <div className="flex flex-col gap-6">
             <div>ASC Name: {ticket.asc?.user?.name ?? "None"}</div>
@@ -87,6 +139,18 @@ export default function ContentRepairFormection() {
             </div>
             <div>Email: {ticket.asc?.user?.email ?? ""}</div>
             <div>Phone: {ticket.asc?.user?.phone ?? ""}</div>
+            <Upload
+                method="GET"
+                action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                listType="picture"
+                defaultFileList={invoices}
+                multiple
+                onChange={upload_attachment}
+            >
+                <Button type="primary" icon={<UploadOutlined />}>
+                    Upload Attachments
+                </Button>
+            </Upload>
             <Input
                 onChange={formHandler}
                 name="repair_cost"
@@ -96,6 +160,7 @@ export default function ContentRepairFormection() {
                 type="text"
                 errorMessage="Repair Cost is required"
             />
+
             <Textarea
                 required={true}
                 onChange={formHandler}

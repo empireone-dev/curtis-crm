@@ -543,9 +543,23 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/productivity/page');
     })->name('agent.productivity');
 
-    // Route::get('/tickets/{id}', function () {
-    //     return Inertia::render('agent/tickets/details/page');
-    // })->name('agent.tickets.details');
+      Route::get('/productivity/{id}', function () {
+        return Inertia::render('agent/productivity/id/page');
+    });
+
+
+      Route::get('/productivity/direct_emails/{id}', function () {
+        return Inertia::render('agent/productivity/direct_emails/page');
+    });
+
+    Route::get('/productivity/direct_emails/{ticket_id}/{id}', function () {
+        return Inertia::render('agent/productivity/direct_emails/id/page');
+    });
+
+    // Route::get('/productivity/customer_details/{ticket_id}', function () {
+    //     return Inertia::render('agent/productivity/id/customer_details/page');
+    // });
+
     Route::prefix('tickets')->group(function () {
         Route::get('/details/{ticket_id}/files', function () {
             return Inertia::render('admin/tickets/details/contents/files/page');

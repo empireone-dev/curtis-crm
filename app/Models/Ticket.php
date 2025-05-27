@@ -58,6 +58,10 @@ class Ticket extends Model
     ];
 
 
+      public function repair_files(): HasMany
+    {
+        return $this->hasMany(RepairFiles::class, 'repair_information_id', 'ticket_id');
+    }
     public function dealer(): HasOne
     {
         return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1','invoices1']);

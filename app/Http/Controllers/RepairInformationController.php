@@ -11,6 +11,32 @@ use Illuminate\Support\Str;
 
 class RepairInformationController extends Controller
 {
+
+    public function upload_attachment(Request $request)
+    {
+        foreach ($request->attachments as $base64File) {
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64File, $matches)) {
+                $extension = $matches[1];
+                $base64File = substr($base64File, strpos($base64File, ',') + 1);
+                $imageData = base64_decode($base64File);
+
+                if ($imageData === false) {
+                    return response()->json(['error' => 'Invalid Base64 data'], 400);
+                }
+
+                $filename = date("Y") . '/' . Str::random(20) . '.' . $extension;
+                Storage::disk('s3')->put($filename, $imageData);
+                $url = Storage::disk('s3')->url($filename);
+                RepairFiles::create([
+                    'repair_information_id' => $request->ticket_id,
+                    'file' => $url,
+                    'type' => 'attachment'
+                ]);
+            }
+        }
+        
+                return response()->json(['status' => 'success'], 200);
+    }
     public function store(Request $request)
     {
         // Validate request
@@ -27,11 +53,11 @@ class RepairInformationController extends Controller
             ['ticket_id' => $request->ticket_id],
             $request->dealer
         );
-        $ticket=Ticket::where('ticket_id',$request->ticket_id)->first();
+        $ticket = Ticket::where('ticket_id', $request->ticket_id)->first();
         if ($ticket) {
             $ticket->update([
-                'decision_status' =>$request->decision_status,
-                'status' =>$request->status,
+                'decision_status' => $request->decision_status,
+                'status' => $request->status,
             ]);
         }
         if ($request->dealer['attachments'] ?? null) {

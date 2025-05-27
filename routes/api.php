@@ -157,6 +157,7 @@ Route::post('/received_item', [TicketController::class, 'received_item']);
 
 
 Route::resource('repair_information', RepairInformationController::class);
+Route::post('/upload_attachment', [RepairInformationController::class, 'upload_attachment']);
 
 Route::resource('brands', BrandController::class);
 Route::resource('item_types', ItemTypeController::class);

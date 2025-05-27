@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
     ExclamationCircleFilled,
     FolderOpenFilled,
@@ -9,25 +9,14 @@ import Highlighter from "react-highlight-words";
 import ProductivitySearchSection from "./productivity-search-section";
 import ProductivityDateSection from "./productivity-date-section";
 import { useSelector } from "react-redux";
-import moment from "moment";
-import { router } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
+import ProductivityDirectEmailSection from "./productivity-direct-email-section";
 
-export default function ProductivityTableSection({loading}) {
+export default function ProductivityTableSection() {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const queryParams = new URLSearchParams(window.location.search);
-
-    const start = queryParams.get("start") ?? moment().format("YYYY-MM-DD");
-    const end = queryParams.get("end") ?? moment().format("YYYY-MM-DD");
-    // useEffect(() => {}, [
-    //     router.visit(window.location.pathname+`?start=${start}&end=${end}`)
-    // ]);
-    const [datas, setDatas] = useState({
-        start: start ?? moment().format("YYYY-MM-DD"),
-        end: end ?? moment().format("YYYY-MM-DD"),
-    });
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -152,8 +141,9 @@ export default function ProductivityTableSection({loading}) {
 
     const data = users
         .map((res, i) =>
-            res.agent_type === "Warranty" || res.agent_type === "Parts"
+            res.agent_type === "Warranty" || res.agent_type === "Parts" || res.agent_type === "Admin"
                 ? {
+                      id: res.id,
                       agent: res.name,
                       position: res.agent_type,
                       overdue_cases: res.overdue_cases,
@@ -188,18 +178,50 @@ export default function ProductivityTableSection({loading}) {
             dataIndex: "overdue_cases",
             key: "overdue_cases",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/agent/productivity/${record.id}?page=1&search=over_due`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.overdue_cases}
+                    </Link>
+                );
+            },
         },
         {
             title: "Cases Due Today",
             dataIndex: "cases_due_today",
             key: "cases_due_today",
-            // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/agent/productivity/${record.id}?page=1&search=due_today`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.cases_due_today}
+                    </Link>
+                );
+            },
         },
         {
             title: "Overdue Direct Emails",
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/agent/productivity/direct_emails/${record.id}?page=1&search=over_due`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.overdue_direct_emails}
+                    </Link>
+                );
+            },
         },
 
         {
@@ -207,6 +229,17 @@ export default function ProductivityTableSection({loading}) {
             dataIndex: "direct_emails_due_today",
             key: "direct_emails_due_today",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/agent/productivity/direct_emails/${record.id}?page=1&search=due_today`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.direct_emails_due_today}
+                    </Link>
+                );
+            },
         },
         {
             title: "Handled Cases",
@@ -231,13 +264,12 @@ export default function ProductivityTableSection({loading}) {
     return (
         <div>
             <div className="p-3 rounded-md">
-                <div className="flex">
-                    <ProductivityDateSection data={datas} setData={setDatas} />
+                <div className="flex gap-5">
+                    <ProductivityDateSection />
                     <ProductivitySearchSection />
+                    <ProductivityDirectEmailSection />
                 </div>
-                <Table 
-                loading={loading}
-                columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={data} />
             </div>
         </div>
     );
