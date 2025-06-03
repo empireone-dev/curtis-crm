@@ -14,6 +14,7 @@ import { tickets_create_thunk } from "../../admin/tickets/create/redux/tickets-c
 import { get_common_issues_thunk } from "../../admin/common_issues/redux/common-issues-thunk";
 import { setForm } from "../../admin/tickets/create/redux/tickets-create-slice";
 import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import Swal from "sweetalert2";
 
 export default function WebFormFormSection() {
     const dispatch = useDispatch();
@@ -133,8 +134,20 @@ export default function WebFormFormSection() {
         );
         const response = await store.dispatch(tickets_create_thunk());
         setLoading(false);
-        alert("Your ticket has been successfully filed.");
-        window.location.href = "https://www.curtisint.com/product-support/";
+        Swal.fire({
+            title: "You Product has been Successfully Registered.",
+            text: "If the receipt is incomplete, the registration will be invalid.",
+            icon: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Back to website",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href =
+                    "https://www.curtisint.com/product-support/";
+            }
+        });
     }
 
     const findCountry = (countryName) => {
