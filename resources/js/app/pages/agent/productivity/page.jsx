@@ -26,7 +26,9 @@ export default function ProductivityPage({auth}) {
         </h2>
       </div>
       {/* <ProductivityTotalHandledCases/> */}
-      <ProductivityTableSection loading={loading}/>
+      <ProductivityTableSection 
+      account={account}
+      loading={loading}/>
     </AgentLayout>
   )
 }

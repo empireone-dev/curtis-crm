@@ -256,7 +256,7 @@ export default function ProductivityIDPage({ auth }) {
                 <button
                     onClick={() =>
                         window.open(
-                            `/administrator/productivity/customer_details/${`${record.ticket_id}`}`,
+                            `/agent/customer_details/${`${record.ticket_id}`}`,
                             "_blank"
                         )
                     }

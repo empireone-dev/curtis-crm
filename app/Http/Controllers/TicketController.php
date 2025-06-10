@@ -156,7 +156,7 @@ class TicketController extends Controller
 
     public function search_lookup_tickets(Request $request)
     {
-        $query = Ticket::query();
+        $query = Ticket::query()->with(['user']);
 
         // Apply filters based on request inputs
         if (isset($request->ticket_id)) {

@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { Link } from "@inertiajs/react";
 import ProductivityDirectEmailSection from "./productivity-direct-email-section";
 
-export default function ProductivityTableSection() {
+export default function ProductivityTableSection({ account }) {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -141,7 +141,9 @@ export default function ProductivityTableSection() {
 
     const data = users
         .map((res, i) =>
-            res.agent_type === "Warranty" || res.agent_type === "Parts" || res.agent_type === "Admin"
+            res.agent_type === "Warranty" ||
+            res.agent_type === "Parts" ||
+            res.agent_type === "Admin"
                 ? {
                       id: res.id,
                       agent: res.name,
@@ -180,13 +182,19 @@ export default function ProductivityTableSection() {
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
                 return (
-                    <Link
-                        href={`/agent/productivity/${record.id}?page=1&search=over_due`}
-                        className="underline"
-                        key={i}
-                    >
-                        {record.overdue_cases}
-                    </Link>
+                    <>
+                        {account.id == record.id ? (
+                            <Link
+                                href={`/agent/productivity/${record.id}?page=1&search=over_due`}
+                                className="underline"
+                                key={i}
+                            >
+                                {record.overdue_cases}
+                            </Link>
+                        ) : (
+                            record.overdue_cases
+                        )}
+                    </>
                 );
             },
         },
@@ -195,7 +203,7 @@ export default function ProductivityTableSection() {
             dataIndex: "cases_due_today",
             key: "cases_due_today",
             render: (_, record, i) => {
-                return (
+                return account.id == record.id ? (
                     <Link
                         href={`/agent/productivity/${record.id}?page=1&search=due_today`}
                         className="underline"
@@ -203,6 +211,8 @@ export default function ProductivityTableSection() {
                     >
                         {record.cases_due_today}
                     </Link>
+                ) : (
+                    record.cases_due_today
                 );
             },
         },
@@ -212,7 +222,7 @@ export default function ProductivityTableSection() {
             key: "overdue_direct_emails",
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
-                return (
+                return account.id == record.id ? (
                     <Link
                         href={`/agent/productivity/direct_emails/${record.id}?page=1&search=over_due`}
                         className="underline"
@@ -220,6 +230,8 @@ export default function ProductivityTableSection() {
                     >
                         {record.overdue_direct_emails}
                     </Link>
+                ) : (
+                    record.overdue_direct_emails
                 );
             },
         },
@@ -230,7 +242,7 @@ export default function ProductivityTableSection() {
             key: "direct_emails_due_today",
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
-                return (
+                return account.id == record.id ? (
                     <Link
                         href={`/agent/productivity/direct_emails/${record.id}?page=1&search=due_today`}
                         className="underline"
@@ -238,6 +250,8 @@ export default function ProductivityTableSection() {
                     >
                         {record.direct_emails_due_today}
                     </Link>
+                ) : (
+                    record.direct_emails_due_today
                 );
             },
         },

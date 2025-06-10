@@ -13,9 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchTicketSection() {
     const [open, setOpen] = useState(false);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [data, setData] = useState([]);
-    const { user,search } = useSelector((state) => state.app);
+    const { user, search } = useSelector((state) => state.app);
     const [random, setRandom] = useState(null);
     async function search_ticket(e) {
         e.preventDefault();
@@ -85,10 +85,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    ticket_id: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        ticket_id: e,
+                                    })
+                                )
                             }
                             label="Case File #"
                             value={search?.ticket_id ?? ""}
@@ -100,10 +102,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="phone"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    phone: formatPhoneNumber(e),
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        phone: formatPhoneNumber(e),
+                                    })
+                                )
                             }
                             label="Phone"
                             value={search?.phone ?? ""}
@@ -112,10 +116,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    email: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        email: e,
+                                    })
+                                )
                             }
                             label="Email"
                             value={search?.email ?? ""}
@@ -126,10 +132,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    serial_number: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        serial_number: e,
+                                    })
+                                )
                             }
                             label="Serial #"
                             value={search?.serial_number ?? ""}
@@ -138,10 +146,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    item_number: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        item_number: e,
+                                    })
+                                )
                             }
                             label="Model"
                             value={search?.item_number ?? ""}
@@ -152,10 +162,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    fname: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        fname: e,
+                                    })
+                                )
                             }
                             label="First Name"
                             value={search?.fname ?? ""}
@@ -164,10 +176,12 @@ export default function SearchTicketSection() {
                         <Input
                             type="text"
                             onChange={(e) =>
-                                dispatch(setSearch({
-                                    ...search,
-                                    lname: e,
-                                }))
+                                dispatch(
+                                    setSearch({
+                                        ...search,
+                                        lname: e,
+                                    })
+                                )
                             }
                             label="Last Name"
                             value={search?.lname ?? ""}
@@ -183,7 +197,7 @@ export default function SearchTicketSection() {
                             Search
                         </button>
                         <button
-                        onClick={()=>dispatch(setSearch({}))}
+                            onClick={() => dispatch(setSearch({}))}
                             type="button"
                             className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                         >
@@ -207,6 +221,11 @@ export default function SearchTicketSection() {
                                 <th className="text-left p-3 px-5">
                                     Ticket ID
                                 </th>
+                                {user.role_id != 6 && (
+                                    <th className="text-left p-3 px-5">
+                                        Assigned To
+                                    </th>
+                                )}
                                 <th className="text-left p-3 px-5">Email</th>
                                 <th className="text-left p-3 px-5">Phone</th>
                                 <th className="text-left p-3 px-5">Fullname</th>
@@ -237,36 +256,49 @@ export default function SearchTicketSection() {
                                         </div>
                                     </>
                                 )}
-                            {data.map((res, index) => (
-                                <tr
-                                    key={index}
-                                    className={`border-b hover:bg-blue-100 `}
-                                >
-                                    <td className="p-3 px-5">
-                                        {res.ticket_id}
-                                    </td>
-                                    <td className="p-3 px-5">{res.email}</td>
-                                    <td className="p-3 px-5">{res.phone}</td>
-                                    <td className="p-3 px-5">
-                                        {res.fname} {res.lname}
-                                    </td>
-                                    <td className="p-3 px-5">
-                                        {res.call_type}
-                                    </td>
-                                    <td className="p-3 px-5">
-                                        {res.issue}
-                                    </td>
-                                    <td className="p-3 px-5">
-                                        <button
-                                            onClick={() =>
-                                                moveToSearch(res.id)
-                                            }
-                                        >
-                                            <ArrowTopRightOnSquareIcon className="h-6 text-blue-600" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {data.map((res, index) => {
+                                console.log("ressss", res);
+                                return (
+                                    <tr
+                                        key={index}
+                                        className={`border-b hover:bg-blue-100 `}
+                                    >
+                                        <td className="p-3 px-5">
+                                            {res.ticket_id}
+                                        </td>
+                                        {user.role_id != 6 && (
+                                            <td className="p-3 px-5">
+                                                {res?.user?.name}
+                                            </td>
+                                        )}
+
+                                        <td className="p-3 px-5">
+                                            {res.email}
+                                        </td>
+                                        <td className="p-3 px-5">
+                                            {res.phone}
+                                        </td>
+                                        <td className="p-3 px-5">
+                                            {res.fname} {res.lname}
+                                        </td>
+                                        <td className="p-3 px-5">
+                                            {res.call_type}
+                                        </td>
+                                        <td className="p-3 px-5">
+                                            {res.issue}
+                                        </td>
+                                        <td className="p-3 px-5">
+                                            <button
+                                                onClick={() =>
+                                                    moveToSearch(res.id)
+                                                }
+                                            >
+                                                <ArrowTopRightOnSquareIcon className="h-6 text-blue-600" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
