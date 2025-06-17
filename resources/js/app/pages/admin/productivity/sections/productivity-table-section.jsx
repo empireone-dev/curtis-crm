@@ -141,7 +141,9 @@ export default function ProductivityTableSection() {
 
     const data = users
         .map((res, i) =>
-            res.agent_type === "Warranty" || res.agent_type === "Parts" || res.agent_type === "Admin"
+            res.agent_type === "Warranty" ||
+            res.agent_type === "Parts" ||
+            res.agent_type === "Admin"
                 ? {
                       id: res.id,
                       agent: res.name,
@@ -152,6 +154,9 @@ export default function ProductivityTableSection() {
                       direct_emails_due_today: res.direct_emails_due_today,
                       handled_cases: res.handled_cases,
                       handled_direct_emails: res.handled_direct_emails,
+                      upcoming_dues: res.upcoming_dues,
+                      upcoming_dues_direct_emails:
+                          res.upcoming_dues_direct_emails,
                       total:
                           parseInt(res.handled_cases) +
                           parseInt(res.handled_direct_emails),
@@ -207,6 +212,23 @@ export default function ProductivityTableSection() {
             },
         },
         {
+            title: "Upcoming Cases Dues",
+            dataIndex: "upcoming_dues",
+            key: "upcoming_dues",
+            // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/${record.id}?page=1&search=upcoming_dues`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.upcoming_dues}
+                    </Link>
+                );
+            },
+        },
+        {
             title: "Overdue Direct Emails",
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
@@ -242,16 +264,34 @@ export default function ProductivityTableSection() {
             },
         },
         {
+            title: "Upcoming Direct Email Dues",
+            dataIndex: "upcoming_dues_direct_emails",
+            key: "upcoming_dues_direct_emails",
+            // ...getColumnSearchProps('app_name'),
+        },
+        {
             title: "Handled Cases",
             dataIndex: "handled_cases",
             key: "handled_cases",
             // ...getColumnSearchProps('app_name'),
         },
+
         {
             title: "Handled Direct Emails",
             dataIndex: "handled_direct_emails",
             key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=handled_direct_emails`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.handled_direct_emails}
+                    </Link>
+                );
+            },
         },
 
         {

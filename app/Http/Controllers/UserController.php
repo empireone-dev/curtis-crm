@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function get_user_by_id($id){
+    public function get_user_by_id($id)
+    {
         $users = User::where('id', '=', $id)->first();
         return response()->json([
             'data' => $users
@@ -40,26 +41,11 @@ class UserController extends Controller
 
     public function show(Request $request, $role_id)
     {
-        $twoDaysAgo = Carbon::now()->subDays(2)->toDateTimeString();
         $today = Carbon::today()->toDateString();
         $users = User::where('role_id', '=', $role_id)
             ->orWhere('role_id', '=', 1)
             ->with('role')->get();
 
-        $days = date("N");
-
-        if ($days == '4') {
-            $addDays = '4';
-        } else if ($days == '5') {
-            $addDays = '4';
-        } else if ($days == '6') {
-            $addDays = '3';
-        } else if ($days == '7') {
-            $addDays = '2';
-        } else {
-            $addDays = '2';
-        }
-        $two_overdue_cases = Carbon::now()->addDays($days)->toDateTimeString();
         if ($role_id == 5) {
             foreach ($users as $user) {
 
@@ -85,9 +71,14 @@ class UserController extends Controller
                     }
                     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
                 }
+
+                $upcoming_dues = $overdue_cases->filter(function ($ticket) use ($today) {
+                    return $ticket->email_date > $today;
+                })->count();
                 $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
                     return $ticket->email_date < $today;
                 })->count();
+
                 //End over due 
 
                 //start due today
@@ -124,7 +115,7 @@ class UserController extends Controller
                 //     ->whereRaw('DATE_ADD(updated_at, INTERVAL 4 DAY) <= ?', [$today])
                 //     ->count();
 
-                $overdue_direct_emails =DirectEmail::where([['user_id','=',$user->id],['isHide', '<>', 'true']])->get();
+                $overdue_direct_emails = DirectEmail::where([['user_id', '=', $user->id], ['isHide', '<>', 'true']])->get();
                 foreach ($overdue_direct_emails as &$value) {
                     $emailDate = Carbon::parse($value->email_date);
                     $dayOfWeek = $emailDate->dayOfWeekIso;
@@ -139,6 +130,9 @@ class UserController extends Controller
                     }
                     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
                 }
+                $upcoming_dues_direct_emails = $overdue_direct_emails->filter(function ($ticket) use ($today) {
+                    return $ticket->email_date > $today;
+                })->count();
                 $overdue_direct_emails = $overdue_direct_emails->filter(function ($ticket) use ($today) {
                     return $ticket->email_date < $today;
                 })->count();
@@ -148,7 +142,7 @@ class UserController extends Controller
                 //     ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
                 //     ->count();
 
-                $direct_emails_due_today =DirectEmail::where([['user_id','=',$user->id],['isHide', '<>', 'true']])->get();
+                $direct_emails_due_today = DirectEmail::where([['user_id', '=', $user->id], ['isHide', '<>', 'true']])->get();
                 foreach ($direct_emails_due_today as &$value) {
                     $emailDate = Carbon::parse($value->email_date);
                     $dayOfWeek = $emailDate->dayOfWeekIso;
@@ -207,6 +201,8 @@ class UserController extends Controller
                 $user->handled_cases = $handled_cases_count;
                 $user->cases_due_today = $cases_due_today;
                 $user->overdue_cases = $overdue_cases;
+                $user->upcoming_dues = $upcoming_dues;
+                $user->upcoming_dues_direct_emails = $upcoming_dues_direct_emails;
                 $user->overdue_direct_emails = $overdue_direct_emails;
                 $user->direct_emails_due_today = $direct_emails_due_today;
                 $user->handled_direct_emails = $handled_direct_emails_count;
