@@ -277,7 +277,7 @@ export default function ProductivityTableSection() {
         },
 
         {
-            title: "Handled Direct Emails",
+            title: "Upcoming Handled Direct Emails",
             dataIndex: "handled_direct_emails",
             key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
