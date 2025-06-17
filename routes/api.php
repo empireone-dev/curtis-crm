@@ -101,7 +101,7 @@ Route::resource('notes', AgentNoteController::class);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Route::resource('tickets', TicketController::class);
+    Route::resource('tickets', TicketController::class);
 });
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
 Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
