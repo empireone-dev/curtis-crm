@@ -4,6 +4,7 @@ import ProductivityTableSection from './sections/productivity-table-section'
 import ProductivityTotalHandledCases from './sections/productivity-total-handled-cases'
 import store from '@/app/store/store';
 import { get_users_thunk } from '../users/redux/users.thunk';
+import ExportExcel from './sections/export-cases-section';
 
 export default function ProductivityPage() {
 
@@ -13,8 +14,9 @@ export default function ProductivityPage() {
   return (
     <AdministratorLayout>
       <div className="flex items-center gap-x-3 p-5">
-        <h2 className="text-xl font-medium text-gray-800">
+        <h2 className="text-xl flex gap-3 font-medium text-gray-800">
           <b>Productivity</b>
+          <ExportExcel />
         </h2>
       </div>
       {/* <ProductivityTotalHandledCases/> */}

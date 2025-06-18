@@ -168,7 +168,7 @@ class UserController extends Controller
                 $handled_cases = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'handled']
-                ]);
+                ])->with(['ticket']);;
 
                 if ($request->start == $request->end) {
                     $today = Carbon::parse($request->start)->toDateString();
@@ -180,11 +180,12 @@ class UserController extends Controller
                     $handled_cases->whereDate('created_at', $today);
                 }
                 $handled_cases_count = $handled_cases->count();
+                $handled_cases_notes = $handled_cases;
 
                 $handled_direct_emails = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
-                ]);
+                ])->with(['ticket']);
                 if ($request->start == $request->end) {
                     $today = Carbon::parse($request->start)->toDateString();
                     $handled_direct_emails->whereDate('created_at', $today);
@@ -195,10 +196,11 @@ class UserController extends Controller
                     $handled_direct_emails->whereDate('created_at', $today);
                 }
                 $handled_direct_emails_count = $handled_direct_emails->count();
-
+                $handled_direct_emails_notes = $handled_direct_emails;
 
                 // Add handled_count attribute to the user instance
                 $user->handled_cases = $handled_cases_count;
+                $user->handled_cases_notes = $handled_cases_notes->get();
                 $user->cases_due_today = $cases_due_today;
                 $user->overdue_cases = $overdue_cases;
                 $user->upcoming_dues = $upcoming_dues;
@@ -206,6 +208,7 @@ class UserController extends Controller
                 $user->overdue_direct_emails = $overdue_direct_emails;
                 $user->direct_emails_due_today = $direct_emails_due_today;
                 $user->handled_direct_emails = $handled_direct_emails_count;
+                $user->handled_direct_emails_notes = $handled_direct_emails_notes->get();
             }
         }
 
