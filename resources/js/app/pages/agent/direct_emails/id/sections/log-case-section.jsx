@@ -1,5 +1,5 @@
 import { create_caseslog_service } from "@/app/services/cases-log-service";
-import { Button,message } from "antd";
+import { Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
@@ -20,9 +20,9 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
             user_id: account.id,
             log_from: "direct_emails",
         });
-        const ress=await get_direct_email_by_id_service()
+        const ress = await get_direct_email_by_id_service();
         setData({
-            isHide:ress.result.isHide
+            isHide: ress.result.isHide,
         });
         dispatch(set_cases_log(res.data));
         messageApi.open({
@@ -31,16 +31,16 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
         });
         setLoading(false);
     }
-    useEffect(()=>{
+    useEffect(() => {
         async function getData(params) {
-                const res=await get_direct_email_by_id_service()
-                setData({
-                    ...data,
-                    isHide:res.result.isHide
-                })
+            const res = await get_direct_email_by_id_service();
+            setData({
+                ...data,
+                isHide: res.result.isHide,
+            });
         }
-        getData()
-    },[])
+        getData();
+    }, []);
     return (
         <div>
             {contextHolder}
@@ -96,51 +96,76 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
                         </option>
                         {account.agent_type == "Warranty" && (
                             <>
-                                <option value="Pending-Incomplete Details">
-                                    Pending-Incomplete Details
+                                <option selected disabled>
+                                    Select
                                 </option>
-                                <option value="Pending-Completed and Validated">
-                                    Pending-Completed and Validated
+                                <option value="Done for Destroy">
+                                    Done for Destroy
                                 </option>
-                                <option value="Pending-Warranty Decision-Refund">
-                                    Pending-Warranty Decision-Refund
+                                <option value="Unit Received / Ice Maker Delivered">
+                                    Unit Received / Ice Maker Delivered
                                 </option>
-                                <option value="Pending-Warranty Decision-Replacement">
-                                    Pending-Warranty Decision-Replacement
+                                <option value="Complete and Validated">
+                                    Complete and Validated
                                 </option>
-                                <option value="Pending-Warranty Decision-Repair">
-                                    Pending-Warranty Decision-Repair
+                                <option value="Decision Making">
+                                    Decision Making
                                 </option>
-                                <option value="Pending-Case Follow-up">
-                                    Pending-Case Follow-up
+                                <option value="Sent Lacking Info">
+                                    Sent Lacking Info
                                 </option>
-                                <option value="Pending-Undelivered Email / Bounced Back Email">
-                                    Pending-Undelivered Email / Bounced Back
-                                    Email
+                                <option value="Referred to the Store">
+                                    Referred to the Store
                                 </option>
-                                <option value="Pending-Proactive Follow-up">
-                                    Pending-Proactive Follow-up
+                                <option value="Escalated">Escalated</option>
+                                <option value="Sent a Reply">
+                                    Sent a Reply
                                 </option>
-                                <option value="Case Closed-Warranty Denied">
-                                    Case Closed-Warranty Denied
+                                <option value="Created a Ticket (Direct Email)">
+                                    Created a Ticket (Direct Email)
                                 </option>
-                                <option value="Case Closed-Refer to Parts">
-                                    Case Closed-Refer to Parts
+                                <option value="Sent Lacking for Destroy">
+                                    Sent Lacking for Destroy
                                 </option>
-                                <option value="Case Endorsed to TCH">
-                                    Case Endorsed to TCH
+                                <option value="Close - OOW">Close - OOW</option>
+                                <option value="Close - Physical Damage">
+                                    Close - Physical Damage
                                 </option>
-                                <option value="Case Survey Sent">
-                                    Case Survey Sent
+                                <option value="Close- Resolved">
+                                    Close- Resolved
                                 </option>
-                                <option value="Case Closed-No Survey">
-                                    Case Closed-No Survey
+                                <option value="Close - Customer Not Interested">
+                                    Close - Customer Not Interested
+                                </option>
+                                <option value="Close - Customer disposed of the Unit">
+                                    Close - Customer disposed of the Unit
+                                </option>
+                                <option value="Close - Non-curtis">
+                                    Close - Non-curtis
+                                </option>
+                                <option value="Close - Not a Valid Retailer">
+                                    Close - Not a Valid Retailer
+                                </option>
+                                <option value="Close - Used / Resold">
+                                    Close - Used / Resold
+                                </option>
+                                <option value="Close - Returned to the Store">
+                                    Close - Returned to the Store
+                                </option>
+                                <option value="Close- Not a Warranty Issue">
+                                    Close- Not a Warranty Issue
+                                </option>
+                                <option value="Close - Has Existing Ticket">
+                                    Close - Has Existing Ticket
                                 </option>
                             </>
                         )}
-                        
+
                         {account.agent_type == "Parts" && (
                             <>
+                                <option selected disabled>
+                                    Select
+                                </option>
                                 <option value="Pending - Incomplete Information">
                                     Pending - Incomplete Information
                                 </option>
@@ -177,38 +202,69 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
                                 <option value="Checking Availability">
                                     Checking Availability
                                 </option>
-                                <option value="Case Closed - Shipping Damage">
+                                <option
+                                    value="Case Closed - Shipping Damage
+                            "
+                                >
                                     Case Closed - Shipping Damage
                                 </option>
-                                <option value="Case Closed - Forwarded to Warranty">
+                                <option
+                                    value=" Case Closed - Forwarded to Warranty
+                            
+                            "
+                                >
                                     Case Closed - Forwarded to Warranty
                                 </option>
-                                <option value="Case Closed - Forwarded to Tech">
+                                <option
+                                    value="Case Closed - Forwarded to Tech
+                            "
+                                >
                                     Case Closed - Forwarded to Tech
                                 </option>
-                                <option value="Case Closed - Customer Not Interested">
+                                <option
+                                    value=" Case Closed - Customer Not Interested
+                            "
+                                >
                                     Case Closed - Customer Not Interested
                                 </option>
-                                <option value="Case Closed - No Response (14 days)">
+                                <option
+                                    value="Case Closed - No Response (14 days)
+                            "
+                                >
                                     Case Closed - No Response (14 days)
                                 </option>
-                                <option value="Case Closed - Not Willing to Buy">
+                                <option
+                                    value="Case Closed - Not Willing to Buy
+                            "
+                                >
                                     Case Closed - Not Willing to Buy
                                 </option>
-                                <option value="Case Closed - Parts Not Available">
+                                <option
+                                    value="Case Closed - Parts Not Available
+                            "
+                                >
                                     Case Closed - Parts Not Available
                                 </option>
-                                <option value="Case Closed - Has Existing Ticket">
+                                <option
+                                    value="Case Closed - Has Existing Ticket
+                            "
+                                >
                                     Case Closed - Has Existing Ticket
                                 </option>
-                                <option value="Case Closed - Resolved">
+                                <option
+                                    value="Case Closed - Resolved 
+                            "
+                                >
                                     Case Closed - Resolved
                                 </option>
-                                <option value="Case Closed - Survey Sent">
+                                <option
+                                    value="Case Closed - Survey Sent
+                            "
+                                >
                                     Case Closed - Survey Sent
                                 </option>
-                                <option value="Case Closed - No Survey">
-                                    Case Closed - No Survey
+                                <option value="Case Closed - No Survey">
+                                    Case Closed - No Survey
                                 </option>
                             </>
                         )}
@@ -220,7 +276,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
                    Submit
                 </button> */}
                 <Button
-                    disabled={data.isHide == 'true'}
+                    disabled={data.isHide == "true"}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"
