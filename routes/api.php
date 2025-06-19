@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AddressLookupController;
 use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\AppScriptController;
+use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CasesLogController;
 use App\Http\Controllers\CommonIssueController;
@@ -88,6 +89,8 @@ Route::get('/get_user_by_id/{id}', [UserController::class, 'get_user_by_id']);
 
 Route::resource('permissions', PermissionController::class);
 Route::resource('internals', InternalController::class);
+Route::post('auth/login', [AuthApiController::class, 'login']);
+Route::post('auth/logout', [AuthApiController::class, 'logout']);
 
 Route::resource('email_templates', EmailTemplateController::class);
 Route::post('validation', [EmailTemplateController::class, 'validation']);
