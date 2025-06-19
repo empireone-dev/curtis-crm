@@ -130,11 +130,12 @@ export default function LogCaseSection({ datas, account }) {
                         id="countries"
                         class="bg-gray-50 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     >
-                        {datas.call_type == "CF-Warranty Claim" && (
-                            <>
-                                <option selected disabled>
+                           <option selected disabled>
                                     Select
                                 </option>
+                        {datas.call_type == "CF-Warranty Claim" && (
+                            <>
+                              
                                 <option value="Done for Destroy" >
                                     Done for Destroy
                                 </option>
@@ -196,111 +197,75 @@ export default function LogCaseSection({ datas, account }) {
                                 </option>
                             </>
                         )}
+                        
                         {datas.call_type == "Parts" && (
-                              <>
-                                <option selected disabled>
-                                    Select
+                             <>
+                                <option value="Parts Available">
+                                    Parts Available
                                 </option>
-                                <option value="Pending - Incomplete Information">
-                                    Pending - Incomplete Information
+                                <option value="Parts Not Available">
+                                    Parts Not Available
                                 </option>
-                                <option value="Pending - Part in Order">
-                                    Pending - Part in Order
-                                </option>
-                                <option value="Pending - Case Follow Up">
-                                    Pending - Case Follow Up
-                                </option>
-                                <option value="Pending - Shipping Info (IW)">
-                                    Pending - Shipping Info (IW)
-                                </option>
-                                <option value="Pending - Shipping Info (OOW)">
-                                    Pending - Shipping Info (OOW)
-                                </option>
-                                <option value="Pending - Escalated Case">
-                                    Pending - Escalated Case
-                                </option>
-                                <option value="Responded - Parts Available">
-                                    Responded - Parts Available
-                                </option>
-                                <option value="Responded - Parts Not Available">
-                                    Responded - Parts Not Available
-                                </option>
-                                <option value="Responded - Sent Email">
-                                    Responded - Sent Email
+                                <option value="Part in Order">
+                                    Part in Order
                                 </option>
                                 <option value="Referred to Store">
                                     Referred to Store
                                 </option>
-                                <option value="Payment Method">
-                                    Payment Method
+                                <option value="Sent a Reply / Email">
+                                    Sent a Reply / Email
+                                </option>
+                                <option value="Willing to Purchase">
+                                    Willing to Purchase
+                                </option>
+                                <option value="Follow Up">Follow Up</option>
+                                <option value="Shipping Damage">
+                                    Shipping Damage
+                                </option>
+                                <option value="Sent Survey">Sent Survey</option>
+                                <option value="Forwarded to Warranty">
+                                    Forwarded to Warranty
+                                </option>
+                                <option value="Forwarded to Tech">
+                                    Forwarded to Tech
+                                </option>
+                                <option value="Shipping Info (IW)">
+                                    Shipping Info (IW)
+                                </option>
+                                <option value="Shipping Info (OOW)">
+                                    Shipping Info (OOW)
+                                </option>
+                                <option value="Escalated Case">
+                                    Escalated Case
+                                </option>
+                                <option value="Lacking Info">
+                                    Lacking Info
                                 </option>
                                 <option value="Checking Availability">
                                     Checking Availability
                                 </option>
-                                <option
-                                    value="Case Closed - Shipping Damage
-"
-                                >
-                                    Case Closed - Shipping Damage
+                                <option value="Connected Call / Voicemail">
+                                    Connected Call / Voicemail
                                 </option>
-                                <option
-                                    value=" Case Closed - Forwarded to Warranty
-
-"
-                                >
-                                    Case Closed - Forwarded to Warranty
+                                <option value="Close - Customer Not Interested">
+                                    Close - Customer Not Interested
                                 </option>
-                                <option
-                                    value="Case Closed - Forwarded to Tech
-"
-                                >
-                                    Case Closed - Forwarded to Tech
+                                <option value="Close - No Response (14 days)">
+                                    Close - No Response (14 days)
                                 </option>
-                                <option
-                                    value=" Case Closed - Customer Not Interested
-"
-                                >
-                                    Case Closed - Customer Not Interested
+                                <option value="Close - Not Willing to Buy">
+                                    Close - Not Willing to Buy
                                 </option>
-                                <option
-                                    value="Case Closed - No Response (14 days)
-"
-                                >
-                                    Case Closed - No Response (14 days)
+                                <option value="Close - Parts Not Availble">
+                                    Close - Parts Not Availble
                                 </option>
-                                <option
-                                    value="Case Closed - Not Willing to Buy
-"
-                                >
-                                    Case Closed - Not Willing to Buy
+                                <option value="Close - Resolved">
+                                    Close - Resolved
                                 </option>
-                                <option
-                                    value="Case Closed - Parts Not Available
-"
-                                >
-                                    Case Closed - Parts Not Available
+                                <option value="Close - Has Existing Ticket">
+                                    Close - Has Existing Ticket
                                 </option>
-                                <option
-                                    value="Case Closed - Has Existing Ticket
-"
-                                >
-                                    Case Closed - Has Existing Ticket
-                                </option>
-                                <option
-                                    value="Case Closed - Resolved 
-"
-                                >
-                                    Case Closed - Resolved
-                                </option>
-                                <option
-                                    value="Case Closed - Survey Sent
-"
-                                >
-                                    Case Closed - Survey Sent
-                                </option>
-                                <option value="Case Closed - No Survey">
-                                    Case Closed - No Survey
-                                </option>
+                                <option value="Pending">Pending</option>
                             </>
                         )}
                     </select>
