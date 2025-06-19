@@ -71,6 +71,7 @@ const ExportExcel = () => {
                     caseNotes.push({
                         Agent: agent.agent,
                         Ticket_ID: note?.ticket?.ticket_id || "",
+                        Email: note?.ticket?.email || "",
                         Case_Status: note.case_status || "",
                         Type: note.case_type || "",
                         Remarks: note.remarks || "",
@@ -87,6 +88,7 @@ const ExportExcel = () => {
                     directEmailNotes.push({
                         Agent: agent.agent,
                         Ticket_ID: note?.ticket?.ticket_id || "",
+                        Email: note?.ticket?.email || "",
                         Case_Status: note.case_status || "",
                         Type: note.case_type || "",
                         Remarks: note.remarks || "",
