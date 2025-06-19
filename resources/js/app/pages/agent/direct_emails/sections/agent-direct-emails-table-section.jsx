@@ -201,15 +201,17 @@ export default function AgentDirectEmailsTableSection({ account }) {
             key: "overdue_direct_emails",
             render: (_, record) => {
                 const str = record?.email;
-                const emailRegex = /<([^>]+)>/;
+                const emailRegex =
+                    /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
                 const match = str?.match(emailRegex);
+                const email = match ? match[1] : null;
 
                 return (
                     <a
                         target="_blank"
                         href={`${window.location.pathname}/${
                             record?.id
-                        }?email= ${match ? match[1] : ""}`}
+                        }?email= ${email ?? ""}`}
                         className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3"
                     >
                         VIEW

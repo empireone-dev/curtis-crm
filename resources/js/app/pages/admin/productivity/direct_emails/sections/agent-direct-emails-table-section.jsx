@@ -211,9 +211,12 @@ export default function AgentDirectEmailsTableSection({ account }) {
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
             render: (_, record) => {
-                const str = record?.email;
-                const match = str.match(/<([^>]+)>/);
-                const email = match ? match[1] : str.trim();
+               const str = record?.email;
+                const emailRegex =
+                    /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
+                const match = str?.match(emailRegex);
+                const email = match ? match[1] : null;
+                
                 return (
                     <a
                         target="_blank"
