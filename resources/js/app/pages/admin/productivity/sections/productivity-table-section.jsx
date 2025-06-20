@@ -268,6 +268,17 @@ export default function ProductivityTableSection() {
             dataIndex: "upcoming_dues_direct_emails",
             key: "upcoming_dues_direct_emails",
             // ...getColumnSearchProps('app_name'),
+                       render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=upcoming_dues_direct_emails`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.upcoming_dues_direct_emails}
+                    </Link>
+                );
+            },
         },
         {
             title: "Handled Cases",
@@ -281,17 +292,7 @@ export default function ProductivityTableSection() {
             dataIndex: "handled_direct_emails",
             key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
-            render: (_, record, i) => {
-                return (
-                    <Link
-                        href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=handled_direct_emails`}
-                        className="underline"
-                        key={i}
-                    >
-                        {record.handled_direct_emails}
-                    </Link>
-                );
-            },
+ 
         },
 
         {
