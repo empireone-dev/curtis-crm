@@ -154,6 +154,9 @@ export default function ProductivityTableSection({ account }) {
                       direct_emails_due_today: res.direct_emails_due_today,
                       handled_cases: res.handled_cases,
                       handled_direct_emails: res.handled_direct_emails,
+                      upcoming_dues: res.upcoming_dues,
+                      upcoming_dues_direct_emails:
+                          res.upcoming_dues_direct_emails,
                       total:
                           parseInt(res.handled_cases) +
                           parseInt(res.handled_direct_emails),
@@ -217,6 +220,23 @@ export default function ProductivityTableSection({ account }) {
             },
         },
         {
+            title: "Upcoming Cases Dues",
+            dataIndex: "upcoming_dues",
+            key: "upcoming_dues",
+            // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                return (
+                    <a
+                        // href={`/administrator/productivity/${record.id}?page=1&search=upcoming_dues`}
+                        // className="underline"
+                        key={i}
+                    >
+                        {record.upcoming_dues}
+                    </a>
+                );
+            },
+        },
+        {
             title: "Overdue Direct Emails",
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
@@ -254,6 +274,12 @@ export default function ProductivityTableSection({ account }) {
                     record.direct_emails_due_today
                 );
             },
+        },
+        {
+            title: "Upcoming Direct Email Dues",
+            dataIndex: "upcoming_dues_direct_emails",
+            key: "upcoming_dues_direct_emails",
+            // ...getColumnSearchProps('app_name'),
         },
         {
             title: "Handled Cases",
