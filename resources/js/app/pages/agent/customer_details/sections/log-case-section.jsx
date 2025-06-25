@@ -2,7 +2,7 @@ import { create_caseslog_service } from "@/app/services/cases-log-service";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { set_cases_log } from "@/app/pages/admin/users/redux/users-slice";
-import { Button, message} from "antd";
+import { Button, message } from "antd";
 export default function LogCaseSection({ datas, account }) {
     const [messageApi, contextHolder] = message.useMessage();
     const [data, setData] = useState({
@@ -27,9 +27,9 @@ export default function LogCaseSection({ datas, account }) {
             content: "Submitted Successfully",
         });
         dispatch(set_cases_log(res.data));
-        setTimeout(()=>{
+        setTimeout(() => {
             setLoading(false);
-        },1000)
+        }, 1000);
     }
     return (
         <div>
@@ -130,14 +130,20 @@ export default function LogCaseSection({ datas, account }) {
                         id="countries"
                         class="bg-gray-50 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     >
-                           <option selected disabled>
-                                    Select
-                                </option>
+                        <option selected disabled>
+                            Select
+                        </option>
                         {datas.call_type == "CF-Warranty Claim" && (
                             <>
-                              
-                                <option value="Done for Destroy" >
+                                <option value="Done for Destroy">
                                     Done for Destroy
+                                </option>
+                                <option value="Close - Shipping Damage">
+                                    Close - Shipping Damage
+                                </option>
+
+                                <option value="Referred to CA/US Warehouse">
+                                    Referred to CA/US Warehouse
                                 </option>
                                 <option value="Unit Received / Ice Maker Delivered">
                                     Unit Received / Ice Maker Delivered
@@ -197,9 +203,16 @@ export default function LogCaseSection({ datas, account }) {
                                 </option>
                             </>
                         )}
-                        
+
                         {datas.call_type == "Parts" && (
-                             <>
+                            <>
+                                <option value="Close - Shipping Damage">
+                                    Close - Shipping Damage
+                                </option>
+
+                                <option value="Referred to CA/US Warehouse">
+                                    Referred to CA/US Warehouse
+                                </option>
                                 <option value="Parts Available">
                                     Parts Available
                                 </option>
@@ -276,7 +289,7 @@ export default function LogCaseSection({ datas, account }) {
                    Submit
                 </button> */}
                 <Button
-                    disabled={datas.is_reply == null?true:false}
+                    disabled={datas.is_reply == null ? true : false}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"

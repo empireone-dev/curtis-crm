@@ -136,6 +136,14 @@ export default function LogCaseSection({ datas, account }) {
                                 <option value="Done for Destroy">
                                     Done for Destroy
                                 </option>
+                                <option value="Close - Shipping Damage">
+                                    Close - Shipping Damage
+                                </option>
+
+                                <option value="Referred to CA/US Warehouse">
+                                    Referred to CA/US Warehouse
+                                </option>
+
                                 <option value="Unit Received / Ice Maker Delivered">
                                     Unit Received / Ice Maker Delivered
                                 </option>
@@ -198,6 +206,13 @@ export default function LogCaseSection({ datas, account }) {
                             <>
                                 <option selected disabled>
                                     Select
+                                </option>
+                                <option value="Close - Shipping Damage">
+                                    Close - Shipping Damage
+                                </option>
+
+                                <option value="Referred to CA/US Warehouse">
+                                    Referred to CA/US Warehouse
                                 </option>
                                 <option value="1 Parts Available">
                                     Parts Available
