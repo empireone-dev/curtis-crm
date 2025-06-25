@@ -18,6 +18,37 @@ import routing from "../../../components/routing";
 import { get_specific_item_service } from "@/app/services/product-search";
 import { message } from "antd";
 
+const questions = [
+    {
+        id: "q1",
+        text: "Did the customer provide a complete receipt (DOP, Unit Price, Unit Description, Order summary with Total Breakdown, Name of store)?",
+    },
+    {
+        id: "q2",
+        text: "Did the customer already provide all necessary photos (front, back, model#, serial#, photo or video of the issue)?",
+    },
+    {
+        id: "q3",
+        text: "Is the unit within warranty?",
+    },
+    {
+        id: "q4",
+        text: "Did you check the serial number in InComm?",
+    },
+    {
+        id: "q5",
+        text: "Is it purchased from an Authorized retailer?",
+    },
+    {
+        id: "q6",
+        text: "Is the condition of the unit New? and Not Used, like new?",
+    },
+    {
+        id: "q7",
+        text: "Did the model#,serial#,description match from the unit and receipt?",
+    },
+];
+
 export default function DecisionMakingSection() {
     const { user } = useSelector((state) => state.app);
     const { asc, ticket } = useSelector((state) => state.tickets);
@@ -27,7 +58,17 @@ export default function DecisionMakingSection() {
     const [isLoading1, setIsLoading1] = useState(false);
     const { email_templates } = useSelector((state) => state.email_templates);
     const [messageApi, contextHolder] = message.useMessage();
+    const [checkedItems, setCheckedItems] = useState({});
 
+    const handleChange = (e) => {
+        const { name, checked } = e.target;
+        setCheckedItems((prev) => ({
+            ...prev,
+            [name]: checked,
+        }));
+    };
+
+    const allChecked = questions.every((q) => checkedItems[q.id]);
     useEffect(() => {
         setData({
             ...data,
@@ -417,7 +458,6 @@ export default function DecisionMakingSection() {
                                             errorMessage="Height is required"
                                         />
                                     </div>
-
                                     <div className="flex gap-3">
                                         <button
                                             onClick={get_fedex_rate}
@@ -503,7 +543,6 @@ export default function DecisionMakingSection() {
                                             },
                                         ]}
                                     />
-
                                     <Select
                                         onChange={formHandlerTemplates}
                                         name="email_template"
@@ -523,7 +562,27 @@ export default function DecisionMakingSection() {
                                             onChange={formHandler}
                                         />
                                     )}
-
+                                    {questions.map((q) => (
+                                        <div
+                                            key={q.id}
+                                            className="flex items-start space-x-2"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id={q.id}
+                                                name={q.id}
+                                                checked={!!checkedItems[q.id]}
+                                                onChange={handleChange}
+                                                className="accent-blue-600 mt-1"
+                                            />
+                                            <label
+                                                htmlFor={q.id}
+                                                className="font-medium"
+                                            >
+                                                {q.text}
+                                            </label>
+                                        </div>
+                                    ))}
                                     <div className="flex gap-5 my-12">
                                         {data.state !== "HI" &&
                                             data.state !== "PR" &&
@@ -635,7 +694,6 @@ export default function DecisionMakingSection() {
                                             </label>
                                         </div>
                                     </div>
-
                                     <div className="mt-10">
                                         <Input
                                             onChange={formHandler}
@@ -652,8 +710,9 @@ export default function DecisionMakingSection() {
                                     </div>
                                     <button
                                         type="submit"
+                                          disabled={!allChecked || isLoading1}
                                         onClick={submit_form}
-                                        className="p-3 bg-blue-600 hover:bg-blue-700  w-full font-bold text-white rounded-sm my-8"
+                                        className={`${!allChecked || isLoading1?"bg-gray-600":"bg-blue-600 hover:bg-blue-700"} p-3   w-full font-bold text-white rounded-sm my-8`}
                                     >
                                         {isLoading1 ? (
                                             <div className="p-1.5 flex items-center justify-center">
