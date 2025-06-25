@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AgentNote;
+use App\Models\CasesLog;
 use Illuminate\Http\Request;
 
 class AgentNoteController extends Controller
@@ -15,8 +16,11 @@ class AgentNoteController extends Controller
 
     public function show($ticketid)
     {
+        
+        $cases_logs = CasesLog::where('ticket_id', $ticketid)->with(['user'])->get();
         return response()->json([
-            'data' => $this->index($ticketid)
+            'agent_notes' => $this->index($ticketid),
+            'cases_logs'=>$cases_logs
         ], 200);
     }
 

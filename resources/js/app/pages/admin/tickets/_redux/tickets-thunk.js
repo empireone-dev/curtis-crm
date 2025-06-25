@@ -83,7 +83,7 @@ export function add_notes_on_tickets_thunk(data) {
             ticket_id: ticket.id,
             message: data,
         });
-        dispatch(ticketsSlice.actions.setNotes(result.data));
+        // dispatch(ticketsSlice.actions.setNotes(result.data));
         return "success";
     };
 }
@@ -93,7 +93,7 @@ export function get_notes_by_id_thunk() {
         const { ticket } = getState().customer_tickets;
         if (ticket) {
             const result = await get_notes_by_id_service(ticket.id);
-            dispatch(ticketsSlice.actions.setNotes(result.data));
+            dispatch(ticketsSlice.actions.setNotes(result));
         }
     };
 }

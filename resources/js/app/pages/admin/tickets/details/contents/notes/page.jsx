@@ -10,7 +10,8 @@ import WarehouseLayout from "@/app/layouts/warehouse/warehouse-layout";
 import ASCLayout from "@/app/layouts/asc/asc-layout";
 import AgentLayout from "@/app/layouts/agent/agent-layout";
 import CurtisLayout from "@/app/layouts/curtis/curtis-layout";
-export default function TicketsDetailsContentNotes({auth}) {
+import CasesLogSection from "./sections/cases-log-section";
+export default function TicketsDetailsContentNotes({ auth }) {
     const { ticket } = useSelector((state) => state.customer_tickets);
     useEffect(() => {
         store.dispatch(get_notes_by_id_thunk());
@@ -29,10 +30,18 @@ export default function TicketsDetailsContentNotes({auth}) {
             : CurtisLayout;
     return (
         <MainLayout account={auth.user}>
-                <TicketsDetailsLayout>
-                    <ContentNotesTextareaSection />
-                    <ContentNotesCommentSection />
-                </TicketsDetailsLayout>
+            <TicketsDetailsLayout>
+                <ContentNotesTextareaSection />
+                <div className="flex w-full gap-3">
+                    <div className="flex-1 border-r-2 ">
+                        <ContentNotesCommentSection />
+                    </div>
+                    <div  className="flex-1">
+                        
+                    <CasesLogSection />
+                    </div>
+                </div>
+            </TicketsDetailsLayout>
         </MainLayout>
     );
 }

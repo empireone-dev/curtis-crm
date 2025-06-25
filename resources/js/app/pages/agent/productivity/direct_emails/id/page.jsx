@@ -65,6 +65,7 @@ export default function AgentDirectEmailIDPage({ auth }) {
                                         email={email}
                                     />
                                     <AgentCaseLogsSection />
+                                    
                                 </div>
                                 <div className="border-l p-2 md:pl-4 overflow-auto">
                                     <div className="flex gap-4">

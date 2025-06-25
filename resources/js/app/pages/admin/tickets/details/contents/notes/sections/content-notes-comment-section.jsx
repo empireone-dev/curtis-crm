@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 export default function ContentNotesCommentSection() {
 
     const { notes } = useSelector((state) => state.tickets);
-    
+    console.log('notes',notes)
     return (
         <div>
             <ol className="relative ">
                 {
-                    notes.map((res, i) => {
+                    notes?.agent_notes?.map((res, i) => {
                         const formattedTimestamp = moment(res.created_at).fromNow();
                         return (
                             <article key={i} className="p-6 text-base bg-white rounded-lg border-s border-l-2 border-blue-500 my-3">
