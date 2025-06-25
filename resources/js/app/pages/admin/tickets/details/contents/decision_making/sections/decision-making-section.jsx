@@ -562,6 +562,7 @@ export default function DecisionMakingSection() {
                                             onChange={formHandler}
                                         />
                                     )}
+                                    <br /> <br />
                                     {questions.map((q) => (
                                         <div
                                             key={q.id}
