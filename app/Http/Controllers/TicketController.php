@@ -166,6 +166,7 @@ class TicketController extends Controller
 
         if (isset($request->phone)) {
             $query->orWhere('phone', $request->input('phone'));
+            $query->orWhere('phone2', $request->input('phone'));
             $tickets = $query->get();
         }
 

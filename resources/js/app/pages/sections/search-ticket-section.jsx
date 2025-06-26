@@ -109,7 +109,7 @@ export default function SearchTicketSection() {
                                     })
                                 )
                             }
-                            label="Phone"
+                            label="Phone (Primary or Secondary)"
                             value={search?.phone ?? ""}
                             name="phone"
                         />
@@ -228,6 +228,7 @@ export default function SearchTicketSection() {
                                 )}
                                 <th className="text-left p-3 px-5">Email</th>
                                 <th className="text-left p-3 px-5">Phone</th>
+                                <th className="text-left p-3 px-5">Secondary Phone</th>
                                 <th className="text-left p-3 px-5">Fullname</th>
                                 <th className="text-left p-3 px-5">
                                     Resolution
@@ -277,6 +278,9 @@ export default function SearchTicketSection() {
                                         </td>
                                         <td className="p-3 px-5">
                                             {res.phone}
+                                        </td>
+                                          <td className="p-3 px-5">
+                                            {res.phone2}
                                         </td>
                                         <td className="p-3 px-5">
                                             {res.fname} {res.lname}

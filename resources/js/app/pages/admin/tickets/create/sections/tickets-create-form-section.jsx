@@ -20,7 +20,6 @@ import { check_serial_number_service } from "@/app/services/tickets-service";
 import { message } from "antd";
 import { get_product_registration_by_serial_service } from "@/app/services/product-registration-service";
 export default function TicketCreateFormSection() {
-    
     const dispatch = useDispatch();
     const { form } = useSelector((state) => state.tickets_create);
     const { user } = useSelector((state) => state.app);
@@ -46,11 +45,11 @@ export default function TicketCreateFormSection() {
         return value;
     }
     async function formHandler(value, name) {
-        if (name == "phone") {
+        if (name == "phone" || name == "phone2") {
             dispatch(
                 setForm({
                     ...form,
-                    phone: formatPhoneNumber(value),
+                    [name]: formatPhoneNumber(value),
                 })
             );
         } else if (name == "issue") {
@@ -242,13 +241,22 @@ export default function TicketCreateFormSection() {
                         </div>
                     </div>
                 </div>
-                <div className="md:w-1/2 px-3">
+                <div className="md:w-1/2 px-3 flex flex-col gap-5">
                     <Input
                         onChange={formHandler}
                         name="phone"
                         required={true}
                         value={form.phone}
                         label="Phone Number"
+                        type="phone"
+                        // errorMessage="Phone Number is required"
+                    />
+                    <Input
+                        onChange={formHandler}
+                        name="phone2"
+                        required={true}
+                        value={form?.phone2}
+                        label="Secondary Phone Number"
                         type="phone"
                         // errorMessage="Phone Number is required"
                     />
