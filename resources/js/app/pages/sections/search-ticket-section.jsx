@@ -128,6 +128,7 @@ export default function SearchTicketSection() {
                             name="email"
                         />
                     </div>
+                    
                     <div className="flex w-full gap-5">
                         <Input
                             type="text"

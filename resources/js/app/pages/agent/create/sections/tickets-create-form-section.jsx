@@ -76,8 +76,18 @@ export default function TicketCreateFormSection() {
                     ...form,
                     country: value,
                     state: "",
+                    zip_code: "",
                 })
             );
+        } else if (name == "zip_code") {
+            if (form.country === "US") {
+                const onlyNumbers = /^\d+$/;
+                if (onlyNumbers.test(value)) {
+                    dispatch(setForm({ ...form, zip_code: value }));
+                }
+            } else {
+                dispatch(setForm({ ...form, zip_code: value }));
+            }
         } else if (name == "serial_number") {
             if (value.length == 17) {
                 setLoading1(true);
@@ -266,7 +276,7 @@ export default function TicketCreateFormSection() {
                         onChange={formHandler}
                         name="phone2"
                         required={true}
-                       value={form?.phone2}
+                        value={form?.phone2}
                         label="Secondary Phone Number"
                         type="phone"
                         // errorMessage="Phone Number is required"
@@ -365,18 +375,6 @@ export default function TicketCreateFormSection() {
             </div>
 
             <div className=" md:flex mb-3">
-                <div className="md:w-1/4 px-3 mb-3 md:mb-0">
-                    <Input
-                        onChange={formHandler}
-                        name="zip_code"
-                        required={false}
-                        value={form?.zip_code}
-                        label="Zip Code / Postal Code"
-                        type="text"
-                        // errorMessage='Zip Code is required'
-                    />
-                </div>
-
                 <div className="md:w-1/4 px-3">
                     <Select
                         onChange={formHandler}
@@ -411,6 +409,17 @@ export default function TicketCreateFormSection() {
                         label="City"
                         type="text"
                         // errorMessage='City is required'
+                    />
+                </div>
+                <div className="md:w-1/4 px-3 mb-3 md:mb-0">
+                    <Input
+                        onChange={formHandler}
+                        name="zip_code"
+                        required={false}
+                        value={form?.zip_code}
+                        label="Zip Code / Postal Code"
+                        type="text"
+                        // errorMessage='Zip Code is required'
                     />
                 </div>
             </div>
