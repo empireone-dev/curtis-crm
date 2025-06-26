@@ -84,6 +84,8 @@ export default function TicketCreateFormSection() {
                 const onlyNumbers = /^\d+$/;
                 if (onlyNumbers.test(value)) {
                     dispatch(setForm({ ...form, zip_code: value }));
+                } else if (value.length == 0) {
+                    dispatch(setForm({ ...form, zip_code: value }));
                 }
             } else {
                 dispatch(setForm({ ...form, zip_code: value }));

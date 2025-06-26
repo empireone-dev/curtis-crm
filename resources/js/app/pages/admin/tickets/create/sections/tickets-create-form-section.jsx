@@ -66,13 +66,15 @@ export default function TicketCreateFormSection() {
                     ...form,
                     country: value,
                     state: "",
-                    zip_code:""
+                    zip_code: "",
                 })
             );
         } else if (name == "zip_code") {
             if (form.country === "US") {
                 const onlyNumbers = /^\d+$/;
                 if (onlyNumbers.test(value)) {
+                    dispatch(setForm({ ...form, zip_code: value }));
+                } else if (value.length == 0) {
                     dispatch(setForm({ ...form, zip_code: value }));
                 }
             } else {
