@@ -266,7 +266,7 @@ export default function TicketCreateFormSection() {
                     <Input
                         onChange={formHandler}
                         name="phone2"
-                        required={true}
+                        required={false}
                         value={form?.phone2}
                         label="Secondary Phone Number"
                         type="phone"
