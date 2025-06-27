@@ -1029,11 +1029,11 @@ class TicketController extends Controller
                 } else {
                     $addDay = 2;
                 }
-                $value->true_email_date = $value->email_date;
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+                $value->email_date = $value->email_date;
+                $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
             }
             $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                return $ticket->email_date < $today;
+                return $ticket->due_date < $today;
             });
             return response()->json([
                 'data_count' => count($overdue_cases),

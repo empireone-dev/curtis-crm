@@ -44,7 +44,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
         fetch_data();
     }, []);
 
-  function addDaysSkippingWeekends(date) {
+    function addDaysSkippingWeekends(date) {
         let dueDate = moment(date);
         let dayOfWeek = dueDate.day();
 
@@ -71,8 +71,8 @@ export default function AgentDirectEmailsTableSection({ account }) {
     const data = newDataTable.map((res, i) => ({
         key: i,
         email: res.email,
-        date: moment(res.true_email_date).format("LLL"),
-        due_date:moment(res.email_date).format("LLL"),
+        date: moment(res.email_date).format("LLL"),
+        due_date: moment(res.due_date).format("LLL"),
         link: res.threadId,
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
@@ -120,12 +120,12 @@ export default function AgentDirectEmailsTableSection({ account }) {
             dataIndex: "overdue_direct_emails",
             key: "overdue_direct_emails",
             render: (_, record) => {
-               const str = record?.email;
+                const str = record?.email;
                 const emailRegex =
                     /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
                 const match = str?.match(emailRegex);
                 const email = match ? match[1] : null;
-                
+
                 return (
                     <a
                         target="_blank"
