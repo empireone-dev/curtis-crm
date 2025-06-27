@@ -44,123 +44,33 @@ export default function AgentDirectEmailsTableSection({ account }) {
         fetch_data();
     }, []);
 
-    const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            close,
-        }) => (
-            <div
-                style={{
-                    padding: 8,
-                }}
-                onKeyDown={(e) => e.stopPropagation()}
-            >
-                <Input
-                    ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
-                    value={selectedKeys[0]}
-                    onChange={(e) =>
-                        setSelectedKeys(e.target.value ? [e.target.value] : [])
-                    }
-                    onPressEnter={() =>
-                        handleSearch(selectedKeys, confirm, dataIndex)
-                    }
-                    style={{
-                        marginBottom: 8,
-                        display: "block",
-                    }}
-                />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() =>
-                            handleSearch(selectedKeys, confirm, dataIndex)
-                        }
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() =>
-                            clearFilters && handleReset(clearFilters)
-                        }
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Reset
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({
-                                closeDropdown: false,
-                            });
-                            setSearchText(selectedKeys[0]);
-                            setSearchedColumn(dataIndex);
-                        }}
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            close();
-                        }}
-                    >
-                        close
-                    </Button>
-                </Space>
-            </div>
-        ),
-        filterIcon: (filtered) => (
-            <SearchOutlined
-                style={{
-                    color: filtered ? "#1677ff" : undefined,
-                }}
-            />
-        ),
-        onFilter: (value, record) =>
-            record[dataIndex]
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        onFilterDropdownOpenChange: (visible) => {
-            if (visible) {
-                setTimeout(() => searchInput.current?.select(), 100);
-            }
-        },
-        render: (text) =>
-            searchedColumn === dataIndex ? (
-                <Highlighter
-                    highlightStyle={{
-                        backgroundColor: "#ffc069",
-                        padding: 0,
-                    }}
-                    searchWords={[searchText]}
-                    autoEscape
-                    textToHighlight={text ? text.toString() : ""}
-                />
-            ) : (
-                text
-            ),
-    });
+   function addDaysSkippingWeekends(date) {
+         let dueDate = moment(date);
+         let dayOfWeek = dueDate.day();
+ 
+         if (dayOfWeek === 4) {
+             // Thursday (4), add 4 days to make it Monday (1)
+             dueDate = dueDate.add(4, "days");
+         } else if (dayOfWeek === 5) {
+             // Friday (5), add 4 days to make it Tuesday (2)
+             dueDate = dueDate.add(4, "days");
+         } else if (dayOfWeek === 6) {
+             // Saturday (6), add 3 days to make it Tuesday (2)
+             dueDate = dueDate.add(3, "days");
+         } else if (dayOfWeek === 0) {
+             // Sunday (0), add 2 days to make it Tuesday (2)
+             dueDate = dueDate.add(2, "days");
+         } else {
+             dueDate = dueDate.add(2, "days");
+         }
+         return dueDate.format("LL");
+     }
 
     const data = dataTable.map((res, i) => ({
         key: i,
         email: res.email,
         date: moment(res.email_date).format("LLL"),
-        due_date: moment(res.email_date).add(2, "days").format("LLL"),
+        due_date:  addDaysSkippingWeekends(moment(res.email_date)),
         link: res.threadId,
         id: res.id,
     }));
