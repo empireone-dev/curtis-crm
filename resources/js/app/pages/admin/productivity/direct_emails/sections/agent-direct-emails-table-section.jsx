@@ -71,8 +71,8 @@ export default function AgentDirectEmailsTableSection({ account }) {
     const data = newDataTable.map((res, i) => ({
         key: i,
         email: res.email,
-        date: moment(res.email_date).format("LLL"),
-        due_date:moment(res.due_date).format("LLL"),
+        date: moment(res.true_email_date).format("LLL"),
+        due_date:moment(res.email_date).format("LLL"),
         link: res.threadId,
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
