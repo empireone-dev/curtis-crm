@@ -63,7 +63,7 @@ export default function ProductivityIDPage({ auth }) {
         } else {
             dueDate = dueDate.add(2, "days");
         }
-        return dueDate.format("LL");
+        return dueDate.format("LLL");
     }
 
     const [searchText, setSearchText] = useState("");
@@ -231,6 +231,7 @@ export default function ProductivityIDPage({ auth }) {
                                 .tz("America/New_York")
                                 .format("LLL")
                         )}
+                        
                     </>
                 );
             },
