@@ -1017,20 +1017,20 @@ class TicketController extends Controller
                 ['isHide', '=', 'false'],
             ])->with('user')->get();
 
-            // foreach ($overdue_cases as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
+            foreach ($overdue_cases as &$value) {
+                $emailDate = Carbon::parse($value->email_date);
+                $dayOfWeek = $emailDate->dayOfWeekIso;
+                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+                    $addDay = 4;
+                } elseif ($dayOfWeek == 6) {
+                    $addDay = 3;
+                } elseif ($dayOfWeek == 7) {
+                    $addDay = 2;
+                } else {
+                    $addDay = 2;
+                }
+                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            }
             $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
                 return $ticket->email_date < $today;
             });
