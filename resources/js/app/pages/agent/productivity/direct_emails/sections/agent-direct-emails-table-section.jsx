@@ -44,28 +44,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
         fetch_data();
     }, []);
 
-    function addDaysSkippingWeekends(date) {
-        let dueDate = moment(date);
-        let dayOfWeek = dueDate.day();
-
-        if (dayOfWeek === 4) {
-            // Thursday (4), add 4 days to make it Monday (1)
-            dueDate = dueDate.add(4, "days");
-        } else if (dayOfWeek === 5) {
-            // Friday (5), add 4 days to make it Tuesday (2)
-            dueDate = dueDate.add(4, "days");
-        } else if (dayOfWeek === 6) {
-            // Saturday (6), add 3 days to make it Tuesday (2)
-            dueDate = dueDate.add(3, "days");
-        } else if (dayOfWeek === 0) {
-            // Sunday (0), add 2 days to make it Tuesday (2)
-            dueDate = dueDate.add(2, "days");
-        } else {
-            dueDate = dueDate.add(2, "days");
-        }
-        return dueDate.format("LL");
-    }
-
+  
     const newDataTable = Object.entries(dataTable).map((res) => ({
         ...res[1],
     }));
@@ -73,7 +52,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
         key: i,
         email: res.email,
         date: moment(res.email_date).format("LLL"),
-        due_date: addDaysSkippingWeekends(moment(res.email_date)),
+        due_date: moment(res.due_date).format("LLL"),
         link: res.threadId,
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
