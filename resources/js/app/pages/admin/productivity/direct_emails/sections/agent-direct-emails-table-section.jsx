@@ -72,7 +72,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
         key: i,
         email: res.email,
         date: moment(res.email_date).format("LLL"),
-        due_date: addDaysSkippingWeekends(moment(res.due_date)),
+        due_date:moment(res.due_date).format("LLL"),
         link: res.threadId,
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
