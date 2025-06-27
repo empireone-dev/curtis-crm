@@ -1115,10 +1115,11 @@ class TicketController extends Controller
                 } else {
                     $addDay = 2;
                 }
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+                $value->email_date = $value->email_date;
+                $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
             }
             $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-                return $ticket->email_date === $today;
+                return $ticket->due_date === $today;
             });
             return response()->json([
                 'data_count' => count($cases_due_today),
