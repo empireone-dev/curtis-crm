@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse, Tag } from "antd";
 import { cases_service } from "@/app/services/tickets-service";
@@ -14,7 +13,7 @@ import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
-
+import moment from "moment-timezone";
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(true);
@@ -208,7 +207,14 @@ export default function ProductivityIDPage({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record.true_email_date).format("LL")}</>;
+                return (
+                    <>
+                        {/* {moment(record.true_email_date).format("LL")} */}
+                        {moment(record.true_email_date)
+                            .tz("America/New_York")
+                            .format("LLL")}
+                    </>
+                );
             },
         },
         {
@@ -217,8 +223,17 @@ export default function ProductivityIDPage({ auth }) {
             key: "email_date",
             width: "20%",
             ...getColumnSearchProps("email_date"),
-            render: (_, record, i) =>
-                addDaysSkippingWeekends(moment(record.true_email_date)),
+            render: (_, record, i) => {
+                return (
+                    <>
+                        {addDaysSkippingWeekends(
+                            moment(record.true_email_date)
+                                .tz("America/New_York")
+                                .format("LLL")
+                        )}
+                    </>
+                );
+            },
         },
         {
             title: "Case File",
@@ -244,7 +259,7 @@ export default function ProductivityIDPage({ auth }) {
                 if (record.is_reply) {
                     return <Tag color="red">Email Reply</Tag>;
                 } else {
-                    <Tag color="red">red</Tag>
+                    <Tag color="red">red</Tag>;
                 }
             },
         },
@@ -285,7 +300,15 @@ export default function ProductivityIDPage({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={Object.entries(tickets.result).map(res=>res[1]).sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ?? []}
+                            dataSource={
+                                Object.entries(tickets.result)
+                                    .map((res) => res[1])
+                                    .sort(
+                                        (a, b) =>
+                                            new Date(a.email_date) -
+                                            new Date(b.email_date)
+                                    ) ?? []
+                            }
                         />
                     </div>
                 )}
