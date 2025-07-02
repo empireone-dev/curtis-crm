@@ -304,10 +304,14 @@ export default function ProductRegistrationForm() {
                         NOTE: It must be clear and readable. Not valid if
                         required information is incomplete.
                     </div>
+                       <div className="text-red-500">
+                        Photos and Receipt must in be in the following file formats: .jpg, .jpeg, .png, .pdf
+                    </div>
                     <Upload
                         fileList={form?.fileList ?? []}
                         listType="picture"
                         {...props}
+                         accept=".jpg,.jpeg,.png,.pdf"
                     >
                         <Button icon={<UploadOutlined />}>
                             Click to upload receipt/bill of sale.
