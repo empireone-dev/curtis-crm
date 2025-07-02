@@ -217,7 +217,6 @@ export default function WebFormFormSection() {
                     <Input
                         onChange={formHandler}
                         name="phone2"
-                        required={true}
                         value={form?.phone2}
                         label="Secondary Phone Number"
                         type="phone"

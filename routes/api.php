@@ -103,9 +103,8 @@ Route::get('export_by_the_warehouse', [ActivityController::class, 'export_by_the
 Route::resource('notes', AgentNoteController::class);
 
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('tickets', TicketController::class);
-});
+Route::resource('tickets', TicketController::class);
+
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
 Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
 Route::post('escalated', [TicketController::class, 'escalated']);
