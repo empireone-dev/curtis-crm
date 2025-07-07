@@ -28,6 +28,36 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function export_process_ticket(Request $request)
+    {
+        // Convert DD-MM-YYYY to Carbon dates
+        $start = $request->start ? Carbon::createFromFormat('d-m-Y', $request->start)->startOfDay() : null;
+        $end = $request->end ? Carbon::createFromFormat('d-m-Y', $request->end)->endOfDay() : null;
+
+        // Base query
+        $query = Activity::whereIn('type', ['REFUND SHIPPED', 'REPLACEMENT SHIPPED'])->with(['ticket','cases_log','decision','refund','replacement','receipt','validate','replacement_shipped']);
+
+        if ($start && $end) {
+            $query->whereHas('ticket', function ($q) {
+                $q->where('status', 'PROCESSED TICKET');
+            });
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        // Get all relevant activities
+        $activities = $query->get();
+
+        // Group by ticket_id and get the latest activity for each
+        $latestActivities = $activities
+            ->sortByDesc('created_at')
+            ->unique('ticket_id') // or use $activity->ticket->id if ticket_id isn't directly available
+            ->values(); // reindex the collection
+
+        return response()->json([
+            'result' => $latestActivities,
+        ], 200);
+    }
+
     public function accept_acknowledge(Request $request)
     {
         $ticket = Ticket::where('id', $request->id)->first();

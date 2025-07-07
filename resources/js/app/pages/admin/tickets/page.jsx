@@ -10,6 +10,7 @@ import TicketsSearchSection from "./_sections/tickets-search-section";
 import TicketsExportFileSection from "./_sections/tickets-export-file-section";
 import TicketFilterSection from "./_sections/ticket-filter-section";
 import { get_products_thunk } from "../ticket_form/redux/ticket-form-thunk";
+import ExportProcessTicket from "./_sections/export-process-ticket";
 
 export default function TicketsPage() {
     const { search } = useSelector((state) => state.tickets);
@@ -40,6 +41,7 @@ export default function TicketsPage() {
                     >
                         CREATE TICKET
                     </button>
+                    <ExportProcessTicket />
                     <TicketsExportFileSection />
                 </div>
                 <div className="m-3 flex items-center justify-between gap-3 ">

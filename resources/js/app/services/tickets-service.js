@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export async function export_process_ticket_service(data) {
+    try {
+        const res = await axios.post("/api/export_process_ticket", data);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 
 
 export async function accept_acknowledge_service(data) {

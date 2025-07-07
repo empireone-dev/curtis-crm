@@ -17,7 +17,7 @@ class Activity extends Model
     ];
 
 
-     public function refund_shipped(): HasOne
+    public function refund_shipped(): HasOne
     {
         return $this->hasOne(Activity::class, 'ticket_id', 'ticket_id')
             ->where('type', '=', 'REFUND SHIPPED')
@@ -29,7 +29,7 @@ class Activity extends Model
             ->where('type', '=', 'REPLACEMENT SHIPPED')
             ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
     }
-     public function decision(): HasOne
+    public function decision(): HasOne
     {
         return $this->hasOne(Activity::class, 'ticket_id', 'ticket_id')
             ->where('type', '=', 'DECISION MAKING')
@@ -51,7 +51,7 @@ class Activity extends Model
         return $this->hasOne(Ticket::class, 'id', 'ticket_id');
     }
 
-     public function replacement(): HasOne
+    public function replacement(): HasOne
     {
         return $this->hasOne(Replacement::class, 'ticket_id', 'ticket_id');
     }
@@ -59,5 +59,14 @@ class Activity extends Model
     public function refund(): HasOne
     {
         return $this->hasOne(Refund::class, 'ticket_id', 'ticket_id');
+    }
+      public function receipt(): HasOne
+    {
+        return $this->hasOne(Receipt::class, 'ticket_id', 'ticket_id');
+    }
+    public function cases_log(): HasOne
+    {
+        return $this->hasOne(CasesLog::class, 'ticket_id', 'ticket_id')
+            ->latest('id'); // same as ->orderBy('id', 'desc')
     }
 }
