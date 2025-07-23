@@ -26,5 +26,10 @@ class CasesLog extends Model
     {
         return $this->hasOne(Ticket::class,'id','ticket_id');
     }
+
+     public function direct_email(): HasOne
+    {
+        return $this->hasOne(DirectEmail::class,'id','ticket_id');
+    }
     
 }

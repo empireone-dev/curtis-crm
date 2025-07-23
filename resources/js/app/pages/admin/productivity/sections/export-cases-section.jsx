@@ -87,8 +87,8 @@ const ExportExcel = () => {
                 agent.handled_direct_emails_notes.forEach((note) => {
                     directEmailNotes.push({
                         Agent: agent.agent,
-                        Ticket_ID: note?.id || "",
-                        Email: note?.ticket?.email || "",
+                        Ticket_ID: "N/A",
+                        Email: note?.direct_email?.email || "",
                         Case_Status: note.case_status || "",
                         Type: note.case_type || "",
                         Remarks: note.remarks || "",
