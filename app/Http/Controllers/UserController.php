@@ -168,7 +168,7 @@ class UserController extends Controller
                 $handled_cases = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'handled']
-                ])->with(['ticket']);;
+                ])->with(['ticket']);
 
                 if ($request->start == $request->end) {
                     $today = Carbon::parse($request->start)->toDateString();
@@ -185,7 +185,8 @@ class UserController extends Controller
                 $handled_direct_emails = CasesLog::where([
                     ['user_id', '=', $user->id],
                     ['log_from', '=', 'direct_emails']
-                ])->with(['ticket']);
+                ]);
+                
                 if ($request->start == $request->end) {
                     $today = Carbon::parse($request->start)->toDateString();
                     $handled_direct_emails->whereDate('created_at', $today);
