@@ -57,16 +57,38 @@ class AppScriptController extends Controller
                         $userWithSmallestCount = $user;
                     }
                 }
-                $de = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                if ($de) {
-                    $de->update([
-                        'isHide' => 'false'
+                // $de = DirectEmail::where([
+                //     ['threadId', '=', $value['threadId']],
+                //     ['email', '=', $value['from']]
+                // ])->first();
+                // if ($de) {
+                //     $de->update([
+                //         'isHide' => 'false'
+                //     ]);
+                // } else {
+                //     DirectEmail::create([
+                //         'email' => $value['from'],
+                //         'threadId' => $value['threadId'],
+                //         'user_id' => $userWithSmallestCount->id??58,
+                //         'count' => $value['count'] ?? 0,
+                //         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                //     ]);
+                // }
+
+                $existing = DirectEmail::where('threadId', $value['threadId'])
+                    ->where('email', $value['from'])
+                    ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
+                    ->first();
+
+                if ($existing) {
+                    $existing->update([
+                        'isHide' => false // no quotes if it's boolean
                     ]);
                 } else {
                     DirectEmail::create([
                         'email' => $value['from'],
                         'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id??58,
+                        'user_id' => $userWithSmallestCount->id ?? 58,
                         'count' => $value['count'] ?? 0,
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);
@@ -119,7 +141,7 @@ class AppScriptController extends Controller
                     DirectEmail::create([
                         'email' => $value['from'],
                         'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id??60,
+                        'user_id' => $userWithSmallestCount->id ?? 60,
                         'count' => $value['count'] ?? 0,
                         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
                     ]);
