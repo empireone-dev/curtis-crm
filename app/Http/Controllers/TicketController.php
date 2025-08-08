@@ -35,7 +35,7 @@ class TicketController extends Controller
         $end = $request->end ? Carbon::createFromFormat('d-m-Y', $request->end)->endOfDay() : null;
 
         // Base query
-        $query = Activity::whereIn('type', ['REFUND SHIPPED', 'REPLACEMENT SHIPPED'])->with(['ticket','cases_log','decision','refund','replacement','receipt','validate','replacement_shipped']);
+        $query = Activity::whereIn('type', ['REFUND SHIPPED', 'REPLACEMENT SHIPPED'])->with(['ticket', 'cases_log', 'decision', 'refund', 'replacement', 'receipt', 'validate', 'replacement_shipped']);
 
         if ($start && $end) {
             $query->whereHas('ticket', function ($q) {
@@ -196,6 +196,9 @@ class TicketController extends Controller
 
         if (isset($request->phone)) {
             $query->orWhere('phone', $request->input('phone'));
+            $tickets = $query->get();
+        }
+        if (isset($request->phone2)) {
             $query->orWhere('phone2', $request->input('phone2'));
             $tickets = $query->get();
         }
