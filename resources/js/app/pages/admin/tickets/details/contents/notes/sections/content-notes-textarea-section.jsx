@@ -7,7 +7,12 @@ import {
 import Loading from "@/app/layouts/components/loading";
 
 export default function ContentNotesTextareaSection() {
-    const [data, setData] = useState("");
+    const [data, setData] = useState(`Calling From: 
+Store:
+Purchase Date:
+Issue:
+Remarks:
+`);
     const [isLoading, setIsLoading] = useState(false);
     async function addNotes(e) {
         e.preventDefault();
@@ -29,7 +34,7 @@ export default function ContentNotesTextareaSection() {
                         value={data}
                         onChange={(e) => setData(e.target.value)}
                         id="chat"
-                        rows="3"
+                        rows="5"
                         className="block mx-4 p-3  w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Your message..."
                     />

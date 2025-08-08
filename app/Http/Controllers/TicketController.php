@@ -1654,6 +1654,7 @@ class TicketController extends Controller
                 $type = 'Warranty';
         }
 
+        //is the remember_token is not null the user cannot be assigned a ticket
         $users = User::where([
             ['role_id', '=', 5],
             ['agent_type', '=', $type],
