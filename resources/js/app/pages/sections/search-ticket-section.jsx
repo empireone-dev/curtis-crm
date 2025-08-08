@@ -105,6 +105,20 @@ export default function SearchTicketSection() {
                                 dispatch(
                                     setSearch({
                                         ...search,
+                                        phone: formatPhoneNumber(e),
+                                    })
+                                )
+                            }
+                            label="Phone (Primary or Secondary)"
+                            value={search?.phone ?? ""}
+                            name="phone"
+                        />
+                        <Input
+                            type="phone"
+                            onChange={(e) =>
+                                dispatch(
+                                    setSearch({
+                                        ...search,
                                         phone2: formatPhoneNumber(e),
                                     })
                                 )
