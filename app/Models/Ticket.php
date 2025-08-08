@@ -19,6 +19,7 @@ class Ticket extends Model
         'lname',
         'email',
         'phone',
+        'phone2',
         'item_number',
         'unit',
         'brand',

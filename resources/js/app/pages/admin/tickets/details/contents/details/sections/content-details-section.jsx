@@ -96,7 +96,11 @@ export default function ContentDetailsSection() {
                     </div>
 
                     <div className="flex gap-5">
-                        <div>{user.role_id == 1 && <EscalatedSection data={ticket}/>}</div>
+                        <div>
+                            {user.role_id == 1 && (
+                                <EscalatedSection data={ticket} />
+                            )}
+                        </div>
                         {ticket?.email && <ResendInitialEmail />}
                         <MoveTicketAssignement />
                         <button
@@ -149,6 +153,15 @@ export default function ContentDetailsSection() {
                         <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
                             <b>Purchase Date :</b>{" "}
                             {moment(ticket?.purchase_date).format("LL")}
+                        </dd>
+                    </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">
+                            <b>Calling From :</b> {formatPhone(ticket?.phone2)}
+                        </dt>
+                        <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
+                            {/* <b>Purchase Date :</b>{" "}
+                            {moment(ticket?.purchase_date).format("LL")} */}
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

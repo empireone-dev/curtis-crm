@@ -109,9 +109,9 @@ export default function SearchTicketSection() {
                                     })
                                 )
                             }
-                            label="Phone (Primary or Secondary)"
-                            value={search?.phone ?? ""}
-                            name="phone"
+                            label="Calling From"
+                            value={search?.phone2 ?? ""}
+                            name="phone2"
                         />
                         <Input
                             type="text"
