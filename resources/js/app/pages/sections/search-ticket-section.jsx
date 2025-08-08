@@ -105,7 +105,7 @@ export default function SearchTicketSection() {
                                 dispatch(
                                     setSearch({
                                         ...search,
-                                        phone: formatPhoneNumber(e),
+                                        phone2: formatPhoneNumber(e),
                                     })
                                 )
                             }
