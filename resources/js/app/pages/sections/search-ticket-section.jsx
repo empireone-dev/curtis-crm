@@ -109,7 +109,7 @@ export default function SearchTicketSection() {
                                     })
                                 )
                             }
-                            label="Phone (Primary or Secondary)"
+                            label="Phone"
                             value={search?.phone ?? ""}
                             name="phone"
                         />
@@ -243,7 +243,7 @@ export default function SearchTicketSection() {
                                 )}
                                 <th className="text-left p-3 px-5">Email</th>
                                 <th className="text-left p-3 px-5">Phone</th>
-                                <th className="text-left p-3 px-5">Secondary Phone</th>
+                                <th className="text-left p-3 px-5">Calling From</th>
                                 <th className="text-left p-3 px-5">Fullname</th>
                                 <th className="text-left p-3 px-5">
                                     Resolution
