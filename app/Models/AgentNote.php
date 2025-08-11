@@ -18,12 +18,16 @@ class AgentNote extends Model
 
     public function user(): HasOne
     {
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-       public function cases_logs(): HasMany
+    public function cases_logs(): HasMany
     {
-        return $this->hasMany(CasesLog::class,'ticket_id','ticket_id');
+        return $this->hasMany(CasesLog::class, 'ticket_id', 'ticket_id');
     }
 
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class, 'id', 'ticket_id');
+    }
 }

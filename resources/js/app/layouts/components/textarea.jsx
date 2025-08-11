@@ -22,6 +22,7 @@ export default function Textarea({
                             }
                             type={type}
                             id={name}
+                            rows={5}
                             name={name}
                             value={value}
                             className="peer text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500"

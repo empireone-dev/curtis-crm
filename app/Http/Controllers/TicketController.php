@@ -28,6 +28,26 @@ use Illuminate\Support\Facades\Storage;
 class TicketController extends Controller
 {
 
+    public function get_agent_note_by_contact_number(Request $request)
+    {
+        $number = preg_replace('/\D/', '', $request->phone); // Digits only
+
+        $notes = AgentNote::whereRaw(
+            "REGEXP_REPLACE(message, '[^0-9]', '') LIKE ?",
+            ['%' . $number . '%']
+        )
+            ->orderBy('id', 'desc')
+            ->with(['user', 'ticket'])
+            ->get();
+
+        if ($notes->isNotEmpty()) {
+            return response()->json(['result' => $notes], 200);
+        }
+
+        return response()->json(['error' => 'Data not found'], 404);
+    }
+
+
     public function export_process_ticket(Request $request)
     {
         // Convert DD-MM-YYYY to Carbon dates

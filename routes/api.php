@@ -140,6 +140,7 @@ Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request'
 Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
 Route::post('change_isExport', [TicketController::class, 'change_isExport']);
 Route::post('change_check_all', [TicketController::class, 'change_check_all']);
+Route::get('get_agent_note_by_contact_number', [TicketController::class, 'get_agent_note_by_contact_number']);
 
 
 Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);

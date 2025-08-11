@@ -44,6 +44,7 @@ export default function TicketCreateFormSection() {
         }
         return value;
     }
+    
     async function formHandler(value, name) {
         if (name == "phone" || name == "phone2") {
             dispatch(

@@ -8,7 +8,13 @@ export const ticketsCreateSlice = createSlice({
       country:null,
       state:null,
       call_type:'CF-Warranty Claim',
-      isSendEmail:true
+      isSendEmail:true,
+      remarks:`Calling From: 
+Store:
+Purchase Date:
+Issue:
+Remarks:
+`
     }
   },
   reducers: {
