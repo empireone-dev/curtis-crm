@@ -50,14 +50,16 @@ class TicketController extends Controller
             )
                 ->with(['user']) // make sure this relation exists
                 ->first();
-            return response()->json(['result' => [
-                'id' =>  random_int(100000, 999999),
-                'ticket_id' => $ticket->ticket_id ?? null,
-                'user_id' => $ticket->user->id ?? null,
-                'message' => $number ?? '',
-                'user' => $ticket->user ?? null,
-                'ticket' => $ticket,
-            ]], 200);
+            if ($ticket) {
+                return response()->json(['result' => [
+                    'id' =>  random_int(100000, 999999),
+                    'ticket_id' => $ticket->ticket_id ?? null,
+                    'user_id' => $ticket->user->id ?? null,
+                    'message' => $number ?? '',
+                    'user' => $ticket->user ?? null,
+                    'ticket' => $ticket,
+                ]], 200);
+            }
         }
         return response()->json(['error' => 'Data not found'], 404);
     }
