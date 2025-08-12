@@ -34,7 +34,7 @@ class TicketController extends Controller
         $number = preg_replace('/\D/', '', $request->phone); // Digits only
 
         $notes = AgentNote::whereRaw(
-            "REGEXP_REPLACE(message, '[get_agent_note_by_contact_number^0-9]', '') LIKE ?",
+            "REGEXP_REPLACE(message, '[^0-9]', '') LIKE ?",
             ['%' . $number . '%']
         )
             ->orderBy('id', 'desc')
