@@ -1740,12 +1740,13 @@ class TicketController extends Controller
 
             if ($request->user()) {
                 AgentNote::create([
-                    'user_id' => $auth->id ,
+                    'user_id'   => $auth->id,
                     'ticket_id' => $data->id,
-                    'message' => $request->remarks,
+                    'message'   => "Primary Number: {$request->phone} Secondary Number: {$request->phone2} {$request->remarks}",
                 ]);
+
                 Activity::create([
-                    'user_id' => $auth->id ,
+                    'user_id' => $auth->id,
                     'ticket_id' => $data->id,
                     'type' => 'TICKET CREATED',
                     'message' => json_encode($data)
@@ -1772,7 +1773,7 @@ class TicketController extends Controller
                 AgentNote::create([
                     'user_id' => $auth->id,
                     'ticket_id' => $data->id,
-                    'message' => $request->remarks,
+                    'message'   => "Primary Number: {$request->phone} Secondary Number: {$request->phone2} {$request->remarks}",
                 ]);
                 Activity::create([
                     'user_id' => $auth->id,
