@@ -54,8 +54,8 @@ class TicketController extends Controller
                 'id' =>  random_int(100000, 999999),
                 'ticket_id' => $ticket->ticket_id ?? null,
                 'user_id' => $ticket->user->id ?? null,
-                'message' => $number,
-                'user' => $ticket->user,
+                'message' => $number ?? '',
+                'user' => $ticket->user ?? null,
                 'ticket' => $ticket,
             ]], 200);
         }
