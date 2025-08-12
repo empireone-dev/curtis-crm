@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Http;
@@ -1725,6 +1726,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $user = User::where('email', $request->email)->first();
+        $auth = Auth::user();
         $account = [];
         $validation = $this->getValidation($request->call_type);
 
@@ -1738,12 +1740,12 @@ class TicketController extends Controller
 
             if ($request->user()) {
                 AgentNote::create([
-                    'user_id' => $request->user['id'] ?? 0,
+                    'user_id' => $auth->id ?? 0,
                     'ticket_id' => $data->id,
                     'message' => $request->remarks,
                 ]);
                 Activity::create([
-                    'user_id' => $request->user['id'] ?? 0,
+                    'user_id' => $auth->id ?? 0,
                     'ticket_id' => $data->id,
                     'type' => 'TICKET CREATED',
                     'message' => json_encode($data)
@@ -1768,12 +1770,12 @@ class TicketController extends Controller
 
             if ($request->user()) {
                 AgentNote::create([
-                    'user_id' => $request->user['id'] ?? 0,
+                    'user_id' => $auth->id ?? 0,
                     'ticket_id' => $data->id,
                     'message' => $request->remarks,
                 ]);
                 Activity::create([
-                    'user_id' => $request->user['id'] ?? 0,
+                    'user_id' => $auth->id ?? 0,
                     'ticket_id' => $data->id,
                     'type' => 'TICKET CREATED',
                     'message' => json_encode($data)
