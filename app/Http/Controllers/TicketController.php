@@ -1727,7 +1727,7 @@ class TicketController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $auth = Auth::user();
-        
+
         $validation = $this->getValidation($request->call_type);
 
         if ((!$user && $request->isHasEmail === true) || (!$user && $request->isHasEmail === 'true')) {
@@ -1952,9 +1952,9 @@ class TicketController extends Controller
             ]);
 
             AgentNote::create([
-                'user_id' => $account->id,
+                'user_id' => Auth::user()->id,
                 'ticket_id' => $data->id,
-                'message' => $request->remarks,
+                'message'   => "Primary Number: {$request->phone} Secondary Number: {$request->phone2} {$request->remarks}",
             ]);
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
 
@@ -1982,7 +1982,7 @@ class TicketController extends Controller
 
 
             Activity::create([
-                'user_id' => $request->user['id'],
+                'user_id' => Auth::user()->id,
                 'ticket_id' => $data->id,
                 'type' => 'TICKET CLOSED',
                 'message' => $request->reason
@@ -2017,7 +2017,7 @@ class TicketController extends Controller
 
             $account = User::where('email', '=', $t->email)->first();
             AgentNote::create([
-                'user_id' => $account->id,
+                'user_id' => Auth::user()->id,
                 'ticket_id' => $data->id,
                 'message' => $request->remarks,
             ]);
