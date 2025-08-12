@@ -44,28 +44,28 @@ class TicketController extends Controller
         if ($notes->isNotEmpty()) {
             return response()->json(['result' => $notes], 200);
         }
-        if ($notes->isEmpty()) {
-            $ticket = Ticket::whereRaw(
-                "REGEXP_REPLACE(phone, '[^0-9]', '') = ?",
-                [$number]
-            )
-                ->orWhereRaw(
-                    "REGEXP_REPLACE(phone2, '[^0-9]', '') = ?",
-                    [$number]
-                )
-                ->with(['user']) // make sure this relation exists
-                ->first();
-            if ($ticket) {
-                return response()->json(['result' => [
-                    'id' =>  random_int(100000, 999999),
-                    'ticket_id' => $ticket->id ?? null,
-                    'user_id' => $ticket->user->id ?? null,
-                    'message' => $number ?? '',
-                    'user' => $ticket->user ?? null,
-                    'ticket' => $ticket,
-                ]], 200);
-            }
-        }
+        // if ($notes->isEmpty()) {
+        //     $ticket = Ticket::whereRaw(
+        //         "REGEXP_REPLACE(phone, '[^0-9]', '') = ?",
+        //         [$number]
+        //     )
+        //         ->orWhereRaw(
+        //             "REGEXP_REPLACE(phone2, '[^0-9]', '') = ?",
+        //             [$number]
+        //         )
+        //         ->with(['user']) // make sure this relation exists
+        //         ->first();
+        //     if ($ticket) {
+        //         return response()->json(['result' => [
+        //             'id' =>  random_int(100000, 999999),
+        //             'ticket_id' => $ticket->id ?? null,
+        //             'user_id' => $ticket->user->id ?? null,
+        //             'message' => $number ?? '',
+        //             'user' => $ticket->user ?? null,
+        //             'ticket' => $ticket,
+        //         ]], 200);
+        //     }
+        // }
         return response()->json(['error' => 'Data not found'], 404);
     }
 
