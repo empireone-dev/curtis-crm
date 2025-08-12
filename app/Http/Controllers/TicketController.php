@@ -2019,7 +2019,7 @@ class TicketController extends Controller
             AgentNote::create([
                 'user_id' => Auth::user()->id,
                 'ticket_id' => $data->id,
-                'message' => $request->remarks,
+                'message'   => "Primary Number: {$request->phone} Secondary Number: {$request->phone2} {$request->remarks}",
             ]);
 
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true  || $request->email && $request->isSendEmail) {
