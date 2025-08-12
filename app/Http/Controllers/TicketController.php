@@ -48,6 +48,10 @@ class TicketController extends Controller
                 "REGEXP_REPLACE(phone, '[^0-9]', '') = ?",
                 [$number]
             )
+                ->orWhereRaw(
+                    "REGEXP_REPLACE(secondary_phone, '[^0-9]', '') = ?",
+                    [$number]
+                )
                 ->with(['user']) // make sure this relation exists
                 ->first();
             if ($ticket) {
