@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AgentNote;
 use App\Models\CasesLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AgentNoteController extends Controller
 {
@@ -26,9 +27,10 @@ class AgentNoteController extends Controller
 
     public function store(Request $request)
     {
+        $auth = Auth::user();
 
         AgentNote::create([
-            'user_id' => $request->user_id,
+            'user_id' => $auth->id,
             'ticket_id' => $request->ticket_id,
             'message' => $request->message,
         ]);

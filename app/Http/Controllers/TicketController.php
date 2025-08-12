@@ -1727,7 +1727,7 @@ class TicketController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $auth = Auth::user();
-        $account = [];
+        
         $validation = $this->getValidation($request->call_type);
 
         if ((!$user && $request->isHasEmail === true) || (!$user && $request->isHasEmail === 'true')) {
