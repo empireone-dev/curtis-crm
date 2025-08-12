@@ -42,7 +42,8 @@ class TicketController extends Controller
 
         if ($notes->isNotEmpty()) {
             return response()->json(['result' => $notes], 200);
-        }else if ($notes->isEmpty()) {
+        }
+        if ($notes->isEmpty()) {
             $ticket = Ticket::whereRaw(
                 "REGEXP_REPLACE(phone, '[^0-9]', '') = ?",
                 [$number]
@@ -53,7 +54,7 @@ class TicketController extends Controller
                 )
                 ->with(['user']) // make sure this relation exists
                 ->first();
-            if ($ticket->isNotEmpty()) {
+            if ($ticket) {
                 return response()->json(['result' => [
                     'id' =>  random_int(100000, 999999),
                     'ticket_id' => $ticket->ticket_id ?? null,
