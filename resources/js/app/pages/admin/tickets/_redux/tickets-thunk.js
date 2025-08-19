@@ -1,4 +1,5 @@
 import {
+    get_recall_service,
     get_tickets_service,
     update_tickets_status_service,
 } from "@/app/services/tickets-service";
@@ -10,6 +11,14 @@ import {
     get_notes_by_id_service,
 } from "@/app/services/add-notes-service";
 import { get_internals_by_ticket_id_service } from "@/app/services/internals-service";
+
+
+export function get_recall_thunk(data) {
+    return async function (dispatch, getState) {
+        const result = await get_recall_service();
+        dispatch(ticketsSlice.actions.setRecalls(result));
+    };
+}
 
 export function select_row_table_thunk(data) {
     return async function (dispatch, getState) {

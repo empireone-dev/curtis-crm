@@ -11,6 +11,7 @@ import {
     UploadOutlined,
     UserOutlined,
     DownOutlined,
+    PhoneOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme, Dropdown, Space } from "antd";
 import {
@@ -130,6 +131,14 @@ const AdministratorLayout = ({ children }) => {
                 router.visit("/administrator/product_registration");
             },
         },
+        {
+            key: "11",
+            icon: <PhoneOutlined className="h-6" />,
+            label: "Recall",
+            onClick: () => {
+                router.visit("/administrator/recall");
+            },
+        },
     ];
 
     let active = "0";
@@ -153,6 +162,8 @@ const AdministratorLayout = ({ children }) => {
         active = "9";
     } else if (path == "product_registration") {
         active = "10";
+    } else if (path == "recall") {
+        active = "11";
     }
     const items = [
         {

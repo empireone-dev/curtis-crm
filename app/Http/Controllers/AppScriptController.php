@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DirectEmail;
+use App\Models\Recall;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,7 +22,63 @@ class AppScriptController extends Controller
         // Return the matched sequences (if any)
         return $matches[0] ?? [];
     }
+    public function get_recall_unread_email(Request $request)
+    {
+        foreach ($request->all() as $value) {
 
+            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
+            if ($ticket) {
+                if ($value['from'] != 'support2@curtiscs.com') {
+                    $ticket->update([
+                        'cases_status' => 'handled',
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'is_reply' => 'true'
+                    ]);
+                }
+            }
+            if ($value['ticket_id'] == 'direct_email') {
+                // $users = User::where([
+                //     ['role_id', '=', 5],
+                //     ['agent_type', '=', "Warranty"],
+                //     ['remember_token', '=', null],
+                // ])->get();
+                // $userWithSmallestCount = null;
+                // $smallestCount = PHP_INT_MAX; 
+
+                // foreach ($users as $user) {
+                //     $count = DirectEmail::where([
+                //         ['user_id', '=', $user->id],
+                //         ['isHide', '=', 'false'],
+                //     ])->count();
+
+                //     if ($count < $smallestCount) {
+                //         $smallestCount = $count;
+                //         $userWithSmallestCount = $user;
+                //     }
+                // }
+
+                $existing = DirectEmail::where('threadId', $value['threadId'])
+                    ->where('email', $value['from'])
+                    ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
+                    ->first();
+
+                if ($existing) {
+                    $existing->update([
+                        'isHide' => false // no quotes if it's boolean
+                    ]);
+                } else {
+                    Recall::create([
+                        'email' => $value['from'],
+                        'threadId' => $value['threadId'],
+                        // 'user_id' => $userWithSmallestCount->id ?? 58,
+                        'count' => $value['count'] ?? 0,
+                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+        }
+        return response()->json(['message' => 'Emails processed successfully'], 200);
+    }
     public function get_warranty_unread_email(Request $request)
     {
 

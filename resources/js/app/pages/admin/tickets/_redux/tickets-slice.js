@@ -19,6 +19,8 @@ export const ticketsSlice = createSlice({
         internals: [],
         asc: [],
         selectedRowKeys: [],
+        recalls: [],
+        recall:{}
     },
     reducers: {
         setTickets: (state, action) => {
@@ -60,11 +62,19 @@ export const ticketsSlice = createSlice({
         setSelectedRowKeys: (state, action) => {
             state.selectedRowKeys = action.payload;
         },
+        setRecalls: (state, action) => {
+            state.recalls = action.payload;
+        },
+        setRecall: (state, action) => {
+            state.recall = action.payload;
+        },
     },
 });
 export const {
     setTickets,
     setPage,
+    setRecalls,
+    setRecall,
     setSearch,
     setTicket,
     setActivities,

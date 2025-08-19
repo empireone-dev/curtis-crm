@@ -82,6 +82,8 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/page');
         })->name('tickets');
 
+
+
         Route::get('/details/{ticketid}/files', function () {
             return Inertia::render('admin/tickets/details/contents/files/page');
         })->name('admin.tickets.details.files');
@@ -165,6 +167,9 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/create/page');
         })->name('tickets.creates');
     });
+    Route::get('/recall', function () {
+        return Inertia::render('admin/recall/page');
+    })->name('recall');
     Route::get('/product_registration', function () {
         return Inertia::render('admin/product_registration/page');
     });
@@ -214,7 +219,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     // Route::get('/users/{userid}/cases/assigned_cases', function () {
     //     return Inertia::render('admin/users/cases/assigned_cases/page');
     // })->name('users.cases.assigned_cases');
-    
+
     Route::get('/users/{userid}/cases/remaining_cases', function () {
         return Inertia::render('admin/users/cases/remaining_cases/page');
     })->name('users.cases.remaining_cases');
@@ -222,7 +227,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     Route::get('/users/{userid}', function () {
         return Inertia::render('admin/users/tickets/page');
     })->name('users.tickets');
-    
+
 
     Route::get('/brands', function () {
         return Inertia::render('admin/brands/page');
@@ -239,7 +244,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     Route::get('/email_template/create', function () {
         return Inertia::render('admin/email_template/create/page');
     })->name('create.email_template.id');
-    
+
     Route::get('/email_template/{id}', function () {
         return Inertia::render('admin/email_template/id/page');
     })->name('email_template.id');
@@ -543,12 +548,12 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
         return Inertia::render('agent/productivity/page');
     })->name('agent.productivity');
 
-      Route::get('/productivity/{id}', function () {
+    Route::get('/productivity/{id}', function () {
         return Inertia::render('agent/productivity/id/page');
     });
 
 
-      Route::get('/productivity/direct_emails/{id}', function () {
+    Route::get('/productivity/direct_emails/{id}', function () {
         return Inertia::render('agent/productivity/direct_emails/page');
     });
 

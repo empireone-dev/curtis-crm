@@ -21,6 +21,7 @@ use App\Http\Controllers\InternalController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductRegistrationController;
+use App\Http\Controllers\RecallController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RepairController;
@@ -101,8 +102,6 @@ Route::resource('role', RoleController::class);
 Route::resource('activities', ActivityController::class);
 Route::get('export_by_the_warehouse', [ActivityController::class, 'export_by_the_warehouse']);
 Route::resource('notes', AgentNoteController::class);
-
-
 Route::resource('tickets', TicketController::class);
 
 Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
@@ -145,6 +144,7 @@ Route::get('get_agent_note_by_contact_number', [TicketController::class, 'get_ag
 
 Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
 Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
+Route::post('get_recall_unread_email', [AppScriptController::class, 'get_recall_unread_email']);
 
 
 
