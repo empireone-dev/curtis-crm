@@ -57,7 +57,7 @@ class AppScriptController extends Controller
                 //     }
                 // }
 
-                $existing = DirectEmail::where('threadId', $value['threadId'])
+                $existing = Recall::where('threadId', $value['threadId'])
                     ->where('email', $value['from'])
                     ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
                     ->first();
