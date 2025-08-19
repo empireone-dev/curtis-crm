@@ -26,56 +26,57 @@ class AppScriptController extends Controller
     {
         foreach ($request->all() as $value) {
 
-            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
-            if ($ticket) {
-                if ($value['from'] != 'support2@curtiscs.com') {
-                    $ticket->update([
-                        'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true'
-                    ]);
-                }
+            // $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
+            // if ($ticket) {
+            //     if ($value['from'] != 'support2@curtiscs.com') {
+            //         $ticket->update([
+            //             'cases_status' => 'handled',
+            //             'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+            //             'is_reply' => 'true'
+            //         ]);
+            //     }
+            // }
+            $existing = Recall::where('threadId', $value['threadId'])
+                ->where('email', $value['from'])
+                ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
+                ->first();
+
+            if ($existing) {
+                $existing->update([
+                    'isHide' => false // no quotes if it's boolean
+                ]);
+            } else {
+                Recall::create([
+                    'email' => $value['from'],
+                    'threadId' => $value['threadId'],
+                    // 'user_id' => $userWithSmallestCount->id ?? 58,
+                    'count' => $value['count'] ?? 0,
+                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                ]);
             }
-            if ($value['ticket_id'] == 'direct_email') {
-                // $users = User::where([
-                //     ['role_id', '=', 5],
-                //     ['agent_type', '=', "Warranty"],
-                //     ['remember_token', '=', null],
-                // ])->get();
-                // $userWithSmallestCount = null;
-                // $smallestCount = PHP_INT_MAX; 
+            // if ($value['ticket_id'] == 'direct_email') {
+            // $users = User::where([
+            //     ['role_id', '=', 5],
+            //     ['agent_type', '=', "Warranty"],
+            //     ['remember_token', '=', null],
+            // ])->get();
+            // $userWithSmallestCount = null;
+            // $smallestCount = PHP_INT_MAX; 
 
-                // foreach ($users as $user) {
-                //     $count = DirectEmail::where([
-                //         ['user_id', '=', $user->id],
-                //         ['isHide', '=', 'false'],
-                //     ])->count();
+            // foreach ($users as $user) {
+            //     $count = DirectEmail::where([
+            //         ['user_id', '=', $user->id],
+            //         ['isHide', '=', 'false'],
+            //     ])->count();
 
-                //     if ($count < $smallestCount) {
-                //         $smallestCount = $count;
-                //         $userWithSmallestCount = $user;
-                //     }
-                // }
+            //     if ($count < $smallestCount) {
+            //         $smallestCount = $count;
+            //         $userWithSmallestCount = $user;
+            //     }
+            // }
 
-                $existing = Recall::where('threadId', $value['threadId'])
-                    ->where('email', $value['from'])
-                    ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
-                    ->first();
 
-                if ($existing) {
-                    $existing->update([
-                        'isHide' => false // no quotes if it's boolean
-                    ]);
-                } else {
-                    Recall::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        // 'user_id' => $userWithSmallestCount->id ?? 58,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
-                    ]);
-                }
-            }
+            // }
         }
         return response()->json(['message' => 'Emails processed successfully'], 200);
     }
