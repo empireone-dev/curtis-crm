@@ -2,7 +2,25 @@ import axios from "axios";
 
 export async function get_recall_service() {
     try {
-        const res = await axios.get("/api/recall", );
+        const res = await axios.get("/api/recall");
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function get_recall_by_id_service() {
+    try {
+        const res = await axios.get("/api/recall/"+window.location.pathname.split('/')[3]);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function create_recall_service(data) {
+    try {
+        const res = await axios.post("/api/recall_log", data);
         return res.data;
     } catch (error) {
         return [];

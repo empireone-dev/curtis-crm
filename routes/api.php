@@ -22,6 +22,7 @@ use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductRegistrationController;
 use App\Http\Controllers\RecallController;
+use App\Http\Controllers\RecallLogController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RepairController;
@@ -145,6 +146,10 @@ Route::get('get_agent_note_by_contact_number', [TicketController::class, 'get_ag
 Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
 Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
 Route::post('get_recall_unread_email', [AppScriptController::class, 'get_recall_unread_email']);
+
+
+Route::resource('recall', RecallController::class);
+Route::resource('recall_log', RecallLogController::class);
 
 
 

@@ -1,0 +1,6 @@
+import{r as o,j as e,s as n}from"./page-2UpeYRev.js";import{f as u,e as c}from"./tickets-thunk-dYmF8qWD.js";import{L as d}from"./loading-BfdWBXQD.js";import"./tickets-service-BZozyF9u.js";import"./activities-service-BaJCmKbj.js";import"./internals-service-B9kSbxh_.js";function b(){const[s,a]=o.useState(`Calling From: 
+Store:
+Purchase Date:
+Issue:
+Remarks:
+`),[i,r]=o.useState(!1);async function l(t){t.preventDefault(),r(!0),await n.dispatch(u(s)),await n.dispatch(c()),r(!1),a("")}return e.jsx("div",{className:"my-3",children:e.jsxs("form",{onSubmit:l,children:[e.jsx("label",{htmlFor:"chat",className:"sr-only",children:"Your message"}),e.jsxs("div",{className:"flex flex-col items-end p-3 rounded-lg ",children:[e.jsx("textarea",{required:!0,value:s,onChange:t=>a(t.target.value),id:"chat",rows:"5",className:"block mx-4 p-3  w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ",placeholder:"Your message..."}),e.jsx("div",{className:"flex items-center justify-between px-3 py-2 ",children:e.jsx("button",{type:"submit",className:"inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800",children:i?e.jsx(d,{}):"POST COMMENT"})})]})]})})}export{b as default};

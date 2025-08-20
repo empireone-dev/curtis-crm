@@ -1,4 +1,5 @@
 import {
+    get_recall_by_id_service,
     get_recall_service,
     get_tickets_service,
     update_tickets_status_service,
@@ -17,6 +18,13 @@ export function get_recall_thunk(data) {
     return async function (dispatch, getState) {
         const result = await get_recall_service();
         dispatch(ticketsSlice.actions.setRecalls(result));
+    };
+}
+
+export function get_recall_by_id_thunk() {
+    return async function (dispatch, getState) {
+        const result = await get_recall_by_id_service();
+        dispatch(ticketsSlice.actions.setRecall(result));
     };
 }
 
