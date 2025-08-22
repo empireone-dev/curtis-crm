@@ -124,7 +124,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
             );
             newFileList.forEach((file) => {
                 if (data.resp.length !== 0) {
-                    // console.log('newFileLists',data.resp)
+                    console.log('newFileLists',file.status)
                     if (file.status === "uploading") {
                         setFileList(newFileList);
                     }else{
@@ -204,7 +204,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                 <Upload
                     multiple
                     method="GET"
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                    // action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture"
                     fileList={fileList}
                     onPreview={handlePreview}
