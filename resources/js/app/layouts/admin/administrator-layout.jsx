@@ -136,7 +136,7 @@ const AdministratorLayout = ({ children }) => {
             icon: <PhoneOutlined className="h-6" />,
             label: "Recall",
             onClick: () => {
-                router.visit("/administrator/recall");
+                router.visit("/administrator/recall/stats");
             },
         },
     ];

@@ -150,6 +150,9 @@ Route::post('get_recall_unread_email', [AppScriptController::class, 'get_recall_
 
 Route::resource('recall', RecallController::class);
 Route::resource('recall_log', RecallLogController::class);
+Route::get('recall_stats', [RecallLogController::class, 'get_recall_unread_email']);
+
+
 
 
 

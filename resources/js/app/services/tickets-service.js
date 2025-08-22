@@ -1,14 +1,22 @@
 import axios from "axios";
 
-export async function get_recall_service() {
+export async function get_recall_stats_service() {
     try {
-        const res = await axios.get("/api/recall");
+        const res = await axios.get("/api/recall_stats");
         return res.data;
     } catch (error) {
         return [];
     }
 }
 
+export async function get_recall_service() {
+    try {
+        const res = await axios.get("/api/recall"+window.location.search);
+        return res.data;
+    } catch (error) {
+        return [];
+    }
+}
 export async function get_recall_by_id_service() {
     try {
         const res = await axios.get("/api/recall/"+window.location.pathname.split('/')[3]);

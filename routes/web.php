@@ -170,6 +170,9 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
     Route::get('/recall', function () {
         return Inertia::render('admin/recall/page');
     })->name('recall');
+    Route::get('/recall/stats', function () {
+        return Inertia::render('admin/recall/page2');
+    })->name('recall.stats');
     Route::get('/recall/{id}', function () {
         return Inertia::render('admin/recall/details/page');
     });

@@ -31,7 +31,7 @@ export default function DirectEmailTable({ account }) {
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
     }));
-    console.log("datadata", recalls);
+    console.log("datadata", newDataTable);
     const columns = [
         {
             title: "Assigned to",
