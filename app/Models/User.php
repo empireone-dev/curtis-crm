@@ -53,6 +53,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id', 'id');
+    }
     public function role(): HasOne
     {
         return $this->hasOne(Role::class, 'id', 'role_id');

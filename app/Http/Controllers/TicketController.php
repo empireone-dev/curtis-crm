@@ -1684,44 +1684,28 @@ class TicketController extends Controller
 
     public function queueing($call_type)
     {
-        $type = 'Warranty';
-        switch ($call_type) {
-            case 'Parts':
-                $type = 'Parts';
-                break;
-            case 'CF-Warranty Claim':
-                $type = 'Warranty';
-                break;
-            case 'TS-Tech Support':
-                $type = 'Tech';
-                break;
-            default:
-                $type = 'Warranty';
-        }
+        $map = [
+            'Parts' => 'Parts',
+            'CF-Warranty Claim' => 'Warranty',
+            'TS-Tech Support' => 'Tech',
+        ];
 
-        //is the remember_token is not null the user cannot be assigned a ticket
-        $users = User::where([
+        $type = $map[$call_type] ?? 'Warranty';
+
+        // Only get eligible users
+        $userWithSmallestCount = User::where([
             ['role_id', '=', 5],
             ['agent_type', '=', $type],
             ['remember_token', '=', null],
         ])
-            ->get();
-        $userWithSmallestCount = null;
-        $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+            ->withCount(['tickets' => function ($query) {
+                $query->whereDate('created_at', Carbon::today()); // ✅ only today’s tickets
+            }])
+            ->orderBy('tickets_count', 'asc')
+            ->first();
 
-        foreach ($users as $user) {
-            $count = Ticket::where('user_id', $user->id)->count();
-
-            if ($count < $smallestCount) {
-                $smallestCount = $count;
-                $userWithSmallestCount = $user;
-            }
-        }
-        return $userWithSmallestCount->id;
-        // $usersWithSmallestCount contains all users with the smallest count of tickets
+        return $userWithSmallestCount?->id;
     }
-
-
 
     public function store(Request $request)
     {
