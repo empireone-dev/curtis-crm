@@ -42,183 +42,100 @@ class UserController extends Controller
     public function show(Request $request, $role_id)
     {
         $today = Carbon::today()->toDateString();
-        $users = User::where('role_id', '=', $role_id)
-            ->orWhere('role_id', '=', 1)
-            ->with('role')->get();
+
+        // Get all users (role_id OR admin)
+        $users = User::where(function ($q) use ($role_id) {
+            $q->where('role_id', $role_id)
+                ->orWhere('role_id', 1)
+                ->whereIn('agent_type', ['Warranty', 'Parts']);
+        })
+            ->with('role')
+            ->get();
 
         if ($role_id == 5) {
             foreach ($users as $user) {
-
-                $overdue_cases = Ticket::where([
-                    ['user_id', '=', $user->id],
-                    ['ticket_id', '<>', null],
-                    ['cases_status', '<>', 'hide'],
-                    ['is_reply', '=', 'true'],
-                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-                ])->get();
-
-                foreach ($overdue_cases as &$value) {
-                    $emailDate = Carbon::parse($value->email_date);
-                    $dayOfWeek = $emailDate->dayOfWeekIso;
-                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                        $addDay = 4;
-                    } elseif ($dayOfWeek == 6) {
-                        $addDay = 3;
-                    } elseif ($dayOfWeek == 7) {
-                        $addDay = 2;
-                    } else {
-                        $addDay = 2;
-                    }
-                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-                }
-
-                $upcoming_dues = $overdue_cases->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date > $today;
-                })->count();
-                $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date < $today;
-                })->count();
-
-                //End over due 
-
-                //start due today
-                $cases_due_today = Ticket::where([
-                    ['user_id', '=', $user->id],
-                    ['ticket_id', '<>', null],
-                    ['cases_status', '<>', 'hide'],
-                    ['is_reply', '=', 'true'],
-                    ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-                ])->get();
-
-                foreach ($cases_due_today as &$value) {
-                    $emailDate = Carbon::parse($value->email_date);
+                // --------------------------
+                // Helper: adjust email_date
+                // --------------------------
+                $adjustDate = function ($date) {
+                    $emailDate = Carbon::parse($date);
                     $dayOfWeek = $emailDate->dayOfWeekIso;
 
-                    // Determine the number of days to add
-                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                        $addDay = 4;
-                    } elseif ($dayOfWeek == 6) {
-                        $addDay = 3;
-                    } elseif ($dayOfWeek == 7) {
-                        $addDay = 2;
+                    return $emailDate->addDays(
+                        in_array($dayOfWeek, [4, 5]) ? 4 : ($dayOfWeek == 6 ? 3 : 2)
+                    )->toDateString();
+                };
+
+                // --------------------------
+                // Tickets
+                // --------------------------
+                $tickets = Ticket::where('user_id', $user->id)
+                    ->whereNotNull('ticket_id')
+                    ->where('cases_status', '<>', 'hide')
+                    ->where('is_reply', 'true')
+                    ->where('call_type', $user->agent_type === 'Warranty'
+                        ? 'CF-Warranty Claim'
+                        : 'Parts')
+                    ->get()
+                    ->map(function ($t) use ($adjustDate) {
+                        $t->email_date = $adjustDate($t->email_date);
+                        return $t;
+                    });
+
+                $user->cases_due_today = $tickets->where('email_date', $today)->count();
+                $user->overdue_cases   = $tickets->where('email_date', '<', $today)->count();
+                $user->upcoming_dues   = $tickets->where('email_date', '>', $today)->count();
+
+                // --------------------------
+                // Direct Emails
+                // --------------------------
+                $directEmails = DirectEmail::where('user_id', $user->id)
+                    ->where('isHide', '<>', 'true')
+                    ->get()
+                    ->map(function ($d) use ($adjustDate) {
+                        $d->email_date = $adjustDate($d->email_date);
+                        return $d;
+                    });
+
+                $user->direct_emails_due_today    = $directEmails->where('email_date', $today)->count();
+                $user->overdue_direct_emails      = $directEmails->where('email_date', '<', $today)->count();
+                $user->upcoming_dues_direct_emails = $directEmails->where('email_date', '>', $today)->count();
+
+                // --------------------------
+                // Handled Cases
+                // --------------------------
+                $handledCases = CasesLog::where('user_id', $user->id)
+                    ->where('log_from', 'handled')
+                    ->with('ticket');
+
+                $handledDirect = CasesLog::where('user_id', $user->id)
+                    ->where('log_from', 'direct_emails')
+                    ->with('direct_email');
+
+                if ($request->start && $request->end) {
+                    if ($request->start == $request->end) {
+                        $date = Carbon::parse($request->start)->toDateString();
+                        $handledCases->whereDate('created_at', $date);
+                        $handledDirect->whereDate('created_at', $date);
                     } else {
-                        $addDay = 2;
+                        $handledCases->whereBetween('created_at', [$request->start, $request->end]);
+                        $handledDirect->whereBetween('created_at', [$request->start, $request->end]);
                     }
-                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-                }
-                $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date === $today;
-                })->count();
-                //End due today
-
-                // $overdue_direct_emails = DirectEmail::where('user_id', $user->id)
-                //     ->whereRaw('DATE_ADD(updated_at, INTERVAL 4 DAY) <= ?', [$today])
-                //     ->count();
-
-                $overdue_direct_emails = DirectEmail::where([['user_id', '=', $user->id], ['isHide', '<>', 'true']])->get();
-                foreach ($overdue_direct_emails as &$value) {
-                    $emailDate = Carbon::parse($value->email_date);
-                    $dayOfWeek = $emailDate->dayOfWeekIso;
-                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                        $addDay = 4;
-                    } elseif ($dayOfWeek == 6) {
-                        $addDay = 3;
-                    } elseif ($dayOfWeek == 7) {
-                        $addDay = 2;
-                    } else {
-                        $addDay = 2;
-                    }
-                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-                }
-                $upcoming_dues_direct_emails = $overdue_direct_emails->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date > $today;
-                })->count();
-                $overdue_direct_emails = $overdue_direct_emails->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date < $today;
-                })->count();
-
-
-                // $direct_emails_due_today = DirectEmail::where('user_id', $user->id)
-                //     ->whereDate(DB::raw('DATE_ADD(updated_at, INTERVAL 2 DAY)'), '=', $today)
-                //     ->count();
-
-                $direct_emails_due_today = DirectEmail::where([['user_id', '=', $user->id], ['isHide', '<>', 'true']])->get();
-                foreach ($direct_emails_due_today as &$value) {
-                    $emailDate = Carbon::parse($value->email_date);
-                    $dayOfWeek = $emailDate->dayOfWeekIso;
-
-                    // Determine the number of days to add
-                    if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                        $addDay = 4;
-                    } elseif ($dayOfWeek == 6) {
-                        $addDay = 3;
-                    } elseif ($dayOfWeek == 7) {
-                        $addDay = 2;
-                    } else {
-                        $addDay = 2;
-                    }
-                    $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-                }
-                $direct_emails_due_today = $direct_emails_due_today->filter(function ($ticket) use ($today) {
-                    return $ticket->email_date === $today;
-                })->count();
-
-
-
-                $handled_cases = CasesLog::where([
-                    ['user_id', '=', $user->id],
-                    ['log_from', '=', 'handled']
-                ])->with(['ticket']);
-
-                if ($request->start == $request->end) {
-                    $today = Carbon::parse($request->start)->toDateString();
-                    $handled_cases->whereDate('created_at', $today);
-                } else if ($request->start && $request->end) {
-                    $handled_cases->whereBetween('created_at', [$request->start, $request->end]);
                 } else {
-                    $today = Carbon::today()->toDateString();
-                    $handled_cases->whereDate('created_at', $today);
+                    $handledCases->whereDate('created_at', $today);
+                    $handledDirect->whereDate('created_at', $today);
                 }
-                $handled_cases_count = $handled_cases->count();
-                $handled_cases_notes = $handled_cases;
 
-                $handled_direct_emails = CasesLog::where([
-                    ['user_id', '=', $user->id],
-                    ['log_from', '=', 'direct_emails']
-                ])->with(['direct_email']);
-                
-                if ($request->start == $request->end) {
-                    $today = Carbon::parse($request->start)->toDateString();
-                    $handled_direct_emails->whereDate('created_at', $today);
-                } else if ($request->start && $request->end) {
-                    $handled_direct_emails->whereBetween('created_at', [$request->start, $request->end]);
-                } else {
-                    $today = Carbon::today()->toDateString();
-                    $handled_direct_emails->whereDate('created_at', $today);
-                }
-                $handled_direct_emails_count = $handled_direct_emails->count();
-                $handled_direct_emails_notes = $handled_direct_emails;
-
-                // Add handled_count attribute to the user instance
-                $user->handled_cases = $handled_cases_count;
-                $user->handled_cases_notes = $handled_cases_notes->get();
-                $user->cases_due_today = $cases_due_today;
-                $user->overdue_cases = $overdue_cases;
-                $user->upcoming_dues = $upcoming_dues;
-                $user->upcoming_dues_direct_emails = $upcoming_dues_direct_emails;
-                $user->overdue_direct_emails = $overdue_direct_emails;
-                $user->direct_emails_due_today = $direct_emails_due_today;
-                $user->handled_direct_emails = $handled_direct_emails_count;
-                $user->handled_direct_emails_notes = $handled_direct_emails_notes->get();
+                $user->handled_cases              = $handledCases->count();
+                $user->handled_cases_notes        = $handledCases->get();
+                $user->handled_direct_emails      = $handledDirect->count();
+                $user->handled_direct_emails_notes = $handledDirect->get();
             }
         }
 
-
-
-        return response()->json([
-            'data' => $users,
-        ], 200);
+        return response()->json(['data' => $users], 200);
     }
+
 
 
     public function store(Request $request)
