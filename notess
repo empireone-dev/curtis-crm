@@ -1,3 +1,10 @@
+* dili ma creatan ug ticket id. add generate ticket id if no ticket id
+* ang tickets page ni missy dapat mag una ang bag-ong processed ticket sa parts and warranty. sample: PS050925102519 
+* add filter sa parts and warranty tickets. status date asc and desc.
+* rename processed at.
+* dili ma kita ang notes ni ysabel sa paghuman ug callback. https://curtis-css.com/agent/tickets/details/106173/callback (willing to buy)
+
+
 
     public function show(Request $request, $role_id)
     {

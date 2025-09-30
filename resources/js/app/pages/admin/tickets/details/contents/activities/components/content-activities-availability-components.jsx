@@ -99,6 +99,9 @@ export default function ContentActivitiesAvailabilityComponents({ data }) {
                         </div>
                     </div>
                 </div>
+                 <div className="flex gap-3  my-3">
+                        <div className="font-black text-red-500">CallBack Notes: {data?.ticket?.callback_notes??''}</div>
+                    </div>
                 <div className="flex flex-col w-full ">
                     <div className="flex gap-3  my-3">
                         <div className="font-black">INTERNALS INFORMATION</div>
