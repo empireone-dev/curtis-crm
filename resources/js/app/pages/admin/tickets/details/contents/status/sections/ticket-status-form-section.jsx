@@ -24,43 +24,39 @@ export default function TicketStatusFormSection() {
     }
     const status = [
         {
-            value: 0,
-            name: "",
-        },
-        {
-            value: 1,
+            value: 'Callback Sucessful - Fixed',
             name: "Callback Sucessful - Fixed",
         },
         {
-            value: 2,
+            value: 'Callback Sucessful - Not Fixed',
             name: "Callback Sucessful - Not Fixed",
         },
         {
-            value: 3,
+            value: 'No Answer - End Call',
             name: "No Answer - End Call",
         },
         {
-            value: 4,
+            value: 'No Answer - Left Voicemail',
             name: "No Answer - Left Voicemail",
         },
         {
-            value: 5,
+            value: 'Email sent',
             name: "Email sent",
         },
         {
-            value: 6,
+            value: 'Closed resolved - agent resolution',
             name: "Closed resolved - agent resolution",
         },
         {
-            value: 7,
+            value: 'Closed resolved - customer resolution',
             name: "Closed resolved - customer resolution",
         },
         {
-            value: 8,
+            value: 'Closed for warranty',
             name: "Closed for warranty",
         },
         {
-            value: 9,
+            value: 'Closed - parts issue',
             name: "Closed - parts issue",
         },
     ];
@@ -69,7 +65,7 @@ export default function TicketStatusFormSection() {
             setIsLoading(true);
             try {
                 await store.dispatch(
-                    update_tickets_status_thunk(ticket.id, "CLOSED")
+                    update_tickets_status_thunk(ticket.id, "CLOSED",form)
                 );
                 setIsLoading(false);
                 router.visit(routing("files"));

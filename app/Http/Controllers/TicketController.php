@@ -831,7 +831,8 @@ class TicketController extends Controller
     {
         $ticket = Ticket::where('id', $id)->first();
         $ticket->update([
-            'status' => $request->status
+            'status' => $request->status,
+            'reason_to_close' => ($request->data['reason']??'') . ' : ' . ($request->data['notes']??''),
         ]);
         $user = User::find($request->user_id);
 

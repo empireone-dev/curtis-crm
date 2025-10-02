@@ -139,6 +139,9 @@ export default function ContentActivitiesAssignedToComponents({ data }) {
                                 {data?.ticket?.remarks ?? ""}
                             </div>
                         </div>
+
+                             <div className="font-black text-red-500">CallBack Notes: {data?.ticket?.reason_to_close??''}</div>
+                    
                     </div>
                 </div>
                 {/* <div className="flex flex-col w-full ">
