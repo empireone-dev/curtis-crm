@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 
 class CasesLogController extends Controller
 {
-    public function get_caseslog_by_ticket_id_direct_email($id){
-        $logs = CasesLog::where([['ticket_id','=',$id],['log_from','=','direct_emails']])->with('user')->orderBy('id', 'desc')->get();
+    public function get_caseslog_by_ticket_id_direct_email($id)
+    {
+        $logs = CasesLog::where([['ticket_id', '=', $id], ['log_from', '=', 'direct_emails']])->with('user')->orderBy('id', 'desc')->get();
         return response()->json([
             'status' => 'success',
             'data' => $logs
@@ -32,10 +33,14 @@ class CasesLogController extends Controller
     {
         CasesLog::create($request->all());
         $logs = CasesLog::where('ticket_id', $request->ticket_id)->with('user')->get();
-        Ticket::where('id',$request->ticket_id)->update([
-            'is_reply'=>null
-        ]);
-        
+        $ticket = Ticket::where('id', $request->ticket_id)->first();
+        if ($ticket) {
+            $ticket->update([
+                'is_reply' => null,
+                'cases_status' => 'hidden'
+            ]);
+        }
+
         $direct = DirectEmail::where('id', $request->ticket_id)->first();
         if ($direct) {
             $direct->update([
