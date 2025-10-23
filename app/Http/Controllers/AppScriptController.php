@@ -51,7 +51,7 @@ class AppScriptController extends Controller
                     'threadId' => $value['threadId'],
                     // 'user_id' => $userWithSmallestCount->id ?? 58,
                     'count' => $value['count'] ?? 0,
-                    'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                    'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
             }
             // if ($value['ticket_id'] == 'direct_email') {
@@ -90,7 +90,7 @@ class AppScriptController extends Controller
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                         'is_reply' => 'true'
                     ]);
                 }
@@ -165,7 +165,7 @@ class AppScriptController extends Controller
                 if ($value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                         'is_reply' => 'true'
                     ]);
                 }
