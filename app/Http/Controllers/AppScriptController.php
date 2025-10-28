@@ -85,7 +85,10 @@ class AppScriptController extends Controller
 
         foreach ($request->all() as $value) {
 
-            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
+            $ticket = Ticket::where([
+                ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
+                ['is_reply', '=', null]
+            ])->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
@@ -160,7 +163,10 @@ class AppScriptController extends Controller
     {
 
         foreach ($request->all() as $value) {
-            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))->first();
+            $ticket = Ticket::where([
+                ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
+                ['is_reply', '=', null]
+            ])->first();
             if ($ticket) {
                 if ($value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
