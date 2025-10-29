@@ -832,7 +832,7 @@ class TicketController extends Controller
         $ticket = Ticket::where('id', $id)->first();
         $ticket->update([
             'status' => $request->status,
-            'reason_to_close' => ($request->data['reason']??'') . ' : ' . ($request->data['notes']??''),
+            'reason_to_close' => ($request->data['reason'] ?? '') . ' : ' . ($request->data['notes'] ?? ''),
         ]);
         $user = User::find($request->user_id);
 
@@ -1407,15 +1407,13 @@ class TicketController extends Controller
         if ($request->cases == 'case_file') {
             $search = [];
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
+               
                 $search = Ticket::where([
                     ['email', '=', $request->where],
                     ['cases_status', '<>', 'hidden']
                 ])->with(['direct_emails'])->get();
             } else {
-                $search = Ticket::where([
-                    ['ticket_id', '=', $request->where],
-                    ['cases_status', '<>', 'hidden']
-                ])->with(['direct_emails'])->get();
+                $search = Ticket::where('ticket_id', '=', $request->where)->with(['direct_emails'])->get();
             }
 
             foreach ($search as &$value) {
