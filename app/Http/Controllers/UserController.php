@@ -73,6 +73,7 @@ class UserController extends Controller
                     ->whereNotNull('ticket_id')
                     ->where('cases_status', '<>', 'hide')
                     ->where('is_reply', 'true')
+                    ->where('status', '<>', 'CLOSED')
                     ->where('call_type', $user->agent_type === 'Warranty'
                         ? 'CF-Warranty Claim'
                         : 'Parts')

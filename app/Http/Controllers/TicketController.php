@@ -1407,10 +1407,11 @@ class TicketController extends Controller
         if ($request->cases == 'case_file') {
             $search = [];
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
-               
+
                 $search = Ticket::where([
                     ['email', '=', $request->where],
-                    ['cases_status', '<>', 'hidden']
+                    ['cases_status', '<>', 'hidden'],
+                    ['status', '<>', 'CLOSED'],
                 ])->with(['direct_emails'])->get();
             } else {
                 $search = Ticket::where('ticket_id', '=', $request->where)->with(['direct_emails'])->get();
@@ -1444,6 +1445,7 @@ class TicketController extends Controller
                 ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['status', '<>', 'CLOSED'],
             ])->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
@@ -1462,6 +1464,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->with(['direct_emails'])->get();
 
@@ -1494,6 +1497,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->with(['direct_emails'])->get();
 
@@ -1528,6 +1532,7 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])->with(['direct_emails'])->get();
 
