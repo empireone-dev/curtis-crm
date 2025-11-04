@@ -1446,7 +1446,9 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
-            ])->with(['direct_emails'])
+            ])
+            ->where('created_at', '>=', Carbon::now()->subMonths(12)) 
+            ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
 
@@ -1466,7 +1468,9 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-            ])->with(['direct_emails'])->get();
+            ])
+            ->where('created_at', '>=', Carbon::now()->subMonths(12)) 
+            ->with(['direct_emails'])->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1499,7 +1503,10 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-            ])->with(['direct_emails'])->get();
+            ])
+            
+            ->where('created_at', '>=', Carbon::now()->subMonths(12))
+            ->with(['direct_emails'])->get();
 
             foreach ($cases_due_today as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1534,7 +1541,10 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
                 ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
-            ])->with(['direct_emails'])->get();
+            ])
+            
+            ->where('created_at', '>=', Carbon::now()->subMonths(12))
+            ->with(['direct_emails'])->get();
 
             foreach ($upcoming_dues as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
