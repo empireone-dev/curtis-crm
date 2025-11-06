@@ -71,7 +71,7 @@ class UserController extends Controller
                 // --------------------------
                 $tickets = Ticket::where('user_id', $user->id)
                     ->whereNotNull('ticket_id')
-                    ->where('cases_status', '<>', 'hide')
+                    ->where('cases_status', '<>', 'hidden')
                     ->where('is_reply', 'true')
                     ->where('status', '<>', 'CLOSED')
                     ->where('call_type', $user->agent_type === 'Warranty'

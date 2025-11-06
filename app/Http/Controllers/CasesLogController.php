@@ -38,7 +38,6 @@ class CasesLogController extends Controller
             $ticket->update([
                 'is_reply' => null,
                 'cases_status' => 'hidden',
-                'email_date' => null,
             ]);
         }
 
