@@ -1442,12 +1442,12 @@ class TicketController extends Controller
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
                 ['ticket_id', '<>', null],
-                ['call_type', '=', $call_type],
+                // ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
             ])
-            ->where('created_at', '>=', Carbon::now()->subMonths(5)) 
+            ->where('created_at', '>=', Carbon::now()->subMonths(4)) 
             ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
@@ -1467,9 +1467,9 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
-                ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-            ->where('created_at', '>=', Carbon::now()->subMonths(5)) 
+            ->where('created_at', '>=', Carbon::now()->subMonths(4)) 
             ->with(['direct_emails'])->get();
 
             foreach ($overdue_cases as &$value) {
@@ -1502,10 +1502,10 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
-                ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
             
-            ->where('created_at', '>=', Carbon::now()->subMonths(5))
+            ->where('created_at', '>=', Carbon::now()->subMonths(4))
             ->with(['direct_emails'])->get();
 
             foreach ($cases_due_today as &$value) {
@@ -1540,7 +1540,7 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
-                ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
+                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
             
             ->where('created_at', '>=', Carbon::now()->subMonths(4))
