@@ -47,9 +47,10 @@ class UserController extends Controller
         $users = User::where(function ($q) use ($role_id) {
             $q->where('role_id', $role_id)
                 ->orWhere('role_id', 1)
-                ->whereIn('agent_type', ['Warranty', 'Parts']);
+                ->whereIn('agent_type', ['Warranty', 'Parts', 'CSR']);
         })
             ->with('role')
+            ->orderBy('agent_type', 'desc')
             ->get();
 
         if ($role_id == 5) {
