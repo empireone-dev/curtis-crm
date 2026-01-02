@@ -143,6 +143,7 @@ export default function ProductivityTableSection() {
         .map((res, i) =>
             res.agent_type === "Warranty" ||
             res.agent_type === "Parts" ||
+            res.agent_type === "CSR" ||
             res.agent_type === "Admin"
                 ? {
                       id: res.id,
@@ -268,7 +269,7 @@ export default function ProductivityTableSection() {
             dataIndex: "upcoming_dues_direct_emails",
             key: "upcoming_dues_direct_emails",
             // ...getColumnSearchProps('app_name'),
-                       render: (_, record, i) => {
+            render: (_, record, i) => {
                 return (
                     <Link
                         href={`/administrator/productivity/direct_emails/${record.id}?page=1&search=upcoming_dues_direct_emails`}
@@ -292,7 +293,6 @@ export default function ProductivityTableSection() {
             dataIndex: "handled_direct_emails",
             key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
- 
         },
 
         {
