@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { Link } from "@inertiajs/react";
 import ProductivityDirectEmailSection from "./productivity-direct-email-section";
 
-export default function ProductivityTableSection() {
+export default function ProductivityTableSection({ loading }) {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -140,11 +140,8 @@ export default function ProductivityTableSection() {
     });
 
     const data = users
-        .map((res, i) =>
-            res.agent_type === "Warranty" ||
-            res.agent_type === "Parts" ||
-            res.agent_type === "CSR" ||
-            res.agent_type === "Admin"
+        .map((res) =>
+            ["Warranty", "Parts", "CSR", "Admin"].includes(res.agent_type)
                 ? {
                       id: res.id,
                       agent: res.name,
@@ -164,7 +161,8 @@ export default function ProductivityTableSection() {
                   }
                 : null
         )
-        .filter((item) => item !== null);
+        .filter(Boolean)
+        .sort((a, b) => b.position.localeCompare(a.position));
 
     const columns = [
         {
@@ -310,7 +308,7 @@ export default function ProductivityTableSection() {
                     <ProductivitySearchSection />
                     <ProductivityDirectEmailSection />
                 </div>
-                <Table columns={columns} dataSource={data} />
+                <Table loading={loading} columns={columns} dataSource={data} />
             </div>
         </div>
     );
