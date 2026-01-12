@@ -18,24 +18,30 @@ export default function RemoveCasesSection({ data }) {
     const cases = getQueryParam(url, "search");
     const account_id = window.location.pathname.split("/")[3];
     const handleRemove = async () => {
-        setLoading(true);
-        await axios.post("/api/remove_unread_email", {
-            ticket_id: data.ticket_id,
-        });
-        const res = await cases_service(
-            window.location.search,
-            cases,
-            account_id
-        );
-        dispatch(setTickets(res));
-        setLoading(false);
-        await Swal.fire({
-            icon: "success",
-            title: "Done!",
-            showConfirmButton: false,
-            timer: 1500,
-            text: "Tickets have been removed successfully.",
-        });
+        if (
+            window.confirm(
+                "Are you sure you want to remove this ticket from unread emails?"
+            )
+        ) {
+            setLoading(true);
+            await axios.post("/api/remove_unread_email", {
+                ticket_id: data.ticket_id,
+            });
+            const res = await cases_service(
+                window.location.search,
+                cases,
+                account_id
+            );
+            dispatch(setTickets(res));
+            setLoading(false);
+            await Swal.fire({
+                icon: "success",
+                title: "Done!",
+                showConfirmButton: false,
+                timer: 1500,
+                text: "Tickets have been removed successfully.",
+            });
+        }
     };
 
     return (
