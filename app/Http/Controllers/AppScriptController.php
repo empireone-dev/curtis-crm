@@ -11,6 +11,22 @@ use Illuminate\Http\Request;
 
 class AppScriptController extends Controller
 {
+
+    public function remove_unread_email(Request $request){
+
+          $ticket = Ticket::where([
+                ['ticket_id', '=', $this->find14CharSequences($request->input('ticket_id'))],
+                ['is_reply', '=', 'true'],
+                ['cases_status', '=', 'handled'],
+            ])->first();
+            if ($ticket) {
+                $ticket->update([
+                    'cases_status' => 'hidden',
+                    'is_reply' => null
+                ]);
+            }
+        return 'success';
+    }
     public function find14CharSequences($sentence)
     {
         // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters

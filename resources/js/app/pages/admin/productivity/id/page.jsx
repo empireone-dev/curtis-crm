@@ -14,6 +14,7 @@ import Highlighter from "react-highlight-words";
 import { setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
 import moment from "moment-timezone";
+import RemoveCasesSection from "./sections/remove-cases-section";
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
     const [loading, setLoading] = useState(true);
@@ -263,6 +264,16 @@ export default function ProductivityIDPage({ auth }) {
                     <Tag color="red">red</Tag>;
                 }
             },
+        },
+        {
+            title: "Remove",
+            dataIndex: "remove",
+            key: "remove",
+            // ...getColumnSearchProps("remove"),
+            render: (_, record, i) => (
+                <RemoveCasesSection 
+                data={record} />
+            ),
         },
         {
             title: "Action",
