@@ -88,7 +88,7 @@ class AppScriptController extends Controller
             $ticket = Ticket::where([
                 ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
                 ['is_reply', '=', null],
-                ['cases_status' => 'hidden'],
+                ['cases_status', '=', 'hidden'],
             ])->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
@@ -167,7 +167,7 @@ class AppScriptController extends Controller
             $ticket = Ticket::where([
                 ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
                 ['is_reply', '=', null],
-                ['cases_status' => 'hidden'],
+                ['cases_status', '=', 'hidden'],
             ])->first();
             if ($ticket) {
                 if ($value['from'] != 'parts@curtiscs.com') {
