@@ -103,45 +103,46 @@ Route::resource('role', RoleController::class);
 Route::resource('activities', ActivityController::class);
 Route::get('export_by_the_warehouse', [ActivityController::class, 'export_by_the_warehouse']);
 Route::resource('notes', AgentNoteController::class);
+
 Route::resource('tickets', TicketController::class);
+// Route::middleware('auth:sanctum')->prefix('administrator')->group(function () {
+    Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
+    Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
+    Route::post('escalated', [TicketController::class, 'escalated']);
+    Route::get('queueing', [TicketController::class, 'queueing']);
+    Route::put('close_ticket/{ticket_id}', [TicketController::class, 'close_ticket']);
+    Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ticket']);
+    Route::get('get_tickets_by_email/{email}', [TicketController::class, 'get_tickets_by_email']);
+    Route::post('search_tickets', [TicketController::class, 'search_tickets']);
+    Route::get('/get_users', [TicketController::class, 'get_users']);
+    Route::post('forward_ticket', [TicketController::class, 'forward_ticket']);
+    Route::post('export_process_ticket', [TicketController::class, 'export_process_ticket']);
 
-Route::post('get_tickets_by_warehouse/{country}', [TicketController::class, 'get_tickets_by_warehouse']);
-Route::post('get_tickets_by_asc/{userid}', [TicketController::class, 'get_tickets_by_asc']);
-Route::post('escalated', [TicketController::class, 'escalated']);
-Route::get('queueing', [TicketController::class, 'queueing']);
-Route::put('close_ticket/{ticket_id}', [TicketController::class, 'close_ticket']);
-Route::put('transfer_ticket/{ticket_id}', [TicketController::class, 'transfer_ticket']);
-Route::get('get_tickets_by_email/{email}', [TicketController::class, 'get_tickets_by_email']);
-Route::post('search_tickets', [TicketController::class, 'search_tickets']);
-Route::get('/get_users', [TicketController::class, 'get_users']);
-Route::post('forward_ticket', [TicketController::class, 'forward_ticket']);
-Route::post('export_process_ticket', [TicketController::class, 'export_process_ticket']);
+    Route::get('cases', [TicketController::class, 'cases']);
+    Route::get('direct_emails', [TicketController::class, 'direct_emails']);
+    Route::get('save_direct_emails', [TicketController::class, 'save_direct_emails']);
+    Route::get('save_direct_emails_parts', [TicketController::class, 'save_direct_emails_parts']);
+    Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_cases']);
+    Route::post('create_verify_tickets', [TicketController::class, 'create_verify_tickets']);
+    Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
+    Route::get('export_ticket_files', [TicketController::class, 'export_ticket_files']);
 
-Route::get('cases', [TicketController::class, 'cases']);
-Route::get('direct_emails', [TicketController::class, 'direct_emails']);
-Route::get('save_direct_emails', [TicketController::class, 'save_direct_emails']);
-Route::get('save_direct_emails_parts', [TicketController::class, 'save_direct_emails_parts']);
-Route::put('transfer_ticket_cases', [TicketController::class, 'transfer_ticket_cases']);
-Route::post('create_verify_tickets', [TicketController::class, 'create_verify_tickets']);
-Route::post('verify_tickets', [TicketController::class, 'verify_tickets']);
-Route::get('export_ticket_files', [TicketController::class, 'export_ticket_files']);
-
-Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
-Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
-Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
-Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
-Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
-Route::get('get_ticket_by_id/{id}', [TicketController::class, 'get_ticket_by_id']);
-Route::get('get_email_replies', [TicketController::class, 'get_email_replies']);
-Route::get('get_email_replies_parts', [TicketController::class, 'get_email_replies_parts']);
-Route::get('sample', [TicketController::class, 'sample']);
-Route::get('get_tickets_warehouse/{country}', [TicketController::class, 'get_tickets_warehouse']);
-Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request']);
-Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
-Route::post('change_isExport', [TicketController::class, 'change_isExport']);
-Route::post('change_check_all', [TicketController::class, 'change_check_all']);
-Route::get('get_agent_note_by_contact_number', [TicketController::class, 'get_agent_note_by_contact_number']);
-
+    Route::post('move_ticket_assignment', [TicketController::class, 'move_ticket_assignment']);
+    Route::post('resend_email_templete', [TicketController::class, 'resend_email_templete']);
+    Route::post('create_ticket_close', [TicketController::class, 'create_ticket_close']);
+    Route::get('check_serial_number/{serial_number}', [TicketController::class, 'check_serial_number']);
+    Route::post('search_lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
+    Route::get('get_ticket_by_id/{id}', [TicketController::class, 'get_ticket_by_id']);
+    Route::get('get_email_replies', [TicketController::class, 'get_email_replies']);
+    Route::get('get_email_replies_parts', [TicketController::class, 'get_email_replies_parts']);
+    Route::get('sample', [TicketController::class, 'sample']);
+    Route::get('get_tickets_warehouse/{country}', [TicketController::class, 'get_tickets_warehouse']);
+    Route::post('upload_rma_request', [TicketController::class, 'upload_rma_request']);
+    Route::put('ticket_export_status', [TicketController::class, 'ticket_export_status']);
+    Route::post('change_isExport', [TicketController::class, 'change_isExport']);
+    Route::post('change_check_all', [TicketController::class, 'change_check_all']);
+    Route::get('get_agent_note_by_contact_number', [TicketController::class, 'get_agent_note_by_contact_number']);
+// });
 
 Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warranty_unread_email']);
 Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
@@ -151,10 +152,6 @@ Route::post('get_recall_unread_email', [AppScriptController::class, 'get_recall_
 Route::resource('recall', RecallController::class);
 Route::resource('recall_log', RecallLogController::class);
 Route::get('recall_stats', [RecallLogController::class, 'get_recall_unread_email']);
-
-
-
-
 
 
 Route::put('transfer_direct_email', [DirectEmailController::class, 'transfer_direct_email']);
