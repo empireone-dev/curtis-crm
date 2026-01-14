@@ -13,6 +13,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
+import RemoveCasesSection from "../../../admin/productivity/id/sections/remove-cases-section";
 
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
@@ -243,9 +244,16 @@ export default function ProductivityIDPage({ auth }) {
                 if (record.is_reply) {
                     return <Tag color="red">Email Reply</Tag>;
                 } else {
-                    <Tag color="red">red</Tag>
+                    <Tag color="red">red</Tag>;
                 }
             },
+        },
+        {
+            title: "Remove",
+            dataIndex: "remove",
+            key: "remove",
+            // ...getColumnSearchProps("remove"),
+            render: (_, record, i) => <RemoveCasesSection data={record} />,
         },
         {
             title: "Action",
@@ -268,7 +276,7 @@ export default function ProductivityIDPage({ auth }) {
         },
     ];
     return (
-        <AgentLayout  account={account}>
+        <AgentLayout account={account}>
             <div className="p-3 flex gap-5 flex-col justify-between w-full h-full">
                 {loading ? (
                     <div>
@@ -284,7 +292,15 @@ export default function ProductivityIDPage({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={Object.entries(tickets.result).map(res=>res[1]).sort((a, b) => new Date(a.email_date) - new Date(b.email_date)) ?? []}
+                            dataSource={
+                                Object.entries(tickets.result)
+                                    .map((res) => res[1])
+                                    .sort(
+                                        (a, b) =>
+                                            new Date(a.email_date) -
+                                            new Date(b.email_date)
+                                    ) ?? []
+                            }
                         />
                     </div>
                 )}

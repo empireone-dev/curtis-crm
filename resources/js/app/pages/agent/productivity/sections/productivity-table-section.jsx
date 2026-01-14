@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { Link } from "@inertiajs/react";
 import ProductivityDirectEmailSection from "./productivity-direct-email-section";
 
-export default function ProductivityTableSection({ account }) {
+export default function ProductivityTableSection({ account, loading }) {
     const { users } = useSelector((state) => state.users);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
@@ -309,7 +309,9 @@ export default function ProductivityTableSection({ account }) {
                     <ProductivitySearchSection />
                     <ProductivityDirectEmailSection />
                 </div>
-                <Table columns={columns} dataSource={data} />
+                <Table
+                loading={loading}
+                columns={columns} dataSource={data} />
             </div>
         </div>
     );
