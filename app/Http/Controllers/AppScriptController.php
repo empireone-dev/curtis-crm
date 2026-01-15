@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class AppScriptController extends Controller
 {
 
-      public function find14CharSequences($sentence)
+    public function find14CharSequences($sentence)
     {
         // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
         $regex = '/\b(CF|PS|TS)\w{12}\b/';
@@ -39,7 +39,7 @@ class AppScriptController extends Controller
         }
         return 'success';
     }
-  
+
     public function get_recall_unread_email(Request $request)
     {
         foreach ($request->all() as $value) {
@@ -101,10 +101,13 @@ class AppScriptController extends Controller
     public function get_warranty_unread_email(Request $request)
     {
 
+        $tickets = [];
         foreach ($request->all() as $value) {
-
+            $tickets = array_map(function ($value) {
+                return $this->find14CharSequences($value['ticket_id']);
+            }, $request->all());
             $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
-                ->whereNull('is_reply') 
+                ->whereNull('is_reply')
                 ->where('cases_status', 'hidden')
                 ->first();
             if ($ticket) {
@@ -175,7 +178,7 @@ class AppScriptController extends Controller
             }
         }
         return response()->json([
-            'data' => $request->all(),
+            'data' => $tickets,
             'message' => 'Emails processed successfully'
         ], 200);
     }
