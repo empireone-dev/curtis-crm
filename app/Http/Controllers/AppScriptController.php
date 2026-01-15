@@ -173,7 +173,9 @@ class AppScriptController extends Controller
                 }
             }
         }
-        return response()->json(['message' => 'Emails processed successfully'], 200);
+        return response()->json([
+            'data'=>$request->all(),
+            'message' => 'Emails processed successfully'], 200);
     }
 
     public function get_parts_unread_email(Request $request)
