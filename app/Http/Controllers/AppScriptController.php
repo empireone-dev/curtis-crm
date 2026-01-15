@@ -103,14 +103,15 @@ class AppScriptController extends Controller
 
         $tickets = [];
         foreach ($request->all() as $value) {
-            $tickets = array_map(function ($value) {
-                return $this->find14CharSequences($value['ticket_id']);
-            }, $request->all());
+
             $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
                 ->whereNull('is_reply')
                 ->where('cases_status', 'hidden')
                 ->first();
             if ($ticket) {
+                $tickets = array_map(function ($value) {
+                    return $this->find14CharSequences($value['ticket_id']);
+                }, $request->all());
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
