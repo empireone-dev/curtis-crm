@@ -110,9 +110,7 @@ class AppScriptController extends Controller
                 ->first();
             if ($ticket) {
                 if ($value['ticket_id'] != 'direct_email') {
-                    $tickets = array_map(function ($value) {
-                        return $this->find14CharSequences($value['ticket_id']);
-                    }, $request->all());
+                    $tickets[] = $this->find14CharSequences($value['ticket_id']);
                 }
 
                 if ($value['from'] != 'support2@curtiscs.com') {
