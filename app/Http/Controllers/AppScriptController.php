@@ -12,19 +12,20 @@ use Illuminate\Http\Request;
 class AppScriptController extends Controller
 {
 
-    public function remove_unread_email(Request $request){
+    public function remove_unread_email(Request $request)
+    {
 
-          $ticket = Ticket::where([
-                ['ticket_id', '=', $this->find14CharSequences($request->input('ticket_id'))],
-                ['is_reply', '=', 'true'],
-                ['cases_status', '=', 'handled'],
-            ])->first();
-            if ($ticket) {
-                $ticket->update([
-                    'cases_status' => 'hidden',
-                    'is_reply' => null
-                ]);
-            }
+        $ticket = Ticket::where([
+            ['ticket_id', '=', $this->find14CharSequences($request->input('ticket_id'))],
+            ['is_reply', '=', 'true'],
+            ['cases_status', '=', 'handled'],
+        ])->first();
+        if ($ticket) {
+            $ticket->update([
+                'cases_status' => 'hidden',
+                'is_reply' => null
+            ]);
+        }
         return 'success';
     }
     public function find14CharSequences($sentence)
@@ -101,18 +102,17 @@ class AppScriptController extends Controller
 
         foreach ($request->all() as $value) {
 
-            $ticket = Ticket::where([
-                ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
-                ['is_reply', '=', null],
-                ['cases_status', '=', 'hidden'],
-            ])->first();
+            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
+                ->whereNull('is_reply') // better than ['is_reply', '=', null]
+                ->where('cases_status', 'hidden')
+                ->first();
             if ($ticket) {
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                         'is_reply' => 'true',
-                        'asc_status'=>'sample'
+                        'asc_status' => null
                     ]);
                 }
             }
@@ -175,19 +175,19 @@ class AppScriptController extends Controller
             }
         }
         return response()->json([
-            'data'=>$request->all(),
-            'message' => 'Emails processed successfully'], 200);
+            'data' => $request->all(),
+            'message' => 'Emails processed successfully'
+        ], 200);
     }
 
     public function get_parts_unread_email(Request $request)
     {
 
         foreach ($request->all() as $value) {
-            $ticket = Ticket::where([
-                ['ticket_id', '=', $this->find14CharSequences($value['ticket_id'])],
-                ['is_reply', '=', null],
-                ['cases_status', '=', 'hidden'],
-            ])->first();
+            $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
+                ->whereNull('is_reply') // better than ['is_reply', '=', null]
+                ->where('cases_status', 'hidden')
+                ->first();
             if ($ticket) {
                 if ($value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
