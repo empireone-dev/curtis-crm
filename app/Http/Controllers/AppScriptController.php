@@ -109,9 +109,7 @@ class AppScriptController extends Controller
                 ->where('cases_status', 'hidden')
                 ->first();
             if ($ticket) {
-                if ($value['ticket_id'] != 'direct_email') {
-                    $tickets[] = $this->find14CharSequences($value['ticket_id']);
-                }
+               $tickets[] = $this->find14CharSequences($value['ticket_id']);
 
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
