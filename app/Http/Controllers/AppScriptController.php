@@ -49,14 +49,14 @@ class AppScriptController extends Controller
             //     if ($value['from'] != 'support2@curtiscs.com') {
             //         $ticket->update([
             //             'cases_status' => 'handled',
-            //             'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+            //             'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
             //             'is_reply' => 'true'
             //         ]);
             //     }
             // }
             $existing = Recall::where('threadId', $value['threadId'])
                 ->where('email', $value['from'])
-                ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
+                ->whereDate('email_date', Carbon::now()->format('Y-m-d H:i:s'))
                 ->first();
 
             if ($existing) {
@@ -150,13 +150,13 @@ class AppScriptController extends Controller
                 //         'threadId' => $value['threadId'],
                 //         'user_id' => $userWithSmallestCount->id??58,
                 //         'count' => $value['count'] ?? 0,
-                //         'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                //         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 //     ]);
                 // }
 
                 $existing = DirectEmail::where('threadId', $value['threadId'])
                     ->where('email', $value['from'])
-                    ->whereDate('email_date', Carbon::parse($value['date'])->toDateString())
+                    ->whereDate('email_date', Carbon::now()->format('Y-m-d H:i:s'))
                     ->first();
 
                 if ($existing) {
@@ -169,7 +169,7 @@ class AppScriptController extends Controller
                         'threadId' => $value['threadId'],
                         'user_id' => $userWithSmallestCount->id ?? 58,
                         'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
@@ -228,7 +228,7 @@ class AppScriptController extends Controller
                         'threadId' => $value['threadId'],
                         'user_id' => $userWithSmallestCount->id ?? 60,
                         'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::parse($value['date'])->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
