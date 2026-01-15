@@ -104,14 +104,19 @@ class AppScriptController extends Controller
         $tickets = [];
 
         foreach ($request->all() as $value) {
+            if ($value['ticket_id'] !== 'direct_email') {
+                $ticketId = $this->find14CharSequences($value['ticket_id']);
 
-            if ($value['ticket_id'] != 'direct_email') {
-                $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
+                $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
                     ->where('cases_status', 'hidden')
                     ->first();
-                $tickets[] = $this->find14CharSequences($value['ticket_id']);
-                if ($value['from'] != 'support2@curtiscs.com') {
+
+                // Push the ticket_id to the array
+                $tickets[] = $ticketId;
+
+                // Only update if ticket exists and from is not the support email
+                if ($ticket && $value['from'] !== 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
