@@ -183,6 +183,7 @@ class AppScriptController extends Controller
         }
         return response()->json([
             'data' => $tickets,
+            'data2' => $request->all(),
             'message' => 'Emails processed successfully'
         ], 200);
     }
