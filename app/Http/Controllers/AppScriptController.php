@@ -108,10 +108,13 @@ class AppScriptController extends Controller
                 ->whereNull('is_reply')
                 ->where('cases_status', 'hidden')
                 ->first();
-            if ($value['ticket_id'] != 'direct_email') {
-                $tickets = array_map(function ($value) {
-                    return $this->find14CharSequences($value['ticket_id']);
-                }, $request->all());
+            if ($ticket) {
+                if ($value['ticket_id'] != 'direct_email') {
+                    $tickets = array_map(function ($value) {
+                        return $this->find14CharSequences($value['ticket_id']);
+                    }, $request->all());
+                }
+
                 if ($value['from'] != 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
