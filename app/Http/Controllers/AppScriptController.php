@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 class AppScriptController extends Controller
 {
 
+    public function find14CharSequences($sentence)
+    {
+        // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
+        $regex = '/\b(CF|PS|TS)\w{12}\b/';
+
+        // Perform the match and return the results
+        preg_match_all($regex, $sentence, $matches);
+
+        // Return the matched sequences (if any)
+        return $matches[0] ?? [];
+    }
     public function remove_unread_email(Request $request)
     {
 
@@ -28,17 +39,7 @@ class AppScriptController extends Controller
         }
         return 'success';
     }
-    public function find14CharSequences($sentence)
-    {
-        // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
-        $regex = '/\b(CF|PS|TS)\w{12}\b/';
 
-        // Perform the match and return the results
-        preg_match_all($regex, $sentence, $matches);
-
-        // Return the matched sequences (if any)
-        return $matches[0] ?? [];
-    }
     public function get_recall_unread_email(Request $request)
     {
         foreach ($request->all() as $value) {
@@ -100,10 +101,13 @@ class AppScriptController extends Controller
     public function get_warranty_unread_email(Request $request)
     {
 
+        $tickets = [];
         foreach ($request->all() as $value) {
-
+            $tickets = array_map(function ($value) {
+                return $this->find14CharSequences($value['ticket_id']);
+            }, $request->all());
             $ticket = Ticket::where('ticket_id', $this->find14CharSequences($value['ticket_id']))
-                ->whereNull('is_reply') // better than ['is_reply', '=', null]
+                ->whereNull('is_reply')
                 ->where('cases_status', 'hidden')
                 ->first();
             if ($ticket) {
@@ -112,7 +116,6 @@ class AppScriptController extends Controller
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
                         'is_reply' => 'true',
-                        'asc_status' => null
                     ]);
                 }
             }
@@ -175,7 +178,7 @@ class AppScriptController extends Controller
             }
         }
         return response()->json([
-            'data' => $request->all(),
+            'data' => $tickets,
             'message' => 'Emails processed successfully'
         ], 200);
     }
