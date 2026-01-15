@@ -103,7 +103,10 @@ class AppScriptController extends Controller
 
         $tickets = [];
         foreach ($request->all() as $item) {
-            $tickets[] = $this->find14CharSequences($item['ticket_id']);
+            if ($item['ticket_id'] == 'direct_email') {
+
+                $tickets[] = $this->find14CharSequences($item['ticket_id']);
+            }
         }
         foreach ($request->all() as $value) {
 
