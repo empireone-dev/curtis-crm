@@ -108,7 +108,7 @@ class AppScriptController extends Controller
                 ->whereNull('is_reply')
                 ->where('cases_status', 'hidden')
                 ->first();
-            if ($ticket && $value['ticket_id']) {
+            if ($ticket && $value['ticket_id'] != 'direct_email') {
                 $tickets = array_map(function ($value) {
                     return $this->find14CharSequences($value['ticket_id']);
                 }, $request->all());
