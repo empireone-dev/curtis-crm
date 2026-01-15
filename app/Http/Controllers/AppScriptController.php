@@ -111,7 +111,8 @@ class AppScriptController extends Controller
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true'
+                        'is_reply' => 'true',
+                        'asc_status'=>'sample'
                     ]);
                 }
             }
