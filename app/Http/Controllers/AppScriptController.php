@@ -165,10 +165,9 @@ class AppScriptController extends Controller
                 //     ]);
                 // }
 
-                $existing = DirectEmail::where('threadId', $value['threadId'])
-                    ->where('email', $value['from'])
-                    ->whereDate('email_date', Carbon::now()->format('Y-m-d H:i:s'))
-                    ->first();
+          
+                    
+                $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
 
                 if ($existing) {
                     $existing->update([
