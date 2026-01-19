@@ -94,6 +94,11 @@ class UserController extends Controller
                 // --------------------------
                 $directEmails = DirectEmail::where('user_id', $user->id)
                     ->where('isHide', '<>', 'true')
+                    ->whereIn('id', function ($query) {
+                        $query->selectRaw('MAX(id)')
+                            ->from('direct_emails')
+                            ->groupBy('threadId');
+                    })
                     ->get()
                     ->map(function ($d) use ($adjustDate) {
                         $d->email_date = $adjustDate($d->email_date);
