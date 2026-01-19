@@ -1088,10 +1088,17 @@ class TicketController extends Controller
 
         $today = Carbon::today()->toDateString();
         if ($request->search == 'over_due') {
-            $overdue_cases = DirectEmail::where([
-                ['user_id', '=', $request->user_id],
-                ['isHide', '=', 'false'],
-            ])->with('user')->get();
+
+
+            $overdue_cases = DirectEmail::where('user_id', $request->user_id)
+                ->where('isHide', 'false')
+                ->whereIn('id', function ($query) {
+                    $query->selectRaw('MAX(id)')
+                        ->from('direct_emails')
+                        ->groupBy('threadId');
+                })
+                ->with('user')
+                ->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1118,10 +1125,15 @@ class TicketController extends Controller
             ], 200);
         }
         if ($request->search == 'upcoming_dues_direct_emails') {
-            $overdue_cases = DirectEmail::where([
-                ['user_id', '=', $request->user_id],
-                ['isHide', '=', 'false'],
-            ])->with('user')->get();
+            $overdue_cases = DirectEmail::where('user_id', $request->user_id)
+                ->where('isHide', 'false')
+                ->whereIn('id', function ($query) {
+                    $query->selectRaw('MAX(id)')
+                        ->from('direct_emails')
+                        ->groupBy('threadId');
+                })
+                ->with('user')
+                ->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1147,10 +1159,15 @@ class TicketController extends Controller
                 'result' =>  $overdue_cases,
             ], 200);
         } else if ($request->search == 'handled_direct_emails') {
-            $handled_direct_emails = DirectEmail::where([
-                ['user_id', '=', $request->user_id],
-                ['isHide', '=', 'false'],
-            ])->with('user')->get();
+            $handled_direct_emails = DirectEmail::where('user_id', $request->user_id)
+                ->where('isHide', 'false')
+                ->whereIn('id', function ($query) {
+                    $query->selectRaw('MAX(id)')
+                        ->from('direct_emails')
+                        ->groupBy('threadId');
+                })
+                ->with('user')
+                ->get();
 
             foreach ($handled_direct_emails as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1175,10 +1192,15 @@ class TicketController extends Controller
                 'result' =>  $handled_direct_emails,
             ], 200);
         } else if ($request->search == 'due_today') {
-            $cases_due_today = DirectEmail::where([
-                ['user_id', '=', $request->user_id],
-                ['isHide', '=', 'false'],
-            ])->with('user')->get();
+            $cases_due_today = DirectEmail::where('user_id', $request->user_id)
+                ->where('isHide', 'false')
+                ->whereIn('id', function ($query) {
+                    $query->selectRaw('MAX(id)')
+                        ->from('direct_emails')
+                        ->groupBy('threadId');
+                })
+                ->with('user')
+                ->get();
 
             foreach ($cases_due_today as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1205,12 +1227,24 @@ class TicketController extends Controller
             ], 200);
         } else {
             if ($request->user_id != 0) {
-                $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])->with('user')->paginate(10);
+                $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])
+                    ->whereIn('id', function ($query) {
+                        $query->selectRaw('MAX(id)')
+                            ->from('direct_emails')
+                            ->groupBy('threadId');
+                    })
+                    ->with('user')->paginate(10);
                 return response()->json([
                     'result' => $direct,
                 ], 200);
             } else {
-                $direct = DirectEmail::where('email', 'LIKE', "%{$request->where}%")->with('user')->get();
+                $direct = DirectEmail::where('email', 'LIKE', "%{$request->where}%")
+                    ->whereIn('id', function ($query) {
+                        $query->selectRaw('MAX(id)')
+                            ->from('direct_emails')
+                            ->groupBy('threadId');
+                    })
+                    ->with('user')->get();
                 return response()->json([
                     'result' => $direct,
                 ], 200);
@@ -1447,8 +1481,8 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
             ])
-            ->where('created_at', '>=', Carbon::now()->subMonths(4)) 
-            ->with(['direct_emails'])
+                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
 
@@ -1469,8 +1503,8 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-            ->where('created_at', '>=', Carbon::now()->subMonths(4)) 
-            ->with(['direct_emails'])->get();
+                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->with(['direct_emails'])->get();
 
             foreach ($overdue_cases as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1504,9 +1538,9 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-            
-            ->where('created_at', '>=', Carbon::now()->subMonths(4))
-            ->with(['direct_emails'])->get();
+
+                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->with(['direct_emails'])->get();
 
             foreach ($cases_due_today as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
@@ -1542,9 +1576,9 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-            
-            ->where('created_at', '>=', Carbon::now()->subMonths(4))
-            ->with(['direct_emails'])->get();
+
+                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->with(['direct_emails'])->get();
 
             foreach ($upcoming_dues as &$value) {
                 $emailDate = Carbon::parse($value->email_date);
