@@ -26,17 +26,20 @@ class AppScriptController extends Controller
     public function remove_unread_email(Request $request)
     {
 
-        $ticket = Ticket::where([
-            ['ticket_id', '=', $this->find14CharSequences($request->input('ticket_id'))],
-            ['is_reply', '=', 'true'],
-            ['cases_status', '=', 'handled'],
-        ])->first();
-        if ($ticket) {
-            $ticket->update([
-                'cases_status' => 'hidden',
-                'is_reply' => null
-            ]);
+        foreach ($request->ticket_ids as $key => $ticket_id) {
+            $ticket = Ticket::where([
+                ['ticket_id', '=', $ticket_id],
+                ['is_reply', '=', 'true'],
+                ['cases_status', '=', 'handled'],
+            ])->first();
+            if ($ticket) {
+                $ticket->update([
+                    'cases_status' => 'hidden',
+                    'is_reply' => null
+                ]);
+            }
         }
+
         return 'success';
     }
 

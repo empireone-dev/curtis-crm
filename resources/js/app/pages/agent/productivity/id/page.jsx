@@ -14,6 +14,7 @@ import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { setTickets } from "@/app/pages/customer/tickets/redux/customer-tickets-slice";
 import RemoveCasesSection from "../../../admin/productivity/id/sections/remove-cases-section";
+import Swal from "sweetalert2";
 
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
@@ -21,6 +22,17 @@ export default function ProductivityIDPage({ auth }) {
     const account = auth.user;
     const dispatch = useDispatch();
 
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [disabled, setDisabled] = useState(false);
+
+    const onSelectChange = (newSelectedRowKeys) => {
+        console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
     const url = window.location.pathname + window.location.search;
     const getQueryParam = (url, paramName) => {
         const searchParams = new URLSearchParams(url.split("?")[1]);
@@ -275,9 +287,47 @@ export default function ProductivityIDPage({ auth }) {
             ),
         },
     ];
+
+    async function delete_casefiles() {
+        if (
+            window.confirm(
+                "Are you sure you want to remove this ticket from unread emails?"
+            )
+        ) {
+            setDisabled(true);
+            await axios.post("/api/remove_unread_email", {
+                ticket_ids: selectedRowKeys,
+            });
+            const res = await cases_service(
+                window.location.search,
+                cases,
+                account_id
+            );
+            dispatch(setTickets(res));
+            setSelectedRowKeys([]);
+            setDisabled(false);
+            await Swal.fire({
+                icon: "success",
+                title: "Done!",
+                showConfirmButton: false,
+                timer: 1500,
+                text: "Tickets have been removed successfully.",
+            });
+        }
+    }
     return (
         <AgentLayout account={account}>
             <div className="p-3 flex gap-5 flex-col justify-between w-full h-full">
+                <Button
+                    type="primary"
+                    danger
+                    onClick={delete_casefiles}
+                    className="w-52"
+                    loading={disabled}
+                    disabled={selectedRowKeys.length == 0 || disabled}
+                >
+                    {selectedRowKeys.length} DELETE CASEFILE
+                </Button>
                 {loading ? (
                     <div>
                         <Skeleton />
@@ -285,6 +335,7 @@ export default function ProductivityIDPage({ auth }) {
                 ) : (
                     <div>
                         <Table
+                            rowSelection={rowSelection}
                             pagination={true}
                             columns={columns}
                             // dataSource={
@@ -294,7 +345,10 @@ export default function ProductivityIDPage({ auth }) {
                             // }
                             dataSource={
                                 Object.entries(tickets.result)
-                                    .map((res) => res[1])
+                                    .map((res) => ({
+                                        key: res[1].ticket_id,
+                                        ...res[1],
+                                    }))
                                     .sort(
                                         (a, b) =>
                                             new Date(a.email_date) -

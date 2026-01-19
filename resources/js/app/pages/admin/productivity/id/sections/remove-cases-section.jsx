@@ -25,7 +25,7 @@ export default function RemoveCasesSection({ data }) {
         ) {
             setLoading(true);
             await axios.post("/api/remove_unread_email", {
-                ticket_id: data.ticket_id,
+                ticket_ids: [data.ticket_id],
             });
             const res = await cases_service(
                 window.location.search,
