@@ -107,7 +107,7 @@ class AppScriptController extends Controller
         $tickets = [];
 
         foreach ($request->all() as $value) {
-            if ($value['ticket_id'] !== 'direct_email') {
+            if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
@@ -194,7 +194,7 @@ class AppScriptController extends Controller
 
         $tickets = [];
         foreach ($request->all() as $value) {
-            if ($value['ticket_id'] !== 'direct_email') {
+            if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
