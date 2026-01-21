@@ -111,6 +111,8 @@ class AppScriptController extends Controller
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
+                    ->whereNull('is_reply')
+                    ->where('cases_status', 'hidden')
                     ->first();
 
                 // Push the ticket_id to the array
@@ -163,8 +165,8 @@ class AppScriptController extends Controller
                 //     ]);
                 // }
 
-          
-                    
+
+
                 $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
 
                 if ($existing) {
@@ -198,6 +200,8 @@ class AppScriptController extends Controller
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
+                    ->whereNull('is_reply')
+                    ->where('cases_status', 'hidden')
                     ->first();
 
                 // Push the ticket_id to the array
