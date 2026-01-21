@@ -64,7 +64,7 @@ class AppScriptController extends Controller
 
             if ($existing) {
                 $existing->update([
-                    'isHide' => false // no quotes if it's boolean
+                    'isHide' => 'false' // no quotes if it's boolean
                 ]);
             } else {
                 Recall::create([
@@ -169,7 +169,7 @@ class AppScriptController extends Controller
 
                 if ($existing) {
                     $existing->update([
-                        'isHide' => 'false' // no quotes if it's boolean
+                        'isHide' => 'false'
                     ]);
                 } else {
                     DirectEmail::create([
