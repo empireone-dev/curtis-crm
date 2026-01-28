@@ -112,10 +112,7 @@ class AppScriptController extends Controller
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
-                    // ->where('cases_status', 'hidden')
                     ->first();
-
-                // Push the ticket_id to the array
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
@@ -201,10 +198,7 @@ class AppScriptController extends Controller
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
-                    // ->where('cases_status', 'hidden')
                     ->first();
-
-                // Push the ticket_id to the array
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
