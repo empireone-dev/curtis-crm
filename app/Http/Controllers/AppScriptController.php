@@ -112,7 +112,7 @@ class AppScriptController extends Controller
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
-                    ->where('cases_status', 'hidden')
+                    // ->where('cases_status', 'hidden')
                     ->first();
 
                 // Push the ticket_id to the array
@@ -201,7 +201,7 @@ class AppScriptController extends Controller
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
-                    ->where('cases_status', 'hidden')
+                    // ->where('cases_status', 'hidden')
                     ->first();
 
                 // Push the ticket_id to the array
