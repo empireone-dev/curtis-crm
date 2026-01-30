@@ -1856,6 +1856,7 @@ class TicketController extends Controller
     {
         return Ticket::create(array_merge($request->all(), [
             'user_id' => $this->queueing($request->call_type),
+            'call_type' => $request->call_type ?? 'CF-Warranty Claim',
             'status' => $validation,
             'cases_status' => 'handled'
         ]));
