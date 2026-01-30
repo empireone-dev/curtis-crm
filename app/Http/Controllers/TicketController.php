@@ -1481,6 +1481,7 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 ['status', '<>', 'CLOSED'],
             ])
+
                 ->where('created_at', '>=', Carbon::now()->subMonths(4))
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
@@ -1503,6 +1504,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
+
                 ->where('created_at', '>=', Carbon::now()->subMonths(4))
                 ->with(['direct_emails'])->get();
 
@@ -1538,6 +1540,7 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
+
 
                 ->where('created_at', '>=', Carbon::now()->subMonths(4))
                 ->with(['direct_emails'])->get();
@@ -1576,7 +1579,6 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-
                 ->where('created_at', '>=', Carbon::now()->subMonths(4))
                 ->with(['direct_emails'])->get();
 

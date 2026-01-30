@@ -3,6 +3,7 @@ SOURCE C:/Users/marlo/Downloads/curtis.sql;
 
 
 
+ ->where('created_at', '>=', Carbon::now()->subMonths(4))
 
 SELECT *
 FROM tickets
