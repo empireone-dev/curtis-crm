@@ -1,2 +1,26 @@
 USE curtis;
 SOURCE C:/Users/marlo/Downloads/curtis.sql;
+
+
+
+
+SELECT *
+FROM tickets
+WHERE cases_status = 'handled'
+  AND is_reply IS NULL
+  AND ticket_id IS NOT NULL
+  AND ticket_id != ''
+  AND call_type != 'TS-Tech Support'
+AND call_type != 'CF-Warranty Claim'
+  AND isUploading = 'true';
+
+
+SELECT COUNT(*) AS total
+FROM tickets
+WHERE cases_status = 'handled'
+  AND is_reply IS NULL
+  AND ticket_id IS NOT NULL
+  AND ticket_id != ''
+  AND call_type != 'TS-Tech Support'
+AND call_type != 'CF-Warranty Claim'
+  AND isUploading = 'true';
