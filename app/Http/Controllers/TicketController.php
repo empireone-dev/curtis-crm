@@ -1508,7 +1508,6 @@ class TicketController extends Controller
             ])
 
                 ->where('created_at', '>=', Carbon::now()->subMonths(6))
-                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1545,9 +1544,7 @@ class TicketController extends Controller
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
-
                 ->where('created_at', '>=', Carbon::now()->subMonths(6))
-                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1586,7 +1583,6 @@ class TicketController extends Controller
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
                 ->where('created_at', '>=', Carbon::now()->subMonths(6))
-                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
