@@ -79,6 +79,8 @@ class UserController extends Controller
                     //     ? 'CF-Warranty Claim'
                     //     : 'Parts')
                     ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                    // ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
+                    ->whereYear('created_at', '<>', 2024)
                     ->get()
                     ->map(function ($t) use ($adjustDate) {
                         $t->email_date = $adjustDate($t->email_date);

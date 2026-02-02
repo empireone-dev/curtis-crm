@@ -1482,7 +1482,9 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
             ])
 
-                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->where('created_at', '>=', Carbon::now()->subMonths(5))
+                // ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
+                ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
@@ -1505,7 +1507,9 @@ class TicketController extends Controller
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
-                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->where('created_at', '>=', Carbon::now()->subMonths(5))
+                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
+                ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
             foreach ($overdue_cases as &$value) {
@@ -1542,7 +1546,9 @@ class TicketController extends Controller
             ])
 
 
-                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->where('created_at', '>=', Carbon::now()->subMonths(5))
+                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
+                ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
             foreach ($cases_due_today as &$value) {
@@ -1579,7 +1585,9 @@ class TicketController extends Controller
                 ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-                ->where('created_at', '>=', Carbon::now()->subMonths(4))
+                ->where('created_at', '>=', Carbon::now()->subMonths(5))
+                ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
+                ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
             foreach ($upcoming_dues as &$value) {
