@@ -202,7 +202,7 @@ class AppScriptController extends Controller
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
-                if ($ticket && $value['from'] !== 'support2@curtiscs.com') {
+                if ($ticket && $value['from'] !== 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
