@@ -1903,9 +1903,13 @@ class TicketController extends Controller
     {
         if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
             if ($request->call_type == 'CF-Warranty Claim') {
-                $this->send_warranty_email($request->email, $subject, $request->body);
+                $et = EmailTemplate::where('id', 64)->first();
+                $body = $et->template_text;
+                $this->send_warranty_email($request->email, $subject, $body);
             } else if ($request->call_type == 'Parts') {
-                $this->send_parts_email($request->email, $subject, $request->body);
+                $et = EmailTemplate::where('id', 63)->first();
+                $body = $et->template_text;
+                $this->send_parts_email($request->email, $subject, $body);
             }
         }
     }
