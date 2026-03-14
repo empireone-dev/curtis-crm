@@ -44,11 +44,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             'throttle:60000000000,1',
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\EncryptCookies::class,//this is for Request failed with status code 401
-            \Illuminate\Session\Middleware\StartSession::class,//this is for Request failed with status code 401
-            
+            \App\Http\Middleware\EncryptCookies::class, //this is for Request failed with status code 401
+            \Illuminate\Session\Middleware\StartSession::class, //this is for Request failed with status code 401
+
         ],
     ];
 
@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'auth.apikey' => \App\Http\Middleware\ApiKeyMiddleware::class,
         'redirectBasedOnRole' => \App\Http\Middleware\RedirectBasedOnRole::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
