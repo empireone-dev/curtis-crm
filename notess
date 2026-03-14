@@ -2,6 +2,8 @@ USE curtis;
 SOURCE C:/Users/marlo/Downloads/curtis.sql;
 php artisan generate:api-key
 
+APP_API_KEY_LIVE:ZXZtnyAKALO4FHsBwbflth7aYyb7IC9RLHbdXY8tebAqgykx09IeWp3R5fHy
+APP_API_KEY_STAGING:L2k3o3QO0GR14Xkov8P5wfRHxwtO6zdkG62CmgW5OMN4ryEp9LbALSAS9Ptv
 
  ->where('created_at', '>=', Carbon::now()->subMonths(4))
 

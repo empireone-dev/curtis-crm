@@ -108,6 +108,8 @@ Route::middleware('auth.apikey')->group(function () {
     Route::post('tickets', [TicketController::class, 'store']);
 });
 
+
+Route::post('create_tickets', [TicketController::class, 'store']);
 Route::resource('tickets', TicketController::class)
     ->only(['index', 'show', 'update', 'destroy']);
 
