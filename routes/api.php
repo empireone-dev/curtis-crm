@@ -106,6 +106,8 @@ Route::resource('notes', AgentNoteController::class);
 
 Route::middleware('auth.apikey')->group(function () {
     Route::post('tickets', [TicketController::class, 'store']);
+    Route::get('lookup_tickets', [TicketController::class, 'search_lookup_tickets']);
+    Route::get('/curtis_products/{gid}', [GoogleSheetsController::class, 'getSheetData']);
 });
 
 

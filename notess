@@ -7,6 +7,11 @@ APP_API_KEY_STAGING:L2k3o3QO0GR14Xkov8P5wfRHxwtO6zdkG62CmgW5OMN4ryEp9LbALSAS9Ptv
 
  ->where('created_at', '>=', Carbon::now()->subMonths(4))
 
+
+
+I added Laravel Sanctum for authentication. Each user gets a unique Bearer token, which must be included in the Authorization header.
+
+
 SELECT *
 FROM tickets
 WHERE cases_status = 'handled'
