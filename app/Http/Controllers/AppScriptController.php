@@ -205,7 +205,9 @@ class AppScriptController extends Controller
                     $count = DirectEmail::where([
                         ['user_id', '=', $user->id],
                         ['isHide', '=', 'false'],
-                    ])->count();
+                    ])
+                        ->whereDate('created_at', Carbon::today())
+                        ->count();
 
                     if ($count < $smallestCount) {
                         $smallestCount = $count;
