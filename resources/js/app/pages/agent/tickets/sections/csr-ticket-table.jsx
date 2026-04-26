@@ -28,7 +28,7 @@ export default function CSRTicketsTableSection() {
                     obj.status != "PARTS VALIDATION" &&
                     obj.status != "WARRANTY VALIDATION" &&
                     obj.status != "TECH VALIDATION" &&
-                    obj.status != "CLOSED"
+                    obj.status != "CLOSED",
             );
         }
         ticketData = searchBy();
@@ -237,10 +237,10 @@ export default function CSRTicketsTableSection() {
                     record.status == "CLOSED"
                         ? "red"
                         : record.status == "PARTS VALIDATION" ||
-                          record.status == "WARRANTY VALIDATION" ||
-                          record.status == "TECH VALIDATION"
-                        ? "orange"
-                        : "green";
+                            record.status == "WARRANTY VALIDATION" ||
+                            record.status == "TECH VALIDATION"
+                          ? "orange"
+                          : "green";
                 return (
                     <>
                         <Tag color={color} key={i}>
@@ -294,12 +294,15 @@ export default function CSRTicketsTableSection() {
             render: (_, record) => {
                 function route_link(data) {
                     if (data.call_type == "TS-Tech Support") {
+                        const path =
+                            record.status == "CLOSED" ? "activities" : "status";
                         return (
                             <Link
                                 href={
                                     "/agent/tickets/details/" +
                                     record.id +
-                                    "/status"
+                                    "/" +
+                                    path
                                 }
                             >
                                 <EyeOutlined className="text-lg text-blue-500" />

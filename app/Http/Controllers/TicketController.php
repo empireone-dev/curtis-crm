@@ -896,6 +896,9 @@ class TicketController extends Controller
             'repair_information'
         ]);
 
+        if ($request->user_id) {
+            $query->where('user_id', $request->user_id);
+        }
         // Dynamic search
         if ($searchQuery) {
             $query->where(function ($q) use ($searchQuery) {
@@ -914,6 +917,8 @@ class TicketController extends Controller
                     $q->where([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
                 } elseif ($status === 'PARTS CLOSED') {
                     $q->where([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
+                } elseif ($status === 'TECH CLOSED') {
+                    $q->where([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
                 } elseif (!in_array($status, ['PROCESSED TICKET', 'PARTS PROCESSED TICKET'])) {
                     $q->where('status', $status);
                 }
@@ -926,6 +931,9 @@ class TicketController extends Controller
         } else if ($request->status == 'PARTS CLOSED') {
             $query->where('status', '=', 'CLOSED');
             $query->where('call_type', '=', 'PARTS');
+        } else if ($request->status == 'TECH CLOSED') {
+            $query->where('status', '=', 'CLOSED');
+            $query->where('call_type', '=', 'TS-Tech Support');
         } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
             if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
                 $query->orWhere('created_from', '=', $request->status);

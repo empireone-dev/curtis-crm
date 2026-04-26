@@ -17,7 +17,7 @@ export default function AgentCardsComponent({ title, count, icon, link }) {
             </div>
             <div className="border-t border-blue-gray-50 p-4">
                 <Link
-                    href={"/agent/tickets?search=" + link}
+                    href={"/agent/tickets?status=" + link}
                     className="block antialiased font-sans text-base text-red-600 leading-relaxed font-black text-blue-gray-600"
                 >
                     Click to visit

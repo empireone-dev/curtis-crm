@@ -124,7 +124,7 @@ export default function AgentCardsSection({ account }) {
                     {agent_type(["Tech"]) && (
                         <AgentCardsComponent
                             title="Open Ticket for Tech"
-                            link="OPEN TECH"
+                            link={`TECH VALIDATION&user_id=${account.id}`}
                             count={data.open_tech ?? 0}
                             icon={
                                 <ListBulletIcon className="h-10 text-white" />
@@ -303,7 +303,7 @@ export default function AgentCardsSection({ account }) {
                 {agent_type(["Tech"]) && (
                     <AgentCardsComponent
                         title="Technical"
-                        link="TECH VALIDATION"
+                        link={`TECH VALIDATION&user_id=${account.id}`}
                         count={data.technical ?? 0}
                         icon={
                             <WrenchScrewdriverIcon className="h-10 text-white" />
@@ -314,7 +314,7 @@ export default function AgentCardsSection({ account }) {
                 {agent_type(["Tech"]) && (
                     <AgentCardsComponent
                         title="Close Ticket for Technical"
-                        link="Close"
+                        link={`TECH CLOSED&user_id=${account.id}`}
                         count={data.tech_closed ?? 0}
                         icon={
                             <WrenchScrewdriverIcon className="h-10 text-white" />

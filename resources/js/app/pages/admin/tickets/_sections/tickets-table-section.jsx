@@ -41,13 +41,16 @@ export default function TicketTableSection() {
             ticket_id: (() => {
                 function route_link(data) {
                     if (data.call_type == "TS-Tech Support") {
+                        const path =
+                            res.status == "CLOSED" ? "activities" : "status";
                         return (
                             <Link
                                 className="underline"
                                 href={
                                     "/administrator/tickets/details/" +
                                     res.id +
-                                    "/status"
+                                    "/" +
+                                    path
                                 }
                             >
                                 <div className="flex gap-3">
@@ -105,18 +108,19 @@ export default function TicketTableSection() {
                     res.status === "CLOSED"
                         ? "red"
                         : res.status === "PARTS VALIDATION" ||
-                          res.status === "WARRANTY VALIDATION" ||
-                          res.status === "TECH VALIDATION" ||
-                          res.status == null
-                        ? "orange"
-                        : "green";
+                            res.status === "WARRANTY VALIDATION" ||
+                            res.status === "TECH VALIDATION" ||
+                            res.status == null
+                          ? "orange"
+                          : "green";
 
                 return (
                     <div className="flex gap-2">
-                       {(res.status == "REPAIR SUCCESS" ||
-                            res.status == "REPAIR UNSUCCESSFUL") && res.repair_information && (
-                            <ShowAttachmentSection data={res} />
-                        )}
+                        {(res.status == "REPAIR SUCCESS" ||
+                            res.status == "REPAIR UNSUCCESSFUL") &&
+                            res.repair_information && (
+                                <ShowAttachmentSection data={res} />
+                            )}
                         <Tag color={color}>
                             {res.status === "PARTS VALIDATION" ||
                             res.status === "WARRANTY VALIDATION" ||
@@ -125,7 +129,7 @@ export default function TicketTableSection() {
                                 ? "OPEN"
                                 : res.status}
                         </Tag>
-                     
+
                         {res.is_reply && (
                             <Tag color="purple">
                                 Customer has responded on{" "}

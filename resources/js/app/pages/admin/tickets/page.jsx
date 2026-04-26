@@ -15,13 +15,7 @@ import ExportProcessTicket from "./_sections/export-process-ticket";
 export default function TicketsPage() {
     const { search } = useSelector((state) => state.tickets);
     useEffect(() => {
-        if (window.location.hash == "") {
-            store.dispatch(get_tickets_thunk(window.location.search));
-        } else {
-            store.dispatch(
-                get_tickets_thunk("?search=" + window.location.hash.slice(1))
-            );
-        }
+        store.dispatch(get_tickets_thunk(window.location.search));
     }, [search.page ?? ""]);
 
     useEffect(() => {

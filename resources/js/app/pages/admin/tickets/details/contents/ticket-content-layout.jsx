@@ -9,6 +9,7 @@ import { setTicket } from "../../_redux/tickets-slice";
 import { TicketIcon } from "@heroicons/react/24/outline";
 import Skeleton from "@/app/layouts/components/skeleton";
 import TicketsDetailsMoveAssignSection from "../sections/tickets-details-move-assign-section,";
+import RequestCallback from "../components/request-callback";
 
 export default function TicketsDetailsLayout({ children }) {
     const { ticket } = useSelector((state) => state.tickets);
@@ -24,7 +25,7 @@ export default function TicketsDetailsLayout({ children }) {
                     .split("/")
                     [url.split("/").length - 2].split("#")[0];
                 const res = await store.dispatch(
-                    get_upload_ticket_files_thunk(ticketId)
+                    get_upload_ticket_files_thunk(ticketId),
                 );
                 const ress = await get_tickets_by_ticket_id(ticketId);
                 dispatch(setTicket(ress));
@@ -183,19 +184,25 @@ export default function TicketsDetailsLayout({ children }) {
                     <TicketsDetailsMoveAssignSection />
                 )}
                 <div className=" px-8 text-3xl font-black text-red-600">
-                    Case File : {ticket.ticket_id ?? "N/A"} -- ({ticket.created_from})
+                    Case File : {ticket.ticket_id ?? "N/A"} -- (
+                    {ticket.created_from})
                 </div>
                 <div className="w-full px-8">
-                    
-                    <div
-                        className={`py-3 text-3xl font-black flex gap-3 ${
-                            ticket.status === "CLOSED"
-                                ? "text-red-600"
-                                : "text-blue-600"
-                        }`}
-                    >
-                        <TicketIcon className="h-9" />{" "}
-                        {ticket.status ?? "Open Ticket"} ({ticket.call_type})
+                    <div className="flex items-center justify-between">
+                        <div
+                            className={`py-3 text-3xl font-black flex gap-3 ${
+                                ticket.status === "CLOSED"
+                                    ? "text-red-600"
+                                    : "text-blue-600"
+                            }`}
+                        >
+                            <TicketIcon className="h-9" />{" "}
+                            {ticket.status ?? "Open Ticket"} ({ticket.call_type}
+                            )
+                        </div>
+                        <div>
+                            <RequestCallback />
+                        </div>
                     </div>
                     <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
                         {tabs.map((res, i) => (

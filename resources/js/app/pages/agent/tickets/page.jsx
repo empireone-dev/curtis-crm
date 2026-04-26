@@ -11,17 +11,7 @@ export default function AgentTicketsPage({ auth }) {
     const account = auth.user;
 
     useEffect(() => {
-        if (account.agent_type == 'CSR') {
-            if (window.location.hash == "") {
-                store.dispatch(get_tickets_thunk(window.location.search));
-            } else {
-                store.dispatch(
-                    get_tickets_thunk("?search=" + window.location.hash.slice(1))
-                );
-            }
-        }else{
-            store.dispatch(get_tickets_by_user_id_thunk(account.id));
-        }
+        store.dispatch(get_tickets_thunk(window.location.search));
     }, []);
 
     return (
@@ -31,7 +21,7 @@ export default function AgentTicketsPage({ auth }) {
                     <button
                         onClick={() =>
                             // router.visit("/agent/tickets/create")
-                            window.location.href='/agent/tickets/create'
+                            (window.location.href = "/agent/tickets/create")
                         }
                         className="p-3 bg-blue-500 text-white hover:bg-blue-600 rounded-md"
                     >
@@ -39,8 +29,7 @@ export default function AgentTicketsPage({ auth }) {
                     </button>
                 </div>
             </div>
-            {account.agent_type == 'CSR' && <CSRTicketsTableSection />}
-            {account.agent_type !== 'CSR' &&  <CustomerTicketsTableSection />}
+            <CSRTicketsTableSection />
         </AgentLayout>
     );
 }
