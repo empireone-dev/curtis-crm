@@ -24,9 +24,16 @@ class DashboardController extends Controller
         $open_parts = Ticket::where([
             ['user_id', '=', $userid],
             ['call_type', '=', 'Parts'],
-            // ['isUploading', '=', 'false'],
             ['status', '=', 'PARTS VALIDATION']
         ])->count();
+
+        $tech_callback = Ticket::where([
+            ['user_id', '=', $userid],
+            ['call_type', '=', 'TS-Tech Support'],
+            ['status', '=', 'TECH CALLBACK']
+        ])->count();
+
+
 
         $open_tech = Ticket::where([
             ['user_id', '=', $userid],
@@ -179,6 +186,7 @@ class DashboardController extends Controller
         $direct_email = DirectEmail::where('isHide', '=', 'false')->count();
 
         return response()->json([
+            'tech_callback' => $tech_callback,
             'repair_unsuccessful' => $repair_unsuccessful,
             'repair_success' => $repair_success,
             'waiting_for_photos' => $waiting_for_photos,
@@ -209,7 +217,7 @@ class DashboardController extends Controller
             'parts_process_ticket' => $parts_process_ticket,
             'rma_request' => $rma_request,
             'asc' => $asc,
-            'direct_email'=>$direct_email
+            'direct_email' => $direct_email
         ], 200);
     }
     public function asc_dashboard($id)
@@ -219,22 +227,22 @@ class DashboardController extends Controller
         if (!$check) {
             return response()->json(['error' => 'User not found'], 404);
         }
-    
+
         // Find all user IDs with the same email
         $userIds = User::where('email', $check->email)->pluck('id');
-    
+
         // Count tickets for all these users
         $assigned = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIR')->count();
         $repaired = Ticket::whereIn('asc_id', $userIds)->where('decision_status', 'REPAIRED')->count();
-        $notrepaired = Ticket::whereIn('asc_id', $userIds)->whereIn('decision_status', ['NOT REPAIRED','REPAIR UNSUCCESSFUL'])->count();
-    
+        $notrepaired = Ticket::whereIn('asc_id', $userIds)->whereIn('decision_status', ['NOT REPAIRED', 'REPAIR UNSUCCESSFUL'])->count();
+
         return response()->json([
             'assigned' => $assigned,
             'repaired' => $repaired,
             'notrepaired' => $notrepaired,
         ], 200);
     }
-    
+
 
     public function warehouse_dashboard($country)
     {
@@ -254,6 +262,11 @@ class DashboardController extends Controller
             ['call_type', '=', 'CF-Warranty Claim'],
             ['isUploading', '=', 'false'],
             ['status', '=', 'WARRANTY VALIDATION']
+        ])->count();
+
+        $tech_callback = Ticket::where([
+            ['call_type', '=', 'TS-Tech Support'],
+            ['status', '=', 'TECH CALLBACK']
         ])->count();
 
         $open_parts = Ticket::where([
@@ -382,6 +395,7 @@ class DashboardController extends Controller
         $direct_email = DirectEmail::where('isHide', '=', 'false')->count();
 
         return response()->json([
+            'tech_callback' => $tech_callback,
             'repair_unsuccessful' => $repair_unsuccessful,
             'repair_success' => $repair_success,
             'waiting_for_photos' => $waiting_for_photos,
@@ -413,7 +427,7 @@ class DashboardController extends Controller
             'rma_request' => $rma_request,
             'rma_issued' => $rma_issued,
             'asc' => $asc,
-            'direct_email'=>$direct_email
+            'direct_email' => $direct_email
         ], 200);
     }
 

@@ -59,28 +59,31 @@ class Ticket extends Model
     ];
 
 
-      public function repair_files(): HasMany
+    public function repair_files(): HasMany
     {
         return $this->hasMany(RepairFiles::class, 'repair_information_id', 'ticket_id');
     }
     public function dealer(): HasOne
     {
-        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1','invoices1']);
+        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1', 'invoices1']);
     }
     public function direct_emails(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-      public function asc(): HasOne
+    public function asc(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'asc_id');
     }
-
+    public function callbacks(): HasMany
+    {
+        return $this->hasMany(TechCallBack::class, 'ticket_id', 'id')->with(['user']);
+    }
 
     public function repair_information(): HasOne
     {
-        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1','invoices1']);
+        return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1', 'invoices1']);
     }
     public function user(): HasOne
     {
@@ -159,5 +162,4 @@ class Ticket extends Model
             ->where('type', '=', 'REPLACEMENT SHIPPED')
             ->orderBy('created_at', 'desc'); // Adjust the column to your desired ordering field
     }
-    
 }

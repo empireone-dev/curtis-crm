@@ -116,6 +116,11 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/details/contents/refund/page');
         })->name('admin.tickets.details.refund');
 
+         Route::get('/details/{ticket_id}/tech_callback', function () {
+            return Inertia::render('admin/tickets/details/contents/tech_callback/page');
+        })->name('admin.tickets.details.tech_callback');
+
+
         Route::get('/details/{ticket_id}/repair', function () {
             return Inertia::render('admin/tickets/details/contents/repair/page');
         })->name('admin.tickets.details.repair');

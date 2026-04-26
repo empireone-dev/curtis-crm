@@ -159,6 +159,15 @@ export default function TicketsDetailsLayout({ children }) {
                   },
               ]
             : []),
+        ...(ticket.call_type === "TS-Tech Support" &&
+        ticket.status === "TECH CALLBACK"
+            ? [
+                  {
+                      title: "Tech Callback",
+                      hash: "tech_callback",
+                  },
+              ]
+            : []),
         {
             title: "Activities",
             hash: "activities",

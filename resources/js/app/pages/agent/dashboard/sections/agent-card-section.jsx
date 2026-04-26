@@ -321,6 +321,17 @@ export default function AgentCardsSection({ account }) {
                         }
                     />
                 )}
+
+                {agent_type(["Tech"]) && (
+                    <AgentCardsComponent
+                        title="Tech Callbacks"
+                        link="TECH CALLBACK"
+                        count={data.tech_callback ?? 0}
+                        icon={
+                            <WrenchScrewdriverIcon className="h-10 text-white" />
+                        }
+                    />
+                )}
             </div>
             {/* <div className="text-3xl font-black my-8">Curtis Internal</div> */}
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">

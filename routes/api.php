@@ -29,6 +29,7 @@ use App\Http\Controllers\RepairController;
 use App\Http\Controllers\RepairInformationController;
 use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TechCallBackController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UspsController;
@@ -167,6 +168,7 @@ Route::post('remove_unread_email', [AppScriptController::class, 'remove_unread_e
 
 
 Route::resource('recall', RecallController::class);
+Route::resource('tech_call_back', TechCallBackController::class);
 Route::resource('recall_log', RecallLogController::class);
 Route::get('recall_stats', [RecallLogController::class, 'get_recall_unread_email']);
 
