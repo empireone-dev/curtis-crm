@@ -209,9 +209,11 @@ export default function TicketsDetailsLayout({ children }) {
                             {ticket.status ?? "Open Ticket"} ({ticket.call_type}
                             )
                         </div>
-                        <div>
-                            <RequestCallback />
-                        </div>
+                        {ticket.status && (
+                            <div>
+                                <RequestCallback />
+                            </div>
+                        )}
                     </div>
                     <div className="mb-4 flex space-x-4 p-2 bg-white rounded-md border-blue-500 border-2 ">
                         {tabs.map((res, i) => (
