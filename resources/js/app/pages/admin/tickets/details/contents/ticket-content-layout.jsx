@@ -209,7 +209,7 @@ export default function TicketsDetailsLayout({ children }) {
                             {ticket.status ?? "Open Ticket"} ({ticket.call_type}
                             )
                         </div>
-                        {ticket.status && (
+                        {user?.agent_type == "CSR" && ticket?.status && (
                             <div>
                                 <RequestCallback />
                             </div>
