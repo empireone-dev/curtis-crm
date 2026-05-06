@@ -1484,7 +1484,7 @@ class TicketController extends Controller
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
                 ['ticket_id', '<>', null],
-                // ['call_type', '=', $call_type],
+                ['ticket_id', '<>', ''],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
             ])
@@ -1508,6 +1508,7 @@ class TicketController extends Controller
             $overdue_cases = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
+                ['ticket_id', '<>', ''],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
@@ -1544,6 +1545,7 @@ class TicketController extends Controller
             $cases_due_today = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
+                ['ticket_id', '<>', ''],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
@@ -1582,6 +1584,7 @@ class TicketController extends Controller
             $upcoming_dues = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
+                ['ticket_id', '<>', ''],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
