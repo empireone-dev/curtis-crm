@@ -29,6 +29,7 @@ use App\Http\Controllers\RepairController;
 use App\Http\Controllers\RepairInformationController;
 use App\Http\Controllers\ReplacementController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\TechCallBackController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -61,6 +62,8 @@ Route::get('/google-sheets/{gid}', [GoogleSheetsController::class, 'getSheetData
 Route::post('/get_specific_item/{gid}', [GoogleSheetsController::class, 'get_specific_item']);
 
 Route::post('/get_fedex_rate/{ticketid}', [FedExController::class, 'get_fedex_rate']);
+
+Route::post('/get_new_fedex_rate/{ticketid}', [ShippingController::class, 'get_new_fedex_rate']);
 
 
 Route::resource('replacement', ReplacementController::class);

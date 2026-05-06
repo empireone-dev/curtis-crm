@@ -110,9 +110,7 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
-                $ticket = Ticket::where('ticket_id', $ticketId)
-                    ->whereNull('is_reply')
-                    ->first();
+                $ticket = Ticket::where('ticket_id', $ticketId)->first();
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
@@ -178,9 +176,7 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
-                $ticket = Ticket::where('ticket_id', $ticketId)
-                    ->whereNull('is_reply')
-                    ->first();
+                $ticket = Ticket::where('ticket_id', $ticketId)->first();
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
