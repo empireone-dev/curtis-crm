@@ -110,11 +110,13 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
-                $ticket = Ticket::where('ticket_id', $ticketId)->first();
+                $ticket = Ticket::where('ticket_id', $ticketId)
+                    ->whereNull('is_reply')
+                    ->first();
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
-                if ($ticket && $value['from'] != 'support2@curtiscs.com') {
+                if ($ticket && $value['from'] !== 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -176,11 +178,13 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
-                $ticket = Ticket::where('ticket_id', $ticketId)->first();
+                $ticket = Ticket::where('ticket_id', $ticketId)
+                    ->whereNull('is_reply')
+                    ->first();
                 $tickets[] = $ticketId;
 
                 // Only update if ticket exists and from is not the support email
-                if ($ticket && $value['from'] != 'parts@curtiscs.com') {
+                if ($ticket && $value['from'] !== 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
