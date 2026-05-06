@@ -75,6 +75,7 @@ class UserController extends Controller
                     ->where('cases_status', '<>', 'hidden')
                     ->where('is_reply', 'true')
                     ->where('ticket_id', '<>', '')
+                    ->whereNotNull('email')
                     // ->where('call_type', $user->agent_type === 'Warranty'
                     //     ? 'CF-Warranty Claim'
                     //     : 'Parts')
