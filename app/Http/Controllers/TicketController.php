@@ -1487,7 +1487,6 @@ class TicketController extends Controller
                 // ['call_type', '=', $call_type],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['status', '<>', 'CLOSED'],
             ])
 
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
@@ -1511,7 +1510,6 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
@@ -1548,7 +1546,6 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
@@ -1587,7 +1584,6 @@ class TicketController extends Controller
                 ['ticket_id', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['status', '<>', 'CLOSED'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
