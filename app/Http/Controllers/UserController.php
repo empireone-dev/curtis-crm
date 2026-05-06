@@ -78,7 +78,7 @@ class UserController extends Controller
                     // ->where('call_type', $user->agent_type === 'Warranty'
                     //     ? 'CF-Warranty Claim'
                     //     : 'Parts')
-                    ->where('created_at', '>=', Carbon::now()->subMonths(8))
+                    ->where('created_at', '>=', Carbon::now()->subMonths(11))
                     ->whereYear('created_at', '<>', 2024)
                     ->get()
                     ->map(function ($t) use ($adjustDate) {
