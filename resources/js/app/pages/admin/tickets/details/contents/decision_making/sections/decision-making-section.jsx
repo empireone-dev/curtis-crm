@@ -375,7 +375,7 @@ export default function DecisionMakingSection() {
                                         value={data?.mail_date ?? " "}
                                         label="Mail Date"
                                         type="date"
-                                        // errorMessage="Mail Date is required"
+                                    // errorMessage="Mail Date is required"
                                     />
                                 </div>
                                 {/* <Input
@@ -462,11 +462,10 @@ export default function DecisionMakingSection() {
                                         <button
                                             onClick={get_fedex_rate}
                                             type="button"
-                                            className={`w-96 flex items-center justify-center mr-12 py-2 ${
-                                                isLoading
+                                            className={`w-96 flex items-center justify-center mr-12 py-2 ${isLoading
                                                     ? "bg-blue-500"
                                                     : " bg-transparent  hover:bg-blue-50"
-                                            }  text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black`}
+                                                }  text-blue-700 font-semibold px-4 border border-blue-500 rounded w-lg  shadow-sm shadow-black`}
                                         >
                                             {isLoading ? (
                                                 <Loading />
@@ -513,22 +512,30 @@ export default function DecisionMakingSection() {
                                                 value: "",
                                                 name: "",
                                             },
-                                            ...(data.country === "CA"
-                                                ? [
-                                                      {
-                                                          value: "CA Warehouse",
-                                                          name: "Return to (CA Warehouse)",
-                                                      },
-                                                  ]
-                                                : []),
-                                            ...(data.country === "US"
-                                                ? [
-                                                      {
-                                                          value: "US Warehouse",
-                                                          name: "Return to (US Warehouse)",
-                                                      },
-                                                  ]
-                                                : []),
+                                            // ...(data.country === "CA"
+                                            //     ? [
+                                            //         {
+                                            //             value: "CA Warehouse",
+                                            //             name: "Return to (CA Warehouse)",
+                                            //         },
+                                            //     ]
+                                            //     : []),
+                                            // ...(data.country === "US"
+                                            //     ? [
+                                            //         {
+                                            //             value: "US Warehouse",
+                                            //             name: "Return to (US Warehouse)",
+                                            //         },
+                                            //     ]
+                                            //     : []),
+                                            {
+                                                value: "CA Warehouse",
+                                                name: "Return to (CA Warehouse)",
+                                            },
+                                            {
+                                                value: "US Warehouse",
+                                                name: "Return to (US Warehouse)",
+                                            },
                                             {
                                                 value: "Home",
                                                 name: "Destroy in Home",
@@ -706,14 +713,14 @@ export default function DecisionMakingSection() {
                                             }
                                             label="Resource Notes"
                                             type="text"
-                                            // errorMessage="Notes is required"
+                                        // errorMessage="Notes is required"
                                         />
                                     </div>
                                     <button
                                         type="submit"
-                                          disabled={!allChecked || isLoading1}
+                                        disabled={!allChecked || isLoading1}
                                         onClick={submit_form}
-                                        className={`${!allChecked || isLoading1?"bg-gray-600":"bg-blue-600 hover:bg-blue-700"} p-3   w-full font-bold text-white rounded-sm my-8`}
+                                        className={`${!allChecked || isLoading1 ? "bg-gray-600" : "bg-blue-600 hover:bg-blue-700"} p-3   w-full font-bold text-white rounded-sm my-8`}
                                     >
                                         {isLoading1 ? (
                                             <div className="p-1.5 flex items-center justify-center">
