@@ -140,3 +140,9 @@ export async function parts_initial(ticket) {
     const result = await get_email_template_by_id_service(63);
     return result.data;
 }
+
+
+export async function safety_issue_initial(ticket) {
+    const result = await get_email_template_by_id_service(68);
+    return result.data;
+}

@@ -1,4 +1,4 @@
-import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
 import { move_ticket_assignment_service } from "@/app/services/tickets-service";
 import { router } from "@inertiajs/react";
 import { Modal, Select } from "antd";
@@ -13,27 +13,30 @@ export default function MoveTicketAssignement() {
     const { user } = useSelector((state) => state.app);
     const [warranty, setWarranty] = useState('')
     const [parts, setParts] = useState('')
+    const [safetyIssue, setSafetyIssue] = useState("");
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     useEffect(() => {
-        async function  getData(params) {
+        async function getData(params) {
             const w = await warranty_initial(form);
             const p = await parts_initial(form);
+            const si = await safety_issue_initial(form);
+            setSafetyIssue(si.template_text);
             setWarranty(w.template_text)
             setParts(p.template_text)
         }
         getData()
     }, []);
-    
+
     async function handleOk() {
         setIsLoading(true);
         await move_ticket_assignment_service({
-            user:user,
+            user: user,
             ticket_id: ticket.id,
             call_type: callType,
-            body: callType == "Parts" ? parts : warranty,
+            body: form.call_type == "Parts" ? parts : form.call_type == "Safety Issue" ? safetyIssue : warranty,
             subject: ticket.ticket_id,
             recipient: ticket.email,
         });

@@ -1,4 +1,4 @@
-import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
 import Loading from "@/app/layouts/components/loading";
 import { resend_email_templete_service } from "@/app/services/tickets-service";
 import React, { useEffect, useState } from "react";
@@ -12,23 +12,25 @@ export default function ResendInitialEmail() {
     const [parts, setParts] = useState('')
 
 
-   useEffect(() => {
-        async function  getData(params) {
+    useEffect(() => {
+        async function getData(params) {
             const w = await warranty_initial();
             const p = await parts_initial();
+            const si = await safety_issue_initial(form);
+            setSafetyIssue(si.template_text);
             setWarranty(w.template_text)
             setParts(p.template_text)
         }
         getData()
     }, []);
-    
+
     async function resend_email(params) {
         setLoading(true);
         try {
             await resend_email_templete_service({
                 ticket_id: ticket.id,
                 call_type: ticket.call_type,
-                body: ticket.call_type == "Parts" ? parts : warranty,
+                body: form.call_type == "Parts" ? parts : form.call_type == "Safety Issue" ? safetyIssue : warranty,
                 subject: ticket.ticket_id,
                 recipient: ticket.email,
             });

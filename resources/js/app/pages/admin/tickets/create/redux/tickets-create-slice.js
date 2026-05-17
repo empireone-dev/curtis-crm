@@ -1,30 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const ticketsCreateSlice = createSlice({
-  name: 'tickets_create',
-  initialState: {
-    form: {
-      isHasEmail:'true',
-      country:null,
-      state:null,
-      call_type:'CF-Warranty Claim',
-      isSendEmail:true,
-      remarks:`Calling From: 
+    name: "tickets_create",
+    initialState: {
+        form: {
+            isHasEmail: "true",
+            country: null,
+            state: null,
+            call_type: "Safety Issue",
+            isSendEmail: true,
+            remarks: `Calling From: 
 Store:
 Purchase Date:
 Issue:
 Remarks:
-`
-    }
-  },
-  reducers: {
-    setForm: (state, action) => {
-      state.form = action.payload
+`,
+        },
     },
-  },
-})
-export const { 
-    setForm,
- } = ticketsCreateSlice.actions
+    reducers: {
+        setForm: (state, action) => {
+            state.form = action.payload;
+        },
+    },
+});
+export const { setForm } = ticketsCreateSlice.actions;
 
-export default ticketsCreateSlice.reducer
+export default ticketsCreateSlice.reducer;

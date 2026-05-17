@@ -22,7 +22,7 @@ import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
 import { message, Select as SelectData } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
-import axios from "axios";
+
 import SearchAddressSection from "./search-address-section";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;

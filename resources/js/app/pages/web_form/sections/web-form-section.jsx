@@ -13,7 +13,7 @@ import Autocomplete from "@/app/layouts/components/autocomplete";
 import { tickets_create_thunk } from "../../admin/tickets/create/redux/tickets-create-thunk";
 import { get_common_issues_thunk } from "../../admin/common_issues/redux/common-issues-thunk";
 import { setForm } from "../../admin/tickets/create/redux/tickets-create-slice";
-import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
+import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
 import Swal from "sweetalert2";
 
 export default function WebFormFormSection() {
@@ -23,6 +23,7 @@ export default function WebFormFormSection() {
     const [loading, setLoading] = useState(false);
     const [warranty, setWarranty] = useState("");
     const [parts, setParts] = useState("");
+    const [safetyIssue, setSafetyIssue] = useState("");
 
     const getQueryParam = (paramName) => {
         const searchParams = new URLSearchParams(window.location.search);
@@ -34,7 +35,7 @@ export default function WebFormFormSection() {
     console.log("window.location", call_type);
 
     useEffect(() => {
-        if (call_type == "CF-Warranty Claim" || call_type == "Parts") {
+        if (call_type == "CF-Warranty Claim" || call_type == "Parts" || call_type == "Safety Issue") {
         } else {
             window.location.href = "https://www.curtisint.com/product-support/";
         }
@@ -109,11 +110,14 @@ export default function WebFormFormSection() {
         async function getData(params) {
             const w = await warranty_initial(form);
             const p = await parts_initial(form);
+            const si = await safety_issue_initial(form);
             setWarranty(w.template_text);
             setParts(p.template_text);
+            setSafetyIssue(si.template_text);
         }
         getData();
     }, []);
+
 
     async function submitFormTicket(e) {
         e.preventDefault();
@@ -129,7 +133,7 @@ export default function WebFormFormSection() {
                     form.isHasEmail == "true" || form.isHasEmail == true
                         ? form.email
                         : null,
-                body: form.call_type == "Parts" ? parts : warranty,
+                body: form.call_type == "Parts" ? parts : form.call_type == "Safety Issue" ? safetyIssue : warranty,
             })
         );
         const response = await store.dispatch(tickets_create_thunk());
@@ -156,6 +160,12 @@ export default function WebFormFormSection() {
 
     const { regions } = findCountry(form.country ?? "CA");
 
+
+    const selected_issue = common_issues.filter(res => {
+        if (!res.name) return false;
+        const hasSafety = res.name.includes('Safety Issue');
+        return call_type === "Safety Issue" ? hasSafety : !hasSafety;
+    });
     return (
         <form
             onSubmit={submitFormTicket}
@@ -220,7 +230,7 @@ export default function WebFormFormSection() {
                         value={form?.phone2}
                         label="Secondary Phone Number"
                         type="phone"
-                        // errorMessage="Phone Number is required"
+                    // errorMessage="Phone Number is required"
                     />
                 </div>
             </div>
@@ -370,11 +380,11 @@ export default function WebFormFormSection() {
                     <Input
                         onChange={formHandler}
                         name="address"
-                        // required={true}
+                        required={true}
                         value={form.address}
                         label="Address"
                         type="text"
-                        // errorMessage='Address is required'
+                    // errorMessage='Address is required'
                     />
                 </div>
                 <div className="md:w-full px-3 mb-3 md:mb-0">
@@ -385,13 +395,15 @@ export default function WebFormFormSection() {
                         value={form?.address2}
                         label="Mailing Address"
                         type="text"
-                        // errorMessage='Address is required'
+                    // errorMessage='Address is required'
                     />
                 </div>
 
                 <div className="md:w-full px-3 mb-3 md:mb-0">
                     {form.call_type == "Parts" ? (
                         <Autocomplete
+                            label="Issue"
+                            required={true}
                             defaultValue={form.issue ?? "[]"}
                             onChange={formHandler}
                             value={[
@@ -411,9 +423,11 @@ export default function WebFormFormSection() {
                         />
                     ) : (
                         <Autocomplete
+                            label="Issue"
+                            required={true}
                             defaultValue={form.issue ?? "[]"}
                             onChange={formHandler}
-                            value={common_issues.map((res) => ({
+                            value={selected_issue.map((res) => ({
                                 id: res.id,
                                 name: res.name,
                             }))}

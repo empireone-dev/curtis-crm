@@ -13,8 +13,7 @@ import { tickets_create_thunk } from "../redux/tickets-create-thunk";
 import { router } from "@inertiajs/react";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
-import { parts_initial, warranty_initial } from "@/app/json/initial-templates";
-import ReasonToClose from "../../details/contents/details/id/sections/reason-to-close";
+import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
 import TicketCloseSection from "./ticket-close-section";
 import { check_serial_number_service } from "@/app/services/tickets-service";
 import { message } from "antd";
@@ -29,6 +28,7 @@ export default function TicketCreateFormSection() {
     const [warranty, setWarranty] = useState("");
     const [parts, setParts] = useState("");
     const [loading1, setLoading1] = useState(false);
+    const [safetyIssue, setSafetyIssue] = useState("");
 
     function formatPhoneNumber(value) {
         const cleaned = ("" + value).replace(/\D/g, "");
@@ -44,7 +44,7 @@ export default function TicketCreateFormSection() {
         }
         return value;
     }
-    
+
     async function formHandler(value, name) {
         if (name == "phone" || name == "phone2") {
             dispatch(
@@ -135,6 +135,8 @@ export default function TicketCreateFormSection() {
         async function getData(params) {
             const w = await warranty_initial(form);
             const p = await parts_initial(form);
+            const si = await safety_issue_initial(form);
+            setSafetyIssue(si.template_text);
             setWarranty(w.template_text);
             setParts(p.template_text);
         }
@@ -156,7 +158,7 @@ export default function TicketCreateFormSection() {
                         form.isHasEmail == "true" || form.isHasEmail == true
                             ? form.email
                             : null,
-                    body: form.call_type == "Parts" ? parts : warranty,
+                    body: form.call_type == "Parts" ? parts : form.call_type == "Safety Issue" ? safetyIssue : warranty,
                 })
             );
             const response = await store.dispatch(tickets_create_thunk());
@@ -200,7 +202,7 @@ export default function TicketCreateFormSection() {
                         value={form.fname}
                         label="First Name"
                         type="text"
-                        // errorMessage="First Name is required"
+                    // errorMessage="First Name is required"
                     />
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -211,7 +213,7 @@ export default function TicketCreateFormSection() {
                         value={form.lname}
                         label="Last Name"
                         type="text"
-                        // errorMessage="Last Name is required"
+                    // errorMessage="Last Name is required"
                     />
                 </div>
             </div>
@@ -248,7 +250,7 @@ export default function TicketCreateFormSection() {
                                     value={form.email}
                                     label="Email"
                                     type="email"
-                                    // errorMessage="Email is required"
+                                // errorMessage="Email is required"
                                 />
                             )}
                         </div>
@@ -262,7 +264,7 @@ export default function TicketCreateFormSection() {
                         value={form.phone}
                         label="Phone Number"
                         type="phone"
-                        // errorMessage="Phone Number is required"
+                    // errorMessage="Phone Number is required"
                     />
                     <Input
                         onChange={formHandler}
@@ -271,7 +273,7 @@ export default function TicketCreateFormSection() {
                         value={form?.phone2}
                         label="Calling From"
                         type="phone"
-                        // errorMessage="Phone Number is required"
+                    // errorMessage="Phone Number is required"
                     />
                 </div>
             </div>
@@ -289,7 +291,7 @@ export default function TicketCreateFormSection() {
                         value={form.item_number}
                         label="Item Number"
                         type="text"
-                        // errorMessage="Item Number is required"
+                    // errorMessage="Item Number is required"
                     />
                 </div>
 
@@ -301,7 +303,7 @@ export default function TicketCreateFormSection() {
                         value={form.unit}
                         label="Item Unit"
                         type="text"
-                        // errorMessage="Item Unit is required"
+                    // errorMessage="Item Unit is required"
                     />
                 </div>
             </div>
@@ -315,7 +317,7 @@ export default function TicketCreateFormSection() {
                         value={form.brand}
                         label="Brand"
                         type="text"
-                        // errorMessage="Brand is required"
+                    // errorMessage="Brand is required"
                     />
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -326,7 +328,7 @@ export default function TicketCreateFormSection() {
                         value={form.class}
                         label="Item Class"
                         type="text"
-                        // errorMessage="Item Class is required"
+                    // errorMessage="Item Class is required"
                     />
                 </div>
             </div>
@@ -339,7 +341,7 @@ export default function TicketCreateFormSection() {
                         value={form.serial_number}
                         label={loading1 ? "Loading ..." : "Serial Number"}
                         type="text"
-                        // errorMessage="Serial Number is required"
+                    // errorMessage="Serial Number is required"
                     />
                 </div>
 
@@ -362,7 +364,7 @@ export default function TicketCreateFormSection() {
                         value={form.purchase_date}
                         label="Purchase Date"
                         type="date"
-                        // errorMessage="Purchase Date is required"
+                    // errorMessage="Purchase Date is required"
                     />
                 </div>
             </div>
@@ -401,7 +403,7 @@ export default function TicketCreateFormSection() {
                         value={form.city}
                         label="City"
                         type="text"
-                        // errorMessage="City is required"
+                    // errorMessage="City is required"
                     />
                 </div>
                 <div className="md:w-1/4 px-3 mb-3">
@@ -412,7 +414,7 @@ export default function TicketCreateFormSection() {
                         value={form.zip_code}
                         label="Zip Code / Postal Code"
                         type="text"
-                        // errorMessage="Zip Code is required"
+                    // errorMessage="Zip Code is required"
                     />
                 </div>
             </div>
@@ -425,7 +427,7 @@ export default function TicketCreateFormSection() {
                         value={form.address}
                         label="Address"
                         type="text"
-                        // errorMessage='Address is required'
+                    // errorMessage='Address is required'
                     />
                 </div>
                 <div className=" px-3 mb-3">
@@ -436,7 +438,7 @@ export default function TicketCreateFormSection() {
                         value={form?.address2}
                         label="Mailing Address"
                         type="text"
-                        // errorMessage='Address is required'
+                    // errorMessage='Address is required'
                     />
                 </div>
                 <div className="my-5 px-3 mb-3">
@@ -523,7 +525,7 @@ export default function TicketCreateFormSection() {
                             value={form.remarks}
                             label="Remarks"
                             type="text"
-                            // errorMessage="Remarks is required"
+                        // errorMessage="Remarks is required"
                         />
                     </div>
                     <div className="basis-1/4 flex items-center justify-center">

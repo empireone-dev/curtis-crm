@@ -40,7 +40,7 @@ export default function Input({
         <div className="w-full">
             <div className="relative">
                 <input
-                readOnly={readOnly??false}
+                    readOnly={readOnly ?? false}
                     autoComplete="off"
                     required={required}
                     value={formType() ?? ""}
@@ -60,9 +60,11 @@ export default function Input({
                 </div>
                 <label
                     htmlFor={id}
-                    className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white"
+                    className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-blue-500 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white"
                 >
-                    {label}
+                    <div className='flex gap-1 text-blue-600'>
+                        {label} {required && <div className='text-red-600'>*</div>}
+                    </div>
                 </label>
                 {type === 'password' && (
                     <button

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-export default function Autocomplete({ value, onChange, defaultValue }) {
+export default function Autocomplete({ value, onChange, defaultValue, label = "", required = false }) {
     const [selectedValue, setSelectedValue] = useState(null);
     const [query, setQuery] = useState('');
 
@@ -29,13 +29,19 @@ export default function Autocomplete({ value, onChange, defaultValue }) {
             );
 
 
-    const targetName = defaultValue.replace(/^\["/, '') 
+    const targetName = defaultValue.replace(/^\["/, '')
         .replace(/"\]$/, '');
     const foundObject = value.find(obj => obj.name === targetName);
 
     return (
         <Combobox value={foundObject} onChange={setSelectedValue}>
             <div className="relative mt-1">
+                <div className='text-blue-600 absolute ml-3 -mt-3 bg-white px-3'>
+                    <div className='flex gap-1 text-blue-600'>
+                        {label} {required && <div className='text-red-600'>*</div>}
+                    </div>
+
+                </div>
                 <div className='peer text-black placeholder-transparent w-full py-1 px-5 border-gray-500 border bg-transparent rounded-sm bg-white focus-within:outline-none focus-within:border-blue-500'>
                     <div className="grid grid-flow-row-dense grid-cols-4 ">
                         {/* {selectedValue && (

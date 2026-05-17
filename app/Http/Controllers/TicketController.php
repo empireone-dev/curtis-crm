@@ -283,7 +283,7 @@ class TicketController extends Controller
     }
     public function resend_email_templete(Request $request)
     {
-        if ($request->call_type == 'CF-Warranty Claim') {
+        if ($request->call_type == 'CF-Warranty Claim' || $request->call_type == 'Safety Issue') {
             $this->send_warranty_email($request->recipient, $request->subject, $request->body);
         } else if ($request->call_type == 'Parts') {
             $this->send_parts_email($request->recipient, $request->subject, $request->body);
@@ -1888,6 +1888,8 @@ class TicketController extends Controller
         switch ($callType) {
             case 'Parts':
                 return 'PS' . $id;
+            case 'Safety Issue':
+                return 'SI' . $id;
             case 'CF-Warranty Claim':
                 return 'CF' . $id;
             case 'TS-Tech Support':
@@ -1915,6 +1917,10 @@ class TicketController extends Controller
         if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
             if ($request->call_type == 'CF-Warranty Claim') {
                 $et = EmailTemplate::where('id', 64)->first();
+                $body = $et->template_text;
+                $this->send_warranty_email($request->email, $subject, $body);
+            }else if($request->call_type == 'Safety Issue'){
+                  $et = EmailTemplate::where('id', 68)->first();
                 $body = $et->template_text;
                 $this->send_warranty_email($request->email, $subject, $body);
             } else if ($request->call_type == 'Parts') {
@@ -2012,7 +2018,7 @@ class TicketController extends Controller
             ]);
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true || $request->email && $request->isSendEmail) {
 
-                if ($request->call_type == 'CF-Warranty Claim') {
+                if ($request->call_type == 'CF-Warranty Claim' || $request->call_type == 'Safety Issue') {
                     $this->send_warranty_email($request->email, $subject, $request->body);
                 } else if ($request->call_type == 'Parts') {
                     $this->send_parts_email($request->email, $subject, $request->body);
@@ -2077,7 +2083,7 @@ class TicketController extends Controller
             ]);
 
             if ($request->isSendEmail == 'true' || $request->isSendEmail == true  || $request->email && $request->isSendEmail) {
-                if ($request->call_type == 'CF-Warranty Claim') {
+                if ($request->call_type == 'CF-Warranty Claim' || $request->call_type == 'Safety Issue') {
                     $this->send_warranty_email($request->email, $subject, $request->body);
                 } else if ($request->call_type == 'Parts') {
                     $this->send_parts_email($request->email, $subject, $request->body);
