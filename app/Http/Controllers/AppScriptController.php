@@ -15,7 +15,7 @@ class AppScriptController extends Controller
     public function find14CharSequences($sentence)
     {
         // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
-        $regex = '/\b(CF|PS|TS)\w{12}\b/';
+        $regex = '/\b(CF|PS|SI|TS)\w{12}\b/';
 
         // Perform the match and return the results
         preg_match_all($regex, $sentence, $matches);
