@@ -59,8 +59,8 @@ class UserController extends Controller
         // 2. Fetch Users and Eager Load all necessary data at once
         $users = User::where(function ($q) use ($role_id) {
             $q->where('role_id', $role_id)
-                ->orWhere('role_id', 1)
-                ->whereIn('agent_type', ['Warranty', 'Parts', 'CSR'])
+                ->orWhereIn('role_id', [1, 5])
+                // ->whereIn('agent_type', ['Warranty', 'Parts', 'CSR', 'Safety Issue','Admin'])
                 ->orderBy('agent_type', 'desc');
         })
             ->with(['role'])

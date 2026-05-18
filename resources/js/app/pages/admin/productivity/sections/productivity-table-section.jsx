@@ -140,28 +140,20 @@ export default function ProductivityTableSection({ loading }) {
     });
 
     const data = users
-        .map((res) =>
-            ["Warranty", "Parts", "CSR", "Admin"].includes(res.agent_type)
-                ? {
-                      id: res.id,
-                      agent: res.name,
-                      position: res.agent_type,
-                      overdue_cases: res.overdue_cases,
-                      cases_due_today: res.cases_due_today,
-                      overdue_direct_emails: res.overdue_direct_emails,
-                      direct_emails_due_today: res.direct_emails_due_today,
-                      handled_cases: res.handled_cases,
-                      handled_direct_emails: res.handled_direct_emails,
-                      upcoming_dues: res.upcoming_dues,
-                      upcoming_dues_direct_emails:
-                          res.upcoming_dues_direct_emails,
-                      total:
-                          parseInt(res.handled_cases) +
-                          parseInt(res.handled_direct_emails),
-                  }
-                : null
-        )
-        .filter(Boolean)
+        .map((res) => ({
+            id: res.id,
+            agent: res.name,
+            position: res.agent_type ?? "", // Changed null to an empty string
+            overdue_cases: res.overdue_cases,
+            cases_due_today: res.cases_due_today,
+            overdue_direct_emails: res.overdue_direct_emails,
+            direct_emails_due_today: res.direct_emails_due_today,
+            handled_cases: res.handled_cases,
+            handled_direct_emails: res.handled_direct_emails,
+            upcoming_dues: res.upcoming_dues,
+            upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
+            total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0),
+        }))
         .sort((a, b) => b.position.localeCompare(a.position));
 
     const columns = [
