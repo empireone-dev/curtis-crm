@@ -1758,6 +1758,7 @@ class TicketController extends Controller
             'Parts' => 'Parts',
             'CF-Warranty Claim' => 'Warranty',
             'TS-Tech Support' => 'Tech',
+            'Safety Issue' => 'Safety Issue',
         ];
 
         $type = $map[$call_type] ?? 'Warranty';
@@ -1944,21 +1945,21 @@ class TicketController extends Controller
         $account = [];
 
 
-        $validation = '';
-        switch ($request->call_type) {
-            case 'Parts':
-                $validation = 'PARTS VALIDATION';
-                break;
-            case 'CF-Warranty Claim':
-                $validation = 'WARRANTY VALIDATION';
-                break;
-            case 'TS-Tech Support':
-                $validation = 'TECH VALIDATION';
-                break;
-            default:
-                $validation = $request->call_type;
-                break;
-        }
+        // $validation = '';
+        // switch ($request->call_type) {
+        //     case 'Parts':
+        //         $validation = 'PARTS VALIDATION';
+        //         break;
+        //     case 'CF-Warranty Claim':
+        //         $validation = 'WARRANTY VALIDATION';
+        //         break;
+        //     case 'TS-Tech Support':
+        //         $validation = 'TECH VALIDATION';
+        //         break;
+        //     default:
+        //         $validation = $request->call_type;
+        //         break;
+        // }
 
         if ((!$user) && $request->isHasEmail == true || (!$user) && $request->isHasEmail == 'true') {
             $account = User::create([
