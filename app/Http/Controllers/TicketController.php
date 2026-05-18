@@ -1765,7 +1765,7 @@ class TicketController extends Controller
 
         // Only get eligible users
         $userWithSmallestCount = User::where([
-            ['role_id', '=', 5],
+            ['role_id', '=', $type == "Safety Issue" ? 1 : 5],
             ['agent_type', '=', $type],
             ['remember_token', '=', null],
         ])
