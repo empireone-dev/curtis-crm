@@ -103,108 +103,110 @@ class AppScriptController extends Controller
     }
     public function get_warranty_unread_email(Request $request)
     {
-
         $tickets = [];
+        $today = Carbon::today()->toDateString();
+        $tomorrowDate = Carbon::now()->addDays(1)->format('Y-m-d H:i:s');
 
+        // ---------------------------------------------------------
+        // 1. Helper Function to Pre-fetch User Workloads Efficiently
+        // ---------------------------------------------------------
+        $getWorkloads = function ($agentType) use ($today) {
+            $userIds = User::where('agent_type', $agentType)
+                ->whereNull('remember_token')
+                ->pluck('id')
+                ->toArray();
+
+            if (empty($userIds)) return [];
+
+            // Get counts in a single query grouping by user_id
+            $counts = DirectEmail::whereIn('user_id', $userIds)
+                ->where('isHide', 'false')
+                ->whereDate('created_at', $today)
+                ->selectRaw('user_id, count(*) as total')
+                ->groupBy('user_id')
+                ->pluck('total', 'user_id')
+                ->toArray();
+
+            // Ensure all valid users are in the array, defaulting to 0 if no emails today
+            $workloads = [];
+            foreach ($userIds as $id) {
+                $workloads[$id] = $counts[$id] ?? 0;
+            }
+
+            return $workloads;
+        };
+
+        // Fetch workloads ONCE before looping
+        $warrantyWorkloads = $getWorkloads('Warranty');
+        $safetyWorkloads   = $getWorkloads('Safety Issue');
+
+        // ---------------------------------------------------------
+        // 2. Process Request Data
+        // ---------------------------------------------------------
         foreach ($request->all() as $value) {
+
+            // --- TICKET LOGIC ---
             if ($value['ticket_id'] != 'direct_email') {
                 $ticketId = $this->find14CharSequences($value['ticket_id']);
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
                     ->first();
+
                 $tickets[] = $ticketId;
 
-
-                // Only update if ticket exists and from is not the support email
                 if ($ticket && $value['from'] != 'support2@curtiscs.com') {
-
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true',
+                        'email_date'   => $tomorrowDate,
+                        'is_reply'     => 'true',
                     ]);
                 }
+                continue; // Skip the rest of the loop for this item
             }
-            if ($value['ticket_id'] == 'direct_email') {
-                if ($value['sequence_type'] == 'CF') {
-                    $users = User::where([
-                        // ['role_id', '=', 5],
-                        ['agent_type', '=', "Warranty"],
-                        ['remember_token', '=', null],
-                    ])->get();
-                    $userWithSmallestCount = null;
-                    $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
-                    foreach ($users as $user) {
-                        $count = DirectEmail::where([
-                            ['user_id', '=', $user->id],
-                            ['isHide', '=', 'false'],
-                        ])
-                            ->whereDate('created_at', Carbon::today())
-                            ->count();
+            // --- DIRECT EMAIL LOGIC ---
+            $isCF = ($value['sequence_type'] == 'CF');
 
-                        if ($count < $smallestCount) {
-                            $smallestCount = $count;
-                            $userWithSmallestCount = $user;
-                        }
-                    }
-                    $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                    if ($existing) {
-                        $existing->update([
-                            'isHide' => 'false'
-                        ]);
-                    } else {
-                        DirectEmail::create([
-                            'email' => $value['from'],
-                            'threadId' => $value['threadId'],
-                            'user_id' => $userWithSmallestCount->id ?? 58,
-                            'count' => $value['count'] ?? 0,
-                            'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
-                        ]);
-                    }
-                } else {
-                    $users = User::where([
-                        // ['role_id', '=', 5],
-                        ['agent_type', '=', "Safety Issue"],
-                        ['remember_token', '=', null],
-                    ])->get();
-                    $userWithSmallestCount = null;
-                    $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+            // Dynamically reference the correct workload array and fallback ID
+            $workloads = &$warrantyWorkloads; // using reference to update original array
+            $fallbackId = 58;
 
-                    foreach ($users as $user) {
-                        $count = DirectEmail::where([
-                            ['user_id', '=', $user->id],
-                            ['isHide', '=', 'false'],
-                        ])
-                            ->whereDate('created_at', Carbon::today())
-                            ->count();
+            if (!$isCF) {
+                $workloads = &$safetyWorkloads;
+                $fallbackId = 62;
+            }
 
-                        if ($count < $smallestCount) {
-                            $smallestCount = $count;
-                            $userWithSmallestCount = $user;
-                        }
-                    }
-                    $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-                    if ($existing) {
-                        $existing->update([
-                            'isHide' => 'false'
-                        ]);
-                    } else {
-                        DirectEmail::create([
-                            'email' => $value['from'],
-                            'threadId' => $value['threadId'],
-                            'user_id' => $userWithSmallestCount->id ?? 62,
-                            'count' => $value['count'] ?? 0,
-                            'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
-                        ]);
-                    }
-                }
+            $assignedUserId = $fallbackId;
+
+            // Find the user with the lowest count
+            if (!empty($workloads)) {
+                asort($workloads); // Sorts array by value (count) ascending, maintaining keys (user_id)
+                $assignedUserId = array_key_first($workloads); // Grabs the user_id with the lowest count
+
+                // Increment their in-memory count so the next iteration respects this new assignment
+                $workloads[$assignedUserId]++;
+            }
+
+            // Update or Create the Direct Email record
+            $existing = DirectEmail::where('threadId', $value['threadId'])->first();
+
+            if ($existing) {
+                $existing->update(['isHide' => 'false']);
+            } else {
+                DirectEmail::create([
+                    'email'      => $value['from'],
+                    'threadId'   => $value['threadId'],
+                    'user_id'    => $assignedUserId,
+                    'count'      => $value['count'] ?? 0,
+                    'email_date' => $tomorrowDate,
+                ]);
             }
         }
+
         return response()->json([
-            'data' => $tickets,
-            'data2' => $request->all(),
+            'data'    => $tickets,
+            'data2'   => $request->all(),
             'message' => 'Emails processed successfully'
         ], 200);
     }
