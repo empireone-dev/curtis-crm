@@ -1765,13 +1765,12 @@ class TicketController extends Controller
 
         // Only get eligible users
         $userWithSmallestCount = User::where([
-            ['role_id', '=', $type == "Safety Issue" ? 1 : 5],
+            // ['role_id', '=', $type == "Safety Issue" ? 1 : 5],
             ['agent_type', '=', $type],
             ['remember_token', '=', null],
-        ])
-            ->withCount(['tickets' => function ($query) {
-                $query->whereDate('created_at', Carbon::today()); // ✅ only today’s tickets
-            }])
+        ])->withCount(['tickets' => function ($query) {
+            $query->whereDate('created_at', Carbon::today()); // ✅ only today’s tickets
+        }])
             ->orderBy('tickets_count', 'asc')
             ->first();
 
