@@ -43,104 +43,88 @@ class UserController extends Controller
     {
         $today = Carbon::today()->toDateString();
 
-        // Get all users (role_id OR admin)
+        // 1. Define the reusable date filter for CasesLog
+        $applyDateFilter = function ($query) use ($request, $today) {
+            if ($request->start && $request->end) {
+                if ($request->start == $request->end) {
+                    $query->whereDate('created_at', Carbon::parse($request->start)->toDateString());
+                } else {
+                    $query->whereBetween('created_at', [$request->start, $request->end]);
+                }
+            } else {
+                $query->whereDate('created_at', $today);
+            }
+        };
+
+        // 2. Fetch Users and Eager Load all necessary data at once
         $users = User::where(function ($q) use ($role_id) {
             $q->where('role_id', $role_id)
                 ->orWhere('role_id', 1)
                 ->whereIn('agent_type', ['Warranty', 'Parts', 'CSR'])
                 ->orderBy('agent_type', 'desc');
         })
-            ->with('role')
+            ->with(['role'])
+            // Conditionally eager load the heavy data ONLY if role is 5
+            ->when($role_id == 5, function ($query) use ($applyDateFilter) {
+                $query->with([
+                    'tickets' => function ($q) {
+                        $q->whereNotNull('ticket_id')
+                            ->where('cases_status', '<>', 'hidden')
+                            ->where('is_reply', 'true')
+                            ->where('ticket_id', '<>', '')
+                            ->whereNotNull('email')
+                            ->where('created_at', '>=', Carbon::now()->subMonths(11))
+                            ->whereYear('created_at', '<>', 2024);
+                    },
+                    'directEmails' => function ($q) {
+                        $q->where('isHide', '<>', 'true')
+                            ->whereIn('id', function ($subQuery) {
+                                $subQuery->selectRaw('MAX(id)')
+                                    ->from('direct_emails')
+                                    ->groupBy('threadId');
+                            });
+                    },
+                    'handledCasesLogs' => function ($q) use ($applyDateFilter) {
+                        $q->with('ticket'); // nested eager loading
+                        $applyDateFilter($q);
+                    },
+                    'handledDirectEmailsLogs' => function ($q) use ($applyDateFilter) {
+                        $q->with('direct_email'); // nested eager loading
+                        $applyDateFilter($q);
+                    }
+                ]);
+            })
             ->get();
 
+        // 3. Map the loaded relationships into your specific JSON response format
         if ($role_id == 5) {
-            foreach ($users as $user) {
-                // --------------------------
-                // Helper: adjust email_date
-                // --------------------------
-                $adjustDate = function ($date) {
-                    $emailDate = Carbon::parse($date);
-                    $dayOfWeek = $emailDate->dayOfWeekIso;
+            $users->each(function ($user) use ($today) {
 
-                    return $emailDate->addDays(
-                        in_array($dayOfWeek, [4, 5]) ? 4 : ($dayOfWeek == 6 ? 3 : 2)
-                    )->toDateString();
-                };
+                // Tickets - Counting in memory via Collection
+                $user->cases_due_today = $user->tickets->where('email_date', $today)->count();
+                $user->overdue_cases   = $user->tickets->where('email_date', '<', $today)->count();
+                $user->upcoming_dues   = $user->tickets->where('email_date', '>', $today)->count();
 
-                // --------------------------
-                // Tickets
-                // --------------------------
-                $tickets = Ticket::where('user_id', $user->id)
-                    ->whereNotNull('ticket_id')
-                    ->where('cases_status', '<>', 'hidden')
-                    ->where('is_reply', 'true')
-                    ->where('ticket_id', '<>', '')
-                    ->whereNotNull('email')
-                    // ->where('call_type', $user->agent_type === 'Warranty'
-                    //     ? 'CF-Warranty Claim'
-                    //     : 'Parts')
-                    ->where('created_at', '>=', Carbon::now()->subMonths(11))
-                    ->whereYear('created_at', '<>', 2024)
-                    ->get()
-                    ->map(function ($t) use ($adjustDate) {
-                        $t->email_date = $adjustDate($t->email_date);
-                        return $t;
-                    });
+                // Direct Emails - Counting in memory via Collection
+                $user->direct_emails_due_today     = $user->directEmails->where('email_date', $today)->count();
+                $user->overdue_direct_emails       = $user->directEmails->where('email_date', '<', $today)->count();
+                $user->upcoming_dues_direct_emails = $user->directEmails->where('email_date', '>', $today)->count();
 
-                $user->cases_due_today = $tickets->where('email_date', $today)->count();
-                $user->overdue_cases   = $tickets->where('email_date', '<', $today)->count();
-                $user->upcoming_dues   = $tickets->where('email_date', '>', $today)->count();
-
-                // --------------------------
-                // Direct Emails
-                // --------------------------
-                $directEmails = DirectEmail::where('user_id', $user->id)
-                    ->where('isHide', '<>', 'true')
-                    ->whereIn('id', function ($query) {
-                        $query->selectRaw('MAX(id)')
-                            ->from('direct_emails')
-                            ->groupBy('threadId');
-                    })
-                    ->get()
-                    ->map(function ($d) use ($adjustDate) {
-                        $d->email_date = $adjustDate($d->email_date);
-                        return $d;
-                    });
-
-                $user->direct_emails_due_today    = $directEmails->where('email_date', $today)->count();
-                $user->overdue_direct_emails      = $directEmails->where('email_date', '<', $today)->count();
-                $user->upcoming_dues_direct_emails = $directEmails->where('email_date', '>', $today)->count();
-
-                // --------------------------
                 // Handled Cases
-                // --------------------------
-                $handledCases = CasesLog::where('user_id', $user->id)
-                    ->where('log_from', 'handled')
-                    ->with('ticket');
+                $user->handled_cases       = $user->handledCasesLogs->count();
+                $user->handled_cases_notes = $user->handledCasesLogs; // Assigning the collection
 
-                $handledDirect = CasesLog::where('user_id', $user->id)
-                    ->where('log_from', 'direct_emails')
-                    ->with('direct_email');
+                // Handled Direct Emails
+                $user->handled_direct_emails       = $user->handledDirectEmailsLogs->count();
+                $user->handled_direct_emails_notes = $user->handledDirectEmailsLogs; // Assigning the collection
 
-                if ($request->start && $request->end) {
-                    if ($request->start == $request->end) {
-                        $date = Carbon::parse($request->start)->toDateString();
-                        $handledCases->whereDate('created_at', $date);
-                        $handledDirect->whereDate('created_at', $date);
-                    } else {
-                        $handledCases->whereBetween('created_at', [$request->start, $request->end]);
-                        $handledDirect->whereBetween('created_at', [$request->start, $request->end]);
-                    }
-                } else {
-                    $handledCases->whereDate('created_at', $today);
-                    $handledDirect->whereDate('created_at', $today);
-                }
-
-                $user->handled_cases              = $handledCases->count();
-                $user->handled_cases_notes        = $handledCases->get();
-                $user->handled_direct_emails      = $handledDirect->count();
-                $user->handled_direct_emails_notes = $handledDirect->get();
-            }
+                // Optional: Unset the base relationship properties so your JSON payload 
+                // exactly matches your original structure without duplicated data arrays.
+                unset($user->tickets);
+                unset($user->directEmails);
+                unset($user->handledCasesLogs);
+                unset($user->handledDirectEmailsLogs);
+            });
         }
 
         return response()->json(['data' => $users], 200);

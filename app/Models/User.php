@@ -57,6 +57,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class, 'user_id', 'id');
     }
+
+    public function directEmails()
+    {
+        return $this->hasMany(DirectEmail::class);
+    }
+
+    // Specific relationship for handled cases
+    public function handledCasesLogs()
+    {
+        return $this->hasMany(CasesLog::class)->where('log_from', 'handled');
+    }
+
+    // Specific relationship for handled direct emails
+    public function handledDirectEmailsLogs()
+    {
+        return $this->hasMany(CasesLog::class)->where('log_from', 'direct_emails');
+    }
     public function role(): HasOne
     {
         return $this->hasOne(Role::class, 'id', 'role_id');

@@ -1108,24 +1108,24 @@ class TicketController extends Controller
                 ->with('user')
                 ->get();
 
-            foreach ($overdue_cases as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->email_date = $value->email_date;
-                $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                return $ticket->due_date < $today;
-            });
+            // foreach ($overdue_cases as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->email_date = $value->email_date;
+            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
+            //     return $ticket->due_date < $today;
+            // });
             return response()->json([
                 'data_count' => count($overdue_cases),
                 'ticket_count' => 100,
@@ -1135,6 +1135,7 @@ class TicketController extends Controller
         if ($request->search == 'upcoming_dues_direct_emails') {
             $overdue_cases = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
+                ->where('email_date', '>', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1143,24 +1144,24 @@ class TicketController extends Controller
                 ->with('user')
                 ->get();
 
-            foreach ($overdue_cases as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->email_date = $value->email_date;
-                $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                return $ticket->due_date > $today;
-            });
+            // foreach ($overdue_cases as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->email_date = $value->email_date;
+            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
+            //     return $ticket->due_date > $today;
+            // });
             return response()->json([
                 'data_count' => count($overdue_cases),
                 'ticket_count' => 100,
@@ -1169,6 +1170,7 @@ class TicketController extends Controller
         } else if ($request->search == 'handled_direct_emails') {
             $handled_direct_emails = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
+                ->where('email_date', '>', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1177,23 +1179,23 @@ class TicketController extends Controller
                 ->with('user')
                 ->get();
 
-            foreach ($handled_direct_emails as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $handled_direct_emails = $handled_direct_emails->filter(function ($ticket) use ($today) {
-                return $ticket->email_date > $today;
-            });
+            // foreach ($handled_direct_emails as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $handled_direct_emails = $handled_direct_emails->filter(function ($ticket) use ($today) {
+            //     return $ticket->email_date > $today;
+            // });
             return response()->json([
                 'data_count' => count($handled_direct_emails),
                 'ticket_count' => 100,
@@ -1202,6 +1204,7 @@ class TicketController extends Controller
         } else if ($request->search == 'due_today') {
             $cases_due_today = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
+                ->where('email_date', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1210,24 +1213,24 @@ class TicketController extends Controller
                 ->with('user')
                 ->get();
 
-            foreach ($cases_due_today as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->email_date = $value->email_date;
-                $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-                return $ticket->due_date === $today;
-            });
+            // foreach ($cases_due_today as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->email_date = $value->email_date;
+            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
+            //     return $ticket->due_date === $today;
+            // });
             return response()->json([
                 'data_count' => count($cases_due_today),
                 'ticket_count' => 100,
@@ -1431,20 +1434,20 @@ class TicketController extends Controller
     public function cases(Request $request)
     {
         // Number of results per page
-        $perPage = 10;
+        // $perPage = 10;
         $data = [];
         $user = User::where('id', $request->user_id)->first();
         $today = Carbon::today()->toDateString();
-        $call_type = '';
-        if ($request->cases !== 'case_file') {
-            if ($user->agent_type == 'Warranty') {
-                $call_type = 'CF-Warranty Claim';
-            } elseif ($user->agent_type == 'Parts') {
-                $call_type = 'Parts';
-            } else {
-                $call_type = 'Tech';
-            }
-        }
+        // $call_type = '';
+        // if ($request->cases !== 'case_file') {
+        //     if ($user->agent_type == 'Warranty') {
+        //         $call_type = 'CF-Warranty Claim';
+        //     } elseif ($user->agent_type == 'Parts') {
+        //         $call_type = 'Parts';
+        //     } else {
+        //         $call_type = 'Tech';
+        //     }
+        // }
 
         if ($request->cases == 'case_file') {
             $search = [];
@@ -1459,21 +1462,21 @@ class TicketController extends Controller
                 $search = Ticket::where('ticket_id', '=', $request->where)->with(['direct_emails'])->get();
             }
 
-            foreach ($search as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->true_email_date = $value->email_date;
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
+            // foreach ($search as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->true_email_date = $value->email_date;
+            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
 
             return response()->json([
                 'data_count' => count($search),
@@ -1505,7 +1508,7 @@ class TicketController extends Controller
                 'ticket_count' => $dataQueryCount,
                 'result' =>  $dataQuery,
             ], 200);
-        } else  if ($request->cases == 'over_due') {
+        } else  if ($request->cases == 'over_due') { //done
             $overdue_cases = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1520,30 +1523,30 @@ class TicketController extends Controller
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            foreach ($overdue_cases as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->true_email_date = $value->email_date;
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                return $ticket->email_date < $today;
-            });
+            // foreach ($overdue_cases as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->true_email_date = $value->email_date;
+            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
+            //     return $ticket->email_date < $today;
+            // });
             return response()->json([
                 'data_count' => count($overdue_cases),
                 'ticket_count' => 100,
                 'result' =>  $overdue_cases,
             ], 200);
-        } else  if ($request->cases == 'due_today') {
+        } else  if ($request->cases == 'due_today') { //done
             $cases_due_today = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1551,6 +1554,7 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['email_date', '=', $today]
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
@@ -1558,32 +1562,32 @@ class TicketController extends Controller
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            foreach ($cases_due_today as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
+            // foreach ($cases_due_today as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
 
-                // Determine the number of days to add
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->true_email_date = $value->email_date;
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-                return $ticket->email_date === $today;
-            });
+            //     // Determine the number of days to add
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->true_email_date = $value->email_date;
+            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
+            //     return $ticket->email_date === $today;
+            // });
             return response()->json([
                 'data_count' => count($cases_due_today),
                 'ticket_count' => 100,
                 'result' =>  $cases_due_today,
             ], 200);
-        } else  if ($request->cases == 'upcoming_dues') {
+        } else  if ($request->cases == 'upcoming_dues') { //done
             $upcoming_dues = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1591,32 +1595,33 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['email_date', '>', $today]
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            foreach ($upcoming_dues as &$value) {
-                $emailDate = Carbon::parse($value->email_date);
-                $dayOfWeek = $emailDate->dayOfWeekIso;
+            // foreach ($upcoming_dues as &$value) {
+            //     $emailDate = Carbon::parse($value->email_date);
+            //     $dayOfWeek = $emailDate->dayOfWeekIso;
 
-                // Determine the number of days to add
-                if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-                    $addDay = 4;
-                } elseif ($dayOfWeek == 6) {
-                    $addDay = 3;
-                } elseif ($dayOfWeek == 7) {
-                    $addDay = 2;
-                } else {
-                    $addDay = 2;
-                }
-                $value->true_email_date = $value->email_date;
-                $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            }
-            $upcoming_dues = $upcoming_dues->filter(function ($ticket) use ($today) {
-                return $ticket->email_date > $today;
-            });
+            //     // Determine the number of days to add
+            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
+            //         $addDay = 4;
+            //     } elseif ($dayOfWeek == 6) {
+            //         $addDay = 3;
+            //     } elseif ($dayOfWeek == 7) {
+            //         $addDay = 2;
+            //     } else {
+            //         $addDay = 2;
+            //     }
+            //     $value->true_email_date = $value->email_date;
+            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
+            // }
+            // $upcoming_dues = $upcoming_dues->filter(function ($ticket) use ($today) {
+            //     return $ticket->email_date > $today;
+            // });
             return response()->json([
                 'data_count' => count($upcoming_dues),
                 'ticket_count' => 100,
@@ -1919,8 +1924,8 @@ class TicketController extends Controller
                 $et = EmailTemplate::where('id', 64)->first();
                 $body = $et->template_text;
                 $this->send_warranty_email($request->email, $subject, $body);
-            }else if($request->call_type == 'Safety Issue'){
-                  $et = EmailTemplate::where('id', 68)->first();
+            } else if ($request->call_type == 'Safety Issue') {
+                $et = EmailTemplate::where('id', 68)->first();
                 $body = $et->template_text;
                 $this->send_warranty_email($request->email, $subject, $body);
             } else if ($request->call_type == 'Parts') {
