@@ -52,7 +52,7 @@ class AppScriptController extends Controller
             //     if ($value['from'] != 'support2@curtiscs.com') {
             //         $ticket->update([
             //             'cases_status' => 'handled',
-            //             'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            //             'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
             //             'is_reply' => 'true'
             //         ]);
             //     }
@@ -72,7 +72,7 @@ class AppScriptController extends Controller
                     'threadId' => $value['threadId'],
                     // 'user_id' => $userWithSmallestCount->id ?? 58,
                     'count' => $value['count'] ?? 0,
-                    'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
                 ]);
             }
             // if ($value['ticket_id'] == 'direct_email') {
@@ -115,51 +115,90 @@ class AppScriptController extends Controller
                     ->first();
                 $tickets[] = $ticketId;
 
+
                 // Only update if ticket exists and from is not the support email
                 if ($ticket && $value['from'] != 'support2@curtiscs.com') {
+
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
                         'is_reply' => 'true',
                     ]);
                 }
             }
             if ($value['ticket_id'] == 'direct_email') {
-                $users = User::where([
-                    ['role_id', '=', 5],
-                    ['agent_type', '=', "Warranty"],
-                    ['remember_token', '=', null],
-                ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+                if ($value['sequence_type'] == 'CF') {
+                    $users = User::where([
+                        ['role_id', '=', 5],
+                        ['agent_type', '=', "Warranty"],
+                        ['remember_token', '=', null],
+                    ])->get();
+                    $userWithSmallestCount = null;
+                    $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
 
-                foreach ($users as $user) {
-                    $count = DirectEmail::where([
-                        ['user_id', '=', $user->id],
-                        ['isHide', '=', 'false'],
-                    ])
-                        ->whereDate('created_at', Carbon::today())
-                        ->count();
+                    foreach ($users as $user) {
+                        $count = DirectEmail::where([
+                            ['user_id', '=', $user->id],
+                            ['isHide', '=', 'false'],
+                        ])
+                            ->whereDate('created_at', Carbon::today())
+                            ->count();
 
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
+                        if ($count < $smallestCount) {
+                            $smallestCount = $count;
+                            $userWithSmallestCount = $user;
+                        }
                     }
-                }
-                $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
-
-                if ($existing) {
-                    $existing->update([
-                        'isHide' => 'false'
-                    ]);
+                    $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                    if ($existing) {
+                        $existing->update([
+                            'isHide' => 'false'
+                        ]);
+                    } else {
+                        DirectEmail::create([
+                            'email' => $value['from'],
+                            'threadId' => $value['threadId'],
+                            'user_id' => $userWithSmallestCount->id ?? 58,
+                            'count' => $value['count'] ?? 0,
+                            'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                        ]);
+                    }
                 } else {
-                    DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id ?? 58,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
+                    $users = User::where([
+                        ['role_id', '=', 5],
+                        ['agent_type', '=', "Safety Issue"],
+                        ['remember_token', '=', null],
+                    ])->get();
+                    $userWithSmallestCount = null;
+                    $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+
+                    foreach ($users as $user) {
+                        $count = DirectEmail::where([
+                            ['user_id', '=', $user->id],
+                            ['isHide', '=', 'false'],
+                        ])
+                            ->whereDate('created_at', Carbon::today())
+                            ->count();
+
+                        if ($count < $smallestCount) {
+                            $smallestCount = $count;
+                            $userWithSmallestCount = $user;
+                        }
+                    }
+                    $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
+                    if ($existing) {
+                        $existing->update([
+                            'isHide' => 'false'
+                        ]);
+                    } else {
+                        DirectEmail::create([
+                            'email' => $value['from'],
+                            'threadId' => $value['threadId'],
+                            'user_id' => $userWithSmallestCount->id ?? 62,
+                            'count' => $value['count'] ?? 0,
+                            'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                        ]);
+                    }
                 }
             }
         }
@@ -187,7 +226,7 @@ class AppScriptController extends Controller
                 if ($ticket && $value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
                         'is_reply' => 'true',
                     ]);
                 }
@@ -225,7 +264,7 @@ class AppScriptController extends Controller
                         'threadId' => $value['threadId'],
                         'user_id' => $userWithSmallestCount->id ?? 60,
                         'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
