@@ -129,7 +129,7 @@ class AppScriptController extends Controller
             if ($value['ticket_id'] == 'direct_email') {
                 if ($value['sequence_type'] == 'CF') {
                     $users = User::where([
-                        ['role_id', '=', 5],
+                        // ['role_id', '=', 5],
                         ['agent_type', '=', "Warranty"],
                         ['remember_token', '=', null],
                     ])->get();
@@ -165,7 +165,7 @@ class AppScriptController extends Controller
                     }
                 } else {
                     $users = User::where([
-                        ['role_id', '=', 5],
+                        // ['role_id', '=', 5],
                         ['agent_type', '=', "Safety Issue"],
                         ['remember_token', '=', null],
                     ])->get();
