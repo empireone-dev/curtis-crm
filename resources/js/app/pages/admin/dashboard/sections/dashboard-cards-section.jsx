@@ -151,8 +151,14 @@ export default function DashboardCardsSection() {
                     icon={<XMarkIcon className="h-10 text-white" />}
                 />
             </div>
-            <div className="text-3xl font-black my-8">Safty Issue</div>
+            <div className="text-3xl font-black my-8">Safety Issue</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <DashboardCardsComponent
+                    link="SAFETY ISSUE VALIDATION"
+                    title="Safety Issue Validation"
+                    count={data.safety_issue_validation ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
                 <DashboardCardsComponent
                     link="SAFETY ISSUE PROCESSED TICKET"
                     title="Processed Tickets for Safety Issue"
