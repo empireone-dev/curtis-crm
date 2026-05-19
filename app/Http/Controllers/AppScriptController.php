@@ -103,76 +103,65 @@ class AppScriptController extends Controller
     }
     public function get_warranty_unread_email(Request $request)
     {
-
         $tickets = [];
+        $processedData = $request->all();
 
-        foreach ($request->all() as $value) {
-            if ($value['ticket_id'] != 'direct_email') {
-                $ticketId = $this->find14CharSequences($value['ticket_id']);
+        // Cache or fetch the user with the smallest workload for today to avoid running N+1 queries in the loop
+        $userWithSmallestCount = User::whereIn('agent_type', ['Warranty', 'Safety Issue'])
+            ->whereNull('remember_token')
+            ->withCount(['directEmails' => function ($query) {
+                $query->where('isHide', 'false')
+                    ->whereDate('created_at', Carbon::today());
+            }])
+            ->orderBy('direct_emails_count', 'asc')
+            ->first();
+
+        $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
+        $futureEmailDate = Carbon::now()->addDay()->toDateTimeString();
+
+        foreach ($processedData as $value) {
+            $ticketIdInput = $value['ticket_id'] ?? null;
+
+            if ($ticketIdInput !== 'direct_email') {
+                $ticketId = $this->find14CharSequences($ticketIdInput);
+                $tickets[] = $ticketId;
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
                     ->first();
-                $tickets[] = $ticketId;
 
-
-                // Only update if ticket exists and from is not the support email
-                if ($ticket && $value['from'] != 'support2@curtiscs.com') {
-
+                // Only update if ticket exists and email is not from the support exclusion list
+                if ($ticket && ($value['from'] ?? null) !== 'support2@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
-                        'is_reply' => 'true',
+                        'email_date'   => $futureEmailDate,
+                        'is_reply'     => 'true',
                     ]);
                 }
-            }
-            if ($value['ticket_id'] == 'direct_email') {
-                $users = User::where([
-                    ['agent_type', '=', "Warranty"],
-                    ['remember_token', '=', null],
-                ])->orWhere([
-                    ['agent_type', '=', "Safety Issue"],
-                    ['remember_token', '=', null],
-                ])->get();
-                $userWithSmallestCount = null;
-                $smallestCount = PHP_INT_MAX; // Initialize with the maximum integer value
+            } else {
+                // Logic for 'direct_email'
+                $existing = DirectEmail::where('threadId', $value['threadId'] ?? null)->first();
 
-                foreach ($users as $user) {
-                    $count = DirectEmail::where([
-                        ['user_id', '=', $user->id],
-                        ['isHide', '=', 'false'],
-                    ])
-                        ->whereDate('created_at', Carbon::today())
-                        ->count();
-
-                    if ($count < $smallestCount) {
-                        $smallestCount = $count;
-                        $userWithSmallestCount = $user;
-                    }
-                }
-                $existing = DirectEmail::where('threadId', '=', $value['threadId'])->first();
                 if ($existing) {
-                    $existing->update([
-                        'isHide' => 'false'
-                    ]);
+                    $existing->update(['isHide' => 'false']);
                 } else {
                     DirectEmail::create([
-                        'email' => $value['from'],
-                        'threadId' => $value['threadId'],
-                        'user_id' => $userWithSmallestCount->id ?? 58,
-                        'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                        'email'      => $value['from'] ?? null,
+                        'threadId'   => $value['threadId'] ?? null,
+                        'user_id'    => $fallbackUserId,
+                        'count'      => $value['count'] ?? 0,
+                        'email_date' => $futureEmailDate,
                     ]);
                 }
             }
         }
+
         return response()->json([
-            'data' => $tickets,
-            'data2' => $request->all(),
+            'data'    => $tickets,
+            'data2'   => $processedData,
             'message' => 'Emails processed successfully'
         ], 200);
     }
-
     public function get_parts_unread_email(Request $request)
     {
 
