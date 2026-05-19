@@ -356,24 +356,23 @@ class DashboardController extends Controller
 
         $warranty_process_ticket = Ticket::where([
             ['call_type', '=', 'CF-Warranty Claim'],
-            ['where_status', '=', 'PROCESSED TICKET'],
+            ['status', '=', 'PROCESSED TICKET'],
         ])->count();
 
         $safety_issue_process_ticket = Ticket::where([
             ['call_type', '=', 'Safety Issue'],
-            ['where_status', '=', 'SAFETY ISSUE PROCESSED TICKET'],
+            ['status', '=', 'SAFETY ISSUE PROCESSED TICKET'],
         ])->count();
 
         $safety_issue_validation = Ticket::where([
             ['call_type', '=', 'Safety Issue'],
-            ['where_status', '=', 'SAFETY ISSUE VALIDATION'],
+            ['status', '=', 'SAFETY ISSUE VALIDATION'],
         ])->count();
-
 
 
         $parts_process_ticket = Ticket::where([
             ['call_type', '=', 'Parts'],
-            ['where_status', '=', 'PARTS PROCESSED TICKET'],
+            ['status', '=', 'PARTS PROCESSED TICKET'],
         ])->count();
 
         $warehouse_ca = Ticket::where([
