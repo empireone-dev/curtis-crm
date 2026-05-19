@@ -72,7 +72,7 @@ function checkNewEmails() {
   }
   
   function find14CharSequences(sentence) {
-      const regex = /\b(CF|PS|TS)\w{12}\b/g; // Matches sequences that start with CF or PS and have 14 total characters
+      const regex = /\b(CF|PS|SI|TS)\w{12}\b/g; // Matches sequences that start with CF or PS and have 14 total characters
       return sentence.match(regex) || [];
   }
   

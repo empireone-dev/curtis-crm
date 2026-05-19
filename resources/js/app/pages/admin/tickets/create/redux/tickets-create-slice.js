@@ -7,7 +7,7 @@ export const ticketsCreateSlice = createSlice({
             isHasEmail: "true",
             country: null,
             state: null,
-            call_type: "Safety Issue",
+            call_type: "CF-Warranty Claim",
             isSendEmail: true,
             remarks: `Calling From: 
 Store:

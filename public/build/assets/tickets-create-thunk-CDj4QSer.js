@@ -1,1 +1,0 @@
-import{s as o}from"./tickets-service-BYEwoOw6.js";import{x as c}from"./page-DiPs_w31.js";function a(){return async function(t,e){const r=e().tickets_create.form,s=await o(r);return t(c.actions.setForm({})),s}}export{a as t};

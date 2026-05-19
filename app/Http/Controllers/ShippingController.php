@@ -56,6 +56,7 @@ class ShippingController extends Controller
             'postalCode' => $ticket->zip_code,
             'countryCode' => $ticket->country
         ];
+        
 
         // 3. Setup Package Dimensions & Weight
         // We use max(1, ...) to ensure the value is NEVER 0. FedEx rejects 0 weight/dimensions.
