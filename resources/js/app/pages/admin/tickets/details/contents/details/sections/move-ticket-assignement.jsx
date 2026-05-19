@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function MoveTicketAssignement() {
+    const { form } = useSelector((state) => state.tickets_create);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { ticket } = useSelector((state) => state.tickets);
@@ -100,6 +101,7 @@ export default function MoveTicketAssignement() {
                             label: "CF-Warranty Claim",
                         },
                         { value: "Parts", label: "Parts" },
+                        { value: "Safety Issue", label: "Safety Issue" },
                         {
                             value: "TS-Tech Support",
                             label: "TS-Tech Support",

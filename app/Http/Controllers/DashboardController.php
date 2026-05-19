@@ -359,6 +359,11 @@ class DashboardController extends Controller
             ['where_status', '=', 'PROCESSED TICKET'],
         ])->count();
 
+        $safety_issue_process_ticket = Ticket::where([
+            ['call_type', '=', 'Safety Issue'],
+            ['where_status', '=', 'SAFETY ISSUE PROCESSED TICKET'],
+        ])->count();
+
         $parts_process_ticket = Ticket::where([
             ['call_type', '=', 'Parts'],
             ['where_status', '=', 'PARTS PROCESSED TICKET'],
@@ -395,6 +400,7 @@ class DashboardController extends Controller
         $direct_email = DirectEmail::where('isHide', '=', 'false')->count();
 
         return response()->json([
+            'safety_issue_process_ticket' => $safety_issue_process_ticket,
             'tech_callback' => $tech_callback,
             'repair_unsuccessful' => $repair_unsuccessful,
             'repair_success' => $repair_success,

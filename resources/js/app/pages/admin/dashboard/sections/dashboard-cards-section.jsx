@@ -135,6 +135,8 @@ export default function DashboardCardsSection() {
                     count={data.warranty_process_ticket ?? 0}
                     icon={<ClipboardIcon className="h-10 text-white" />}
                 />
+
+
                 <DashboardCardsComponent
                     link="WAITING FOR PHOTOS"
                     title="Waiting for Photos"
@@ -147,6 +149,15 @@ export default function DashboardCardsSection() {
                     link="WARRANTY CLOSED"
                     count={data.warranty_closed ?? 0}
                     icon={<XMarkIcon className="h-10 text-white" />}
+                />
+            </div>
+            <div className="text-3xl font-black my-8">Safty Issue</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <DashboardCardsComponent
+                    link="SAFETY ISSUE PROCESSED TICKET"
+                    title="Processed Tickets for Safety Issue"
+                    count={data.safety_issue_process_ticket ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
                 />
             </div>
             <div className="text-3xl font-black my-8">Parts</div>

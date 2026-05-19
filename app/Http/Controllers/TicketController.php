@@ -339,11 +339,17 @@ class TicketController extends Controller
             $this->send_parts_email($request->recipient, $request->subject, $request->body);
         }
         $move = $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->call_type . ' move to ' . $request->call_type;
+        $status = match ($request->call_type) {
+            'CF-Warranty Claim' => 'WARRANTY VALIDATION',
+            'Parts'             => 'PARTS VALIDATION',
+            'Safety Issue'      => 'SAFETY ISSUE VALIDATION',
+            default             => 'TECH VALIDATION',
+        };
         $ticket->update([
-            'user_id' => $this->queueing($request->call_type),
-            'call_type' => $request->call_type,
+            'user_id'     => $this->queueing($request->call_type),
+            'call_type'   => $request->call_type,
             'move_status' => $move,
-            'status' => $request->call_type == 'CF-Warranty Claim' ? 'WARRANTY VALIDATION' : ($request->call_type == 'Parts' ? 'PARTS VALIDATION' : 'TECH VALIDATION')
+            'status'      => $status,
         ]);
         Activity::create([
             'user_id' => $request->user['id'],
@@ -390,7 +396,7 @@ class TicketController extends Controller
         } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
             if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
                 $query->orWhere('created_from', '=', $request->status);
-            } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
+            } else if (!in_array($request->status, ['SAFETY ISSUE PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
             } else {
                 $query->where('status', '=', $request->status);
@@ -481,7 +487,7 @@ class TicketController extends Controller
         } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
             if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
                 $query->orWhere('created_from', '=', $request->status);
-            } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
+            } else if (!in_array($request->status, ['SAFETY ISSUE PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
             } else {
                 $query->where('status', '=', $request->status);
@@ -937,7 +943,7 @@ class TicketController extends Controller
         } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
             if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
                 $query->orWhere('created_from', '=', $request->status);
-            } else if (!in_array($request->status, ['PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
+            } else if (!in_array($request->status, ['SAFETY ISSUE PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
                 $query->where('status', '=', $request->status);
             } else {
                 $query->where('status', '=', $request->status);

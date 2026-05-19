@@ -6,17 +6,19 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 export default function ResendInitialEmail() {
     const [loading, setLoading] = useState(false);
+    const { form } = useSelector((state) => state.tickets_create);
     const { ticket } = useSelector((state) => state.tickets);
     const [messageApi, contextHolder] = message.useMessage();
     const [warranty, setWarranty] = useState('')
     const [parts, setParts] = useState('')
+    const [safetyIssue, setSafetyIssue] = useState("");
 
 
     useEffect(() => {
         async function getData(params) {
             const w = await warranty_initial();
             const p = await parts_initial();
-            const si = await safety_issue_initial(form);
+            const si = await safety_issue_initial();
             setSafetyIssue(si.template_text);
             setWarranty(w.template_text)
             setParts(p.template_text)
