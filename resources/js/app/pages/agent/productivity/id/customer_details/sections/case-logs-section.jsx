@@ -3,10 +3,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function CaseLogsSection() {
-    const { cases_logs,customer_details_logs } = useSelector((state) => state.users);
+    const { cases_logs, customer_details_logs } = useSelector((state) => state.users);
     return (
         <div>
-                     <div className="flex gap-5">
+            <div className="flex gap-5">
                 <div className="flex-1">
                     <div class="text-gray-600 mb-2">
                         <p class="font-medium text-lg">Case Logs</p>

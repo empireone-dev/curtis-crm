@@ -1859,6 +1859,8 @@ class TicketController extends Controller
                 return 'PARTS VALIDATION';
             case 'CF-Warranty Claim':
                 return 'WARRANTY VALIDATION';
+            case 'Safety Issue':
+                return 'SAFETY ISSUE VALIDATION';
             case 'TS-Tech Support':
                 return 'TECH VALIDATION';
             default:
