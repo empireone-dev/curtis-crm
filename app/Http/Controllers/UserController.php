@@ -101,28 +101,45 @@ class UserController extends Controller
             $users->each(function ($user) use ($today) {
 
                 // Tickets - Counting in memory via Collection
-                $user->cases_due_today = $user->tickets->filter(function ($ticket) use ($today) {
-                    return Carbon::parse($ticket->email_date)->isSameDay($today);
+                $now = \Carbon\Carbon::now();
+                $sub24Hours = $now->copy()->subHours(24);
+                $sub48Hours = $now->copy()->subHours(48);
+
+                // --- TICKETS ---
+
+                $user->upcoming_dues = $user->tickets->filter(function ($ticket) use ($sub24Hours) {
+                    // Less than 24 hours old
+                    return \Carbon\Carbon::parse($ticket->email_date)->gt($sub24Hours);
                 })->count();
 
-                $user->overdue_cases = $user->tickets->filter(function ($ticket) use ($today) {
-                    return Carbon::parse($ticket->email_date)->startOfDay()->lt($today);
+                $user->cases_due_today = $user->tickets->filter(function ($ticket) use ($sub24Hours, $sub48Hours) {
+                    // Between 24 and 48 hours old
+                    $emailDate = \Carbon\Carbon::parse($ticket->email_date);
+                    return $emailDate->lte($sub24Hours) && $emailDate->gt($sub48Hours);
                 })->count();
 
-                $user->upcoming_dues = $user->tickets->filter(function ($ticket) use ($today) {
-                    return Carbon::parse($ticket->email_date)->startOfDay()->gt($today);
+                $user->overdue_cases = $user->tickets->filter(function ($ticket) use ($sub48Hours) {
+                    // More than 48 hours old
+                    return \Carbon\Carbon::parse($ticket->email_date)->lte($sub48Hours);
                 })->count();
 
-                $user->direct_emails_due_today = $user->directEmails->filter(function ($email) use ($today) {
-                    return \Carbon\Carbon::parse($email->email_date)->isSameDay($today);
+
+                // --- DIRECT EMAILS ---
+
+                $user->upcoming_dues_direct_emails = $user->directEmails->filter(function ($email) use ($sub24Hours) {
+                    // Less than 24 hours old
+                    return \Carbon\Carbon::parse($email->email_date)->gt($sub24Hours);
                 })->count();
 
-                $user->overdue_direct_emails = $user->directEmails->filter(function ($email) use ($today) {
-                    return \Carbon\Carbon::parse($email->email_date)->startOfDay()->lt($today);
+                $user->direct_emails_due_today = $user->directEmails->filter(function ($email) use ($sub24Hours, $sub48Hours) {
+                    // Between 24 and 48 hours old
+                    $emailDate = \Carbon\Carbon::parse($email->email_date);
+                    return $emailDate->lte($sub24Hours) && $emailDate->gt($sub48Hours);
                 })->count();
 
-                $user->upcoming_dues_direct_emails = $user->directEmails->filter(function ($email) use ($today) {
-                    return \Carbon\Carbon::parse($email->email_date)->startOfDay()->gt($today);
+                $user->overdue_direct_emails = $user->directEmails->filter(function ($email) use ($sub48Hours) {
+                    // More than 48 hours old
+                    return \Carbon\Carbon::parse($email->email_date)->lte($sub48Hours);
                 })->count();
 
                 // Handled Cases

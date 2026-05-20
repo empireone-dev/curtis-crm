@@ -1099,169 +1099,92 @@ class TicketController extends Controller
 
     public function direct_emails(Request $request)
     {
+        // 1. Calculate exact rolling hour boundaries once
+        $now = \Carbon\Carbon::now();
+        $sub24Hours = $now->copy()->subHours(24);
+        $sub48Hours = $now->copy()->subHours(48);
 
-        $today = Carbon::today()->toDateString();
+        // 2. Extract the repetitive subquery to keep code clean
+        $latestThreadSubquery = function ($query) {
+            $query->selectRaw('MAX(id)')
+                ->from('direct_emails')
+                ->groupBy('threadId');
+        };
+
         if ($request->search == 'over_due') {
-
-
+            // OVERDUE: Older than 48 hours
             $overdue_cases = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->whereIn('id', function ($query) {
-                    $query->selectRaw('MAX(id)')
-                        ->from('direct_emails')
-                        ->groupBy('threadId');
-                })
+                ->where('email_date', '<=', $sub48Hours) // Replaces in-memory filter
+                ->whereIn('id', $latestThreadSubquery)
                 ->with('user')
                 ->get();
 
-            // foreach ($overdue_cases as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->email_date = $value->email_date;
-            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-                return Carbon::parse($ticket->email_date)->startOfDay()->lt($today);
-            });
             return response()->json([
                 'data_count' => count($overdue_cases),
                 'ticket_count' => 100,
                 'result' =>  $overdue_cases,
             ], 200);
-        }
-        if ($request->search == 'upcoming_dues_direct_emails') {
-            $overdue_cases = DirectEmail::where('user_id', $request->user_id)
+        } else if ($request->search == 'upcoming_dues_direct_emails') {
+            // UPCOMING DUES (Safe): Less than 24 hours old
+            $upcoming_dues = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->whereDate('email_date', '>', $today)
-                ->whereIn('id', function ($query) {
-                    $query->selectRaw('MAX(id)')
-                        ->from('direct_emails')
-                        ->groupBy('threadId');
-                })
+                ->where('email_date', '>', $sub24Hours) // Replaces whereDate('>')
+                ->whereIn('id', $latestThreadSubquery)
                 ->with('user')
                 ->get();
 
-            // foreach ($overdue_cases as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->email_date = $value->email_date;
-            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-            //     return $ticket->due_date > $today;
-            // });
             return response()->json([
-                'data_count' => count($overdue_cases),
+                'data_count' => count($upcoming_dues),
                 'ticket_count' => 100,
-                'result' =>  $overdue_cases,
+                'result' =>  $upcoming_dues,
             ], 200);
         } else if ($request->search == 'handled_direct_emails') {
+            // HANDLED: Kept consistent with the < 24 hour logic based on your previous code
             $handled_direct_emails = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->whereDate('email_date', '>', $today)
-                ->whereIn('id', function ($query) {
-                    $query->selectRaw('MAX(id)')
-                        ->from('direct_emails')
-                        ->groupBy('threadId');
-                })
+                ->where('email_date', '>', $sub24Hours) // Replaces whereDate('>')
+                ->whereIn('id', $latestThreadSubquery)
                 ->with('user')
                 ->get();
 
-            // foreach ($handled_direct_emails as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $handled_direct_emails = $handled_direct_emails->filter(function ($ticket) use ($today) {
-            //     return $ticket->email_date > $today;
-            // });
             return response()->json([
                 'data_count' => count($handled_direct_emails),
                 'ticket_count' => 100,
                 'result' =>  $handled_direct_emails,
             ], 200);
         } else if ($request->search == 'due_today') {
+            // DUE TODAY (Action Req): Between 24 and 48 hours old
             $cases_due_today = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->whereDate('email_date', $today)
-                ->whereIn('id', function ($query) {
-                    $query->selectRaw('MAX(id)')
-                        ->from('direct_emails')
-                        ->groupBy('threadId');
-                })
+                ->where('email_date', '<=', $sub24Hours) // Older than 24h
+                ->where('email_date', '>', $sub48Hours)  // But newer than 48h
+                ->whereIn('id', $latestThreadSubquery)
                 ->with('user')
                 ->get();
 
-            // foreach ($cases_due_today as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->email_date = $value->email_date;
-            //     $value->due_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-            //     return $ticket->due_date === $today;
-            // });
             return response()->json([
                 'data_count' => count($cases_due_today),
                 'ticket_count' => 100,
                 'result' =>  $cases_due_today,
             ], 200);
         } else {
+            // Default search and pagination
             if ($request->user_id != 0) {
                 $direct = DirectEmail::where([['user_id', '=', $request->user_id], ['isHide', '=', 'false']])
-                    ->whereIn('id', function ($query) {
-                        $query->selectRaw('MAX(id)')
-                            ->from('direct_emails')
-                            ->groupBy('threadId');
-                    })
-                    ->with('user')->paginate(10);
+                    ->whereIn('id', $latestThreadSubquery)
+                    ->with('user')
+                    ->paginate(10);
+
                 return response()->json([
                     'result' => $direct,
                 ], 200);
             } else {
                 $direct = DirectEmail::where('email', 'LIKE', "%{$request->where}%")
-                    ->whereIn('id', function ($query) {
-                        $query->selectRaw('MAX(id)')
-                            ->from('direct_emails')
-                            ->groupBy('threadId');
-                    })
-                    ->with('user')->get();
+                    ->whereIn('id', $latestThreadSubquery)
+                    ->with('user')
+                    ->get();
+
                 return response()->json([
                     'result' => $direct,
                 ], 200);
@@ -1439,50 +1362,25 @@ class TicketController extends Controller
     }
     public function cases(Request $request)
     {
-        // Number of results per page
-        // $perPage = 10;
-        $data = [];
         $user = User::where('id', $request->user_id)->first();
-        $today = Carbon::today()->toDateString();
-        // $call_type = '';
-        // if ($request->cases !== 'case_file') {
-        //     if ($user->agent_type == 'Warranty') {
-        //         $call_type = 'CF-Warranty Claim';
-        //     } elseif ($user->agent_type == 'Parts') {
-        //         $call_type = 'Parts';
-        //     } else {
-        //         $call_type = 'Tech';
-        //     }
-        // }
+
+        // 1. Calculate exact rolling hour boundaries once
+        $now = \Carbon\Carbon::now();
+        $sub24Hours = $now->copy()->subHours(24);
+        $sub48Hours = $now->copy()->subHours(48);
 
         if ($request->cases == 'case_file') {
             $search = [];
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
-
                 $search = Ticket::where([
                     ['email', '=', $request->where],
                     ['cases_status', '<>', 'hidden'],
                     ['status', '<>', 'CLOSED'],
                 ])->with(['direct_emails'])->get();
             } else {
-                $search = Ticket::where('ticket_id', '=', $request->where)->with(['direct_emails'])->get();
+                $search = Ticket::where('ticket_id', '=', $request->where)
+                    ->with(['direct_emails'])->get();
             }
-
-            // foreach ($search as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->true_email_date = $value->email_date;
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
 
             return response()->json([
                 'data_count' => count($search),
@@ -1498,23 +1396,21 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
             ])
-
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
-                // ->whereRaw('DATE(updated_at) != DATE(DATE_ADD(email_date, INTERVAL 8 HOUR))')
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
-
             $dataQueryCount = $dataQuery->count();
-
             $dataQuery = $dataQuery->get();
+
             return response()->json([
-                'data_count' => count($data),
+                'data_count' => count($dataQuery),
                 'ticket_count' => $dataQueryCount,
                 'result' =>  $dataQuery,
             ], 200);
-        } else  if ($request->cases == 'over_due') { //done
+        } else if ($request->cases == 'over_due') {
+            // OVERDUE: Older than 48 hours
             $overdue_cases = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1522,37 +1418,19 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-                ->whereDate('email_date', '<', $today)
+                ->where('email_date', '<=', $sub48Hours) // Changed here
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            // foreach ($overdue_cases as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->true_email_date = $value->email_date;
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $overdue_cases = $overdue_cases->filter(function ($ticket) use ($today) {
-            //     return $ticket->email_date < $today;
-            // });
             return response()->json([
                 'data_count' => count($overdue_cases),
                 'ticket_count' => 100,
                 'result' =>  $overdue_cases,
             ], 200);
-        } else  if ($request->cases == 'due_today') { //done
+        } else if ($request->cases == 'due_today') {
+            // DUE TODAY (Action Req): Between 24 and 48 hours old
             $cases_due_today = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1560,41 +1438,20 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                // ['email_date', '=', $today]
-                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-
-                ->whereDate('email_date', '=', $today)
+                ->where('email_date', '<=', $sub24Hours) // Older than 24h
+                ->where('email_date', '>', $sub48Hours)  // But newer than 48h
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            // foreach ($cases_due_today as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-
-            //     // Determine the number of days to add
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->true_email_date = $value->email_date;
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $cases_due_today = $cases_due_today->filter(function ($ticket) use ($today) {
-            //     return $ticket->email_date === $today;
-            // });
             return response()->json([
                 'data_count' => count($cases_due_today),
                 'ticket_count' => 100,
                 'result' =>  $cases_due_today,
             ], 200);
-        } else  if ($request->cases == 'upcoming_dues') { //done
+        } else if ($request->cases == 'upcoming_dues') {
+            // UPCOMING DUES (Safe): Less than 24 hours old
             $upcoming_dues = Ticket::where([
                 ['user_id', '=', $user->id],
                 ['ticket_id', '<>', null],
@@ -1602,34 +1459,12 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                // ['email_date', '>', $today]
-                // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-                ->whereDate('email_date', '>', $today)
+                ->where('email_date', '>', $sub24Hours) // Changed here
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
-            // foreach ($upcoming_dues as &$value) {
-            //     $emailDate = Carbon::parse($value->email_date);
-            //     $dayOfWeek = $emailDate->dayOfWeekIso;
-
-            //     // Determine the number of days to add
-            //     if ($dayOfWeek == 4 || $dayOfWeek == 5) {
-            //         $addDay = 4;
-            //     } elseif ($dayOfWeek == 6) {
-            //         $addDay = 3;
-            //     } elseif ($dayOfWeek == 7) {
-            //         $addDay = 2;
-            //     } else {
-            //         $addDay = 2;
-            //     }
-            //     $value->true_email_date = $value->email_date;
-            //     $value->email_date = $emailDate->addDays($addDay)->format('Y-m-d');
-            // }
-            // $upcoming_dues = $upcoming_dues->filter(function ($ticket) use ($today) {
-            //     return $ticket->email_date > $today;
-            // });
             return response()->json([
                 'data_count' => count($upcoming_dues),
                 'ticket_count' => 100,
