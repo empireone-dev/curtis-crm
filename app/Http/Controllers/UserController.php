@@ -113,10 +113,17 @@ class UserController extends Controller
                     return Carbon::parse($ticket->email_date)->startOfDay()->gt($today);
                 })->count();
 
-                // Direct Emails - Counting in memory via Collection
-                $user->direct_emails_due_today     = $user->directEmails->whereDate('email_date', '=', $today)->count();
-                $user->overdue_direct_emails       = $user->directEmails->whereDate('email_date', '<', $today)->count();
-                $user->upcoming_dues_direct_emails = $user->directEmails->whereDate('email_date', '>', $today)->count();
+                $user->direct_emails_due_today = $user->directEmails->filter(function ($email) use ($today) {
+                    return \Carbon\Carbon::parse($email->email_date)->isSameDay($today);
+                })->count();
+
+                $user->overdue_direct_emails = $user->directEmails->filter(function ($email) use ($today) {
+                    return \Carbon\Carbon::parse($email->email_date)->startOfDay()->lt($today);
+                })->count();
+
+                $user->upcoming_dues_direct_emails = $user->directEmails->filter(function ($email) use ($today) {
+                    return \Carbon\Carbon::parse($email->email_date)->startOfDay()->gt($today);
+                })->count();
 
                 // Handled Cases
                 $user->handled_cases       = $user->handledCasesLogs->count();
