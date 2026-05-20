@@ -98,7 +98,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record?.email_date).fromNow()}</>;
+                return <>{moment(record?.due_date).fromNow()}</>;
             },
         },
         {
