@@ -72,6 +72,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
         key: i,
         email: res.email,
         date: res.email_date,
+        time_span: res.email_date,
         due_date: moment(res.due_date).format("LLL"),
         link: res.threadId,
         id: res.id,
@@ -98,7 +99,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record?.due_date).fromNow()}</>;
+                return <>{moment(record?.time_span).fromNow()}</>;
             },
         },
         {
