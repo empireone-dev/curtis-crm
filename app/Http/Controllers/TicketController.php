@@ -1141,7 +1141,7 @@ class TicketController extends Controller
         if ($request->search == 'upcoming_dues_direct_emails') {
             $overdue_cases = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->where('email_date', '>', $today)
+                ->whereDate('email_date', '>', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1176,7 +1176,7 @@ class TicketController extends Controller
         } else if ($request->search == 'handled_direct_emails') {
             $handled_direct_emails = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->where('email_date', '>', $today)
+                ->whereDate('email_date', '>', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1210,7 +1210,7 @@ class TicketController extends Controller
         } else if ($request->search == 'due_today') {
             $cases_due_today = DirectEmail::where('user_id', $request->user_id)
                 ->where('isHide', 'false')
-                ->where('email_date', $today)
+                ->whereDate('email_date', $today)
                 ->whereIn('id', function ($query) {
                     $query->selectRaw('MAX(id)')
                         ->from('direct_emails')
@@ -1524,7 +1524,7 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
-
+                ->whereDate('email_date', '<', $today)
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
@@ -1560,10 +1560,11 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['email_date', '=', $today]
+                // ['email_date', '=', $today]
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
 
+                ->whereDate('email_date', '=', $today)
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
@@ -1601,9 +1602,10 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
-                ['email_date', '>', $today]
+                // ['email_date', '>', $today]
                 // ['call_type', '=', $user->agent_type == 'Warranty' ? 'CF-Warranty Claim' : 'Parts'],
             ])
+                ->whereDate('email_date', '>', $today)
                 ->where('created_at', '>=', Carbon::now()->subMonths(11))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();

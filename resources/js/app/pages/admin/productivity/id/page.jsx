@@ -18,6 +18,7 @@ import RemoveCasesSection from "./sections/remove-cases-section";
 import Swal from "sweetalert2";
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
+    console.log('tickets',tickets.result)
     const [loading, setLoading] = useState(true);
     const account = auth.user;
     const dispatch = useDispatch();
@@ -359,17 +360,7 @@ export default function ProductivityIDPage({ auth }) {
                             //         ...res[1],
                             //     })) ?? []
                             // }
-                            dataSource={
-                                Object.entries(tickets.result)
-                                    .map((res) => ({
-                                        key: res[1].ticket_id,
-                                        ...res[1],
-                                    }))
-                                    .sort(
-                                        (a, b) =>
-                                            new Date(a.email_date) -
-                                            new Date(b.email_date)
-                                    ) ?? []
+                            dataSource={tickets?.result ?? []
                             }
                         />
                     </div>

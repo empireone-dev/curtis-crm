@@ -101,14 +101,22 @@ class UserController extends Controller
             $users->each(function ($user) use ($today) {
 
                 // Tickets - Counting in memory via Collection
-                $user->cases_due_today = $user->tickets->where('email_date', $today)->count();
-                $user->overdue_cases   = $user->tickets->where('email_date', '<', $today)->count();
-                $user->upcoming_dues   = $user->tickets->where('email_date', '>', $today)->count();
+                $user->cases_due_today = $user->tickets->filter(function ($ticket) use ($today) {
+                    return Carbon::parse($ticket->email_date)->isSameDay($today);
+                })->count();
+
+                $user->overdue_cases = $user->tickets->filter(function ($ticket) use ($today) {
+                    return Carbon::parse($ticket->email_date)->startOfDay()->lt($today);
+                })->count();
+
+                $user->upcoming_dues = $user->tickets->filter(function ($ticket) use ($today) {
+                    return Carbon::parse($ticket->email_date)->startOfDay()->gt($today);
+                })->count();
 
                 // Direct Emails - Counting in memory via Collection
-                $user->direct_emails_due_today     = $user->directEmails->where('email_date', $today)->count();
-                $user->overdue_direct_emails       = $user->directEmails->where('email_date', '<', $today)->count();
-                $user->upcoming_dues_direct_emails = $user->directEmails->where('email_date', '>', $today)->count();
+                $user->direct_emails_due_today     = $user->directEmails->whereDate('email_date', '=', $today)->count();
+                $user->overdue_direct_emails       = $user->directEmails->whereDate('email_date', '<', $today)->count();
+                $user->upcoming_dues_direct_emails = $user->directEmails->whereDate('email_date', '>', $today)->count();
 
                 // Handled Cases
                 $user->handled_cases       = $user->handledCasesLogs->count();
