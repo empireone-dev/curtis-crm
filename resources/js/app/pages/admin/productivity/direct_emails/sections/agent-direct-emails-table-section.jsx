@@ -10,7 +10,7 @@ import Highlighter from "react-highlight-words";
 // import ProductivityDateSection from './productivity-date-section';
 import { useSelector } from "react-redux";
 import { direct_emails_service } from "@/app/services/tickets-service";
-import moment from "moment";
+import moment from "moment-timezone";
 import { router } from "@inertiajs/react";
 
 export default function AgentDirectEmailsTableSection({ account }) {
@@ -71,7 +71,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
     const data = newDataTable.map((res, i) => ({
         key: i,
         email: res.email,
-        date: moment(res.email_date).format("LLL"),
+        date: res.email_date,
         due_date: moment(res.due_date).format("LLL"),
         link: res.threadId,
         id: res.id,
@@ -92,10 +92,30 @@ export default function AgentDirectEmailsTableSection({ account }) {
             // ...getColumnSearchProps('app_name'),
         },
         {
-            title: "Date Completed",
+            title: "Time Span",
+            dataIndex: "time_span",
+            key: "time_span",
+            width: "30%",
+            // ...getColumnSearchProps("date"),
+            render: (_, record, i) => {
+                return <>{moment(record?.email_date).fromNow()}</>;
+            },
+        },
+        {
+            title: "Added On",
             dataIndex: "date",
             key: "date",
-            // ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                console.log('record', record)
+                return (
+                    <>
+                        {moment(record.due_date)
+                            .subtract(24, 'hours')
+                            .tz("America/New_York")
+                            .format("LLL")}
+                    </>
+                );
+            },
         },
         {
             title: "Due Date",
@@ -129,9 +149,8 @@ export default function AgentDirectEmailsTableSection({ account }) {
                 return (
                     <a
                         target="_blank"
-                        href={`${window.location.pathname}/${
-                            record?.id
-                        }?email= ${email ?? ""}`}
+                        href={`${window.location.pathname}/${record?.id
+                            }?email= ${email ?? ""}`}
                         className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3"
                     >
                         VIEW

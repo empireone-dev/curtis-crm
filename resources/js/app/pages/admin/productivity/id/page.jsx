@@ -18,7 +18,7 @@ import RemoveCasesSection from "./sections/remove-cases-section";
 import Swal from "sweetalert2";
 export default function ProductivityIDPage({ auth }) {
     const { tickets } = useSelector((state) => state.customer_tickets);
-    console.log('tickets',tickets.result)
+    console.log('tickets', tickets.result)
     const [loading, setLoading] = useState(true);
     const account = auth.user;
     const dispatch = useDispatch();
@@ -215,6 +215,16 @@ export default function ProductivityIDPage({ auth }) {
             },
         },
         {
+            title: "Time Span",
+            dataIndex: "time_span",
+            key: "time_span",
+            width: "30%",
+            // ...getColumnSearchProps("date"),
+            render: (_, record, i) => {
+                return <>{moment(record?.email_date).fromNow()}</>;
+            },
+        },
+        {
             title: "Added On",
             dataIndex: "email_date",
             key: "email_date",
@@ -224,7 +234,8 @@ export default function ProductivityIDPage({ auth }) {
                 return (
                     <>
                         {/* {moment(record.true_email_date).format("LL")} */}
-                        {moment(record.true_email_date)
+                        {moment(record.email_date)
+                            .subtract(24, 'hours')
                             .tz("America/New_York")
                             .format("LLL")}
                     </>
@@ -240,11 +251,9 @@ export default function ProductivityIDPage({ auth }) {
             render: (_, record, i) => {
                 return (
                     <>
-                        {addDaysSkippingWeekends(
-                            moment(record.true_email_date)
-                                .tz("America/New_York")
-                                .format("LLL")
-                        )}
+                        {moment(record.email_date)
+                            .tz("America/New_York")
+                            .format("LLL")}
                     </>
                 );
             },
