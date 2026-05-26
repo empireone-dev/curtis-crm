@@ -23,7 +23,7 @@ export default function TicketsDetailsLayout({ children }) {
             try {
                 const ticketId = url
                     .split("/")
-                    [url.split("/").length - 2].split("#")[0];
+                [url.split("/").length - 2].split("#")[0];
                 const res = await store.dispatch(
                     get_upload_ticket_files_thunk(ticketId),
                 );
@@ -42,131 +42,131 @@ export default function TicketsDetailsLayout({ children }) {
     const tabs = [
         ...(ticket.call_type !== "TS-Tech Support"
             ? [
-                  {
-                      title: "Files",
-                      hash: "files",
-                  },
-              ]
+                {
+                    title: "Files",
+                    hash: "files",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" &&
-        ticket.call_type === "CF-Warranty Claim" &&
-        ticket.status === "WARRANTY VALIDATION"
+            (ticket.call_type === "CF-Warranty Claim" || ticket.call_type === "Safety Issue") &&
+            ticket.status === "WARRANTY VALIDATION"
             ? [
-                  {
-                      title: "Warranty Validation",
-                      hash: "warranty_validation",
-                  },
-              ]
+                {
+                    title: "Warranty Validation",
+                    hash: "warranty_validation",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" &&
-        ticket.call_type === "Parts" &&
-        ticket.status === "PARTS VALIDATION"
+            ticket.call_type === "Parts" &&
+            ticket.status === "PARTS VALIDATION"
             ? [
-                  {
-                      title: "Parts Validation",
-                      hash: "parts_validation",
-                  },
-              ]
+                {
+                    title: "Parts Validation",
+                    hash: "parts_validation",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "RESOURCE"
             ? [
-                  {
-                      title: "Decision Making",
-                      hash: "decision",
-                  },
-              ]
+                {
+                    title: "Decision Making",
+                    hash: "decision",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" &&
-        (ticket.status === "CA WAREHOUSE" || ticket.status === "US WAREHOUSE")
+            (ticket.status === "CA WAREHOUSE" || ticket.status === "US WAREHOUSE")
             ? [
-                  {
-                      title: ticket.country + " Warehouse",
-                      hash: "warehouse",
-                  },
-              ]
+                {
+                    title: ticket.country + " Warehouse",
+                    hash: "warehouse",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "REPAIR"
             ? [
-                  {
-                      title: "Repair",
-                      hash: "repair",
-                  },
-              ]
+                {
+                    title: "Repair",
+                    hash: "repair",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "RMA REQUEST"
             ? [
-                  {
-                      title: "RMA Upload",
-                      hash: "rma_request",
-                  },
-              ]
+                {
+                    title: "RMA Upload",
+                    hash: "rma_request",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "AVAILABILITY"
             ? [
-                  {
-                      title: "Availability",
-                      hash: "availability",
-                  },
-              ]
+                {
+                    title: "Availability",
+                    hash: "availability",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "INTERNALS"
             ? [
-                  {
-                      title: "Internals",
-                      hash: "internals",
-                  },
-              ]
+                {
+                    title: "Internals",
+                    hash: "internals",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "CALLBACK"
             ? [
-                  {
-                      title: "Callback",
-                      hash: "callback",
-                  },
-              ]
+                {
+                    title: "Callback",
+                    hash: "callback",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "REFUND"
             ? [
-                  {
-                      title: "Refund",
-                      hash: "refund",
-                  },
-              ]
+                {
+                    title: "Refund",
+                    hash: "refund",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" && ticket.status === "REPLACEMENT"
             ? [
-                  {
-                      title: "Replacement",
-                      hash: "replacement",
-                  },
-              ]
+                {
+                    title: "Replacement",
+                    hash: "replacement",
+                },
+            ]
             : []),
         ...(ticket?.isUploading === "true" &&
-        ticket.status === "REPLACEMENT PARTS"
+            ticket.status === "REPLACEMENT PARTS"
             ? [
-                  {
-                      title: "Replacement Parts",
-                      hash: "replacement_parts",
-                  },
-              ]
+                {
+                    title: "Replacement Parts",
+                    hash: "replacement_parts",
+                },
+            ]
             : []),
         ...(ticket.call_type === "TS-Tech Support" &&
-        ticket.status === "TECH VALIDATION"
+            ticket.status === "TECH VALIDATION"
             ? [
-                  {
-                      title: "Update Status",
-                      hash: "status",
-                  },
-              ]
+                {
+                    title: "Update Status",
+                    hash: "status",
+                },
+            ]
             : []),
         ...(ticket.call_type === "TS-Tech Support" &&
-        ticket.status === "TECH CALLBACK"
+            ticket.status === "TECH CALLBACK"
             ? [
-                  {
-                      title: "Tech Callback",
-                      hash: "tech_callback",
-                  },
-              ]
+                {
+                    title: "Tech Callback",
+                    hash: "tech_callback",
+                },
+            ]
             : []),
         {
             title: "Activities",
@@ -199,11 +199,10 @@ export default function TicketsDetailsLayout({ children }) {
                 <div className="w-full px-8">
                     <div className="flex items-center justify-between">
                         <div
-                            className={`py-3 text-3xl font-black flex gap-3 ${
-                                ticket.status === "CLOSED"
+                            className={`py-3 text-3xl font-black flex gap-3 ${ticket.status === "CLOSED"
                                     ? "text-red-600"
                                     : "text-blue-600"
-                            }`}
+                                }`}
                         >
                             <TicketIcon className="h-9" />{" "}
                             {ticket.status ?? "Open Ticket"} ({ticket.call_type}
@@ -220,11 +219,10 @@ export default function TicketsDetailsLayout({ children }) {
                             <button
                                 key={i}
                                 onClick={() => handleTabClick(i)}
-                                className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${
-                                    hash === res.hash
+                                className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash === res.hash
                                         ? "bg-blue-600 text-white"
                                         : "bg-gray-300 hover:bg-blue-200"
-                                }`}
+                                    }`}
                             >
                                 {res.title}
                             </button>

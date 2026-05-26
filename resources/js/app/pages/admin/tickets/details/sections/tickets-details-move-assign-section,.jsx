@@ -73,10 +73,12 @@ export default function TicketsDetailsMoveAssignSection() {
                                         value={
                                             ticket.call_type ==
                                                 "CF-Warranty Claim"
-                                                ? "WARRANTY VALIDATION"
-                                                : ticket.call_type == "Parts"
-                                                    ? "PARTS VALIDATION"
-                                                    : "TECH VALIDATION"
+                                                ? "WARRANTY VALIDATION" : ticket.call_type ==
+                                                    "Safety Issue"
+                                                    ? "SAFETY ISSUE VALIDATION"
+                                                    : ticket.call_type == "Parts"
+                                                        ? "PARTS VALIDATION"
+                                                        : "TECH VALIDATION"
                                         }
                                         icon={
                                             <CheckBadgeIcon className="h-6" />
