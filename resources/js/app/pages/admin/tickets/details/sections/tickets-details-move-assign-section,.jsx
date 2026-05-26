@@ -18,7 +18,7 @@ export default function TicketsDetailsMoveAssignSection() {
                 ticket.isUploading == "true" && (
                     <div>
                         {ticket?.call_type &&
-                        ticket?.call_type == "CF-Warranty Claim" ? (
+                            (ticket?.call_type == "CF-Warranty Claim" || ticket?.call_type == "Safety Issue") ? (
                             <div className="flex gap-3">
                                 {ticket?.status !== "RESOURCE" && (
                                     <TicketsDetailsMoveAssignComponents
@@ -72,11 +72,11 @@ export default function TicketsDetailsMoveAssignSection() {
                                         name="MOVE TO VALIDATION"
                                         value={
                                             ticket.call_type ==
-                                            "CF-Warranty Claim"
+                                                "CF-Warranty Claim"
                                                 ? "WARRANTY VALIDATION"
                                                 : ticket.call_type == "Parts"
-                                                  ? "PARTS VALIDATION"
-                                                  : "TECH VALIDATION"
+                                                    ? "PARTS VALIDATION"
+                                                    : "TECH VALIDATION"
                                         }
                                         icon={
                                             <CheckBadgeIcon className="h-6" />

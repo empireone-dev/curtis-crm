@@ -7,7 +7,6 @@ import store from "@/app/store/store";
 import Textarea from "@/app/layouts/components/textarea";
 import { get_products_thunk } from "@/app/pages/admin/ticket_form/redux/ticket-form-thunk";
 import { countries } from "./../../../json/country.json";
-// import { call_type } from "./../../../json/call_type.json";
 import Loading from "@/app/layouts/components/loading";
 import Autocomplete from "@/app/layouts/components/autocomplete";
 import { tickets_create_thunk } from "../../admin/tickets/create/redux/tickets-create-thunk";
