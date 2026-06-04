@@ -96,6 +96,21 @@ export default function CustomerCardsSection({ account }) {
                     icon={<XMarkIcon className="h-10 text-white" />}
                 />
             </div>
+            <div className="text-3xl font-black my-8">Safety Issue</div>
+            <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                <CurtisCardsComponent
+                    link="SAFETY ISSUE VALIDATION"
+                    title="Safety Issue Validation"
+                    count={data.safety_issue_validation ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
+                <CurtisCardsComponent
+                    link="SAFETY ISSUE PROCESSED TICKET"
+                    title="Processed Tickets for Safety Issue"
+                    count={data.safety_issue_process_ticket ?? 0}
+                    icon={<ClipboardIcon className="h-10 text-white" />}
+                />
+            </div>
             <div className="text-3xl font-black my-8">Parts</div>
             <div className=" grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <CurtisCardsComponent
