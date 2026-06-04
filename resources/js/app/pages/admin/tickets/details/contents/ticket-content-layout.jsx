@@ -196,12 +196,13 @@ export default function TicketsDetailsLayout({ children }) {
                     Case File : {ticket.ticket_id ?? "N/A"} -- (
                     {ticket.created_from})
                 </div>
+                <div className="px-8">{ticket?.detailed_explanation_issue ?? ticket.issue}</div>
                 <div className="w-full px-8">
                     <div className="flex items-center justify-between">
                         <div
                             className={`py-3 text-3xl font-black flex gap-3 ${ticket.status === "CLOSED"
-                                    ? "text-red-600"
-                                    : "text-blue-600"
+                                ? "text-red-600"
+                                : "text-blue-600"
                                 }`}
                         >
                             <TicketIcon className="h-9" />{" "}
@@ -220,8 +221,8 @@ export default function TicketsDetailsLayout({ children }) {
                                 key={i}
                                 onClick={() => handleTabClick(i)}
                                 className={`flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300 ${hash === res.hash
-                                        ? "bg-blue-600 text-white"
-                                        : "bg-gray-300 hover:bg-blue-200"
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-gray-300 hover:bg-blue-200"
                                     }`}
                             >
                                 {res.title}
