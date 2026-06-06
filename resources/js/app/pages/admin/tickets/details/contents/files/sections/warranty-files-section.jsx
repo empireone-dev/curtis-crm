@@ -80,6 +80,15 @@ export default function WarrantyFilesSection() {
                     </div>
                 </div>
             )}
+            {ticket.call_type == "Safety Issue" && (
+                <div className="flex gap-2 border-b border-black my-5">
+                    <div className="text-xl"> Customer Detailed Explanation: </div>
+                    <div className="text-xl font-bold">
+                        {ticket.detailed_explanation_issue}
+                    </div>
+                </div>
+            )}
+
 
             <div className="text-4xl font-black text-blue-600">
                 Warranty Files
@@ -118,7 +127,7 @@ export default function WarrantyFilesSection() {
             <CustomerTicketsPartsModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             {/* <CustomerTicketsClearModel /> */}
-           
+
             <Button
                 loading={loading}
                 onClick={() => uploadPhoto()}

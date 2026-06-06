@@ -12,6 +12,23 @@ APP_API_KEY_STAGING:L2k3o3QO0GR14Xkov8P5wfRHxwtO6zdkG62CmgW5OMN4ryEp9LbALSAS9Ptv
 I added Laravel Sanctum for authentication. Each user gets a unique Bearer token, which must be included in the Authorization header.
 
 
+
+
+
+                        {ticket.detailed_explanation_issue}
+                         <dt className="text-sm font-medium leading-6 text-gray-900 flex">
+                            <b>Customer Detailed Explanation :</b>{" "}
+
+                            <dd className="mt-1 text-sm leading-6  font-medium text-gray-700 sm:col-span-2 sm:mt-0">
+                                {ticket.detailed_explanation_issue}
+                            </dd>
+                        </dt>
+
+
+
+
+
+
 SELECT *
 FROM tickets
 WHERE cases_status = 'handled'
