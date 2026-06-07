@@ -382,7 +382,8 @@ class TicketController extends Controller
                 'agent_notes',
                 'cases_logs',
                 'refund_shipped',
-                'replacement_shipped'
+                'replacement_shipped',
+                'activities'
             ]);
         if ($request->search) {
             $query->where('ticket_id', $request->search);
@@ -1368,8 +1369,20 @@ class TicketController extends Controller
         $now = \Carbon\Carbon::now();
         $sub24Hours = $now->copy()->subHours(24);
         $sub48Hours = $now->copy()->subHours(48);
+        if ($request->cases == 'safety_issue_web_form') {
+            $ticket = Ticket::where('user_id', '=', $request->user_id)
+                ->where('created_from', 'WEB FORM')
+                ->where('call_type', 'Safety Issue')
+                ->whereColumn('created_at', 'updated_at')
+                ->with(['direct_emails'])
+                ->get();
 
-        if ($request->cases == 'case_file') {
+            return response()->json([
+                'data_count' => count($ticket),
+                'ticket_count' => 10990,
+                'result' =>  $ticket,
+            ], 200);
+        } else if ($request->cases == 'case_file') {
             $search = [];
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
                 $search = Ticket::where([

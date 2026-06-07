@@ -85,6 +85,10 @@ class Ticket extends Model
     {
         return $this->hasOne(RepairInformation::class, 'ticket_id', 'ticket_id')->with(['attachments1', 'invoices1']);
     }
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class, 'ticket_id', 'id')->where('type','<>','upload');
+    }
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');

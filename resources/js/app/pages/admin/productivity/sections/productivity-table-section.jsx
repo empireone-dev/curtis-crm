@@ -152,6 +152,7 @@ export default function ProductivityTableSection({ loading }) {
             handled_direct_emails: res.handled_direct_emails,
             upcoming_dues: res.upcoming_dues,
             upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
+            safety_issue_web_form: res.safety_issue_web_form,
             total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0),
         }))
         .sort((a, b) => b.position.localeCompare(a.position));
@@ -163,12 +164,22 @@ export default function ProductivityTableSection({ loading }) {
             key: "agent",
             // ...getColumnSearchProps('app_id'),
         },
-        // {
-        //     title: "Position",
-        //     dataIndex: "position",
-        //     key: "position",
-        //     // ...getColumnSearchProps('app_id'),
-        // },
+        {
+            title: "Safety Issue Web Form",
+            dataIndex: "safety_issue_web_form",
+            key: "safety_issue_web_form",
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/administrator/productivity/${record.id}?page=1&search=safety_issue_web_form`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.safety_issue_web_form}
+                    </Link>
+                );
+            },
+        },
         {
             title: "Overdue Cases",
             dataIndex: "overdue_cases",

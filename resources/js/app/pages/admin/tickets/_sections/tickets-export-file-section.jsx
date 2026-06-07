@@ -22,10 +22,10 @@ const STANDARD_HEADERS = [
     "Price After Discount", "Purchase Price", "Cost Price", "Shipping Cost",
     "Replacement Ship Date", "Tracking #", "Cheque Ship Date", "Cheque #",
     "Cheque Amount", "Cheque Currency", "Retail Store", "From Parts",
-    "Is Downloaded", "Warranty Decision", "Validation Date", "Date Processed", 
-    "Date of Ticket Creation", "Date of Customer's First Email", "Date For Warranty Validation",
-    "Date For Resource","Date For Decision Making","Date For Resolution (Moved to Refund / Replacement)",
-    "Date for Refund Mailed / Replacement Shipped","Average Time for Customer to Respond (per ticket)",
+    "Is Downloaded", "Warranty Decision", "Validation Date", "Date Processed",
+    "Date of Ticket Creation", "Date of Customer's First Email", "Date For Warranty Validation", "Date For Decision Making",
+    "Date For Resolution (Moved to Refund / Replacement)",
+    "Date for Refund Mailed / Replacement Shipped", "Average Time for Customer to Respond (per ticket)",
     "Average Time for Curtis to Respond to Customer (per ticket)"
 ];
 
@@ -78,7 +78,26 @@ export default function TicketsExportFileSection() {
                         : res?.decision_status === "REFUND"
                             ? res?.refund_shipped?.created_at
                             : null;
+                    const warrantyActivity = res.activities?.find(a => a.type === "WARRANTY VALIDATION");
+                    const decisionMaking = res.activities?.find(a => a.type === "DECISION MAKING");
+                    const assign_to = res.activities?.find(a => a.type == "ASSIGNED TO")
+                    const refundMaking = res.activities?.find(a => a.type === "REFUND SHIPPED");
+                    const replacementMaking = res.activities?.find(a => a.type === "REPLACEMENT SHIPPED");
 
+                    const warranty_validation_date = warrantyActivity?.created_at
+                        ? moment(warrantyActivity.created_at).format('LL')
+                        : '';
+                    const decision_making_date = decisionMaking?.created_at
+                        ? moment(decisionMaking.created_at).format('LL')
+                        : '';
+                    const refund_date = refundMaking?.created_at
+                        ? moment(refundMaking.created_at).format('LL')
+                        : '';
+                    const replacement_date = replacementMaking?.created_at
+                        ? moment(replacementMaking.created_at).format('LL')
+                        : '';
+                    const resolution_date = moment(JSON.parse(assign_to.message)?.data?.created_at).format('LL') ?? '';
+                    const refund_mailed = refund_date ?? replacement_date
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
                         latestCreatedAt ? moment(latestCreatedAt).format("L") : "N/A",
@@ -120,6 +139,11 @@ export default function TicketsExportFileSection() {
                         res?.validate?.created_at ? moment(res?.validate?.created_at).format("L") : "N/A",
                         dateProcessed ? moment(dateProcessed).format("L") : "N/A",
                         res.created_at ? moment(res.created_at).format("LL") : "N/A",
+                        'n/a',
+                        warranty_validation_date,
+                        decision_making_date,
+                        resolution_date,
+                        refund_mailed
                     ];
                 });
 
