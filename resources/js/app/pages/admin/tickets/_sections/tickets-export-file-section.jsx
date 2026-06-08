@@ -31,6 +31,23 @@ const STANDARD_HEADERS = [
 
 const RESOURCE_HEADERS = ["Validated Date", "Ticket Number", "Agent Name"];
 
+
+const calculateAverageInterval = (responses) => {
+    if (!responses || responses.length < 2) return "Not enough data to calculate an interval.";
+
+    // 1. Extract and convert dates to milliseconds
+    const timestamps = responses
+        .map(res => new Date(res.created_at).getTime())
+        .sort((a, b) => a - b);
+    const totalDifferenceMs = timestamps[timestamps.length - 1] - timestamps[0];
+    const averageMs = totalDifferenceMs / (timestamps.length - 1);
+    const days = Math.floor(averageMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((averageMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((averageMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days} days, ${hours} hours, and ${minutes} minutes`;
+};
+
 export default function TicketsExportFileSection() {
     const [loading, setLoading] = useState(false);
 
@@ -96,8 +113,26 @@ export default function TicketsExportFileSection() {
                     const replacement_date = replacementMaking?.created_at
                         ? moment(replacementMaking.created_at).format('LL')
                         : '';
-                    const resolution_date = moment(JSON.parse(assign_to.message)?.data?.created_at).format('LL') ?? '';
+                    let resolution_date = '';
+
+                    if (assign_to?.message) {
+                        try {
+                            const parsedMessage = JSON.parse(assign_to.message);
+                            const createdAt = parsedMessage?.data?.created_at;
+                            if (createdAt) {
+                                resolution_date = moment(createdAt).format('LL');
+                            }
+                        } catch (error) {
+                            console.warn("Could not parse message JSON for export:", assign_to.message);
+                        }
+                    }
                     const refund_mailed = refund_date ?? replacement_date
+                    const curtis_response_average = calculateAverageInterval([
+                        { created_at: res.created_at },
+                        ...combinedLogs
+                    ]);
+                    console.log(curtis_response_average);
+
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
                         latestCreatedAt ? moment(latestCreatedAt).format("L") : "N/A",
@@ -143,7 +178,9 @@ export default function TicketsExportFileSection() {
                         warranty_validation_date,
                         decision_making_date,
                         resolution_date,
-                        refund_mailed
+                        refund_mailed,
+                        "Pending",
+                        curtis_response_average
                     ];
                 });
 
