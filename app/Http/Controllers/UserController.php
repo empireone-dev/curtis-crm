@@ -123,9 +123,9 @@ class UserController extends Controller
                     return \Carbon\Carbon::parse($ticket->email_date)->lte($sub48Hours);
                 })->count();
 
-                $user->safety_issue_web_form = $user->tickets()
+                $user->web_form = $user->tickets()
                     ->where('created_from', 'WEB FORM')
-                    ->where('call_type','Safety Issue')
+                    // ->where('call_type','Safety Issue')
                     ->whereColumn('created_at', 'updated_at')
                     ->count();
                 // --- DIRECT EMAILS ---

@@ -152,7 +152,7 @@ export default function ProductivityTableSection({ loading }) {
             handled_direct_emails: res.handled_direct_emails,
             upcoming_dues: res.upcoming_dues,
             upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
-            safety_issue_web_form: res.safety_issue_web_form,
+            web_form: res.web_form,
             total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0),
         }))
         .sort((a, b) => b.position.localeCompare(a.position));
@@ -165,17 +165,17 @@ export default function ProductivityTableSection({ loading }) {
             // ...getColumnSearchProps('app_id'),
         },
         {
-            title: "Safety Issue Web Form",
-            dataIndex: "safety_issue_web_form",
-            key: "safety_issue_web_form",
+            title: "Web Form",
+            dataIndex: "web_form",
+            key: "web_form",
             render: (_, record, i) => {
                 return (
                     <Link
-                        href={`/administrator/productivity/${record.id}?page=1&search=safety_issue_web_form`}
+                        href={`/administrator/productivity/${record.id}?page=1&search=web_form`}
                         className="underline"
                         key={i}
                     >
-                        {record.safety_issue_web_form}
+                        {record.web_form}
                     </Link>
                 );
             },

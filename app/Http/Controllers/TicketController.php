@@ -1369,10 +1369,10 @@ class TicketController extends Controller
         $now = \Carbon\Carbon::now();
         $sub24Hours = $now->copy()->subHours(24);
         $sub48Hours = $now->copy()->subHours(48);
-        if ($request->cases == 'safety_issue_web_form') {
+        if ($request->cases == 'web_form') {
             $ticket = Ticket::where('user_id', '=', $request->user_id)
                 ->where('created_from', 'WEB FORM')
-                ->where('call_type', 'Safety Issue')
+                // ->where('call_type','Safety Issue')
                 ->whereColumn('created_at', 'updated_at')
                 ->with(['direct_emails'])
                 ->get();
