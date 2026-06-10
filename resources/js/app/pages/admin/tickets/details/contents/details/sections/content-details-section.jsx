@@ -155,6 +155,16 @@ export default function ContentDetailsSection() {
                             {moment(ticket?.purchase_date).format("LL")}
                         </dd>
                     </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">
+                            Physical Address:  {ticket?.address ?? ''} {ticket?.city ?? ''}  {ticket?.state ?? ''} {ticket?.country ?? ''} {ticket?.zip_code ?? ''}
+                        </dt>
+                    </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">
+                            Mailing Address:  {ticket?.address_2 ?? ''} {ticket?.city_2 ?? ''}  {ticket?.state_2 ?? ''} {ticket?.country_2 ?? ''} {ticket?.zip_code_2 ?? ''}
+                        </dt>
+                    </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                             <b>Calling From :</b> {formatPhone(ticket?.phone2)}
