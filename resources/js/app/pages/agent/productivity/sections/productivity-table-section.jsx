@@ -142,25 +142,27 @@ export default function ProductivityTableSection({ account, loading }) {
     const data = users
         .map((res, i) =>
             res.agent_type === "Warranty" ||
-            res.agent_type === "Parts" ||
-            res.agent_type === "Admin"
+                res.agent_type === "Parts" ||
+                res.agent_type === "Admin" ||
+                res.agent_type === "Safety Issue"
                 ? {
-                      id: res.id,
-                      agent: res.name,
-                      position: res.agent_type,
-                      overdue_cases: res.overdue_cases,
-                      cases_due_today: res.cases_due_today,
-                      overdue_direct_emails: res.overdue_direct_emails,
-                      direct_emails_due_today: res.direct_emails_due_today,
-                      handled_cases: res.handled_cases,
-                      handled_direct_emails: res.handled_direct_emails,
-                      upcoming_dues: res.upcoming_dues,
-                      upcoming_dues_direct_emails:
-                          res.upcoming_dues_direct_emails,
-                      total:
-                          parseInt(res.handled_cases) +
-                          parseInt(res.handled_direct_emails),
-                  }
+                    id: res.id,
+                    agent: res.name,
+                    position: res.agent_type,
+                    web_form: res.web_form,
+                    overdue_cases: res.overdue_cases,
+                    cases_due_today: res.cases_due_today,
+                    overdue_direct_emails: res.overdue_direct_emails,
+                    direct_emails_due_today: res.direct_emails_due_today,
+                    handled_cases: res.handled_cases,
+                    handled_direct_emails: res.handled_direct_emails,
+                    upcoming_dues: res.upcoming_dues,
+                    upcoming_dues_direct_emails:
+                        res.upcoming_dues_direct_emails,
+                    total:
+                        parseInt(res.handled_cases) +
+                        parseInt(res.handled_direct_emails),
+                }
                 : null
         )
         .filter((item) => item !== null);
@@ -178,6 +180,29 @@ export default function ProductivityTableSection({ account, loading }) {
         //     key: "position",
         //     // ...getColumnSearchProps('app_id'),
         // },
+        {
+            title: "Web Form",
+            dataIndex: "web_form",
+            key: "web_form",
+            render: (_, record, i) => {
+                return (
+
+                    <>
+                        {account.id == record.id ? (
+                            <Link
+                                href={`/agent/productivity/${record.id}?page=1&search=web_form`}
+                                className="underline"
+                                key={i}
+                            >
+                                {record.web_form}
+                            </Link>
+                        ) : (
+                            record.web_form
+                        )}
+                    </>
+                );
+            },
+        },
         {
             title: "Overdue Cases",
             dataIndex: "overdue_cases",
@@ -310,8 +335,8 @@ export default function ProductivityTableSection({ account, loading }) {
                     <ProductivityDirectEmailSection />
                 </div>
                 <Table
-                loading={loading}
-                columns={columns} dataSource={data} />
+                    loading={loading}
+                    columns={columns} dataSource={data} />
             </div>
         </div>
     );
