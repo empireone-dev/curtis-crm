@@ -463,8 +463,11 @@ class TicketController extends Controller
             $query->orderBy('updated_at', 'desc');
         }
 
+        $allTickets = $query->lazy(20000)->map(function ($ticket) {
+            return $ticket->toArray();
+        });
         return response()->json([
-            'data' => $query->get()
+            'data' => $allTickets
         ], 200);
     }
 
