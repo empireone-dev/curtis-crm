@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class AgentNote extends Model
 {
     use HasFactory;
+    protected $touches = ['ticket'];
     protected $fillable = [
         'user_id',
         'ticket_id',

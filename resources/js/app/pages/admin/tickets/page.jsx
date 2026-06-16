@@ -26,16 +26,18 @@ export default function TicketsPage() {
         <AdministratorLayout>
             <div className="py-3">
                 <div className="px-3 flex items-start justify-between gap-4">
-                    <button
-                        onClick={() =>
-                            // router.visit("/administrator/tickets/create")
-                            window.location.href='/administrator/tickets/create'
-                        }
-                        className="p-2 bg-green-500 text-white hover:bg-green-600 rounded-md"
-                    >
-                        CREATE TICKET
-                    </button>
-                    <ExportProcessTicket />
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() =>
+                                // router.visit("/administrator/tickets/create")
+                                window.location.href = '/administrator/tickets/create'
+                            }
+                            className="p-2 bg-green-500 text-white hover:bg-green-600 rounded-md"
+                        >
+                            CREATE TICKET
+                        </button>
+                        <ExportProcessTicket />
+                    </div>
                     <TicketsExportFileSection />
                 </div>
                 <div className="m-3 flex items-center justify-between gap-3 ">

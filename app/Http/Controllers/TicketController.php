@@ -20,6 +20,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Http;
@@ -369,102 +370,101 @@ class TicketController extends Controller
     }
     public function export_ticket_files(Request $request)
     {
-        $query = Ticket::query()
-            ->with([
-                'refund',
-                'repair',
-                'receipt',
-                'replacement',
-                'decision_making',
-                'user',
-                'activity',
-                'validate',
-                'agent_notes',
-                'cases_logs',
-                'refund_shipped',
-                'replacement_shipped',
-                'activities'
-            ]);
-        if ($request->search) {
-            $query->where('ticket_id', $request->search);
-        }
-        if ($request->status == 'WARRANTY CLOSED') {
-            $query->where('status', '=', 'CLOSED');
-            $query->where('call_type', '=', 'CF-Warranty Claim');
-        } else if ($request->status == 'PARTS CLOSED') {
-            $query->where('status', '=', 'CLOSED');
-            $query->where('call_type', '=', 'PARTS');
-        } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
-            if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
-                $query->orWhere('created_from', '=', $request->status);
-            } else if (!in_array($request->status, ['SAFETY ISSUE PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
-                $query->where('status', '=', $request->status);
-            } else {
-                $query->where('status', '=', $request->status);
-            }
-        }
+        // 1. Get input values
+        $searchQuery = $request->input('search');
+        $status      = $request->input('status');
+        $callType    = $request->input('call_type');
+        $model       = $request->input('model');
+        $dateStatus  = $request->input('date_status');
+        $startDate   = $request->input('start');
+        $endDate     = $request->input('end');
+        $checked     = $request->input('checked');
+        $ticketId    = $request->input('ticket_id');
+        $fullname    = $request->input('fullname');
 
-        // Filter by export status
-        if ($request->export === 'checked') {
-            $query->orWhere('isExported', '=', 'true');
-        } elseif ($request->export === 'uncheck') {
-            $query->orWhereNull('isExported');
+        // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
+        $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
+
+        // 2. Base query with eager loading
+        $query = Ticket::query()->with([
+            'refund',
+            'repair',
+            'receipt',
+            'replacement',
+            'decision_making',
+            'user',
+            'agent_notes',
+            'cases_logs',
+            'validate',
+            'repair_information'
+        ]);
+
+        // 3. Apply Filters using fluent when() clauses
+        $query->when($request->user_id, function ($q, $userId) {
+            $q->where('user_id', $userId);
+        });
+
+        $query->when($searchQuery, function ($q, $search) {
+            $q->where(function ($sub) use ($search) {
+                $sub->where('id', $search)
+                    ->orWhere('ticket_id', $search)
+                    ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$search]);
+            });
+        });
+
+        // Consolidated & Fixed Status Logic
+        $query->when($isValid($status), function ($q) use ($status) {
+            match ($status) {
+                'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
+                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'), // Standardized to 'Parts'
+                'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
+                'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
+                'PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'SAFETY ISSUE PROCESSED TICKET' => null, // Ignored as per original logic
+                default  => $q->where('status', $status),
+            };
+        });
+
+        $query->when($isValid($callType), function ($q) use ($callType) {
+            $q->where('call_type', $callType);
+        });
+
+        $query->when($isValid($model), function ($q) use ($model) {
+            $q->whereIn('item_number', explode(',', $model));
+        });
+
+        // // Date Filters
+        $query->when($isValid($startDate) && $isValid($endDate), function ($q) use ($startDate, $endDate, $dateStatus) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end   = Carbon::parse($endDate)->endOfDay();
+
+            match ($dateStatus) {
+                'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+                'Last Updated'    => $q->select('tickets.*') // Crucial: forces Laravel to only return ticket columns
+                    ->leftJoin('agent_notes', 'tickets.id', '=', 'agent_notes.ticket_id')
+                    ->leftJoin('cases_logs', 'tickets.id', '=', 'cases_logs.ticket_id')
+                    ->where(function ($sub) use ($start, $end) {
+                        $sub->whereBetween('agent_notes.created_at', [$start, $end])
+                            ->orWhereBetween('cases_logs.created_at', [$start, $end]);
+                    })
+                    ->distinct(), // Crucial: prevents the same ticket from showing up 5 times if it has 5 notes
+
+                default           => $q->whereBetween('created_at', [$start, $end]),
+            };
+        });
+
+        // 4. Sorting
+        if (in_array($checked, ['asc', 'desc'])) {
+            $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
+        } elseif (in_array($ticketId, ['asc', 'desc'])) {
+            $query->orderBy('id', $ticketId);
+        } elseif (in_array($fullname, ['asc', 'desc'])) {
+            $query->orderBy('fname', $fullname);
+        } else {
+            $query->orderBy('updated_at', 'desc');
         }
-
-        // Sorting by export status
-        if (in_array($request->checked, ['asc', 'desc'])) {
-            $query->orderByRaw($request->checked === 'asc' ? 'isExported IS NULL ASC, isExported ASC' : 'isExported IS NULL DESC, isExported DESC');
-        }
-
-        // Sorting by ticket ID
-        if (in_array($request->ticket_id, ['asc', 'desc'])) {
-            $query->orderBy('id', $request->ticket_id);
-        }
-
-        // Sorting by full name
-        if (in_array($request->fullname, ['asc', 'desc'])) {
-            $query->orderBy('fname', $request->fullname);
-        }
-
-        // Filter by model
-        if ($request->model && !in_array($request->model, ['null', 'undefined'], true)) {
-            $models = explode(',', $request->model);
-            $query->whereIn('item_number', $models);
-        }
-
-        // Filter by call type
-        if ($request->call_type && !in_array($request->call_type, ['null', 'undefined'], true)) {
-            $query->where('call_type', '=', $request->call_type);
-        }
-
-        // Filter by date range
-        if ($request->start && $request->end && !in_array($request->start, ['null', 'undefined'], true) && !in_array($request->end, ['null', 'undefined'], true)) {
-            $startTime = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
-            $endTime = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
-
-            if ($request->date_status === 'Date Created') {
-                $query->whereBetween('created_at', [$startTime, $endTime]);
-            } elseif ($request->date_status === 'Validation Date') {
-                $query->whereHas('validate', function ($q) use ($startTime, $endTime) {
-                    $q->whereBetween('created_at', [$startTime, $endTime]);
-                });
-            } elseif ($request->date_status === 'Last Updated') {
-                $query->whereHas('agent_notes', function ($q) use ($startTime, $endTime) {
-                    $q->whereBetween('created_at', [$startTime, $endTime]);
-                })->orWhereHas('cases_logs', function ($q) use ($startTime, $endTime) {
-                    $q->whereBetween('created_at', [$startTime, $endTime]);
-                });
-            } else {
-                $query->whereBetween('created_at', [$startTime, $endTime]);
-            }
-        }
-
-        // Execute query
-        $data = $query->get();
 
         return response()->json([
-            'data' => $data ?? [],
-            'result' => $data->isNotEmpty() ? 'exist' : 'not found'
+            'data' => $query->get()
         ], 200);
     }
 
@@ -877,19 +877,22 @@ class TicketController extends Controller
 
     public function index(Request $request)
     {
-        // Get input values
+        // 1. Get input values
         $searchQuery = $request->input('search');
-        $status = $request->input('status');
-        $callType = $request->input('call_type');
-        $model = $request->input('model');
-        $dateStatus = $request->input('date_status');
-        $startDate = $request->input('start');
-        $endDate = $request->input('end');
-        $checked = $request->input('checked');
-        $ticketId = $request->input('ticket_id');
-        $fullname = $request->input('fullname');
+        $status      = $request->input('status');
+        $callType    = $request->input('call_type');
+        $model       = $request->input('model');
+        $dateStatus  = $request->input('date_status');
+        $startDate   = $request->input('start');
+        $endDate     = $request->input('end');
+        $checked     = $request->input('checked');
+        $ticketId    = $request->input('ticket_id');
+        $fullname    = $request->input('fullname');
 
-        // Base query with eager loading
+        // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
+        $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
+
+        // 2. Base query with eager loading
         $query = Ticket::query()->with([
             'refund',
             'repair',
@@ -903,113 +906,75 @@ class TicketController extends Controller
             'repair_information'
         ]);
 
-        if ($request->user_id) {
-            $query->where('user_id', $request->user_id);
-        }
-        // Dynamic search
-        if ($searchQuery) {
-            $query->where(function ($q) use ($searchQuery) {
-                // $q->where('ticket_id', 'LIKE', "%{$searchQuery}%")
-                //     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
-                $q->where('id', '=', $searchQuery)
-                    ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$searchQuery]);
-                $q->orWhere('ticket_id', $searchQuery);
+        // 3. Apply Filters using fluent when() clauses
+        $query->when($request->user_id, function ($q, $userId) {
+            $q->where('user_id', $userId);
+        });
+
+        $query->when($searchQuery, function ($q, $search) {
+            $q->where(function ($sub) use ($search) {
+                $sub->where('id', $search)
+                    ->orWhere('ticket_id', $search)
+                    ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$search]);
             });
-        }
+        });
 
-        // Status filters
-        if ($status && $status !== 'null' && $status !== 'undefined') {
-            $query->where(function ($q) use ($status) {
-                if ($status === 'WARRANTY CLOSED') {
-                    $q->where([['call_type', '=', 'CF-Warranty Claim'], ['status', '=', 'CLOSED']]);
-                } elseif ($status === 'PARTS CLOSED') {
-                    $q->where([['call_type', '=', 'Parts'], ['status', '=', 'CLOSED']]);
-                } elseif ($status === 'TECH CLOSED') {
-                    $q->where([['call_type', '=', 'TS-Tech Support'], ['status', '=', 'CLOSED']]);
-                } elseif (!in_array($status, ['PROCESSED TICKET', 'PARTS PROCESSED TICKET'])) {
-                    $q->where('status', $status);
-                }
-            });
-        }
+        // Consolidated & Fixed Status Logic
+        $query->when($isValid($status), function ($q) use ($status) {
+            match ($status) {
+                'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
+                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'), // Standardized to 'Parts'
+                'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
+                'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
+                'PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'SAFETY ISSUE PROCESSED TICKET' => null, // Ignored as per original logic
+                default  => $q->where('status', $status),
+            };
+        });
 
-        if ($request->status == 'WARRANTY CLOSED') {
-            $query->where('status', '=', 'CLOSED');
-            $query->where('call_type', '=', 'CF-Warranty Claim');
-        } else if ($request->status == 'PARTS CLOSED') {
-            $query->where('status', '=', 'CLOSED');
-            $query->where('call_type', '=', 'PARTS');
-        } else if ($request->status == 'TECH CLOSED') {
-            $query->where('status', '=', 'CLOSED');
-            $query->where('call_type', '=', 'TS-Tech Support');
-        } else if ($request->status && !in_array($request->status, ['null', 'undefined'], true)) {
-            if (in_array($request->status, ['WEB FORM', 'AGENT FORM'])) {
-                $query->orWhere('created_from', '=', $request->status);
-            } else if (!in_array($request->status, ['SAFETY ISSUE PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'PROCESSED TICKET'])) {
-                $query->where('status', '=', $request->status);
-            } else {
-                $query->where('status', '=', $request->status);
-            }
-        }
+        $query->when($isValid($callType), function ($q) use ($callType) {
+            $q->where('call_type', $callType);
+        });
 
-        // Call type filter
-        if ($callType && $callType !== 'null' && $callType !== 'undefined') {
-            $query->where('call_type', $callType);
-        }
+        $query->when($isValid($model), function ($q) use ($model) {
+            $q->whereIn('item_number', explode(',', $model));
+        });
 
-        // Model filter
-        if ($model && $model !== 'null' && $model !== 'undefined') {
-            $query->whereIn('item_number', explode(',', $model));
-        }
+        // // Date Filters
+        $query->when($isValid($startDate) && $isValid($endDate), function ($q) use ($startDate, $endDate, $dateStatus) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end   = Carbon::parse($endDate)->endOfDay();
 
-        // Date filters
-        if ($startDate && $endDate && $startDate !== 'null' && $endDate !== 'null') {
-            $startTime = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
-            $endTime = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay();
+            match ($dateStatus) {
+                'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+                'Last Updated'    => $q->select('tickets.*') // Crucial: forces Laravel to only return ticket columns
+                    ->leftJoin('agent_notes', 'tickets.id', '=', 'agent_notes.ticket_id')
+                    ->leftJoin('cases_logs', 'tickets.id', '=', 'cases_logs.ticket_id')
+                    ->where(function ($sub) use ($start, $end) {
+                        $sub->whereBetween('agent_notes.created_at', [$start, $end])
+                            ->orWhereBetween('cases_logs.created_at', [$start, $end]);
+                    })
+                    ->distinct(), // Crucial: prevents the same ticket from showing up 5 times if it has 5 notes
 
-            switch ($dateStatus) {
-                case 'Date Created':
-                    $query->whereBetween('created_at', [$startTime, $endTime]);
-                    break;
+                default           => $q->whereBetween('created_at', [$start, $end]),
+            };
+        });
 
-                case 'Validation Date':
-                    $query->whereHas('validate', function ($q) use ($startTime, $endTime) {
-                        $q->whereBetween('created_at', [$startTime, $endTime]);
-                    });
-                    break;
-
-                case 'Last Updated':
-                    $query->where(function ($q) use ($startTime, $endTime) {
-                        $q->whereHas('agent_notes', function ($q) use ($startTime, $endTime) {
-                            $q->whereBetween('created_at', [$startTime, $endTime]);
-                        })->orWhereHas('cases_logs', function ($q) use ($startTime, $endTime) {
-                            $q->whereBetween('created_at', [$startTime, $endTime]);
-                        });
-                    });
-                    break;
-
-                default:
-                    $query->whereBetween('created_at', [$startTime, $endTime]);
-            }
-        }
-
-        // Sorting
-        if ($checked === 'asc' || $checked === 'desc') {
-            $query->orderByRaw("isExported IS NULL " . ($checked === 'asc' ? 'ASC' : 'DESC'));
-        } elseif ($ticketId === 'asc' || $ticketId === 'desc') {
+        // 4. Sorting
+        if (in_array($checked, ['asc', 'desc'])) {
+            $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
+        } elseif (in_array($ticketId, ['asc', 'desc'])) {
             $query->orderBy('id', $ticketId);
-        } elseif ($fullname === 'asc' || $fullname === 'desc') {
+        } elseif (in_array($fullname, ['asc', 'desc'])) {
             $query->orderBy('fname', $fullname);
         } else {
             $query->orderBy('updated_at', 'desc');
         }
 
-        // Pagination
-        $data = $query->paginate(10);
-
-        // Return JSON response
-        return response()->json(['data' => $data], 200);
+        // 5. Pagination & Return
+        return response()->json([
+            'data' => $query->paginate(10)
+        ], 200);
     }
-
     public function save_direct_emails_parts()
     {
         $scriptUrlParts = 'https://script.google.com/macros/s/AKfycbxB47GclMU6dAK5A7to2-JIOAq1BWKKbPwVmv5-1_jCsSkkA56PjsAY2OZKqrIJ_niW/exec?page=' . '1';
