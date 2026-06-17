@@ -196,14 +196,15 @@ export default function TicketsDetailsLayout({ children }) {
                     Case File : {ticket.ticket_id ?? "N/A"} -- (
                     {ticket.created_from})
                 </div>
-                {ticket.call_type == "Safety Issue" && (
-                    <div className="flex gap-2 border-b border-black px-3 m-5">
+                {
+                    ticket.detailed_explanation_issue && <div className="flex gap-2 border-b border-black px-3 m-5 flex-col">
                         <div className="text-xl"> Customer Detailed Explanation: </div>
                         <div className="text-xl font-bold">
                             {ticket.detailed_explanation_issue}
                         </div>
                     </div>
-                )}
+                }
+
                 <div className="w-full px-8">
                     <div className="flex items-center justify-between">
                         <div
