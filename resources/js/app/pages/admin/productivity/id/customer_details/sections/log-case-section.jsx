@@ -292,7 +292,7 @@ export default function LogCaseSection({ datas, account }) {
                    Submit
                 </button> */}
                 <Button
-                    // disabled={datas.is_reply == null ? true : false}
+                    disabled={datas.is_reply == null ? true : (datas.created_at == datas.updated_at && datas.created_from == 'WEB FORM') ? false : false}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"
