@@ -72,7 +72,7 @@ export default function WarrantyFilesSection() {
                     </div>
                 )}
             </div>
-            {ticket.explanation && (
+            {(ticket.call_type == "CF-Warranty Claim" && ticket.explanation) && (
                 <div className="flex gap-2 border-b border-black my-5">
                     <div className="text-xl"> Detailed Explanation: </div>
                     <div className="text-xl font-bold">
@@ -112,6 +112,14 @@ export default function WarrantyFilesSection() {
                 Part Files
             </div>
 
+            {(ticket.call_type == "Parts" && ticket.explanation) && (
+                <div className="flex gap-2 border-b border-black my-5">
+                    <div className="text-xl"> Detailed Explanation: </div>
+                    <div className="text-xl font-bold">
+                        {ticket.explanation}
+                    </div>
+                </div>
+            )}
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsSerialModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
