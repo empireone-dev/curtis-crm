@@ -32,60 +32,10 @@ export default function ExportProcessTicket() {
                 start: dateRange[0],
                 end: dateRange[1],
             });
-            // console.log('ress',res)
-            // console.log(
-            //     "res",
-            //     res?.result?.map((item) => ({
-            //         "Date Created":
-            //             moment(item?.ticket?.created_at).format("LLL") || "",
-            //         "Date Last Updated":
-            //             moment(item?.cases_log?.created_at).format("LLL") || "",
-            //         "Ticket #": item?.ticket?.ticket_id || "",
-            //         "First Name": item?.ticket?.fname || "",
-            //         "Last Name": item?.ticket?.lname || "",
-            //         Phone: item?.ticket?.phone || "",
-            //         Email: item?.ticket?.email || "",
-            //         "Serial #": item?.ticket?.serial_number || "",
-            //         "Model #": item?.ticket?.item_number || "",
-            //         "Unit Item": item?.ticket?.unit || "",
-            //         Class: item?.ticket?.class || "",
-            //         Brand: item?.ticket?.brand || "",
-            //         Resolution: item?.ticket?.call_type || "",
-            //         "Purchase Date":
-            //             moment(item?.ticket?.purchase_date).format("LL") || "",
-            //         Zipcode: item?.ticket?.Zip_code || "",
-            //         Country: item?.ticket?.country || "",
-            //         State: item?.ticket?.state || "",
-            //         City: item?.ticket?.city || "",
-            //         Address: item.address || "",
-            //         Issue: item?.ticket?.issue || "",
-            //         "Ticket Status": item?.ticket?.status || "",
-            //         Reason: item?.ticket?.reason_to_close || "",
-            //         Discount: item?.decision?.discount || "",
-            //         "Price After Discount":
-            //             item?.decision?.after_discount || "",
-            //         "Purchase Price": item?.decision?.retailers_price || "",
-            //         "Cost Price": item?.decision?.cost_of_unit || "",
-            //         "Shipping Cost": item.shippingCost || "",
-            //         "Replacement Ship Date": item?.decision?.date || "",
-            //         "Tracking #": (item.replacement?.tracking ?? "N/A") || "",
-            //         "Cheque Ship Date": item?.refund?.ship_date || "",
-            //         "Cheque #": item?.refund?.cheque_no || "",
-            //         "Cheque Amount": item?.refund?.cheque_amount || "",
-            //         "Cheque Currency":
-            //             item?.ticket?.country == "US" ? "USD" : "CAD" || "",
-            //         "Retail Store": item?.receipt?.store || "",
-            //         // "From Parts": item.fromParts || "",
-            //         // "Is Downloaded": item.isDownloaded || "",
-            //         "Warranty Decision": item?.ticket?.decision_status || "",
-            //         "Validation Date":
-            //             moment(item?.validate?.created_at).format("LL") || "",
-            //         "Date Processed":
-            //             moment(item?.replacement_shipped?.created_at).format(
-            //                 "LLL"
-            //             ) || "",
-            //     }))
-            // );
+
+            
+            console.log('res?.result',res?.result)
+       
 
             if (res?.result?.length > 0) {
                 exportToXLSX(
@@ -124,7 +74,7 @@ export default function ExportProcessTicket() {
                         "Purchase Price": item?.decision?.retailers_price || "",
                         "Cost Price": item?.decision?.cost_of_unit || "",
                         "Shipping Cost": item.shippingCost || "",
-                        "Replacement Ship Date": item?.decision?.date || "",
+                        "Replacement Ship Date": item?.replacement?.ship_date || "",
                         "Tracking #":
                             (item.replacement?.tracking ?? "N/A") || "",
                         "Cheque Ship Date": item?.refund?.ship_date || "",
