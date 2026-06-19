@@ -27,9 +27,17 @@ export default function LogCaseSection({ datas, account }) {
             content: "Submitted Successfully",
         });
         dispatch(set_cases_log(res.data));
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        setLoading(false);
+    }
+
+    function disabled_cases(params) {
+        if (datas.created_at == datas.updated_at && datas.created_from == 'WEB FORM') {
+            return false
+        } else if (datas.is_reply == null) {
+            return true
+        } else {
+            return false
+        }
     }
     return (
         <div>
@@ -288,8 +296,11 @@ export default function LogCaseSection({ datas, account }) {
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full mt-3">
                    Submit
                 </button> */}
+                {/* {datas.created_at}&nbsp;
+                {datas.updated_at}
+                {datas.created_from} */}
                 <Button
-                    disabled={datas.is_reply == null ? true : (datas.created_at == datas.updated_at && datas.created_from == 'WEB FORM') ? false : false}
+                    disabled={disabled_cases()}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"
