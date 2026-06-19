@@ -31,6 +31,16 @@ export default function LogCaseSection({ datas, account }) {
             setLoading(false);
         }, 1000);
     }
+
+    function disabled_cases(params) {
+        if (datas.created_at == datas.updated_at && datas.created_from == 'WEB FORM') {
+            return false
+        } else if (datas.is_reply == null) {
+            return true
+        } else {
+            return false
+        }
+    }
     return (
         <div>
             {contextHolder}
@@ -275,7 +285,7 @@ export default function LogCaseSection({ datas, account }) {
                    Submit
                 </button> */}
                 <Button
-                    disabled={datas.is_reply == null ? true : (datas.created_at == datas.updated_at && datas.created_from == 'WEB FORM') ? false : false}
+                    disabled={disabled_cases()}
                     onClick={submit_case_log}
                     loading={loading}
                     type="primary"
