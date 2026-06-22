@@ -97,9 +97,9 @@ export default function WarrantyFilesSection() {
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsRearOfTheUnitSection />
             <div className="h-px my-8 border border-blue-500 w-full" />
-            <CustomerTicketsReadableSerialSection />
+            {/* <CustomerTicketsReadableSerialSection /> */}
             <div className="h-px my-8 border border-blue-500 w-full" />
-            <CustomerTicketsDefectIssueSection />
+            {/* <CustomerTicketsDefectIssueSection /> */}
             <div className="flex flex-col gap-2 border-t border-black my-5">
                 <div className="text-xl font-black">Destroy or Cut Cord Photo: </div>
                 <div className="text-xl font-bold">
