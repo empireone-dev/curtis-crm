@@ -100,7 +100,7 @@ export default function TicketsExportFileSection() {
                     const assign_to = res.activities?.find(a => a.type == "ASSIGNED TO")
                     const refundMaking = res.activities?.find(a => a.type === "REFUND SHIPPED");
                     const replacementMaking = res.activities?.find(a => a.type === "REPLACEMENT SHIPPED");
-                    console.log('warrantyActivity',res)
+
                     const warranty_validation_date = warrantyActivity?.created_at
                         ? moment(warrantyActivity.created_at).format('LL')
                         : '';
@@ -118,7 +118,7 @@ export default function TicketsExportFileSection() {
                     if (assign_to?.message) {
                         try {
                             const parsedMessage = JSON.parse(assign_to.message);
-                            const createdAt = parsedMessage?.data?.created_at;
+                            const createdAt = parsedMessage?.created_at;
                             if (createdAt) {
                                 resolution_date = moment(createdAt).format('LL');
                             }
@@ -131,8 +131,8 @@ export default function TicketsExportFileSection() {
                         { created_at: res.created_at },
                         ...combinedLogs
                     ]);
-                    console.log(curtis_response_average);
-
+                    console.log('warrantyActivity1', refund_date)
+                    console.log('warrantyActivity2', replacement_date)
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
                         latestCreatedAt ? moment(latestCreatedAt).format("L") : "N/A",

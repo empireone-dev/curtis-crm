@@ -420,7 +420,9 @@ class TicketController extends Controller
                 'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'), // Standardized to 'Parts'
                 'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
                 'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
-                'PROCESSED TICKET', 'PARTS PROCESSED TICKET', 'SAFETY ISSUE PROCESSED TICKET' => null, // Ignored as per original logic
+                'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')->where('status', $status),
+                'PARTS PROCESSED TICKET' => $q->where('call_type', 'Parts')->where('status', $status),
+                'SAFETY ISSUE PROCESSED TICKET' => $q->where('call_type', 'Safety Issue')->where('status', $status),
                 default  => $q->where('status', $status),
             };
         });
