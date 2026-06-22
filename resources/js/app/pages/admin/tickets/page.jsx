@@ -36,7 +36,7 @@ export default function TicketsPage() {
                         >
                             CREATE TICKET
                         </button>
-                        <ExportProcessTicket />
+                        {/* <ExportProcessTicket /> */}
                     </div>
                     <TicketsExportFileSection />
                 </div>
