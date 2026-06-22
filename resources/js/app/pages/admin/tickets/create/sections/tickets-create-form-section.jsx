@@ -16,7 +16,7 @@ import Autocomplete from "@/app/layouts/components/autocomplete";
 import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
 import TicketCloseSection from "./ticket-close-section";
 import { check_serial_number_service } from "@/app/services/tickets-service";
-import { message } from "antd";
+import { Checkbox, message } from "antd";
 import { get_product_registration_by_serial_service } from "@/app/services/product-registration-service";
 export default function TicketCreateFormSection() {
     const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export default function TicketCreateFormSection() {
     const [messageApi, contextHolder] = message.useMessage();
     const [warranty, setWarranty] = useState("");
     const [parts, setParts] = useState("");
+    const [has_address_2, setHasAddress2] = useState(false)
     const [loading1, setLoading1] = useState(false);
     const [safetyIssue, setSafetyIssue] = useState("");
 
@@ -369,7 +370,19 @@ export default function TicketCreateFormSection() {
                 </div>
             </div>
 
-            <div className=" md:flex mb-3">
+            <div className=" px-3 mb-3">
+                <Input
+                    onChange={formHandler}
+                    name="address"
+                    required={false}
+                    value={form.address}
+                    label="Physical Address"
+                    type="text"
+                // errorMessage='Address is required'
+                />
+            </div>
+
+            <div className=" md:flex ">
                 <div className="md:w-1/4 px-3">
                     <Select
                         onChange={formHandler}
@@ -418,19 +431,81 @@ export default function TicketCreateFormSection() {
                     />
                 </div>
             </div>
+
+            <div className="px-3 my-3">
+                <Checkbox
+                    onChange={(e) => setHasAddress2(e.target.checked)}
+                >My physical address is the same as my mailing address.
+                </Checkbox>
+            </div>
             <div className="flex flex-col gap-4 mb-3">
-                <div className=" px-3 mb-3">
-                    <Input
-                        onChange={formHandler}
-                        name="address"
-                        required={false}
-                        value={form.address}
-                        label="Address"
-                        type="text"
-                    // errorMessage='Address is required'
-                    />
-                </div>
-                <div className=" px-3 mb-3">
+                {
+                    !has_address_2 && <>
+
+                        <div className=" px-3 mb-3">
+                            <Input
+                                onChange={formHandler}
+                                name="address_2"
+                                required={false}
+                                value={form.address_2}
+                                label="Mailing Address"
+                                type="text"
+                            // errorMessage='Address is required'
+                            />
+                        </div>
+
+                        <div className=" md:flex ">
+                            <div className="md:w-1/4 px-3">
+                                <Select
+                                    onChange={formHandler}
+                                    name="country_2"
+                                    required={false}
+                                    value={form.country_2}
+                                    label="Country"
+                                    // errorMessage="Country_2 is required"
+                                    data={countries.map((res) => ({
+                                        name: res.name,
+                                        value: res.value,
+                                    }))}
+                                />
+                            </div>
+                            <div className="md:w-1/4 px-3">
+                                <Select
+                                    onChange={formHandler}
+                                    name="state_2"
+                                    required={false}
+                                    value={form.state_2}
+                                    label="State"
+                                    // errorMessage="State is required"
+                                    data={regions}
+                                />
+                            </div>
+                            <div className="md:w-1/4 px-3">
+                                <Input
+                                    onChange={formHandler}
+                                    name="city_2"
+                                    required={false}
+                                    value={form.city_2}
+                                    label="City"
+                                    type="text"
+                                // errorMessage="City is required"
+                                />
+                            </div>
+                            <div className="md:w-1/4 px-3 mb-3">
+                                <Input
+                                    onChange={formHandler}
+                                    name="zip_code_2"
+                                    required={false}
+                                    value={form.zip_code_2}
+                                    label="Zip Code / Postal Code"
+                                    type="text"
+                                // errorMessage="Zip Code is required"
+                                />
+                            </div>
+                        </div>
+                    </>
+                }
+                {/* <div className=" px-3 mb-3">
                     <Input
                         onChange={formHandler}
                         name="address2"
@@ -440,7 +515,7 @@ export default function TicketCreateFormSection() {
                         type="text"
                     // errorMessage='Address is required'
                     />
-                </div>
+                </div> */}
                 <div className="my-5 px-3 mb-3">
                     {form.call_type == "Parts" ? (
                         <Autocomplete
