@@ -78,6 +78,17 @@ export default function WarrantyFilesSection() {
                     </div>
                 </div>
             )}
+
+             {(ticket?.created_from == "WEB FORM" && ticket?.store_refusal_reason) && (
+                <div className="flex gap-2 border-b border-black my-5">
+                    <div className="text-xl"> Detailed Explanation: </div>
+                    <div className="text-xl font-bold">
+                        {ticket?.store_refusal_reason}
+                    </div>
+                </div>
+            )}
+
+            
             {ticket.detailed_explanation_issue && (
                 <div className="flex gap-2 border-b border-black my-5">
                     <div className="text-xl"> Customer Detailed Explanation: </div>
@@ -97,9 +108,9 @@ export default function WarrantyFilesSection() {
             <div className="h-px my-8 border border-blue-500 w-full" />
             <CustomerTicketsRearOfTheUnitSection />
             <div className="h-px my-8 border border-blue-500 w-full" />
-            {/* <CustomerTicketsReadableSerialSection /> */}
+            <CustomerTicketsReadableSerialSection />
             <div className="h-px my-8 border border-blue-500 w-full" />
-            {/* <CustomerTicketsDefectIssueSection /> */}
+            <CustomerTicketsDefectIssueSection />
             <div className="flex flex-col gap-2 border-t border-black my-5">
                 <div className="text-xl font-black">Destroy or Cut Cord Photo: </div>
                 <div className="text-xl font-bold">
