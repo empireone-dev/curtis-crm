@@ -4,13 +4,11 @@ import CustomerTicketsFrontOfTheUnitSection from "./customer-tickets-front-of-th
 import CustomerTicketsRearOfTheUnitSection from "./customer-tickets-rear-of-the-unit-section";
 import CustomerTicketsReadableSerialSection from "./customer-tickets-readable-serial-section";
 import CustomerTicketsDefectIssueSection from "./customer-tickets-defect-issue-section";
-import CustomerTicketsClearModel from "./customer-tickets-clear-model";
 import CustomerTicketsPartsModel from "./customer-tickets-parts-model";
 import CustomerTicketsReceiptModel from "./customer-tickets-receipt-model";
 import CustomerTicketsSerialModel from "./customer-tickets-serial-model";
-import { router, usePage } from "@inertiajs/react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "antd";
+import { router } from "@inertiajs/react";
+import { useSelector } from "react-redux";
 import { upload_photo_status } from "@/app/services/files-service";
 import CustomerTicketDistroy from "./customer-tickets-destroy";
 
@@ -129,15 +127,14 @@ export default function WarrantyFilesSection() {
             <div className="h-px my-8 border border-blue-500 w-full" />
             {/* <CustomerTicketsClearModel /> */}
 
-            <Button
-                loading={loading}
+            <button
+                type="button"
+                disabled={loading}
                 onClick={() => uploadPhoto()}
-                type="primary"
-                size="large"
-                className="my-10 w-full"
+                className="my-10 w-full rounded-lg bg-blue-500 p-3 font-semibold text-white transition-all duration-200 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100"
             >
-                UPLOAD
-            </Button>
+                {loading ? "UPLOADING..." : "UPLOAD"}
+            </button>
         </>
     );
 }
