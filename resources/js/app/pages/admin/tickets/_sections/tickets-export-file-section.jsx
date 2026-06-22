@@ -100,7 +100,7 @@ export default function TicketsExportFileSection() {
                     const assign_to = res.activities?.find(a => a.type == "ASSIGNED TO")
                     const refundMaking = res.activities?.find(a => a.type === "REFUND SHIPPED");
                     const replacementMaking = res.activities?.find(a => a.type === "REPLACEMENT SHIPPED");
-
+                    console.log('warrantyActivity',res)
                     const warranty_validation_date = warrantyActivity?.created_at
                         ? moment(warrantyActivity.created_at).format('LL')
                         : '';

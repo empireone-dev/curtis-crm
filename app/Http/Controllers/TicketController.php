@@ -395,6 +395,7 @@ class TicketController extends Controller
             'user',
             'agent_notes',
             'cases_logs',
+            'activities',
             'validate',
             'repair_information'
         ]);
