@@ -25,13 +25,13 @@ const isImage = (extension) => {
 const DetailsFileUploadComponent = ({ files, type }) => {
     const { user } = useSelector((state) => state.app);
     const { url } = usePage();
-    
+
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState([]);
-    const [toast, setToast] = useState(null); 
+    const [toast, setToast] = useState(null);
     const [isUploading, setIsUploading] = useState(false); // Added loading state
-    
+
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -50,29 +50,6 @@ const DetailsFileUploadComponent = ({ files, type }) => {
         setToast({ type, text });
         if (duration > 0) {
             setTimeout(() => setToast(null), duration);
-        }
-    };
-
-    const handlePreview = async (file) => {
-        try {
-            if (file.extension === "pdf") {
-                window.open(file.url, "_blank");
-            } else if (file.extension === "docx") {
-                const encodedUrl = encodeURIComponent(file.url);
-                window.open(
-                    `https://docs.google.com/gview?url=${encodedUrl}&embedded=true`,
-                    "_blank"
-                );
-            } else if (["mp4", "webm", "ogg", "mov"].includes(file.extension)) {
-                window.open(file.url, "_blank");
-            } else if (isImage(file.extension)) {
-                setPreviewImage(file.url || file.preview);
-                setPreviewOpen(true);
-            } else {
-                window.open(file.url, "_blank");
-            }
-        } catch (error) {
-            console.error("Error handling file preview:", error);
         }
     };
 
@@ -102,7 +79,7 @@ const DetailsFileUploadComponent = ({ files, type }) => {
             const data = await store.dispatch(
                 upload_ticket_files_thunk(fd, resolvedTicketId)
             );
-            
+
             if (data?.resp) {
                 setFileList(
                     data.resp.map((res) => ({
@@ -175,15 +152,16 @@ const DetailsFileUploadComponent = ({ files, type }) => {
 
             <div className="px-4 py-3">
                 <div className="border border-blue-500 hover:border-blue-600 p-2.5 rounded-md bg-white transition-colors duration-200">
-                    
+
                     {/* File List */}
                     {fileList.length > 0 && (
                         <ul className="space-y-2 mb-3">
                             {fileList.map((file) => (
                                 <li key={file.uid} className={`flex items-center justify-between p-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200 group ${isUploading ? 'opacity-70 pointer-events-none' : ''}`}>
-                                    <div 
-                                        className="flex items-center gap-3 cursor-pointer overflow-hidden flex-1" 
-                                        onClick={() => handlePreview(file)}
+                                    <a
+                                        className="flex items-center gap-3 cursor-pointer overflow-hidden flex-1"
+                                        href={file.url}
+                                        target="_blank"
                                     >
                                         <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded overflow-hidden">
                                             {isImage(file.extension) ? (
@@ -197,13 +175,13 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                                         <span className="text-blue-500 group-hover:text-blue-700 group-hover:underline text-sm font-medium truncate">
                                             {file.name || file.url.split("/").pop()}
                                         </span>
-                                    </div>
+                                    </a>
 
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onClick={() => remove_image(file.uid)}
                                         disabled={isUploading}
-                                        className="text-gray-400 hover:text-red-500 p-2 transition-colors focus:outline-none disabled:opacity-50" 
+                                        className="text-gray-400 hover:text-red-500 p-2 transition-colors focus:outline-none disabled:opacity-50"
                                         title="Remove file"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,11 +194,11 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                     )}
 
                     {/* Hidden Native File Input */}
-                    <input 
-                        type="file" 
-                        multiple 
-                        className="hidden" 
-                        ref={fileInputRef} 
+                    <input
+                        type="file"
+                        multiple
+                        className="hidden"
+                        ref={fileInputRef}
                         onChange={handleFileChange}
                         disabled={isUploading}
                     />
@@ -231,11 +209,10 @@ const DetailsFileUploadComponent = ({ files, type }) => {
                             type="button"
                             onClick={() => !isUploading && fileInputRef.current?.click()}
                             disabled={isUploading}
-                            className={`flex flex-col items-center justify-center w-[104px] h-[104px] bg-gray-50 border border-dashed rounded transition-colors duration-200 ${
-                                isUploading
+                            className={`flex flex-col items-center justify-center w-[104px] h-[104px] bg-gray-50 border border-dashed rounded transition-colors duration-200 ${isUploading
                                     ? "border-gray-200 text-gray-400 cursor-not-allowed"
                                     : "border-gray-300 text-gray-500 hover:border-blue-500 hover:text-blue-500 cursor-pointer"
-                            }`}
+                                }`}
                         >
                             {isUploading ? (
                                 <svg className="w-6 h-6 mb-2 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -255,22 +232,22 @@ const DetailsFileUploadComponent = ({ files, type }) => {
 
             {/* Image Preview Modal */}
             {previewOpen && previewImage && (
-                <div 
-                    className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-75 transition-opacity" 
+                <div
+                    className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-75 transition-opacity"
                     onClick={() => setPreviewOpen(false)}
                 >
                     <div className="relative max-w-5xl max-h-[90vh] p-4 flex flex-col items-center justify-center">
-                        <button 
+                        <button
                             className="absolute -top-10 right-0 text-white hover:text-gray-300 text-4xl leading-none focus:outline-none"
                             onClick={() => setPreviewOpen(false)}
                         >
                             &times;
                         </button>
-                        <img 
-                            src={previewImage} 
-                            alt="Preview" 
-                            className="max-w-full max-h-full object-contain rounded shadow-lg" 
-                            onClick={(e) => e.stopPropagation()} 
+                        <img
+                            src={previewImage}
+                            alt="Preview"
+                            className="max-w-full max-h-full object-contain rounded shadow-lg"
+                            onClick={(e) => e.stopPropagation()}
                         />
                     </div>
                 </div>

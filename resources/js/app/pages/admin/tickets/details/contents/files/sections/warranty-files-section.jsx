@@ -89,11 +89,11 @@ export default function WarrantyFilesSection() {
             )}
 
             
-            {ticket.detailed_explanation_issue && (
+            {ticket?.detailed_explanation_issue && (
                 <div className="flex gap-2 border-b border-black my-5">
                     <div className="text-xl"> Customer Detailed Explanation: </div>
                     <div className="text-xl font-bold">
-                        {ticket.detailed_explanation_issue}
+                        {ticket?.detailed_explanation_issue}
                     </div>
                 </div>
             )}

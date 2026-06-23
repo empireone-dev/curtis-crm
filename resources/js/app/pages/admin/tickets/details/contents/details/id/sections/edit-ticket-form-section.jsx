@@ -20,7 +20,7 @@ import ReasonToClose from "./reason-to-close";
 import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
-import { message, Select as SelectData } from "antd";
+import { message, Select as SelectData,Checkbox } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
 
 import SearchAddressSection from "./search-address-section";
@@ -33,6 +33,7 @@ export default function EditTicketFormSection() {
     //     isHasEmail: "true",
     // });
 
+
     const { common_issues } = useSelector((state) => state.common_issues);
     const { ticket } = useSelector((state) => state.tickets);
     const { form } = useSelector((state) => state.tickets_create);
@@ -42,6 +43,7 @@ export default function EditTicketFormSection() {
     const { url } = usePage();
     const [load, setLoad] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
+    const [has_address_2, setHasAddress2] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -420,7 +422,19 @@ export default function EditTicketFormSection() {
                     <div className=" px-3 ">
                         <SearchAddressSection data={form} />
                     </div>
+                    <div className="md:w-full px-3 my-5">
+                        <Input
+                            onChange={formHandler}
+                            name="address"
+                            required={false}
+                            value={form?.address}
+                            label="Address"
+                            type="text"
+                        // errorMessage='Address is required'
+                        />
+                    </div>
                     <div className=" md:flex mb-3">
+
                         <div className="flex gap-3 md:w-1/4 px-3 mb-3">
                             {/* <Input
                                 onChange={formHandler}
@@ -481,29 +495,82 @@ export default function EditTicketFormSection() {
                             />
                         </div>
                     </div>
+                    <div className="px-3 my-3">
+                        <Checkbox
+                            onChange={(e) => setHasAddress2(e.target.checked)}
+                        >My physical address is the same as my mailing address.
+                        </Checkbox>
+                    </div>
                     <div className="flex flex-col gap-4 mb-3">
-                        <div className="md:w-full px-3 mb-3">
-                            <Input
-                                onChange={formHandler}
-                                name="address"
-                                required={false}
-                                value={form?.address}
-                                label="Address"
-                                type="text"
-                                // errorMessage='Address is required'
-                            />
-                        </div>
-                        <div className="md:w-full px-3 mb-3">
-                            <Input
-                                onChange={formHandler}
-                                name="address2"
-                                required={false}
-                                value={form?.address2}
-                                label="Mailing Address"
-                                type="text"
-                                // errorMessage='Address is required'
-                            />
-                        </div>
+
+
+
+                        {
+                            !has_address_2 && <>
+
+                                <div className=" px-3 mb-3">
+                                    <Input
+                                        onChange={formHandler}
+                                        name="address_2"
+                                        required={false}
+                                        value={form.address_2}
+                                        label="Mailing Address"
+                                        type="text"
+                                    // errorMessage='Address is required'
+                                    />
+                                </div>
+
+                                <div className=" md:flex ">
+                                    <div className="md:w-1/4 px-3">
+                                        <Select
+                                            onChange={formHandler}
+                                            name="country_2"
+                                            required={false}
+                                            value={form.country_2}
+                                            label="Country"
+                                            // errorMessage="Country_2 is required"
+                                            data={countries.map((res) => ({
+                                                name: res.name,
+                                                value: res.value,
+                                            }))}
+                                        />
+                                    </div>
+                                    <div className="md:w-1/4 px-3">
+                                        <Select
+                                            onChange={formHandler}
+                                            name="state_2"
+                                            required={false}
+                                            value={form.state_2}
+                                            label="State"
+                                            // errorMessage="State is required"
+                                            data={regions}
+                                        />
+                                    </div>
+                                    <div className="md:w-1/4 px-3">
+                                        <Input
+                                            onChange={formHandler}
+                                            name="city_2"
+                                            required={false}
+                                            value={form.city_2}
+                                            label="City"
+                                            type="text"
+                                        // errorMessage="City is required"
+                                        />
+                                    </div>
+                                    <div className="md:w-1/4 px-3 mb-3">
+                                        <Input
+                                            onChange={formHandler}
+                                            name="zip_code_2"
+                                            required={false}
+                                            value={form.zip_code_2}
+                                            label="Zip Code / Postal Code"
+                                            type="text"
+                                        // errorMessage="Zip Code is required"
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        }
 
                         <div className="md:w-full px-3 mb-3">
                             {/* {form?.issue && form?.call_type == "Parts" && (
