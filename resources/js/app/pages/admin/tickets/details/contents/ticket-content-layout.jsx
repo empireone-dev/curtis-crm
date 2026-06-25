@@ -205,6 +205,15 @@ export default function TicketsDetailsLayout({ children }) {
                     </div>
                 }
 
+                {
+                    ticket?.explanation && <div className="flex gap-2 border-b border-black px-3 m-5 flex-col">
+                        <div className="text-xl"> Explanation: </div>
+                        <div className="text-xl font-bold">
+                            {ticket?.explanation}
+                        </div>
+                    </div>
+                }
+
                 <div className="w-full px-8">
                     <div className="flex items-center justify-between">
                         <div
