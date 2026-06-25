@@ -6,7 +6,7 @@ import { setSelectedTemplate } from "../../../../_redux/tickets-slice";
 import { router } from "@inertiajs/react";
 import routing from "../../../components/routing";
 
-export default function ValidationButtonSection() {
+export default function ValidationButtonSection({ isProceedDisabled }) {
     const { selectedTemplate } = useSelector((state) => state.tickets);
     const { ticket } = useSelector((state) => state.tickets);
     const { user } = useSelector((state) => state.app);
@@ -44,23 +44,36 @@ export default function ValidationButtonSection() {
     return (
         <div className="py-4 flex gap-4">
             <button
+                disabled={isProceedDisabled}
                 onClick={() => submitValidation("IW")}
-                className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                className={`p-2 text-white rounded-md transition-colors ${
+                    isProceedDisabled 
+                        ? "bg-gray-400 cursor-not-allowed" 
+                        : "bg-green-500 hover:bg-green-600"
+                }`}
             >
                 {loading == "IW" ? <Loading /> : "MARK VALID - IW"}
             </button>
+            
             <button
+                disabled={isProceedDisabled}
                 onClick={() => submitValidation("OOW")}
-                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className={`p-2 text-white rounded-md transition-colors ${
+                    isProceedDisabled 
+                        ? "bg-gray-400 cursor-not-allowed" 
+                        : "bg-blue-500 hover:bg-blue-600"
+                }`}
             >
                 {loading == "OOW" ? <Loading /> : " MARK VALID - OOW"}
             </button>
+            
             <button
                 onClick={() => submitValidation("INVALID")}
                 className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
             >
                 {loading == "INVALID" ? <Loading /> : "MARK INVALID"}
             </button>
+            
             <button
                 onClick={() => submitValidation("INCOMPLETE")}
                 className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600"
