@@ -221,7 +221,7 @@ export default function TicketsExportFileSection() {
     };
 
     // 6. Return null early if no criteria are met
-    if (!statusQuery && !searchQuery) return null;
+    // if (!statusQuery && !searchQuery) return null;
 
     return (
         <Button
