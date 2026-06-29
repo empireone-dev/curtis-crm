@@ -1,257 +1,180 @@
-import React, { useEffect, useRef, useState } from "react";
-import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Pagination, Space, Tag, Tooltip } from "antd";
-import Highlighter from "react-highlight-words";
+import React, { useMemo } from "react";
+import { Pagination, Table, Tag, Tooltip } from "antd";
 import { Link, router } from "@inertiajs/react";
+import { useSelector } from "react-redux";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
 import { ArrowDownTrayIcon, CheckBadgeIcon } from "@heroicons/react/24/outline";
 import TicketsSelectedExportSection from "./tickets-selected-export-section";
-import store from "@/app/store/store";
-import Table from "@/app/_components/table";
-import TicketSortSection from "./ticket-sort-section";
 import ShowAttachmentSection from "./show-attachment-section";
 
-export default function TicketTableSection() {
+// --- Helper Functions (Defined outside component to prevent recreation on re-render) ---
+
+const getStatusColor = (status) => {
+    if (status === "CLOSED") return "red";
+    if (["PARTS VALIDATION", "WARRANTY VALIDATION", "TECH VALIDATION", null].includes(status)) return "orange";
+    return "green";
+};
+
+const getDisplayStatus = (status) => {
+    if (["PARTS VALIDATION", "WARRANTY VALIDATION", "TECH VALIDATION", null].includes(status)) return "OPEN";
+    return status;
+};
+
+const getFilterDate = (record, dateStatus) => {
+    if (dateStatus === "Validation Date") {
+        return moment(record?.validate?.created_at).format("LL");
+    }
+    if (dateStatus === "Last Updated") {
+        const combinedLogs = [...(record?.agent_notes || []), ...(record?.cases_logs || [])];
+        if (!combinedLogs.length) return moment(record.created_at).format("LL");
+
+        const latestCreatedAt = combinedLogs.reduce((latest, log) => {
+            return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
+        }, combinedLogs[0]?.created_at);
+
+        return moment(latestCreatedAt).format("LL");
+    }
+    return moment(record.created_at).format("LL");
+};
+
+export default function TicketTableSection({ loading }) {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
-    const queryParams = new URLSearchParams(window.location.search);
+
+    // Safely parse URL params once
+    const queryParams = useMemo(() => new URLSearchParams(typeof window !== "undefined" ? window.location.search : ""), []);
     const date_status = queryParams.get("date_status");
+    const isStatus = queryParams.get("status");
 
-    const data = tickets?.data?.map((res) => {
-        let filterDate = "";
-        if (date_status == "Date Created") {
-            filterDate = moment(res.created_at).format("LL");
-        } else if (date_status == "Validation Date") {
-            filterDate = moment(res?.validate?.created_at).format("LL");
-        } else if (date_status == "Last Updated") {
-            const combinedLogs = [...res?.agent_notes, ...res?.cases_logs];
-            const latestCreatedAt = combinedLogs.reduce((latest, log) => {
-                return moment(log.created_at).isAfter(moment(latest))
-                    ? log.created_at
-                    : latest;
-            }, combinedLogs[0]?.created_at);
-
-            filterDate = moment(latestCreatedAt).format("LL");
-        } else {
-            filterDate = moment(res.created_at).format("LL");
-        }
-        return {
+    // 1. Prepare raw data (Only append the required 'key')
+    const dataSource = useMemo(() => {
+        return tickets?.data?.map((res) => ({
             ...res,
             key: res.id,
-            ticket_id: (() => {
-                function route_link(data) {
-                    if (data.call_type == "TS-Tech Support") {
-                        const path =
-                            res.status == "CLOSED" ? "activities" : "status";
-                        return (
-                            <Link
-                                className="underline"
-                                href={
-                                    "/administrator/tickets/details/" +
-                                    res.id +
-                                    "/" +
-                                    path
-                                }
-                            >
-                                <div className="flex gap-3">
-                                    {res.pr && (
-                                        <CheckBadgeIcon className="h-6 text-green-600" />
-                                    )}
-                                    {res.isExported && (
-                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                    )}
-                                    {res.ticket_id
-                                        ? res.ticket_id
-                                        : "Show More"}
-                                </div>
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <Link
-                                className="underline"
-                                href={
-                                    "/administrator/tickets/details/" +
-                                    res.id +
-                                    "/files"
-                                }
-                            >
-                                <div className="flex gap-3">
-                                    {res.pr && (
-                                        <CheckBadgeIcon className="h-6 text-green-600" />
-                                    )}
-                                    {res.isExported && (
-                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                    )}
-                                    {res.ticket_id
-                                        ? res.ticket_id
-                                        : "Show More"}
-                                </div>
-                            </Link>
-                        );
-                    }
-                }
-                return (
-                    <Tooltip placement="topLeft" title="View Ticket Details">
-                        {route_link(res)}
-                    </Tooltip>
-                );
-            })(),
-            fullname: (
-                <div>
-                    {res.fname} {res.lname}
-                </div>
-            ),
-            issue: <Tag color={"blue"}>{res.issue}</Tag>,
-            status: (() => {
-                const color =
-                    res.status === "CLOSED"
-                        ? "red"
-                        : res.status === "PARTS VALIDATION" ||
-                            res.status === "WARRANTY VALIDATION" ||
-                            res.status === "TECH VALIDATION" ||
-                            res.status == null
-                          ? "orange"
-                          : "green";
+        })) || [];
+    }, [tickets]);
+    console.log('datassssssss',tickets)
 
-                return (
-                    <div className="flex gap-2">
-                        {(res.status == "REPAIR SUCCESS" ||
-                            res.status == "REPAIR UNSUCCESSFUL") &&
-                            res.repair_information && (
-                                <ShowAttachmentSection data={res} />
-                            )}
-                        <Tag color={color}>
-                            {res.status === "PARTS VALIDATION" ||
-                            res.status === "WARRANTY VALIDATION" ||
-                            res.status === "TECH VALIDATION" ||
-                            res.status == null
-                                ? "OPEN"
-                                : res.status}
-                        </Tag>
-
-                        {res.is_reply && (
-                            <Tag color="purple">
-                                Customer has responded on{" "}
-                                {moment(res.email_date).format("LL")}
-                            </Tag>
-                        )}
-                    </div>
-                );
-            })(), // Call the function immediately to return the JSX
-            isUploading: (() => {
-                const color = res.isUploading == "true" ? "green" : "red";
-
-                return (
-                    <>
-                        <Tag color={color} key={res.id}>
-                            {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
-                        </Tag>
-                    </>
-                );
-            })(),
-            created_at: <div>{filterDate}</div>,
-        };
-    });
-
-    const columns = [
+    // 2. Define columns with rendering logic built-in
+    const columns = useMemo(() => [
         {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            isSort: true,
+            sorter: true,
+            render: (ticketId, record) => {
+                const path = record.status === "CLOSED" ? "activities" : "status";
+                const href = record.call_type === "TS-Tech Support"
+                    ? `/administrator/tickets/details/${record.id}/${path}`
+                    : `/administrator/tickets/details/${record.id}/files`;
+
+                return (
+                    <Tooltip placement="topLeft" title="View Ticket Details">
+                        <Link className="underline" href={href}>
+                            <div className="flex gap-3 items-center">
+                                {record.pr && <CheckBadgeIcon className="h-6 text-green-600" />}
+                                {record.isExported && <ArrowDownTrayIcon className="h-6 text-blue-600" />}
+                                {ticketId || "Show More"}
+                            </div>
+                        </Link>
+                    </Tooltip>
+                );
+            }
         },
         {
             title: "Fullname",
-            dataIndex: "fullname",
             key: "fullname",
-            isSort: true,
+            sorter: true,
+            render: (_, record) => <div>{record.fname} {record.lname}</div>,
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            isSort: false,
         },
         {
             title: "Resolution",
             dataIndex: "call_type",
             key: "call_type",
-            isSort: false,
         },
         {
             title: "Issue",
             dataIndex: "issue",
             key: "issue",
-            isSort: false,
+            render: (issue) => <Tag color="blue">{issue}</Tag>,
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            isSort: false,
+            render: (status, record) => (
+                <div className="flex gap-2">
+                    {["REPAIR SUCCESS", "REPAIR UNSUCCESSFUL"].includes(status) && record.repair_information && (
+                        <ShowAttachmentSection data={record} />
+                    )}
+                    <Tag color={getStatusColor(status)}>
+                        {getDisplayStatus(status)}
+                    </Tag>
+                    {record.is_reply && (
+                        <Tag color="purple">
+                            Customer has responded on {moment(record.email_date).format("LL")}
+                        </Tag>
+                    )}
+                </div>
+            ),
         },
-
         {
             title: "IsUpload",
             dataIndex: "isUploading",
             key: "isUploading",
-            isSort: false,
+            render: (isUploading) => (
+                <Tag color={isUploading === "true" ? "green" : "red"}>
+                    {isUploading === "true" ? "UPLOADED" : "PENDING"}
+                </Tag>
+            ),
         },
         {
-            title: date_status ?? "Created At",
-            dataIndex: "created_at",
+            title: date_status || "Created At",
             key: "created_at",
-            isSort: false,
+            render: (_, record) => <div>{getFilterDate(record, date_status)}</div>,
         },
-    ];
+    ], [date_status]);
 
-    const url = window.location.pathname + window.location.search;
-
-    const getQueryParam = (url, paramName) => {
-        const searchParams = new URLSearchParams(url.split("?")[1]);
-        return searchParams.get(paramName);
-    };
-
-    const page = getQueryParam(url, "page");
-    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+    const currentPage = Number(queryParams.get("page"));
 
     const onChangePaginate = (page) => {
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", page);
-        const newUrl = window.location.pathname + "?" + searchParams.toString();
-        router.visit(newUrl);
+        // route().params grabs all current URL filters (status, call_type, etc.)
+        // We spread them into a new object and overwrite/add the 'page' variable
+        router.get(window.location.pathname, {
+            ...route().params,
+            page: page
+        });
     };
-
-    const isStatus = getQueryParam(url, "status");
-    console.log("isStatus", isStatus);
     return (
         <>
-            {isStatus && (
-                <TicketsSelectedExportSection selected={selectedRowKeys} />
-            )}
-            {data && (
-                <>
-                    {/* <div className="py-3">
-                        <TicketSortSection />
-                    </div> */}
-                    <Table
-                        isStatus={isStatus}
-                        columns={columns}
-                        data={data}
-                        dataChecked={selectedRowKeys}
-                        isCheckbox={true}
+            {isStatus && <TicketsSelectedExportSection selected={selectedRowKeys} />}
+
+            <Table
+                loading={loading}
+                columns={columns}
+                dataSource={dataSource} // Use standard Antd dataSource prop
+                rowSelection={{
+                    selectedRowKeys,
+                    // Note: onChange handler needed here if you want Antd native row selection to work and sync to Redux
+                }}
+                pagination={false} // Disable Antd's built-in pagination if you use a custom external one
+            />
+
+            <div className="py-4 bg-white w-full flex items-center justify-end">
+                <div className="py-4 bg-white w-full flex items-center justify-end">
+                    <Pagination
+                        current={currentPage}
+                        total={tickets?.total || 0} // Safely access total from Redux
+                        pageSize={tickets?.per_page || 10} // Adjust this if your backend returns a different per-page limit
+                        onChange={onChangePaginate}
+                        showSizeChanger={false}
                     />
-                    <div className="py-4 bg-white w-full flex items-center justify-end">
-                        <Pagination
-                            onChange={onChangePaginate}
-                            defaultCurrent={currentPage}
-                            total={tickets.total}
-                            showSizeChanger={false}
-                        />
-                    </div>
-                </>
-            )}
+                </div>
+            </div>
         </>
     );
 }

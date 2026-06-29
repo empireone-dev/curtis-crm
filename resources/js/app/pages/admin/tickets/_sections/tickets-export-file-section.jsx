@@ -68,7 +68,7 @@ export default function TicketsExportFileSection() {
             }
 
             let exportData = [];
-
+            console.log('allTickets', allTickets)
             if (searchQuery === "RESOURCE") {
                 const newData = allTickets.map((res) => [
                     moment(res?.receipt?.updated_at).format("L"),
@@ -82,12 +82,10 @@ export default function TicketsExportFileSection() {
                     // Safe fallback for arrays
                     const combinedLogs = [...(res?.agent_notes || []), ...(res?.cases_logs || [])];
 
-                    let latestCreatedAt = combinedLogs[0]?.created_at;
-                    if (combinedLogs.length > 0) {
-                        latestCreatedAt = combinedLogs.reduce((latest, log) =>
-                            moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest
-                            , combinedLogs[0].created_at);
-                    }
+                    // Native string comparison is blazing fast for ISO dates
+                    const dateLastUpdated = combinedLogs.reduce((latest, log) =>
+                        log.created_at > latest ? log.created_at : latest
+                        , combinedLogs[0]?.created_at || null);
 
                     // Pre-calculate conditional date
                     const dateProcessed = res?.decision_status === "REPLACEMENT"
@@ -135,7 +133,7 @@ export default function TicketsExportFileSection() {
                     console.log('warrantyActivity2', replacement_date)
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
-                        latestCreatedAt ? moment(latestCreatedAt).format("L") : "N/A",
+                        dateLastUpdated ? moment(dateLastUpdated).format("L") : "N/A",
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
                         res.lname ?? "N/A",

@@ -417,7 +417,7 @@ class TicketController extends Controller
         $query->when($isValid($status), function ($q) use ($status) {
             match ($status) {
                 'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
-                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'), // Standardized to 'Parts'
+                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'),
                 'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
                 'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
                 'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')->where('status', $status),
@@ -442,16 +442,17 @@ class TicketController extends Controller
 
             match ($dateStatus) {
                 'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-                'Last Updated'    => $q->select('tickets.*') // Crucial: forces Laravel to only return ticket columns
-                    ->leftJoin('agent_notes', 'tickets.id', '=', 'agent_notes.ticket_id')
-                    ->leftJoin('cases_logs', 'tickets.id', '=', 'cases_logs.ticket_id')
-                    ->where(function ($sub) use ($start, $end) {
-                        $sub->whereBetween('agent_notes.created_at', [$start, $end])
-                            ->orWhereBetween('cases_logs.created_at', [$start, $end]);
-                    })
-                    ->distinct(), // Crucial: prevents the same ticket from showing up 5 times if it has 5 notes
 
-                default           => $q->whereBetween('created_at', [$start, $end]),
+                'Agent Notes' => $q->orWhereHas('agent_notes', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+
+                'Cases Logs' => $q->orWhereHas('cases_logs', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+
+                // 'Last Updated' => $q->where(function ($sub) use ($start, $end) {
+                //     $sub->whereHas('agent_notes', fn($note) => $note->whereBetween('created_at', [$start, $end]))
+                //         ->orWhereHas('cases_logs', fn($log) => $log->whereBetween('created_at', [$start, $end]));
+                // }),
+
+                default => $q->whereBetween('created_at', [$start, $end]),
             };
         });
 
@@ -465,7 +466,6 @@ class TicketController extends Controller
         } else {
             $query->orderBy('updated_at', 'desc');
         }
-
         $allTickets = $query->lazy(10000)->map(function ($ticket) {
             return $ticket->toArray();
         });
@@ -929,7 +929,7 @@ class TicketController extends Controller
         $query->when($isValid($status), function ($q) use ($status) {
             match ($status) {
                 'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
-                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'), // Standardized to 'Parts'
+                'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'),
                 'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
                 'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
                 'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')->where('status', $status),
@@ -946,26 +946,26 @@ class TicketController extends Controller
         $query->when($isValid($model), function ($q) use ($model) {
             $q->whereIn('item_number', explode(',', $model));
         });
-
-        // // Date Filters
         $query->when($isValid($startDate) && $isValid($endDate), function ($q) use ($startDate, $endDate, $dateStatus) {
             $start = Carbon::parse($startDate)->startOfDay();
             $end   = Carbon::parse($endDate)->endOfDay();
 
             match ($dateStatus) {
                 'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-                'Last Updated'    => $q->select('tickets.*') // Crucial: forces Laravel to only return ticket columns
-                    ->leftJoin('agent_notes', 'tickets.id', '=', 'agent_notes.ticket_id')
-                    ->leftJoin('cases_logs', 'tickets.id', '=', 'cases_logs.ticket_id')
-                    ->where(function ($sub) use ($start, $end) {
-                        $sub->whereBetween('agent_notes.created_at', [$start, $end])
-                            ->orWhereBetween('cases_logs.created_at', [$start, $end]);
-                    })
-                    ->distinct(), // Crucial: prevents the same ticket from showing up 5 times if it has 5 notes
 
-                default           => $q->whereBetween('created_at', [$start, $end]),
+                'Agent Notes' => $q->orWhereHas('agent_notes', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+
+                'Cases Logs' => $q->orWhereHas('cases_logs', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
+
+                // 'Last Updated' => $q->where(function ($sub) use ($start, $end) {
+                //     $sub->whereHas('agent_notes', fn($note) => $note->whereBetween('created_at', [$start, $end]))
+                //         ->orWhereHas('cases_logs', fn($log) => $log->whereBetween('created_at', [$start, $end]));
+                // }),
+
+                default => $q->whereBetween('created_at', [$start, $end]),
             };
         });
+
 
         // 4. Sorting
         if (in_array($checked, ['asc', 'desc'])) {
@@ -978,9 +978,12 @@ class TicketController extends Controller
             $query->orderBy('updated_at', 'desc');
         }
 
+
+
         // 5. Pagination & Return
         return response()->json([
-            'data' => $query->paginate(10)
+            'data' => $query->paginate(10),
+            'total_ticket' => $query->paginate(10)->total()
         ], 200);
     }
     public function save_direct_emails_parts()

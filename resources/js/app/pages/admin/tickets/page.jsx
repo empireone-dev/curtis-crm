@@ -1,26 +1,27 @@
 import AdministratorLayout from "@/app/layouts/admin/administrator-layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TicketTableSection from "./_sections/tickets-table-section";
 import store from "@/app/store/store";
 import { get_tickets_thunk } from "./_redux/tickets-thunk";
-import { router, usePage } from "@inertiajs/react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "./_redux/tickets-slice";
+import { useSelector } from "react-redux";
 import TicketsSearchSection from "./_sections/tickets-search-section";
 import TicketsExportFileSection from "./_sections/tickets-export-file-section";
 import TicketFilterSection from "./_sections/ticket-filter-section";
 import { get_products_thunk } from "../ticket_form/redux/ticket-form-thunk";
-import ExportProcessTicket from "./_sections/export-process-ticket";
 
 export default function TicketsPage() {
-    const { search } = useSelector((state) => state.tickets);
-    useEffect(() => {
-        store.dispatch(get_tickets_thunk(window.location.search));
-    }, [search.page ?? ""]);
+    const [loading, setLoading] = useState(true)
+
 
     useEffect(() => {
-        store.dispatch(get_products_thunk());
-    }, []);
+        async function get_data(params) {
+            setLoading(true)
+            await store.dispatch(get_products_thunk());
+            await store.dispatch(get_tickets_thunk(window.location.search));
+            setLoading(false)
+        }
+        get_data()
+    }, [window.location.search]);
 
     return (
         <AdministratorLayout>
@@ -44,7 +45,7 @@ export default function TicketsPage() {
                     <TicketsSearchSection />
                     <TicketFilterSection />
                 </div>
-                <TicketTableSection />
+                <TicketTableSection loading={loading} />
             </div>
         </AdministratorLayout>
     );
