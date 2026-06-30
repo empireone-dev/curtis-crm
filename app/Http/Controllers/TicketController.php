@@ -370,7 +370,7 @@ class TicketController extends Controller
     }
     public function export_ticket_files(Request $request)
     {
-        // 1. Get input values
+
         $searchQuery = $request->input('search');
         $status      = $request->input('status');
         $callType    = $request->input('call_type');
@@ -393,10 +393,9 @@ class TicketController extends Controller
             'replacement',
             'decision_making',
             'user',
+            'validate',
             'agent_notes',
             'cases_logs',
-            'activities',
-            'validate',
             'repair_information'
         ]);
 
@@ -435,26 +434,15 @@ class TicketController extends Controller
             $q->whereIn('item_number', explode(',', $model));
         });
 
-        // // Date Filters
-        $query->when($isValid($startDate) && $isValid($endDate), function ($q) use ($startDate, $endDate, $dateStatus) {
-            $start = Carbon::parse($startDate)->startOfDay();
-            $end   = Carbon::parse($endDate)->endOfDay();
-
-            match ($dateStatus) {
-                'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                'Agent Notes' => $q->orWhereHas('agent_notes', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                'Cases Logs' => $q->orWhereHas('cases_logs', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                // 'Last Updated' => $q->where(function ($sub) use ($start, $end) {
-                //     $sub->whereHas('agent_notes', fn($note) => $note->whereBetween('created_at', [$start, $end]))
-                //         ->orWhereHas('cases_logs', fn($log) => $log->whereBetween('created_at', [$start, $end]));
-                // }),
-
-                default => $q->whereBetween('created_at', [$start, $end]),
+        if ($startDate && $endDate) {
+            $column = match ($dateStatus) {
+                'Validation Date' => 'validation_date',
+                'Last Updated'    => 'latest_updated',
+                default           => 'created_at',
             };
-        });
+
+            $query->whereBetween($column, [$startDate, $endDate]);
+        }
 
         // 4. Sorting
         if (in_array($checked, ['asc', 'desc'])) {
@@ -466,6 +454,8 @@ class TicketController extends Controller
         } else {
             $query->orderBy('updated_at', 'desc');
         }
+
+
         $allTickets = $query->lazy(10000)->map(function ($ticket) {
             return $ticket->toArray();
         });
@@ -865,6 +855,9 @@ class TicketController extends Controller
             'type' => 'ASSIGNED TO',
             'message' => json_encode(array_merge($ticketArray, ['data' => $request->all()]))
         ]);
+        $ticket->update([
+            'validation_date' => Carbon::today()
+        ]);
         return response()->json([
             'result' => $ticket
         ], 200);
@@ -906,8 +899,6 @@ class TicketController extends Controller
             'replacement',
             'decision_making',
             'user',
-            'agent_notes',
-            'cases_logs',
             'validate',
             'repair_information'
         ]);
@@ -946,25 +937,16 @@ class TicketController extends Controller
         $query->when($isValid($model), function ($q) use ($model) {
             $q->whereIn('item_number', explode(',', $model));
         });
-        $query->when($isValid($startDate) && $isValid($endDate), function ($q) use ($startDate, $endDate, $dateStatus) {
-            $start = Carbon::parse($startDate)->startOfDay();
-            $end   = Carbon::parse($endDate)->endOfDay();
 
-            match ($dateStatus) {
-                'Validation Date' => $q->whereHas('validate', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                'Agent Notes' => $q->orWhereHas('agent_notes', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                'Cases Logs' => $q->orWhereHas('cases_logs', fn($sub) => $sub->whereBetween('created_at', [$start, $end])),
-
-                // 'Last Updated' => $q->where(function ($sub) use ($start, $end) {
-                //     $sub->whereHas('agent_notes', fn($note) => $note->whereBetween('created_at', [$start, $end]))
-                //         ->orWhereHas('cases_logs', fn($log) => $log->whereBetween('created_at', [$start, $end]));
-                // }),
-
-                default => $q->whereBetween('created_at', [$start, $end]),
+        if ($startDate && $endDate) {
+            $column = match ($dateStatus) {
+                'Validation Date' => 'validation_date',
+                'Last Updated'    => 'latest_updated',
+                default           => 'created_at',
             };
-        });
+
+            $query->whereBetween($column, [$startDate, $endDate]);
+        }
 
 
         // 4. Sorting
@@ -979,8 +961,6 @@ class TicketController extends Controller
         }
 
 
-
-        // 5. Pagination & Return
         return response()->json([
             'data' => $query->paginate(10),
             'total_ticket' => $query->paginate(10)->total()
@@ -1623,7 +1603,12 @@ class TicketController extends Controller
 
             $this->sendEmailIfNeeded($request, $subject);
             $this->updateTicket($data->id, $subject);
-
+            $ticket = Ticket::where('id', $data->id)->first();
+            if ($ticket) {
+                $ticket->update([
+                    'latest_updated' => Carbon::today()
+                ]);
+            }
             if ($request->user()) {
                 AgentNote::create([
                     'user_id'   => $auth->id,
@@ -1656,6 +1641,12 @@ class TicketController extends Controller
             $this->updateTicket($data->id, $subject);
 
             if ($request->user()) {
+                $ticket = Ticket::where('id', $data->id)->first();
+                if ($ticket) {
+                    $ticket->update([
+                        'latest_updated' => Carbon::today()
+                    ]);
+                }
                 AgentNote::create([
                     'user_id' => $auth->id,
                     'ticket_id' => $data->id,
@@ -1850,6 +1841,12 @@ class TicketController extends Controller
                 'ticket_id' => $subject,
             ]);
 
+            $ticket = Ticket::where('id', $data->id)->first();
+            if ($ticket) {
+                $ticket->update([
+                    'latest_updated' => Carbon::today()
+                ]);
+            }
             AgentNote::create([
                 'user_id' => Auth::user()->id,
                 'ticket_id' => $data->id,
@@ -1910,6 +1907,7 @@ class TicketController extends Controller
             $t = Ticket::where('id', $data->id)->first();
             $t->update([
                 'ticket_id' => $subject,
+                'latest_updated' => Carbon::today()
                 // 'status' => ($request->call_type == 'General Inquiry' || $request->call_type == 'Others') ? 'CLOSED' : $request->status
             ]);
 

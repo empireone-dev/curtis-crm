@@ -60,7 +60,9 @@ class Ticket extends Model
         'isEscalated',
         'where_status',
         'received_at',
-        'asc_status'
+        'asc_status',
+        'latest_updated',
+        'validation_date'
     ];
 
 
@@ -92,7 +94,7 @@ class Ticket extends Model
     }
     public function activities(): HasMany
     {
-        return $this->hasMany(Activity::class, 'ticket_id', 'id')->where('type','<>','upload');
+        return $this->hasMany(Activity::class, 'ticket_id', 'id')->where('type', '<>', 'upload');
     }
     public function user(): HasOne
     {

@@ -93,7 +93,6 @@ export default function TicketFilterSection() {
         <div className="flex gap-4 w-full">
             <div className="w-full">
                 <Select
-                    mode="multiple"
                     maxTagCount="responsive"
                     allowClear
                     size="large"

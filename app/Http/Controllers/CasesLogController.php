@@ -6,6 +6,7 @@ use App\Models\CasesLog;
 use App\Models\CustomerDetailsLog;
 use App\Models\DirectEmail;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CasesLogController extends Controller
@@ -38,6 +39,7 @@ class CasesLogController extends Controller
             $ticket->update([
                 'is_reply' => null,
                 'cases_status' => 'hidden',
+                'latest_updated' => Carbon::today()
             ]);
         }
 
