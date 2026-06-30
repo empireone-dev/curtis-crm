@@ -47,6 +47,7 @@ export default function TicketFilterSection() {
         end: parseParam("end"),
         model: parseParam("model")?.split(",") ?? null,
         status: parseParam("status"),
+        process_type: parseParam("process_type"),
         date_status: parseParam("date_status")?.split(",") ?? null, // Assuming multiple based on Select mode
     });
 
@@ -148,6 +149,29 @@ export default function TicketFilterSection() {
                     options={STATUS_OPTIONS}
                 />
             </div>
+            {
+                data.status == 'PROCESSED TICKET' && <div className="w-full">
+                    <Select
+                        allowClear
+                        size="large"
+                        className="w-full"
+                        placeholder="Procuess Type"
+                        value={data.process_type || undefined}
+                        onChange={handleSelectChange("process_type")}
+                        options={[
+                            {
+                                label: "Replacement Shipped",
+                                value: "replacement_shipped"
+                            },
+                            {
+                                label: "Refund Shipped",
+                                value: "refund_shipped"
+                            },
+                        ]}
+                    />
+                </div>
+            }
+
 
             <div className="w-full flex gap-3">
                 <Button

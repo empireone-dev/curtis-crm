@@ -381,6 +381,7 @@ class TicketController extends Controller
         $checked     = $request->input('checked');
         $ticketId    = $request->input('ticket_id');
         $fullname    = $request->input('fullname');
+        $process_type    = $request->input('process_type');
 
         // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
         $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
@@ -396,7 +397,8 @@ class TicketController extends Controller
             'validate',
             'agent_notes',
             'cases_logs',
-            'repair_information'
+            'repair_information',
+            'activities'
         ]);
 
         // 3. Apply Filters using fluent when() clauses
@@ -413,13 +415,22 @@ class TicketController extends Controller
         });
 
         // Consolidated & Fixed Status Logic
-        $query->when($isValid($status), function ($q) use ($status) {
+        $query->when($isValid($status), function ($q) use ($status, $startDate, $endDate, $isValid, $process_type) {
             match ($status) {
                 'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
                 'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'),
                 'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
                 'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
-                'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')->where('status', $status),
+                'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')
+                    ->where('status', $status)
+                    ->when($isValid($startDate) && $isValid($endDate) && $isValid($process_type), function ($sub) use ($startDate, $endDate, $process_type) {
+                        // Enclose the OR logic inside a nested where group
+                        $sub->where(function ($group) use ($startDate, $endDate, $process_type) {
+                            $group->whereHas($process_type, function ($rel) use ($startDate, $endDate) {
+                                $rel->whereBetween('created_at', [$startDate, $endDate]);
+                            });
+                        });
+                    }),
                 'PARTS PROCESSED TICKET' => $q->where('call_type', 'Parts')->where('status', $status),
                 'SAFETY ISSUE PROCESSED TICKET' => $q->where('call_type', 'Safety Issue')->where('status', $status),
                 default  => $q->where('status', $status),
@@ -434,15 +445,15 @@ class TicketController extends Controller
             $q->whereIn('item_number', explode(',', $model));
         });
 
-        if ($startDate && $endDate) {
-            $column = match ($dateStatus) {
-                'Validation Date' => 'validation_date',
-                'Last Updated'    => 'latest_updated',
-                default           => 'created_at',
-            };
+        // if ($startDate && $endDate) {
+        //     $column = match ($dateStatus) {
+        //         'Validation Date' => 'validation_date',
+        //         'Last Updated'    => 'latest_updated',
+        //         default           => 'created_at',
+        //     };
 
-            $query->whereBetween($column, [$startDate, $endDate]);
-        }
+        //     $query->whereBetween($column, [$startDate, $endDate]);
+        // }
 
         // 4. Sorting
         // if (in_array($checked, ['asc', 'desc'])) {
@@ -455,8 +466,8 @@ class TicketController extends Controller
         //     $query->orderBy('updated_at', 'desc');
         // }
 
-
-        $allTickets = $query->lazy(10000)->map(function ($ticket) {
+        $query->orderBy('created_at', 'asc');
+        $allTickets = $query->lazy(1000)->map(function ($ticket) {
             return $ticket->toArray();
         });
         return response()->json([
@@ -887,6 +898,9 @@ class TicketController extends Controller
         $checked     = $request->input('checked');
         $ticketId    = $request->input('ticket_id');
         $fullname    = $request->input('fullname');
+        $process_type    = $request->input('process_type');
+
+
 
         // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
         $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
@@ -900,7 +914,9 @@ class TicketController extends Controller
             'decision_making',
             'user',
             'validate',
-            'repair_information'
+            'repair_information',
+            'replacement_shipped',
+            'refund_shipped'
         ]);
 
         // 3. Apply Filters using fluent when() clauses
@@ -917,13 +933,22 @@ class TicketController extends Controller
         });
 
         // Consolidated & Fixed Status Logic
-        $query->when($isValid($status), function ($q) use ($status) {
+        $query->when($isValid($status), function ($q) use ($status, $startDate, $endDate, $isValid, $process_type) {
             match ($status) {
                 'WARRANTY CLOSED' => $q->where('status', 'CLOSED')->where('call_type', 'CF-Warranty Claim'),
                 'PARTS CLOSED'    => $q->where('status', 'CLOSED')->where('call_type', 'Parts'),
                 'TECH CLOSED'     => $q->where('status', 'CLOSED')->where('call_type', 'TS-Tech Support'),
                 'WEB FORM', 'AGENT FORM' => $q->where('created_from', $status),
-                'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')->where('status', $status),
+                'PROCESSED TICKET' => $q->where('call_type', 'CF-Warranty Claim')
+                    ->where('status', $status)
+                    ->when($isValid($startDate) && $isValid($endDate) && $isValid($process_type), function ($sub) use ($startDate, $endDate, $process_type) {
+                        // Enclose the OR logic inside a nested where group
+                        $sub->where(function ($group) use ($startDate, $endDate, $process_type) {
+                            $group->whereHas($process_type, function ($rel) use ($startDate, $endDate) {
+                                $rel->whereBetween('created_at', [$startDate, $endDate]);
+                            });
+                        });
+                    }),
                 'PARTS PROCESSED TICKET' => $q->where('call_type', 'Parts')->where('status', $status),
                 'SAFETY ISSUE PROCESSED TICKET' => $q->where('call_type', 'Safety Issue')->where('status', $status),
                 default  => $q->where('status', $status),
@@ -938,26 +963,26 @@ class TicketController extends Controller
             $q->whereIn('item_number', explode(',', $model));
         });
 
-        if ($startDate && $endDate) {
-            $column = match ($dateStatus) {
-                'Validation Date' => 'validation_date',
-                'Last Updated'    => 'latest_updated',
-                default           => 'created_at',
-            };
-            $query->whereBetween($column, [$startDate, $endDate]);
-        }
 
+        // if ($startDate && $endDate) {
+        //     $column = match ($dateStatus) {
+        //         'Validation Date' => 'validation_date',
+        //         'Last Updated'    => 'latest_updated',
+        //         default           => 'created_at',
+        //     };
+        //     $query->whereBetween($column, [$startDate, $endDate]);
+        // }
 
         // 4. Sorting
-        if (in_array($checked, ['asc', 'desc'])) {
-            $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
-        } elseif (in_array($ticketId, ['asc', 'desc'])) {
-            $query->orderBy('id', $ticketId);
-        } elseif (in_array($fullname, ['asc', 'desc'])) {
-            $query->orderBy('fname', $fullname);
-        } else {
-            $query->orderBy('updated_at', 'desc');
-        }
+        // if (in_array($checked, ['asc', 'desc'])) {
+        //     $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
+        // } elseif (in_array($ticketId, ['asc', 'desc'])) {
+        //     $query->orderBy('id', $ticketId);
+        // } elseif (in_array($fullname, ['asc', 'desc'])) {
+        //     $query->orderBy('fname', $fullname);
+        // } else {
+        //     $query->orderBy('updated_at', 'desc');
+        // }
 
 
         return response()->json([
