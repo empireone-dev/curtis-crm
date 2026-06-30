@@ -445,15 +445,15 @@ class TicketController extends Controller
         }
 
         // 4. Sorting
-        if (in_array($checked, ['asc', 'desc'])) {
-            $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
-        } elseif (in_array($ticketId, ['asc', 'desc'])) {
-            $query->orderBy('id', $ticketId);
-        } elseif (in_array($fullname, ['asc', 'desc'])) {
-            $query->orderBy('fname', $fullname);
-        } else {
-            $query->orderBy('updated_at', 'desc');
-        }
+        // if (in_array($checked, ['asc', 'desc'])) {
+        //     $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
+        // } elseif (in_array($ticketId, ['asc', 'desc'])) {
+        //     $query->orderBy('id', $ticketId);
+        // } elseif (in_array($fullname, ['asc', 'desc'])) {
+        //     $query->orderBy('fname', $fullname);
+        // } else {
+        //     $query->orderBy('updated_at', 'desc');
+        // }
 
 
         $allTickets = $query->lazy(10000)->map(function ($ticket) {
@@ -944,7 +944,6 @@ class TicketController extends Controller
                 'Last Updated'    => 'latest_updated',
                 default           => 'created_at',
             };
-
             $query->whereBetween($column, [$startDate, $endDate]);
         }
 
@@ -963,7 +962,6 @@ class TicketController extends Controller
 
         return response()->json([
             'data' => $query->paginate(10),
-            'total_ticket' => $query->paginate(10)->total()
         ], 200);
     }
     public function save_direct_emails_parts()

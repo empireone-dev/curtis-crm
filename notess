@@ -22,6 +22,15 @@ add column on ticket table
             'latest_updated' => Carbon::today()
         ]);
 
+
+
+$ticket = Ticket::where('id', $data->id)->first();
+            if ($ticket) {
+                $ticket->update([
+                    'latest_updated' => Carbon::today()
+                ]);
+            }
+            
 SELECT *
 FROM tickets
 WHERE cases_status = 'handled'
