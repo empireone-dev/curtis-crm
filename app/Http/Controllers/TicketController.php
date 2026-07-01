@@ -398,7 +398,8 @@ class TicketController extends Controller
             'agent_notes',
             'cases_logs',
             'repair_information',
-            'activities'
+            'activities',
+            'activity'
         ]);
 
         // 3. Apply Filters using fluent when() clauses

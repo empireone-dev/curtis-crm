@@ -88,6 +88,7 @@ export default function TicketsExportFileSection() {
                     //     , combinedLogs[0]?.created_at || null);
 
                     // Pre-calculate conditional date
+                    console.log('resresres',res?.activity)
                     const dateProcessed = res?.decision_status === "REPLACEMENT"
                         ? res?.replacement_shipped?.created_at
                         : res?.decision_status === "REFUND"
@@ -169,7 +170,8 @@ export default function TicketsExportFileSection() {
                         "No",
                         res.isUploading === "true" ? "YES" : "NO",
                         res.status ?? "N/A",
-                        moment(res?.validation_date).format("L") || "N/A",
+                        // moment(res?.validation_date).format("L") || "N/A",
+                        moment(res?.activity?.created_at).format("L"),
                         dateProcessed ? moment(dateProcessed).format("L") : "N/A",
                         res.created_at ? moment(res.created_at).format("LL") : "N/A",
                         'n/a',
