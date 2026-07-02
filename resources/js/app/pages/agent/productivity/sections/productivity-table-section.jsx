@@ -27,6 +27,7 @@ export default function ProductivityTableSection({ account, loading }) {
         setSearchText("");
     };
 
+
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
             setSelectedKeys,
@@ -162,6 +163,7 @@ export default function ProductivityTableSection({ account, loading }) {
                     total:
                         parseInt(res.handled_cases) +
                         parseInt(res.handled_direct_emails),
+                    handled_web_form: res?.handled_web_form
                 }
                 : null
         )
@@ -188,17 +190,13 @@ export default function ProductivityTableSection({ account, loading }) {
                 return (
 
                     <>
-                        {account.id == record.id ? (
-                            <Link
-                                href={`/agent/productivity/${record.id}?page=1&search=web_form`}
-                                className="underline"
-                                key={i}
-                            >
-                                {record.web_form}
-                            </Link>
-                        ) : (
-                            record.web_form
-                        )}
+                        <Link
+                            href={`/agent/productivity/${record.id}?page=1&search=web_form`}
+                            className="underline"
+                            key={i}
+                        >
+                            {record.web_form}
+                        </Link>
                     </>
                 );
             },
@@ -211,17 +209,13 @@ export default function ProductivityTableSection({ account, loading }) {
             render: (_, record, i) => {
                 return (
                     <>
-                        {account.id == record.id ? (
-                            <Link
-                                href={`/agent/productivity/${record.id}?page=1&search=over_due`}
-                                className="underline"
-                                key={i}
-                            >
-                                {record.overdue_cases}
-                            </Link>
-                        ) : (
-                            record.overdue_cases
-                        )}
+                        <Link
+                            href={`/agent/productivity/${record.id}?page=1&search=over_due`}
+                            className="underline"
+                            key={i}
+                        >
+                            {record.overdue_cases}
+                        </Link>
                     </>
                 );
             },
@@ -231,17 +225,13 @@ export default function ProductivityTableSection({ account, loading }) {
             dataIndex: "cases_due_today",
             key: "cases_due_today",
             render: (_, record, i) => {
-                return account.id == record.id ? (
-                    <Link
-                        href={`/agent/productivity/${record.id}?page=1&search=due_today`}
-                        className="underline"
-                        key={i}
-                    >
-                        {record.cases_due_today}
-                    </Link>
-                ) : (
-                    record.cases_due_today
-                );
+                return <Link
+                    href={`/agent/productivity/${record.id}?page=1&search=due_today`}
+                    className="underline"
+                    key={i}
+                >
+                    {record.cases_due_today}
+                </Link>;
             },
         },
         {
@@ -267,17 +257,13 @@ export default function ProductivityTableSection({ account, loading }) {
             key: "overdue_direct_emails",
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
-                return account.id == record.id ? (
-                    <Link
-                        href={`/agent/productivity/direct_emails/${record.id}?page=1&search=over_due`}
-                        className="underline"
-                        key={i}
-                    >
-                        {record.overdue_direct_emails}
-                    </Link>
-                ) : (
-                    record.overdue_direct_emails
-                );
+                return <Link
+                    href={`/agent/productivity/direct_emails/${record.id}?page=1&search=over_due`}
+                    className="underline"
+                    key={i}
+                >
+                    {record.overdue_direct_emails}
+                </Link>;
             },
         },
 
@@ -287,17 +273,13 @@ export default function ProductivityTableSection({ account, loading }) {
             key: "direct_emails_due_today",
             // ...getColumnSearchProps('app_name'),
             render: (_, record, i) => {
-                return account.id == record.id ? (
-                    <Link
-                        href={`/agent/productivity/direct_emails/${record.id}?page=1&search=due_today`}
-                        className="underline"
-                        key={i}
-                    >
-                        {record.direct_emails_due_today}
-                    </Link>
-                ) : (
-                    record.direct_emails_due_today
-                );
+                return <Link
+                    href={`/agent/productivity/direct_emails/${record.id}?page=1&search=due_today`}
+                    className="underline"
+                    key={i}
+                >
+                    {record.direct_emails_due_today}
+                </Link>
             },
         },
         {
@@ -318,7 +300,12 @@ export default function ProductivityTableSection({ account, loading }) {
             key: "handled_direct_emails",
             // ...getColumnSearchProps('app_name'),
         },
-
+        {
+            title: "Handled Web Form",
+            dataIndex: "handled_web_form",
+            key: "handled_web_form",
+            // ...getColumnSearchProps('app_name'),
+        },
         {
             title: "Total",
             dataIndex: "total",
