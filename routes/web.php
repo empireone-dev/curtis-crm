@@ -59,13 +59,13 @@ Route::get('/ticket-form', function () {
 
 
 
-Route::get('/customer/web_form', function () {
-    return Inertia::render('web_form/page');
-})->name('web_form');
+// Route::get('/customer/web_form', function () {
+//     return Inertia::render('web_form/page');
+// })->name('web_form');
 
-Route::get('/product_registration', function () {
-    return Inertia::render('product_registration/page');
-});
+// Route::get('/product_registration', function () {
+//     return Inertia::render('product_registration/page');
+// });
 
 Route::get('/print/ticket_details/{id}', function () {
     return Inertia::render('ticket_details/page');
