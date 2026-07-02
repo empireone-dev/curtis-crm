@@ -446,15 +446,16 @@ class TicketController extends Controller
             $q->whereIn('item_number', explode(',', $model));
         });
 
-        // if ($startDate && $endDate) {
-        //     $column = match ($dateStatus) {
-        //         'Validation Date' => 'validation_date',
-        //         'Last Updated'    => 'latest_updated',
-        //         default           => 'created_at',
-        //     };
+        if ($startDate && $endDate && $dateStatus) {
+            match ($dateStatus) {
+                'Validation Date' => $query->whereHas('activity', function ($q) use ($startDate, $endDate) {
+                    $q->whereBetween('created_at', [$startDate, $endDate]);
+                }),
+                'Last Updated'    => $query->whereBetween('latest_updated', [$startDate, $endDate]),
+                default           => $query->whereBetween('created_at', [$startDate, $endDate]),
+            };
+        }
 
-        //     $query->whereBetween($column, [$startDate, $endDate]);
-        // }
 
         // 4. Sorting
         // if (in_array($checked, ['asc', 'desc'])) {
@@ -917,7 +918,8 @@ class TicketController extends Controller
             'validate',
             'repair_information',
             'replacement_shipped',
-            'refund_shipped'
+            'refund_shipped',
+            'activity'
         ]);
 
         // 3. Apply Filters using fluent when() clauses
@@ -965,14 +967,15 @@ class TicketController extends Controller
         });
 
 
-        // if ($startDate && $endDate) {
-        //     $column = match ($dateStatus) {
-        //         'Validation Date' => 'validation_date',
-        //         'Last Updated'    => 'latest_updated',
-        //         default           => 'created_at',
-        //     };
-        //     $query->whereBetween($column, [$startDate, $endDate]);
-        // }
+        if ($startDate && $endDate && $dateStatus) {
+            match ($dateStatus) {
+                'Validation Date' => $query->whereHas('activity', function ($q) use ($startDate, $endDate) {
+                    $q->whereBetween('created_at', [$startDate, $endDate]);
+                }),
+                'Last Updated'    => $query->whereBetween('latest_updated', [$startDate, $endDate]),
+                default           => $query->whereBetween('created_at', [$startDate, $endDate]),
+            };
+        }
 
         // 4. Sorting
         // if (in_array($checked, ['asc', 'desc'])) {

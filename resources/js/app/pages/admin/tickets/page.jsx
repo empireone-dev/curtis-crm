@@ -39,7 +39,7 @@ export default function TicketsPage() {
                         </button>
                         {/* <ExportProcessTicket /> */}
                     </div>
-                    <TicketsExportFileSection />
+                    <TicketsExportFileSection  isLoading={loading}/>
                 </div>
                 <div className="m-3 flex items-center justify-between gap-3 ">
                     <TicketsSearchSection />

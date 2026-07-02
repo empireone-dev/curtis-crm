@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { Button } from "antd";
 import { FileDoneOutlined } from "@ant-design/icons";
@@ -48,8 +48,12 @@ const calculateAverageInterval = (responses) => {
     return `${days} days, ${hours} hours, and ${minutes} minutes`;
 };
 
-export default function TicketsExportFileSection() {
+export default function TicketsExportFileSection({ isLoading }) {
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(isLoading)
+    }, [isLoading])
 
     // Safely check for window to avoid Next.js SSR hydration errors
     const queryParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
@@ -88,7 +92,7 @@ export default function TicketsExportFileSection() {
                     //     , combinedLogs[0]?.created_at || null);
 
                     // Pre-calculate conditional date
-                    console.log('resresres',res?.activity)
+                    console.log('resresres', res?.activity)
                     const dateProcessed = res?.decision_status === "REPLACEMENT"
                         ? res?.replacement_shipped?.created_at
                         : res?.decision_status === "REFUND"
