@@ -139,7 +139,7 @@ export default function LogCaseSection({ datas, account }) {
                         id="countries"
                         class="bg-gray-50 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     >
-                        {datas.call_type == "CF-Warranty Claim" || datas.call_type == "Safety Issue" && (
+                        {(datas.call_type == "CF-Warranty Claim" || datas.call_type == "Safety Issue") && (
                             <>
                                 <option value="">Select Status</option>
                                 <option value="Done for Destroy">
