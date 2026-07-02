@@ -51,9 +51,7 @@ const calculateAverageInterval = (responses) => {
 export default function TicketsExportFileSection({ isLoading }) {
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        setLoading(isLoading)
-    }, [isLoading])
+
 
     // Safely check for window to avoid Next.js SSR hydration errors
     const queryParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
@@ -231,6 +229,7 @@ export default function TicketsExportFileSection({ isLoading }) {
 
     return (
         <Button
+            disabled={isLoading}
             loading={loading}
             onClick={export_ticket}
             type="primary"

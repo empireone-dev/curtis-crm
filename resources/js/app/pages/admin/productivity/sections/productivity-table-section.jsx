@@ -154,6 +154,7 @@ export default function ProductivityTableSection({ loading }) {
             upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
             web_form: res.web_form,
             total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0),
+            handled_web_form:res?.handled_web_form
         }))
         .sort((a, b) => b.position.localeCompare(a.position));
 
@@ -296,6 +297,12 @@ export default function ProductivityTableSection({ loading }) {
             // ...getColumnSearchProps('app_name'),
         },
 
+         {
+            title: "Handled Web Form",
+            dataIndex: "handled_web_form",
+            key: "handled_web_form",
+            // ...getColumnSearchProps('app_name'),
+        },
         {
             title: "Total",
             dataIndex: "total",
