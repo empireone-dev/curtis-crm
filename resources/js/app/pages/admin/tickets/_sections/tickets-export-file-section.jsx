@@ -15,7 +15,7 @@ const formatPhone = (phone) => {
 
 // 2. Extracted headers to keep the component body clean
 const STANDARD_HEADERS = [
-    "Date Created", "Date Last Updated", "Ticket #", "First Name", "Last Name",
+    "Date Created", "Date Last Updated",  "Created From", "Ticket #", "First Name", "Last Name",
     "Phone", "Email", "Serial #", "Model #", "Unit", "Item Class", "Brand",
     "Resolution", "Purchase Date", "Zipcode", "Country", "State", "City",
     "Address", "Issue", "Ticket Status", "Reason", "Discount",
@@ -137,6 +137,7 @@ export default function TicketsExportFileSection({ isLoading }) {
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
                         moment(res.latest_updated).format("L") || "N/A",
+                        res.created_from ?? "N/A",
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
                         res.lname ?? "N/A",
