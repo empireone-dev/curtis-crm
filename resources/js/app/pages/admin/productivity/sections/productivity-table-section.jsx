@@ -153,7 +153,7 @@ export default function ProductivityTableSection({ loading }) {
             upcoming_dues: res.upcoming_dues,
             upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
             web_form: res.web_form,
-            total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0),
+            total: (parseInt(res.handled_cases) || 0) + (parseInt(res.handled_direct_emails) || 0) + (parseInt(res.handled_web_form) || 0),
             handled_web_form:res?.handled_web_form
         }))
         .sort((a, b) => b.position.localeCompare(a.position));
