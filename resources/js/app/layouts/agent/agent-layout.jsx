@@ -67,7 +67,7 @@ export default function AgentLayout({ children, account }) {
             icon: <TicketIcon className="h-6" />,
             label: "Tickets",
             onClick: () => {
-                router.visit(`/agent/tickets?user_id=${account.id}`);
+                router.visit(`/agent/tickets?user_id=${account.id}&page=1`);
             },
         },
         account.agent_type !== "CSR" && {

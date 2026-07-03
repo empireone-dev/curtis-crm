@@ -1,0 +1,1 @@
+const e=[{name:"Safety Issue",value:"Safety Issue"},{name:"CF-Warranty Claim",value:"CF-Warranty Claim"},{name:"TS-Tech Support",value:"TS-Tech Support"},{name:"Parts",value:"Parts"},{name:"General Inquiry",value:"General Inquiry"},{name:"Refer to Website/Webform",value:"Refer to Website/Webform"},{name:"Others",value:"Others"}];export{e as c};
