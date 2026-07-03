@@ -249,6 +249,7 @@ export default function SearchTicketSection() {
                                     Resolution
                                 </th>
                                 <th className="text-left p-3 px-5">Issue</th>
+                                <th className="text-left p-3 px-5">Status</th>
                                 <th className="text-left p-3 px-5">Action</th>
                             </tr>
                             {data.length == 0 &&
@@ -305,6 +306,9 @@ export default function SearchTicketSection() {
                                         </td>
                                         <td className="p-3 px-5">
                                             {res.issue}
+                                        </td>
+                                         <td className="p-3 px-5">
+                                            {res.status}
                                         </td>
                                         <td className="p-3 px-5">
                                             <button
