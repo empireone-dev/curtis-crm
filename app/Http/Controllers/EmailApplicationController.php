@@ -35,18 +35,18 @@ class EmailApplicationController extends Controller
             return response()->json(['error' => 'No payload provided'], 400);
         }
 
-        $processedCount = 0;
+        // $processedCount = 0;
 
-        $userWithSmallestCount = User::whereIn('agent_type', ['Warranty', 'Safety Issue'])
-            ->whereNull('remember_token')
-            ->withCount(['directEmails' => function ($query) {
-                $query->where('isHide', 'false')
-                    ->whereDate('created_at', Carbon::today());
-            }])
-            ->orderBy('direct_emails_count', 'asc')
-            ->first();
+        // $userWithSmallestCount = User::whereIn('agent_type', ['Warranty', 'Safety Issue'])
+        //     ->whereNull('remember_token')
+        //     ->withCount(['directEmails' => function ($query) {
+        //         $query->where('isHide', 'false')
+        //             ->whereDate('created_at', Carbon::today());
+        //     }])
+        //     ->orderBy('direct_emails_count', 'asc')
+        //     ->first();
 
-        $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
+        // $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
 
         foreach ($emails as $emailData) {
             $emailDate = isset($emailData['date']) ? Carbon::parse($emailData['date']) : now();
@@ -68,36 +68,36 @@ class EmailApplicationController extends Controller
             );
 
             // The function is called here and saved to $ticketId
-            $ticketId = $this->find14CharSequences($emailData['subject']);
+            // $ticketId = $this->find14CharSequences($emailData['subject']);
 
-            if ($ticketId !== 'direct_email') {
-                $ticket = Ticket::where('ticket_id', $ticketId)
-                    ->whereNull('is_reply')
-                    ->first();
-                // Only update if ticket exists and email is not from the support exclusion list
-                if ($ticket) {
-                    $ticket->update([
-                        'cases_status' => 'handled',
-                        'email_date'   => $emailDate,
-                        'is_reply'     => 'true',
-                    ]);
-                }
-            } else {
-                // Logic for 'direct_email'
-                $existing = DirectEmail::where('threadId', $emailData['threadId'] ?? null)->first();
+            // if ($ticketId !== 'direct_email') {
+            //     $ticket = Ticket::where('ticket_id', $ticketId)
+            //         ->whereNull('is_reply')
+            //         ->first();
+            //     // Only update if ticket exists and email is not from the support exclusion list
+            //     if ($ticket) {
+            //         $ticket->update([
+            //             'cases_status' => 'handled',
+            //             'email_date'   => $emailDate,
+            //             'is_reply'     => 'true',
+            //         ]);
+            //     }
+            // } else {
+            //     // Logic for 'direct_email'
+            //     $existing = DirectEmail::where('threadId', $emailData['threadId'] ?? null)->first();
 
-                if ($existing) {
-                    $existing->update(['isHide' => 'false']);
-                } else {
-                    DirectEmail::create([
-                        'email'      => $emailData['from'] ?? null,
-                        'threadId'   => $emailData['threadId'] ?? null,
-                        'user_id'    => $fallbackUserId,
-                        'count'      => $emailData['count'] ?? 0,
-                        'email_date' => $emailDate,
-                    ]);
-                }
-            }
+            //     if ($existing) {
+            //         $existing->update(['isHide' => 'false']);
+            //     } else {
+            //         DirectEmail::create([
+            //             'email'      => $emailData['from'] ?? null,
+            //             'threadId'   => $emailData['threadId'] ?? null,
+            //             'user_id'    => $fallbackUserId,
+            //             'count'      => $emailData['count'] ?? 0,
+            //             'email_date' => $emailDate,
+            //         ]);
+            //     }
+            // }
 
             // 2. Process Attachments and Link Them Relationaly
             if (!empty($emailData['attachments']) && is_array($emailData['attachments'])) {
