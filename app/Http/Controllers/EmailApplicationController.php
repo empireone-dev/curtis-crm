@@ -17,14 +17,14 @@ class EmailApplicationController extends Controller
 
     public function find14CharSequences($sentence)
     {
-        // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
-        $regex = '/\b(CF|PS|SI|TS)\w{12}\b/';
+        $regex = '/\b(CF|PS|SI|TS)\w{12}\b/i';
 
-        // Perform the match and return the results
-        preg_match_all($regex, $sentence, $matches);
+        if (preg_match($regex, $sentence, $match)) {
+            return strtoupper($match[0]);
+        }
 
-        // Return the matched sequences (if any)
-        return $matches[0] ?? [];
+        // If there is no sequence, it returns null
+        return null;
     }
     public function store(Request $request)
     {
@@ -74,10 +74,8 @@ class EmailApplicationController extends Controller
             $ticketId = $this->find14CharSequences($ticketIdInput) ?? 'direct_email';
 
             if ($ticketId !== 'direct_email') {
-                // Removed the redundant second call. Just use the variable directly!
-                $tickets[] = $ticketId;
 
-                $ticket = Ticket::where('ticket_id', $ticketId)
+                $ticket = Ticket::where('ticket_id', $emailData['subject'])
                     ->whereNull('is_reply')
                     ->first();
 
