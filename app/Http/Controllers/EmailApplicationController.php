@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DirectEmail;
 use App\Models\EmailApplication;
+use App\Models\EmailAttachment;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -103,8 +104,8 @@ class EmailApplicationController extends Controller
                 foreach ($emailData['attachments'] as $attachment) {
                     try {
                         $decodedFile = base64_decode($attachment['base64']);
-
-                        if ($decodedFile) {
+                        $email_attachment = EmailAttachment::where('name', $attachment['name'])->first();
+                        if ($decodedFile && !$email_attachment) {
                             // 1. Define the exact path and filename for S3
                             $safeFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $attachment['name']);
                             $path = date("Y") . '/' . $safeFilename;
