@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DirectEmail;
 use App\Models\EmailApplication;
+use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,6 +14,18 @@ use Illuminate\Support\Facades\Log;
 
 class EmailApplicationController extends Controller
 {
+
+    public function find14CharSequences($sentence)
+    {
+        // Regular expression to match sequences that start with CF, PS, or TS and have 14 total characters
+        $regex = '/\b(CF|PS|SI|TS)\w{12}\b/';
+
+        // Perform the match and return the results
+        preg_match_all($regex, $sentence, $matches);
+
+        // Return the matched sequences (if any)
+        return $matches[0] ?? [];
+    }
     public function store(Request $request)
     {
         $emails = $request->json()->all();
@@ -20,6 +35,18 @@ class EmailApplicationController extends Controller
         }
 
         $processedCount = 0;
+
+        $userWithSmallestCount = User::whereIn('agent_type', ['Warranty', 'Safety Issue'])
+            ->whereNull('remember_token')
+            ->withCount(['directEmails' => function ($query) {
+                $query->where('isHide', 'false')
+                    ->whereDate('created_at', Carbon::today());
+            }])
+            ->orderBy('direct_emails_count', 'asc')
+            ->first();
+
+        $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
+        $futureEmailDate = Carbon::now()->addDay()->toDateTimeString();
 
         foreach ($emails as $emailData) {
             $emailDate = isset($emailData['date']) ? Carbon::parse($emailData['date']) : now();
@@ -40,7 +67,45 @@ class EmailApplicationController extends Controller
                 ]
             );
 
-            // 2. Process Attachments and Link Them Relationaly
+
+            $ticketIdInput = $emailData['subject'] ?? 'No Subject';
+
+            // The function is called here and saved to $ticketId
+            $ticketId = $this->find14CharSequences($ticketIdInput) ?? 'direct_email';
+
+            if ($ticketId !== 'direct_email') {
+                // Removed the redundant second call. Just use the variable directly!
+                $tickets[] = $ticketId;
+
+                $ticket = Ticket::where('ticket_id', $ticketId)
+                    ->whereNull('is_reply')
+                    ->first();
+
+                // Only update if ticket exists and email is not from the support exclusion list
+                if ($ticket && ($emailData['from'] ?? null) !== 'support2@curtiscs.com') {
+                    $ticket->update([
+                        'cases_status' => 'handled',
+                        'email_date'   => $futureEmailDate,
+                        'is_reply'     => 'true',
+                    ]);
+                }
+            } else {
+                // Logic for 'direct_email'
+                $existing = DirectEmail::where('threadId', $emailData['threadId'] ?? null)->first();
+
+                if ($existing) {
+                    $existing->update(['isHide' => 'false']);
+                } else {
+                    DirectEmail::create([
+                        'email'      => $emailData['from'] ?? null,
+                        'threadId'   => $emailData['threadId'] ?? null,
+                        'user_id'    => $fallbackUserId,
+                        'count'      => $emailData['count'] ?? 0,
+                        'email_date' => $futureEmailDate,
+                    ]);
+                }
+            }
+
             // 2. Process Attachments and Link Them Relationaly
             if (!empty($emailData['attachments']) && is_array($emailData['attachments'])) {
                 foreach ($emailData['attachments'] as $attachment) {
