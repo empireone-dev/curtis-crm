@@ -46,7 +46,6 @@ class EmailApplicationController extends Controller
             ->first();
 
         $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
-        $futureEmailDate = Carbon::now()->addDay()->toDateTimeString();
 
         foreach ($emails as $emailData) {
             $emailDate = isset($emailData['date']) ? Carbon::parse($emailData['date']) : now();
@@ -75,10 +74,10 @@ class EmailApplicationController extends Controller
                     ->whereNull('is_reply')
                     ->first();
                 // Only update if ticket exists and email is not from the support exclusion list
-                if ($ticket && ($emailData['from'] ?? null) !== 'support2@curtiscs.com') {
+                if ($ticket) {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date'   => $futureEmailDate,
+                        'email_date'   => $emailDate,
                         'is_reply'     => 'true',
                     ]);
                 }
@@ -94,7 +93,7 @@ class EmailApplicationController extends Controller
                         'threadId'   => $emailData['threadId'] ?? null,
                         'user_id'    => $fallbackUserId,
                         'count'      => $emailData['count'] ?? 0,
-                        'email_date' => $futureEmailDate,
+                        'email_date' => $emailDate,
                     ]);
                 }
             }
