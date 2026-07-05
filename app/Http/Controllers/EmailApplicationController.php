@@ -35,7 +35,7 @@ class EmailApplicationController extends Controller
             return response()->json(['error' => 'No payload provided'], 400);
         }
 
-        // $processedCount = 0;
+        $processedCount = 0;
 
         // $userWithSmallestCount = User::whereIn('agent_type', ['Warranty', 'Safety Issue'])
         //     ->whereNull('remember_token')
