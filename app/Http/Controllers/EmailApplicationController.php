@@ -67,18 +67,13 @@ class EmailApplicationController extends Controller
                 ]
             );
 
-
-            $ticketIdInput = $emailData['subject'] ?? 'No Subject';
-
             // The function is called here and saved to $ticketId
-            $ticketId = $this->find14CharSequences($ticketIdInput) ?? 'direct_email';
+            $ticketId = $this->find14CharSequences($emailData['subject']) ?? 'direct_email';
 
             if ($ticketId !== 'direct_email') {
-
-                $ticket = Ticket::where('ticket_id', $emailData['subject'])
+                $ticket = Ticket::where('ticket_id', $ticketId)
                     ->whereNull('is_reply')
                     ->first();
-
                 // Only update if ticket exists and email is not from the support exclusion list
                 if ($ticket && ($emailData['from'] ?? null) !== 'support2@curtiscs.com') {
                     $ticket->update([
