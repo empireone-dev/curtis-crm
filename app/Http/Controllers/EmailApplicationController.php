@@ -68,7 +68,7 @@ class EmailApplicationController extends Controller
             );
 
             // The function is called here and saved to $ticketId
-            $ticketId = $this->find14CharSequences($emailData['subject']) ?? 'direct_email';
+            $ticketId = $this->find14CharSequences($emailData['subject']);
 
             if ($ticketId !== 'direct_email') {
                 $ticket = Ticket::where('ticket_id', $ticketId)
