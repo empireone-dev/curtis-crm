@@ -139,6 +139,7 @@ class EmailApplicationController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'data' => $request->all(),
             'message' => "Successfully processed {$processedCount} applicant emails and separated their attachments."
         ], 200);
     }
