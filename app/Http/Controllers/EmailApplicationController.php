@@ -41,24 +41,35 @@ class EmailApplicationController extends Controller
             );
 
             // 2. Process Attachments and Link Them Relationaly
+            // 2. Process Attachments and Link Them Relationaly
             if (!empty($emailData['attachments']) && is_array($emailData['attachments'])) {
                 foreach ($emailData['attachments'] as $attachment) {
                     try {
                         $decodedFile = base64_decode($attachment['base64']);
-                        $safeFilename = time() . '_' . Str::slug($emailData['subject']) . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $attachment['name']);
-                        $path = 'job_applications/attachments/' . $safeFilename;
-                        Storage::disk('s3')->put($path, $decodedFile, [
-                            'ContentType' => $attachment['contentType']
-                        ]);
 
-                        $application->attachments()->updateOrCreate(
-                            ['name' => $attachment['name']],
-                            [
-                                'content_type' => $attachment['contentType'],
-                                'size' => $attachment['size'],
-                                'path' => $path,
-                            ]
-                        );
+                        if ($decodedFile) {
+                            // 1. Define the exact path and filename for S3
+                            $safeFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $attachment['name']);
+                            $path = date("Y") . '/' . $safeFilename;
+
+                            // 2. Upload the raw data to S3
+                            Storage::disk('s3')->put($path, $decodedFile, [
+                                'ContentType' => $attachment['contentType']
+                            ]);
+
+                            // 3. Get the public S3 URL (Optional: or just save $path)
+                            $url = Storage::disk('s3')->url($path);
+
+                            // 4. Save to database
+                            $application->attachments()->updateOrCreate(
+                                ['name' => $attachment['name']],
+                                [
+                                    'content_type' => $attachment['contentType'],
+                                    'size' => $attachment['size'],
+                                    'path' => $url, // Or just use $path if you prefer storing relative paths
+                                ]
+                            );
+                        }
                     } catch (\Exception $e) {
                         Log::error("Failed to save attachment for Application ID {$application->id}: " . $e->getMessage());
                     }
