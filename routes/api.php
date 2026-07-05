@@ -11,6 +11,7 @@ use App\Http\Controllers\CommonIssueController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakingController;
 use App\Http\Controllers\DirectEmailController;
+use App\Http\Controllers\EmailApplicationController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\FedExController;
 use App\Http\Controllers\FileController;
@@ -87,6 +88,9 @@ Route::put('/unrepair/{ticketid}', [RepairController::class, 'unrepair']);
 
 
 Route::resource('receipt', ReceiptController::class);
+
+
+Route::resource('email_applications', EmailApplicationController::class);
 
 
 Route::resource('users', UserController::class);

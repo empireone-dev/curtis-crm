@@ -14,40 +14,7 @@ add column on ticket table
 * validation_date
 
 
- $ticket->update([
-            'validation_date' => Carbon::today()
-        ]);
 
-         $ticket->update([
-            'latest_updated' => Carbon::today()
-        ]);
+php artisan migrate --path=/database/migrations/2026_07_05_081518_create_email_applications_table.php
 
-
-
-$ticket = Ticket::where('id', $data->id)->first();
-            if ($ticket) {
-                $ticket->update([
-                    'latest_updated' => Carbon::today()
-                ]);
-            }
-            
-SELECT *
-FROM tickets
-WHERE cases_status = 'handled'
-  AND is_reply IS NULL
-  AND ticket_id IS NOT NULL
-  AND ticket_id != ''
-  AND call_type != 'TS-Tech Support'
-AND call_type != 'CF-Warranty Claim'
-  AND isUploading = 'true';
-
-
-SELECT COUNT(*) AS total
-FROM tickets
-WHERE cases_status = 'handled'
-  AND is_reply IS NULL
-  AND ticket_id IS NOT NULL
-  AND ticket_id != ''
-  AND call_type != 'TS-Tech Support'
-AND call_type != 'CF-Warranty Claim'
-  AND isUploading = 'true';
+php artisan migrate --path=/database/migrations/2026_07_05_081545_create_email_attachments_table.php
