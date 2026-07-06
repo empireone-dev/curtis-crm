@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
     public function get_user_by_id($id)
     {
         $users = User::where('id', '=', $id)->first();
@@ -153,6 +154,8 @@ class UserController extends Controller
                 $user->handled_web_form = $user->handledCasesLogs
                     ->where('ticket.created_from', 'WEB FORM')
                     ->count();
+                $user->handled_web_form_notes = $user->handledCasesLogs
+                    ->where('ticket.created_from', 'WEB FORM');
                 // Handled Direct Emails
                 $user->handled_direct_emails       = $user->handledDirectEmailsLogs->count();
                 $user->handled_direct_emails_notes = $user->handledDirectEmailsLogs; // Assigning the collection

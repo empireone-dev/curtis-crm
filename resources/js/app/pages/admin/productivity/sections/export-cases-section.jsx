@@ -17,32 +17,35 @@ const autoFitColumns = (data) => {
     return cols;
 };
 
+
 const ExportExcel = () => {
     const { users } = useSelector((state) => state.users);
 
     const data = users
         .map((res) =>
             res.agent_type === "Warranty" ||
-            res.agent_type === "Parts" ||
-            res.agent_type === "Admin"
+                res.agent_type === "Parts" ||
+                res.agent_type === "Admin"
                 ? {
-                      id: res.id,
-                      agent: res.name,
-                      position: res.agent_type,
-                      overdue_cases: res.overdue_cases,
-                      cases_due_today: res.cases_due_today,
-                      overdue_direct_emails: res.overdue_direct_emails,
-                      direct_emails_due_today: res.direct_emails_due_today,
-                      handled_cases: res.handled_cases,
-                      handled_direct_emails: res.handled_direct_emails,
-                      upcoming_dues: res.upcoming_dues,
-                      upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
-                      handled_cases_notes: res.handled_cases_notes,
-                      handled_direct_emails_notes: res.handled_direct_emails_notes,
-                      total:
-                          parseInt(res.handled_cases) +
-                          parseInt(res.handled_direct_emails),
-                  }
+                    id: res.id,
+                    agent: res.name,
+                    position: res.agent_type,
+                    overdue_cases: res.overdue_cases,
+                    cases_due_today: res.cases_due_today,
+                    overdue_direct_emails: res.overdue_direct_emails,
+                    direct_emails_due_today: res.direct_emails_due_today,
+                    handled_cases: res.handled_cases,
+                    handled_direct_emails: res.handled_direct_emails,
+                    upcoming_dues: res.upcoming_dues,
+                    upcoming_dues_direct_emails: res.upcoming_dues_direct_emails,
+                    handled_cases_notes: res.handled_cases_notes,
+                    handled_direct_emails_notes: res.handled_direct_emails_notes,
+                    total:
+                        parseInt(res.handled_cases) +
+                        parseInt(res.handled_direct_emails),
+                    handled_web_form: res.handled_web_form,
+                    handled_web_form_notes: res.handled_web_form_notes
+                }
                 : null
         )
         .filter((item) => item !== null);
@@ -60,10 +63,12 @@ const ExportExcel = () => {
             "Upcoming Dues": agent.upcoming_dues,
             "Upcoming Dues Direct Emails": agent.upcoming_dues_direct_emails,
             Total: agent.total,
+            "Web Form": agent.handled_web_form,
         }));
 
         const caseNotes = [];
         const directEmailNotes = [];
+        const webFormNotes = [];
 
         data.forEach((agent) => {
             if (Array.isArray(agent.handled_cases_notes)) {
@@ -99,6 +104,26 @@ const ExportExcel = () => {
                     });
                 });
             }
+
+                console.log('usersusers', Object.values(agent.handled_web_form_notes))
+            if (Array.isArray(Object.values(agent.handled_web_form_notes))) {
+                Object.values(agent.handled_web_form_notes).forEach((note) => {
+                    webFormNotes.push({
+                        Agent: agent.agent,
+                        Ticket_ID: "N/A",
+                        Email: note?.direct_email?.email || "",
+                        Case_Status: note.case_status || "",
+                        Type: note.case_type || "",
+                        Remarks: note.remarks || "",
+                        Escalated: note.isEscalate || "",
+                        Logged_From: note.log_from || "",
+                        Created_At: moment(note.created_at).format("YYYY-MM-DD HH:mm"),
+                        Updated_At: moment(note.updated_at).format("YYYY-MM-DD HH:mm"),
+                    });
+                });
+            }
+
+
         });
 
         // Create workbook and sheets
@@ -118,6 +143,11 @@ const ExportExcel = () => {
         const emailNotesSheet = XLSX.utils.json_to_sheet(directEmailNotes);
         emailNotesSheet["!cols"] = autoFitColumns(directEmailNotes);
         XLSX.utils.book_append_sheet(workbook, emailNotesSheet, "Handled Email Notes");
+
+        // Handled Email Notes Sheet
+        const webFormNotesSheet = XLSX.utils.json_to_sheet(webFormNotes);
+        webFormNotesSheet["!cols"] = autoFitColumns(webFormNotes);
+        XLSX.utils.book_append_sheet(workbook, webFormNotesSheet, "Handled Web Form Notes");
 
         // Export file
         XLSX.writeFile(workbook, "agents_with_notes.xlsx");
