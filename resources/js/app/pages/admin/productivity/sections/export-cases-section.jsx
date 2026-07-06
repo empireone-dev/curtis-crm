@@ -105,13 +105,13 @@ const ExportExcel = () => {
                 });
             }
 
-                console.log('usersusers', Object.values(agent.handled_web_form_notes))
+            console.log('usersusers', Object.values(agent.handled_web_form_notes))
             if (Array.isArray(Object.values(agent.handled_web_form_notes))) {
                 Object.values(agent.handled_web_form_notes).forEach((note) => {
                     webFormNotes.push({
                         Agent: agent.agent,
-                        Ticket_ID: "N/A",
-                        Email: note?.direct_email?.email || "",
+                        Ticket_ID: note?.ticket?.ticket_id,
+                        Email:note?.ticket?.email,
                         Case_Status: note.case_status || "",
                         Type: note.case_type || "",
                         Remarks: note.remarks || "",
