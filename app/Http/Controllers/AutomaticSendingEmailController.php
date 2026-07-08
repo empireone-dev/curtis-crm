@@ -16,6 +16,7 @@ class AutomaticSendingEmailController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'count'=>count( $tickets),
             'data' => $tickets
         ], 200);
     }
