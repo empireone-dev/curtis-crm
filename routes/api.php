@@ -5,6 +5,7 @@ use App\Http\Controllers\AddressLookupController;
 use App\Http\Controllers\AgentNoteController;
 use App\Http\Controllers\AppScriptController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\AutomaticSendingEmailController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CasesLogController;
 use App\Http\Controllers\CommonIssueController;
@@ -54,6 +55,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+Route::get('/send_lacking_information_notification', [AutomaticSendingEmailController::class, 'send_lacking_information_notification']);
 
 Route::post('/usps/zipcode-lookup', [UspsController::class, 'zipCodeLookup']);
 Route::post('/address_lookup', [AddressLookupController::class, 'address_lookup']);
