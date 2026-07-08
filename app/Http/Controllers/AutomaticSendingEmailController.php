@@ -10,16 +10,16 @@ class AutomaticSendingEmailController extends Controller
 {
     public function send_lacking_information_notification()
     {
-        $tickets = Ticket::whereDate('created_at', Carbon::now()->subDays(3)
+        // Corrected query chain
+        $tickets = Ticket::whereDate('created_at', Carbon::now()->subDays(3)->toDateString())
             ->where('call_type', 'CF-Warranty Claim')
-            ->toDateString())
             ->doesntHave('files')
             ->get();
 
         return response()->json([
             'status' => 'success',
-            'count' => count($tickets),
-            'data' => $tickets
+            'count'  => $tickets->count(), // Using Eloquent collection's count() method is cleaner
+            'data'   => $tickets
         ], 200);
     }
 }
