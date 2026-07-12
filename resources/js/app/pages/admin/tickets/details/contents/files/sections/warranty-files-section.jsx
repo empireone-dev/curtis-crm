@@ -11,6 +11,7 @@ import { router } from "@inertiajs/react";
 import { useSelector } from "react-redux";
 import { upload_photo_status } from "@/app/services/files-service";
 import CustomerTicketDistroy from "./customer-tickets-destroy";
+import SendManualLackingInformation from "./send-manual-lacking-information";
 
 export default function WarrantyFilesSection() {
     const { ticket } = useSelector((state) => state.tickets);
@@ -137,7 +138,7 @@ export default function WarrantyFilesSection() {
             <CustomerTicketsPartsModel />
             <div className="h-px my-8 border border-blue-500 w-full" />
             {/* <CustomerTicketsClearModel /> */}
-
+            <SendManualLackingInformation />
             <button
                 type="button"
                 disabled={loading}

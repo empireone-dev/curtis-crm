@@ -57,7 +57,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('/send_lacking_information_notification', [AutomaticSendingEmailController::class, 'send_lacking_information_notification']);
+Route::post('/manual_send_lacking_information', [AutomaticSendingEmailController::class, 'manual_send_lacking_information']);
 
 Route::post('/usps/zipcode-lookup', [UspsController::class, 'zipCodeLookup']);
 Route::post('/address_lookup', [AddressLookupController::class, 'address_lookup']);
