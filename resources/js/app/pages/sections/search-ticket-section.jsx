@@ -229,8 +229,8 @@ export default function SearchTicketSection() {
                         </button>
                     </div>
                 </form>
-                <div className="py-4 flex justify-center">
-                    <table className="w-full text-md mb-4">
+                <div className="py-4 pflex justify-center overflow-auto w-full">
+                    <table className="w-full x-6  text-md mb-4 overflow-auto">
                         <tbody>
                             <tr className="border-b">
                                 <th className="text-left p-3 px-5">
