@@ -71,6 +71,11 @@ class Ticket extends Model
         return $this->hasMany(RepairFiles::class, 'repair_information_id', 'ticket_id');
     }
 
+    public function emails(): HasMany
+    {
+        return $this->hasMany(EmailApplication::class, 'subject', 'ticket_id');
+    }
+
     public function files(): HasMany
     {
         return $this->hasMany(File::class, 'ticket_id', 'id');

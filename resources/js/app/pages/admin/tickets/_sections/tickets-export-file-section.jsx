@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { Button } from "antd";
 import { FileDoneOutlined } from "@ant-design/icons";
 import { export_ticket_files } from "@/app/services/tickets-service";
 import moment from "moment";
 
-// 1. Extracted helper to avoid recreation on every render
+// Helper to clean and format phone strings efficiently
 const formatPhone = (phone) => {
     if (!phone) return "N/A";
     const cleaned = phone.replace(/[^\d]/g, "");
     if (cleaned.length !== 10) return "N/A";
-    return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
 };
 
-// 2. Extracted headers to keep the component body clean
 const STANDARD_HEADERS = [
-    "Date Created", "Date Last Updated",  "Created From", "Ticket #", "First Name", "Last Name",
+    "Date Created", "Date Last Updated", "Created From", "Ticket #", "First Name", "Last Name",
     "Phone", "Email", "Serial #", "Model #", "Unit", "Item Class", "Brand",
     "Resolution", "Purchase Date", "Zipcode", "Country", "State", "City",
     "Address", "Issue", "Ticket Status", "Reason", "Discount",
@@ -31,112 +30,148 @@ const STANDARD_HEADERS = [
 
 const RESOURCE_HEADERS = ["Validated Date", "Ticket Number", "Agent Name"];
 
-
+// Optimized numeric timestamp calculator
 const calculateAverageInterval = (responses) => {
     if (!responses || responses.length < 2) return "Not enough data to calculate an interval.";
 
-    // 1. Extract and convert dates to milliseconds
     const timestamps = responses
         .map(res => new Date(res.created_at).getTime())
         .sort((a, b) => a - b);
+
     const totalDifferenceMs = timestamps[timestamps.length - 1] - timestamps[0];
     const averageMs = totalDifferenceMs / (timestamps.length - 1);
-    const days = Math.floor(averageMs / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((averageMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((averageMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    const days = Math.floor(averageMs / 86400000);
+    const hours = Math.floor((averageMs % 86400000) / 3600000);
+    const minutes = Math.floor((averageMs % 3600000) / 60000);
 
     return `${days} days, ${hours} hours, and ${minutes} minutes`;
 };
 
+// Optimized conversation thread response times analyzer
+function calculateAverageResponseTimes(threadsArray) {
+    if (!threadsArray || !threadsArray.length) {
+        return { supportAverageResponseTime: "0 hours", customerAverageResponseTime: "0 hours" };
+    }
+
+    const sortedThreads = [...threadsArray].sort((a, b) => moment(a.date).diff(moment(b.date)));
+    const supportResponseTimes = [];
+    const customerResponseTimes = [];
+
+    for (let i = 1; i < sortedThreads.length; i++) {
+        const currentMsg = sortedThreads[i];
+        const previousMsg = sortedThreads[i - 1];
+
+        const diffInHours = moment(currentMsg.date).diff(moment(previousMsg.date), 'hours', true);
+
+        const currentIsSupport = currentMsg.from?.includes('support2@curtiscs.com') ?? false;
+        const previousIsSupport = previousMsg.from?.includes('support2@curtiscs.com') ?? false;
+
+        if (currentIsSupport && !previousIsSupport) {
+            supportResponseTimes.push(diffInHours);
+        } else if (!currentIsSupport && previousIsSupport) {
+            customerResponseTimes.push(diffInHours);
+        }
+    }
+
+    const formatDuration = (arr) => {
+        if (!arr.length) return "0 hours";
+        const avgHours = arr.reduce((sum, val) => sum + val, 0) / arr.length;
+        const duration = moment.duration(avgHours, 'hours');
+        const days = Math.floor(duration.asDays());
+        const hours = Math.round(duration.hours());
+
+        if (days > 0) return `${days} ${days === 1 ? 'day' : 'days'} ${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+        return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    };
+
+    return {
+        supportAverageResponseTime: formatDuration(supportResponseTimes),
+        customerAverageResponseTime: formatDuration(customerResponseTimes)
+    };
+}
+
 export default function TicketsExportFileSection({ isLoading }) {
     const [loading, setLoading] = useState(false);
-
-
-
-    // Safely check for window to avoid Next.js SSR hydration errors
-    const queryParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
-    const searchQuery = queryParams.get("search");
-    const statusQuery = queryParams.get("status");
 
     const export_ticket = async () => {
         setLoading(true);
         try {
-            // 3. Consolidated API call and data extraction
-            const { data: allTickets } = await export_ticket_files(window.location.search);
+            const queryParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+            const searchQuery = queryParams.get("search");
 
-            if (!allTickets || allTickets.length === 0) {
-                console.warn("No data available to export.");
-                return;
-            }
+            const { data: allTickets } = await export_ticket_files(window.location.search);
+            if (!allTickets || allTickets.length === 0) return;
 
             let exportData = [];
-            console.log('allTickets', allTickets)
+
             if (searchQuery === "RESOURCE") {
                 const newData = allTickets.map((res) => [
-                    moment(res?.receipt?.updated_at).format("L"),
-                    res.ticket_id,
+                    res?.receipt?.updated_at ? moment(res.receipt.updated_at).format("L") : "N/A",
+                    res.ticket_id || "N/A",
                     res.validator?.name ?? "N/A",
                 ]).sort((a, b) => new Date(a[0]) - new Date(b[0]));
 
                 exportData = [RESOURCE_HEADERS, ...newData];
             } else {
                 const newData = allTickets.map((res) => {
-                    // Safe fallback for arrays
-                    const combinedLogs = [...(res?.agent_notes || []), ...(res?.cases_logs || [])];
+                    const agentNotes = res?.agent_notes || [];
+                    const casesLogs = res?.cases_logs || [];
+                    const combinedLogs = [...agentNotes, ...casesLogs];
 
-                    // Native string comparison is blazing fast for ISO dates
-                    // const dateLastUpdated = combinedLogs.reduce((latest, log) =>
-                    //     log.created_at > latest ? log.created_at : latest
-                    //     , combinedLogs[0]?.created_at || null);
+                    // Email merge routine
+                    const emailMap = {};
+                    (res?.emails || []).forEach(current => {
+                        const subjectKey = current.subject;
+                        if (!emailMap[subjectKey]) {
+                            emailMap[subjectKey] = { ...current, threads: [...(current.threads || [])] };
+                        } else {
+                            emailMap[subjectKey].threads.push(...(current.threads || []));
+                            emailMap[subjectKey].message_count = (emailMap[subjectKey].message_count || 0) + (current.message_count || 0);
+                            if (new Date(current.updated_at) > new Date(emailMap[subjectKey].updated_at)) {
+                                emailMap[subjectKey].updated_at = current.updated_at;
+                                emailMap[subjectKey].body = current.body;
+                            }
+                        }
+                    });
 
-                    // Pre-calculate conditional date
-                    console.log('resresres', res?.activity)
+                    const allUnifiedThreads = Object.values(emailMap).flatMap(email => email.threads || []);
+                    const globalResults = calculateAverageResponseTimes(allUnifiedThreads);
+
                     const dateProcessed = res?.decision_status === "REPLACEMENT"
                         ? res?.replacement_shipped?.created_at
                         : res?.decision_status === "REFUND"
                             ? res?.refund_shipped?.created_at
                             : null;
-                    const warrantyActivity = res.activities?.find(a => a.type === "WARRANTY VALIDATION");
-                    const decisionMaking = res.activities?.find(a => a.type === "DECISION MAKING");
-                    const assign_to = res.activities?.find(a => a.type == "ASSIGNED TO")
-                    const refundMaking = res.activities?.find(a => a.type === "REFUND SHIPPED");
-                    const replacementMaking = res.activities?.find(a => a.type === "REPLACEMENT SHIPPED");
 
-                    const warranty_validation_date = warrantyActivity?.created_at
-                        ? moment(warrantyActivity.created_at).format('LL')
-                        : '';
-                    const decision_making_date = decisionMaking?.created_at
-                        ? moment(decisionMaking.created_at).format('LL')
-                        : '';
-                    const refund_date = refundMaking?.created_at
-                        ? moment(refundMaking.created_at).format('LL')
-                        : '';
-                    const replacement_date = replacementMaking?.created_at
-                        ? moment(replacementMaking.created_at).format('LL')
-                        : '';
+                    const activities = res.activities || [];
+                    const warrantyActivity = activities.find(a => a.type === "WARRANTY VALIDATION");
+                    const decisionMaking = activities.find(a => a.type === "DECISION MAKING");
+                    const assign_to = activities.find(a => a.type === "ASSIGNED TO");
+                    const refundMaking = activities.find(a => a.type === "REFUND SHIPPED");
+                    const replacementMaking = activities.find(a => a.type === "REPLACEMENT SHIPPED");
+
+                    const warranty_validation_date = warrantyActivity?.created_at ? moment(warrantyActivity.created_at).format('LL') : '';
+                    const decision_making_date = decisionMaking?.created_at ? moment(decisionMaking.created_at).format('LL') : '';
+                    const refund_date = refundMaking?.created_at ? moment(refundMaking.created_at).format('LL') : '';
+                    const replacement_date = replacementMaking?.created_at ? moment(replacementMaking.created_at).format('LL') : '';
+
                     let resolution_date = '';
-
                     if (assign_to?.message) {
                         try {
                             const parsedMessage = JSON.parse(assign_to.message);
-                            const createdAt = parsedMessage?.created_at;
-                            if (createdAt) {
-                                resolution_date = moment(createdAt).format('LL');
+                            if (parsedMessage?.created_at) {
+                                resolution_date = moment(parsedMessage.created_at).format('LL');
                             }
-                        } catch (error) {
-                            console.warn("Could not parse message JSON for export:", assign_to.message);
-                        }
+                        } catch (e) { }
                     }
-                    const refund_mailed = refund_date ?? replacement_date
-                    const curtis_response_average = calculateAverageInterval([
-                        { created_at: res.created_at },
-                        ...combinedLogs
-                    ]);
-                    console.log('warrantyActivity1', refund_date)
-                    console.log('warrantyActivity2', replacement_date)
+
+                    const refund_mailed = refund_date || replacement_date || '';
+                    const curtis_response_average = calculateAverageInterval([{ created_at: res.created_at }, ...combinedLogs]);
+
                     return [
                         res.created_at ? moment(res.created_at).format("L") : "N/A",
-                        moment(res.latest_updated).format("L") || "N/A",
+                        res.latest_updated ? moment(res.latest_updated).format("L") : "N/A",
                         res.created_from ?? "N/A",
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
@@ -173,8 +208,7 @@ export default function TicketsExportFileSection({ isLoading }) {
                         "No",
                         res.isUploading === "true" ? "YES" : "NO",
                         res.status ?? "N/A",
-                        // moment(res?.validation_date).format("L") || "N/A",
-                        moment(res?.activity?.created_at).format("L"),
+                        res.activity?.created_at ? moment(res.activity.created_at).format("L") : "N/A",
                         dateProcessed ? moment(dateProcessed).format("L") : "N/A",
                         res.created_at ? moment(res.created_at).format("LL") : "N/A",
                         'n/a',
@@ -182,7 +216,7 @@ export default function TicketsExportFileSection({ isLoading }) {
                         decision_making_date,
                         resolution_date,
                         refund_mailed,
-                        "Pending",
+                        globalResults.customerAverageResponseTime,
                         curtis_response_average
                     ];
                 });
@@ -190,9 +224,7 @@ export default function TicketsExportFileSection({ isLoading }) {
                 exportData = [STANDARD_HEADERS, ...newData];
             }
 
-            // 4. Excel generation logic
             const ws = XLSX.utils.aoa_to_sheet(exportData);
-
             const headerStyle = {
                 font: { bold: true, color: { rgb: "FFFFFF" } },
                 fill: { fgColor: { rgb: "2F75B5" } },
@@ -204,29 +236,20 @@ export default function TicketsExportFileSection({ isLoading }) {
                 ws[cell].s = headerStyle;
             }
 
-            // Auto-calculate column widths cleanly
-            const colWidths = exportData[0].map((_, colIndex) => {
-                const maxLen = Math.max(...exportData.map(row =>
-                    row[colIndex] ? row[colIndex].toString().length : 0
-                ));
-                return { wch: maxLen + 2 };
+            ws["!cols"] = exportData[0].map((_, colIndex) => {
+                const maxLen = Math.max(...exportData.map(row => row[colIndex] ? row[colIndex].toString().length : 0));
+                return { wch: Math.min(maxLen + 2, 50) }; // Capped at 50 max to avoid massive columns
             });
-            ws["!cols"] = colWidths;
 
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-            XLSX.writeFile(wb, `Tickets_Export_${new Date().getTime()}.xlsx`);
-
+            XLSX.writeFile(wb, `Tickets_Export_${Date.now()}.xlsx`);
         } catch (error) {
             console.error("Export Failed:", error);
         } finally {
-            // 5. Ensures loading is toggled off regardless of success or error
             setLoading(false);
         }
     };
-
-    // 6. Return null early if no criteria are met
-    // if (!statusQuery && !searchQuery) return null;
 
     return (
         <Button
