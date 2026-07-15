@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class AutomaticSendingEmailController extends Controller
@@ -87,6 +89,12 @@ class AutomaticSendingEmailController extends Controller
             }
         }
 
+        return Activity::create([
+            'user_id' => Auth::id(),
+            'ticket_id' => $request->ticket_id,
+            'message' => 'SENT LACKING INFORMATION',
+            'type' => 'SENT LACKING INFORMATION',
+        ]);
         return response()->json([
             'status'        => 'success',
             'tickets_found' => $tickets->count(),
