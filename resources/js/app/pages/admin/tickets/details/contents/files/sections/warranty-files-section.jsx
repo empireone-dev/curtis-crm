@@ -80,16 +80,16 @@ export default function WarrantyFilesSection() {
                 </div>
             )}
 
-             {(ticket?.created_from == "WEB FORM" && ticket?.store_refusal_reason) && (
+            {(ticket?.created_from == "WEB FORM" && ticket?.store_refusal_reason) && (
                 <div className="flex gap-2 border-b border-black my-5">
-                    <div className="text-xl"> Detailed Explanation: </div>
+                    <div className="text-xl"> Referred to Store (Reason):</div>
                     <div className="text-xl font-bold">
                         {ticket?.store_refusal_reason}
                     </div>
                 </div>
             )}
 
-            
+
             {ticket?.detailed_explanation_issue && (
                 <div className="flex gap-2 border-b border-black my-5">
                     <div className="text-xl"> Customer Detailed Explanation: </div>
