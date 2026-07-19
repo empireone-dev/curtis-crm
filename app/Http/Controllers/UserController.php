@@ -148,7 +148,9 @@ class UserController extends Controller
                 })->count();
 
                 // Handled Cases
-                $user->handled_cases       = $user->handledCasesLogs->count();
+                $user->handled_cases       = $user->handledCasesLogs
+                    ->where('ticket.created_from', 'AGENT FORM')
+                    ->count();
                 $user->handled_cases_notes = $user->handledCasesLogs; // Assigning the collection
 
                 $user->handled_web_form = $user->handledCasesLogs
