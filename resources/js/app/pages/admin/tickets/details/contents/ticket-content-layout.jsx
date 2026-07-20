@@ -16,6 +16,7 @@ export default function TicketsDetailsLayout({ children }) {
     const { user } = useSelector((state) => state.app);
     const { url } = usePage();
     const dispatch = useDispatch();
+    const [isExpanded, setIsExpanded] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -200,7 +201,20 @@ export default function TicketsDetailsLayout({ children }) {
                     ticket.detailed_explanation_issue && <div className="flex gap-2 border-b border-black px-3 m-5 flex-col">
                         <div className="text-xl"> Customer Detailed Explanation: </div>
                         <div className="text-xl font-bold">
-                            {ticket.detailed_explanation_issue}
+                            {isExpanded || (ticket.detailed_explanation_issue?.length ?? 0) <= 180
+                                ? ticket.detailed_explanation_issue
+                                : `${ticket.detailed_explanation_issue?.substring(0, 180)}... `
+                            }
+
+                            {/* Only show the button if the string is actually longer than 180 characters */}
+                            {(ticket.detailed_explanation_issue?.length ?? 0) > 180 && (
+                                <button
+                                    onClick={() => setIsExpanded(!isExpanded)}
+                                    className="text-blue-600 hover:underline font-medium ml-1"
+                                >
+                                    {isExpanded ? "See less" : "See more"}
+                                </button>
+                            )}
                         </div>
                     </div>
                 }

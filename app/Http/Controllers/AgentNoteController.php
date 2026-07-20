@@ -42,6 +42,13 @@ class AgentNoteController extends Controller
             'ticket_id' => $request->ticket_id,
             'message' => $request->message,
         ]);
+
+        ActivityController::create_activity(
+            $auth->id,
+            $request->ticket_id,
+            $request->message,
+            'Agent Notes'
+        );
         return response()->json([
             'data' => $this->index($request->ticket_id)
         ], 200);
