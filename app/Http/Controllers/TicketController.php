@@ -443,8 +443,16 @@ class TicketController extends Controller
             $q->where('call_type', $callType);
         });
 
+        // $query->when($isValid($model), function ($q) use ($model) {
+        //     $q->whereIn('item_number', explode(',', $model));
+        // });
         $query->when($isValid($model), function ($q) use ($model) {
-            $q->whereIn('item_number', explode(',', $model));
+            $modelArray = array_map('trim', explode(',', $model));
+            $q->where(function ($subQuery) use ($modelArray) {
+                foreach ($modelArray as $singleModel) {
+                    $subQuery->orWhere('item_number', 'like', "%{$singleModel}%");
+                }
+            });
         });
 
         if ($startDate && $endDate && $dateStatus) {
@@ -964,9 +972,13 @@ class TicketController extends Controller
         });
 
         $query->when($isValid($model), function ($q) use ($model) {
-            $q->whereIn('item_number', explode(',', $model));
+            $modelArray = array_map('trim', explode(',', $model));
+            $q->where(function ($subQuery) use ($modelArray) {
+                foreach ($modelArray as $singleModel) {
+                    $subQuery->orWhere('item_number', 'like', "%{$singleModel}%");
+                }
+            });
         });
-
 
         if ($startDate && $endDate && $dateStatus) {
             match ($dateStatus) {
@@ -1086,8 +1098,8 @@ class TicketController extends Controller
     {
         // 1. Calculate exact rolling hour boundaries once
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(24);
-        $sub48Hours = $now->copy()->subHours(48);
+        $sub24Hours = $now->copy()->subHours(48);
+        $sub48Hours = $now->copy()->subHours(72);
 
         // 2. Extract the repetitive subquery to keep code clean
         $latestThreadSubquery = function ($query) {
@@ -1351,8 +1363,8 @@ class TicketController extends Controller
 
         // 1. Calculate exact rolling hour boundaries once
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(24);
-        $sub48Hours = $now->copy()->subHours(48);
+        $sub24Hours = $now->copy()->subHours(48);
+        $sub48Hours = $now->copy()->subHours(72);
         if ($request->cases == 'web_form') {
             $ticket = Ticket::where('user_id', '=', $request->user_id)
                 ->where('created_from', 'WEB FORM')
@@ -1393,7 +1405,7 @@ class TicketController extends Controller
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
             ])
-                ->where('created_at', '>=', Carbon::now()->subMonths(11))
+                ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
@@ -1417,7 +1429,7 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
             ])
                 ->where('email_date', '<=', $sub48Hours) // Changed here
-                ->where('created_at', '>=', Carbon::now()->subMonths(11))
+                ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1438,7 +1450,7 @@ class TicketController extends Controller
             ])
                 ->where('email_date', '<=', $sub24Hours) // Older than 24h
                 ->where('email_date', '>', $sub48Hours)  // But newer than 48h
-                ->where('created_at', '>=', Carbon::now()->subMonths(11))
+                ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1458,7 +1470,7 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
             ])
                 ->where('email_date', '>', $sub24Hours) // Changed here
-                ->where('created_at', '>=', Carbon::now()->subMonths(11))
+                ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
