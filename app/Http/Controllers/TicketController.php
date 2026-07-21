@@ -1408,6 +1408,7 @@ class TicketController extends Controller
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 // ->where('created_at', '>=', Carbon::now()->subMonths(13))
                 // ->whereYear('created_at', '<>', 2024)
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
 
@@ -1433,6 +1434,7 @@ class TicketController extends Controller
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 // ->where('created_at', '>=', Carbon::now()->subMonths(13))
                 // ->whereYear('created_at', '<>', 2024)
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->with(['direct_emails'])->get();
 
             return response()->json([
@@ -1455,6 +1457,7 @@ class TicketController extends Controller
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 // ->where('created_at', '>=', Carbon::now()->subMonths(13))
                 // ->whereYear('created_at', '<>', 2024)
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->with(['direct_emails'])->get();
 
             return response()->json([
@@ -1476,6 +1479,7 @@ class TicketController extends Controller
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
                 // ->where('created_at', '>=', Carbon::now()->subMonths(13))
                 // ->whereYear('created_at', '<>', 2024)
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->with(['direct_emails'])->get();
 
             return response()->json([
