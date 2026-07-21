@@ -1406,7 +1406,8 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
             ])
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
-                ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                // ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                ->whereBetween('created_at', [Carbon::parse('2025-06-01')->startOfDay(), Carbon::now()])
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc');
@@ -1431,7 +1432,8 @@ class TicketController extends Controller
             ])
                 ->where('email_date', '<=', $sub48Hours) // Changed here
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
-                ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                // ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                ->whereBetween('created_at', [Carbon::parse('2025-06-01')->startOfDay(), Carbon::now()])
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1453,7 +1455,8 @@ class TicketController extends Controller
                 ->where('email_date', '<=', $sub24Hours) // Older than 24h
                 ->where('email_date', '>', $sub48Hours)  // But newer than 48h
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
-                ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                // ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                ->whereBetween('created_at', [Carbon::parse('2025-06-01')->startOfDay(), Carbon::now()])
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
@@ -1474,7 +1477,8 @@ class TicketController extends Controller
             ])
                 ->where('email_date', '>', $sub24Hours) // Changed here
                 // ->where('created_at', '>=', Carbon::parse('2025-05-01'))
-                ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                // ->where('created_at', '>=', Carbon::now()->subMonths(13))
+                ->whereBetween('created_at', [Carbon::parse('2025-06-01')->startOfDay(), Carbon::now()])
                 ->whereYear('created_at', '<>', 2024)
                 ->with(['direct_emails'])->get();
 
