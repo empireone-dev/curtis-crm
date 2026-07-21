@@ -138,11 +138,22 @@ export default function TicketsExportFileSection({ isLoading }) {
                     const allUnifiedThreads = Object.values(emailMap).flatMap(email => email.threads || []);
                     const globalResults = calculateAverageResponseTimes(allUnifiedThreads);
 
-                    const dateProcessed = res?.decision_status === "REPLACEMENT"
+                    const dateProcessed = res?.decision_status == "REPLACEMENT"
                         ? res?.replacement_shipped?.created_at
-                        : res?.decision_status === "REFUND"
+                        : res?.decision_status == "REFUND"
                             ? res?.refund_shipped?.created_at
                             : null;
+
+                    console.log('dateProcessed1',)
+                    console.log('dateProcessed2', res)
+
+                    const assignedActivities = res.activities.filter(item => item.type === 'ASSIGNED TO');
+
+                    // 2. Sort by created_at descending and pick the first one, or fallback to 'N/A'
+                    const validation_date = assignedActivities.length > 0
+                        ? assignedActivities.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
+                        : null;
+                    console.log('dateProcessed3', validation_date)
 
                     const activities = res.activities || [];
                     const warrantyActivity = activities.find(a => a.type === "WARRANTY VALIDATION");
@@ -208,7 +219,7 @@ export default function TicketsExportFileSection({ isLoading }) {
                         "No",
                         res.isUploading === "true" ? "YES" : "NO",
                         res.status ?? "N/A",
-                        res.activity?.created_at ? moment(res.activity.created_at).format("L") : "N/A",
+                        moment(validation_date?.created_at).format("L") ?? "N/A",
                         dateProcessed ? moment(dateProcessed).format("L") : "N/A",
                         res.created_at ? moment(res.created_at).format("LL") : "N/A",
                         'n/a',
