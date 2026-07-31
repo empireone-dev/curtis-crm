@@ -42,6 +42,7 @@ export default function AgentLayout({ children, account }) {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+    const searchParams = new URLSearchParams(window.location.search);
 
     useEffect(() => {
         async function get_account() {
@@ -75,7 +76,15 @@ export default function AgentLayout({ children, account }) {
             icon: <InboxArrowDownIcon className="h-6" />,
             label: "Open Cases",
             onClick: () => {
-                router.visit("/agent/open_cases?page=1");
+                router.visit("/agent/open_cases?page=1&created_from=AGENT FORM");
+            },
+        },
+        account.agent_type !== "CSR" && {
+            key: "7",
+            icon: <InboxArrowDownIcon className="h-6" />,
+            label: "Web Form",
+            onClick: () => {
+                router.visit("/agent/web_form?page=1&search=web_form");
             },
         },
         account.agent_type !== "CSR" && {
@@ -108,7 +117,7 @@ export default function AgentLayout({ children, account }) {
         active = "1";
     } else if (path == "tickets") {
         active = "2";
-    } else if (path == "open_cases") {
+    } else if (path == "open_cases" && searchParams.get('created_from') == 'AGENT FORM') {
         active = "3";
     } else if (path == "direct_emails") {
         active = "4";
@@ -116,6 +125,8 @@ export default function AgentLayout({ children, account }) {
         active = "5";
     } else if (path == "product_registration") {
         active = "6";
+    } else if (path == "open_cases" && searchParams.get('search') == 'web_form') {
+        active = "7";
     }
     const items = [
         {

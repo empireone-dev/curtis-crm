@@ -114,7 +114,7 @@ Route::middleware('auth:sanctum', 'role:1')->prefix('administrator')->group(func
             return Inertia::render('admin/tickets/details/contents/refund/page');
         })->name('admin.tickets.details.refund');
 
-         Route::get('/details/{ticket_id}/tech_callback', function () {
+        Route::get('/details/{ticket_id}/tech_callback', function () {
             return Inertia::render('admin/tickets/details/contents/tech_callback/page');
         })->name('admin.tickets.details.tech_callback');
 
@@ -532,6 +532,10 @@ Route::middleware('auth:sanctum', 'role:5')->prefix('agent')->group(function () 
     Route::get('/open_cases', function () {
         return Inertia::render('agent/open_cases/page');
     })->name('agent.open_cases');
+
+    Route::get('/web_form', function () {
+        return Inertia::render('agent/open_cases/page');
+    })->name('agent.web_form');
 
     Route::get('/customer_details/{ticket_id}', function () {
         return Inertia::render('agent/customer_details/page');

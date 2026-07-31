@@ -1365,12 +1365,35 @@ class TicketController extends Controller
         $now = \Carbon\Carbon::now();
         $sub24Hours = $now->copy()->subHours(48);
         $sub48Hours = $now->copy()->subHours(72);
-        if ($request->cases == 'web_form') {
+        if ($request->created_from == 'AGENT FORM') {
+            $dataQuery = Ticket::where([
+                ['user_id', '=', $request->user_id],
+                ['ticket_id', '<>', null],
+                ['ticket_id', '<>', ''],
+                ['email', '<>', null],
+                ['cases_status', '<>', 'hidden'],
+                ['is_reply', '=', 'true'],
+            ])
+                ->where('created_from', 'AGENT FORM')
+                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
+                ->with(['direct_emails'])
+                ->orderBy('email_date', 'asc');
+
+            $dataQueryCount = $dataQuery->count();
+            $dataQuery = $dataQuery->orderBy('email_date', 'asc')->get();
+
+            return response()->json([
+                'data_count' => count($dataQuery),
+                'ticket_count' => $dataQueryCount,
+                'result' =>  $dataQuery,
+            ], 200);
+        } else if ($request->cases == 'web_form') {
             $ticket = Ticket::where('user_id', '=', $request->user_id)
                 ->where('created_from', 'WEB FORM')
                 // ->where('call_type','Safety Issue')
                 ->whereColumn('created_at', 'updated_at')
                 ->with(['direct_emails'])
+                ->orderBy('email_date', 'asc')
                 ->get();
             return response()->json([
                 'data_count' => count($ticket),
@@ -1384,10 +1407,14 @@ class TicketController extends Controller
                     ['email', '=', $request->where],
                     ['cases_status', '<>', 'hidden'],
                     ['status', '<>', 'CLOSED'],
-                ])->with(['direct_emails'])->get();
+                ])->with(['direct_emails'])
+                    ->orderBy('email_date', 'asc')
+                    ->get();
             } else {
                 $search = Ticket::where('ticket_id', '=', $request->where)
-                    ->with(['direct_emails'])->get();
+                    ->with(['direct_emails'])
+                    ->orderBy('email_date', 'asc')
+                    ->get();
             }
 
             return response()->json([
@@ -1405,11 +1432,12 @@ class TicketController extends Controller
                 ['is_reply', '=', 'true'],
             ])
                 ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])
-                ->orderBy('email_date', 'asc');
+                ->with(['direct_emails']);
 
             $dataQueryCount = $dataQuery->count();
-            $dataQuery = $dataQuery->get();
+            $dataQuery = $dataQuery
+                ->orderBy('email_date', 'asc')
+                ->get();
 
             return response()->json([
                 'data_count' => count($dataQuery),
@@ -1428,7 +1456,9 @@ class TicketController extends Controller
             ])
                 ->where('email_date', '<=', $sub48Hours) // Changed here
                 ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])->get();
+                ->with(['direct_emails'])
+                ->orderBy('email_date', 'asc')
+                ->get();
 
             return response()->json([
                 'data_count' => count($overdue_cases),
@@ -1448,7 +1478,8 @@ class TicketController extends Controller
                 ->where('email_date', '<=', $sub24Hours) // Older than 24h
                 ->where('email_date', '>', $sub48Hours)  // But newer than 48h
                 ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])->get();
+                ->with(['direct_emails'])
+                ->orderBy('email_date', 'asc')->get();
 
             return response()->json([
                 'data_count' => count($cases_due_today),
@@ -1467,7 +1498,8 @@ class TicketController extends Controller
             ])
                 ->where('email_date', '>', $sub24Hours) // Changed here
                 ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])->get();
+                ->with(['direct_emails'])
+                ->orderBy('email_date', 'asc')->get();
 
             return response()->json([
                 'data_count' => count($upcoming_dues),

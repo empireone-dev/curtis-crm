@@ -200,6 +200,16 @@ export default function AgentOpenCasesEMail({ auth }) {
                 addDaysSkippingWeekends(moment(record.email_date)),
         },
         {
+            title: "Time Span",
+            dataIndex: "time_span",
+            key: "time_span",
+            width: "30%",
+            // ...getColumnSearchProps("date"),
+            render: (_, record, i) => {
+                return <>{moment(record?.email_date).fromNow()}</>;
+            },
+        },
+        {
             title: "Case File",
             dataIndex: "ticket_id",
             key: "ticket_id",
