@@ -10,6 +10,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
     const [messageApi, contextHolder] = message.useMessage();
     const { cases_logs } = useSelector((state) => state.users);
 
+
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     async function submit_case_log(params) {
@@ -17,7 +18,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
         const res = await create_caseslog_service({
             ...data,
             ticket_id: ticket_id,
-            user_id: account.id,
+            user_id: account?.id,
             log_from: "direct_emails",
         });
         const ress = await get_direct_email_by_id_service();
@@ -41,6 +42,7 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
         }
         getData();
     }, []);
+    console.log('account', account)
     return (
         <div>
             {contextHolder}
@@ -88,79 +90,60 @@ export default function AgentLogCaseSection({ ticket_id, account }) {
                                 case_status: e.target.value,
                             })
                         }
-
                         id="countries"
                         class="bg-gray-50 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     >
                         <option selected disabled>
                             Select
                         </option>
-                        {account.agent_type == "Warranty" && (
+                        {account?.agent_type == "Warranty" && (
                             <>
-                                <option value="Done for Destroy">
-                                    Done for Destroy
+                                <option value="Pending-Incomplete Details">
+                                    Pending-Incomplete Details
                                 </option>
-                                <option value="Unit Received / Ice Maker Delivered">
-                                    Unit Received / Ice Maker Delivered
+                                <option value="Pending-Completed and Validated">
+                                    Pending-Completed and Validated
                                 </option>
-                                <option value="Complete and Validated">
-                                    Complete and Validated
+                                <option value="Pending-Warranty Decision-Refund">
+                                    Pending-Warranty Decision-Refund
                                 </option>
-                                <option value="Decision Making">
-                                    Decision Making
+                                <option value="Pending-Warranty Decision-Replacement">
+                                    Pending-Warranty Decision-Replacement
                                 </option>
-                                <option value="Sent Lacking Info">
-                                    Sent Lacking Info
+                                <option value="Pending-Warranty Decision-Repair">
+                                    Pending-Warranty Decision-Repair
                                 </option>
-                                <option value="Referred to the Store">
-                                    Referred to the Store
+                                <option value="Pending-Case Follow-up">
+                                    Pending-Case Follow-up
                                 </option>
-                                <option value="Escalated">Escalated</option>
-                                <option value="Sent a Reply">
-                                    Sent a Reply
+                                <option value="Pending-Undelivered Email / Bounced Back Email">
+                                    Pending-Undelivered Email / Bounced Back
+                                    Email
                                 </option>
-                                <option value="Created a Ticket (Direct Email)">
-                                    Created a Ticket (Direct Email)
+                                <option value="Pending-Proactive Follow-up">
+                                    Pending-Proactive Follow-up
                                 </option>
-                                <option value="Sent Lacking for Destroy">
-                                    Sent Lacking for Destroy
+                                <option value="Case Closed-Warranty Denied">
+                                    Case Closed-Warranty Denied
                                 </option>
-                                <option value="Close - OOW">Close - OOW</option>
-                                <option value="Close - Physical Damage">
-                                    Close - Physical Damage
+                                <option value="Case Closed-Refer to Parts">
+                                    Case Closed-Refer to Parts
                                 </option>
-                                <option value="Close- Resolved">
-                                    Close- Resolved
+                                <option value="Case Endorsed to TCH">
+                                    Case Endorsed to TCH
                                 </option>
-                                <option value="Close - Customer Not Interested">
-                                    Close - Customer Not Interested
+                                <option value="Case Survey Sent">
+                                    Case Survey Sent
                                 </option>
-                                <option value="Close - Customer disposed of the Unit">
-                                    Close - Customer disposed of the Unit
-                                </option>
-                                <option value="Close - Non-curtis">
-                                    Close - Non-curtis
-                                </option>
-                                <option value="Close - Not a Valid Retailer">
-                                    Close - Not a Valid Retailer
-                                </option>
-                                <option value="Close - Used / Resold">
-                                    Close - Used / Resold
-                                </option>
-                                <option value="Close - Returned to the Store">
-                                    Close - Returned to the Store
-                                </option>
-                                <option value="Close- Not a Warranty Issue">
-                                    Close- Not a Warranty Issue
-                                </option>
-                                <option value="Close - Has Existing Ticket">
-                                    Close - Has Existing Ticket
+                                <option value="Case Closed-No Survey">
+                                    Case Closed-No Survey
                                 </option>
                             </>
                         )}
 
-                        {account.agent_type == "Parts" && (
-                             <>
+
+                        {account?.agent_type == "Parts" && (
+                            <>
                                 <option value="Parts Available">
                                     Parts Available
                                 </option>
