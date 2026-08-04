@@ -57,7 +57,15 @@ export default function ContentDetailsSection() {
                             "PARTS VALIDATION"
                         )
                     );
+                } else if (ticket?.call_type == "TS-Tech Support") {
+                    await store.dispatch(
+                        update_tickets_status_thunk(
+                            ticket?.id,
+                            "TECH VALIDATION"
+                        )
+                    );
                 }
+
                 setIsLoading(false);
                 router.visit(routing("details"));
             } catch (error) {
