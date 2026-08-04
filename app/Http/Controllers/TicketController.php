@@ -381,6 +381,7 @@ class TicketController extends Controller
         $checked     = $request->input('checked');
         $ticketId    = $request->input('ticket_id');
         $fullname    = $request->input('fullname');
+        $is_downloaded    = $request->input('is_downloaded');
         $process_type    = $request->input('process_type');
 
         // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
@@ -408,10 +409,13 @@ class TicketController extends Controller
             $q->where('user_id', $userId);
         });
 
+
         $query->when($searchQuery, function ($q, $search) {
             $q->where(function ($sub) use ($search) {
                 $sub->where('id', $search)
                     ->orWhere('ticket_id', $search)
+                    ->orWhere('fname', $search)
+                    ->orWhere('lname', $search)
                     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$search]);
             });
         });
@@ -466,6 +470,15 @@ class TicketController extends Controller
         }
 
 
+        $query->when($isValid($is_downloaded), function ($q) use ($is_downloaded) {
+            if ($is_downloaded === 'false' || $is_downloaded === '0') {
+                // Not downloaded / Not exported
+                $q->whereNull('isExported');
+            } elseif ($is_downloaded === 'true' || $is_downloaded === '1') {
+                // Already downloaded / Exported
+                $q->whereNotNull('isExported');
+            }
+        });
         // 4. Sorting
         // if (in_array($checked, ['asc', 'desc'])) {
         //     $query->orderByRaw("isExported IS NULL " . strtoupper($checked));
@@ -567,7 +580,7 @@ class TicketController extends Controller
             $query->where('isExported', '=', 'true');
         }
         if ($request->export === 'uncheck') {
-            $query->whereNull('isExported');
+            $q->whereNull('isExported');
         }
         $data = $query->get();
 
@@ -909,9 +922,8 @@ class TicketController extends Controller
         $checked     = $request->input('checked');
         $ticketId    = $request->input('ticket_id');
         $fullname    = $request->input('fullname');
+        $is_downloaded    = $request->input('is_downloaded');
         $process_type    = $request->input('process_type');
-
-
 
         // Helper function to check for valid frontend inputs (ignoring string 'null'/'undefined')
         $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
@@ -936,10 +948,13 @@ class TicketController extends Controller
             $q->where('user_id', $userId);
         });
 
+
         $query->when($searchQuery, function ($q, $search) {
             $q->where(function ($sub) use ($search) {
                 $sub->where('id', $search)
                     ->orWhere('ticket_id', $search)
+                    ->orWhere('fname', $search)
+                    ->orWhere('lname', $search)
                     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$search]);
             });
         });
@@ -989,6 +1004,16 @@ class TicketController extends Controller
                 default           => $query->whereBetween('created_at', [$startDate, $endDate]),
             };
         }
+
+        $query->when($isValid($is_downloaded), function ($q) use ($is_downloaded) {
+            if ($is_downloaded === 'false' || $is_downloaded === '0') {
+                // Not downloaded / Not exported
+                $q->whereNull('isExported');
+            } elseif ($is_downloaded === 'true' || $is_downloaded === '1') {
+                // Already downloaded / Exported
+                $q->whereNotNull('isExported');
+            }
+        });
 
         // 4. Sorting
         // if (in_array($checked, ['asc', 'desc'])) {

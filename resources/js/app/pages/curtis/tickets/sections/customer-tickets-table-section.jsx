@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Pagination, Space, Tag, Tooltip } from "antd";
+import { Button, Input, Pagination, Space, Switch, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { Link, router } from "@inertiajs/react";
 import moment from "moment";
@@ -15,19 +15,17 @@ import ShowAttachmentSection from "@/app/pages/admin/tickets/_sections/show-atta
 
 export default function CustomerTicketsTableSection() {
     const { tickets, selectedRowKeys } = useSelector((state) => state.tickets);
-
+    const [hasData, setHasData] = useState(true);
     const data = tickets?.data?.map((res) => ({
         ...res,
         key: res.id,
-        ticket_id: (() => {
+        flags: (() => {
             function route_link(data) {
                 if (data.call_type == "TS-Tech Support") {
                     return (
                         <Link
                             className="underline"
-                            href={
-                                "/curtis/tickets/details/" + res.id + "/status"
-                            }
+                            href={"/curtis/tickets/details/" + res.id + "/status"}
                         >
                             <div className="flex gap-3">
                                 {res.pr && (
@@ -36,6 +34,51 @@ export default function CustomerTicketsTableSection() {
                                 {res.isExported && (
                                     <ArrowDownTrayIcon className="h-6 text-blue-600" />
                                 )}
+                            </div>
+                        </Link>
+                    );
+                } else {
+                    return (
+                        <div className="flex gap-2">
+                            {(res.status == "REPAIR SUCCESS" ||
+                                res.status == "REPAIR UNSUCCESSFUL") &&
+                                res.repair_information && (
+                                    <ShowAttachmentSection data={res} />
+                                )}
+                            <Link
+                                className="underline"
+                                href={"/curtis/tickets/details/" + res.id + "/files"}
+                            >
+                                <div className="flex gap-3">
+                                    {res.pr && (
+                                        <CheckBadgeIcon className="h-6 text-green-600" />
+                                    )}
+                                    {res.isExported && (
+                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
+                                    )}
+                                </div>
+                            </Link>
+                        </div>
+                    );
+                }
+            }
+            return (
+                <Tooltip placement="topLeft" title="View Ticket Details">
+                    <div className="flex items-center justify-center">
+                        {route_link(res)}
+                    </div>
+                </Tooltip>
+            );
+        })(),
+        ticket_id: (() => {
+            function route_link(data) {
+                if (data.call_type == "TS-Tech Support") {
+                    return (
+                        <Link
+                            className="underline"
+                            href={"/curtis/tickets/details/" + res.id + "/status"}
+                        >
+                            <div className="flex gap-3">
                                 {res.ticket_id}
                             </div>
                         </Link>
@@ -50,19 +93,9 @@ export default function CustomerTicketsTableSection() {
                                 )}
                             <Link
                                 className="underline"
-                                href={
-                                    "/curtis/tickets/details/" +
-                                    res.id +
-                                    "/files"
-                                }
+                                href={"/curtis/tickets/details/" + res.id + "/files"}
                             >
                                 <div className="flex gap-3">
-                                    {res.pr && (
-                                        <CheckBadgeIcon className="h-6 text-green-600" />
-                                    )}
-                                    {res.isExported && (
-                                        <ArrowDownTrayIcon className="h-6 text-blue-600" />
-                                    )}
                                     {res.ticket_id}
                                 </div>
                             </Link>
@@ -83,46 +116,28 @@ export default function CustomerTicketsTableSection() {
         ),
         issue: <Tag color={"blue"}>{res.issue}</Tag>,
         status: (() => {
-            const color =
-                res.status === "CLOSED"
-                    ? "red"
-                    : res.status === "PARTS VALIDATION" ||
-                      res.status === "WARRANTY VALIDATION" ||
-                      res.status === "TECH VALIDATION" ||
-                      res.status == null
-                    ? "orange"
-                    : "green";
+            const isOpenStatus =
+                res.status === "PARTS VALIDATION" ||
+                res.status === "WARRANTY VALIDATION" ||
+                res.status === "TECH VALIDATION" ||
+                res.status == null;
+
+            const color = res.status === "CLOSED" ? "red" : isOpenStatus ? "orange" : "green";
+            const label = isOpenStatus ? "OPEN" : res.status;
 
             return (
-                <>
-                    <div className="flex gap-2">
-                        <Tag color={color}>
-                            {res.status === "PARTS VALIDATION" ||
-                            res.status === "WARRANTY VALIDATION" ||
-                            res.status === "TECH VALIDATION" ||
-                            res.status == null
-                                ? "OPEN"
-                                : res.status}
-                        </Tag>
-                    </div>
-                    {/* {res.is_reply && (
-                        <Tag color="purple">
-                            Customer has responded on{" "}
-                            {moment(res.email_date).format("LL")}
-                        </Tag>
-                    )} */}
-                </>
+                <div className="flex gap-2">
+                    <Tag color={color}>{label}</Tag>
+                </div>
             );
-        })(), // Call the function immediately to return the JSX
+        })(),
         isUploading: (() => {
             const color = res.isUploading == "true" ? "green" : "red";
 
             return (
-                <>
-                    <Tag color={color} key={res.id}>
-                        {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
-                    </Tag>
-                </>
+                <Tag color={color} key={res.id}>
+                    {res.isUploading == "true" ? "UPLOADED" : "PENDING"}
+                </Tag>
             );
         })(),
         created_at: <div>{moment(res.created_at).format("LL")}</div>,
@@ -133,12 +148,40 @@ export default function CustomerTicketsTableSection() {
         ),
     }));
 
+    function sort_the_data(data) {
+        // 1. Grab all current query parameters from the URL
+        const searchParams = new URLSearchParams(window.location.search);
+
+        // 2. Set or update the 'is_downloaded' parameter
+        searchParams.set("is_downloaded", data);
+
+        // 3. Construct the new URL while keeping the original path
+        const newUrl = window.location.pathname + "?" + searchParams.toString();
+
+        // 4. Visit the new URL
+        router.visit(newUrl);
+    }
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // 2. Get the specific value
+    const isDownloaded = searchParams.get("is_downloaded");
     const columns = [
+        {
+            title: <Switch
+                checked={JSON.parse(isDownloaded)}
+                checkedChildren="Include"
+                unCheckedChildren="Exclude"
+                onChange={sort_the_data}
+            />,
+            dataIndex: "flags",
+            key: "flags",
+            isSort: false,
+        },
         {
             title: "Ticket ID",
             dataIndex: "ticket_id",
             key: "ticket_id",
-            isSort: true,
+            isSort: false,
         },
         {
             title: "Move Ticket",
@@ -150,7 +193,7 @@ export default function CustomerTicketsTableSection() {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            isSort: true,
+            isSort: false,
         },
         {
             title: "Email",
@@ -176,7 +219,6 @@ export default function CustomerTicketsTableSection() {
             key: "status",
             isSort: false,
         },
-
         {
             title: "IsUpload",
             dataIndex: "isUploading",
@@ -199,7 +241,7 @@ export default function CustomerTicketsTableSection() {
     };
 
     const page = getQueryParam(url, "page");
-    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+    const currentPage = page ? parseInt(page, 10) : 1;
 
     const onChangePaginate = (page) => {
         const searchParams = new URLSearchParams(window.location.search);
@@ -210,6 +252,7 @@ export default function CustomerTicketsTableSection() {
 
     const isStatus = getQueryParam(url, "status");
     console.log("isStatus", isStatus);
+
     return (
         <>
             {isStatus && (

@@ -200,7 +200,7 @@ export default function Table({
                                                     <div className="pl-3">
                                                         All
                                                     </div>
-                                                    <button
+                                                    {/* <button
                                                         onClick={() =>
                                                             sort_data("check")
                                                         }
@@ -222,7 +222,7 @@ export default function Table({
                                                                 d="m8 15 4 4 4-4m0-6-4-4-4 4"
                                                             />
                                                         </svg>
-                                                    </button>
+                                                    </button> */}
                                                 </div>
                                             )}
                                         </th>
@@ -232,7 +232,7 @@ export default function Table({
                                         <th
                                             key={i}
                                             scope="col"
-                                            className="min-w-[8rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+                                            className="min-w-[2.5rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
                                         >
                                             <span class="flex items-center">
                                                 {column.title}
