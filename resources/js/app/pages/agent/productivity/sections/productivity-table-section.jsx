@@ -240,7 +240,7 @@ export default function ProductivityTableSection({ account, loading }) {
             render: (_, record, i) => {
                 return (
                     <a
-                        // href={`/administrator/productivity/${record.id}?page=1&search=upcoming_dues`}
+                        href={`/agent/productivity/${record.id}?page=1&search=upcoming_dues`}
                         // className="underline"
                         key={i}
                     >
