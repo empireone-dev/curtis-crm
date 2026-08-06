@@ -285,7 +285,20 @@ export default function ProductivityTableSection({ account, loading }) {
             dataIndex: "upcoming_dues_direct_emails",
             key: "upcoming_dues_direct_emails",
             // ...getColumnSearchProps('app_name'),
+            
+            render: (_, record, i) => {
+                return (
+                    <Link
+                        href={`/agent/productivity/direct_emails/${record.id}?page=1&search=upcoming_dues_direct_emails`}
+                        className="underline"
+                        key={i}
+                    >
+                        {record.upcoming_dues_direct_emails}
+                    </Link>
+                );
+            },
         },
+
         {
             title: "Handled Cases",
             dataIndex: "handled_cases",
