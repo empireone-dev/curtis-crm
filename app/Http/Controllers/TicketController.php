@@ -953,12 +953,13 @@ class TicketController extends Controller
             $q->where(function ($sub) use ($search) {
                 $sub->where('id', $search)
                     ->orWhere('ticket_id', $search)
-                    ->orWhere('fname', $search)
-                    ->orWhere('lname', $search)
+                    ->orWhere('fname', 'like', "%{$search}%")
+                    ->orWhere('lname', 'like', "%{$search}%")
+                    // Combines fname and lname to search the full name
+                    ->orWhereRaw("CONCAT(fname, ' ', lname) LIKE ?", ["%{$search}%"])
                     ->orWhereRaw('REGEXP_REPLACE(phone, "[^0-9]", "") = ?', [$search]);
             });
         });
-
         // Consolidated & Fixed Status Logic
         $query->when($isValid($status), function ($q) use ($status, $startDate, $endDate, $isValid, $process_type) {
             match ($status) {
