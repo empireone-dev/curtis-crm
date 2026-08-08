@@ -503,7 +503,9 @@ class TicketController extends Controller
     {
         $export = ExportFile::where('export_name', $request->searchData)->first();
 
+        $is_downloaded    = $request->input('is_downloaded');
         $searchQuery = $request->search;
+        $isValid = fn($val) => !empty($val) && !in_array($val, ['null', 'undefined'], true);
 
         // Get all column names of the table
         $columns = Schema::getColumnListing('tickets');
@@ -527,7 +529,21 @@ class TicketController extends Controller
         }
 
         // Filter by export status
+        if ($request->export === 'checked') {
+            $query->where('isExported', '=', 'true');
+        } else if ($request->export === 'uncheck') {
+            $query->whereNull('isExported');
+        }
 
+        // $query->when($isValid($is_downloaded), function ($q) use ($is_downloaded) {
+        //     if ($is_downloaded === 'false' || $is_downloaded === '0') {
+        //         // Not downloaded / Not exported
+        //         $q->whereNull('isExported');
+        //     } elseif ($is_downloaded === 'true' || $is_downloaded === '1') {
+        //         // Already downloaded / Exported
+        //         $q->whereNotNull('isExported');
+        //     }
+        // });
 
         // Sorting by export status
         if (in_array($request->checked, ['asc', 'desc'])) {
@@ -576,12 +592,7 @@ class TicketController extends Controller
                 $query->whereBetween('created_at', [$startTime, $endTime]);
             }
         }
-        if ($request->export === 'checked') {
-            $query->where('isExported', '=', 'true');
-        }
-        if ($request->export === 'uncheck') {
-            $q->whereNull('isExported');
-        }
+
         $data = $query->get();
 
 

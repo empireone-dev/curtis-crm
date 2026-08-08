@@ -17,6 +17,7 @@ export default function TicketsSelectedExportSection({ selected }) {
     const [value, setValue] = useState("all");
     const [selectedColumn, setSelectedColumn] = useState([]);
 
+
     const columns = [
         // { id: 0, name: "Date Created" },
         // { id: 1, name: "Date Last Updated" },
@@ -95,14 +96,18 @@ export default function TicketsSelectedExportSection({ selected }) {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    console.log('selectedColumn',selectedColumn)
+    console.log('selectedColumn', selectedColumn)
     const handleOk = async () => {
         // setIsModalOpen(false);
         if (selectedColumn.length != 0) {
             setLoading(true);
             console.log(window.location.search);
-            const exist = await verify_tickets_service(window.location.search+'&export='+value);
-    
+            try {
+                var exist = await verify_tickets_service(window.location.search + '&export=' + value);
+            } catch (error) {
+                setLoading(false)
+            }
+
             async function get_status(params) {
                 // if (value == "all") {
                 //     return exist.data;
@@ -113,7 +118,7 @@ export default function TicketsSelectedExportSection({ selected }) {
                 // }
                 return exist.data;
             }
-    
+
             async function get_column(params) {
                 return columns.filter((item) => selectedColumn.includes(item.id));
             }
@@ -123,11 +128,11 @@ export default function TicketsSelectedExportSection({ selected }) {
                 const latestCreatedAt = combinedLogs.reduce((latest, log) => {
                     return moment(log.created_at).isAfter(moment(latest)) ? log.created_at : latest;
                 }, combinedLogs[0]?.created_at);
-                
+
                 return {
                     0: {
                         id: 0,
-                        name:moment(latestCreatedAt).format("L"),
+                        name: moment(latestCreatedAt).format("L"),
                     },
                     1: {
                         id: 1,
@@ -213,7 +218,7 @@ export default function TicketsSelectedExportSection({ selected }) {
                     },
                 };
             });
-    
+
             const new_column = await get_column();
             const new_data = result.map((item) =>
                 selectedColumn.map((res) => item[res])
@@ -227,27 +232,27 @@ export default function TicketsSelectedExportSection({ selected }) {
                     itemArray.find((dataItem) => dataItem.id === res)
                 )
             );
-    
+
             const export_data = [
                 sortedColumn.map((res) => res.name),
                 ...sortedData.map((res) => res.map((res) => res?.name)),
             ];
-            console.log('export_data',export_data)
+            console.log('export_data', export_data)
             const ws = XLSX.utils.aoa_to_sheet(export_data);
-    
+
             // Define the style for the header row
             const headerStyle = {
                 font: { bold: true, color: { rgb: "FFFFFF" } }, // White font color
                 fill: { fgColor: { rgb: "2F75B5" } }, // Blue background color
             };
-    
+
             // Apply the style to each cell in the first row (header row)
             for (let col = 0; col < export_data[0].length; col++) {
                 const cell = XLSX.utils.encode_cell({ r: 0, c: col });
                 if (!ws[cell]) ws[cell] = {}; // Ensure the cell object exists
                 ws[cell].s = headerStyle;
             }
-    
+
             // Calculate the column widths
             const colWidths = export_data[0].map((_, colIndex) => {
                 return Math.max(
@@ -257,28 +262,31 @@ export default function TicketsSelectedExportSection({ selected }) {
                     })
                 );
             });
-    
+
             ws["!cols"] = colWidths.map((width) => ({ wch: width + 2 })); // Adding a little extra padding
-    
+
             const wb = XLSX.utils.book_new();
-    
+
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    
+
             XLSX.writeFile(wb, new Date().getTime() + ".xlsx");
             // const updated_export = (await get_status()).map((res) => res.id);
             // update_ticket_export_status_service(updated_export,value);
             if (window.location.hash == "") {
                 store.dispatch(get_tickets_thunk(window.location.search));
+                setLoading(false);
+                setIsModalOpen(false)
             } else {
                 store.dispatch(
                     get_tickets_thunk("?search=" + window.location.hash.slice(1))
                 );
+                setLoading(false);
+                setIsModalOpen(false)
             }
-            setLoading(false);
-        }else{
+        } else {
             message.warning('Please select a column!')
         }
-       
+
     };
     const handleCancel = () => {
         setIsModalOpen(false);
