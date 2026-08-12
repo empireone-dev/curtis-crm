@@ -1402,7 +1402,7 @@ class TicketController extends Controller
         $now = \Carbon\Carbon::now();
         $sub24Hours = $now->copy()->subHours(48);
         $sub48Hours = $now->copy()->subHours(72);
-        if ($request->created_from == 'AGENT FORM') {
+        if ($request->created_from == 'AGENT FORM' && $request->cases != 'open_cases') {
             $dataQuery = Ticket::where([
                 ['user_id', '=', $request->user_id],
                 ['ticket_id', '<>', null],
@@ -1424,7 +1424,7 @@ class TicketController extends Controller
                 'ticket_count' => $dataQueryCount,
                 'result' =>  $dataQuery,
             ], 200);
-        } else if ($request->cases == 'web_form') {
+        } else if ($request->cases == 'web_form' && $request->cases != 'open_cases') {
             $ticket = Ticket::where('user_id', '=', $request->user_id)
                 ->where('created_from', 'WEB FORM')
                 // ->where('call_type','Safety Issue')
@@ -1437,7 +1437,7 @@ class TicketController extends Controller
                 'ticket_count' => 10990,
                 'result' =>  $ticket,
             ], 200);
-        } else if ($request->cases == 'case_file') {
+        } else if ($request->cases == 'case_file' && $request->cases != 'open_cases') {
             $search = [];
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
                 $search = Ticket::where([
@@ -1467,6 +1467,7 @@ class TicketController extends Controller
                 ['email', '<>', null],
                 ['cases_status', '<>', 'hidden'],
                 ['is_reply', '=', 'true'],
+                ['email_date', '<>', null]
             ])
                 ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
                 ->with(['direct_emails']);
@@ -1481,7 +1482,7 @@ class TicketController extends Controller
                 'ticket_count' => $dataQueryCount,
                 'result' =>  $dataQuery,
             ], 200);
-        } else if ($request->cases == 'over_due') {
+        } else if ($request->cases == 'over_due' && $request->cases != 'open_cases') {
             // OVERDUE: Older than 48 hours
             $overdue_cases = Ticket::where([
                 ['user_id', '=', $user->id],
@@ -1502,7 +1503,7 @@ class TicketController extends Controller
                 'ticket_count' => 100,
                 'result' =>  $overdue_cases,
             ], 200);
-        } else if ($request->cases == 'due_today') {
+        } else if ($request->cases == 'due_today' && $request->cases != 'open_cases') {
             // DUE TODAY (Action Req): Between 24 and 48 hours old
             $cases_due_today = Ticket::where([
                 ['user_id', '=', $user->id],
@@ -1523,7 +1524,7 @@ class TicketController extends Controller
                 'ticket_count' => 100,
                 'result' =>  $cases_due_today,
             ], 200);
-        } else if ($request->cases == 'upcoming_dues') {
+        } else if ($request->cases == 'upcoming_dues' && $request->cases != 'open_cases') {
             // UPCOMING DUES (Safe): Less than 24 hours old
             $upcoming_dues = Ticket::where([
                 ['user_id', '=', $user->id],
