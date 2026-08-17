@@ -1694,7 +1694,8 @@ class TicketController extends Controller
         return $userWithSmallestCount?->id;
     }
 
-    public function store(Request $request)
+
+    public function ticket_creation(Request $request)
     {
         $user = User::where('email', $request->email)->first();
         $auth = Auth::user();
@@ -1772,6 +1773,36 @@ class TicketController extends Controller
                 'ticket_id' => $subject,
             ], 200);
         }
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'model' => 'nullable|string',
+            'phone' => 'required|string', // Required as per the image
+            'fname' => 'nullable|string',
+            'lname' => 'nullable|string',
+            'email' => 'nullable|string',
+            // 'email' => 'required_if:is_sending_email,true|nullable|email',
+            'remarks' => 'required|string',
+            'call_type' => 'required|string',
+            // 'is_sending_email' => 'required|boolean',
+        ]);
+        $validatedData['phone'] = $this->formatPhoneNumber($validatedData['phone']);
+        Ticket::create([
+            ...$validatedData,
+            'item_number' => $validatedData['model'],
+            'status' => 'CLOSED',
+            'call_type' => $request->call_type
+        ]);
+        // if ($validatedData['is_sending_email']) {
+        //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
+        // }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Ticket created successfully.',
+            'data' => $validatedData
+        ], 200);
     }
 
     private function getValidation($callType)
