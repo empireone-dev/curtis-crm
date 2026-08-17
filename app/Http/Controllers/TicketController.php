@@ -1775,6 +1775,14 @@ class TicketController extends Controller
         }
     }
 
+    private function formatPhoneNumber($phone)
+    {
+        $cleaned = preg_replace('/[^0-9]/', '', $phone);
+        if (strlen($cleaned) === 10) {
+            return preg_replace("/^(\d{3})(\d{3})(\d{4})$/", "($1) $2-$3", $cleaned);
+        }
+        return $phone;
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
