@@ -62,7 +62,9 @@ class Ticket extends Model
         'received_at',
         'asc_status',
         'latest_updated',
-        'validation_date'
+        'validation_date',
+        'isHasEmail',
+        'isCreatedFrom'
     ];
 
 
