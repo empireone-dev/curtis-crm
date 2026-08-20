@@ -334,11 +334,11 @@ class TicketController extends Controller
     public function move_ticket_assignment(Request $request)
     {
         $ticket = Ticket::where('id', $request->ticket_id)->first();
-        if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'CF-Warranty Claim') {
-            $this->send_warranty_email($request->recipient, $request->subject, $request->body);
-        } else if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'Parts') {
-            $this->send_parts_email($request->recipient, $request->subject, $request->body);
-        }
+        // if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'CF-Warranty Claim') {
+        //     $this->send_warranty_email($request->recipient, $request->subject, $request->body);
+        // } else if ($ticket->call_type == 'TS-Tech Support' && $request->call_type == 'Parts') {
+        //     $this->send_parts_email($request->recipient, $request->subject, $request->body);
+        // }
         $move = $ticket->move_status ? $ticket->call_type . ' move to ' . $request->call_type : $ticket->call_type . ' move to ' . $request->call_type;
         $status = match ($request->call_type) {
             'CF-Warranty Claim' => 'WARRANTY VALIDATION',
@@ -1803,8 +1803,6 @@ class TicketController extends Controller
             'item_number' => $validatedData['model'],
             'status'      => 'CLOSED',
             'call_type'   => $validatedData['call_type'] ?? $request->call_type,
-            'isHasEmail' => $validatedData['isHasEmail'],
-            'isCreatedFrom' => $validatedData['isHasEmail'],
         ]));
         // if ($validatedData['is_sending_email']) {
         //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
