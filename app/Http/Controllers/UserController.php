@@ -44,7 +44,12 @@ class UserController extends Controller
     {
         $today = Carbon::today()->toDateString();
 
-        // 1. Define the reusable date filter for CasesLog
+        // 1. Move time variables OUTSIDE the loop for consistency and performance
+        $now = \Carbon\Carbon::now();
+        $sub24Hours = $now->copy()->subHours(24); // FIXED to 24
+        $sub48Hours = $now->copy()->subHours(48); // FIXED to 48
+
+        // 2. Define the reusable date filter for CasesLog
         $applyDateFilter = function ($query) use ($request, $today) {
             if ($request->start && $request->end) {
                 if ($request->start == $request->end) {
@@ -57,15 +62,13 @@ class UserController extends Controller
             }
         };
 
-        // 2. Fetch Users and Eager Load all necessary data at once
+        // 3. Fetch Users and Eager Load all necessary data at once
         $users = User::where(function ($q) use ($role_id) {
             $q->where('role_id', $role_id)
                 ->orWhereIn('role_id', [1, 5])
-                // ->whereIn('agent_type', ['Warranty', 'Parts', 'CSR', 'Safety Issue','Admin'])
                 ->orderBy('agent_type', 'desc');
         })
             ->with(['role'])
-            // Conditionally eager load the heavy data ONLY if role is 5
             ->when($role_id == 5, function ($query) use ($applyDateFilter) {
                 $query->with([
                     'tickets' => function ($q) {
@@ -75,8 +78,6 @@ class UserController extends Controller
                             ->where('ticket_id', '<>', '')
                             ->whereNotNull('email')
                             ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay());
-                        // ->where('created_at', '>=', Carbon::now()->subMonths(13))
-                        // ->whereYear('created_at', '<>', 2024);
                     },
                     'directEmails' => function ($q) {
                         $q->where('isHide', '<>', 'true')
@@ -87,88 +88,75 @@ class UserController extends Controller
                             });
                     },
                     'handledCasesLogs' => function ($q) use ($applyDateFilter) {
-                        $q->with('ticket'); // nested eager loading
+                        $q->with('ticket');
                         $applyDateFilter($q);
                     },
                     'handledDirectEmailsLogs' => function ($q) use ($applyDateFilter) {
-                        $q->with('direct_email'); // nested eager loading
+                        $q->with('direct_email');
                         $applyDateFilter($q);
                     }
                 ]);
             })
             ->get();
 
-        // 3. Map the loaded relationships into your specific JSON response format
+        // 4. Map the loaded relationships into your specific JSON response format
         if ($role_id == 5) {
-            $users->each(function ($user) use ($today) {
-
-                // Tickets - Counting in memory via Collection
-                $now = \Carbon\Carbon::now();
-                $sub24Hours = $now->copy()->subHours(48);
-                $sub48Hours = $now->copy()->subHours(72);
+            $users->each(function ($user) use ($sub24Hours, $sub48Hours) {
 
                 // --- TICKETS ---
-
+                // In your User Controller (Script 1)
                 $user->upcoming_dues = $user->tickets->filter(function ($ticket) use ($sub24Hours) {
-                    // Less than 24 hours old
+                    // Return false immediately if email_date is null
+                    if (!$ticket->email_date) return false;
+
                     return \Carbon\Carbon::parse($ticket->email_date)->gt($sub24Hours);
                 })->count();
 
                 $user->cases_due_today = $user->tickets->filter(function ($ticket) use ($sub24Hours, $sub48Hours) {
-                    // Between 24 and 48 hours old
                     $emailDate = \Carbon\Carbon::parse($ticket->email_date);
                     return $emailDate->lte($sub24Hours) && $emailDate->gt($sub48Hours);
                 })->count();
 
                 $user->overdue_cases = $user->tickets->filter(function ($ticket) use ($sub48Hours) {
-                    // More than 48 hours old
                     return \Carbon\Carbon::parse($ticket->email_date)->lte($sub48Hours);
                 })->count();
 
-                $user->web_form = $user->tickets()
-                    ->where('created_from', 'WEB FORM')
-                    // ->where('call_type','Safety Issue')
-                    ->whereColumn('created_at', 'updated_at')
-                    ->count();
-                // --- DIRECT EMAILS ---
+                // FIXED N+1 QUERY (Filters the in-memory collection instead of hitting the DB)
+                $user->web_form = $user->tickets->filter(function ($ticket) {
+                    return $ticket->created_from === 'WEB FORM' &&
+                        $ticket->created_at == $ticket->updated_at;
+                })->count();
 
+                // --- DIRECT EMAILS ---
                 $user->upcoming_dues_direct_emails = $user->directEmails->filter(function ($email) use ($sub24Hours) {
-                    // Less than 24 hours old
                     return \Carbon\Carbon::parse($email->email_date)->gt($sub24Hours);
                 })->count();
 
                 $user->direct_emails_due_today = $user->directEmails->filter(function ($email) use ($sub24Hours, $sub48Hours) {
-                    // Between 24 and 48 hours old
                     $emailDate = \Carbon\Carbon::parse($email->email_date);
                     return $emailDate->lte($sub24Hours) && $emailDate->gt($sub48Hours);
                 })->count();
 
                 $user->overdue_direct_emails = $user->directEmails->filter(function ($email) use ($sub48Hours) {
-                    // More than 48 hours old
                     return \Carbon\Carbon::parse($email->email_date)->lte($sub48Hours);
                 })->count();
 
-                // Handled Cases
-                $user->handled_cases       = $user->handledCasesLogs
-                    ->where('ticket.created_from', 'AGENT FORM')
-                    ->count();
-                $user->handled_cases_notes = $user->handledCasesLogs; // Assigning the collection
+                // --- HANDLED CASES ---
+                $user->handled_cases = $user->handledCasesLogs->where('ticket.created_from', 'AGENT FORM')->count();
+                $user->handled_cases_notes = $user->handledCasesLogs;
 
-                $user->handled_web_form = $user->handledCasesLogs
-                    ->where('ticket.created_from', 'WEB FORM')
-                    ->count();
-                $user->handled_web_form_notes = $user->handledCasesLogs
-                    ->where('ticket.created_from', 'WEB FORM');
-                // Handled Direct Emails
-                $user->handled_direct_emails       = $user->handledDirectEmailsLogs->count();
-                $user->handled_direct_emails_notes = $user->handledDirectEmailsLogs; // Assigning the collection
+                $user->handled_web_form = $user->handledCasesLogs->where('ticket.created_from', 'WEB FORM')->count();
+                $user->handled_web_form_notes = $user->handledCasesLogs->where('ticket.created_from', 'WEB FORM')->values();
 
-                // Optional: Unset the base relationship properties so your JSON payload 
-                // exactly matches your original structure without duplicated data arrays.
-                unset($user->tickets);
-                unset($user->directEmails);
-                unset($user->handledCasesLogs);
-                unset($user->handledDirectEmailsLogs);
+                // --- DIRECT EMAILS ---
+                $user->handled_direct_emails = $user->handledDirectEmailsLogs->count();
+                $user->handled_direct_emails_notes = $user->handledDirectEmailsLogs;
+
+                // FIXED: Properly remove relation arrays from the final JSON payload
+                $user->unsetRelation('tickets');
+                $user->unsetRelation('directEmails');
+                $user->unsetRelation('handledCasesLogs');
+                $user->unsetRelation('handledDirectEmailsLogs');
             });
         }
 

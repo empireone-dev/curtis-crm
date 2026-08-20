@@ -1396,155 +1396,96 @@ class TicketController extends Controller
     }
     public function cases(Request $request)
     {
-        $user = User::where('id', $request->user_id)->first();
-
-        // 1. Calculate exact rolling hour boundaries once
+        // 1. FIX: Calculate exact rolling hour boundaries correctly
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(48);
-        $sub48Hours = $now->copy()->subHours(72);
-        if ($request->created_from == 'AGENT FORM' && $request->cases != 'open_cases') {
-            $dataQuery = Ticket::where([
-                ['user_id', '=', $request->user_id],
-                ['ticket_id', '<>', null],
-                ['ticket_id', '<>', ''],
-                ['email', '<>', null],
-                ['cases_status', '<>', 'hidden'],
-                ['is_reply', '=', 'true'],
-            ])
-                ->where('created_from', 'AGENT FORM')
-                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])
-                ->orderBy('email_date', 'asc');
+        $sub24Hours = $now->copy()->subHours(24); // Fixed: 24
+        $sub48Hours = $now->copy()->subHours(48); // Fixed: 48
 
-            $dataQueryCount = $dataQuery->count();
-            $dataQuery = $dataQuery->orderBy('email_date', 'asc')->get();
+        $userId = $request->user_id;
 
-            return response()->json([
-                'data_count' => count($dataQuery),
-                'ticket_count' => $dataQueryCount,
-                'result' =>  $dataQuery,
-            ], 200);
-        } else if ($request->cases == 'web_form' && $request->cases != 'open_cases') {
-            $ticket = Ticket::where('user_id', '=', $request->user_id)
+        // 2. DRY (Don't Repeat Yourself): Create a reusable base query generator
+        $getBaseQuery = function () use ($userId) {
+            return Ticket::where('user_id', $userId)
+                ->whereNotNull('ticket_id')
+                ->where('ticket_id', '<>', '')
+                ->whereNotNull('email')
+                ->whereNotNull('email_date')
+                ->where('cases_status', '<>', 'hidden')
+                ->where('is_reply', 'true')
+                ->where('created_at', '>=', \Carbon\Carbon::parse('2025-07-20')->startOfDay())
+                ->with(['direct_emails']);
+        };
+
+        $result = [];
+        $ticketCount = 100; // Your default fallback
+        $cases = $request->cases;
+
+        // 3. Clean if/elseif routing (no need to repeat `$cases != 'open_cases'` everywhere)
+        if ($request->created_from == 'AGENT FORM' && $cases != 'open_cases') {
+
+            $query = $getBaseQuery()->where('created_from', 'AGENT FORM');
+            $ticketCount = $query->count();
+            $result = $query->orderBy('email_date', 'asc')->get();
+
+        } elseif ($cases == 'web_form') {
+
+            $result = Ticket::where('user_id', $userId)
                 ->where('created_from', 'WEB FORM')
-                // ->where('call_type','Safety Issue')
                 ->whereColumn('created_at', 'updated_at')
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc')
                 ->get();
-            return response()->json([
-                'data_count' => count($ticket),
-                'ticket_count' => 10990,
-                'result' =>  $ticket,
-            ], 200);
-        } else if ($request->cases == 'case_file' && $request->cases != 'open_cases') {
-            $search = [];
+            $ticketCount = 10990; // From your original code
+
+        } elseif ($cases == 'case_file') {
+
+            $query = Ticket::with(['direct_emails'])->orderBy('email_date', 'asc');
+
             if (filter_var($request->where, FILTER_VALIDATE_EMAIL)) {
-                $search = Ticket::where([
-                    ['email', '=', $request->where],
-                    ['cases_status', '<>', 'hidden'],
-                    ['status', '<>', 'CLOSED'],
-                ])->with(['direct_emails'])
-                    ->orderBy('email_date', 'asc')
+                $result = $query->where('email', $request->where)
+                    ->where('cases_status', '<>', 'hidden')
+                    ->where('status', '<>', 'CLOSED')
                     ->get();
             } else {
-                $search = Ticket::where('ticket_id', '=', $request->where)
-                    ->with(['direct_emails'])
-                    ->orderBy('email_date', 'asc')
-                    ->get();
+                $result = $query->where('ticket_id', $request->where)->get();
             }
+            $ticketCount = 10990; // From your original code
 
-            return response()->json([
-                'data_count' => count($search),
-                'ticket_count' => 10990,
-                'result' =>  $search,
-            ], 200);
-        } else if ($request->cases == 'open_cases') {
-            $dataQuery = Ticket::where([
-                ['user_id', '=', $request->user_id],
-                ['ticket_id', '<>', null],
-                ['ticket_id', '<>', ''],
-                ['email', '<>', null],
-                ['cases_status', '<>', 'hidden'],
-                ['is_reply', '=', 'true'],
-                ['email_date', '<>', null]
-            ])
-                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails']);
+        } elseif ($cases == 'open_cases') {
 
-            $dataQueryCount = $dataQuery->count();
-            $dataQuery = $dataQuery
-                ->orderBy('email_date', 'asc')
-                ->get();
+            $query = $getBaseQuery()->whereNotNull('email_date');
+            $ticketCount = $query->count();
+            $result = $query->orderBy('email_date', 'asc')->get();
+        } elseif ($cases == 'over_due') {
 
-            return response()->json([
-                'data_count' => count($dataQuery),
-                'ticket_count' => $dataQueryCount,
-                'result' =>  $dataQuery,
-            ], 200);
-        } else if ($request->cases == 'over_due' && $request->cases != 'open_cases') {
             // OVERDUE: Older than 48 hours
-            $overdue_cases = Ticket::where([
-                ['user_id', '=', $user->id],
-                ['ticket_id', '<>', null],
-                ['ticket_id', '<>', ''],
-                ['email', '<>', null],
-                ['cases_status', '<>', 'hidden'],
-                ['is_reply', '=', 'true'],
-            ])
-                ->where('email_date', '<=', $sub48Hours) // Changed here
-                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])
+            $result = $getBaseQuery()
+                ->where('email_date', '<=', $sub48Hours)
                 ->orderBy('email_date', 'asc')
                 ->get();
+        } elseif ($cases == 'due_today') {
 
-            return response()->json([
-                'data_count' => count($overdue_cases),
-                'ticket_count' => 100,
-                'result' =>  $overdue_cases,
-            ], 200);
-        } else if ($request->cases == 'due_today' && $request->cases != 'open_cases') {
-            // DUE TODAY (Action Req): Between 24 and 48 hours old
-            $cases_due_today = Ticket::where([
-                ['user_id', '=', $user->id],
-                ['ticket_id', '<>', null],
-                ['ticket_id', '<>', ''],
-                ['email', '<>', null],
-                ['cases_status', '<>', 'hidden'],
-                ['is_reply', '=', 'true'],
-            ])
-                ->where('email_date', '<=', $sub24Hours) // Older than 24h
-                ->where('email_date', '>', $sub48Hours)  // But newer than 48h
-                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])
-                ->orderBy('email_date', 'asc')->get();
+            // DUE TODAY: Between 24 and 48 hours old
+            $result = $getBaseQuery()
+                ->where('email_date', '<=', $sub24Hours)
+                ->where('email_date', '>', $sub48Hours)
+                ->orderBy('email_date', 'asc')
+                ->get();
+        } elseif ($cases == 'upcoming_dues') {
 
-            return response()->json([
-                'data_count' => count($cases_due_today),
-                'ticket_count' => 100,
-                'result' =>  $cases_due_today,
-            ], 200);
-        } else if ($request->cases == 'upcoming_dues' && $request->cases != 'open_cases') {
-            // UPCOMING DUES (Safe): Less than 24 hours old
-            $upcoming_dues = Ticket::where([
-                ['user_id', '=', $user->id],
-                ['ticket_id', '<>', null],
-                ['ticket_id', '<>', ''],
-                ['email', '<>', null],
-                ['cases_status', '<>', 'hidden'],
-                ['is_reply', '=', 'true'],
-            ])
-                ->where('email_date', '>', $sub24Hours) // Changed here
-                ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay())
-                ->with(['direct_emails'])
-                ->orderBy('email_date', 'asc')->get();
-
-            return response()->json([
-                'data_count' => count($upcoming_dues),
-                'ticket_count' => 100,
-                'result' =>  $upcoming_dues,
-            ], 200);
+            // UPCOMING DUES: Less than 24 hours old
+            $result = $getBaseQuery()
+                ->where('email_date', '>', $sub24Hours)
+                ->orderBy('email_date', 'asc')
+                ->get();
         }
+
+        // 4. Return single unified response
+        return response()->json([
+            'data_count'   => count($result),
+            'ticket_count' => $ticketCount,
+            'result'       => $result,
+        ], 200);
     }
     public function show(Request $request, $id)
     {
