@@ -20,7 +20,7 @@ import ReasonToClose from "./reason-to-close";
 import { setTicket } from "@/app/pages/admin/tickets/_redux/tickets-slice";
 import { get_retailers } from "@/app/services/product-search";
 import Skeleton from "@/app/layouts/components/skeleton";
-import { message, Select as SelectData,Checkbox } from "antd";
+import { message, Select as SelectData, Checkbox } from "antd";
 import { setForm } from "@/app/pages/admin/tickets/create/redux/tickets-create-slice";
 
 import SearchAddressSection from "./search-address-section";
@@ -195,27 +195,41 @@ export default function EditTicketFormSection() {
     async function submitFormTicket(e) {
         e.preventDefault();
         setLoading(true);
-        const checked = await check_serial_number_service(form.serial_number);
-        if (!checked.result || checked.result.ticket_id == form.ticket_id) {
-            const data = {
-                ...form,
-                id: ticketid,
-                status: ticket.status,
-            };
-            try {
-                await update_tickets_by_user_id(data);
-                setLoading(false);
-                router.visit(
-                    `/administrator/tickets/details/${ticketid}/details`
-                );
-            } catch (error) {
-                setLoading(false);
-            }
-        } else {
-            messageApi.open({
-                type: "error",
-                content: "Serial number is already exist!",
-            });
+        // const checked = await check_serial_number_service(form.serial_number);
+        // if (!checked.result || checked.result.ticket_id == form.ticket_id) {
+        //     const data = {
+        //         ...form,
+        //         id: ticketid,
+        //         status: ticket.status,
+        //     };
+        //     try {
+        //         await update_tickets_by_user_id(data);
+        //         setLoading(false);
+        //         router.visit(
+        //             `/administrator/tickets/details/${ticketid}/details`
+        //         );
+        //     } catch (error) {
+        //         setLoading(false);
+        //     }
+        // } else {
+        //     messageApi.open({
+        //         type: "error",
+        //         content: "Serial number is already exist!",
+        //     });
+        //     setLoading(false);
+        // }
+        const data = {
+            ...form,
+            id: ticketid,
+            status: ticket.status,
+        };
+        try {
+            await update_tickets_by_user_id(data);
+            setLoading(false);
+            router.visit(
+                `/administrator/tickets/details/${ticketid}/details`
+            );
+        } catch (error) {
             setLoading(false);
         }
     }
