@@ -194,7 +194,6 @@ export default function EditTicketFormSection() {
     }, []);
     async function submitFormTicket(e) {
         e.preventDefault();
-        setLoading(true);
         // const checked = await check_serial_number_service(form.serial_number);
         // if (!checked.result || checked.result.ticket_id == form.ticket_id) {
         //     const data = {
@@ -224,6 +223,7 @@ export default function EditTicketFormSection() {
             status: ticket.status,
         };
         try {
+            setLoading(true);
             await update_tickets_by_user_id(data);
             setLoading(false);
             router.visit(
