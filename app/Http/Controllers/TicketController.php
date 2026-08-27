@@ -1742,6 +1742,7 @@ class TicketController extends Controller
             'item_number' => $validatedData['item_number'],
             'status'      => 'CLOSED',
             'call_type'   => 'Refer to Website/Webform',
+            'reason_to_close' => 'Refer to Website/Webform'
         ]));
         // if ($validatedData['is_sending_email']) {
         //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
