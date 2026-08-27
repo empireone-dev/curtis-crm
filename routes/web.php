@@ -71,7 +71,9 @@ Route::get('/print/ticket_details/{id}', function () {
     return Inertia::render('ticket_details/page');
 });
 
-
+Route::get('/test', function () {
+    return Inertia::render('test/page');
+});
 Route::get('/logout', function () {
     return Inertia::render('logout');
 })->name('tickets.logout');

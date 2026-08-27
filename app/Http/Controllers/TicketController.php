@@ -1727,7 +1727,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'model' => 'nullable|string',
+            'item_number' => 'nullable|string',
             'phone' => 'required|string', // Required as per the image
             'fname' => 'nullable|string',
             'lname' => 'nullable|string',
@@ -1735,13 +1735,12 @@ class TicketController extends Controller
             // 'email' => 'required_if:is_sending_email,true|nullable|email',
             'remarks' => 'required|string',
             'call_type' => 'required|string',
-            'isHasEmail' => 'nullable|string',
             'isCreatedFrom' => 'nullable|string',
             // 'is_sending_email' => 'required|boolean',
         ]);
-        $validatedData['phone'] = $this->formatPhoneNumber($validatedData['phone']);
+        // $validatedData['phone'] = $this->formatPhoneNumber($validatedData['phone']);
         Ticket::create(array_merge($validatedData, [
-            'item_number' => $validatedData['model'],
+            'item_number' => $validatedData['item_number'],
             'status'      => 'CLOSED',
             'call_type'   => $validatedData['call_type'] ?? $request->call_type,
         ]));
