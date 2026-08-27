@@ -1426,7 +1426,6 @@ class TicketController extends Controller
             $query = $getBaseQuery()->where('created_from', 'AGENT FORM');
             $ticketCount = $query->count();
             $result = $query->orderBy('email_date', 'asc')->get();
-
         } elseif ($cases == 'web_form') {
 
             $result = Ticket::where('user_id', $userId)
@@ -1742,7 +1741,7 @@ class TicketController extends Controller
         Ticket::create(array_merge($validatedData, [
             'item_number' => $validatedData['item_number'],
             'status'      => 'CLOSED',
-            'call_type'   => $validatedData['call_type'] ?? $request->call_type,
+            'call_type'   => 'Refer to Website/Webform',
         ]));
         // if ($validatedData['is_sending_email']) {
         //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
