@@ -1728,7 +1728,7 @@ class TicketController extends Controller
     {
         $validatedData = $request->validate([
             'item_number' => 'nullable|string',
-            'phone' => 'required|string', // Required as per the image
+            'phone' => 'nullable|string', // Required as per the image
             'fname' => 'nullable|string',
             'lname' => 'nullable|string',
             'email' => 'nullable|string',
