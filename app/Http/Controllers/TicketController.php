@@ -1727,13 +1727,12 @@ class TicketController extends Controller
     {
         $validatedData = $request->validate([
             'item_number' => 'nullable|string',
-            'phone' => 'nullable|string', // Required as per the image
+            'phone' => 'required|string', // Required as per the image
             'fname' => 'nullable|string',
             'lname' => 'nullable|string',
             'email' => 'nullable|string',
             // 'email' => 'required_if:is_sending_email,true|nullable|email',
             'remarks' => 'required|string',
-            'call_type' => 'required|string',
             'isCreatedFrom' => 'nullable|string',
             // 'is_sending_email' => 'required|boolean',
         ]);
