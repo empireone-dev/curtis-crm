@@ -1743,6 +1743,12 @@ class TicketController extends Controller
             'call_type'   => 'Refer to Website/Webform',
             'reason_to_close' => 'Refer to Website/Webform'
         ]));
+        return Activity::create([
+            'user_id' => 0,
+            'ticket_id' => null,
+            'message' => 'AI Refer to Website/WebForm',
+            'type' => 'TICKET CREATED',
+        ]);
         // if ($validatedData['is_sending_email']) {
         //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
         // }
