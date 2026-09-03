@@ -1737,14 +1737,14 @@ class TicketController extends Controller
             // 'is_sending_email' => 'required|boolean',
         ]);
         // $validatedData['phone'] = $this->formatPhoneNumber($validatedData['phone']);
-        Ticket::create(array_merge($validatedData, [
+      $ticket=  Ticket::create(array_merge($validatedData, [
             'item_number' => $validatedData['item_number'],
             'status'      => 'CLOSED',
             'call_type'   => 'Refer to Website/Webform',
             'reason_to_close' => 'Refer to Website/Webform'
         ]));
         return Activity::create([
-            'user_id' => 0,
+            'user_id' => $ticket->id,
             'ticket_id' => null,
             'message' => 'AI Refer to Website/WebForm',
             'type' => 'TICKET CREATED',
