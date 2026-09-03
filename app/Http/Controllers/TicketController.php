@@ -1744,8 +1744,8 @@ class TicketController extends Controller
             'reason_to_close' => 'Refer to Website/Webform'
         ]));
         return Activity::create([
-            'user_id' => $ticket->id,
-            'ticket_id' => null,
+            'user_id' => 0,
+            'ticket_id' => $ticket->id,
             'message' => 'AI Refer to Website/WebForm',
             'type' => 'TICKET CREATED',
         ]);
