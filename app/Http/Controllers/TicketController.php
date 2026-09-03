@@ -1747,7 +1747,7 @@ class TicketController extends Controller
             'user_id' => 0,
             'ticket_id' => $ticket->id,
             'message' => 'AI Refer to Website/WebForm',
-            'type' => 'TICKET CREATED',
+            'type' => 'AI TICKET CREATED',
         ]);
         // if ($validatedData['is_sending_email']) {
         //     Mail::to($validatedData['email'])->send(new AIReferWebForm());
