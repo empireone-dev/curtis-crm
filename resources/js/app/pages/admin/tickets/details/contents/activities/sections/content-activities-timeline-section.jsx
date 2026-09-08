@@ -65,7 +65,7 @@ export default function ContentActivitiesTimelineSection() {
                                     {moment(res.created_at).format("LLL")}
                                 </time>
                                 <p className="mb-4 text-base font-normal text-gray-900">
-                                    AI Notes: {res?.ticket?.remarks}
+                                    AI Notes: {res.ticket?.remarks}
                                 </p>
                             </li>
                         );
