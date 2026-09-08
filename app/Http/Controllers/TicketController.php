@@ -1408,7 +1408,7 @@ class TicketController extends Controller
             return Ticket::where('user_id', $userId)
                 ->whereNotNull('ticket_id')
                 ->where('ticket_id', '<>', '')
-                // ->whereNotNull('email')
+                ->whereNotNull('email')
                 ->whereNotNull('email_date')
                 ->where('cases_status', '<>', 'hidden')
                 ->where('is_reply', 'true')
