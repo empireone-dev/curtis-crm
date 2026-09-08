@@ -76,8 +76,8 @@ class UserController extends Controller
                             ->where('cases_status', '<>', 'hidden')
                             ->where('is_reply', 'true')
                             ->where('ticket_id', '<>', '')
-                            ->whereNotNull('email')
-                            ->where('created_at', '>=', Carbon::parse('2025-07-20')->startOfDay());
+                            // ->whereNotNull('email')
+                            ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay());
                     },
                     'directEmails' => function ($q) {
                         $q->where('isHide', '<>', 'true')

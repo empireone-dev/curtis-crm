@@ -1408,11 +1408,11 @@ class TicketController extends Controller
             return Ticket::where('user_id', $userId)
                 ->whereNotNull('ticket_id')
                 ->where('ticket_id', '<>', '')
-                ->whereNotNull('email')
+                // ->whereNotNull('email')
                 ->whereNotNull('email_date')
                 ->where('cases_status', '<>', 'hidden')
                 ->where('is_reply', 'true')
-                ->where('created_at', '>=', \Carbon\Carbon::parse('2025-07-20')->startOfDay())
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->with(['direct_emails']);
         };
 
