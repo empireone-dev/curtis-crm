@@ -264,7 +264,11 @@ export default function ProductivityIDPage({ auth }) {
             key: "ticket_id",
             ...getColumnSearchProps("ticket_id"),
             render: (_, record, i) => {
-                return record.ticket_id;
+                return <a
+                    target='_blank'
+                    href={`/administrator/tickets/details/${record?.id}/details`}
+                    className='flex gap-3 underline'>{record.ticket_id}
+                </a>
             },
         },
         {

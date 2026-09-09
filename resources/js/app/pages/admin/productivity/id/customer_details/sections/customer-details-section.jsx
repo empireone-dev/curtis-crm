@@ -1,25 +1,39 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import { PencilIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 
-export default function CustomerDetailsSection({data}) {
+export default function CustomerDetailsSection({ data }) {
     return (
         <div>
             <div>
+                {
+                    data?.id && <>
+                        <div class="text-gray-600 mb-2 mt-4">
+                            <p class="font-medium text-lg"><a
+                                target='_blank'
+                                href={`/administrator/tickets/details/${data?.id}/edit`}
+                                className='flex gap-3'>Address <PencilIcon className='h-6' /></a></p>
+                        </div>
+                        <div className='flex flex-1 w-full gap-4 font-black'>
+                            {`${data?.address} ${data?.city} ${data?.state} ${data?.country} ${data?.zip_code}`}
+                        </div>
+                    </>
+                }
                 <div class="text-gray-600 mb-2 mt-4">
                     <p class="font-medium text-lg">Customer Details</p>
                 </div>
                 <div className='flex flex-1 w-full gap-4'>
                     <div class="w-full">
                         <label for="full_name">Name</label>
-                        <input type="text" value={data?.fname+' '+data?.lname} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                        <input type="text" value={data?.fname + ' ' + data?.lname} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                     </div>
                     <div class="w-full">
                         <label for="full_name">Email</label>
-                        <input type="text" value={data?.email} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                        <input type="text" value={data?.email} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                     </div>
                     <div class="w-full">
                         <label for="full_name">Phone</label>
-                        <input type="text" value={data?.phone} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                        <input type="text" value={data?.phone} name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                     </div>
                 </div>
 
