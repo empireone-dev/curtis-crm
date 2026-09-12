@@ -25,7 +25,7 @@ class AutomaticSendingEmailController extends Controller
         $emailsSent = 0;
         $lackingsValues = implode(',', $request->input('lackings', []));
         foreach ($tickets as $ticket) {
-            $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->serial_number . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
+            $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->ticket_id . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
             $logoUrl = "https://curtis-international.com/images/logo.png";
             // 1. Build the missing files HTML list
             $missingFilesHtml = '';
