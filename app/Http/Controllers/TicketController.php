@@ -1736,9 +1736,16 @@ class TicketController extends Controller
 
         $googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxPA9n7MGp1XZ2XzfmUhFramVV6j2S8goavJ15Ezcl7GN_rWUqgTE3xIIkc4bF6TMff/exec';
         $emailsSent = 0;
-        $lackingsValues = implode(',', $request->lackings);
+        $call_type = match ($request->call_type) {
+            'CF-Warranty Claim' => 'warranty',
+            'Parts'             => 'parts',
+            default             => 'safety_issue',
+        };
+        // $lackingsValues = implode(',', $request->lackings);
+
         foreach ($tickets as $ticket) {
-            $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->ticket_id . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
+            // $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->ticket_id . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
+            $uploadLink = "https://curtis-international.com/resolution/" . $call_type . "/" . $ticket->ticket_id;
             $logoUrl = "https://curtis-international.com/images/logo.png";
             // 1. Build the missing files HTML list
             $missingFilesHtml = '';
@@ -1832,7 +1839,7 @@ class TicketController extends Controller
                 'lackings'  => ['readable_serial_section', 'bill_of_sale', 'defect_issue'],
                 'notes'     => ''
             ]);
-            // $this->manual_send_lacking_information($lackingRequest);
+            $this->manual_send_lacking_information($lackingRequest);
         }
         return response()->json([
             'status' => 'success',
