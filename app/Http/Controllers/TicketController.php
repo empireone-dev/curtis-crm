@@ -1744,17 +1744,17 @@ class TicketController extends Controller
         // $lackingsValues = implode(',', $request->lackings);
 
         foreach ($tickets as $ticket) {
+
+            //  return router.visit(`/resolution/${call_type}/${encodeBase64Id(formData.ticket_id)}`)
             // $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->ticket_id . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
             $encodedId = base64_encode($ticket->ticket_id);
             $uploadLink = "https://curtis-international.com/resolution/" . $call_type . "/" .  $encodedId;
-
-            //  return router.visit(`/resolution/${call_type}/${encodeBase64Id(formData.ticket_id)}`)
             $logoUrl = "https://curtis-international.com/images/logo.png";
             // 1. Build the missing files HTML list
             $missingFilesHtml = '';
             if (!empty($request->lackings) && is_array($request->lackings)) {
                 $missingFilesHtml = "<p>Specifically, we are missing the following:</p><ul style='background-color: #f8f9fa; padding: 15px 15px 15px 35px; border-radius: 5px;'>";
-
+                $missingFilesHtml .=  "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . "Complete the " . $call_type . " form." . "</strong></li>";
                 foreach ($request->lackings as $rawName) {
                     $cleanName = $fileLabels[$rawName] ?? $rawName;
                     $missingFilesHtml .= "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . htmlspecialchars($cleanName) . "</strong></li>";
