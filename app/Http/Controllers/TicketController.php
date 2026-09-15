@@ -1745,7 +1745,10 @@ class TicketController extends Controller
 
         foreach ($tickets as $ticket) {
             // $uploadLink = "https://curtis-international.com/resolution/search/" . $ticket->ticket_id . "?tab=upload&lackings=" . urlencode($lackingsValues) . '&notes=' . $request->notes;
-            $uploadLink = "https://curtis-international.com/resolution/" . $call_type . "/" . $ticket->ticket_id;
+            $encodedId = base64_encode($ticket->ticket_id);
+            $uploadLink = "https://curtis-international.com/resolution/" . $call_type . "/" .  $encodedId;
+
+            //  return router.visit(`/resolution/${call_type}/${encodeBase64Id(formData.ticket_id)}`)
             $logoUrl = "https://curtis-international.com/images/logo.png";
             // 1. Build the missing files HTML list
             $missingFilesHtml = '';
