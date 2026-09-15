@@ -1825,7 +1825,6 @@ class TicketController extends Controller
         $ticket =   $this->createTicket($request, $validation);
 
         $subject = $this->generateSubject($request->call_type, $ticket->id);
-        $this->sendEmailIfNeeded($request, $subject);
         $this->updateTicket($ticket->id, $subject);
         if ($request->filled('email')) {
             $lackingRequest = new Request([
