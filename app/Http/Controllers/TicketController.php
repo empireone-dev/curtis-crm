@@ -1833,7 +1833,7 @@ class TicketController extends Controller
                 'lackings'  => ['readable_serial_section', 'bill_of_sale', 'defect_issue'],
                 'notes'     => ''
             ]);
-            $this->manual_send_lacking_information($lackingRequest);
+            // $this->manual_send_lacking_information($lackingRequest);
         }
         return response()->json([
             'status' => 'success',
