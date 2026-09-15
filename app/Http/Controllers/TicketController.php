@@ -1754,7 +1754,7 @@ class TicketController extends Controller
             $missingFilesHtml = '';
             if (!empty($request->lackings) && is_array($request->lackings)) {
                 $missingFilesHtml = "<p>Specifically, we are missing the following:</p><ul style='background-color: #f8f9fa; padding: 15px 15px 15px 35px; border-radius: 5px;'>";
-                $missingFilesHtml .=  "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . "Complete the " . $call_type . " form." . "</strong></li>";
+                $missingFilesHtml .=  "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . "Complete the " . $request->call_type . " form." . "</strong></li>";
                 foreach ($request->lackings as $rawName) {
                     $cleanName = $fileLabels[$rawName] ?? $rawName;
                     $missingFilesHtml .= "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . htmlspecialchars($cleanName) . "</strong></li>";
