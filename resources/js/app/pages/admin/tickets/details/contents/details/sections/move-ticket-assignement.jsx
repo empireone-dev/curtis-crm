@@ -3,7 +3,7 @@ import { get_tickets_by_ticket_id, move_ticket_assignment_service } from "@/app/
 import { router, usePage } from "@inertiajs/react";
 import { Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTicket } from "../../../../_redux/tickets-slice";
 
 export default function MoveTicketAssignement() {
@@ -17,6 +17,7 @@ export default function MoveTicketAssignement() {
     const [parts, setParts] = useState('')
     const [safetyIssue, setSafetyIssue] = useState("");
     const { url } = usePage();
+    const dispatch = useDispatch()
 
     const showModal = () => {
         setIsModalOpen(true);
