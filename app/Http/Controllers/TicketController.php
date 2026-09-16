@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AIReferWebForm;
 use App\Mail\ShippedProcess;
 use App\Models\Activity;
 use App\Models\AgentNote;
@@ -1754,6 +1755,7 @@ class TicketController extends Controller
             $missingFilesHtml = '';
             if (!empty($request->lackings) && is_array($request->lackings)) {
                 $missingFilesHtml = "<p>Specifically, we are missing the following:</p><ul style='background-color: #f8f9fa; padding: 15px 15px 15px 35px; border-radius: 5px;'>";
+                $missingFilesHtml .=  "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . "Detailed explaination" . "</strong></li>";
                 $missingFilesHtml .=  "<li style='margin-bottom: 8px; color: #dc3545;'><strong>" . "Complete the " . $request->call_type . " form." . "</strong></li>";
                 foreach ($request->lackings as $rawName) {
                     $cleanName = $fileLabels[$rawName] ?? $rawName;
@@ -1803,7 +1805,7 @@ class TicketController extends Controller
             // 4. Trigger the Google Apps Script
             $httpResponse = Http::asForm()->post($googleScriptUrl, [
                 'recipient' => $ticket->email,
-                'subject'   => 'Action Required: Missing Information for Ticket # ' . $ticket->ticket_id,
+                'subject'   => $ticket->ticket_id,
                 'body'      => $htmlBody
             ]);
 
@@ -1831,18 +1833,16 @@ class TicketController extends Controller
             'remarks' => 'required|string',
             'isCreatedFrom' => 'nullable|string',
         ]);
-        $validation = $this->getValidation($request->call_type);
-        $ticket =   $this->createTicket($request, $validation);
 
-        $subject = $this->generateSubject($request->call_type, $ticket->id);
-        $this->updateTicket($ticket->id, $subject);
-        if ($request->filled('email')) {
-            $lackingRequest = new Request([
-                'ticket_id' => $ticket->id,
-                'lackings'  => ['readable_serial_section', 'bill_of_sale', 'defect_issue'],
-                'notes'     => ''
-            ]);
-            $this->manual_send_lacking_information($lackingRequest);
+        if ($request->filled('email') && $request->call_type != 'Refer to Website/Webform') {
+            $validation = $this->getValidation($request->call_type);
+            $ticket =   $this->createTicket($request, $validation);
+            $subject = $this->generateSubject($request->call_type, $ticket->id);
+            $this->updateTicket($ticket->id, $subject);
+            $this->sendEmailIfNeeded($request, $subject);
+        } else {
+            Ticket::create($request->all());
+            Mail::to($request->email)->send(new AIReferWebForm());
         }
         return response()->json([
             'status' => 'success',

@@ -1,9 +1,10 @@
 import { parts_initial, warranty_initial, safety_issue_initial } from "@/app/json/initial-templates";
-import { move_ticket_assignment_service } from "@/app/services/tickets-service";
-import { router } from "@inertiajs/react";
+import { get_tickets_by_ticket_id, move_ticket_assignment_service } from "@/app/services/tickets-service";
+import { router, usePage } from "@inertiajs/react";
 import { Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { setTicket } from "../../../../_redux/tickets-slice";
 
 export default function MoveTicketAssignement() {
     const { form } = useSelector((state) => state.tickets_create);
@@ -15,6 +16,7 @@ export default function MoveTicketAssignement() {
     const [warranty, setWarranty] = useState('')
     const [parts, setParts] = useState('')
     const [safetyIssue, setSafetyIssue] = useState("");
+    const { url } = usePage();
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -33,6 +35,11 @@ export default function MoveTicketAssignement() {
 
     async function handleOk() {
         setIsLoading(true);
+
+        const ticketId = url
+            .split("/")
+        [url.split("/").length - 2].split("#")[0];
+
         await move_ticket_assignment_service({
             user: user,
             ticket_id: ticket.id,
@@ -41,6 +48,9 @@ export default function MoveTicketAssignement() {
             subject: ticket.ticket_id,
             recipient: ticket.email,
         });
+        const ress = await get_tickets_by_ticket_id(ticketId);
+        dispatch(setTicket(ress));
+
         if (callType == "TS-Tech Support") {
             router.visit("details");
         } else {
