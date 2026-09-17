@@ -52,7 +52,7 @@ class AppScriptController extends Controller
             //     if ($value['from'] != 'support2@curtiscs.com') {
             //         $ticket->update([
             //             'cases_status' => 'handled',
-            //             'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+            //             'email_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s'),
             //             'is_reply' => 'true'
             //         ]);
             //     }
@@ -72,7 +72,7 @@ class AppScriptController extends Controller
                     'threadId' => $value['threadId'],
                     // 'user_id' => $userWithSmallestCount->id ?? 58,
                     'count' => $value['count'] ?? 0,
-                    'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                    'email_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s'),
                 ]);
             }
             // if ($value['ticket_id'] == 'direct_email') {
@@ -117,7 +117,7 @@ class AppScriptController extends Controller
             ->first();
 
         $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
-        $futureEmailDate = Carbon::now()->addDay()->toDateTimeString();
+        $futureEmailDate = Carbon::now()->addDays(2)->toDateTimeString();
 
         foreach ($processedData as $value) {
             $ticketIdInput = $value['ticket_id'] ?? null;
@@ -179,7 +179,7 @@ class AppScriptController extends Controller
                 if ($ticket && $value['from'] != 'parts@curtiscs.com') {
                     $ticket->update([
                         'cases_status' => 'handled',
-                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s'),
                         'is_reply' => 'true',
                     ]);
                 }
@@ -217,7 +217,7 @@ class AppScriptController extends Controller
                         'threadId' => $value['threadId'],
                         'user_id' => $userWithSmallestCount->id ?? 60,
                         'count' => $value['count'] ?? 0,
-                        'email_date' => Carbon::now()->addDays(1)->format('Y-m-d H:i:s'),
+                        'email_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
