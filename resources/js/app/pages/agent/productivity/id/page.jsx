@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse, Tag } from "antd";
 import { cases_service } from "@/app/services/tickets-service";
@@ -220,7 +220,15 @@ export default function ProductivityIDPage({ auth }) {
             width: "30%",
             // ...getColumnSearchProps("date"),
             render: (_, record, i) => {
-                return <>{moment(record.true_email_date).format("LL")}</>;
+                return (
+                    <>
+                        {/* {moment(record.true_email_date).format("LL")} */}
+                        {moment(record.email_date)
+                            // .subtract(24, 'hours')
+                            .tz("America/New_York")
+                            .format("LLL")}
+                    </>
+                );
             },
         },
         {
@@ -229,8 +237,16 @@ export default function ProductivityIDPage({ auth }) {
             key: "email_date",
             width: "20%",
             ...getColumnSearchProps("email_date"),
-            render: (_, record, i) =>
-                addDaysSkippingWeekends(moment(record.true_email_date)),
+            render: (_, record, i) => {
+                return (
+                    <>
+                        {moment(record.email_date)
+                            .tz("America/New_York")
+                            .add(48, 'hours')
+                            .format("LLL")}
+                    </>
+                );
+            },
         },
         {
             title: "Case File",
