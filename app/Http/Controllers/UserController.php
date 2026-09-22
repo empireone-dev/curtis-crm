@@ -108,8 +108,6 @@ class UserController extends Controller
                 $user->upcoming_dues = $user->tickets->filter(function ($ticket) use ($sub24Hours) {
                     // Return false immediately if email_date is null
                     if (!$ticket->email_date) return false;
-
-                    
                     return \Carbon\Carbon::parse($ticket->email_date)->gt($sub24Hours);
                 })->count();
 

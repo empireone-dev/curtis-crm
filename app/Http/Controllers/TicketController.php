@@ -1479,6 +1479,7 @@ class TicketController extends Controller
                 ->orderBy('email_date', 'asc')
                 ->get();
         }
+        
 
         // 4. Return single unified response
         return response()->json([
