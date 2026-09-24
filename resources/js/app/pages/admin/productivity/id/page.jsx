@@ -235,7 +235,7 @@ export default function ProductivityIDPage({ auth }) {
                     <>
                         {/* {moment(record.true_email_date).format("LL")} */}
                         {moment(record.email_date)
-                            .subtract(24, 'hours')
+                            // .subtract(24, 'hours')
                             .tz("America/New_York")
                             .format("LLL")}
                     </>
@@ -253,7 +253,7 @@ export default function ProductivityIDPage({ auth }) {
                     <>
                         {moment(record.email_date)
                             .tz("America/New_York")
-                            // .add(48, 'hours')
+                            .add(48, 'hours')
                             .format("LLL")}
                     </>
                 );
@@ -366,16 +366,11 @@ export default function ProductivityIDPage({ auth }) {
                 ) : (
                     <div>
                         <Table
+                            rowKey="ticket_id" // OR rowKey="ticket_id" depending on what your backend expects
                             rowSelection={rowSelection}
                             pagination={true}
                             columns={columns}
-                            // dataSource={
-                            //     Object.entries(tickets.result).map((res) => ({
-                            //         ...res[1],
-                            //     })) ?? []
-                            // }
-                            dataSource={tickets?.result ?? []
-                            }
+                            dataSource={tickets?.result ?? []}
                         />
                     </div>
                 )}

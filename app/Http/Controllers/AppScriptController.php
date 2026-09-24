@@ -119,7 +119,7 @@ class AppScriptController extends Controller
         $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
         foreach ($processedData as $value) {
             $ticketIdInput = $value['ticket_id'] ?? null; 
-            $futureEmailDate = Carbon::parse($value['date'])->addDays(2)->toDateTimeString();
+            $futureEmailDate = Carbon::parse($value['date'])->toDateTimeString();
 
             if ($ticketIdInput !== 'direct_email') {
                 $ticketId = $this->find14CharSequences($ticketIdInput);
