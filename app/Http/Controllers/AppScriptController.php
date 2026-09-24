@@ -23,6 +23,17 @@ class AppScriptController extends Controller
         // Return the matched sequences (if any)
         return $matches[0] ?? [];
     }
+    public function remove_direct_email(Request $request)
+    {
+
+        foreach ($request->ticket_ids as $key => $ticket_id) {
+            $direct = DirectEmail::where('id', $ticket_id)->first();
+            if ($direct) {
+                $direct->delete();
+            }
+        }
+        return 'success';
+    }
     public function remove_unread_email(Request $request)
     {
 

@@ -3,15 +3,16 @@ import {
     ExclamationCircleFilled,
     FolderOpenFilled,
     SearchOutlined,
+    DeleteOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
-// import ProductivitySearchSection from './productivity-search-section';
-// import ProductivityDateSection from './productivity-date-section';
 import { useSelector } from "react-redux";
 import { direct_emails_service } from "@/app/services/tickets-service";
 import moment from "moment-timezone";
 import { router } from "@inertiajs/react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function AgentDirectEmailsTableSection({ account }) {
     const { users } = useSelector((state) => state.users);
@@ -22,54 +23,115 @@ export default function AgentDirectEmailsTableSection({ account }) {
     const [loading, setLoading] = useState(true);
     const [pageSize, setPageSize] = useState(10);
     const [total, setTotal] = useState(0);
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
-    };
-    const handleReset = (clearFilters) => {
-        clearFilters();
-        setSearchText("");
-    };
-    useEffect(() => {
-        async function fetch_data() {
+
+    // Row selection and action states
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [deleting, setDeleting] = useState(false);
+
+    const fetch_data = async () => {
+        setLoading(true);
+        try {
             const res = await direct_emails_service(
                 account.id,
                 window.location.search ?? "page=1"
             );
             setDataTable(res.result);
             setTotal(res.ticket_count);
+        } catch (error) {
+            console.error("Error fetching direct emails:", error);
+        } finally {
             setLoading(false);
         }
+    };
+
+    useEffect(() => {
         fetch_data();
     }, []);
 
-    function addDaysSkippingWeekends(date) {
-        let dueDate = moment(date);
-        let dayOfWeek = dueDate.day();
+    // Handle Selection Change
+    const onSelectChange = (newSelectedRowKeys) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
 
-        if (dayOfWeek === 4) {
-            // Thursday (4), add 4 days to make it Monday (1)
-            dueDate = dueDate.add(4, "days");
-        } else if (dayOfWeek === 5) {
-            // Friday (5), add 4 days to make it Tuesday (2)
-            dueDate = dueDate.add(4, "days");
-        } else if (dayOfWeek === 6) {
-            // Saturday (6), add 3 days to make it Tuesday (2)
-            dueDate = dueDate.add(3, "days");
-        } else if (dayOfWeek === 0) {
-            // Sunday (0), add 2 days to make it Tuesday (2)
-            dueDate = dueDate.add(2, "days");
-        } else {
-            dueDate = dueDate.add(2, "days");
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+
+    // Remove single direct email
+    const handleRemoveSingle = async (id) => {
+        if (
+            window.confirm("Are you sure you want to remove this direct email?")
+        ) {
+            setDeleting(true);
+            try {
+                await axios.post("/api/remove_unread_email", {
+                    ticket_ids: [id],
+                });
+                await fetch_data();
+                setSelectedRowKeys((prev) => prev.filter((key) => key !== id));
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Removed!",
+                    text: "Direct email removed successfully.",
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            } catch (error) {
+                console.error("Error deleting item:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to remove direct email.",
+                });
+            } finally {
+                setDeleting(false);
+            }
         }
-        return dueDate.format("LL");
-    }
+    };
+
+    // Bulk Delete selected direct emails
+    const handleDeleteSelected = async () => {
+        if (
+            window.confirm(
+                `Are you sure you want to remove ${selectedRowKeys.length} direct email(s)?`
+            )
+        ) {
+            setDeleting(true);
+            try {
+                await axios.post("/api/remove_direct_email", {
+                    ticket_ids: selectedRowKeys,
+                });
+                await fetch_data();
+                setSelectedRowKeys([]);
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Done!",
+                    text: "Selected direct emails removed successfully.",
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            } catch (error) {
+                console.error("Error deleting selected items:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to remove selected items.",
+                });
+            } finally {
+                setDeleting(false);
+            }
+        }
+    };
+
     const newDataTable = Object.entries(dataTable).map((res) => ({
         ...res[1],
     }));
+
     const data = newDataTable.map((res, i) => ({
-        key: i,
+        key: res.id ?? i,
         email: res.email,
         date: res.email_date,
         time_span: res.email_date,
@@ -78,64 +140,46 @@ export default function AgentDirectEmailsTableSection({ account }) {
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
     }));
-    console.log("datadata", data);
+
     const columns = [
         {
             title: "Assigned to",
             dataIndex: "assigned",
             key: "assigned",
-            // ...getColumnSearchProps('app_name'),
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            // ...getColumnSearchProps('app_name'),
         },
         {
             title: "Time Span",
             dataIndex: "time_span",
             key: "time_span",
-            width: "30%",
-            // ...getColumnSearchProps("date"),
-            render: (_, record, i) => {
-                return <>{moment(record?.time_span).fromNow()}</>;
-            },
+            width: "20%",
+            render: (_, record) => (
+                <>{moment(record?.time_span).fromNow()}</>
+            ),
         },
         {
             title: "Added On",
             dataIndex: "date",
             key: "date",
-            render: (_, record, i) => {
-                console.log('record', record)
-                return (
-                    <>
-                        {moment(record.due_date)
-                            .subtract(24, 'hours')
-                            .tz("America/New_York")
-                            .format("LLL")}
-                    </>
-                );
-            },
+            render: (_, record) => (
+                <>
+                    {moment(record.due_date)
+                        .subtract(24, "hours")
+                        .tz("America/New_York")
+                        .format("LLL")}
+                </>
+            ),
         },
         {
             title: "Due Date",
             dataIndex: "due_date",
             key: "due_date",
-            render: (_, record) => {
-                return record.due_date;
-            },
+            render: (_, record) => record.due_date,
         },
-        // {
-        //     title: "Email Link",
-        //     dataIndex: "link",
-        //     key: "link",
-        //     render: (_, record) => (
-        //         <a href={'https://mail.google.com/mail/u/0/#inbox/'+record?.link} target="_blank">
-        //             {'https://mail.google.com/mail/u/0/#inbox/'+record?.link}
-        //         </a>
-        //     )
-        // },
         {
             title: "Action",
             dataIndex: "overdue_direct_emails",
@@ -150,8 +194,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
                 return (
                     <a
                         target="_blank"
-                        href={`${window.location.pathname}/${record?.id
-                            }?email= ${email ?? ""}`}
+                        href={`${window.location.pathname}/${record?.id}?email=${email ?? ""}`}
                         className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-sm px-3"
                     >
                         VIEW
@@ -160,25 +203,28 @@ export default function AgentDirectEmailsTableSection({ account }) {
             },
         },
     ];
-    // const paginationConfig = {
-    //     showSizeChanger: false,
-    //     current: parseInt(window.location.search.split("=")[1] ?? 1),
-    //     pageSize: pageSize,
-    //     total: total,
-    //     onChange: (page, pageSize) => {
-    //         router.visit(window.location.pathname + `?page=${page}`);
-    //     },
-    // };
+
     return (
         <div>
-            <div className="p-3 rounded-md">
-                <div className="flex">
-                    {/* <ProductivityDateSection/>
-                <ProductivitySearchSection/> */}
+            <div className="p-3 rounded-md space-y-4">
+                {/* Bulk Action Header */}
+                <div className="flex justify-between items-center">
+                    <Button
+                        type="primary"
+                        danger
+                        onClick={handleDeleteSelected}
+                        loading={deleting}
+                        disabled={selectedRowKeys.length === 0 || deleting}
+                        className="w-52"
+                    >
+                        {selectedRowKeys.length} DELETE DIRECT EMAIL
+                    </Button>
                 </div>
+
                 <Table
+                    rowKey="id"
+                    rowSelection={rowSelection}
                     loading={loading}
-                    // pagination={paginationConfig}
                     columns={columns}
                     dataSource={data}
                 />

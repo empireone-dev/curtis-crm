@@ -176,6 +176,7 @@ Route::post('get_warranty_unread_email', [AppScriptController::class, 'get_warra
 Route::post('get_parts_unread_email', [AppScriptController::class, 'get_parts_unread_email']);
 Route::post('get_recall_unread_email', [AppScriptController::class, 'get_recall_unread_email']);
 Route::post('remove_unread_email', [AppScriptController::class, 'remove_unread_email']);
+Route::post('remove_direct_email', [AppScriptController::class, 'remove_direct_email']);
 
 
 Route::resource('recall', RecallController::class);
