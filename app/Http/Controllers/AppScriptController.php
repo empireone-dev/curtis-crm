@@ -118,7 +118,7 @@ class AppScriptController extends Controller
 
         $fallbackUserId = $userWithSmallestCount ? $userWithSmallestCount->id : 58;
         foreach ($processedData as $value) {
-            $ticketIdInput = $value['ticket_id'] ?? null; 
+            $ticketIdInput = $value['ticket_id'] ?? null;
             $futureEmailDate = Carbon::parse($value['date'])->toDateTimeString();
 
             if ($ticketIdInput !== 'direct_email') {
@@ -144,13 +144,18 @@ class AppScriptController extends Controller
                 if ($existing) {
                     $existing->update(['isHide' => 'false']);
                 } else {
-                    DirectEmail::create([
-                        'email'      => $value['from'] ?? null,
-                        'threadId'   => $value['threadId'] ?? null,
-                        'user_id'    => $fallbackUserId,
-                        'count'      => $value['count'] ?? 0,
-                        'email_date' => $futureEmailDate,
-                    ]);
+                    $emailYear = Carbon::parse($futureEmailDate)->year;
+                    $currentYear = now()->year;
+
+                    if ($emailYear === $currentYear) {
+                        DirectEmail::create([
+                            'email'      => $value['from'] ?? null,
+                            'threadId'   => $value['threadId'] ?? null,
+                            'user_id'    => $fallbackUserId,
+                            'count'      => $value['count'] ?? 0,
+                            'email_date' => $futureEmailDate,
+                        ]);
+                    }
                 }
             }
         }
