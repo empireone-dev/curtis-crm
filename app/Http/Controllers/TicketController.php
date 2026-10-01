@@ -1432,6 +1432,7 @@ class TicketController extends Controller
             $result = Ticket::where('user_id', $userId)
                 ->where('created_from', 'WEB FORM')
                 // ->whereColumn('created_at', 'updated_at')
+                ->where('is_reply', 'true')
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc')
                 ->orderBy('is_reply', 'desc') // Change to 'asc' or 'desc' depending on desired order
