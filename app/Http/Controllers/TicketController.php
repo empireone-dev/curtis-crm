@@ -1431,9 +1431,10 @@ class TicketController extends Controller
 
             $result = Ticket::where('user_id', $userId)
                 ->where('created_from', 'WEB FORM')
-                ->whereColumn('created_at', 'updated_at')
+                // ->whereColumn('created_at', 'updated_at')
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc')
+                ->orderBy('is_reply', 'desc') // Change to 'asc' or 'desc' depending on desired order
                 ->get();
             $ticketCount = 10990; // From your original code
 
@@ -1479,7 +1480,7 @@ class TicketController extends Controller
                 ->orderBy('email_date', 'asc')
                 ->get();
         }
-        
+
 
         // 4. Return single unified response
         return response()->json([

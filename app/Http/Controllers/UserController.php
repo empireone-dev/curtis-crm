@@ -122,8 +122,7 @@ class UserController extends Controller
 
                 // FIXED N+1 QUERY (Filters the in-memory collection instead of hitting the DB)
                 $user->web_form = $user->tickets->filter(function ($ticket) {
-                    return $ticket->created_from === 'WEB FORM' &&
-                        $ticket->created_at == $ticket->updated_at;
+                    return $ticket->created_from === 'WEB FORM';
                 })->count();
 
                 // --- DIRECT EMAILS ---
