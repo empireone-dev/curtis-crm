@@ -253,7 +253,7 @@ export default function ProductivityIDPage({ auth }) {
                     <>
                         {moment.utc(record.email_date)
                             .tz("America/New_York")
-                            .add(12, 'hours')
+                            .add(24, 'hours')
                             .format("LLL")}
                     </>
                 );

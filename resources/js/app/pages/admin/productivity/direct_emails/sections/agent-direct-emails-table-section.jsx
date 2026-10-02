@@ -168,6 +168,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
             render: (_, record) => (
                 <>
                     {moment.utc(record.date)
+                        .tz("America/New_York")
                         .format("LLL")}
                 </>
             ),
@@ -180,7 +181,8 @@ export default function AgentDirectEmailsTableSection({ account }) {
                 return (
                     <>
                         {moment.utc(record.email_date)
-                            .add(12, 'hours')
+                            .tz("America/New_York")
+                            .add(24, 'hours')
                             .format("LLL")}
                     </>
                 );
