@@ -1136,8 +1136,8 @@ class TicketController extends Controller
     {
         // 1. Calculate exact rolling hour boundaries once
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(24);
-        $sub48Hours = $now->copy()->subHours(48);
+        $sub24Hours = $now->copy()->subHours(12);
+        $sub48Hours = $now->copy()->subHours(24);
 
         // 2. Extract the repetitive subquery to keep code clean
         $latestThreadSubquery = function ($query) {

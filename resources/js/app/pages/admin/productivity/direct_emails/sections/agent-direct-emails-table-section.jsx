@@ -135,12 +135,12 @@ export default function AgentDirectEmailsTableSection({ account }) {
         email: res.email,
         date: res.email_date,
         time_span: res.email_date,
-        due_date: moment(res.due_date).format("LLL"),
+        due_date: res.email_date,
         link: res.threadId,
         id: res.id,
         assigned: res?.user?.name ?? "N/A",
     }));
-
+    console.log('newDataTable', newDataTable)
     const columns = [
         {
             title: "Assigned to",
@@ -167,8 +167,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
             key: "date",
             render: (_, record) => (
                 <>
-                    {moment.utc(record.due_date)
-                        .tz("America/New_York")
+                    {moment.utc(record.date)
                         .format("LLL")}
                 </>
             ),
@@ -180,9 +179,8 @@ export default function AgentDirectEmailsTableSection({ account }) {
             render: (_, record, i) => {
                 return (
                     <>
-                        {moment.utc(record.due_date)
-                            .tz("America/New_York")
-                            .add(24)
+                        {moment.utc(record.email_date)
+                            .add(12, 'hours')
                             .format("LLL")}
                     </>
                 );
