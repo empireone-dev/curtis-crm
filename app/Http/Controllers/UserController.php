@@ -46,8 +46,8 @@ class UserController extends Controller
 
         // 1. Move time variables OUTSIDE the loop for consistency and performance
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(24); // FIXED to 24
-        $sub48Hours = $now->copy()->subHours(48); // FIXED to 48
+        $sub24Hours = $now->copy()->subHours(12); // FIXED to 24
+        $sub48Hours = $now->copy()->subHours(24); // FIXED to 48
 
         // 2. Define the reusable date filter for CasesLog
         $applyDateFilter = function ($query) use ($request, $today) {

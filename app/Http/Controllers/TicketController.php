@@ -1399,8 +1399,8 @@ class TicketController extends Controller
     {
         // 1. FIX: Calculate exact rolling hour boundaries correctly
         $now = \Carbon\Carbon::now();
-        $sub24Hours = $now->copy()->subHours(24); // Fixed: 24
-        $sub48Hours = $now->copy()->subHours(48); // Fixed: 48
+        $sub24Hours = $now->copy()->subHours(12); // Fixed: 24
+        $sub48Hours = $now->copy()->subHours(24); // Fixed: 48
 
         $userId = $request->user_id;
 

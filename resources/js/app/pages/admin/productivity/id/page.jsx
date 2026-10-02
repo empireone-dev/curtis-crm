@@ -234,7 +234,7 @@ export default function ProductivityIDPage({ auth }) {
                 return (
                     <>
                         {/* {moment(record.true_email_date).format("LL")} */}
-                        {moment(record.email_date)
+                        {moment.utc(record.email_date)
                             // .subtract(24, 'hours')
                             .tz("America/New_York")
                             .format("LLL")}
@@ -251,9 +251,9 @@ export default function ProductivityIDPage({ auth }) {
             render: (_, record, i) => {
                 return (
                     <>
-                        {moment(record.email_date)
+                        {moment.utc(record.email_date)
                             .tz("America/New_York")
-                            .add(48, 'hours')
+                            .add(12, 'hours')
                             .format("LLL")}
                     </>
                 );

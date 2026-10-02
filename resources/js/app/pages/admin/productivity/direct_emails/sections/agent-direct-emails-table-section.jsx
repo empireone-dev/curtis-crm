@@ -167,8 +167,7 @@ export default function AgentDirectEmailsTableSection({ account }) {
             key: "date",
             render: (_, record) => (
                 <>
-                    {moment(record.due_date)
-                        .subtract(24, "hours")
+                    {moment.utc(record.due_date)
                         .tz("America/New_York")
                         .format("LLL")}
                 </>
@@ -178,7 +177,16 @@ export default function AgentDirectEmailsTableSection({ account }) {
             title: "Due Date",
             dataIndex: "due_date",
             key: "due_date",
-            render: (_, record) => record.due_date,
+            render: (_, record, i) => {
+                return (
+                    <>
+                        {moment.utc(record.due_date)
+                            .tz("America/New_York")
+                            .add(24)
+                            .format("LLL")}
+                    </>
+                );
+            },
         },
         {
             title: "Action",
