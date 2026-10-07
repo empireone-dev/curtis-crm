@@ -42,7 +42,8 @@ class UserController extends Controller
 
     public function show(Request $request, $role_id)
     {
-        $today = Carbon::today()->toDateString();
+        $estNow = Carbon::now('America/New_York');
+        $today  = $estNow->toDateString();
 
         // 1. Move time variables OUTSIDE the loop for consistency and performance
         $now = \Carbon\Carbon::now();
@@ -50,16 +51,23 @@ class UserController extends Controller
         $sub48Hours = $now->copy()->subHours(24); // FIXED to 48
 
         // 2. Define the reusable date filter for CasesLog
+        // 2. Define the date filter
         $applyDateFilter = function ($query) use ($request, $today) {
             if ($request->start && $request->end) {
-                if ($request->start == $request->end) {
-                    $query->whereDate('created_at', Carbon::parse($request->start)->toDateString());
-                } else {
-                    $query->whereBetween('created_at', [$request->start, $request->end]);
-                }
+                // Parse user start and end inputs as Eastern Time
+                $startDate = $request->start;
+                $endDate   = $request->end;
             } else {
-                $query->whereDate('created_at', $today);
+                // Fallback to today in EST
+                $startDate = $today;
+                $endDate   = $today;
             }
+
+            // Convert EST start-of-day and end-of-day to UTC for the database query
+            $startUtc = Carbon::parse($startDate, 'America/New_York')->startOfDay()->setTimezone('UTC');
+            $endUtc   = Carbon::parse($endDate, 'America/New_York')->endOfDay()->setTimezone('UTC');
+
+            $query->whereBetween('created_at', [$startUtc, $endUtc]);
         };
 
         // 3. Fetch Users and Eager Load all necessary data at once
