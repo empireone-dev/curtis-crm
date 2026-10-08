@@ -1435,6 +1435,7 @@ class TicketController extends Controller
                 ->where('is_reply', 'true')
                 ->with(['direct_emails'])
                 ->orderBy('email_date', 'asc')
+                ->where('created_at', '>=', Carbon::parse('2025-06-01')->startOfDay())
                 ->orderBy('is_reply', 'desc') // Change to 'asc' or 'desc' depending on desired order
                 ->get();
             $ticketCount = 10990; // From your original code
