@@ -130,9 +130,10 @@ class UserController extends Controller
 
                 // FIXED N+1 QUERY (Filters the in-memory collection instead of hitting the DB)
                 $user->web_form = $user->tickets->filter(function ($ticket) {
-                    return $ticket->created_from === 'WEB FORM';
+                    return $ticket->created_from === 'WEB FORM'
+                        && $ticket->created_at->eq($ticket->updated_at);
                 })->count();
-
+                
                 // --- DIRECT EMAILS ---
                 $user->upcoming_dues_direct_emails = $user->directEmails->filter(function ($email) use ($sub24Hours) {
                     return \Carbon\Carbon::parse($email->email_date)->gt($sub24Hours);
