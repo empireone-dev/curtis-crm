@@ -137,11 +137,11 @@ class AppScriptController extends Controller
                 $tickets[] = $ticketId;
 
                 $ticket = Ticket::where('ticket_id', $ticketId)
-                    ->whereNull('is_reply')
+                    // ->whereNull('is_reply')
                     ->first();
 
                 // Only update if ticket exists and email is not from the support exclusion list
-                if ($ticket && ($value['from'] ?? null) !== 'support2@curtiscs.com') {
+                if ($ticket) {
                     $ticket->update([
                         'cases_status' => 'handled',
                         'email_date'   => $futureEmailDate,
