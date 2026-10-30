@@ -1859,7 +1859,7 @@ class TicketController extends Controller
             'data'    => $ticket,
             'status'  => 'success',
             'message' => 'Ticket created successfully.',
-        ], 201);
+        ], 200);
     }
 
     private function getValidation($callType)
