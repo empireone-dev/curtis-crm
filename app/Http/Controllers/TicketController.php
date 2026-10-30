@@ -1828,30 +1828,38 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'item_number' => 'nullable|string',
-            'phone' => 'required|string',
-            'fname' => 'nullable|string',
-            'lname' => 'nullable|string',
-            'email' => 'nullable|string',
-            'remarks' => 'required|string',
+        $validated = $request->validate([
+            'item_number'   => 'nullable|string',
+            'phone'         => 'required|string',
+            'fname'         => 'nullable|string',
+            'lname'         => 'nullable|string',
+            'email'         => 'nullable|email',
+            'remarks'       => 'required|string',
             'isCreatedFrom' => 'nullable|string',
+            'call_type'     => 'nullable|string',
         ]);
 
-        if ($request->filled('email') && $request->call_type != 'Refer to Website/Webform') {
+        $hasEmail = !empty($validated['email']);
+        $isReferral = ($request->input('call_type') === 'Refer to Website/Webform');
+
+        if ($hasEmail && !$isReferral) {
             $validation = $this->getValidation($request->call_type);
-            $ticket =   $this->createTicket($request, $validation);
+            $ticket = $this->createTicket($request, $validation);
             $subject = $this->generateSubject($request->call_type, $ticket->id);
             $this->updateTicket($ticket->id, $subject);
             $this->sendEmailIfNeeded($request, $subject);
         } else {
-            Ticket::create($request->all());
-            Mail::to($request->email)->send(new AIReferWebForm());
+            $ticket = Ticket::create($validated);
+            if ($hasEmail) {
+                Mail::to($validated['email'])->send(new AIReferWebForm());
+            }
         }
+
         return response()->json([
-            'status' => 'success',
+            'data'    => $ticket,
+            'status'  => 'success',
             'message' => 'Ticket created successfully.',
-        ], 200);
+        ], 201);
     }
 
     private function getValidation($callType)
