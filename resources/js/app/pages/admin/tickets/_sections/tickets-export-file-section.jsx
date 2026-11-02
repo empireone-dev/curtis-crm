@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import { Button } from "antd";
 import { FileDoneOutlined } from "@ant-design/icons";
 import { export_ticket_files } from "@/app/services/tickets-service";
-import moment from "moment";
+import moment from "moment-timezone";
 
 // Helper to clean and format phone strings efficiently
 const formatPhone = (phone) => {
@@ -54,7 +54,7 @@ function calculateAverageResponseTimes(threadsArray) {
         return { supportAverageResponseTime: "0 hours", customerAverageResponseTime: "0 hours" };
     }
 
-    const sortedThreads = [...threadsArray].sort((a, b) => moment(a.date).diff(moment(b.date)));
+    const sortedThreads = [...threadsArray].sort((a, b) => moment.utc(a.date).diff(moment.utc(b.date)));
     const supportResponseTimes = [];
     const customerResponseTimes = [];
 
@@ -62,7 +62,7 @@ function calculateAverageResponseTimes(threadsArray) {
         const currentMsg = sortedThreads[i];
         const previousMsg = sortedThreads[i - 1];
 
-        const diffInHours = moment(currentMsg.date).diff(moment(previousMsg.date), 'hours', true);
+        const diffInHours = moment.utc(currentMsg.date).diff(moment.utc(previousMsg.date), 'hours', true);
 
         const currentIsSupport = currentMsg.from?.includes('support2@curtiscs.com') ?? false;
         const previousIsSupport = previousMsg.from?.includes('support2@curtiscs.com') ?? false;
@@ -107,7 +107,7 @@ export default function TicketsExportFileSection({ isLoading }) {
 
             if (searchQuery === "RESOURCE") {
                 const newData = allTickets.map((res) => [
-                    res?.receipt?.updated_at ? moment(res.receipt.updated_at).format("L") : "N/A",
+                    res?.receipt?.updated_at ? moment.utc(res.receipt.updated_at).format("L") : "N/A",
                     res.ticket_id || "N/A",
                     res.validator?.name ?? "N/A",
                 ]).sort((a, b) => new Date(a[0]) - new Date(b[0]));
@@ -162,17 +162,17 @@ export default function TicketsExportFileSection({ isLoading }) {
                     const refundMaking = activities.find(a => a.type === "REFUND SHIPPED");
                     const replacementMaking = activities.find(a => a.type === "REPLACEMENT SHIPPED");
 
-                    const warranty_validation_date = warrantyActivity?.created_at ? moment(warrantyActivity.created_at).format('LL') : '';
-                    const decision_making_date = decisionMaking?.created_at ? moment(decisionMaking.created_at).format('LL') : '';
-                    const refund_date = refundMaking?.created_at ? moment(refundMaking.created_at).format('LL') : '';
-                    const replacement_date = replacementMaking?.created_at ? moment(replacementMaking.created_at).format('LL') : '';
+                    const warranty_validation_date = warrantyActivity?.created_at ? moment.utc(warrantyActivity.created_at).format('LL') : '';
+                    const decision_making_date = decisionMaking?.created_at ? moment.utc(decisionMaking.created_at).format('LL') : '';
+                    const refund_date = refundMaking?.created_at ? moment.utc(refundMaking.created_at).format('LL') : '';
+                    const replacement_date = replacementMaking?.created_at ? moment.utc(replacementMaking.created_at).format('LL') : '';
 
                     let resolution_date = '';
                     if (assign_to?.message) {
                         try {
                             const parsedMessage = JSON.parse(assign_to.message);
                             if (parsedMessage?.created_at) {
-                                resolution_date = moment(parsedMessage.created_at).format('LL');
+                                resolution_date = moment.utc(parsedMessage.created_at).format('LL');
                             }
                         } catch (e) { }
                     }
@@ -181,8 +181,9 @@ export default function TicketsExportFileSection({ isLoading }) {
                     const curtis_response_average = calculateAverageInterval([{ created_at: res.created_at }, ...combinedLogs]);
 
                     return [
-                        res.created_at ? moment(res.created_at).format("L") : "N/A",
-                        res.latest_updated ? moment(res.latest_updated).format("L") : "N/A",
+
+                        res.created_at ? moment.utc(res.created_at).format("L") : "N/A",
+                        res.latest_updated ? moment.utc(res.latest_updated).format("L") : "N/A",
                         res.created_from ?? "N/A",
                         res.ticket_id ?? "N/A",
                         res.fname ?? "N/A",
@@ -219,9 +220,9 @@ export default function TicketsExportFileSection({ isLoading }) {
                         "No",
                         res.isUploading === "true" ? "YES" : "NO",
                         res.status ?? "N/A",
-                        moment(validation_date?.created_at).format("L") ?? "N/A",
-                        dateProcessed ? moment(dateProcessed).format("L") : "N/A",
-                        res.created_at ? moment(res.created_at).format("LL") : "N/A",
+                        moment.utc(validation_date?.created_at).format("L") ?? "N/A",
+                        dateProcessed ? moment.utc(dateProcessed).format("L") : "N/A",
+                        res.created_at ? moment.utc(res.created_at).format("LL") : "N/A",
                         'n/a',
                         warranty_validation_date,
                         decision_making_date,
